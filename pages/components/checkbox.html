@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Checkbox — FreshDS</title>
+<base href="../../">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="tokens/primitives.css">
+<link rel="stylesheet" href="tokens/theme.css">
+<link rel="stylesheet" href="tokens/dataviz.css">
+<link rel="stylesheet" href="styles/reset.css">
+<link rel="stylesheet" href="styles/layout.css">
+<link rel="stylesheet" href="styles/components/core.css">
+<link rel="stylesheet" href="styles/docs.css">
+<script src="js/freshds.js"></script>
+<script src="js/freshds-site.js"></script>
+</head>
+<body>
+<div class="fds-app" id="app">
+  <ds-topbar active-section="ds"></ds-topbar>
+  <div class="fds-body">
+    <ds-shell active="checkbox"></ds-shell>
+    <main class="fds-main">
+      <div class="fds-page active" id="page-checkbox">
+        <div class="page-header">
+          <div class="page-eyebrow">Core UI</div>
+          <h1 class="page-title">Checkbox</h1>
+          <p class="page-desc">Binary selection control. Supports checked, unchecked, and indeterminate states. Used for multi-select lists, settings toggles, and agreement prompts.</p>
+        </div>
+        <div class="page-section">
+          <div class="page-section-title">States</div>
+          <div class="demo-surface col" style="gap:var(--space-4)">
+            <fresh-checkbox label="Unchecked"></fresh-checkbox>
+            <fresh-checkbox checked label="Checked"></fresh-checkbox>
+            <fresh-checkbox indeterminate label="Indeterminate"></fresh-checkbox>
+            <fresh-checkbox disabled label="Disabled"></fresh-checkbox>
+            <fresh-checkbox checked disabled label="Checked + disabled"></fresh-checkbox>
+          </div>
+        </div>
+        <div class="page-section">
+          <div class="page-section-title">In a group</div>
+          <div class="demo-surface col" style="gap:var(--space-4)">
+            <fresh-checkbox checked label="Send email notifications"></fresh-checkbox>
+            <fresh-checkbox checked label="Send push notifications"></fresh-checkbox>
+            <fresh-checkbox label="Send SMS notifications"></fresh-checkbox>
+            <fresh-checkbox label="Send weekly digest"></fresh-checkbox>
+          </div>
+        </div>
+        <div class="page-section">
+          <div class="page-section-title">Attributes</div>
+          <table class="usage-table">
+            <thead><tr><th>Attribute</th><th>Values</th><th>Default</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td>label</td><td>string</td><td>—</td><td>Text label beside the checkbox</td></tr>
+              <tr><td>checked</td><td>boolean</td><td>—</td><td>Selected state</td></tr>
+              <tr><td>indeterminate</td><td>boolean</td><td>—</td><td>Partial selection (e.g. select-all with mixed children)</td></tr>
+              <tr><td>disabled</td><td>boolean</td><td>—</td><td>Prevents interaction</td></tr>
+              <tr><td>value</td><td>string</td><td>—</td><td>Passed in the change event detail</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+<script src="components/core/fresh-button.js"></script>
+<script src="components/core/fresh-input.js"></script>
+<script src="components/core/fresh-checkbox.js"></script>
+<script src="components/navigation/fresh-simple-tabs.js"></script>
+</body>
+</html>

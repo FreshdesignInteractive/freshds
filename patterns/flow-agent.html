@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agent Builder — Acme</title>
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="../tokens/primitives.css">
+<link rel="stylesheet" href="../tokens/theme.css">
+<link rel="stylesheet" href="../tokens/dataviz.css">
+<link rel="stylesheet" href="../styles/reset.css">
+<link rel="stylesheet" href="../styles/patterns/dashboard.css">
+<link rel="stylesheet" href="../styles/patterns/workflow.css">
+<script>if(location.href.indexOf('?thumb')!==-1)document.write('<style>#demo-bar{display:none!important}</style>');</script>
+<script src="../js/pattern-topbar-v2.js"></script>
+<script src="../js/freshds.js"></script>
+<script src="../js/pattern-bar.js"></script>
+</head>
+<body>
+<div id="app">
+
+  <div class="demo-bar" id="demo-bar">
+    <div class="demo-inner" id="demo-inner">
+      <button class="demo-mode-btn" id="mode-toggle-btn" onclick="toggleDemoMode()" aria-label="Toggle dark mode">
+        <i class="ti ti-moon"></i>
+      </button>
+    </div>
+    <div class="demo-sep"></div>
+    <button class="demo-collapse-btn" id="demo-collapse-btn" onclick="toggleDemoBar()" aria-label="Collapse toolbar">
+      <i class="ti ti-minus"></i>
+    </button>
+  </div>
+
+  <div class="dash-shell">
+
+    <pattern-topbar logged-in></pattern-topbar>
+
+    <div class="dash-body">
+
+      <nav class="app-nav open" id="app-nav" aria-label="Main navigation">
+        <div class="app-nav-inner">
+          <button class="app-nav-item active"><i class="ti ti-home"></i> Home</button>
+          <button class="app-nav-item"><i class="ti ti-chart-bar"></i> Analytics</button>
+          <button class="app-nav-item"><i class="ti ti-activity"></i> Activity</button>
+          <button class="app-nav-item"><i class="ti ti-folders"></i> Projects</button>
+          <button class="app-nav-item"><i class="ti ti-check"></i> My tasks</button>
+          <button class="app-nav-item"><i class="ti ti-calendar-event"></i> Calendar</button>
+          <button class="app-nav-item"><i class="ti ti-users"></i> Members</button>
+          <button class="app-nav-item"><i class="ti ti-settings"></i> Settings</button>
+        </div>
+      </nav>
+
+      <main class="dash-main">
+
+        <!-- Builder header -->
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:var(--space-3) var(--space-5);border-bottom:1px solid var(--surface-border);background:var(--surface-bg);flex-shrink:0;">
+          <div style="display:flex;align-items:center;gap:var(--space-3);">
+            <div style="width:32px;height:32px;border-radius:var(--radius-md);background:var(--color-success-subtle);color:var(--color-success-text);display:flex;align-items:center;justify-content:center;font-size:16px;"><i class="ti ti-robot"></i></div>
+            <div>
+              <div style="font-size:14px;font-weight:700;color:var(--text-primary);">Lead researcher</div>
+              <div style="font-size:11px;color:var(--text-secondary);">Autonomous · Opus 4</div>
+            </div>
+            <fresh-badge variant="warning">Draft</fresh-badge>
+          </div>
+          <div style="display:flex;align-items:center;gap:var(--space-2);">
+            <fresh-button variant="ghost" size="sm"><i class="ti ti-history"></i> Versions</fresh-button>
+            <fresh-button variant="secondary" size="sm"><i class="ti ti-share"></i> Share</fresh-button>
+            <fresh-button variant="primary" size="sm"><i class="ti ti-device-floppy"></i> Save & deploy</fresh-button>
+          </div>
+        </div>
+
+        <div class="wf-agent-layout">
+
+          <!-- Config panel -->
+          <div class="wf-agent-config">
+
+            <div class="wf-config-card">
+              <div class="wf-config-card-title">Identity</div>
+              <fresh-form-field label="Agent name">
+                <fresh-input slot="input" value="Lead researcher"></fresh-input>
+              </fresh-form-field>
+              <div style="margin-top:var(--space-3);">
+                <fresh-form-field label="Description">
+                  <fresh-input slot="input" value="Researches company and contact data for incoming leads."></fresh-input>
+                </fresh-form-field>
+              </div>
+            </div>
+
+            <div class="wf-config-card">
+              <div class="wf-config-card-title">Model</div>
+              <fresh-model-selector value="claude-opus-4"></fresh-model-selector>
+            </div>
+
+            <div class="wf-config-card">
+              <div class="wf-config-card-title">Mode</div>
+              <fresh-ai-mode-toggle value="autonomous"></fresh-ai-mode-toggle>
+            </div>
+
+            <div class="wf-config-card">
+              <div class="wf-config-card-title">System instructions</div>
+              <div style="background:var(--surface-subtle);border:1px solid var(--surface-border);border-radius:var(--radius-md);padding:var(--space-3);font-size:12px;color:var(--text-secondary);font-family:var(--font-mono);line-height:1.6;min-height:80px;">You are a research assistant that investigates leads. When given a company name or email, use your tools to find: company size, industry, funding, tech stack, and recent news. Be concise. Return structured JSON.</div>
+              <div style="margin-top:var(--space-2);text-align:right;">
+                <fresh-button variant="ghost" size="sm"><i class="ti ti-pencil"></i> Edit</fresh-button>
+              </div>
+            </div>
+
+            <div class="wf-config-card">
+              <div class="wf-config-card-title">Tools enabled</div>
+              <div style="display:flex;flex-wrap:wrap;gap:var(--space-1);margin-bottom:var(--space-3);">
+                <span class="wf-tool-tag active"><i class="ti ti-world"></i> Web search</span>
+                <span class="wf-tool-tag active"><i class="ti ti-database"></i> CRM lookup</span>
+                <span class="wf-tool-tag active"><i class="ti ti-building"></i> Crunchbase</span>
+                <span class="wf-tool-tag"><i class="ti ti-brand-linkedin"></i> LinkedIn</span>
+                <span class="wf-tool-tag"><i class="ti ti-mail"></i> Email verify</span>
+                <span class="wf-tool-tag"><i class="ti ti-code"></i> Code runner</span>
+              </div>
+              <fresh-button variant="ghost" size="sm"><i class="ti ti-plus"></i> Add tool</fresh-button>
+            </div>
+
+            <div class="wf-config-card">
+              <div class="wf-config-card-title">Safety & limits</div>
+              <div style="display:flex;flex-direction:column;gap:var(--space-3);">
+                <div style="display:flex;align-items:center;justify-content:space-between;">
+                  <div>
+                    <div style="font-size:12px;color:var(--text-primary);font-weight:500;">Require human approval</div>
+                    <div style="font-size:11px;color:var(--text-tertiary);">Before taking write actions</div>
+                  </div>
+                  <fresh-toggle checked></fresh-toggle>
+                </div>
+                <div>
+                  <div style="font-size:12px;color:var(--text-secondary);margin-bottom:var(--space-1);">Max steps per run</div>
+                  <fresh-input value="20" type="number" size="sm"></fresh-input>
+                </div>
+                <div>
+                  <div style="font-size:12px;color:var(--text-secondary);margin-bottom:var(--space-1);">Timeout (seconds)</div>
+                  <fresh-input value="120" type="number" size="sm"></fresh-input>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Test panel -->
+          <div class="wf-agent-test">
+            <div class="wf-agent-test-header">
+              <div class="wf-agent-test-title"><i class="ti ti-player-play" style="color:var(--color-interactive-text);margin-right:var(--space-1);"></i> Test run</div>
+              <div style="display:flex;gap:var(--space-2);">
+                <fresh-button variant="ghost" size="sm"><i class="ti ti-trash"></i> Clear</fresh-button>
+                <fresh-button variant="secondary" size="sm"><i class="ti ti-player-stop"></i> Stop</fresh-button>
+              </div>
+            </div>
+
+            <div class="wf-agent-messages">
+
+              <!-- User message -->
+              <div style="display:flex;justify-content:flex-end;">
+                <div style="background:var(--color-interactive);color:var(--text-inverse);border-radius:var(--radius-lg);border-bottom-right-radius:var(--radius-sm);padding:var(--space-3) var(--space-4);max-width:80%;font-size:13px;line-height:1.5;">
+                  Research this lead: Marcus Chen, m.chen@luminate.health
+                </div>
+              </div>
+
+              <!-- Thinking indicator -->
+              <fresh-thinking label="Researching company data…"></fresh-thinking>
+
+              <!-- Tool calls -->
+              <div style="background:var(--surface-canvas);border:1px solid var(--surface-border);border-radius:var(--radius-md);padding:var(--space-3);font-size:12px;color:var(--text-secondary);">
+                <div style="display:flex;align-items:center;gap:var(--space-2);margin-bottom:var(--space-2);font-weight:600;color:var(--text-primary);">
+                  <i class="ti ti-tool" style="color:var(--color-info-text);"></i> Tool calls
+                </div>
+                <div style="display:flex;flex-direction:column;gap:var(--space-1);font-family:var(--font-mono);">
+                  <div style="color:var(--color-success-text);">✓ web_search("luminate health company")</div>
+                  <div style="color:var(--color-success-text);">✓ crunchbase_lookup("luminate-health")</div>
+                  <div style="color:var(--color-success-text);">✓ crm_lookup("m.chen@luminate.health")</div>
+                </div>
+              </div>
+
+              <!-- AI response -->
+              <fresh-ai-response>
+                <div slot="content">
+                  <strong>Luminate Health</strong><br><br>
+                  <strong>Company:</strong> Luminate Health · Series B ($42M raised)<br>
+                  <strong>Industry:</strong> HealthTech / Digital Therapeutics<br>
+                  <strong>Size:</strong> 180–220 employees · Growing 40% YoY<br>
+                  <strong>HQ:</strong> San Francisco, CA<br>
+                  <strong>Tech stack:</strong> AWS, Kubernetes, React, Python<br>
+                  <strong>Recent news:</strong> Partnered with Mayo Clinic (Apr 2026)<br><br>
+                  <strong>Contact:</strong> Marcus Chen · CTO · 8 yrs in healthtech · Ex-Omada Health<br>
+                  <strong>CRM history:</strong> 2 previous demos, last touch 4 months ago<br><br>
+                  <strong>Score:</strong> <span style="color:var(--color-success-text);font-weight:700;">82 / 100</span> — High intent, strategic fit.
+                </div>
+              </fresh-ai-response>
+
+            </div>
+
+            <div class="wf-agent-test-footer">
+              <fresh-prompt-input placeholder="Send a test message…" style="width:100%;"></fresh-prompt-input>
+            </div>
+          </div>
+
+        </div>
+
+      </main>
+
+    </div>
+  </div>
+
+</div>
+<script>
+  document.addEventListener('nav-toggle', function() {
+    document.getElementById('app-nav').classList.toggle('open');
+  });
+</script>
+<script src="../components/core/fresh-button.js"></script>
+<script src="../components/core/fresh-input.js"></script>
+<script src="../components/core/fresh-form-field.js"></script>
+<script src="../components/core/fresh-toggle.js"></script>
+<script src="../components/feedback/fresh-badge.js"></script>
+<script src="../components/ai/fresh-model-selector.js"></script>
+<script src="../components/ai/fresh-ai-mode-toggle.js"></script>
+<script src="../components/ai/fresh-thinking.js"></script>
+<script src="../components/ai/fresh-ai-response.js"></script>
+<script src="../components/ai/fresh-prompt-input.js"></script>
+</body>
+</html>

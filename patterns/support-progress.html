@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Progress Indicator — Acme</title>
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="../tokens/primitives.css">
+<link rel="stylesheet" href="../tokens/theme.css">
+<link rel="stylesheet" href="../tokens/dataviz.css">
+<link rel="stylesheet" href="../styles/reset.css">
+<link rel="stylesheet" href="../styles/patterns/dashboard.css">
+<link rel="stylesheet" href="../styles/patterns/feedback.css">
+<script>if(location.href.indexOf('?thumb')!==-1)document.write('<style>#demo-bar{display:none!important}</style>');</script>
+<script src="../js/pattern-topbar-v2.js"></script>
+<script src="../js/freshds.js"></script>
+<script src="../js/pattern-bar.js"></script>
+</head>
+<body>
+<div id="app">
+  <div class="demo-bar" id="demo-bar">
+    <div class="demo-inner"><button class="demo-mode-btn" id="mode-toggle-btn" onclick="toggleDemoMode()"><i class="ti ti-moon"></i></button></div>
+    <div class="demo-sep"></div>
+    <button class="demo-collapse-btn" id="demo-collapse-btn" onclick="toggleDemoBar()"><i class="ti ti-minus"></i></button>
+  </div>
+
+  <div class="dash-shell">
+    <pattern-topbar logged-in></pattern-topbar>
+    <div class="dash-body">
+
+      <nav class="app-nav open" id="app-nav" aria-label="Main navigation">
+        <div class="app-nav-inner">
+          <button class="app-nav-item active"><i class="ti ti-home"></i> Home</button>
+          <button class="app-nav-item"><i class="ti ti-chart-bar"></i> Analytics</button>
+          <button class="app-nav-item"><i class="ti ti-activity"></i> Activity</button>
+          <button class="app-nav-item"><i class="ti ti-folders"></i> Projects</button>
+          <button class="app-nav-item"><i class="ti ti-check"></i> My tasks</button>
+          <button class="app-nav-item"><i class="ti ti-calendar-event"></i> Calendar</button>
+          <button class="app-nav-item"><i class="ti ti-users"></i> Members</button>
+          <button class="app-nav-item"><i class="ti ti-settings"></i> Settings</button>
+        </div>
+      </nav>
+      <main class="dash-main">
+        <div class="dash-page-header">
+          <div><div class="dash-page-title">Progress Indicator</div><div class="dash-page-subtitle">Linear progress, steppers, and completion feedback</div></div>
+        </div>
+        <div class="dash-content">
+
+          <div class="fb-section">
+            <div class="fb-section-title">Linear progress bars</div>
+            <div class="fb-card">
+              <div class="fb-progress-item">
+                <div class="fb-progress-header"><span class="fb-progress-label">Storage used</span><span class="fb-progress-pct">64 GB / 100 GB</span></div>
+                <fresh-progress value="64" variant="primary"></fresh-progress>
+              </div>
+              <div class="fb-progress-item">
+                <div class="fb-progress-header"><span class="fb-progress-label">AI Copilot queries</span><span class="fb-progress-pct">420 / 500 this month</span></div>
+                <fresh-progress value="84" variant="warning"></fresh-progress>
+              </div>
+              <div class="fb-progress-item">
+                <div class="fb-progress-header"><span class="fb-progress-label">Onboarding checklist</span><span class="fb-progress-pct">7 / 10 tasks</span></div>
+                <fresh-progress value="70" variant="success"></fresh-progress>
+              </div>
+              <div class="fb-progress-item">
+                <div class="fb-progress-header"><span class="fb-progress-label">Monthly spend limit</span><span class="fb-progress-pct">$4,820 / $5,000</span></div>
+                <fresh-progress value="96" variant="danger"></fresh-progress>
+              </div>
+              <div class="fb-progress-item">
+                <div class="fb-progress-header"><span class="fb-progress-label">Uploading file...</span><span class="fb-progress-pct">38%</span></div>
+                <fresh-progress value="38" variant="info"></fresh-progress>
+              </div>
+            </div>
+          </div>
+
+          <div class="fb-section">
+            <div class="fb-section-title">Stepper — multi-step flow</div>
+            <div class="fb-grid-2">
+              <div class="fb-card">
+                <div class="fb-card-label">Step 2 of 4 active</div>
+                <fresh-stepper steps='["Upload","Map fields","Preview","Import"]' current="2"></fresh-stepper>
+              </div>
+              <div class="fb-card">
+                <div class="fb-card-label">Step 4 of 4 complete</div>
+                <fresh-stepper steps='["Account","Plan","Payment","Confirm"]' current="4"></fresh-stepper>
+              </div>
+            </div>
+          </div>
+
+          <div class="fb-section">
+            <div class="fb-section-title">File upload progress</div>
+            <div class="fb-card" style="max-width:480px;">
+              <div style="display:flex;flex-direction:column;gap:var(--space-3);">
+                <!-- Uploading -->
+                <div style="padding:var(--space-3);background:var(--surface-subtle);border-radius:var(--radius-md);">
+                  <div style="display:flex;align-items:center;gap:var(--space-3);margin-bottom:var(--space-2);">
+                    <i class="ti ti-file-type-csv" style="font-size:20px;color:var(--color-interactive-text);flex-shrink:0;"></i>
+                    <div style="flex:1;min-width:0;">
+                      <div style="font-size:13px;font-weight:600;color:var(--text-primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">contacts_export_2026.csv</div>
+                      <div style="font-size:12px;color:var(--text-secondary);">142 KB · Uploading…</div>
+                    </div>
+                    <fresh-button variant="ghost" size="sm" icon-only><i class="ti ti-x"></i></fresh-button>
+                  </div>
+                  <fresh-progress value="62" variant="primary"></fresh-progress>
+                </div>
+                <!-- Done -->
+                <div style="padding:var(--space-3);background:var(--color-success-subtle);border-radius:var(--radius-md);">
+                  <div style="display:flex;align-items:center;gap:var(--space-3);">
+                    <i class="ti ti-file-type-pdf" style="font-size:20px;color:var(--color-success-text);flex-shrink:0;"></i>
+                    <div style="flex:1;min-width:0;">
+                      <div style="font-size:13px;font-weight:600;color:var(--color-success-text);">Q2-report-final.pdf</div>
+                      <div style="font-size:12px;color:var(--color-success-text);opacity:0.8;">2.4 MB · Upload complete</div>
+                    </div>
+                    <i class="ti ti-circle-check" style="color:var(--color-success-text);font-size:18px;"></i>
+                  </div>
+                </div>
+                <!-- Error -->
+                <div style="padding:var(--space-3);background:var(--color-danger-subtle);border-radius:var(--radius-md);">
+                  <div style="display:flex;align-items:center;gap:var(--space-3);">
+                    <i class="ti ti-file" style="font-size:20px;color:var(--color-danger-text);flex-shrink:0;"></i>
+                    <div style="flex:1;min-width:0;">
+                      <div style="font-size:13px;font-weight:600;color:var(--color-danger-text);">presentation.pptx</div>
+                      <div style="font-size:12px;color:var(--color-danger-text);opacity:0.8;">File too large — max 50 MB</div>
+                    </div>
+                    <fresh-button variant="ghost" size="sm" style="color:var(--color-danger-text);">Retry</fresh-button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="fb-section">
+            <div class="fb-section-title">Processing states</div>
+            <div class="fb-grid-3">
+              <div class="fb-card" style="text-align:center;">
+                <div class="fb-card-label">Generating report</div>
+                <div style="display:flex;flex-direction:column;align-items:center;gap:var(--space-3);padding:var(--space-4) 0;">
+                  <fresh-spinner size="lg"></fresh-spinner>
+                  <div style="font-size:13px;font-weight:500;color:var(--text-primary);">Generating your report…</div>
+                  <div style="font-size:12px;color:var(--text-secondary);">This usually takes 20–30 seconds</div>
+                  <fresh-progress value="45" variant="primary" style="width:100%;"></fresh-progress>
+                </div>
+              </div>
+              <div class="fb-card" style="text-align:center;">
+                <div class="fb-card-label">AI processing</div>
+                <div style="display:flex;flex-direction:column;align-items:center;gap:var(--space-3);padding:var(--space-4) 0;">
+                  <fresh-spinner size="lg"></fresh-spinner>
+                  <div style="font-size:13px;font-weight:500;color:var(--text-primary);">Analysing your data…</div>
+                  <div style="font-size:12px;color:var(--text-secondary);">AI Copilot is working on it</div>
+                  <fresh-badge variant="info"><i class="ti ti-sparkles"></i> AI processing</fresh-badge>
+                </div>
+              </div>
+              <div class="fb-card" style="text-align:center;">
+                <div class="fb-card-label">Sync in progress</div>
+                <div style="display:flex;flex-direction:column;align-items:center;gap:var(--space-3);padding:var(--space-4) 0;">
+                  <fresh-spinner size="lg"></fresh-spinner>
+                  <div style="font-size:13px;font-weight:500;color:var(--text-primary);">Syncing 1,284 records</div>
+                  <div style="font-size:12px;color:var(--text-secondary);">842 of 1,284 imported</div>
+                  <fresh-progress value="66" variant="success" style="width:100%;"></fresh-progress>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </main>
+    </div>
+  </div>
+</div>
+<script>
+  document.addEventListener('nav-toggle', function() {
+    document.getElementById('app-nav').classList.toggle('open');
+  });
+</script>
+<script src="../components/core/fresh-button.js"></script>
+<script src="../components/feedback/fresh-progress.js"></script>
+<script src="../components/feedback/fresh-spinner.js"></script>
+<script src="../components/feedback/fresh-badge.js"></script>
+<script src="../components/navigation/fresh-stepper.js"></script>
+</body>
+</html>

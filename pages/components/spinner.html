@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Spinner — FreshDS</title>
+<base href="../../">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="tokens/primitives.css">
+<link rel="stylesheet" href="tokens/theme.css">
+<link rel="stylesheet" href="tokens/dataviz.css">
+<link rel="stylesheet" href="styles/reset.css">
+<link rel="stylesheet" href="styles/layout.css">
+<link rel="stylesheet" href="styles/components/core.css">
+<link rel="stylesheet" href="styles/docs.css">
+<script src="js/freshds.js"></script>
+<script src="js/freshds-site.js"></script>
+</head>
+<body>
+<div class="fds-app" id="app">
+  <ds-topbar active-section="ds"></ds-topbar>
+  <div class="fds-body">
+    <ds-shell active="spinner"></ds-shell>
+    <main class="fds-main">
+      <div class="fds-page active" id="page-spinner">
+        <div class="page-header">
+          <div class="page-eyebrow">Feedback &amp; Status</div>
+          <h1 class="page-title">Spinner</h1>
+          <p class="page-desc">Minimal rotating indicator for indeterminate loading states. Use inline alongside text or centered within a loading region.</p>
+        </div>
+        <div class="page-section">
+          <div class="page-section-title">Sizes</div>
+          <div class="demo-surface" style="align-items:center;gap:var(--space-6)">
+            <div style="text-align:center">
+              <fresh-spinner size="sm"></fresh-spinner>
+              <div style="font-size:11px;color:var(--text-tertiary);font-family:var(--font-sans);margin-top:8px">sm</div>
+            </div>
+            <div style="text-align:center">
+              <fresh-spinner></fresh-spinner>
+              <div style="font-size:11px;color:var(--text-tertiary);font-family:var(--font-sans);margin-top:8px">md</div>
+            </div>
+            <div style="text-align:center">
+              <fresh-spinner size="lg"></fresh-spinner>
+              <div style="font-size:11px;color:var(--text-tertiary);font-family:var(--font-sans);margin-top:8px">lg</div>
+            </div>
+          </div>
+        </div>
+        <div class="page-section">
+          <div class="page-section-title">Inline with text</div>
+          <div class="demo-surface col" style="gap:var(--space-4)">
+            <div style="display:flex;align-items:center;gap:var(--space-2);font-family:var(--font-sans);font-size:13px;color:var(--text-secondary)">
+              <fresh-spinner size="sm"></fresh-spinner>
+              Saving changes…
+            </div>
+            <div style="display:flex;align-items:center;gap:var(--space-3);font-family:var(--font-sans);font-size:13px;color:var(--text-secondary)">
+              <fresh-spinner></fresh-spinner>
+              Processing your request
+            </div>
+          </div>
+        </div>
+        <div class="page-section">
+          <div class="page-section-title">Attributes</div>
+          <table class="usage-table">
+            <thead><tr><th>Attribute</th><th>Values</th><th>Default</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td>size</td><td><code>sm</code> <code>md</code> <code>lg</code></td><td><code>md</code></td><td>Diameter (14 / 20 / 28px)</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+<script src="components/core/fresh-button.js"></script>
+<script src="components/core/fresh-input.js"></script>
+<script src="components/feedback/fresh-spinner.js"></script>
+<script src="components/navigation/fresh-simple-tabs.js"></script>
+</body>
+</html>

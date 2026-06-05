@@ -1,0 +1,233 @@
+/* ============================================================
+   FRESHDS — TIER 2 + 3: SEMANTIC & COMPONENT TOKENS
+   All values reference generated scale steps (--scale-*,
+   --primary-*, --secondary-*, --success-*, --warning-*,
+   --danger-*) written to :root by freshds.js at runtime.
+   No hardcoded hex values here — only var() references.
+   ============================================================ */
+:root {
+  /* ── Primitive aliases — computed from scales, override primitives.css ── */
+  --primitive-primary-light: var(--primary-3);
+  --primitive-primary-dark:  var(--primary-10);
+
+  /* ── Tier 2: Semantic — Surfaces ── */
+  --surface-bg:             var(--color-page-bg);    /* page bg + navbar — user-defined */
+  --surface-canvas:         var(--color-page-bg);    /* cards/panels — matches page in light mode */
+  --surface-input:          var(--color-input-surface); /* form controls — user-defined */
+  --surface-subtle:         var(--scale-2);
+  --surface-overlay:        var(--scale-3);
+  --surface-border:         var(--scale-4);
+  --surface-border-strong:  var(--scale-5);
+
+  /* ── Tier 2: Semantic — Text ── */
+  --text-primary:           var(--scale-11);
+  --text-secondary:         var(--scale-9);
+  --text-tertiary:          var(--scale-8);
+  --text-inverse:           var(--scale-1);
+
+  /* ── Tier 2: Semantic — Interactive (brand) ── */
+  --color-interactive:        var(--primary-9);
+  --color-interactive-hover:  var(--primary-10);
+  --color-interactive-subtle: var(--primary-2);
+  --color-interactive-border: var(--primary-5);
+  --color-interactive-text:   var(--primary-9);
+  --color-accent:             var(--secondary-9);
+  --color-accent-subtle:      var(--secondary-2);
+  --color-accent-border:      var(--secondary-5);
+  --color-accent-text:        var(--secondary-11);
+
+  /* ── Tier 2: Semantic — Info ── */
+  --color-info:             var(--info-9);
+  --color-info-subtle:      var(--info-2);
+  --color-info-border:      var(--info-5);
+  --color-info-text:        var(--info-11);
+
+  /* ── Tier 2: Semantic — Status ── */
+  --color-success:          var(--success-9);
+  --color-success-subtle:   var(--success-2);
+  --color-success-border:   var(--success-5);
+  --color-success-text:     var(--success-11);
+
+  --color-warning:          var(--warning-9);
+  --color-warning-subtle:   var(--warning-2);
+  --color-warning-border:   var(--warning-5);
+  --color-warning-text:     var(--warning-11);
+
+  --color-danger:           var(--danger-9);
+  --color-danger-subtle:    var(--danger-2);
+  --color-danger-border:    var(--danger-5);
+  --color-danger-text:      var(--danger-11);
+
+  /* ── Tier 3: Component — Buttons ── */
+  --btn-primary-bg:         var(--color-interactive);
+  --btn-primary-text:       var(--scale-1);
+  --btn-primary-hover:      var(--color-interactive-hover);
+  --btn-secondary-border:   var(--color-interactive);
+  --btn-secondary-text:     var(--color-interactive);
+  --btn-danger-bg:          var(--color-danger-subtle);
+  --btn-danger-text:        var(--color-danger);
+  --btn-danger-border:      var(--color-danger-border);
+  --btn-danger-hover:       var(--danger-3);
+
+  /* ── Tier 3: Component — Inputs ── */
+  --input-focus-border:     var(--primary-8);
+  --input-focus-ring:       var(--primary-3);
+
+  /* ── Tier 3: Component — Badges ── */
+  --badge-primary-bg:       var(--primary-2);
+  --badge-primary-text:     var(--primary-10);
+  --badge-primary-border:   var(--primary-5);
+
+  --badge-success-bg:       var(--color-success-subtle);
+  --badge-success-text:     var(--color-success-text);
+  --badge-success-border:   var(--color-success-border);
+
+  --badge-warning-bg:       var(--color-warning-subtle);
+  --badge-warning-text:     var(--color-warning-text);
+  --badge-warning-border:   var(--color-warning-border);
+
+  --badge-danger-bg:        var(--color-danger-subtle);
+  --badge-danger-text:      var(--color-danger);
+  --badge-danger-border:    var(--color-danger-border);
+
+  --badge-neutral-bg:       var(--surface-overlay);
+  --badge-neutral-text:     var(--text-secondary);
+  --badge-neutral-border:   var(--surface-border);
+
+  --badge-ai-bg:            var(--secondary-2);
+  --badge-ai-text:          var(--secondary-11);
+  --badge-ai-border:        var(--secondary-5);
+
+  /* ── Tier 3: Component — Navigation ── */
+  --nav-active-bg:          var(--primary-2);
+  --nav-active-text:        var(--color-interactive);
+
+  /* ── Tier 3: Component — Card ── */
+  --card-accent:            var(--color-interactive);
+
+  /* ── Tier 3: Component — Tooltip ── */
+  --tooltip-bg:             var(--scale-12);   /* inverted: near-black in light mode */
+  --tooltip-text:           var(--scale-1);    /* white text on dark tooltip */
+}
+
+/* ── Light mode explicit scope ─────────────────────────────────
+   Used by reference panels (e.g. color system page) that must
+   always show light-mode status colors even when #app is dark.
+   Only overrides status tokens — the panel text uses hardcoded
+   colors in docs.css so no other tokens need scoping here.
+   ────────────────────────────────────────────────────────────── */
+[data-mode="light"] {
+  --color-success:          var(--success-9);
+  --color-success-subtle:   var(--success-2);
+  --color-success-border:   var(--success-5);
+  --color-success-text:     var(--success-11);
+  --color-warning:          var(--warning-9);
+  --color-warning-subtle:   var(--warning-2);
+  --color-warning-border:   var(--warning-5);
+  --color-warning-text:     var(--warning-11);
+  --color-danger:           var(--danger-9);
+  --color-danger-subtle:    var(--danger-2);
+  --color-danger-border:    var(--danger-5);
+  --color-danger-text:      var(--danger-11);
+  --color-info:             var(--info-9);
+  --color-info-subtle:      var(--info-2);
+  --color-info-border:      var(--info-5);
+  --color-info-text:        var(--info-11);
+}
+
+/* ── Dark mode ─────────────────────────────────────────────────
+   All semantic tokens that differ in dark mode are listed here.
+   Scale steps are set at runtime by JS on :root; semantic tokens
+   that don't appear here keep their light-mode var() reference.
+
+   Surface hierarchy (dark, lightest→darkest):
+     overlay (9) > border-strong (7) > border (8) >
+     canvas/input (10) > subtle (11) > bg (12)
+   ────────────────────────────────────────────────────────────── */
+[data-mode="dark"] {
+  /* Surfaces — bg/subtle/canvas/input are distinct steps */
+  --surface-bg:             var(--scale-12);  /* page + navbar */
+  --surface-canvas:         var(--scale-10);  /* cards / panels — elevated */
+  --surface-input:          var(--scale-11);  /* form controls */
+  --surface-subtle:         var(--scale-11);  /* hover tints / section bg */
+  --surface-overlay:        var(--scale-9);
+  --surface-border:         var(--scale-8);   /* shifted for contrast */
+  --surface-border-strong:  var(--scale-7);
+
+  /* Text */
+  --text-primary:           var(--scale-1);
+  --text-secondary:         var(--scale-3);
+  --text-tertiary:          var(--scale-5);
+  --text-inverse:           var(--scale-12);
+
+  /* Interactive */
+  --color-interactive-text:   var(--primary-4);
+  --color-interactive-subtle: var(--primary-11);
+  --color-interactive-border: var(--primary-7);
+
+  /* Accent */
+  --color-accent-subtle:      var(--secondary-11);
+  --color-accent-border:      var(--secondary-7);
+  --color-accent-text:        var(--secondary-4);  /* was missing — added */
+
+  /* Status main — step 6: lighter than input (L≈0.82), reads vividly on dark bg */
+  --color-success:          var(--success-6);
+  --color-warning:          var(--warning-6);
+  --color-danger:           var(--danger-6);
+  --color-info:             var(--info-6);
+
+  /* Status subtle (step 12, L≈0.15) / border (step 11, L≈0.34) / text */
+  --color-success-subtle:   var(--success-12);
+  --color-success-border:   var(--success-11);
+  --color-success-text:     var(--success-5);
+
+  --color-warning-subtle:   var(--warning-12);
+  --color-warning-border:   var(--warning-11);
+  --color-warning-text:     var(--warning-4);  /* step 4 not 5 — yellow at L=0.85 risks washing out */
+
+  --color-danger-subtle:    var(--danger-12);
+  --color-danger-border:    var(--danger-11);
+  --color-danger-text:      var(--danger-5);
+
+  --color-info-subtle:      var(--info-12);
+  --color-info-border:      var(--info-11);
+  --color-info-text:        var(--info-5);
+
+  /* Buttons */
+  --btn-secondary-border:   var(--primary-4);
+  --btn-secondary-text:     var(--primary-4);
+
+  /* Inputs */
+  --input-focus-border:     var(--primary-5);
+  --input-focus-ring:       var(--primary-11);
+
+  /* Badges */
+  --badge-primary-bg:       var(--primary-11);
+  --badge-primary-text:     var(--primary-4);
+  --badge-primary-border:   var(--primary-8);
+  --badge-success-bg:       var(--success-12);
+  --badge-success-text:     var(--success-5);
+  --badge-success-border:   var(--success-11);
+  --badge-warning-bg:       var(--warning-12);
+  --badge-warning-text:     var(--warning-4);
+  --badge-warning-border:   var(--warning-11);
+  --badge-danger-bg:        var(--danger-12);
+  --badge-danger-text:      var(--danger-5);
+  --badge-danger-border:    var(--danger-11);
+  --badge-ai-bg:            var(--secondary-11);
+  --badge-ai-text:          var(--secondary-3);
+  --badge-ai-border:        var(--secondary-8);
+
+  /* Navigation */
+  --nav-active-bg:          var(--primary-11);
+  --nav-active-text:        var(--primary-4);
+
+  /* Tooltip — inverted in dark mode: light bg, dark text */
+  --tooltip-bg:             var(--scale-2);
+  --tooltip-text:           var(--scale-11);
+
+  /* Elevation */
+  --elev-1: 0 1px 3px rgba(0,0,0,0.3),  0 1px 2px rgba(0,0,0,0.2);
+  --elev-2: 0 4px 12px rgba(0,0,0,0.4), 0 2px 4px rgba(0,0,0,0.3);
+  --elev-3: 0 8px 24px rgba(0,0,0,0.5), 0 4px 8px rgba(0,0,0,0.4);
+}

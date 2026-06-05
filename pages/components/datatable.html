@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Data table — FreshDS</title>
+<base href="../../">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="tokens/primitives.css">
+<link rel="stylesheet" href="tokens/theme.css">
+<link rel="stylesheet" href="tokens/dataviz.css">
+<link rel="stylesheet" href="styles/reset.css">
+<link rel="stylesheet" href="styles/layout.css">
+<link rel="stylesheet" href="styles/components/core.css">
+<link rel="stylesheet" href="styles/docs.css">
+<script src="js/freshds.js"></script>
+<script src="js/freshds-site.js"></script>
+</head>
+<body>
+<div class="fds-app" id="app">
+  <ds-topbar active-section="ds"></ds-topbar>
+  <div class="fds-body">
+    <ds-shell active="datatable"></ds-shell>
+    <main class="fds-main">
+      <div class="fds-page active" id="page-datatable">
+        <div class="page-header">
+          <div class="page-eyebrow">Data Display</div>
+          <h1 class="page-title">Data table</h1>
+          <p class="page-desc">Enhanced table with full-text search, column sorting, row selection, bulk actions, and row highlight. Pass columns and data as JSON attributes.</p>
+        </div>
+        <div class="page-section">
+          <div class="page-section-title">Searchable + sortable</div>
+          <div class="demo-surface col">
+            <fresh-data-table
+              searchable
+              columns='[
+                {"key":"name","label":"Name","sortable":true},
+                {"key":"role","label":"Role","sortable":true},
+                {"key":"status","label":"Status"},
+                {"key":"joined","label":"Joined","sortable":true,"align":"right"}
+              ]'
+              data='[
+                {"name":"Jane Smith","role":"Admin","status":"Active","joined":"2024-01-12"},
+                {"name":"Marcus Lee","role":"Editor","status":"Active","joined":"2024-03-05"},
+                {"name":"Priya Nair","role":"Viewer","status":"Inactive","joined":"2023-11-20"},
+                {"name":"Tom Wu","role":"Editor","status":"Active","joined":"2024-02-18"},
+                {"name":"Anya Patel","role":"Admin","status":"Active","joined":"2023-09-08"},
+                {"name":"Carlos R","role":"Viewer","status":"Pending","joined":"2024-04-01"}
+              ]'>
+            </fresh-data-table>
+          </div>
+        </div>
+        <div class="page-section">
+          <div class="page-section-title">With row selection &amp; bulk actions</div>
+          <div class="demo-surface col">
+            <fresh-data-table
+              searchable
+              selectable
+              columns='[
+                {"key":"model","label":"Model","sortable":true},
+                {"key":"tokens","label":"Tokens","sortable":true,"align":"right"},
+                {"key":"cost","label":"Cost","align":"right"},
+                {"key":"latency","label":"Latency","align":"right"}
+              ]'
+              data='[
+                {"model":"claude-sonnet-4-6","tokens":"24,500","cost":"$0.18","latency":"1.2s"},
+                {"model":"claude-opus-4-8","tokens":"18,200","cost":"$0.54","latency":"2.1s"},
+                {"model":"claude-haiku-4-5","tokens":"61,000","cost":"$0.07","latency":"0.4s"},
+                {"model":"claude-sonnet-4-6","tokens":"9,800","cost":"$0.07","latency":"0.9s"}
+              ]'>
+              <div slot="bulk-actions">
+                <fresh-button variant="danger" size="sm">Delete</fresh-button>
+              </div>
+            </fresh-data-table>
+          </div>
+        </div>
+        <div class="page-section">
+          <div class="page-section-title">Row highlight</div>
+          <p style="font-size:13px;color:var(--text-secondary);margin-bottom:var(--space-5);line-height:1.6">Add <code>highlightable</code> to enable single-row focus. Click a row to highlight it; click again to clear. Fires a <code>row-highlight</code> event with the row data.</p>
+          <div class="demo-surface col" style="gap:var(--space-4)">
+            <fresh-data-table
+              id="demo-hl-table"
+              highlightable
+              searchable
+              columns='[
+                {"key":"name","label":"Name","sortable":true},
+                {"key":"role","label":"Role","sortable":true},
+                {"key":"department","label":"Department"},
+                {"key":"status","label":"Status","align":"right"}
+              ]'
+              data='[
+                {"name":"Jane Smith","role":"Admin","department":"Engineering","status":"Active"},
+                {"name":"Marcus Lee","role":"Editor","department":"Design","status":"Active"},
+                {"name":"Priya Nair","role":"Viewer","department":"Product","status":"Inactive"},
+                {"name":"Tom Wu","role":"Editor","department":"Engineering","status":"Active"},
+                {"name":"Anya Patel","role":"Admin","department":"Data","status":"Active"},
+                {"name":"Carlos R","role":"Viewer","department":"Marketing","status":"Pending"}
+              ]'>
+            </fresh-data-table>
+            <div id="demo-hl-output" style="font-size:12px;font-family:var(--font-mono);color:var(--text-tertiary);padding:var(--space-3) var(--space-4);background:var(--surface-overlay);border-radius:var(--radius-md);border:1px solid var(--surface-border)">
+              row-highlight → click a row
+            </div>
+          </div>
+          <script>
+            document.getElementById('demo-hl-table')?.addEventListener('row-highlight', function(e) {
+              var out = document.getElementById('demo-hl-output');
+              if (out) out.textContent = e.detail.row
+                ? 'row-highlight → index: ' + e.detail.index + ' · ' + JSON.stringify(e.detail.row)
+                : 'row-highlight → cleared';
+            });
+          </script>
+        </div>
+        <div class="page-section">
+          <div class="page-section-title">Attributes</div>
+          <table class="usage-table">
+            <thead><tr><th>Attribute</th><th>Values</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td>columns</td><td>JSON array <code>{ key, label, sortable?, align?, width? }</code></td><td>Column definitions</td></tr>
+              <tr><td>data</td><td>JSON array of objects</td><td>Row data — keys must match column keys</td></tr>
+              <tr><td>searchable</td><td>boolean</td><td>Shows search input, filters all columns</td></tr>
+              <tr><td>selectable</td><td>boolean</td><td>Shows row checkboxes and select-all</td></tr>
+              <tr><td>highlightable</td><td>boolean</td><td>Click a row to mark it active; click again to clear</td></tr>
+              <tr><td>search-placeholder</td><td>string</td><td>Placeholder for the search input</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="page-section">
+          <div class="page-section-title">Events</div>
+          <table class="usage-table">
+            <thead><tr><th>Event</th><th>Detail</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td>sort</td><td><code>{ key, direction }</code></td><td>Fired when a sortable column header is clicked</td></tr>
+              <tr><td>selection-change</td><td><code>{ selected: number[] }</code></td><td>Fired when row selection changes</td></tr>
+              <tr><td>row-highlight</td><td><code>{ row: object|null, index: number|null }</code></td><td>Fired when a row is highlighted or cleared</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+<script src="components/core/fresh-button.js"></script>
+<script src="components/core/fresh-input.js"></script>
+<script src="components/data/fresh-data-table.js"></script>
+<script src="components/navigation/fresh-simple-tabs.js"></script>
+</body>
+</html>

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Response Stream — Acme</title>
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="../tokens/primitives.css">
+<link rel="stylesheet" href="../tokens/theme.css">
+<link rel="stylesheet" href="../tokens/dataviz.css">
+<link rel="stylesheet" href="../styles/reset.css">
+<link rel="stylesheet" href="../styles/patterns/ai-chat.css">
+<script>if(location.href.indexOf('?thumb')!==-1)document.write('<style>#demo-bar{display:none!important}</style>');</script>
+<script src="../js/pattern-topbar-v2.js"></script>
+<script src="../js/freshds.js"></script>
+<script src="../js/pattern-bar.js"></script>
+<style>
+  /* Stop button */
+  .stop-btn-row {
+    display: flex;
+    justify-content: center;
+    padding: var(--space-3) 0 0;
+  }
+</style>
+</head>
+<body>
+<div id="app">
+
+  <div class="demo-bar" id="demo-bar">
+    <div class="demo-inner" id="demo-inner">
+      <button class="demo-mode-btn" id="mode-toggle-btn" onclick="toggleDemoMode()" aria-label="Toggle dark mode">
+        <i class="ti ti-moon"></i>
+      </button>
+    </div>
+    <div class="demo-sep"></div>
+    <button class="demo-collapse-btn" id="demo-collapse-btn" onclick="toggleDemoBar()" aria-label="Collapse toolbar">
+      <i class="ti ti-minus"></i>
+    </button>
+  </div>
+
+  <div class="ai-shell">
+
+    <pattern-topbar logged-in></pattern-topbar>
+
+    <div class="ai-body">
+
+      <nav class="app-nav open" id="app-nav" aria-label="Main navigation">
+        <div class="app-nav-inner">
+          <button class="app-nav-item active"><i class="ti ti-home"></i> Home</button>
+          <button class="app-nav-item"><i class="ti ti-chart-bar"></i> Analytics</button>
+          <button class="app-nav-item"><i class="ti ti-activity"></i> Activity</button>
+          <button class="app-nav-item"><i class="ti ti-folders"></i> Projects</button>
+          <button class="app-nav-item"><i class="ti ti-check"></i> My tasks</button>
+          <button class="app-nav-item"><i class="ti ti-calendar-event"></i> Calendar</button>
+          <button class="app-nav-item"><i class="ti ti-users"></i> Members</button>
+          <button class="app-nav-item"><i class="ti ti-settings"></i> Settings</button>
+        </div>
+      </nav>
+
+      <aside class="ai-sidebar">
+        <div class="ai-sidebar-header">
+          <fresh-button variant="primary" size="sm" style="width:100%">
+            <i class="ti ti-plus"></i> New chat
+          </fresh-button>
+        </div>
+        <div class="ai-sidebar-list">
+          <div class="ai-sidebar-title" style="padding:var(--space-2) var(--space-3) var(--space-1)">Today</div>
+          <div class="ai-conv-item active">
+            <i class="ti ti-message ai-conv-item-icon"></i>
+            <div class="ai-conv-item-body">
+              <div class="ai-conv-item-title">Draft product update email</div>
+              <div class="ai-conv-item-time">Just now</div>
+            </div>
+          </div>
+          <div class="ai-conv-item">
+            <i class="ti ti-message ai-conv-item-icon"></i>
+            <div class="ai-conv-item-body">
+              <div class="ai-conv-item-title">Revenue analysis Q2</div>
+              <div class="ai-conv-item-time">2 hrs ago</div>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <main class="ai-main">
+        <div class="ai-chat-header">
+          <div>
+            <div class="ai-chat-title">Draft product update email</div>
+            <div class="ai-chat-meta">Claude Sonnet 4 · Generating…</div>
+          </div>
+          <div class="ai-chat-actions">
+            <fresh-button variant="ghost" size="sm" icon-only aria-label="More"><i class="ti ti-dots"></i></fresh-button>
+          </div>
+        </div>
+
+        <div class="ai-messages">
+          <fresh-ai-response role="user">Write a product update email for our customers announcing the new AI insights dashboard. Keep it concise and exciting.</fresh-ai-response>
+
+          <!-- thinking state -->
+          <fresh-thinking label="Drafting email…"></fresh-thinking>
+
+          <!-- streaming response (mid-generation) -->
+          <fresh-ai-response role="assistant" model="Claude Sonnet 4" streaming>
+            <strong>Subject: Introducing AI Insights — your data, explained</strong><br><br>
+            Hi [First name],<br><br>
+            We've been working on something that turns your data into decisions — and today it's live.<br><br>
+            <strong>Meet AI Insights</strong>, a new dashboard panel that automatically surfaces what's happening in your workspace and why. Instead of digging through charts, you get clear answers:<br><br>
+            — What drove last week's growth?<br>
+            — Which accounts need attention?<br>
+            — What should you focus on next?<br><br>
+            AI Insights is available to all Pro and Enterprise customers starting today
+          </fresh-ai-response>
+        </div>
+
+        <!-- Stop generating button -->
+        <div class="stop-btn-row">
+          <fresh-button variant="secondary" size="sm">
+            <i class="ti ti-player-stop"></i> Stop generating
+          </fresh-button>
+        </div>
+
+        <div class="ai-input-area">
+          <fresh-prompt-input placeholder="Ask a follow-up…" disabled></fresh-prompt-input>
+          <div class="ai-input-meta">
+            <span><fresh-token-meter used="1240" total="200000" compact></fresh-token-meter></span>
+            <span>Claude Sonnet 4</span>
+          </div>
+        </div>
+      </main>
+
+    </div>
+  </div>
+
+</div>
+<script>
+  document.addEventListener('nav-toggle', function() {
+    document.getElementById('app-nav').classList.toggle('open');
+  });
+</script>
+<script src="../components/core/fresh-button.js"></script>
+<script src="../components/data/fresh-avatar.js"></script>
+<script src="../components/ai/fresh-ai-mode-toggle.js"></script>
+<script src="../components/ai/fresh-ai-response.js"></script>
+<script src="../components/ai/fresh-thinking.js"></script>
+<script src="../components/ai/fresh-prompt-input.js"></script>
+<script src="../components/ai/fresh-token-meter.js"></script>
+</body>
+</html>

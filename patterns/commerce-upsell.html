@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Upsell Modal — Acme</title>
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="../tokens/primitives.css">
+<link rel="stylesheet" href="../tokens/theme.css">
+<link rel="stylesheet" href="../tokens/dataviz.css">
+<link rel="stylesheet" href="../styles/reset.css">
+<link rel="stylesheet" href="../styles/patterns/dashboard.css">
+<link rel="stylesheet" href="../styles/patterns/commerce.css">
+<script>if(location.href.indexOf('?thumb')!==-1)document.write('<style>#demo-bar{display:none!important}</style>');</script>
+<script src="../js/pattern-topbar-v2.js"></script>
+<script src="../js/freshds.js"></script>
+<script src="../js/pattern-bar.js"></script>
+</head>
+<body>
+<div id="app">
+
+  <div class="demo-bar" id="demo-bar">
+    <div class="demo-inner" id="demo-inner">
+      <button class="demo-mode-btn" id="mode-toggle-btn" onclick="toggleDemoMode()"><i class="ti ti-moon"></i></button>
+    </div>
+    <div class="demo-sep"></div>
+    <button class="demo-collapse-btn" id="demo-collapse-btn" onclick="toggleDemoBar()"><i class="ti ti-minus"></i></button>
+  </div>
+
+  <div class="dash-shell" style="position:relative;">
+    <pattern-topbar logged-in></pattern-topbar>
+
+    <!-- Background page content (blurred/dimmed) -->
+    <div class="dash-body" style="filter:blur(2px);pointer-events:none;user-select:none;opacity:0.4;">
+            <nav class="app-nav open" id="app-nav" aria-label="Main navigation">
+        <div class="app-nav-inner">
+          <button class="app-nav-item active"><i class="ti ti-home"></i> Home</button>
+          <button class="app-nav-item"><i class="ti ti-chart-bar"></i> Analytics</button>
+          <button class="app-nav-item"><i class="ti ti-activity"></i> Activity</button>
+          <button class="app-nav-item"><i class="ti ti-folders"></i> Projects</button>
+          <button class="app-nav-item"><i class="ti ti-check"></i> My tasks</button>
+          <button class="app-nav-item"><i class="ti ti-calendar-event"></i> Calendar</button>
+          <button class="app-nav-item"><i class="ti ti-users"></i> Members</button>
+          <button class="app-nav-item"><i class="ti ti-settings"></i> Settings</button>
+        </div>
+      </nav>
+      <main class="dash-main">
+        <div class="dash-content">
+          <div class="dash-card"><div class="dash-card-title">Dashboard content behind modal</div></div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Upsell modal overlay -->
+    <div class="com-modal-scrim">
+      <div class="com-upsell-modal">
+
+        <div class="com-upsell-header">
+          <div class="com-upsell-header-icon"><i class="ti ti-sparkles"></i></div>
+          <div class="com-upsell-title">Unlock AI Copilot</div>
+          <div class="com-upsell-sub">You've used all 5 of your free AI queries this month. Upgrade to Pro for unlimited access.</div>
+        </div>
+
+        <div class="com-upsell-body">
+          <div class="com-upsell-feature">
+            <i class="ti ti-infinity com-upsell-feature-icon"></i>
+            <div>
+              <div class="com-upsell-feature-title">Unlimited AI queries</div>
+              <div class="com-upsell-feature-desc">No monthly caps. Ask as much as you need.</div>
+            </div>
+          </div>
+          <div class="com-upsell-feature">
+            <i class="ti ti-brain com-upsell-feature-icon"></i>
+            <div>
+              <div class="com-upsell-feature-title">Advanced reasoning</div>
+              <div class="com-upsell-feature-desc">Access GPT-4 and Claude Opus for complex tasks.</div>
+            </div>
+          </div>
+          <div class="com-upsell-feature">
+            <i class="ti ti-database com-upsell-feature-icon"></i>
+            <div>
+              <div class="com-upsell-feature-title">Custom knowledge base</div>
+              <div class="com-upsell-feature-desc">Train AI on your documents, CRM data, and wikis.</div>
+            </div>
+          </div>
+          <div class="com-upsell-feature">
+            <i class="ti ti-history com-upsell-feature-icon"></i>
+            <div>
+              <div class="com-upsell-feature-title">Full conversation history</div>
+              <div class="com-upsell-feature-desc">Search and resume any past conversation.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="com-upsell-footer">
+          <div class="com-upsell-price-row">
+            <div>
+              <div style="font-size:13px;font-weight:700;color:var(--text-primary);">Pro plan</div>
+              <div style="font-size:12px;color:var(--text-secondary);">Billed annually · cancel anytime</div>
+            </div>
+            <div style="text-align:right;">
+              <div style="font-size:20px;font-weight:800;color:var(--text-primary);">$48<span style="font-size:13px;font-weight:500;color:var(--text-secondary);">/seat/mo</span></div>
+            </div>
+          </div>
+          <fresh-button variant="primary" style="width:100%;"><i class="ti ti-sparkles"></i> Upgrade to Pro</fresh-button>
+          <fresh-button variant="ghost" style="width:100%;">Maybe later</fresh-button>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+<script>
+  document.addEventListener('nav-toggle', function() {
+    document.getElementById('app-nav').classList.toggle('open');
+  });
+</script>
+<script src="../components/core/fresh-button.js"></script>
+</body>
+</html>

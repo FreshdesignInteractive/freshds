@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Checkout — Acme</title>
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="../tokens/primitives.css">
+<link rel="stylesheet" href="../tokens/theme.css">
+<link rel="stylesheet" href="../tokens/dataviz.css">
+<link rel="stylesheet" href="../styles/reset.css">
+<link rel="stylesheet" href="../styles/patterns/commerce.css">
+<script>if(location.href.indexOf('?thumb')!==-1)document.write('<style>#demo-bar{display:none!important}</style>');</script>
+<script src="../js/pattern-topbar-v2.js"></script>
+<script src="../js/freshds.js"></script>
+<script src="../js/pattern-bar.js"></script>
+</head>
+<body>
+<div id="app">
+
+  <div class="demo-bar" id="demo-bar">
+    <div class="demo-inner" id="demo-inner">
+      <button class="demo-mode-btn" id="mode-toggle-btn" onclick="toggleDemoMode()"><i class="ti ti-moon"></i></button>
+    </div>
+    <div class="demo-sep"></div>
+    <button class="demo-collapse-btn" id="demo-collapse-btn" onclick="toggleDemoBar()"><i class="ti ti-minus"></i></button>
+  </div>
+
+  <div class="com-shell">
+    <pattern-topbar logged-in></pattern-topbar>
+
+    <div class="page-body-row">
+      <nav class="app-nav open" id="app-nav" aria-label="Main navigation">
+        <div class="app-nav-inner">
+          <button class="app-nav-item active"><i class="ti ti-home"></i> Home</button>
+          <button class="app-nav-item"><i class="ti ti-chart-bar"></i> Analytics</button>
+          <button class="app-nav-item"><i class="ti ti-activity"></i> Activity</button>
+          <button class="app-nav-item"><i class="ti ti-folders"></i> Projects</button>
+          <button class="app-nav-item"><i class="ti ti-check"></i> My tasks</button>
+          <button class="app-nav-item"><i class="ti ti-calendar-event"></i> Calendar</button>
+          <button class="app-nav-item"><i class="ti ti-users"></i> Members</button>
+          <button class="app-nav-item"><i class="ti ti-settings"></i> Settings</button>
+        </div>
+      </nav>
+    <div class="com-page" style="padding-top:var(--space-8);">
+
+      <div style="width:100%;max-width:900px;">
+        <div style="margin-bottom:var(--space-6);">
+          <a href="#" style="font-size:13px;color:var(--text-secondary);text-decoration:none;display:inline-flex;align-items:center;gap:var(--space-1);"><i class="ti ti-arrow-left"></i> Back to plans</a>
+        </div>
+        <div style="font-size:22px;font-weight:800;color:var(--text-primary);letter-spacing:-0.02em;margin-bottom:var(--space-6);">Complete your purchase</div>
+      </div>
+
+      <div class="com-checkout-grid">
+
+        <!-- Form -->
+        <div class="com-checkout-form">
+
+          <!-- Account -->
+          <div class="com-checkout-section">
+            <div class="com-checkout-section-title">
+              <div class="com-checkout-step">1</div> Account
+            </div>
+            <div style="display:flex;align-items:center;gap:var(--space-3);padding:var(--space-3);background:var(--surface-subtle);border-radius:var(--radius-md);">
+              <fresh-avatar name="Jamie Rivera" size="sm"></fresh-avatar>
+              <div>
+                <div style="font-size:13px;font-weight:600;color:var(--text-primary);">Jamie Rivera</div>
+                <div style="font-size:12px;color:var(--text-secondary);">jamie@techvault.io · Techvault Inc</div>
+              </div>
+              <a href="#" style="margin-left:auto;font-size:12px;color:var(--color-interactive-text);text-decoration:none;">Change</a>
+            </div>
+          </div>
+
+          <!-- Plan -->
+          <div class="com-checkout-section">
+            <div class="com-checkout-section-title">
+              <div class="com-checkout-step">2</div> Plan
+            </div>
+            <div style="display:flex;flex-direction:column;gap:var(--space-2);">
+              <label style="display:flex;align-items:flex-start;gap:var(--space-3);padding:var(--space-3);border:2px solid var(--color-interactive);border-radius:var(--radius-md);cursor:pointer;background:var(--color-interactive-subtle);">
+                <fresh-radio name="plan" checked style="margin-top:2px;"></fresh-radio>
+                <div style="flex:1;">
+                  <div style="font-size:13px;font-weight:700;color:var(--text-primary);">Annual · Save 20%</div>
+                  <div style="font-size:12px;color:var(--text-secondary);">$48/seat/mo · billed as $576/seat/year</div>
+                </div>
+                <fresh-badge variant="success">Best value</fresh-badge>
+              </label>
+              <label style="display:flex;align-items:flex-start;gap:var(--space-3);padding:var(--space-3);border:1px solid var(--surface-border);border-radius:var(--radius-md);cursor:pointer;">
+                <fresh-radio name="plan" style="margin-top:2px;"></fresh-radio>
+                <div>
+                  <div style="font-size:13px;font-weight:700;color:var(--text-primary);">Monthly</div>
+                  <div style="font-size:12px;color:var(--text-secondary);">$60/seat/mo · billed monthly</div>
+                </div>
+              </label>
+            </div>
+            <div style="margin-top:var(--space-4);">
+              <fresh-form-field label="Number of seats">
+                <fresh-input slot="control" type="number" value="5" style="max-width:100px;"></fresh-input>
+              </fresh-form-field>
+            </div>
+          </div>
+
+          <!-- Payment -->
+          <div class="com-checkout-section">
+            <div class="com-checkout-section-title">
+              <div class="com-checkout-step">3</div> Payment
+            </div>
+            <div class="com-card-icons">
+              <div class="com-card-brand">VISA</div>
+              <div class="com-card-brand">MC</div>
+              <div class="com-card-brand">AMEX</div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:var(--space-3);">
+              <fresh-form-field label="Card number">
+                <fresh-input slot="control" placeholder="1234 5678 9012 3456" value="4242 4242 4242 4242"></fresh-input>
+              </fresh-form-field>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-3);">
+                <fresh-form-field label="Expiry">
+                  <fresh-input slot="control" placeholder="MM / YY" value="12 / 28"></fresh-input>
+                </fresh-form-field>
+                <fresh-form-field label="CVC">
+                  <fresh-input slot="control" placeholder="123" value="***"></fresh-input>
+                </fresh-form-field>
+              </div>
+              <fresh-form-field label="Name on card">
+                <fresh-input slot="control" value="Jamie Rivera"></fresh-input>
+              </fresh-form-field>
+            </div>
+          </div>
+
+          <!-- Billing address -->
+          <div class="com-checkout-section">
+            <div class="com-checkout-section-title">
+              <div class="com-checkout-step">4</div> Billing address
+            </div>
+            <div style="display:flex;flex-direction:column;gap:var(--space-3);">
+              <fresh-form-field label="Country">
+                <fresh-select slot="control"><option selected>United States</option><option>United Kingdom</option><option>Canada</option><option>Australia</option></fresh-select>
+              </fresh-form-field>
+              <fresh-form-field label="Address">
+                <fresh-input slot="control" value="101 Main Street, Suite 200"></fresh-input>
+              </fresh-form-field>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-3);">
+                <fresh-form-field label="City">
+                  <fresh-input slot="control" value="San Francisco"></fresh-input>
+                </fresh-form-field>
+                <fresh-form-field label="ZIP">
+                  <fresh-input slot="control" value="94107"></fresh-input>
+                </fresh-form-field>
+              </div>
+            </div>
+          </div>
+
+          <div style="padding:var(--space-5) var(--space-6);">
+            <fresh-button variant="primary" style="width:100%;font-size:15px;">
+              <i class="ti ti-lock"></i> Pay $2,880 now
+            </fresh-button>
+            <div class="com-security-note">
+              <i class="ti ti-shield-check"></i> Secured by Stripe · 256-bit TLS encryption
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Order summary -->
+        <div class="com-order-summary">
+          <div class="com-order-title">Order summary</div>
+
+          <div class="com-order-item">
+            <div>
+              <div class="com-order-item-name">Acme Pro — Annual</div>
+              <div class="com-order-item-desc">5 seats × $576/seat/yr</div>
+            </div>
+            <div class="com-order-item-price">$2,880</div>
+          </div>
+          <div class="com-order-item">
+            <div class="com-order-item-name">Annual discount (20%)</div>
+            <div class="com-order-item-price" style="color:var(--color-success-text);">−$720</div>
+          </div>
+          <div class="com-order-item">
+            <div>
+              <div class="com-order-item-name">Coupon: WELCOME10</div>
+              <div class="com-order-item-desc">First year only</div>
+            </div>
+            <div class="com-order-item-price" style="color:var(--color-success-text);">−$288</div>
+          </div>
+          <div class="com-order-item">
+            <div class="com-order-item-name">Tax (8.25%)</div>
+            <div class="com-order-item-price">$154</div>
+          </div>
+
+          <div class="com-order-total">
+            <span>Total due today</span>
+            <span>$2,026</span>
+          </div>
+
+          <div style="margin-top:var(--space-4);padding:var(--space-3);background:var(--color-success-subtle);border-radius:var(--radius-md);">
+            <div style="font-size:12px;font-weight:600;color:var(--color-success-text);margin-bottom:2px;"><i class="ti ti-check"></i> 14-day money-back guarantee</div>
+            <div style="font-size:12px;color:var(--color-success-text);">Not happy? We'll refund you in full, no questions asked.</div>
+          </div>
+
+          <div style="margin-top:var(--space-4);">
+            <div style="font-size:12px;color:var(--text-tertiary);margin-bottom:var(--space-2);">Have a coupon?</div>
+            <div style="display:flex;gap:var(--space-2);">
+              <fresh-input placeholder="COUPON CODE" value="WELCOME10" style="flex:1;"></fresh-input>
+              <fresh-button variant="secondary" size="sm">Apply</fresh-button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    </div>
+  </div>
+
+</div>
+<script>
+  document.addEventListener('nav-toggle', function() {
+    document.getElementById('app-nav').classList.toggle('open');
+  });
+</script>
+<script src="../components/core/fresh-button.js"></script>
+<script src="../components/core/fresh-input.js"></script>
+<script src="../components/core/fresh-select.js"></script>
+<script src="../components/core/fresh-radio.js"></script>
+<script src="../components/core/fresh-form-field.js"></script>
+<script src="../components/data/fresh-avatar.js"></script>
+<script src="../components/feedback/fresh-badge.js"></script>
+</body>
+</html>

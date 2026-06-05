@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pricing — Acme</title>
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="../tokens/primitives.css">
+<link rel="stylesheet" href="../tokens/theme.css">
+<link rel="stylesheet" href="../tokens/dataviz.css">
+<link rel="stylesheet" href="../styles/reset.css">
+<link rel="stylesheet" href="../styles/patterns/commerce.css">
+<script>if(location.href.indexOf('?thumb')!==-1)document.write('<style>#demo-bar{display:none!important}</style>');</script>
+<script src="../js/pattern-topbar-v2.js"></script>
+<script src="../js/freshds.js"></script>
+<script src="../js/pattern-bar.js"></script>
+</head>
+<body>
+<div id="app">
+
+  <div class="demo-bar" id="demo-bar">
+    <div class="demo-inner" id="demo-inner">
+      <button class="demo-mode-btn" id="mode-toggle-btn" onclick="toggleDemoMode()"><i class="ti ti-moon"></i></button>
+    </div>
+    <div class="demo-sep"></div>
+    <button class="demo-collapse-btn" id="demo-collapse-btn" onclick="toggleDemoBar()"><i class="ti ti-minus"></i></button>
+  </div>
+
+  <div class="com-shell">
+    <pattern-topbar logged-in></pattern-topbar>
+
+    <div class="page-body-row">
+      <nav class="app-nav open" id="app-nav" aria-label="Main navigation">
+        <div class="app-nav-inner">
+          <button class="app-nav-item active"><i class="ti ti-home"></i> Home</button>
+          <button class="app-nav-item"><i class="ti ti-chart-bar"></i> Analytics</button>
+          <button class="app-nav-item"><i class="ti ti-activity"></i> Activity</button>
+          <button class="app-nav-item"><i class="ti ti-folders"></i> Projects</button>
+          <button class="app-nav-item"><i class="ti ti-check"></i> My tasks</button>
+          <button class="app-nav-item"><i class="ti ti-calendar-event"></i> Calendar</button>
+          <button class="app-nav-item"><i class="ti ti-users"></i> Members</button>
+          <button class="app-nav-item"><i class="ti ti-settings"></i> Settings</button>
+        </div>
+      </nav>
+    <div class="com-page">
+      <div class="com-container">
+
+        <div class="com-page-eyebrow">Simple, transparent pricing</div>
+        <div class="com-page-title">Plans that grow with your team</div>
+        <div class="com-page-subtitle">Start free. Upgrade when you're ready. No hidden fees, no lock-in.</div>
+
+        <div class="com-billing-toggle">
+          <span class="com-billing-label">Monthly</span>
+          <fresh-toggle id="billing-toggle" checked></fresh-toggle>
+          <span class="com-billing-label active">Annual <span class="com-billing-badge">Save 20%</span></span>
+        </div>
+
+        <div class="com-pricing-grid">
+
+          <!-- Free -->
+          <div class="com-plan-card">
+            <div class="com-plan-name">Starter</div>
+            <div class="com-plan-desc">Everything you need to get started. No credit card required.</div>
+            <div class="com-plan-price">
+              <span class="com-price-currency">$</span>
+              <span class="com-price-amount">0</span>
+            </div>
+            <div class="com-price-sub">Free forever · up to 3 seats</div>
+            <fresh-button variant="secondary" style="width:100%">Get started free</fresh-button>
+            <div class="com-plan-divider"></div>
+            <ul class="com-feature-list">
+              <li class="com-feature-item"><i class="ti ti-check com-feature-icon"></i>Up to 3 team members</li>
+              <li class="com-feature-item"><i class="ti ti-check com-feature-icon"></i>5 projects</li>
+              <li class="com-feature-item"><i class="ti ti-check com-feature-icon"></i>Basic analytics</li>
+              <li class="com-feature-item"><i class="ti ti-check com-feature-icon"></i>2 GB storage</li>
+              <li class="com-feature-item"><i class="ti ti-x com-feature-icon muted"></i>AI Copilot</li>
+              <li class="com-feature-item"><i class="ti ti-x com-feature-icon muted"></i>Priority support</li>
+              <li class="com-feature-item"><i class="ti ti-x com-feature-icon muted"></i>SSO / SAML</li>
+            </ul>
+          </div>
+
+          <!-- Pro — featured -->
+          <div class="com-plan-card featured">
+            <div class="com-plan-badge">Most popular</div>
+            <div class="com-plan-name">Pro</div>
+            <div class="com-plan-desc">For growing teams that need more power and flexibility.</div>
+            <div class="com-plan-price">
+              <span class="com-price-currency">$</span>
+              <span class="com-price-amount">48</span>
+              <span class="com-price-period">/mo</span>
+            </div>
+            <div class="com-price-sub">per seat · billed annually</div>
+            <fresh-button variant="primary" style="width:100%">Start 14-day trial</fresh-button>
+            <div class="com-plan-divider"></div>
+            <ul class="com-feature-list">
+              <li class="com-feature-item"><i class="ti ti-check com-feature-icon"></i>Unlimited team members</li>
+              <li class="com-feature-item"><i class="ti ti-check com-feature-icon"></i>Unlimited projects</li>
+              <li class="com-feature-item"><i class="ti ti-check com-feature-icon"></i>Advanced analytics</li>
+              <li class="com-feature-item"><i class="ti ti-check com-feature-icon"></i>100 GB storage</li>
+              <li class="com-feature-item"><i class="ti ti-check com-feature-icon"></i>AI Copilot (500 queries/mo)</li>
+              <li class="com-feature-item"><i class="ti ti-check com-feature-icon"></i>Priority support</li>
+              <li class="com-feature-item"><i class="ti ti-x com-feature-icon muted"></i>SSO / SAML</li>
+            </ul>
+          </div>
+
+          <!-- Enterprise -->
+          <div class="com-plan-card">
+            <div class="com-plan-name">Enterprise</div>
+            <div class="com-plan-desc">Custom contracts, dedicated support, and enterprise-grade security.</div>
+            <div class="com-plan-price">
+              <span class="com-price-amount" style="font-size:28px;padding-top:6px;">Custom</span>
+            </div>
+            <div class="com-price-sub">Volume pricing · annual contract</div>
+            <fresh-button variant="secondary" style="width:100%"><i class="ti ti-message"></i> Talk to sales</fresh-button>
+            <div class="com-plan-divider"></div>
+            <ul class="com-feature-list">
+              <li class="com-feature-item"><i class="ti ti-check com-feature-icon"></i>Everything in Pro</li>
+              <li class="com-feature-item"><i class="ti ti-check com-feature-icon"></i>Unlimited AI Copilot</li>
+              <li class="com-feature-item"><i class="ti ti-check com-feature-icon"></i>1 TB+ storage</li>
+              <li class="com-feature-item"><i class="ti ti-check com-feature-icon"></i>SSO / SAML</li>
+              <li class="com-feature-item"><i class="ti ti-check com-feature-icon"></i>Dedicated CSM</li>
+              <li class="com-feature-item"><i class="ti ti-check com-feature-icon"></i>SLA guarantee</li>
+              <li class="com-feature-item"><i class="ti ti-check com-feature-icon"></i>Custom integrations</li>
+            </ul>
+          </div>
+
+        </div>
+
+        <!-- Trust row -->
+        <div class="com-trust-row" style="margin-top:var(--space-10);">
+          <div class="com-trust-item"><i class="ti ti-shield-check com-trust-icon"></i>SOC 2 Type II</div>
+          <div class="com-trust-item"><i class="ti ti-lock com-trust-icon"></i>256-bit encryption</div>
+          <div class="com-trust-item"><i class="ti ti-refresh com-trust-icon"></i>Cancel anytime</div>
+          <div class="com-trust-item"><i class="ti ti-headset com-trust-icon"></i>24/7 support on Pro</div>
+        </div>
+
+      </div>
+    </div>
+    </div>
+  </div>
+
+</div>
+<script>
+  document.addEventListener('nav-toggle', function() {
+    document.getElementById('app-nav').classList.toggle('open');
+  });
+</script>
+<script src="../components/core/fresh-button.js"></script>
+<script src="../components/core/fresh-toggle.js"></script>
+</body>
+</html>

@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Home Dashboard — Acme</title>
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="../tokens/primitives.css">
+<link rel="stylesheet" href="../tokens/theme.css">
+<link rel="stylesheet" href="../tokens/dataviz.css">
+<link rel="stylesheet" href="../styles/reset.css">
+<link rel="stylesheet" href="../styles/patterns/dashboard.css">
+<script>if(location.href.indexOf('?thumb')!==-1)document.write('<style>#demo-bar{display:none!important}</style>');</script>
+<script src="../js/pattern-topbar-v2.js"></script>
+<script src="../js/freshds.js"></script>
+<script src="../js/pattern-bar.js"></script>
+<style>
+  /* Home-specific: main area splits chart + activity feed */
+  .home-grid {
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: var(--space-4);
+    margin-top: 0;
+  }
+
+  /* Activity feed */
+  .activity-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--space-4);
+  }
+  .activity-view-all {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--color-interactive-text);
+    text-decoration: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    font-family: var(--font-sans);
+  }
+  .activity-view-all:hover { text-decoration: underline; }
+
+  /* Quick stats strip */
+  .quick-strip {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-3);
+    margin-bottom: var(--space-4);
+  }
+  .quick-stat {
+    background: var(--surface-canvas);
+    border: 1px solid var(--surface-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-3) var(--space-4);
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+  }
+  .quick-stat-icon {
+    width: 32px; height: 32px;
+    border-radius: var(--radius-md);
+    background: var(--color-interactive-subtle);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 15px;
+    color: var(--color-interactive-text);
+    flex-shrink: 0;
+  }
+  .quick-stat-label { font-size: 11px; color: var(--text-secondary); margin-bottom: 2px; }
+  .quick-stat-value { font-size: 16px; font-weight: 700; color: var(--text-primary); letter-spacing: -0.02em; }
+
+  @media (max-width: 1023px) {
+    .home-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div id="app">
+
+  <div class="demo-bar" id="demo-bar">
+    <div class="demo-inner" id="demo-inner">
+      <button class="demo-mode-btn" id="mode-toggle-btn" onclick="toggleDemoMode()" aria-label="Toggle dark mode">
+        <i class="ti ti-moon"></i>
+      </button>
+    </div>
+    <div class="demo-sep"></div>
+    <button class="demo-collapse-btn" id="demo-collapse-btn" onclick="toggleDemoBar()" aria-label="Collapse toolbar">
+      <i class="ti ti-minus"></i>
+    </button>
+  </div>
+
+  <div class="dash-shell">
+
+    <pattern-topbar logged-in></pattern-topbar>
+
+    <div class="dash-body">
+
+      <nav class="app-nav open" id="app-nav" aria-label="Main navigation">
+        <div class="app-nav-inner">
+          <button class="app-nav-item active"><i class="ti ti-home"></i> Home</button>
+          <button class="app-nav-item"><i class="ti ti-chart-bar"></i> Analytics</button>
+          <button class="app-nav-item"><i class="ti ti-activity"></i> Activity</button>
+          <button class="app-nav-item"><i class="ti ti-folders"></i> Projects</button>
+          <button class="app-nav-item"><i class="ti ti-check"></i> My tasks</button>
+          <button class="app-nav-item"><i class="ti ti-calendar-event"></i> Calendar</button>
+          <button class="app-nav-item"><i class="ti ti-users"></i> Members</button>
+          <button class="app-nav-item"><i class="ti ti-settings"></i> Settings</button>
+        </div>
+      </nav>
+
+      <main class="dash-main">
+        <div class="dash-page-header">
+          <div>
+            <div class="dash-page-title">Good morning, Jamie 👋</div>
+            <div class="dash-page-subtitle">Here's what's happening in your workspace today.</div>
+          </div>
+          <div class="dash-page-actions">
+            <fresh-button variant="secondary" size="sm"><i class="ti ti-calendar"></i> Jun 3, 2026</fresh-button>
+            <fresh-button variant="primary" size="sm"><i class="ti ti-plus"></i> New project</fresh-button>
+          </div>
+        </div>
+
+        <div class="dash-content">
+
+          <!-- 4 stat cards -->
+          <div class="dash-stat-row">
+            <fresh-stat-card value="$48,320" label="Monthly revenue" trend="12.4" trend-label="vs last month" icon="ti-currency-dollar"></fresh-stat-card>
+            <fresh-stat-card value="1,847" label="Active users" trend="8.1" trend-label="vs last month" icon="ti-users"></fresh-stat-card>
+            <fresh-stat-card value="24" label="Open projects" trend="-2" trend-label="vs last week" icon="ti-folders"></fresh-stat-card>
+            <fresh-stat-card value="98.7%" label="Uptime" trend="0.2" trend-label="this week" icon="ti-server"></fresh-stat-card>
+          </div>
+
+          <!-- Chart + activity feed side by side -->
+          <div class="home-grid">
+            <div>
+              <!-- Quick stats strip -->
+              <div class="quick-strip">
+                <div class="quick-stat">
+                  <div class="quick-stat-icon"><i class="ti ti-check"></i></div>
+                  <div>
+                    <div class="quick-stat-label">Tasks done today</div>
+                    <div class="quick-stat-value">18</div>
+                  </div>
+                </div>
+                <div class="quick-stat">
+                  <div class="quick-stat-icon"><i class="ti ti-message"></i></div>
+                  <div>
+                    <div class="quick-stat-label">New comments</div>
+                    <div class="quick-stat-value">37</div>
+                  </div>
+                </div>
+                <div class="quick-stat">
+                  <div class="quick-stat-icon"><i class="ti ti-rocket"></i></div>
+                  <div>
+                    <div class="quick-stat-label">Deploys this week</div>
+                    <div class="quick-stat-value">5</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Revenue chart -->
+              <fresh-chart
+                title="Revenue over time"
+                description="Monthly MRR — last 6 months"
+                height="220px">
+                <svg viewBox="0 0 400 160" style="width:100%;height:100%;display:block;" preserveAspectRatio="none">
+                  <defs>
+                    <linearGradient id="rev-grad" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stop-color="var(--dv-1)" stop-opacity="0.18"/>
+                      <stop offset="100%" stop-color="var(--dv-1)" stop-opacity="0"/>
+                    </linearGradient>
+                  </defs>
+                  <!-- area fill -->
+                  <path d="M0,120 C50,110 80,95 120,85 C160,75 190,60 240,50 C280,42 320,35 400,28 L400,160 L0,160 Z" fill="url(#rev-grad)"/>
+                  <!-- line -->
+                  <path d="M0,120 C50,110 80,95 120,85 C160,75 190,60 240,50 C280,42 320,35 400,28" fill="none" stroke="var(--dv-1)" stroke-width="2.5" stroke-linecap="round"/>
+                  <!-- dots -->
+                  <circle cx="0"   cy="120" r="4" fill="var(--dv-1)"/>
+                  <circle cx="80"  cy="95"  r="4" fill="var(--dv-1)"/>
+                  <circle cx="160" cy="75"  r="4" fill="var(--dv-1)"/>
+                  <circle cx="240" cy="50"  r="4" fill="var(--dv-1)"/>
+                  <circle cx="320" cy="35"  r="4" fill="var(--dv-1)"/>
+                  <circle cx="400" cy="28"  r="5" fill="var(--dv-1)" stroke="var(--surface-canvas)" stroke-width="2"/>
+                  <!-- x-axis labels -->
+                  <text x="0"   y="155" font-size="9" fill="var(--text-tertiary)" text-anchor="middle">Jan</text>
+                  <text x="80"  y="155" font-size="9" fill="var(--text-tertiary)" text-anchor="middle">Feb</text>
+                  <text x="160" y="155" font-size="9" fill="var(--text-tertiary)" text-anchor="middle">Mar</text>
+                  <text x="240" y="155" font-size="9" fill="var(--text-tertiary)" text-anchor="middle">Apr</text>
+                  <text x="320" y="155" font-size="9" fill="var(--text-tertiary)" text-anchor="middle">May</text>
+                  <text x="400" y="155" font-size="9" fill="var(--text-tertiary)" text-anchor="middle">Jun</text>
+                </svg>
+              </fresh-chart>
+            </div>
+
+            <!-- Activity feed -->
+            <div class="dash-card">
+              <div class="activity-header">
+                <div class="dash-card-title">Recent activity</div>
+                <a class="activity-view-all" href="#">View all</a>
+              </div>
+              <fresh-timeline items='[
+                {"timestamp":"5 min ago",   "title":"PR #541 merged",             "description":"merged by Marcus Chen",        "icon":"ti-git-merge",   "variant":"success"},
+                {"timestamp":"23 min ago",  "title":"New comment on Design spec",  "description":"Priya Sharma left a comment",  "icon":"ti-message",     "variant":"primary"},
+                {"timestamp":"1 hr ago",    "title":"Deploy to production",        "description":"v2.6.0 shipped successfully",  "icon":"ti-rocket",      "variant":"success"},
+                {"timestamp":"2 hrs ago",   "title":"Quota warning",               "description":"API usage at 82% of limit",    "icon":"ti-alert-triangle", "variant":"warning"},
+                {"timestamp":"Yesterday",   "title":"Jamie joined the workspace",  "description":"Welcome to Acme!",             "icon":"ti-user-plus",   "variant":"neutral"}
+              ]'></fresh-timeline>
+            </div>
+          </div>
+
+        </div><!-- /dash-content -->
+      </main>
+
+    </div>
+  </div>
+
+</div>
+<script>
+  document.addEventListener('nav-toggle', function() {
+    document.getElementById('app-nav').classList.toggle('open');
+  });
+</script>
+<script src="../components/core/fresh-button.js"></script>
+<script src="../components/data/fresh-avatar.js"></script>
+<script src="../components/data/fresh-stat-card.js"></script>
+<script src="../components/data/fresh-chart.js"></script>
+<script src="../components/data/fresh-timeline.js"></script>
+</body>
+</html>

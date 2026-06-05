@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Generation History — Acme</title>
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="../tokens/primitives.css">
+<link rel="stylesheet" href="../tokens/theme.css">
+<link rel="stylesheet" href="../tokens/dataviz.css">
+<link rel="stylesheet" href="../styles/reset.css">
+<link rel="stylesheet" href="../styles/patterns/ai-chat.css">
+<style>
+.hist-body { flex: 1; display: flex; overflow: hidden; }
+.hist-filters {
+  width: 220px;
+  flex-shrink: 0;
+  background: var(--surface-bg);
+  border-right: 1px solid var(--surface-border);
+  overflow-y: auto;
+  padding: var(--space-4);
+}
+.hist-filter-section { margin-bottom: var(--space-5); }
+.hist-filter-title {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-tertiary);
+  margin-bottom: var(--space-2);
+}
+.hist-filter-option {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-1) 0;
+  font-size: 12px;
+  color: var(--text-secondary);
+  cursor: pointer;
+}
+.hist-filter-option:hover { color: var(--text-primary); }
+.hist-filter-count {
+  margin-left: auto;
+  font-size: 10px;
+  color: var(--text-tertiary);
+  background: var(--surface-subtle);
+  padding: 1px 5px;
+  border-radius: var(--radius-full);
+}
+.hist-main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+.hist-toolbar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-5);
+  border-bottom: 1px solid var(--surface-border);
+  background: var(--surface-bg);
+  flex-shrink: 0;
+  flex-wrap: wrap;
+}
+.hist-list { flex: 1; overflow-y: auto; }
+.hist-day-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-tertiary);
+  padding: var(--space-3) var(--space-5) var(--space-1);
+  position: sticky;
+  top: 0;
+  background: var(--surface-subtle);
+  border-bottom: 1px solid var(--surface-border);
+  z-index: 1;
+}
+.hist-row {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-4);
+  padding: var(--space-3) var(--space-5);
+  border-bottom: 1px solid var(--surface-border);
+  cursor: pointer;
+  transition: background 120ms;
+}
+.hist-row:hover { background: var(--surface-subtle); }
+.hist-row.expanded { background: var(--color-interactive-subtle); border-bottom-color: transparent; }
+.hist-model-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-md);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  margin-top: 2px;
+}
+.hist-info { flex: 1; min-width: 0; }
+.hist-prompt {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 2px;
+}
+.hist-meta { font-size: 11px; color: var(--text-tertiary); display: flex; align-items: center; gap: var(--space-3); }
+.hist-stat {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: 11px;
+  color: var(--text-tertiary);
+  font-family: var(--font-mono);
+  flex-shrink: 0;
+}
+.hist-time { font-size: 11px; color: var(--text-tertiary); flex-shrink: 0; min-width: 60px; text-align: right; }
+.hist-expand {
+  display: none;
+  padding: var(--space-4) var(--space-5);
+  background: var(--color-interactive-subtle);
+  border-bottom: 1px solid var(--surface-border);
+}
+.hist-expand.open { display: block; }
+.hist-expand-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4); }
+.hist-expand-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-tertiary); margin-bottom: var(--space-2); }
+.hist-expand-text { font-size: 12px; color: var(--text-secondary); line-height: 1.5; font-family: var(--font-mono); background: var(--surface-canvas); border: 1px solid var(--surface-border); border-radius: var(--radius-md); padding: var(--space-3); max-height: 120px; overflow-y: auto; }
+</style>
+<script>if(location.href.indexOf('?thumb')!==-1)document.write('<style>#demo-bar{display:none!important}</style>');</script>
+<script src="../js/pattern-topbar-v2.js"></script>
+<script src="../js/freshds.js"></script>
+<script src="../js/pattern-bar.js"></script>
+<script>
+function toggleRow(rowId, expandId) {
+  var row = document.getElementById(rowId);
+  var exp = document.getElementById(expandId);
+  var open = exp.classList.contains('open');
+  document.querySelectorAll('.hist-expand').forEach(function(e){ e.classList.remove('open'); });
+  document.querySelectorAll('.hist-row').forEach(function(r){ r.classList.remove('expanded'); });
+  if (!open) { exp.classList.add('open'); row.classList.add('expanded'); }
+}
+</script>
+</head>
+<body>
+<div id="app">
+
+  <div class="demo-bar" id="demo-bar">
+    <div class="demo-inner" id="demo-inner">
+      <button class="demo-mode-btn" id="mode-toggle-btn" onclick="toggleDemoMode()" aria-label="Toggle dark mode">
+        <i class="ti ti-moon"></i>
+      </button>
+    </div>
+    <div class="demo-sep"></div>
+    <button class="demo-collapse-btn" id="demo-collapse-btn" onclick="toggleDemoBar()" aria-label="Collapse toolbar">
+      <i class="ti ti-minus"></i>
+    </button>
+  </div>
+
+  <div class="ai-shell">
+    <pattern-topbar logged-in></pattern-topbar>
+
+    <div class="hist-body">
+
+      <!-- Filters sidebar -->
+      <div class="hist-filters">
+
+        <div class="hist-filter-section">
+          <fresh-input placeholder="Search generations…" clearable size="sm"></fresh-input>
+        </div>
+
+        <div class="hist-filter-section">
+          <div class="hist-filter-title">Time range</div>
+          <div class="hist-filter-option"><fresh-radio name="tr" checked></fresh-radio> Today <span class="hist-filter-count">142</span></div>
+          <div class="hist-filter-option"><fresh-radio name="tr"></fresh-radio> Last 7 days <span class="hist-filter-count">891</span></div>
+          <div class="hist-filter-option"><fresh-radio name="tr"></fresh-radio> Last 30 days <span class="hist-filter-count">4,218</span></div>
+          <div class="hist-filter-option"><fresh-radio name="tr"></fresh-radio> Custom range</div>
+        </div>
+
+        <div class="hist-filter-section">
+          <div class="hist-filter-title">Model</div>
+          <div class="hist-filter-option"><fresh-checkbox checked></fresh-checkbox> claude-opus-4 <span class="hist-filter-count">76</span></div>
+          <div class="hist-filter-option"><fresh-checkbox checked></fresh-checkbox> claude-sonnet-4 <span class="hist-filter-count">48</span></div>
+          <div class="hist-filter-option"><fresh-checkbox checked></fresh-checkbox> claude-haiku-4 <span class="hist-filter-count">18</span></div>
+        </div>
+
+        <div class="hist-filter-section">
+          <div class="hist-filter-title">Feature</div>
+          <div class="hist-filter-option"><fresh-checkbox checked></fresh-checkbox> Chat <span class="hist-filter-count">64</span></div>
+          <div class="hist-filter-option"><fresh-checkbox checked></fresh-checkbox> Agents <span class="hist-filter-count">41</span></div>
+          <div class="hist-filter-option"><fresh-checkbox checked></fresh-checkbox> Automation <span class="hist-filter-count">22</span></div>
+          <div class="hist-filter-option"><fresh-checkbox checked></fresh-checkbox> Playground <span class="hist-filter-count">15</span></div>
+        </div>
+
+        <div class="hist-filter-section">
+          <div class="hist-filter-title">Status</div>
+          <div class="hist-filter-option"><fresh-checkbox checked></fresh-checkbox> Success <span class="hist-filter-count">138</span></div>
+          <div class="hist-filter-option"><fresh-checkbox checked></fresh-checkbox> Error <span class="hist-filter-count">4</span></div>
+        </div>
+
+      </div>
+
+      <!-- Main list -->
+      <div class="hist-main">
+
+        <div class="hist-toolbar">
+          <div style="font-size:13px;color:var(--text-secondary);">142 generations today</div>
+          <div style="margin-left:auto;display:flex;gap:var(--space-2);">
+            <fresh-button variant="ghost" size="sm"><i class="ti ti-download"></i> Export CSV</fresh-button>
+          </div>
+          <div style="display:flex;align-items:center;gap:var(--space-2);">
+            <span style="font-size:12px;color:var(--text-tertiary);">Sort by</span>
+            <fresh-select size="sm" style="min-width:120px;">
+              <option selected>Newest first</option>
+              <option>Oldest first</option>
+              <option>Most tokens</option>
+            </fresh-select>
+          </div>
+        </div>
+
+        <div class="hist-list">
+
+          <!-- Today group -->
+          <div class="hist-day-label">Today — Jun 4, 2026</div>
+
+          <!-- Row 1 (expanded) -->
+          <div class="hist-row expanded" id="row-1" onclick="toggleRow('row-1','exp-1')">
+            <div class="hist-model-icon" style="background:var(--color-interactive-subtle);color:var(--color-interactive-text);"><i class="ti ti-message-circle"></i></div>
+            <div class="hist-info">
+              <div class="hist-prompt">Research this lead: Marcus Chen, m.chen@luminate.health — what's the best angle…</div>
+              <div class="hist-meta"><span>Chat · claude-opus-4</span><span>Priya Sharma</span></div>
+            </div>
+            <div class="hist-stat"><i class="ti ti-coins"></i> 560 tok</div>
+            <div class="hist-stat"><i class="ti ti-clock"></i> 1.8s</div>
+            <fresh-badge variant="success" size="sm">OK</fresh-badge>
+            <div class="hist-time">2:14 PM</div>
+          </div>
+          <div class="hist-expand open" id="exp-1">
+            <div class="hist-expand-grid">
+              <div>
+                <div class="hist-expand-label">Prompt (248 tokens)</div>
+                <div class="hist-expand-text">Research this lead: Marcus Chen, m.chen@luminate.health — what's the best angle for outreach given their Series B, Mayo Clinic partnership, and 40% headcount growth?</div>
+              </div>
+              <div>
+                <div class="hist-expand-label">Response (312 tokens)</div>
+                <div class="hist-expand-text">Luminate Health is a strong ICP match. Best angle: lead with AI-powered workflow automation for clinical trial data management — their engineering scale (180-220 ppl) + Mayo Clinic integration suggest active data pipeline challenges. Reference our HealthTech customer Omada's 60% time savings on data ops…</div>
+              </div>
+            </div>
+            <div style="display:flex;align-items:center;gap:var(--space-3);margin-top:var(--space-3);">
+              <div style="font-size:11px;color:var(--text-tertiary);">Model: claude-opus-4 · Temp: 0.7 · Max tokens: 1024 · Top-p: 0.95</div>
+              <div style="margin-left:auto;display:flex;gap:var(--space-2);">
+                <fresh-button variant="ghost" size="sm"><i class="ti ti-copy"></i> Copy prompt</fresh-button>
+                <fresh-button variant="ghost" size="sm"><i class="ti ti-player-play"></i> Replay</fresh-button>
+              </div>
+            </div>
+          </div>
+
+          <div class="hist-row" id="row-2" onclick="toggleRow('row-2','exp-2')">
+            <div class="hist-model-icon" style="background:var(--color-success-subtle);color:var(--color-success-text);"><i class="ti ti-robot"></i></div>
+            <div class="hist-info">
+              <div class="hist-prompt">Agent run: Lead researcher — Orbis Labs, Tom Okeke, CEO contact research</div>
+              <div class="hist-meta"><span>Agent · claude-opus-4</span><span>Tom Okeke</span></div>
+            </div>
+            <div class="hist-stat"><i class="ti ti-coins"></i> 1,240 tok</div>
+            <div class="hist-stat"><i class="ti ti-clock"></i> 2.4s</div>
+            <fresh-badge variant="success" size="sm">OK</fresh-badge>
+            <div class="hist-time">2:10 PM</div>
+          </div>
+          <div class="hist-expand" id="exp-2"></div>
+
+          <div class="hist-row" id="row-3" onclick="toggleRow('row-3','exp-3')">
+            <div class="hist-model-icon" style="background:var(--color-warning-subtle);color:var(--color-warning-text);"><i class="ti ti-wand"></i></div>
+            <div class="hist-info">
+              <div class="hist-prompt">Summarize this deal note and extract next steps: "Orbis Labs call went well, CFO is interested…"</div>
+              <div class="hist-meta"><span>Automation · claude-sonnet-4</span><span>Workflow: Deal routing</span></div>
+            </div>
+            <div class="hist-stat"><i class="ti ti-coins"></i> 380 tok</div>
+            <div class="hist-stat"><i class="ti ti-clock"></i> 0.9s</div>
+            <fresh-badge variant="success" size="sm">OK</fresh-badge>
+            <div class="hist-time">1:58 PM</div>
+          </div>
+          <div class="hist-expand" id="exp-3"></div>
+
+          <div class="hist-row" id="row-4" onclick="toggleRow('row-4','exp-4')">
+            <div class="hist-model-icon" style="background:var(--color-danger-subtle);color:var(--color-danger-text);"><i class="ti ti-flask"></i></div>
+            <div class="hist-info">
+              <div class="hist-prompt">Generate a cold email for a VP of Engineering at a Series B fintech company focused on…</div>
+              <div class="hist-meta"><span>Playground · claude-opus-4</span><span>Marcus Chen</span></div>
+            </div>
+            <div class="hist-stat"><i class="ti ti-coins"></i> —</div>
+            <div class="hist-stat"><i class="ti ti-clock"></i> 0.1s</div>
+            <fresh-badge variant="danger" size="sm">Error</fresh-badge>
+            <div class="hist-time">11:30 AM</div>
+          </div>
+          <div class="hist-expand" id="exp-4"></div>
+
+          <div class="hist-row" id="row-5" onclick="toggleRow('row-5','exp-5')">
+            <div class="hist-model-icon" style="background:var(--color-interactive-subtle);color:var(--color-interactive-text);"><i class="ti ti-message-circle"></i></div>
+            <div class="hist-info">
+              <div class="hist-prompt">What's our average deal size by industry this quarter? Can you also break it down by…</div>
+              <div class="hist-meta"><span>Chat · claude-sonnet-4</span><span>Anika Patel</span></div>
+            </div>
+            <div class="hist-stat"><i class="ti ti-coins"></i> 890 tok</div>
+            <div class="hist-stat"><i class="ti ti-clock"></i> 1.4s</div>
+            <fresh-badge variant="success" size="sm">OK</fresh-badge>
+            <div class="hist-time">10:12 AM</div>
+          </div>
+          <div class="hist-expand" id="exp-5"></div>
+
+          <!-- Yesterday group -->
+          <div class="hist-day-label">Yesterday — Jun 3, 2026</div>
+
+          <div class="hist-row" id="row-6" onclick="toggleRow('row-6','exp-6')">
+            <div class="hist-model-icon" style="background:var(--color-success-subtle);color:var(--color-success-text);"><i class="ti ti-robot"></i></div>
+            <div class="hist-info">
+              <div class="hist-prompt">Agent run: Support triage — classify and route incoming support tickets from Zendesk</div>
+              <div class="hist-meta"><span>Agent · claude-haiku-4</span><span>Workflow: Support triage</span></div>
+            </div>
+            <div class="hist-stat"><i class="ti ti-coins"></i> 2,100 tok</div>
+            <div class="hist-stat"><i class="ti ti-clock"></i> 1.9s</div>
+            <fresh-badge variant="success" size="sm">OK</fresh-badge>
+            <div class="hist-time">4:00 PM</div>
+          </div>
+          <div class="hist-expand" id="exp-6"></div>
+
+          <!-- Pagination -->
+          <div style="padding:var(--space-4) var(--space-5);border-top:1px solid var(--surface-border);display:flex;align-items:center;justify-content:space-between;">
+            <span style="font-size:13px;color:var(--text-secondary);">Showing 6 of 142</span>
+            <fresh-pagination total="142" page-size="6" current-page="1"></fresh-pagination>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+</div>
+<script>
+  document.addEventListener('nav-toggle', function() {
+    document.getElementById('app-nav').classList.toggle('open');
+  });
+</script>
+<script src="../components/core/fresh-button.js"></script>
+<script src="../components/core/fresh-input.js"></script>
+<script src="../components/core/fresh-select.js"></script>
+<script src="../components/core/fresh-checkbox.js"></script>
+<script src="../components/core/fresh-radio.js"></script>
+<script src="../components/feedback/fresh-badge.js"></script>
+<script src="../components/navigation/fresh-pagination.js"></script>
+</body>
+</html>

@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Create / Edit Form — Acme</title>
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="../tokens/primitives.css">
+<link rel="stylesheet" href="../tokens/theme.css">
+<link rel="stylesheet" href="../tokens/dataviz.css">
+<link rel="stylesheet" href="../styles/reset.css">
+<link rel="stylesheet" href="../styles/patterns/dashboard.css">
+<link rel="stylesheet" href="../styles/patterns/content.css">
+<script>if(location.href.indexOf('?thumb')!==-1)document.write('<style>#demo-bar{display:none!important}</style>');</script>
+<script src="../js/pattern-topbar-v2.js"></script>
+<script src="../js/freshds.js"></script>
+<script src="../js/pattern-bar.js"></script>
+</head>
+<body>
+<div id="app">
+
+  <div class="demo-bar" id="demo-bar">
+    <div class="demo-inner" id="demo-inner">
+      <button class="demo-mode-btn" id="mode-toggle-btn" onclick="toggleDemoMode()" aria-label="Toggle dark mode">
+        <i class="ti ti-moon"></i>
+      </button>
+    </div>
+    <div class="demo-sep"></div>
+    <button class="demo-collapse-btn" id="demo-collapse-btn" onclick="toggleDemoBar()" aria-label="Collapse toolbar">
+      <i class="ti ti-minus"></i>
+    </button>
+  </div>
+
+  <div class="dash-shell">
+
+    <pattern-topbar logged-in></pattern-topbar>
+
+    <div class="dash-body">
+
+      <nav class="app-nav open" id="app-nav" aria-label="Main navigation">
+        <div class="app-nav-inner">
+          <button class="app-nav-item active"><i class="ti ti-home"></i> Home</button>
+          <button class="app-nav-item"><i class="ti ti-chart-bar"></i> Analytics</button>
+          <button class="app-nav-item"><i class="ti ti-activity"></i> Activity</button>
+          <button class="app-nav-item"><i class="ti ti-folders"></i> Projects</button>
+          <button class="app-nav-item"><i class="ti ti-check"></i> My tasks</button>
+          <button class="app-nav-item"><i class="ti ti-calendar-event"></i> Calendar</button>
+          <button class="app-nav-item"><i class="ti ti-users"></i> Members</button>
+          <button class="app-nav-item"><i class="ti ti-settings"></i> Settings</button>
+        </div>
+      </nav>
+
+      <main class="dash-main">
+
+        <div class="dash-page-header">
+          <div>
+            <div class="dash-page-title">New deal</div>
+            <div class="dash-page-subtitle">Fill in the details to add a deal to your pipeline.</div>
+          </div>
+        </div>
+
+        <div class="dash-content" style="padding-bottom: 0;">
+          <div style="max-width: 720px;">
+
+            <!-- Section: Deal details -->
+            <div class="cnt-form-section" id="section-deal">
+              <div class="cnt-form-section-title">Deal details</div>
+              <div class="cnt-form-section-desc">Core information about this deal.</div>
+              <div class="cnt-form-grid">
+                <div class="cnt-form-full">
+                  <fresh-form-field label="Deal name" required>
+                    <fresh-input slot="control" placeholder="e.g. Enterprise Expansion Q3" value="AI Copilot Rollout — Orbis Labs"></fresh-input>
+                  </fresh-form-field>
+                </div>
+                <fresh-form-field label="Deal value">
+                  <fresh-input slot="control" placeholder="0.00" value="210000"></fresh-input>
+                </fresh-form-field>
+                <fresh-form-field label="Currency">
+                  <fresh-select slot="control">
+                    <option selected>USD — US Dollar</option>
+                    <option>EUR — Euro</option>
+                    <option>GBP — British Pound</option>
+                    <option>CAD — Canadian Dollar</option>
+                  </fresh-select>
+                </fresh-form-field>
+                <fresh-form-field label="Pipeline stage" required>
+                  <fresh-select slot="control">
+                    <option>Discovery</option>
+                    <option selected>Proposal</option>
+                    <option>Negotiation</option>
+                    <option>Closed Won</option>
+                    <option>Closed Lost</option>
+                  </fresh-select>
+                </fresh-form-field>
+                <fresh-form-field label="Probability (%)">
+                  <fresh-input slot="control" placeholder="0–100" value="55"></fresh-input>
+                </fresh-form-field>
+                <fresh-form-field label="Expected close date">
+                  <fresh-input slot="control" type="date" value="2026-07-28"></fresh-input>
+                </fresh-form-field>
+                <fresh-form-field label="Deal owner">
+                  <fresh-select slot="control">
+                    <option selected>Priya Sharma</option>
+                    <option>Marcus Chen</option>
+                    <option>Jamie Rivera</option>
+                    <option>Tom Okeke</option>
+                  </fresh-select>
+                </fresh-form-field>
+                <div class="cnt-form-full">
+                  <fresh-form-field label="Deal source">
+                    <fresh-select slot="control">
+                      <option>Website</option>
+                      <option selected>Partner referral</option>
+                      <option>Cold outreach</option>
+                      <option>Conference / event</option>
+                      <option>Inbound</option>
+                    </fresh-select>
+                  </fresh-form-field>
+                </div>
+              </div>
+            </div>
+
+            <!-- Section: Company -->
+            <div class="cnt-form-section" id="section-company">
+              <div class="cnt-form-section-title">Company</div>
+              <div class="cnt-form-section-desc">Link or create the company this deal belongs to.</div>
+              <div class="cnt-form-grid">
+                <div class="cnt-form-full">
+                  <fresh-form-field label="Company name" required>
+                    <fresh-input slot="control" placeholder="Search companies…" value="Orbis Labs" clearable></fresh-input>
+                  </fresh-form-field>
+                </div>
+                <fresh-form-field label="Industry">
+                  <fresh-select slot="control">
+                    <option>Enterprise Software</option>
+                    <option selected>Biotech</option>
+                    <option>Financial Services</option>
+                    <option>Healthcare</option>
+                    <option>Other</option>
+                  </fresh-select>
+                </fresh-form-field>
+                <fresh-form-field label="Company size">
+                  <fresh-select slot="control">
+                    <option>1–10</option>
+                    <option>11–50</option>
+                    <option selected>51–200</option>
+                    <option>201–500</option>
+                    <option>500+</option>
+                  </fresh-select>
+                </fresh-form-field>
+              </div>
+            </div>
+
+            <!-- Section: Products -->
+            <div class="cnt-form-section" id="section-products">
+              <div class="cnt-form-section-title">Products</div>
+              <div class="cnt-form-section-desc">Select the products or services included in this deal.</div>
+              <div style="display:flex;flex-direction:column;gap:var(--space-3);">
+                <div style="display:flex;align-items:center;gap:var(--space-3);padding:var(--space-3);background:var(--surface-subtle);border-radius:var(--radius-md);">
+                  <fresh-checkbox checked></fresh-checkbox>
+                  <div style="flex:1;">
+                    <div style="font-size:13px;font-weight:600;color:var(--text-primary);">AI Copilot — Enterprise</div>
+                    <div style="font-size:12px;color:var(--text-secondary);">Per seat · $120/mo · Annual billing</div>
+                  </div>
+                  <fresh-input placeholder="Qty" value="100" style="--input-width:80px;max-width:80px;"></fresh-input>
+                </div>
+                <div style="display:flex;align-items:center;gap:var(--space-3);padding:var(--space-3);background:var(--surface-subtle);border-radius:var(--radius-md);">
+                  <fresh-checkbox checked></fresh-checkbox>
+                  <div style="flex:1;">
+                    <div style="font-size:13px;font-weight:600;color:var(--text-primary);">Onboarding & Implementation</div>
+                    <div style="font-size:12px;color:var(--text-secondary);">One-time · $30,000</div>
+                  </div>
+                  <fresh-input placeholder="Qty" value="1" style="--input-width:80px;max-width:80px;"></fresh-input>
+                </div>
+                <fresh-button variant="secondary" size="sm" style="align-self:flex-start;"><i class="ti ti-plus"></i> Add product</fresh-button>
+              </div>
+            </div>
+
+            <!-- Section: Notes -->
+            <div class="cnt-form-section" id="section-notes">
+              <div class="cnt-form-section-title">Notes</div>
+              <div class="cnt-form-section-desc">Internal notes visible to your team only.</div>
+              <fresh-form-field label="Deal notes">
+                <fresh-input slot="control" multiline rows="4" placeholder="Add context, next steps, or background information…"></fresh-input>
+              </fresh-form-field>
+              <div style="display:flex;align-items:center;gap:var(--space-3);margin-top:var(--space-3);">
+                <fresh-toggle id="notify-toggle"></fresh-toggle>
+                <label for="notify-toggle" style="font-size:13px;color:var(--text-secondary);cursor:pointer;">Notify team when deal is created</label>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="cnt-form-footer">
+          <fresh-button variant="ghost">Cancel</fresh-button>
+          <fresh-button variant="secondary">Save as draft</fresh-button>
+          <fresh-button variant="primary"><i class="ti ti-check"></i> Create deal</fresh-button>
+        </div>
+
+      </main>
+
+    </div>
+  </div>
+
+</div>
+<script>
+  document.addEventListener('nav-toggle', function() {
+    document.getElementById('app-nav').classList.toggle('open');
+  });
+</script>
+<script src="../components/core/fresh-button.js"></script>
+<script src="../components/core/fresh-input.js"></script>
+<script src="../components/core/fresh-select.js"></script>
+<script src="../components/core/fresh-checkbox.js"></script>
+<script src="../components/core/fresh-toggle.js"></script>
+<script src="../components/core/fresh-form-field.js"></script>
+<script src="../components/data/fresh-avatar.js"></script>
+</body>
+</html>

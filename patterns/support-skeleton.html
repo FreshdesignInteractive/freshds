@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Loading / Skeleton — Acme</title>
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="../tokens/primitives.css">
+<link rel="stylesheet" href="../tokens/theme.css">
+<link rel="stylesheet" href="../tokens/dataviz.css">
+<link rel="stylesheet" href="../styles/reset.css">
+<link rel="stylesheet" href="../styles/patterns/dashboard.css">
+<link rel="stylesheet" href="../styles/patterns/feedback.css">
+<script>if(location.href.indexOf('?thumb')!==-1)document.write('<style>#demo-bar{display:none!important}</style>');</script>
+<script src="../js/pattern-topbar-v2.js"></script>
+<script src="../js/freshds.js"></script>
+<script src="../js/pattern-bar.js"></script>
+</head>
+<body>
+<div id="app">
+  <div class="demo-bar" id="demo-bar">
+    <div class="demo-inner"><button class="demo-mode-btn" id="mode-toggle-btn" onclick="toggleDemoMode()"><i class="ti ti-moon"></i></button></div>
+    <div class="demo-sep"></div>
+    <button class="demo-collapse-btn" id="demo-collapse-btn" onclick="toggleDemoBar()"><i class="ti ti-minus"></i></button>
+  </div>
+
+  <div class="dash-shell">
+    <pattern-topbar logged-in></pattern-topbar>
+    <div class="dash-body">
+
+      <nav class="app-nav open" id="app-nav" aria-label="Main navigation">
+        <div class="app-nav-inner">
+          <button class="app-nav-item active"><i class="ti ti-home"></i> Home</button>
+          <button class="app-nav-item"><i class="ti ti-chart-bar"></i> Analytics</button>
+          <button class="app-nav-item"><i class="ti ti-activity"></i> Activity</button>
+          <button class="app-nav-item"><i class="ti ti-folders"></i> Projects</button>
+          <button class="app-nav-item"><i class="ti ti-check"></i> My tasks</button>
+          <button class="app-nav-item"><i class="ti ti-calendar-event"></i> Calendar</button>
+          <button class="app-nav-item"><i class="ti ti-users"></i> Members</button>
+          <button class="app-nav-item"><i class="ti ti-settings"></i> Settings</button>
+        </div>
+      </nav>
+      <main class="dash-main">
+        <div class="dash-page-header">
+          <div><div class="dash-page-title">Loading / Skeleton</div><div class="dash-page-subtitle">Loading states for content that hasn't arrived yet</div></div>
+        </div>
+        <div class="dash-content">
+
+          <div class="fb-section">
+            <div class="fb-section-title">Spinner variants</div>
+            <div class="fb-card" style="display:flex;align-items:center;gap:var(--space-8);flex-wrap:wrap;">
+              <div style="display:flex;flex-direction:column;align-items:center;gap:var(--space-2);">
+                <fresh-spinner size="sm"></fresh-spinner>
+                <span style="font-size:11px;color:var(--text-tertiary);">Small</span>
+              </div>
+              <div style="display:flex;flex-direction:column;align-items:center;gap:var(--space-2);">
+                <fresh-spinner size="md"></fresh-spinner>
+                <span style="font-size:11px;color:var(--text-tertiary);">Medium</span>
+              </div>
+              <div style="display:flex;flex-direction:column;align-items:center;gap:var(--space-2);">
+                <fresh-spinner size="lg"></fresh-spinner>
+                <span style="font-size:11px;color:var(--text-tertiary);">Large</span>
+              </div>
+              <div style="display:flex;flex-direction:column;align-items:center;gap:var(--space-2);">
+                <fresh-spinner size="md" label="Saving changes…"></fresh-spinner>
+                <span style="font-size:11px;color:var(--text-tertiary);">With label</span>
+              </div>
+              <div style="background:var(--color-interactive);padding:var(--space-3) var(--space-4);border-radius:var(--radius-md);display:flex;flex-direction:column;align-items:center;gap:var(--space-2);">
+                <fresh-spinner size="sm" variant="white"></fresh-spinner>
+                <span style="font-size:11px;color:rgba(255,255,255,0.7);">On primary</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="fb-section">
+            <div class="fb-section-title">Skeleton loaders</div>
+            <div class="fb-grid-2">
+
+              <!-- List skeleton -->
+              <div class="fb-card">
+                <div class="fb-card-label">List / feed</div>
+                <div style="display:flex;flex-direction:column;gap:var(--space-3);">
+                  <div style="display:flex;align-items:center;gap:var(--space-3);" v-for="i in 4">
+                    <fresh-skeleton variant="circle" width="36px" height="36px"></fresh-skeleton>
+                    <div style="flex:1;display:flex;flex-direction:column;gap:var(--space-2);">
+                      <fresh-skeleton width="60%" height="14px"></fresh-skeleton>
+                      <fresh-skeleton width="40%" height="12px"></fresh-skeleton>
+                    </div>
+                  </div>
+                  <div style="display:flex;align-items:center;gap:var(--space-3);">
+                    <fresh-skeleton variant="circle" width="36px" height="36px"></fresh-skeleton>
+                    <div style="flex:1;display:flex;flex-direction:column;gap:var(--space-2);">
+                      <fresh-skeleton width="60%" height="14px"></fresh-skeleton>
+                      <fresh-skeleton width="40%" height="12px"></fresh-skeleton>
+                    </div>
+                  </div>
+                  <div style="display:flex;align-items:center;gap:var(--space-3);">
+                    <fresh-skeleton variant="circle" width="36px" height="36px"></fresh-skeleton>
+                    <div style="flex:1;display:flex;flex-direction:column;gap:var(--space-2);">
+                      <fresh-skeleton width="70%" height="14px"></fresh-skeleton>
+                      <fresh-skeleton width="35%" height="12px"></fresh-skeleton>
+                    </div>
+                  </div>
+                  <div style="display:flex;align-items:center;gap:var(--space-3);">
+                    <fresh-skeleton variant="circle" width="36px" height="36px"></fresh-skeleton>
+                    <div style="flex:1;display:flex;flex-direction:column;gap:var(--space-2);">
+                      <fresh-skeleton width="50%" height="14px"></fresh-skeleton>
+                      <fresh-skeleton width="45%" height="12px"></fresh-skeleton>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Card skeleton -->
+              <div class="fb-card">
+                <div class="fb-card-label">Card / article</div>
+                <div style="display:flex;flex-direction:column;gap:var(--space-3);">
+                  <fresh-skeleton width="100%" height="140px" variant="rect"></fresh-skeleton>
+                  <fresh-skeleton width="80%" height="16px"></fresh-skeleton>
+                  <fresh-skeleton width="55%" height="14px"></fresh-skeleton>
+                  <div style="display:flex;flex-direction:column;gap:var(--space-1);">
+                    <fresh-skeleton width="100%" height="12px"></fresh-skeleton>
+                    <fresh-skeleton width="100%" height="12px"></fresh-skeleton>
+                    <fresh-skeleton width="65%" height="12px"></fresh-skeleton>
+                  </div>
+                  <div style="display:flex;align-items:center;gap:var(--space-2);margin-top:var(--space-1);">
+                    <fresh-skeleton variant="circle" width="24px" height="24px"></fresh-skeleton>
+                    <fresh-skeleton width="100px" height="12px"></fresh-skeleton>
+                    <fresh-skeleton width="60px" height="12px" style="margin-left:auto;"></fresh-skeleton>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Table skeleton -->
+              <div class="fb-card">
+                <div class="fb-card-label">Table rows</div>
+                <div style="display:flex;flex-direction:column;gap:var(--space-1);">
+                  <!-- Header -->
+                  <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:var(--space-3);padding:var(--space-2) 0;border-bottom:2px solid var(--surface-border);margin-bottom:var(--space-2);">
+                    <fresh-skeleton width="80%" height="12px"></fresh-skeleton>
+                    <fresh-skeleton width="70%" height="12px"></fresh-skeleton>
+                    <fresh-skeleton width="60%" height="12px"></fresh-skeleton>
+                    <fresh-skeleton width="50%" height="12px"></fresh-skeleton>
+                  </div>
+                  <!-- Rows -->
+                  <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:var(--space-3);padding:var(--space-2) 0;border-bottom:1px solid var(--surface-border);" v-for="i in 4">
+                    <fresh-skeleton width="75%" height="13px"></fresh-skeleton>
+                    <fresh-skeleton width="60%" height="13px"></fresh-skeleton>
+                    <fresh-skeleton width="80%" height="13px"></fresh-skeleton>
+                    <fresh-skeleton width="50%" height="13px"></fresh-skeleton>
+                  </div>
+                  <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:var(--space-3);padding:var(--space-2) 0;border-bottom:1px solid var(--surface-border);">
+                    <fresh-skeleton width="75%" height="13px"></fresh-skeleton><fresh-skeleton width="60%" height="13px"></fresh-skeleton><fresh-skeleton width="80%" height="13px"></fresh-skeleton><fresh-skeleton width="50%" height="13px"></fresh-skeleton>
+                  </div>
+                  <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:var(--space-3);padding:var(--space-2) 0;border-bottom:1px solid var(--surface-border);">
+                    <fresh-skeleton width="65%" height="13px"></fresh-skeleton><fresh-skeleton width="55%" height="13px"></fresh-skeleton><fresh-skeleton width="70%" height="13px"></fresh-skeleton><fresh-skeleton width="45%" height="13px"></fresh-skeleton>
+                  </div>
+                  <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:var(--space-3);padding:var(--space-2) 0;">
+                    <fresh-skeleton width="80%" height="13px"></fresh-skeleton><fresh-skeleton width="70%" height="13px"></fresh-skeleton><fresh-skeleton width="60%" height="13px"></fresh-skeleton><fresh-skeleton width="55%" height="13px"></fresh-skeleton>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Dashboard skeleton -->
+              <div class="fb-card">
+                <div class="fb-card-label">Dashboard stats</div>
+                <div style="display:flex;flex-direction:column;gap:var(--space-4);">
+                  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-3);">
+                    <div style="display:flex;flex-direction:column;gap:var(--space-2);padding:var(--space-3);background:var(--surface-subtle);border-radius:var(--radius-md);">
+                      <fresh-skeleton width="40%" height="11px"></fresh-skeleton>
+                      <fresh-skeleton width="60%" height="24px"></fresh-skeleton>
+                      <fresh-skeleton width="70%" height="11px"></fresh-skeleton>
+                    </div>
+                    <div style="display:flex;flex-direction:column;gap:var(--space-2);padding:var(--space-3);background:var(--surface-subtle);border-radius:var(--radius-md);">
+                      <fresh-skeleton width="50%" height="11px"></fresh-skeleton>
+                      <fresh-skeleton width="55%" height="24px"></fresh-skeleton>
+                      <fresh-skeleton width="65%" height="11px"></fresh-skeleton>
+                    </div>
+                    <div style="display:flex;flex-direction:column;gap:var(--space-2);padding:var(--space-3);background:var(--surface-subtle);border-radius:var(--radius-md);">
+                      <fresh-skeleton width="45%" height="11px"></fresh-skeleton>
+                      <fresh-skeleton width="50%" height="24px"></fresh-skeleton>
+                      <fresh-skeleton width="60%" height="11px"></fresh-skeleton>
+                    </div>
+                  </div>
+                  <fresh-skeleton width="100%" height="120px" variant="rect"></fresh-skeleton>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      </main>
+    </div>
+  </div>
+</div>
+<script>
+  document.addEventListener('nav-toggle', function() {
+    document.getElementById('app-nav').classList.toggle('open');
+  });
+</script>
+<script src="../components/feedback/fresh-skeleton.js"></script>
+<script src="../components/feedback/fresh-spinner.js"></script>
+</body>
+</html>

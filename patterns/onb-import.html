@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Data Import — Acme</title>
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="../tokens/primitives.css">
+<link rel="stylesheet" href="../tokens/theme.css">
+<link rel="stylesheet" href="../tokens/dataviz.css">
+<link rel="stylesheet" href="../styles/reset.css">
+<link rel="stylesheet" href="../styles/patterns/onboarding.css">
+<script>if(location.href.indexOf('?thumb')!==-1)document.write('<style>#demo-bar{display:none!important}</style>');</script>
+<script src="../js/pattern-topbar-v2.js"></script>
+<script src="../js/freshds.js"></script>
+<script src="../js/pattern-bar.js"></script>
+<style>
+  .import-tabs { margin-bottom: var(--space-6); }
+
+  /* Tab panel visibility */
+  .import-panel { display: none; }
+  .import-panel.active { display: block; }
+
+  .paste-textarea {
+    width: 100%;
+    min-height: 160px;
+    padding: var(--space-3);
+    background: var(--surface-input);
+    border: 1px solid var(--surface-border);
+    border-radius: var(--radius-md);
+    font-family: var(--font-mono, 'JetBrains Mono', monospace);
+    font-size: 12px;
+    color: var(--text-primary);
+    line-height: 1.6;
+    resize: vertical;
+    outline: none;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  .paste-textarea::placeholder { color: var(--text-tertiary); font-family: var(--font-sans); font-size: 13px; }
+  .paste-textarea:focus {
+    border-color: var(--color-interactive);
+    box-shadow: 0 0 0 3px var(--color-interactive-subtle);
+  }
+</style>
+</head>
+<body>
+<div id="app">
+
+  <div class="demo-bar" id="demo-bar">
+    <div class="demo-inner" id="demo-inner">
+      <button class="demo-mode-btn" id="mode-toggle-btn" onclick="toggleDemoMode()" aria-label="Toggle dark mode">
+        <i class="ti ti-moon"></i>
+      </button>
+    </div>
+    <div class="demo-sep"></div>
+    <button class="demo-collapse-btn" id="demo-collapse-btn" onclick="toggleDemoBar()" aria-label="Collapse toolbar">
+      <i class="ti ti-minus"></i>
+    </button>
+  </div>
+
+  <div class="onb-page">
+    <pattern-topbar logged-in></pattern-topbar>
+
+    <div class="page-body-row">
+      <nav class="app-nav open" id="app-nav" aria-label="Main navigation">
+        <div class="app-nav-inner">
+          <button class="app-nav-item active"><i class="ti ti-home"></i> Home</button>
+          <button class="app-nav-item"><i class="ti ti-chart-bar"></i> Analytics</button>
+          <button class="app-nav-item"><i class="ti ti-activity"></i> Activity</button>
+          <button class="app-nav-item"><i class="ti ti-folders"></i> Projects</button>
+          <button class="app-nav-item"><i class="ti ti-check"></i> My tasks</button>
+          <button class="app-nav-item"><i class="ti ti-calendar-event"></i> Calendar</button>
+          <button class="app-nav-item"><i class="ti ti-users"></i> Members</button>
+          <button class="app-nav-item"><i class="ti ti-settings"></i> Settings</button>
+        </div>
+      </nav>
+    <div class="onb-body">
+      <div class="onb-wrap">
+
+        <div class="onb-eyebrow">Data Import</div>
+        <h1 class="onb-title">Bring in your data</h1>
+        <p class="onb-sub">Import existing data to hit the ground running. Supports CSV, JSON, and direct paste.</p>
+
+        <div class="import-tabs">
+          <fresh-simple-tabs
+            id="import-tabs"
+            tabs='[
+              {"key":"upload","label":"Upload file"},
+              {"key":"paste","label":"Paste data"},
+              {"key":"url","label":"From URL"}
+            ]'
+            active="upload">
+          </fresh-simple-tabs>
+        </div>
+
+        <!-- Upload panel -->
+        <div class="import-panel active" id="panel-upload">
+          <div class="import-drop" id="drop-zone">
+            <div class="import-drop-icon"><i class="ti ti-cloud-upload"></i></div>
+            <div class="import-drop-title">Drag &amp; drop your file here</div>
+            <div class="import-drop-sub">or <a class="import-drop-link" href="#">browse to upload</a></div>
+            <div class="import-drop-sub" style="margin-top:var(--space-2);font-size:12px;color:var(--text-tertiary)">
+              CSV, JSON, XLSX · Max 50 MB
+            </div>
+          </div>
+        </div>
+
+        <!-- Paste panel -->
+        <div class="import-panel" id="panel-paste">
+          <div class="onb-field">
+            <label class="onb-label" for="paste-input">Paste your data</label>
+            <textarea
+              class="paste-textarea"
+              id="paste-input"
+              placeholder="Paste CSV, JSON, or tab-separated data here…"
+            ></textarea>
+            <div class="onb-hint">First row will be treated as column headers for CSV/TSV data.</div>
+          </div>
+        </div>
+
+        <!-- URL panel -->
+        <div class="import-panel" id="panel-url">
+          <div class="onb-field-stack">
+            <div class="onb-field">
+              <label class="onb-label" for="import-url">Data URL</label>
+              <fresh-input
+                id="import-url"
+                placeholder="https://example.com/data.csv"
+                type="url"
+                clearable>
+              </fresh-input>
+              <div class="onb-hint">Must be a publicly accessible CSV or JSON endpoint.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="onb-nav">
+          <fresh-button variant="ghost"><i class="ti ti-arrow-left"></i> Back</fresh-button>
+          <div class="onb-nav-right">
+            <a class="onb-skip" href="#">Skip for now</a>
+            <fresh-button variant="primary">Import <i class="ti ti-arrow-right"></i></fresh-button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    </div>
+  </div>
+
+</div>
+<script>
+  document.addEventListener('nav-toggle', function() {
+    document.getElementById('app-nav').classList.toggle('open');
+  });
+</script>
+<script src="../components/core/fresh-button.js"></script>
+<script src="../components/core/fresh-input.js"></script>
+<script src="../components/navigation/fresh-simple-tabs.js"></script>
+<script>
+  document.getElementById('import-tabs').addEventListener('change', e => {
+    document.querySelectorAll('.import-panel').forEach(p => p.classList.remove('active'));
+    const panel = document.getElementById('panel-' + e.detail.key);
+    if (panel) panel.classList.add('active');
+  });
+
+  // Drag-over visual feedback
+  const dz = document.getElementById('drop-zone');
+  if (dz) {
+    dz.addEventListener('dragover', e => { e.preventDefault(); dz.style.borderColor = 'var(--color-interactive)'; dz.style.background = 'var(--color-interactive-subtle)'; });
+    dz.addEventListener('dragleave', () => { dz.style.borderColor = ''; dz.style.background = ''; });
+    dz.addEventListener('drop', e => { e.preventDefault(); dz.style.borderColor = ''; dz.style.background = ''; });
+  }
+</script>
+</body>
+</html>

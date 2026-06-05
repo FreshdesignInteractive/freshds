@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FreshDS — Pattern Library</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+
+<link rel="stylesheet" href="tokens/primitives.css">
+<link rel="stylesheet" href="tokens/theme.css">
+<link rel="stylesheet" href="tokens/dataviz.css">
+<link rel="stylesheet" href="styles/reset.css">
+<link rel="stylesheet" href="styles/layout.css">
+<link rel="stylesheet" href="styles/components/core.css">
+<link rel="stylesheet" href="styles/docs.css">
+
+<script src="js/freshds.js"></script>
+<script src="js/freshds-site.js"></script>
+
+<style>
+  /* ── Pattern library shell ── */
+  .pl-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background: var(--surface-bg);
+  }
+
+  .pl-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-5) var(--space-8);
+    border-bottom: 1px solid var(--surface-border);
+    gap: var(--space-6);
+    flex-shrink: 0;
+  }
+
+  .pl-search { width: 220px; flex-shrink: 0; }
+
+  /* ── Overflow filter bar ── */
+  .pl-filter-bar {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    gap: 2px;
+  }
+
+  .pl-filter-track {
+    display: flex;
+    align-items: center;
+    gap: var(--space-1);
+    overflow: hidden;
+  }
+
+  .pl-filter-tab {
+    all: unset;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 16px;
+    font-family: var(--font-sans);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    white-space: nowrap;
+    flex-shrink: 0;
+    transition: color 150ms ease, background 150ms ease;
+    -webkit-font-smoothing: antialiased;
+  }
+  .pl-filter-tab:hover:not(.active) {
+    color: var(--text-primary);
+    background: var(--surface-subtle);
+  }
+  .pl-filter-tab.active {
+    font-weight: 600;
+    color: var(--text-primary);
+    background: var(--surface-overlay);
+  }
+  .pl-filter-tab:focus-visible {
+    outline: 2px solid var(--color-interactive);
+    outline-offset: 2px;
+  }
+
+  .pl-more-wrap { position: relative; flex-shrink: 0; }
+
+  .pl-more-btn {
+    all: unset;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: var(--radius-md);
+    color: var(--text-secondary);
+    cursor: pointer;
+    font-size: 20px;
+    transition: color 150ms ease, background 150ms ease;
+  }
+  .pl-more-btn:hover       { color: var(--text-primary); background: var(--surface-subtle); }
+  .pl-more-btn.has-active  { color: var(--text-primary); background: var(--surface-overlay); font-weight: 600; }
+  .pl-more-btn:focus-visible { outline: 2px solid var(--color-interactive); outline-offset: 2px; }
+
+  .pl-more-menu {
+    position: absolute;
+    top: calc(100% + var(--space-2));
+    left: 0;
+    min-width: 160px;
+    background: var(--surface-canvas);
+    border: 1px solid var(--surface-border);
+    border-radius: var(--radius-md);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+    padding: var(--space-2);
+    z-index: 200;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .pl-more-menu[hidden] { display: none; }
+
+  .pl-more-item {
+    all: unset;
+    display: flex;
+    align-items: center;
+    padding: 8px 12px;
+    font-family: var(--font-sans);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    white-space: nowrap;
+    transition: color 150ms ease, background 150ms ease;
+  }
+  .pl-more-item:hover  { color: var(--text-primary); background: var(--surface-subtle); }
+  .pl-more-item.active { font-weight: 600; color: var(--text-primary); background: var(--surface-overlay); }
+
+  .pl-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: var(--space-8);
+  }
+  .pl-content::-webkit-scrollbar { width: 4px; }
+  .pl-content::-webkit-scrollbar-thumb { background: var(--surface-border-strong); border-radius: 2px; }
+
+  /* ── Pattern grid ── */
+  .pl-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 280px);
+    gap: var(--space-6);
+  }
+
+  /* Invisible sentinel — spans full row so the observer fires reliably */
+  .pl-sentinel {
+    grid-column: 1 / -1;
+    height: 1px;
+  }
+
+  .pl-empty {
+    grid-column: 1 / -1;
+    padding: var(--space-12) 0;
+    text-align: center;
+    font-family: var(--font-sans);
+    font-size: 14px;
+    color: var(--text-tertiary);
+  }
+
+  /* ── Pattern card thumbnail ── */
+  .pl-thumb {
+    aspect-ratio: 3 / 2;
+    overflow: hidden;
+    position: relative;
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    background: var(--surface-subtle);
+  }
+
+  /* Scaled live iframe — scale set by JS to exactly fill card width */
+  .pl-thumb-frame {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1280px;
+    height: 800px;
+    border: none;
+    transform-origin: top left;
+    pointer-events: none;
+    display: block;
+    opacity: 0;
+    transition: opacity 300ms ease;
+  }
+  .pl-thumb-frame.loaded { opacity: 1; }
+</style>
+</head>
+<body>
+<div class="fds-app" id="app">
+
+  <!-- TOP BAR -->
+  <header class="fds-topbar">
+    <div class="fds-logo">
+      <img class="fds-logotype fds-logotype-light" src="freshdesign-logo.svg" alt="Freshdesign">
+      <img class="fds-logotype fds-logotype-dark"  src="freshdesign-logo-dark.svg" alt="Freshdesign">
+    </div>
+    <fresh-simple-tabs id="section-tabs"
+      tabs='[{"key":"ds","label":"Design System"},{"key":"patterns","label":"Pattern Library"}]'
+      active="patterns">
+    </fresh-simple-tabs>
+    <div class="fds-topbar-right">
+      <fresh-button variant="secondary" id="mode-btn" onclick="toggleMode()"><i class="ti ti-moon"></i> Dark</fresh-button>
+      <fresh-button variant="primary" onclick="window.location.href='index.html#configurator'"><i class="ti ti-adjustments-horizontal"></i> Configurator</fresh-button>
+    </div>
+  </header>
+
+  <!-- PATTERN LIBRARY BODY -->
+  <div class="pl-body">
+
+    <!-- Toolbar: filter bar + search -->
+    <div class="pl-toolbar">
+      <div class="pl-filter-bar" id="pl-filter-bar">
+        <div class="pl-filter-track" id="pl-filter-track"></div>
+        <div class="pl-more-wrap" id="pl-more-wrap" hidden>
+          <button class="pl-more-btn" id="pl-more-btn" aria-label="More filters" aria-expanded="false">
+            <i class="ti ti-dots"></i>
+          </button>
+          <div class="pl-more-menu" id="pl-more-menu" hidden role="menu"></div>
+        </div>
+      </div>
+      <div class="pl-search">
+        <fresh-input id="pl-search-input" icon="ti-search" placeholder="Search patterns…" clearable></fresh-input>
+      </div>
+    </div>
+
+    <!-- Grid -->
+    <div class="pl-content">
+      <div class="pl-grid" id="pl-grid"></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Component scripts -->
+<script src="components/core/fresh-button.js"></script>
+<script src="components/navigation/fresh-simple-tabs.js"></script>
+<script src="components/core/fresh-input.js"></script>
+<script src="components/containers/fresh-media-card.js"></script>
+
+<script>
+  // ── Pattern data ────────────────────────────────────────────────
+  // Ordered by product-building sequence (All view) + flow within each category.
+  // href: '#' = not yet built  |  ai: true = surfaces in the ✦ AI filter
+  var PL_PATTERNS = [
+
+    // ── 1. Authentication & Access ── front door, built first ────
+    { id: 'auth-login',        name: 'Sign In',             section: 'auth',       href: 'patterns/auth-login.html',           tags: ['sign in', 'login', 'authentication', 'credentials'] },
+    { id: 'auth-signup',       name: 'Sign Up',             section: 'auth',       href: 'patterns/auth-signup.html',          tags: ['register', 'create account', 'signup', 'new user'] },
+    { id: 'auth-forgot',       name: 'Forgot Password',     section: 'auth',       href: 'patterns/auth-forgot-password.html', tags: ['forgot', 'reset password', 'recover'] },
+    { id: 'auth-email-sent',   name: 'Email Sent',          section: 'auth',       href: 'patterns/auth-email-sent.html',      tags: ['email sent', 'check email', 'reset link', 'magic link'] },
+    { id: 'auth-reset',        name: 'Reset Password',      section: 'auth',       href: 'patterns/auth-reset.html',  tags: ['reset', 'new password', 'password change'] },
+    { id: 'auth-verify',       name: 'Verify Email',        section: 'auth',       href: 'patterns/auth-verify.html', tags: ['verify', 'email verification', 'confirm email', 'otp'] },
+    { id: 'auth-2fa',          name: 'Two-Factor Auth',     section: 'auth',       href: 'patterns/auth-2fa.html', tags: ['2fa', 'mfa', 'two factor', 'authenticator', 'otp'] },
+    { id: 'auth-sso',          name: 'SSO / OAuth',         section: 'auth',       href: 'patterns/auth-sso.html', tags: ['sso', 'oauth', 'google', 'saml', 'single sign on'] },
+    { id: 'auth-invite',       name: 'Invite Accept',       section: 'auth',       href: 'patterns/auth-invite.html', tags: ['invite', 'invitation', 'join team', 'accept'] },
+    { id: 'auth-expired',      name: 'Session Expired',     section: 'auth',       href: 'patterns/auth-expired.html', tags: ['session', 'timeout', 'expired', 'logged out'] },
+    { id: 'auth-locked',       name: 'Account Locked',      section: 'auth',       href: 'patterns/auth-locked.html', tags: ['locked', 'suspended', 'blocked', 'disabled'] },
+
+    // ── 2. Onboarding & Setup ── first-run experience ────────────
+    { id: 'onb-welcome',       name: 'Welcome Screen',      section: 'onboarding', href: 'patterns/onb-welcome.html',       tags: ['welcome', 'intro', 'getting started', 'first screen'] },
+    { id: 'onb-role',          name: 'Role Selection',      section: 'onboarding', href: 'patterns/onb-role.html',          tags: ['role', 'persona', 'user type', 'job role'] },
+    { id: 'onb-usecase',       name: 'Use Case Picker',     section: 'onboarding', href: 'patterns/onb-usecase.html',       tags: ['use case', 'goals', 'intent', 'personalization'] },
+    { id: 'onb-profile',       name: 'Profile Setup',       section: 'onboarding', href: 'patterns/onb-profile.html',       tags: ['profile', 'account setup', 'personal info'] },
+    { id: 'onb-workspace',     name: 'Workspace Setup',     section: 'onboarding', href: 'patterns/onb-workspace.html',     tags: ['workspace', 'org setup', 'team setup'] },
+    { id: 'onb-team-invite',   name: 'Team Invite',         section: 'onboarding', href: 'patterns/onb-team-invite.html',   tags: ['invite', 'team', 'add members', 'collaborate'] },
+    { id: 'onb-integration',   name: 'Integration Setup',   section: 'onboarding', href: 'patterns/onb-integration.html',   tags: ['integration', 'connect', 'apps', 'third party'] },
+    { id: 'onb-ai-setup',      name: 'AI Model Setup',      section: 'onboarding', href: 'patterns/onb-ai-setup.html',      ai: true, tags: ['ai', 'model', 'llm', 'configure ai', 'setup'] },
+    { id: 'onb-import',        name: 'Data Import',         section: 'onboarding', href: 'patterns/onb-import.html',        tags: ['import', 'upload', 'migrate', 'csv', 'data'] },
+    { id: 'onb-checklist',     name: 'Setup Checklist',     section: 'onboarding', href: 'patterns/onb-checklist.html',     tags: ['checklist', 'progress', 'setup steps', 'tasks'] },
+    { id: 'onb-tour',          name: 'Product Tour',        section: 'onboarding', href: 'patterns/onb-tour.html',          tags: ['tour', 'walkthrough', 'tutorial', 'feature tour'] },
+    { id: 'onb-empty-first',   name: 'Empty First-Run',     section: 'onboarding', href: 'patterns/onb-empty-first.html',   tags: ['empty state', 'first run', 'zero state', 'get started'] },
+
+    // ── 3. Dashboards & Overview ── the home base ────────────────
+    { id: 'dash-home',         name: 'Home Dashboard',      section: 'dashboard',  href: 'patterns/dash-home.html',          tags: ['home', 'dashboard', 'main screen', 'overview'] },
+    { id: 'dash-metrics',      name: 'Metrics Overview',    section: 'dashboard',  href: 'patterns/dash-metrics.html',       tags: ['metrics', 'kpi', 'stats', 'overview', 'summary'] },
+    { id: 'dash-activity',     name: 'Activity Feed',       section: 'dashboard',  href: 'patterns/dash-activity.html',      tags: ['activity', 'feed', 'events', 'log'] },
+    { id: 'dash-analytics',    name: 'Analytics Deep-dive', section: 'dashboard',  href: 'patterns/dash-analytics.html',     tags: ['analytics', 'charts', 'graphs', 'reporting', 'data'] },
+    { id: 'dash-ai-insights',  name: 'AI Insights Panel',   section: 'dashboard',  href: 'patterns/dash-ai-insights.html',   ai: true, tags: ['ai', 'insights', 'recommendations', 'intelligence'] },
+    { id: 'dash-reports',      name: 'Reports View',        section: 'dashboard',  href: 'patterns/dash-reports.html',       tags: ['reports', 'export', 'scheduled', 'data'] },
+    { id: 'dash-realtime',     name: 'Real-time Monitor',   section: 'dashboard',  href: 'patterns/dash-realtime.html',      tags: ['realtime', 'live', 'monitor', 'streaming'] },
+    { id: 'dash-notifications', name: 'Notification Center', section: 'dashboard', href: 'patterns/dash-notifications.html', tags: ['notifications', 'alerts', 'inbox', 'messages'] },
+    { id: 'dash-usage',        name: 'Usage & Quotas',      section: 'dashboard',  href: 'patterns/dash-usage.html',         tags: ['usage', 'quota', 'limits', 'consumption'] },
+    { id: 'dash-status',       name: 'Status Page',         section: 'dashboard',  href: 'patterns/dash-status.html',        tags: ['status', 'uptime', 'incidents', 'health'] },
+
+    // ── 4. Content & Data Management ── core CRUD ────────────────
+    { id: 'content-list',      name: 'List / Index',        section: 'content',    href: 'patterns/content-list.html',     tags: ['list', 'index', 'browse', 'directory'] },
+    { id: 'content-table',     name: 'Data Table',          section: 'content',    href: 'patterns/content-table.html',    tags: ['table', 'grid', 'rows', 'sort', 'filter'] },
+    { id: 'content-detail',    name: 'Detail / Record',     section: 'content',    href: 'patterns/content-detail.html',   tags: ['detail', 'record', 'view', 'single item'] },
+    { id: 'content-form',      name: 'Create / Edit Form',  section: 'content',    href: 'patterns/content-form.html',     tags: ['form', 'create', 'edit', 'input', 'fields'] },
+    { id: 'content-filter',    name: 'Filter & Search',     section: 'content',    href: 'patterns/content-filter.html',   tags: ['filter', 'search', 'query', 'facets'] },
+    { id: 'content-kanban',    name: 'Kanban Board',        section: 'content',    href: 'patterns/content-kanban.html',   tags: ['kanban', 'board', 'columns', 'cards', 'drag'] },
+    { id: 'content-calendar',  name: 'Calendar View',       section: 'content',    href: 'patterns/content-calendar.html', tags: ['calendar', 'schedule', 'events', 'date'] },
+    { id: 'content-timeline',  name: 'Timeline View',       section: 'content',    href: 'patterns/content-timeline.html', tags: ['timeline', 'gantt', 'history', 'chronological'] },
+    { id: 'content-bulk',      name: 'Bulk Actions',        section: 'content',    href: 'patterns/content-bulk.html',     tags: ['bulk', 'select all', 'batch', 'multi-select'] },
+    { id: 'content-import',    name: 'Import / Export',     section: 'content',    href: 'patterns/content-import.html',   tags: ['import', 'export', 'csv', 'download', 'upload'] },
+    { id: 'content-versions',  name: 'Version History',     section: 'content',    href: 'patterns/content-versions.html', tags: ['versions', 'history', 'revisions', 'changelog'] },
+    { id: 'content-audit',     name: 'Audit Log',           section: 'content',    href: 'patterns/content-audit.html',    tags: ['audit', 'log', 'trail', 'compliance'] },
+
+    // ── 5. Workflows & Automation ── layered on top of content ───
+    { id: 'flow-wizard',       name: 'Step Wizard',         section: 'workflow',   href: 'patterns/flow-wizard.html',       tags: ['wizard', 'steps', 'multi-step', 'guided'] },
+    { id: 'flow-pipeline',     name: 'Pipeline Builder',    section: 'workflow',   href: 'patterns/flow-pipeline.html',     tags: ['pipeline', 'flow', 'builder', 'visual editor'] },
+    { id: 'flow-rules',        name: 'Rule Builder',        section: 'workflow',   href: 'patterns/flow-rules.html',        tags: ['rules', 'conditions', 'logic', 'automation'] },
+    { id: 'flow-trigger',      name: 'Trigger Config',      section: 'workflow',   href: 'patterns/flow-trigger.html',      tags: ['triggers', 'events', 'conditions', 'automation'] },
+    { id: 'flow-approval',     name: 'Approval Flow',       section: 'workflow',   href: 'patterns/flow-approval.html',     tags: ['approval', 'review', 'sign off', 'workflow'] },
+    { id: 'flow-agent',        name: 'Agent Builder',       section: 'workflow',   href: 'patterns/flow-agent.html',        ai: true, tags: ['agent', 'ai agent', 'autonomous', 'builder'] },
+    { id: 'flow-scheduled',    name: 'Scheduled Tasks',     section: 'workflow',   href: 'patterns/flow-scheduled.html',    tags: ['scheduled', 'cron', 'recurring', 'tasks'] },
+    { id: 'flow-integration',  name: 'Integration Config',  section: 'workflow',   href: 'patterns/flow-integration.html',  tags: ['integration', 'connect', 'api', 'webhook'] },
+    { id: 'flow-webhook',      name: 'Webhook Setup',       section: 'workflow',   href: 'patterns/flow-webhook.html',      tags: ['webhook', 'endpoint', 'events', 'http'] },
+    { id: 'flow-history',      name: 'Job / Run History',   section: 'workflow',   href: 'patterns/flow-history.html',      tags: ['jobs', 'runs', 'history', 'execution'] },
+
+    // ── 6. AI & Conversational ── increasingly the core product ──
+    { id: 'ai-chat',           name: 'Chat Interface',      section: 'ai-conv',    href: 'patterns/ai-chat.html',        ai: true, tags: ['chat', 'conversation', 'messaging', 'ai chat'] },
+    { id: 'ai-prompt',         name: 'Prompt Builder',      section: 'ai-conv',    href: 'patterns/ai-prompt.html',      ai: true, tags: ['prompt', 'prompt engineering', 'input'] },
+    { id: 'ai-stream',         name: 'AI Response Stream',  section: 'ai-conv',    href: 'patterns/ai-stream.html',      ai: true, tags: ['streaming', 'response', 'generation', 'typewriter'] },
+    { id: 'ai-thread',         name: 'Multi-turn Thread',   section: 'ai-conv',    href: 'patterns/ai-thread.html',      ai: true, tags: ['thread', 'conversation', 'history', 'context'] },
+    { id: 'ai-suggested',      name: 'Suggested Prompts',   section: 'ai-conv',    href: 'patterns/ai-suggested.html',   ai: true, tags: ['suggestions', 'starters', 'prompts', 'quick actions'] },
+    { id: 'ai-model-sel',      name: 'Model Selector',      section: 'ai-conv',    href: 'patterns/ai-model-sel.html',   ai: true, tags: ['model', 'llm', 'gpt', 'claude', 'selector'] },
+    { id: 'ai-knowledge',      name: 'Knowledge Sources',   section: 'ai-conv',    href: 'patterns/ai-knowledge.html',   ai: true, tags: ['knowledge base', 'rag', 'documents', 'sources'] },
+    { id: 'ai-agent-feed',     name: 'Agent Task Feed',     section: 'ai-conv',    href: 'patterns/ai-agent-feed.html',  ai: true, tags: ['agent', 'tasks', 'steps', 'autonomous'] },
+    { id: 'ai-review',         name: 'AI Output Review',    section: 'ai-conv',    href: 'patterns/ai-review.html',      ai: true, tags: ['review', 'output', 'verify', 'human review'] },
+    { id: 'ai-feedback',       name: 'Feedback & Rating',   section: 'ai-conv',    href: 'patterns/ai-feedback.html',    ai: true, tags: ['feedback', 'rating', 'thumbs', 'rlhf'] },
+    { id: 'ai-memory',         name: 'Context / Memory',    section: 'ai-conv',    href: 'patterns/ai-memory.html',      ai: true, tags: ['memory', 'context', 'personalization', 'history'] },
+    { id: 'ai-playground',     name: 'Playground / Sandbox', section: 'ai-conv',   href: 'patterns/ai-playground.html', ai: true, tags: ['playground', 'sandbox', 'test', 'experiment'] },
+    { id: 'ai-config',         name: 'AI Config / Tuning',  section: 'ai-conv',    href: 'patterns/ai-config.html',     ai: true, tags: ['config', 'parameters', 'temperature', 'tuning'] },
+    { id: 'ai-tool-log',       name: 'Tool Call Log',       section: 'ai-conv',    href: 'patterns/ai-tool-log.html',   ai: true, tags: ['tools', 'function calling', 'log', 'trace'] },
+    { id: 'ai-history',        name: 'Generation History',  section: 'ai-conv',    href: 'patterns/ai-history.html',    ai: true, tags: ['history', 'generations', 'log', 'archive'] },
+
+    // ── 7. Collaboration & Social ── multi-user layer ─────────────
+    { id: 'collab-team',       name: 'Team Members',        section: 'collab',     href: 'patterns/collab-team.html',        tags: ['team', 'members', 'users', 'roster'] },
+    { id: 'collab-permissions', name: 'Permissions Matrix', section: 'collab',     href: 'patterns/collab-permissions.html', tags: ['permissions', 'roles', 'access control', 'rbac'] },
+    { id: 'collab-workspace',  name: 'Shared Workspace',    section: 'collab',     href: 'patterns/collab-workspace.html',   tags: ['workspace', 'shared', 'collaboration'] },
+    { id: 'collab-presence',   name: 'Presence Indicators', section: 'collab',     href: 'patterns/collab-presence.html',    tags: ['presence', 'online', 'active', 'avatars'] },
+    { id: 'collab-comments',   name: 'Comments / Threads',  section: 'collab',     href: 'patterns/collab-comments.html',   tags: ['comments', 'threads', 'discussion', 'replies'] },
+    { id: 'collab-mentions',   name: 'Mentions & Replies',  section: 'collab',     href: 'patterns/collab-mentions.html',   tags: ['mentions', 'replies', 'notifications', '@mention'] },
+    { id: 'collab-share',      name: 'Share / Publish',     section: 'collab',     href: 'patterns/collab-share.html',      tags: ['share', 'publish', 'link', 'distribute'] },
+    { id: 'collab-activity',   name: 'Activity Log',        section: 'collab',     href: 'patterns/collab-activity.html',   tags: ['activity', 'log', 'history', 'events'] },
+    { id: 'collab-embeds',     name: 'Embeds & Exports',    section: 'collab',     href: 'patterns/collab-embeds.html',     tags: ['embed', 'export', 'iframe', 'share'] },
+
+    // ── 8. Settings & Account ── always last to build ─────────────
+    { id: 'settings-general',  name: 'General Settings',    section: 'settings',   href: 'patterns/settings-general.html',  tags: ['settings', 'preferences', 'general', 'config'] },
+    { id: 'settings-profile',  name: 'Profile / Account',   section: 'settings',   href: 'patterns/settings-profile.html',  tags: ['profile', 'account', 'personal', 'user'] },
+    { id: 'settings-notifs',   name: 'Notification Prefs',  section: 'settings',   href: 'patterns/settings-notifs.html',   tags: ['notifications', 'preferences', 'email alerts'] },
+    { id: 'settings-theme',    name: 'Appearance / Theme',  section: 'settings',   href: 'patterns/settings-theme.html',    tags: ['theme', 'appearance', 'dark mode', 'customization'] },
+    { id: 'settings-billing',  name: 'Billing & Plans',     section: 'settings',   href: 'patterns/settings-billing.html',  tags: ['billing', 'subscription', 'plans', 'payment'] },
+    { id: 'settings-upgrade',  name: 'Plan Upgrade',        section: 'settings',   href: 'patterns/settings-upgrade.html',  tags: ['upgrade', 'plan', 'upsell', 'tier'] },
+    { id: 'settings-usage',    name: 'Usage & Limits',      section: 'settings',   href: 'patterns/settings-usage.html',    tags: ['usage', 'limits', 'quota', 'consumption'] },
+    { id: 'settings-api',      name: 'API Keys & Tokens',   section: 'settings',   href: 'patterns/settings-api.html',      tags: ['api keys', 'tokens', 'developer', 'credentials'] },
+    { id: 'settings-security', name: 'Security Settings',   section: 'settings',   href: 'patterns/settings-security.html', tags: ['security', 'password', '2fa', 'sessions'] },
+    { id: 'settings-privacy',  name: 'Privacy Controls',    section: 'settings',   href: 'patterns/settings-privacy.html',  tags: ['privacy', 'data', 'gdpr', 'consent'] },
+    { id: 'settings-danger',   name: 'Danger Zone',         section: 'settings',   href: 'patterns/settings-danger.html',   tags: ['delete', 'danger', 'destructive', 'deactivate'] },
+
+    // ── 9. Commerce & Conversion ── monetisation layer ────────────
+    { id: 'commerce-pricing',  name: 'Pricing Page',        section: 'commerce',   href: 'patterns/commerce-pricing.html',  tags: ['pricing', 'plans', 'cost', 'tiers'] },
+    { id: 'commerce-compare',  name: 'Plan Comparison',     section: 'commerce',   href: 'patterns/commerce-compare.html',  tags: ['compare', 'plans', 'features', 'matrix'] },
+    { id: 'commerce-trial',    name: 'Free Trial CTA',      section: 'commerce',   href: 'patterns/commerce-trial.html',    tags: ['trial', 'cta', 'free', 'conversion'] },
+    { id: 'commerce-gates',    name: 'Feature Gates',       section: 'commerce',   href: 'patterns/commerce-gates.html',    tags: ['feature gate', 'paywall', 'upgrade', 'locked'] },
+    { id: 'commerce-upsell',   name: 'Upsell Modal',        section: 'commerce',   href: 'patterns/commerce-upsell.html',   tags: ['upsell', 'modal', 'upgrade', 'premium'] },
+    { id: 'commerce-checkout', name: 'Checkout',            section: 'commerce',   href: 'patterns/commerce-checkout.html', tags: ['checkout', 'payment', 'purchase', 'buy'] },
+    { id: 'commerce-payment',  name: 'Payment Method',      section: 'commerce',   href: 'patterns/commerce-payment.html',  tags: ['payment', 'card', 'billing', 'stripe'] },
+    { id: 'commerce-confirm',  name: 'Order Confirmation',  section: 'commerce',   href: 'patterns/commerce-confirm.html',  tags: ['confirmation', 'receipt', 'order', 'success'] },
+    { id: 'commerce-invoice',  name: 'Invoice / Receipt',   section: 'commerce',   href: 'patterns/commerce-invoice.html',  tags: ['invoice', 'receipt', 'billing', 'document'] },
+
+    // ── 10. Feedback & Support ── polish and edge states ──────────
+    { id: 'support-empty',     name: 'Empty State',         section: 'feedback',   href: 'patterns/support-empty.html',    tags: ['empty', 'zero state', 'no results', 'blank'] },
+    { id: 'support-skeleton',  name: 'Loading / Skeleton',  section: 'feedback',   href: 'patterns/support-skeleton.html',  tags: ['loading', 'skeleton', 'spinner', 'placeholder'] },
+    { id: 'support-progress',  name: 'Progress Indicator',  section: 'feedback',   href: 'patterns/support-progress.html',  tags: ['progress', 'steps', 'completion', 'status'] },
+    { id: 'support-success',   name: 'Success State',       section: 'feedback',   href: 'patterns/support-success.html',   tags: ['success', 'complete', 'done', 'confirmation'] },
+    { id: 'support-error',     name: 'Error / 404 Page',    section: 'feedback',   href: 'patterns/support-error.html',     tags: ['error', '404', 'not found', 'broken link'] },
+    { id: 'support-confirm',   name: 'Confirmation Dialog', section: 'feedback',   href: 'patterns/support-confirm.html',   tags: ['confirm', 'dialog', 'modal', 'alert'] },
+    { id: 'support-toast',     name: 'Toast / Snackbar',    section: 'feedback',   href: 'patterns/support-toast.html',     tags: ['toast', 'snackbar', 'notification', 'alert'] },
+    { id: 'support-tooltip',   name: 'In-app Tooltip',      section: 'feedback',   href: 'patterns/support-tooltip.html',   tags: ['tooltip', 'hint', 'contextual help', 'guidance'] },
+    { id: 'support-nps',       name: 'NPS / Survey',        section: 'feedback',   href: 'patterns/support-nps.html',       tags: ['nps', 'survey', 'rating', 'satisfaction'] },
+    { id: 'support-feedback',  name: 'Feedback Form',       section: 'feedback',   href: 'patterns/support-feedback.html',  tags: ['feedback', 'report', 'suggestions', 'contact'] },
+    { id: 'support-help',      name: 'Help Center',         section: 'feedback',   href: 'patterns/support-help.html',      tags: ['help', 'support', 'docs', 'knowledge base'] },
+  ];
+
+  var _plSection  = 'all';
+  var _plQuery    = '';
+  var _plFiltered = [];          /* current filtered result set */
+  var _PAGE_SIZE  = 20;
+
+  /* Simple thumb URL — theme is pushed via postMessage after load */
+  function _buildThumbSrc(href) { return href + '?thumb'; }
+
+  /* Read current theme from localStorage and push it into a loaded iframe */
+  function _pushTheme(frame) {
+    var t = {};
+    try { t = JSON.parse(localStorage.getItem('freshds-theme') || '{}'); } catch (e) {}
+    try {
+      frame.contentWindow.postMessage({
+        type:         'fds-theme',
+        primary:      t.primary      || '#7c6af7',
+        secondary:    t.secondary    || '#2dd4bf',
+        scaleDark:    t.scaleDark    || '#1f2328',
+        scaleLight:   t.scaleLight   || '#ffffff',
+        success:      t.success      || '#22c55e',
+        warning:      t.warning      || '#f59e0b',
+        danger:       t.danger       || '#f43f5e',
+        info:         t.info         || '#3b82f6',
+        pageBg:       t.pageBg       || '#ffffff',
+        inputSurface: t.inputSurface || '#ffffff',
+        mode:         t.mode         || 'light'
+      }, '*');
+    } catch (e) {}
+  }
+
+  /* bfcache guard — rebuild grid so iframes reload with fresh theme */
+  window.addEventListener('pageshow', function (e) {
+    if (e.persisted) _renderGrid();
+  });
+
+  /* Build one card's HTML */
+  function _cardHTML(p) {
+    var hasLink = p.href !== '#';
+    var thumb = hasLink
+      ? '<div slot="thumb" class="pl-thumb"><iframe class="pl-thumb-frame" data-src="' + _buildThumbSrc(p.href) + '" scrolling="no" tabindex="-1" aria-hidden="true"></iframe></div>'
+      : '<div slot="thumb" class="pl-thumb"></div>';
+    return '<fresh-media-card title="' + p.name + '"'
+      + (hasLink ? ' href="' + p.href + '" target="freshds-pattern"' : '')
+      + '>' + thumb + '</fresh-media-card>';
+  }
+
+  /* Append a sentinel div; _sentinelObserver fires the next page load */
+  function _appendSentinel(grid) {
+    var s = document.createElement('div');
+    s.className = 'pl-sentinel';
+    grid.appendChild(s);
+    _sentinelObserver.observe(s);
+  }
+
+  /* Append the next PAGE_SIZE cards to the grid */
+  function _loadNextPage(grid) {
+    var start = grid.querySelectorAll('fresh-media-card').length;
+    var slice = _plFiltered.slice(start, start + _PAGE_SIZE);
+    if (!slice.length) return;
+
+    var tmp = document.createElement('div');
+    tmp.innerHTML = slice.map(_cardHTML).join('');
+    while (tmp.firstChild) grid.appendChild(tmp.firstChild);
+
+    _observeFrames();
+
+    if (start + slice.length < _plFiltered.length) {
+      _appendSentinel(grid);
+    }
+  }
+
+  /* Sentinel observer — triggers the next page when near the bottom */
+  var _sentinelObserver = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (!entry.isIntersecting) return;
+      var sentinel = entry.target;
+      _sentinelObserver.unobserve(sentinel);
+      sentinel.remove();
+      var grid = document.getElementById('pl-grid');
+      if (grid) _loadNextPage(grid);
+    });
+  }, { rootMargin: '300px' });
+
+  function _renderGrid() {
+    var grid = document.getElementById('pl-grid');
+    if (!grid) return;
+
+    _plFiltered = PL_PATTERNS.filter(function(p) {
+      var matchSection = _plSection === 'all' || (_plSection === 'ai' && p.ai) || p.section === _plSection;
+      var q = _plQuery.toLowerCase();
+      var matchSearch = !_plQuery
+        || p.name.toLowerCase().includes(q)
+        || p.section.toLowerCase().includes(q)
+        || (p.tags && p.tags.some(function(t) { return t.includes(q) || q.includes(t); }));
+      return matchSection && matchSearch;
+    });
+
+    grid.innerHTML = '';
+
+    if (_plFiltered.length === 0) {
+      grid.innerHTML = '<div class="pl-empty">No patterns found.</div>';
+      return;
+    }
+
+    _loadNextPage(grid);
+  }
+
+  /* Scale iframe to exactly fill its card — card and iframe are both 16:10 */
+  function _scaleFrame(frame) {
+    var thumb = frame.parentElement;
+    if (!thumb || !thumb.offsetWidth) return;
+    frame.style.transform = 'scale(' + (thumb.offsetWidth / 1280) + ')';
+  }
+
+  /* Re-scale all loaded frames on window resize */
+  window.addEventListener('resize', function() {
+    document.querySelectorAll('.pl-thumb-frame').forEach(_scaleFrame);
+  });
+
+  /* Lazy-load iframes as they scroll into view, fade in when ready */
+  var _frameObserver = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (!entry.isIntersecting) return;
+      var frame = entry.target;
+      if (!frame.dataset.src) return;
+      _scaleFrame(frame);
+      frame.addEventListener('load', function() {
+        _scaleFrame(frame);
+        _pushTheme(frame);                         /* push theme via postMessage */
+        setTimeout(function() {                    /* show after theme applies  */
+          frame.classList.add('loaded');
+        }, 150);
+      }, { once: true });
+      frame.src = frame.dataset.src;
+      frame.removeAttribute('data-src');
+      _frameObserver.unobserve(frame);
+    });
+  }, { rootMargin: '200px' });
+
+  function _observeFrames() {
+    document.querySelectorAll('.pl-thumb-frame[data-src]').forEach(function(f) {
+      _frameObserver.observe(f);
+    });
+  }
+
+  // ── Filter bar ──────────────────────────────────────────────────
+  var PL_SECTIONS = [
+    { key: 'all',        label: 'All' },
+    { key: 'ai',         label: '✦ AI' },
+    { key: 'auth',       label: 'Auth' },
+    { key: 'onboarding', label: 'Onboarding' },
+    { key: 'dashboard',  label: 'Dashboards' },
+    { key: 'content',    label: 'Content' },
+    { key: 'workflow',   label: 'Workflows' },
+    { key: 'ai-conv',    label: 'AI & Chat' },
+    { key: 'collab',     label: 'Collab' },
+    { key: 'settings',   label: 'Settings' },
+    { key: 'commerce',   label: 'Commerce' },
+    { key: 'feedback',   label: 'Feedback' },
+  ];
+
+  var _filterTrack = document.getElementById('pl-filter-track');
+  var _moreWrap    = document.getElementById('pl-more-wrap');
+  var _moreBtn     = document.getElementById('pl-more-btn');
+  var _moreMenu    = document.getElementById('pl-more-menu');
+
+  // Build filter tab buttons
+  PL_SECTIONS.forEach(function(s) {
+    var btn = document.createElement('button');
+    btn.className = 'pl-filter-tab' + (s.key === 'all' ? ' active' : '');
+    btn.dataset.key = s.key;
+    btn.textContent = s.label;
+    btn.addEventListener('click', function() { _setSection(s.key); });
+    _filterTrack.appendChild(btn);
+  });
+
+  function _setSection(key) {
+    _plSection = key;
+    _filterTrack.querySelectorAll('.pl-filter-tab').forEach(function(b) {
+      b.classList.toggle('active', b.dataset.key === key);
+    });
+    _moreMenu.querySelectorAll('.pl-more-item').forEach(function(item) {
+      item.classList.toggle('active', item.dataset.key === key);
+    });
+    var inOverflow = Array.from(_moreMenu.querySelectorAll('.pl-more-item')).some(function(i) {
+      return i.dataset.key === key;
+    });
+    _moreBtn.classList.toggle('has-active', inOverflow);
+    _renderGrid();
+  }
+
+  // More-menu toggle
+  _moreBtn.addEventListener('click', function(e) {
+    e.stopPropagation();
+    var opening = _moreMenu.hidden;
+    _moreMenu.hidden = !opening;
+    _moreBtn.setAttribute('aria-expanded', opening ? 'true' : 'false');
+  });
+  document.addEventListener('click', function() {
+    _moreMenu.hidden = true;
+    _moreBtn.setAttribute('aria-expanded', 'false');
+  });
+  _moreMenu.addEventListener('click', function(e) { e.stopPropagation(); });
+
+  // Overflow measurement
+  function _recalcOverflow() {
+    var tabs = Array.from(_filterTrack.querySelectorAll('.pl-filter-tab'));
+    var gap  = 4; // var(--space-1)
+
+    // Reset to full-visible state
+    tabs.forEach(function(t) { t.style.display = ''; });
+    _moreWrap.hidden = true;
+    _moreMenu.innerHTML = '';
+
+    var barWidth = document.getElementById('pl-filter-bar').clientWidth;
+    var widths   = tabs.map(function(t) { return t.offsetWidth; });
+    var totalW   = widths.reduce(function(s, w, i) { return s + w + (i > 0 ? gap : 0); }, 0);
+
+    if (totalW <= barWidth) return; // all fit
+
+    // Reserve space for the ... button
+    _moreWrap.hidden = false;
+    var avail = barWidth - _moreWrap.offsetWidth - gap;
+
+    // Find cutoff index
+    var used = 0;
+    var cut  = -1;
+    for (var i = 0; i < tabs.length; i++) {
+      used += widths[i] + (i > 0 ? gap : 0);
+      if (used > avail) { cut = i; break; }
+    }
+
+    if (cut === -1) { _moreWrap.hidden = true; return; } // all fit even with button
+
+    // Hide overflow tabs and populate dropdown
+    for (var i = cut; i < tabs.length; i++) {
+      tabs[i].style.display = 'none';
+      var item = document.createElement('button');
+      item.className = 'pl-more-item' + (tabs[i].dataset.key === _plSection ? ' active' : '');
+      item.dataset.key = tabs[i].dataset.key;
+      item.textContent = tabs[i].textContent;
+      (function(key) {
+        item.addEventListener('click', function(e) {
+          e.stopPropagation();
+          _moreMenu.hidden = true;
+          _moreBtn.setAttribute('aria-expanded', 'false');
+          _setSection(key);
+        });
+      })(tabs[i].dataset.key);
+      _moreMenu.appendChild(item);
+    }
+
+    _moreMenu.hidden = true;
+    var inOverflow = Array.from(_moreMenu.querySelectorAll('.pl-more-item')).some(function(i) {
+      return i.dataset.key === _plSection;
+    });
+    _moreBtn.classList.toggle('has-active', inOverflow);
+  }
+
+  new ResizeObserver(function() { _recalcOverflow(); })
+    .observe(document.getElementById('pl-filter-bar'));
+
+  // ── Search ──────────────────────────────────────────────────────
+  var _plSearchEl = document.getElementById('pl-search-input');
+  _plSearchEl.addEventListener('input', function(e) {
+    _plQuery = (e.detail ? e.detail.value : _plSearchEl.value) || '';
+    _renderGrid();
+  });
+
+  // ── Section tabs (topbar) ───────────────────────────────────────
+  document.getElementById('section-tabs').addEventListener('change', function(e) {
+    if (e.detail.key === 'ds') window.location.href = 'index.html';
+  });
+
+  // ── Dark mode restore ───────────────────────────────────────────
+  if (ds.mode === 'dark') {
+    var appEl = document.getElementById('app');
+    if (appEl) appEl.setAttribute('data-mode', 'dark');
+    var modeBtn = document.getElementById('mode-btn');
+    if (modeBtn) modeBtn.innerHTML = '<i class="ti ti-sun"></i> Light';
+  }
+
+  // ── Reload thumbnail iframes on mode toggle ─────────────────────
+  // Reload is the most reliable approach: the existing load→_pushTheme
+  // path already reads the updated mode from localStorage.
+  var _origToggleMode = toggleMode;
+  toggleMode = function() {
+    _origToggleMode(); // saves updated mode to localStorage
+    document.querySelectorAll('.pl-thumb-frame').forEach(function(f) {
+      if (!f.src) return; // skip frames not yet loaded
+      var src = f.src;
+      f.classList.remove('loaded'); // hide while reloading
+      f.addEventListener('load', function() {
+        _pushTheme(f);
+        setTimeout(function() { f.classList.add('loaded'); }, 150);
+      }, { once: true });
+      f.src = src; // trigger reload
+    });
+  };
+
+  _renderGrid();
+</script>
+</body>
+</html>

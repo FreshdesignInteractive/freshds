@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tool Call Log — Acme</title>
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="../tokens/primitives.css">
+<link rel="stylesheet" href="../tokens/theme.css">
+<link rel="stylesheet" href="../tokens/dataviz.css">
+<link rel="stylesheet" href="../styles/reset.css">
+<link rel="stylesheet" href="../styles/patterns/ai-chat.css">
+<style>
+.log-body { flex: 1; display: flex; overflow: hidden; }
+.log-runs {
+  width: 260px;
+  flex-shrink: 0;
+  background: var(--surface-bg);
+  border-right: 1px solid var(--surface-border);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.log-runs-header {
+  padding: var(--space-4);
+  border-bottom: 1px solid var(--surface-border);
+  flex-shrink: 0;
+}
+.log-runs-list { flex: 1; overflow-y: auto; }
+.run-item {
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--surface-border);
+  cursor: pointer;
+  transition: background 120ms;
+}
+.run-item:hover { background: var(--surface-subtle); }
+.run-item.active { background: var(--color-interactive-subtle); }
+.run-item-header { display: flex; align-items: center; gap: var(--space-2); margin-bottom: 2px; }
+.run-item-name { font-size: 12px; font-weight: 600; color: var(--text-primary); flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.run-item-meta { font-size: 11px; color: var(--text-tertiary); }
+.log-detail {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--surface-subtle);
+}
+.log-detail-header {
+  padding: var(--space-4) var(--space-5);
+  background: var(--surface-bg);
+  border-bottom: 1px solid var(--surface-border);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+.log-list { flex: 1; overflow-y: auto; padding: var(--space-4) var(--space-5); display: flex; flex-direction: column; gap: var(--space-3); }
+.tool-call {
+  background: var(--surface-canvas);
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: border-color 150ms;
+}
+.tool-call:hover { border-color: var(--surface-border-strong); }
+.tool-call-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  cursor: pointer;
+  user-select: none;
+}
+.tool-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  flex-shrink: 0;
+}
+.tool-name { font-size: 13px; font-weight: 600; color: var(--text-primary); flex: 1; }
+.tool-duration { font-size: 11px; color: var(--text-tertiary); font-family: var(--font-mono); }
+.tool-call-body {
+  border-top: 1px solid var(--surface-border);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+.tool-io-pane { padding: var(--space-3) var(--space-4); }
+.tool-io-pane:first-child { border-right: 1px solid var(--surface-border); }
+.tool-io-label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-tertiary);
+  margin-bottom: var(--space-2);
+}
+.code-pre {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+</style>
+<script>if(location.href.indexOf('?thumb')!==-1)document.write('<style>#demo-bar{display:none!important}</style>');</script>
+<script src="../js/pattern-topbar-v2.js"></script>
+<script src="../js/freshds.js"></script>
+<script src="../js/pattern-bar.js"></script>
+</head>
+<body>
+<div id="app">
+
+  <div class="demo-bar" id="demo-bar">
+    <div class="demo-inner" id="demo-inner">
+      <button class="demo-mode-btn" id="mode-toggle-btn" onclick="toggleDemoMode()" aria-label="Toggle dark mode">
+        <i class="ti ti-moon"></i>
+      </button>
+    </div>
+    <div class="demo-sep"></div>
+    <button class="demo-collapse-btn" id="demo-collapse-btn" onclick="toggleDemoBar()" aria-label="Collapse toolbar">
+      <i class="ti ti-minus"></i>
+    </button>
+  </div>
+
+  <div class="ai-shell">
+    <pattern-topbar logged-in></pattern-topbar>
+
+    <div class="log-body">
+
+      <!-- Runs sidebar -->
+      <div class="log-runs">
+        <div class="log-runs-header">
+          <div style="font-size:14px;font-weight:700;color:var(--text-primary);margin-bottom:var(--space-3);">Agent runs</div>
+          <fresh-input placeholder="Search runs…" clearable size="sm"></fresh-input>
+        </div>
+        <div class="log-runs-list">
+
+          <div class="run-item active">
+            <div class="run-item-header">
+              <div class="run-item-name">Lead researcher</div>
+              <fresh-badge variant="success" size="sm">Done</fresh-badge>
+            </div>
+            <div class="run-item-meta">5 tool calls · 2.4s · Jun 4, 2:14 PM</div>
+          </div>
+
+          <div class="run-item">
+            <div class="run-item-header">
+              <div class="run-item-name">Deal summarizer</div>
+              <fresh-badge variant="success" size="sm">Done</fresh-badge>
+            </div>
+            <div class="run-item-meta">3 tool calls · 0.8s · Jun 4, 11:30 AM</div>
+          </div>
+
+          <div class="run-item">
+            <div class="run-item-header">
+              <div class="run-item-name">Lead researcher</div>
+              <fresh-badge variant="danger" size="sm">Error</fresh-badge>
+            </div>
+            <div class="run-item-meta">2 tool calls · 0.3s · Jun 3, 4:12 PM</div>
+          </div>
+
+          <div class="run-item">
+            <div class="run-item-header">
+              <div class="run-item-name">Support triage</div>
+              <fresh-badge variant="success" size="sm">Done</fresh-badge>
+            </div>
+            <div class="run-item-meta">4 tool calls · 1.9s · Jun 3, 2:00 PM</div>
+          </div>
+
+          <div class="run-item">
+            <div class="run-item-header">
+              <div class="run-item-name">Lead researcher</div>
+              <fresh-badge variant="success" size="sm">Done</fresh-badge>
+            </div>
+            <div class="run-item-meta">6 tool calls · 3.1s · Jun 3, 9:45 AM</div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Tool call detail -->
+      <div class="log-detail">
+
+        <div class="log-detail-header">
+          <div style="font-size:14px;font-weight:700;color:var(--text-primary);">Lead researcher</div>
+          <fresh-badge variant="success">Done</fresh-badge>
+          <div style="font-size:12px;color:var(--text-tertiary);margin-left:var(--space-2);">5 tool calls · 2.4s total · Jun 4, 2:14 PM</div>
+          <div style="margin-left:auto;display:flex;gap:var(--space-2);">
+            <fresh-button variant="ghost" size="sm"><i class="ti ti-download"></i> Export</fresh-button>
+            <fresh-button variant="ghost" size="sm"><i class="ti ti-refresh"></i> Replay</fresh-button>
+          </div>
+        </div>
+
+        <div class="log-list">
+
+          <!-- Tool call 1: web_search -->
+          <div class="tool-call">
+            <div class="tool-call-header">
+              <div class="tool-icon" style="background:var(--color-info-subtle);color:var(--color-info-text);"><i class="ti ti-world"></i></div>
+              <div class="tool-name">web_search</div>
+              <fresh-badge variant="success" size="sm">Success</fresh-badge>
+              <div class="tool-duration">840ms</div>
+              <i class="ti ti-chevron-down" style="color:var(--text-tertiary);font-size:14px;"></i>
+            </div>
+            <div class="tool-call-body">
+              <div class="tool-io-pane">
+                <div class="tool-io-label">Input</div>
+                <div class="code-pre">{
+  "query": "Luminate Health company",
+  "max_results": 5
+}</div>
+              </div>
+              <div class="tool-io-pane">
+                <div class="tool-io-label">Output</div>
+                <div class="code-pre">{
+  "results": [
+    {
+      "title": "Luminate Health raises $42M",
+      "url": "techcrunch.com/...",
+      "snippet": "Series B round..."
+    },
+    ...
+  ]
+}</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tool call 2: crunchbase_lookup -->
+          <div class="tool-call">
+            <div class="tool-call-header">
+              <div class="tool-icon" style="background:var(--color-interactive-subtle);color:var(--color-interactive-text);"><i class="ti ti-building"></i></div>
+              <div class="tool-name">crunchbase_lookup</div>
+              <fresh-badge variant="success" size="sm">Success</fresh-badge>
+              <div class="tool-duration">620ms</div>
+              <i class="ti ti-chevron-down" style="color:var(--text-tertiary);font-size:14px;"></i>
+            </div>
+            <div class="tool-call-body">
+              <div class="tool-io-pane">
+                <div class="tool-io-label">Input</div>
+                <div class="code-pre">{
+  "org_name": "luminate-health"
+}</div>
+              </div>
+              <div class="tool-io-pane">
+                <div class="tool-io-label">Output</div>
+                <div class="code-pre">{
+  "name": "Luminate Health",
+  "stage": "Series B",
+  "raised": 42000000,
+  "headcount": "180-220",
+  "founded": 2021
+}</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tool call 3: crm_lookup -->
+          <div class="tool-call">
+            <div class="tool-call-header">
+              <div class="tool-icon" style="background:var(--color-success-subtle);color:var(--color-success-text);"><i class="ti ti-database"></i></div>
+              <div class="tool-name">crm_lookup</div>
+              <fresh-badge variant="success" size="sm">Success</fresh-badge>
+              <div class="tool-duration">280ms</div>
+              <i class="ti ti-chevron-right" style="color:var(--text-tertiary);font-size:14px;"></i>
+            </div>
+          </div>
+
+          <!-- Tool call 4: email_verify (error) -->
+          <div class="tool-call" style="border-color:var(--color-danger);">
+            <div class="tool-call-header">
+              <div class="tool-icon" style="background:var(--color-danger-subtle);color:var(--color-danger-text);"><i class="ti ti-mail"></i></div>
+              <div class="tool-name">email_verify</div>
+              <fresh-badge variant="danger" size="sm">Error</fresh-badge>
+              <div class="tool-duration">92ms</div>
+              <i class="ti ti-chevron-down" style="color:var(--text-tertiary);font-size:14px;"></i>
+            </div>
+            <div class="tool-call-body">
+              <div class="tool-io-pane">
+                <div class="tool-io-label">Input</div>
+                <div class="code-pre">{
+  "email": "m.chen@luminate.health"
+}</div>
+              </div>
+              <div class="tool-io-pane">
+                <div class="tool-io-label">Error</div>
+                <div class="code-pre" style="color:var(--color-danger-text);">{
+  "error": "RateLimitError",
+  "message": "Too many requests,
+    retry after 60s",
+  "retryable": true
+}</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tool call 5: update_contact -->
+          <div class="tool-call">
+            <div class="tool-call-header">
+              <div class="tool-icon" style="background:var(--color-warning-subtle);color:var(--color-warning-text);"><i class="ti ti-pencil"></i></div>
+              <div class="tool-name">update_contact</div>
+              <fresh-badge variant="success" size="sm">Success</fresh-badge>
+              <div class="tool-duration">568ms</div>
+              <i class="ti ti-chevron-right" style="color:var(--text-tertiary);font-size:14px;"></i>
+            </div>
+          </div>
+
+          <!-- Summary -->
+          <div style="background:var(--surface-canvas);border:1px solid var(--surface-border);border-radius:var(--radius-lg);padding:var(--space-4);">
+            <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-tertiary);margin-bottom:var(--space-3);">Run summary</div>
+            <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:var(--space-3);">
+              <div style="text-align:center;"><div style="font-size:18px;font-weight:700;color:var(--text-primary);">5</div><div style="font-size:11px;color:var(--text-tertiary);">Tool calls</div></div>
+              <div style="text-align:center;"><div style="font-size:18px;font-weight:700;color:var(--color-success-text);">4</div><div style="font-size:11px;color:var(--text-tertiary);">Succeeded</div></div>
+              <div style="text-align:center;"><div style="font-size:18px;font-weight:700;color:var(--color-danger-text);">1</div><div style="font-size:11px;color:var(--text-tertiary);">Failed</div></div>
+              <div style="text-align:center;"><div style="font-size:18px;font-weight:700;color:var(--text-primary);">2.4s</div><div style="font-size:11px;color:var(--text-tertiary);">Total time</div></div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+</div>
+<script>
+  document.addEventListener('nav-toggle', function() {
+    document.getElementById('app-nav').classList.toggle('open');
+  });
+</script>
+<script src="../components/core/fresh-button.js"></script>
+<script src="../components/core/fresh-input.js"></script>
+<script src="../components/feedback/fresh-badge.js"></script>
+</body>
+</html>

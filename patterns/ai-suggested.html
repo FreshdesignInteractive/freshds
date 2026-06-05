@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Suggested Prompts — Acme</title>
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="../tokens/primitives.css">
+<link rel="stylesheet" href="../tokens/theme.css">
+<link rel="stylesheet" href="../tokens/dataviz.css">
+<link rel="stylesheet" href="../styles/reset.css">
+<link rel="stylesheet" href="../styles/patterns/ai-chat.css">
+<script>if(location.href.indexOf('?thumb')!==-1)document.write('<style>#demo-bar{display:none!important}</style>');</script>
+<script src="../js/pattern-topbar-v2.js"></script>
+<script src="../js/freshds.js"></script>
+<script src="../js/pattern-bar.js"></script>
+<style>
+  .empty-chat {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-10) var(--space-6);
+    text-align: center;
+  }
+  .empty-chat-icon {
+    width: 56px; height: 56px;
+    border-radius: var(--radius-xl);
+    background: var(--color-interactive-subtle);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 26px;
+    color: var(--color-interactive-text);
+    margin-bottom: var(--space-4);
+  }
+  .empty-chat-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: -0.02em;
+    margin-bottom: var(--space-2);
+  }
+  .empty-chat-sub {
+    font-size: 14px;
+    color: var(--text-secondary);
+    max-width: 380px;
+    line-height: 1.5;
+    margin-bottom: var(--space-8);
+  }
+
+  /* Suggestion cards grid */
+  .suggestion-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-3);
+    width: 100%;
+    max-width: 580px;
+    margin-bottom: var(--space-6);
+  }
+
+  /* Category tabs for filtering suggestions */
+  .suggestion-tabs {
+    display: flex;
+    gap: var(--space-2);
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: var(--space-5);
+  }
+  .suggestion-tab {
+    padding: var(--space-1) var(--space-3);
+    border-radius: var(--radius-full);
+    border: 1.5px solid var(--surface-border);
+    background: var(--surface-canvas);
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 150ms;
+    user-select: none;
+  }
+  .suggestion-tab.active {
+    border-color: var(--color-interactive);
+    background: var(--color-interactive-subtle);
+    color: var(--color-interactive-text);
+  }
+
+  @media (max-width: 600px) {
+    .suggestion-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div id="app">
+
+  <div class="demo-bar" id="demo-bar">
+    <div class="demo-inner" id="demo-inner">
+      <button class="demo-mode-btn" id="mode-toggle-btn" onclick="toggleDemoMode()" aria-label="Toggle dark mode">
+        <i class="ti ti-moon"></i>
+      </button>
+    </div>
+    <div class="demo-sep"></div>
+    <button class="demo-collapse-btn" id="demo-collapse-btn" onclick="toggleDemoBar()" aria-label="Collapse toolbar">
+      <i class="ti ti-minus"></i>
+    </button>
+  </div>
+
+  <div class="ai-shell">
+
+    <pattern-topbar logged-in></pattern-topbar>
+
+    <div class="ai-body">
+
+      <nav class="app-nav open" id="app-nav" aria-label="Main navigation">
+        <div class="app-nav-inner">
+          <button class="app-nav-item active"><i class="ti ti-home"></i> Home</button>
+          <button class="app-nav-item"><i class="ti ti-chart-bar"></i> Analytics</button>
+          <button class="app-nav-item"><i class="ti ti-activity"></i> Activity</button>
+          <button class="app-nav-item"><i class="ti ti-folders"></i> Projects</button>
+          <button class="app-nav-item"><i class="ti ti-check"></i> My tasks</button>
+          <button class="app-nav-item"><i class="ti ti-calendar-event"></i> Calendar</button>
+          <button class="app-nav-item"><i class="ti ti-users"></i> Members</button>
+          <button class="app-nav-item"><i class="ti ti-settings"></i> Settings</button>
+        </div>
+      </nav>
+
+      <main class="ai-main">
+        <!-- Empty state with suggestions -->
+        <div class="empty-chat">
+          <div class="empty-chat-icon"><i class="ti ti-sparkles"></i></div>
+          <div class="empty-chat-title">Good morning, Jamie</div>
+          <div class="empty-chat-sub">Ask anything about your workspace — data, drafts, summaries, or plans.</div>
+
+          <!-- Category filter tabs -->
+          <div class="suggestion-tabs">
+            <div class="suggestion-tab active">All</div>
+            <div class="suggestion-tab">Analytics</div>
+            <div class="suggestion-tab">Writing</div>
+            <div class="suggestion-tab">Planning</div>
+            <div class="suggestion-tab">Code</div>
+          </div>
+
+          <!-- Suggestion cards 2×2 grid -->
+          <div class="suggestion-grid">
+            <fresh-suggestion-card
+              icon="ti-chart-bar"
+              title="Summarise Q2 revenue"
+              description="Get a quick breakdown of this quarter's performance by plan tier."
+              accept-label="Ask this">
+            </fresh-suggestion-card>
+            <fresh-suggestion-card
+              icon="ti-users"
+              title="Identify at-risk accounts"
+              description="Find customers showing low engagement or churn signals."
+              accept-label="Ask this">
+            </fresh-suggestion-card>
+            <fresh-suggestion-card
+              icon="ti-pencil"
+              title="Draft a release announcement"
+              description="Write a customer-facing email for your next product release."
+              accept-label="Ask this">
+            </fresh-suggestion-card>
+            <fresh-suggestion-card
+              icon="ti-checklist"
+              title="Plan next sprint"
+              description="Suggest priorities based on open issues and team capacity."
+              accept-label="Ask this">
+            </fresh-suggestion-card>
+          </div>
+
+          <!-- Recent prompts row -->
+          <div style="width:100%;max-width:580px">
+            <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.07em;color:var(--text-tertiary);margin-bottom:var(--space-2)">Recent</div>
+            <fresh-prompt-history prompts='[
+              "What drove the revenue spike on May 28th?",
+              "Summarise support tickets from last week",
+              "Draft release notes for v2.6.0",
+              "Compare Q1 vs Q2 churn rate"
+            ]'></fresh-prompt-history>
+          </div>
+        </div>
+
+        <div class="ai-input-area">
+          <fresh-prompt-input placeholder="Ask anything about your workspace…"></fresh-prompt-input>
+          <div class="ai-input-meta">
+            <span>Claude Sonnet 4</span>
+            <span>Press Enter to send · Shift+Enter for new line</span>
+          </div>
+        </div>
+      </main>
+
+    </div>
+  </div>
+
+</div>
+<script>
+  document.addEventListener('nav-toggle', function() {
+    document.getElementById('app-nav').classList.toggle('open');
+  });
+</script>
+<script src="../components/core/fresh-button.js"></script>
+<script src="../components/data/fresh-avatar.js"></script>
+<script src="../components/ai/fresh-ai-mode-toggle.js"></script>
+<script src="../components/ai/fresh-suggestion-card.js"></script>
+<script src="../components/ai/fresh-prompt-input.js"></script>
+<script src="../components/ai/fresh-prompt-history.js"></script>
+</body>
+</html>

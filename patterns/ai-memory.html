@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Context / Memory — Acme</title>
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="../tokens/primitives.css">
+<link rel="stylesheet" href="../tokens/theme.css">
+<link rel="stylesheet" href="../tokens/dataviz.css">
+<link rel="stylesheet" href="../styles/reset.css">
+<link rel="stylesheet" href="../styles/patterns/ai-chat.css">
+<script>if(location.href.indexOf('?thumb')!==-1)document.write('<style>#demo-bar{display:none!important}</style>');</script>
+<script src="../js/pattern-topbar-v2.js"></script>
+<script src="../js/freshds.js"></script>
+<script src="../js/pattern-bar.js"></script>
+<style>
+  .memory-page {
+    flex: 1;
+    overflow-y: auto;
+    padding: var(--space-6) var(--space-6) var(--space-16);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .memory-page-inner { width: 100%; max-width: 720px; }
+
+  .memory-category {
+    margin-bottom: var(--space-6);
+  }
+  .memory-category-header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    margin-bottom: var(--space-3);
+  }
+  .memory-category-icon {
+    width: 30px; height: 30px;
+    border-radius: var(--radius-md);
+    background: var(--color-interactive-subtle);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px;
+    color: var(--color-interactive-text);
+  }
+  .memory-category-title { font-size: 14px; font-weight: 700; color: var(--text-primary); }
+  .memory-category-count { font-size: 12px; color: var(--text-tertiary); }
+
+  .memory-card {
+    background: var(--surface-canvas);
+    border: 1px solid var(--surface-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-4);
+    margin-bottom: var(--space-2);
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-3);
+    transition: border-color 150ms;
+  }
+  .memory-card:hover { border-color: var(--surface-border-strong); }
+  .memory-card-body { flex: 1; min-width: 0; }
+  .memory-card-text { font-size: 13px; color: var(--text-primary); line-height: 1.5; margin-bottom: 4px; }
+  .memory-card-meta { font-size: 11px; color: var(--text-tertiary); }
+  .memory-card-actions { display: flex; gap: var(--space-1); flex-shrink: 0; }
+  .memory-delete-btn {
+    width: 26px; height: 26px;
+    border: none; background: none;
+    cursor: pointer; border-radius: var(--radius-sm);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--text-tertiary); font-size: 13px;
+    transition: background 150ms, color 150ms;
+    font-family: var(--font-sans);
+  }
+  .memory-delete-btn:hover { background: var(--color-danger-subtle); color: var(--color-danger); }
+</style>
+</head>
+<body>
+<div id="app">
+
+  <div class="demo-bar" id="demo-bar">
+    <div class="demo-inner" id="demo-inner">
+      <button class="demo-mode-btn" id="mode-toggle-btn" onclick="toggleDemoMode()" aria-label="Toggle dark mode">
+        <i class="ti ti-moon"></i>
+      </button>
+    </div>
+    <div class="demo-sep"></div>
+    <button class="demo-collapse-btn" id="demo-collapse-btn" onclick="toggleDemoBar()" aria-label="Collapse toolbar">
+      <i class="ti ti-minus"></i>
+    </button>
+  </div>
+
+  <div class="ai-shell">
+
+    <pattern-topbar logged-in></pattern-topbar>
+
+    <div class="ai-body">
+
+      <nav class="app-nav open" id="app-nav" aria-label="Main navigation">
+        <div class="app-nav-inner">
+          <button class="app-nav-item active"><i class="ti ti-home"></i> Home</button>
+          <button class="app-nav-item"><i class="ti ti-chart-bar"></i> Analytics</button>
+          <button class="app-nav-item"><i class="ti ti-activity"></i> Activity</button>
+          <button class="app-nav-item"><i class="ti ti-folders"></i> Projects</button>
+          <button class="app-nav-item"><i class="ti ti-check"></i> My tasks</button>
+          <button class="app-nav-item"><i class="ti ti-calendar-event"></i> Calendar</button>
+          <button class="app-nav-item"><i class="ti ti-users"></i> Members</button>
+          <button class="app-nav-item"><i class="ti ti-settings"></i> Settings</button>
+        </div>
+      </nav>
+      <div class="memory-page">
+        <div class="memory-page-inner">
+
+          <div style="margin-bottom:var(--space-6)">
+            <div style="font-size:20px;font-weight:700;color:var(--text-primary);letter-spacing:-0.02em;margin-bottom:var(--space-1)">AI Memory</div>
+            <div style="font-size:14px;color:var(--text-secondary);line-height:1.5">The AI remembers things you've shared to give more personalised, relevant responses. You can review and delete anything here.</div>
+          </div>
+
+          <!-- Context window -->
+          <div style="margin-bottom:var(--space-5);padding:var(--space-4);background:var(--surface-canvas);border:1px solid var(--surface-border);border-radius:var(--radius-lg);display:flex;align-items:center;gap:var(--space-4)">
+            <div style="flex:1">
+              <div style="font-size:13px;font-weight:600;color:var(--text-primary);margin-bottom:2px">Memory in active context</div>
+              <div style="font-size:12px;color:var(--text-tertiary)">12 memories · ~2,400 tokens used for context injection</div>
+            </div>
+            <fresh-token-meter used="2400" total="200000" compact></fresh-token-meter>
+          </div>
+
+          <!-- About you -->
+          <div class="memory-category">
+            <div class="memory-category-header">
+              <div class="memory-category-icon"><i class="ti ti-user"></i></div>
+              <div class="memory-category-title">About you</div>
+              <div class="memory-category-count">4 memories</div>
+            </div>
+
+            <div class="memory-card">
+              <div class="memory-card-body">
+                <div class="memory-card-text">You work at Acme as a Product Manager. You focus on growth and retention metrics.</div>
+                <div class="memory-card-meta">Learned from chat · Jun 2</div>
+              </div>
+              <div class="memory-card-actions">
+                <button class="memory-delete-btn" aria-label="Delete"><i class="ti ti-trash"></i></button>
+              </div>
+            </div>
+
+            <div class="memory-card">
+              <div class="memory-card-body">
+                <div class="memory-card-text">You prefer concise, bullet-point responses over long prose explanations.</div>
+                <div class="memory-card-meta">Learned from feedback · Jun 1</div>
+              </div>
+              <div class="memory-card-actions">
+                <button class="memory-delete-btn" aria-label="Delete"><i class="ti ti-trash"></i></button>
+              </div>
+            </div>
+
+            <div class="memory-card">
+              <div class="memory-card-body">
+                <div class="memory-card-text">You are based in Pacific Time and prefer scheduling meetings between 10am–3pm.</div>
+                <div class="memory-card-meta">Learned from chat · May 29</div>
+              </div>
+              <div class="memory-card-actions">
+                <button class="memory-delete-btn" aria-label="Delete"><i class="ti ti-trash"></i></button>
+              </div>
+            </div>
+
+            <div class="memory-card">
+              <div class="memory-card-body">
+                <div class="memory-card-text">Your team uses Slack for internal comms and Notion for documentation.</div>
+                <div class="memory-card-meta">Learned from chat · May 28</div>
+              </div>
+              <div class="memory-card-actions">
+                <button class="memory-delete-btn" aria-label="Delete"><i class="ti ti-trash"></i></button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Your workspace -->
+          <div class="memory-category">
+            <div class="memory-category-header">
+              <div class="memory-category-icon"><i class="ti ti-building"></i></div>
+              <div class="memory-category-title">Your workspace</div>
+              <div class="memory-category-count">5 memories</div>
+            </div>
+
+            <div class="memory-card">
+              <div class="memory-card-body">
+                <div class="memory-card-text">Acme's Q2 revenue was $48,320. Enterprise plan drives 72% of MRR.</div>
+                <div class="memory-card-meta">Learned from analysis · Jun 3</div>
+              </div>
+              <div class="memory-card-actions">
+                <button class="memory-delete-btn" aria-label="Delete"><i class="ti ti-trash"></i></button>
+              </div>
+            </div>
+
+            <div class="memory-card">
+              <div class="memory-card-body">
+                <div class="memory-card-text">The onboarding step 3 drop-off improved from 42% to 18% after reducing required fields.</div>
+                <div class="memory-card-meta">Learned from chat · Jun 2</div>
+              </div>
+              <div class="memory-card-actions">
+                <button class="memory-delete-btn" aria-label="Delete"><i class="ti ti-trash"></i></button>
+              </div>
+            </div>
+
+            <div class="memory-card">
+              <div class="memory-card-body">
+                <div class="memory-card-text">NovaTech, DataCo, and Acme Labs are flagged as churn risks this quarter.</div>
+                <div class="memory-card-meta">Learned from agent run · Jun 4</div>
+              </div>
+              <div class="memory-card-actions">
+                <button class="memory-delete-btn" aria-label="Delete"><i class="ti ti-trash"></i></button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Preferences -->
+          <div class="memory-category">
+            <div class="memory-category-header">
+              <div class="memory-category-icon"><i class="ti ti-adjustments"></i></div>
+              <div class="memory-category-title">AI preferences</div>
+              <div class="memory-category-count">3 memories</div>
+            </div>
+
+            <div class="memory-card">
+              <div class="memory-card-body">
+                <div class="memory-card-text">Use Claude Opus 4 for complex analysis tasks and Haiku for quick lookups.</div>
+                <div class="memory-card-meta">Set manually · Jun 1</div>
+              </div>
+              <div class="memory-card-actions">
+                <button class="memory-delete-btn" aria-label="Delete"><i class="ti ti-trash"></i></button>
+              </div>
+            </div>
+
+            <div class="memory-card">
+              <div class="memory-card-body">
+                <div class="memory-card-text">Always cite data sources when making claims about revenue or user numbers.</div>
+                <div class="memory-card-meta">Learned from feedback · May 31</div>
+              </div>
+              <div class="memory-card-actions">
+                <button class="memory-delete-btn" aria-label="Delete"><i class="ti ti-trash"></i></button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+<script>
+  document.addEventListener('nav-toggle', function() {
+    document.getElementById('app-nav').classList.toggle('open');
+  });
+</script>
+<script src="../components/core/fresh-button.js"></script>
+<script src="../components/ai/fresh-token-meter.js"></script>
+</body>
+</html>

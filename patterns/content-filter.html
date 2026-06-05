@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Filter &amp; Search — Acme</title>
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="../tokens/primitives.css">
+<link rel="stylesheet" href="../tokens/theme.css">
+<link rel="stylesheet" href="../tokens/dataviz.css">
+<link rel="stylesheet" href="../styles/reset.css">
+<link rel="stylesheet" href="../styles/patterns/dashboard.css">
+<link rel="stylesheet" href="../styles/patterns/content.css">
+<script>if(location.href.indexOf('?thumb')!==-1)document.write('<style>#demo-bar{display:none!important}</style>');</script>
+<script src="../js/pattern-topbar-v2.js"></script>
+<script src="../js/freshds.js"></script>
+<script src="../js/pattern-bar.js"></script>
+</head>
+<body>
+<div id="app">
+
+  <div class="demo-bar" id="demo-bar">
+    <div class="demo-inner" id="demo-inner">
+      <button class="demo-mode-btn" id="mode-toggle-btn" onclick="toggleDemoMode()" aria-label="Toggle dark mode">
+        <i class="ti ti-moon"></i>
+      </button>
+    </div>
+    <div class="demo-sep"></div>
+    <button class="demo-collapse-btn" id="demo-collapse-btn" onclick="toggleDemoBar()" aria-label="Collapse toolbar">
+      <i class="ti ti-minus"></i>
+    </button>
+  </div>
+
+  <div class="dash-shell">
+
+    <pattern-topbar logged-in></pattern-topbar>
+
+    <div class="dash-body">
+
+      <nav class="app-nav open" id="app-nav" aria-label="Main navigation">
+        <div class="app-nav-inner">
+          <button class="app-nav-item active"><i class="ti ti-home"></i> Home</button>
+          <button class="app-nav-item"><i class="ti ti-chart-bar"></i> Analytics</button>
+          <button class="app-nav-item"><i class="ti ti-activity"></i> Activity</button>
+          <button class="app-nav-item"><i class="ti ti-folders"></i> Projects</button>
+          <button class="app-nav-item"><i class="ti ti-check"></i> My tasks</button>
+          <button class="app-nav-item"><i class="ti ti-calendar-event"></i> Calendar</button>
+          <button class="app-nav-item"><i class="ti ti-users"></i> Members</button>
+          <button class="app-nav-item"><i class="ti ti-settings"></i> Settings</button>
+        </div>
+      </nav>
+
+      <!-- Filter sidebar is part of main layout here (no nav sidebar) -->
+      <main class="dash-main">
+
+        <div class="dash-page-header">
+          <div>
+            <div class="dash-page-title">Filter &amp; search</div>
+            <div class="dash-page-subtitle">Narrow results using facets, date ranges, and keywords.</div>
+          </div>
+          <div class="dash-page-actions">
+            <fresh-button variant="secondary" size="sm"><i class="ti ti-bookmark"></i> Save filter</fresh-button>
+            <fresh-button variant="primary" size="sm"><i class="ti ti-plus"></i> New deal</fresh-button>
+          </div>
+        </div>
+
+        <!-- Search bar spanning full width -->
+        <div style="padding:var(--space-4) var(--space-6);border-bottom:1px solid var(--surface-border);background:var(--surface-bg);flex-shrink:0;">
+          <fresh-input
+            placeholder="Search deals by name, company, or owner…"
+            clearable
+            style="max-width:100%;display:block;"
+            value="AI Copilot">
+          </fresh-input>
+          <!-- Active filter chips -->
+          <div style="display:flex;align-items:center;gap:var(--space-2);margin-top:var(--space-3);flex-wrap:wrap;">
+            <span style="font-size:12px;color:var(--text-tertiary);font-weight:500;">Active filters:</span>
+            <span style="display:flex;align-items:center;gap:var(--space-1);padding:3px 10px 3px 8px;background:var(--color-interactive-subtle);color:var(--color-interactive-text);border-radius:var(--radius-full);font-size:12px;font-weight:500;">
+              Stage: Proposal <i class="ti ti-x" style="font-size:10px;cursor:pointer;margin-left:2px;"></i>
+            </span>
+            <span style="display:flex;align-items:center;gap:var(--space-1);padding:3px 10px 3px 8px;background:var(--color-interactive-subtle);color:var(--color-interactive-text);border-radius:var(--radius-full);font-size:12px;font-weight:500;">
+              Owner: Priya <i class="ti ti-x" style="font-size:10px;cursor:pointer;margin-left:2px;"></i>
+            </span>
+            <span style="display:flex;align-items:center;gap:var(--space-1);padding:3px 10px 3px 8px;background:var(--color-interactive-subtle);color:var(--color-interactive-text);border-radius:var(--radius-full);font-size:12px;font-weight:500;">
+              Value: &gt;$50K <i class="ti ti-x" style="font-size:10px;cursor:pointer;margin-left:2px;"></i>
+            </span>
+            <fresh-button variant="ghost" size="sm" style="font-size:12px;padding:0;color:var(--text-tertiary);">Clear all</fresh-button>
+          </div>
+        </div>
+
+        <div class="cnt-filter-layout">
+
+          <!-- Filter sidebar -->
+          <div class="cnt-filter-sidebar">
+
+            <div class="cnt-filter-group">
+              <div class="cnt-filter-group-title">Stage</div>
+              <label class="cnt-filter-option"><fresh-checkbox size="sm"></fresh-checkbox> Discovery <span class="cnt-filter-count">14</span></label>
+              <label class="cnt-filter-option"><fresh-checkbox size="sm" checked></fresh-checkbox> Proposal <span class="cnt-filter-count">22</span></label>
+              <label class="cnt-filter-option"><fresh-checkbox size="sm"></fresh-checkbox> Negotiation <span class="cnt-filter-count">9</span></label>
+              <label class="cnt-filter-option"><fresh-checkbox size="sm"></fresh-checkbox> Closed Won <span class="cnt-filter-count">38</span></label>
+              <label class="cnt-filter-option"><fresh-checkbox size="sm"></fresh-checkbox> Closed Lost <span class="cnt-filter-count">17</span></label>
+            </div>
+
+            <div class="cnt-filter-group">
+              <div class="cnt-filter-group-title">Deal owner</div>
+              <label class="cnt-filter-option"><fresh-checkbox size="sm" checked></fresh-checkbox> Priya Sharma <span class="cnt-filter-count">18</span></label>
+              <label class="cnt-filter-option"><fresh-checkbox size="sm"></fresh-checkbox> Marcus Chen <span class="cnt-filter-count">15</span></label>
+              <label class="cnt-filter-option"><fresh-checkbox size="sm"></fresh-checkbox> Jamie Rivera <span class="cnt-filter-count">12</span></label>
+              <label class="cnt-filter-option"><fresh-checkbox size="sm"></fresh-checkbox> Tom Okeke <span class="cnt-filter-count">11</span></label>
+            </div>
+
+            <div class="cnt-filter-group">
+              <div class="cnt-filter-group-title">Deal value</div>
+              <label class="cnt-filter-option"><fresh-radio name="value" size="sm"></fresh-radio> Any</label>
+              <label class="cnt-filter-option"><fresh-radio name="value" size="sm"></fresh-radio> Under $25K</label>
+              <label class="cnt-filter-option"><fresh-radio name="value" size="sm"></fresh-radio> $25K – $100K</label>
+              <label class="cnt-filter-option"><fresh-radio name="value" size="sm" checked></fresh-radio> Over $100K</label>
+            </div>
+
+            <div class="cnt-filter-group">
+              <div class="cnt-filter-group-title">Close date</div>
+              <label class="cnt-filter-option"><fresh-radio name="date" size="sm"></fresh-radio> Any time</label>
+              <label class="cnt-filter-option"><fresh-radio name="date" size="sm" checked></fresh-radio> This month</label>
+              <label class="cnt-filter-option"><fresh-radio name="date" size="sm"></fresh-radio> Next 30 days</label>
+              <label class="cnt-filter-option"><fresh-radio name="date" size="sm"></fresh-radio> This quarter</label>
+              <label class="cnt-filter-option"><fresh-radio name="date" size="sm"></fresh-radio> Overdue</label>
+            </div>
+
+            <div class="cnt-filter-group">
+              <div class="cnt-filter-group-title">Industry</div>
+              <label class="cnt-filter-option"><fresh-checkbox size="sm"></fresh-checkbox> Enterprise Software <span class="cnt-filter-count">20</span></label>
+              <label class="cnt-filter-option"><fresh-checkbox size="sm"></fresh-checkbox> Healthcare <span class="cnt-filter-count">12</span></label>
+              <label class="cnt-filter-option"><fresh-checkbox size="sm"></fresh-checkbox> Financial Services <span class="cnt-filter-count">9</span></label>
+              <label class="cnt-filter-option"><fresh-checkbox size="sm"></fresh-checkbox> Biotech <span class="cnt-filter-count">7</span></label>
+            </div>
+
+          </div>
+
+          <!-- Results -->
+          <div class="cnt-filter-results">
+
+            <div class="cnt-results-header">
+              <div class="cnt-results-count">6 results matching your filters</div>
+              <div style="display:flex;align-items:center;gap:var(--space-2);">
+                <span style="font-size:13px;color:var(--text-secondary);">Sort:</span>
+                <fresh-select style="--input-width:160px;">
+                  <option>Deal value (high–low)</option>
+                  <option>Close date (soonest)</option>
+                  <option>Last updated</option>
+                </fresh-select>
+              </div>
+            </div>
+
+            <div class="cnt-list dash-card" style="padding:0;overflow:hidden;">
+
+              <div class="cnt-list-row">
+                <div style="width:8px;height:8px;border-radius:50%;background:var(--color-warning);flex-shrink:0;"></div>
+                <div class="cnt-list-info">
+                  <div class="cnt-list-name">AI Copilot Rollout — Orbis Labs</div>
+                  <div class="cnt-list-meta">Proposal · Priya Sharma · Close: Jul 28, 2026</div>
+                </div>
+                <div class="cnt-list-aside">
+                  <span style="font-size:13px;font-weight:700;color:var(--text-primary);">$210K</span>
+                  <fresh-badge variant="warning">55%</fresh-badge>
+                </div>
+              </div>
+
+              <div class="cnt-list-row">
+                <div style="width:8px;height:8px;border-radius:50%;background:var(--color-warning);flex-shrink:0;"></div>
+                <div class="cnt-list-info">
+                  <div class="cnt-list-name">Enterprise Expansion Q3 — Techvault</div>
+                  <div class="cnt-list-meta">Proposal · Priya Sharma · Close: Jul 15, 2026</div>
+                </div>
+                <div class="cnt-list-aside">
+                  <span style="font-size:13px;font-weight:700;color:var(--text-primary);">$128K</span>
+                  <fresh-badge variant="warning">65%</fresh-badge>
+                </div>
+              </div>
+
+              <div class="cnt-list-row">
+                <div style="width:8px;height:8px;border-radius:50%;background:var(--color-warning);flex-shrink:0;"></div>
+                <div class="cnt-list-info">
+                  <div class="cnt-list-name">Platform License Renewal — Luminate Health</div>
+                  <div class="cnt-list-meta">Proposal · Priya Sharma · Close: Jun 30, 2026</div>
+                </div>
+                <div class="cnt-list-aside">
+                  <span style="font-size:13px;font-weight:700;color:var(--text-primary);">$84K</span>
+                  <fresh-badge variant="success">80%</fresh-badge>
+                </div>
+              </div>
+
+              <div class="cnt-list-row">
+                <div style="width:8px;height:8px;border-radius:50%;background:var(--color-warning);flex-shrink:0;"></div>
+                <div class="cnt-list-info">
+                  <div class="cnt-list-name">Compliance Module Add-on — Techvault</div>
+                  <div class="cnt-list-meta">Proposal · Priya Sharma · Close: Jun 25, 2026</div>
+                </div>
+                <div class="cnt-list-aside">
+                  <span style="font-size:13px;font-weight:700;color:var(--text-primary);">$32K</span>
+                  <fresh-badge variant="info">60%</fresh-badge>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+      </main>
+
+    </div>
+  </div>
+
+</div>
+<script>
+  document.addEventListener('nav-toggle', function() {
+    document.getElementById('app-nav').classList.toggle('open');
+  });
+</script>
+<script src="../components/core/fresh-button.js"></script>
+<script src="../components/core/fresh-input.js"></script>
+<script src="../components/core/fresh-select.js"></script>
+<script src="../components/core/fresh-checkbox.js"></script>
+<script src="../components/core/fresh-radio.js"></script>
+<script src="../components/data/fresh-avatar.js"></script>
+<script src="../components/feedback/fresh-badge.js"></script>
+</body>
+</html>

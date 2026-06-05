@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Model Selector — Acme</title>
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="../tokens/primitives.css">
+<link rel="stylesheet" href="../tokens/theme.css">
+<link rel="stylesheet" href="../tokens/dataviz.css">
+<link rel="stylesheet" href="../styles/reset.css">
+<link rel="stylesheet" href="../styles/patterns/ai-chat.css">
+<script>if(location.href.indexOf('?thumb')!==-1)document.write('<style>#demo-bar{display:none!important}</style>');</script>
+<script src="../js/pattern-topbar-v2.js"></script>
+<script src="../js/freshds.js"></script>
+<script src="../js/pattern-bar.js"></script>
+<style>
+  .model-page {
+    flex: 1;
+    overflow-y: auto;
+    padding: var(--space-8) var(--space-6) var(--space-16);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .model-page-inner { width: 100%; max-width: 720px; }
+
+  .model-card {
+    background: var(--surface-canvas);
+    border: 1.5px solid var(--surface-border);
+    border-radius: var(--radius-xl);
+    padding: var(--space-5);
+    margin-bottom: var(--space-3);
+    cursor: pointer;
+    transition: border-color 150ms, box-shadow 150ms;
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-4);
+  }
+  .model-card:hover { border-color: var(--color-interactive-border); }
+  .model-card.selected {
+    border-color: var(--color-interactive);
+    box-shadow: 0 0 0 3px var(--color-interactive-subtle);
+  }
+  .model-card-radio {
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    border: 2px solid var(--surface-border-strong);
+    flex-shrink: 0;
+    margin-top: 2px;
+    transition: all 150ms;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .model-card.selected .model-card-radio {
+    border-color: var(--color-interactive);
+    background: var(--color-interactive);
+  }
+  .model-card.selected .model-card-radio::after {
+    content: '';
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: white;
+  }
+  .model-card-body { flex: 1; min-width: 0; }
+  .model-card-header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    margin-bottom: var(--space-1);
+  }
+  .model-card-name { font-size: 15px; font-weight: 700; color: var(--text-primary); }
+  .model-card-desc { font-size: 13px; color: var(--text-secondary); line-height: 1.5; margin-bottom: var(--space-3); }
+  .model-stats {
+    display: flex;
+    gap: var(--space-4);
+    flex-wrap: wrap;
+  }
+  .model-stat { font-size: 12px; }
+  .model-stat-label { color: var(--text-tertiary); }
+  .model-stat-value { color: var(--text-primary); font-weight: 600; }
+
+  .per-feature-section {
+    margin-top: var(--space-6);
+    background: var(--surface-canvas);
+    border: 1px solid var(--surface-border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+  .per-feature-header {
+    padding: var(--space-4) var(--space-5);
+    border-bottom: 1px solid var(--surface-border);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+  .per-feature-row {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    padding: var(--space-3) var(--space-5);
+    border-bottom: 1px solid var(--surface-border);
+    font-size: 13px;
+  }
+  .per-feature-row:last-child { border-bottom: none; }
+  .per-feature-name { flex: 1; color: var(--text-secondary); }
+</style>
+</head>
+<body>
+<div id="app">
+
+  <div class="demo-bar" id="demo-bar">
+    <div class="demo-inner" id="demo-inner">
+      <button class="demo-mode-btn" id="mode-toggle-btn" onclick="toggleDemoMode()" aria-label="Toggle dark mode">
+        <i class="ti ti-moon"></i>
+      </button>
+    </div>
+    <div class="demo-sep"></div>
+    <button class="demo-collapse-btn" id="demo-collapse-btn" onclick="toggleDemoBar()" aria-label="Collapse toolbar">
+      <i class="ti ti-minus"></i>
+    </button>
+  </div>
+
+  <div class="ai-shell">
+
+    <pattern-topbar logged-in></pattern-topbar>
+
+    <div class="ai-body" style="overflow-y:auto">
+      <div class="model-page">
+        <div class="model-page-inner">
+
+          <div style="margin-bottom:var(--space-6)">
+            <div style="font-size:20px;font-weight:700;color:var(--text-primary);letter-spacing:-0.02em;margin-bottom:var(--space-1)">AI Model</div>
+            <div style="font-size:14px;color:var(--text-secondary)">Choose the default model for all AI features in your workspace. You can override per workflow.</div>
+          </div>
+
+          <!-- Inline selector at top -->
+          <div style="display:flex;align-items:center;gap:var(--space-3);margin-bottom:var(--space-6);padding:var(--space-4);background:var(--surface-canvas);border:1px solid var(--surface-border);border-radius:var(--radius-lg)">
+            <div style="font-size:13px;font-weight:600;color:var(--text-primary)">Default model</div>
+            <div style="flex:1"></div>
+            <fresh-model-selector
+              selected="sonnet"
+              models='[
+                {"key":"opus","name":"Claude Opus 4","badge":"Most capable","description":"Best for complex reasoning"},
+                {"key":"sonnet","name":"Claude Sonnet 4","badge":"Balanced","description":"Great quality at lower cost"},
+                {"key":"haiku","name":"Claude Haiku 4","badge":"Fast","description":"Fastest for simple tasks"}
+              ]'>
+            </fresh-model-selector>
+          </div>
+
+          <!-- Model cards -->
+          <div style="margin-bottom:var(--space-2);font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.07em;color:var(--text-tertiary)">Available models</div>
+
+          <div class="model-card">
+            <div class="model-card-radio"></div>
+            <div class="model-card-body">
+              <div class="model-card-header">
+                <div class="model-card-name">Claude Haiku 4</div>
+                <fresh-badge variant="neutral" size="sm">Fast</fresh-badge>
+              </div>
+              <div class="model-card-desc">Fastest responses for simple tasks — summaries, classifications, short Q&A. Best choice for high-volume, latency-sensitive features.</div>
+              <div class="model-stats">
+                <div class="model-stat"><span class="model-stat-label">Context </span><span class="model-stat-value">200k tokens</span></div>
+                <div class="model-stat"><span class="model-stat-label">Speed </span><span class="model-stat-value">~120 tok/s</span></div>
+                <div class="model-stat"><span class="model-stat-label">Cost </span><span class="model-stat-value">$</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="model-card selected">
+            <div class="model-card-radio"></div>
+            <div class="model-card-body">
+              <div class="model-card-header">
+                <div class="model-card-name">Claude Sonnet 4</div>
+                <fresh-badge variant="primary" size="sm">Balanced</fresh-badge>
+                <fresh-badge variant="success" size="sm">Current</fresh-badge>
+              </div>
+              <div class="model-card-desc">The best balance of intelligence and speed. Great for drafting, analysis, and multi-step reasoning at a lower cost than Opus.</div>
+              <div class="model-stats">
+                <div class="model-stat"><span class="model-stat-label">Context </span><span class="model-stat-value">200k tokens</span></div>
+                <div class="model-stat"><span class="model-stat-label">Speed </span><span class="model-stat-value">~80 tok/s</span></div>
+                <div class="model-stat"><span class="model-stat-label">Cost </span><span class="model-stat-value">$$</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="model-card">
+            <div class="model-card-radio"></div>
+            <div class="model-card-body">
+              <div class="model-card-header">
+                <div class="model-card-name">Claude Opus 4</div>
+                <fresh-badge variant="ai" size="sm">Most capable</fresh-badge>
+              </div>
+              <div class="model-card-desc">The most intelligent model for complex reasoning, nuanced writing, and advanced analysis. Higher cost and latency.</div>
+              <div class="model-stats">
+                <div class="model-stat"><span class="model-stat-label">Context </span><span class="model-stat-value">200k tokens</span></div>
+                <div class="model-stat"><span class="model-stat-label">Speed </span><span class="model-stat-value">~40 tok/s</span></div>
+                <div class="model-stat"><span class="model-stat-label">Cost </span><span class="model-stat-value">$$$$</span></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Per-feature overrides -->
+          <div class="per-feature-section">
+            <div class="per-feature-header">Per-feature model overrides</div>
+            <div class="per-feature-row">
+              <span class="per-feature-name">AI Chat</span>
+              <fresh-model-selector selected="sonnet" models='[{"key":"opus","name":"Opus 4"},{"key":"sonnet","name":"Sonnet 4"},{"key":"haiku","name":"Haiku 4"}]'></fresh-model-selector>
+            </div>
+            <div class="per-feature-row">
+              <span class="per-feature-name">Document summaries</span>
+              <fresh-model-selector selected="haiku" models='[{"key":"opus","name":"Opus 4"},{"key":"sonnet","name":"Sonnet 4"},{"key":"haiku","name":"Haiku 4"}]'></fresh-model-selector>
+            </div>
+            <div class="per-feature-row">
+              <span class="per-feature-name">AI Insights</span>
+              <fresh-model-selector selected="opus" models='[{"key":"opus","name":"Opus 4"},{"key":"sonnet","name":"Sonnet 4"},{"key":"haiku","name":"Haiku 4"}]'></fresh-model-selector>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+<script>
+  document.addEventListener('nav-toggle', function() {
+    document.getElementById('app-nav').classList.toggle('open');
+  });
+</script>
+<script src="../components/core/fresh-button.js"></script>
+<script src="../components/feedback/fresh-badge.js"></script>
+<script src="../components/ai/fresh-model-selector.js"></script>
+</body>
+</html>

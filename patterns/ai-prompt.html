@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prompt Builder — Acme</title>
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="../tokens/primitives.css">
+<link rel="stylesheet" href="../tokens/theme.css">
+<link rel="stylesheet" href="../tokens/dataviz.css">
+<link rel="stylesheet" href="../styles/reset.css">
+<link rel="stylesheet" href="../styles/patterns/ai-chat.css">
+<script>if(location.href.indexOf('?thumb')!==-1)document.write('<style>#demo-bar{display:none!important}</style>');</script>
+<script src="../js/pattern-topbar-v2.js"></script>
+<script src="../js/freshds.js"></script>
+<script src="../js/pattern-bar.js"></script>
+<style>
+  .prompt-layout {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    overflow: hidden;
+  }
+  .prompt-editor {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border-right: 1px solid var(--surface-border);
+  }
+  .prompt-editor-header {
+    padding: var(--space-4) var(--space-5);
+    border-bottom: 1px solid var(--surface-border);
+    background: var(--surface-bg);
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    flex-shrink: 0;
+  }
+  .prompt-editor-title { font-size: 13px; font-weight: 600; color: var(--text-primary); flex: 1; }
+  .prompt-section {
+    padding: var(--space-4) var(--space-5);
+    border-bottom: 1px solid var(--surface-border);
+    flex-shrink: 0;
+  }
+  .prompt-section-label {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--text-tertiary);
+    margin-bottom: var(--space-3);
+  }
+  .prompt-textarea {
+    width: 100%;
+    padding: var(--space-3);
+    background: var(--surface-input);
+    border: 1px solid var(--surface-border);
+    border-radius: var(--radius-md);
+    font-family: var(--font-sans);
+    font-size: 13px;
+    color: var(--text-primary);
+    line-height: 1.55;
+    resize: none;
+    outline: none;
+    transition: border-color 0.15s, box-shadow 0.15s;
+    min-height: 80px;
+  }
+  .prompt-textarea:focus {
+    border-color: var(--color-interactive);
+    box-shadow: 0 0 0 3px var(--color-interactive-subtle);
+  }
+  .variable-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 2px var(--space-2);
+    background: var(--color-interactive-subtle);
+    border: 1px solid var(--color-interactive-border);
+    border-radius: var(--radius-sm);
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--color-interactive-text);
+    font-family: var(--font-mono, monospace);
+    cursor: pointer;
+    margin: 2px;
+  }
+  .prompt-preview-panel {
+    overflow-y: auto;
+    padding: var(--space-5);
+    background: var(--surface-subtle);
+  }
+  .preview-label {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--text-tertiary);
+    margin-bottom: var(--space-3);
+  }
+
+  @media (max-width: 900px) {
+    .prompt-layout { grid-template-columns: 1fr; }
+    .prompt-preview-panel { display: none; }
+  }
+</style>
+</head>
+<body>
+<div id="app">
+
+  <div class="demo-bar" id="demo-bar">
+    <div class="demo-inner" id="demo-inner">
+      <button class="demo-mode-btn" id="mode-toggle-btn" onclick="toggleDemoMode()" aria-label="Toggle dark mode">
+        <i class="ti ti-moon"></i>
+      </button>
+    </div>
+    <div class="demo-sep"></div>
+    <button class="demo-collapse-btn" id="demo-collapse-btn" onclick="toggleDemoBar()" aria-label="Collapse toolbar">
+      <i class="ti ti-minus"></i>
+    </button>
+  </div>
+
+  <div class="ai-shell">
+
+    <pattern-topbar logged-in></pattern-topbar>
+
+    <div class="ai-body">
+
+      <nav class="app-nav open" id="app-nav" aria-label="Main navigation">
+        <div class="app-nav-inner">
+          <button class="app-nav-item active"><i class="ti ti-home"></i> Home</button>
+          <button class="app-nav-item"><i class="ti ti-chart-bar"></i> Analytics</button>
+          <button class="app-nav-item"><i class="ti ti-activity"></i> Activity</button>
+          <button class="app-nav-item"><i class="ti ti-folders"></i> Projects</button>
+          <button class="app-nav-item"><i class="ti ti-check"></i> My tasks</button>
+          <button class="app-nav-item"><i class="ti ti-calendar-event"></i> Calendar</button>
+          <button class="app-nav-item"><i class="ti ti-users"></i> Members</button>
+          <button class="app-nav-item"><i class="ti ti-settings"></i> Settings</button>
+        </div>
+      </nav>
+      <div class="prompt-layout">
+
+        <!-- Prompt editor -->
+        <div class="prompt-editor">
+          <div class="prompt-editor-header">
+            <fresh-input value="Customer support assistant" style="flex:1" size="sm"></fresh-input>
+            <fresh-model-selector
+              selected="sonnet"
+              models='[
+                {"key":"opus","name":"Claude Opus 4","badge":"Best"},
+                {"key":"sonnet","name":"Claude Sonnet 4","badge":"Balanced"},
+                {"key":"haiku","name":"Claude Haiku 4","badge":"Fast"}
+              ]'>
+            </fresh-model-selector>
+          </div>
+
+          <div class="prompt-section">
+            <div class="prompt-section-label">System prompt</div>
+            <textarea class="prompt-textarea" rows="5">You are a helpful customer support assistant for {{company_name}}. Your tone is {{tone}} and professional. Always:
+- Acknowledge the customer's issue
+- Provide a clear resolution or next step
+- Offer to escalate if unresolved after 2 attempts
+
+Context: {{knowledge_base}}</textarea>
+            <div style="margin-top:var(--space-2);display:flex;flex-wrap:wrap;gap:4px;align-items:center">
+              <span style="font-size:11px;color:var(--text-tertiary);margin-right:4px">Variables:</span>
+              <span class="variable-chip"><i class="ti ti-braces" style="font-size:10px"></i>company_name</span>
+              <span class="variable-chip"><i class="ti ti-braces" style="font-size:10px"></i>tone</span>
+              <span class="variable-chip"><i class="ti ti-braces" style="font-size:10px"></i>knowledge_base</span>
+            </div>
+          </div>
+
+          <div class="prompt-section" style="flex:1">
+            <div class="prompt-section-label">Test message</div>
+            <textarea class="prompt-textarea" rows="3" placeholder="Enter a test user message to preview the output…">My order hasn't arrived and it's been 2 weeks. Order #48821.</textarea>
+          </div>
+
+          <div style="padding:var(--space-4) var(--space-5);border-top:1px solid var(--surface-border);background:var(--surface-bg);display:flex;align-items:center;gap:var(--space-3)">
+            <fresh-button variant="ghost" size="sm"><i class="ti ti-history"></i> Version history</fresh-button>
+            <div style="flex:1"></div>
+            <fresh-token-meter used="340" total="200000" compact></fresh-token-meter>
+            <fresh-button variant="primary" size="sm"><i class="ti ti-player-play"></i> Run test</fresh-button>
+          </div>
+        </div>
+
+        <!-- Preview panel -->
+        <div class="prompt-preview-panel">
+          <div class="preview-label">Output preview</div>
+          <fresh-ai-response role="assistant" model="Claude Sonnet 4">
+            Hi there! I'm sorry to hear your order hasn't arrived — 2 weeks is definitely longer than expected, and I completely understand your frustration.<br><br>
+            Let me look into order <strong>#48821</strong> right away. While I pull up the details, could you confirm the shipping address we have on file? This helps me check if there's been a delivery attempt we may have missed.<br><br>
+            In the meantime, I'll flag this for our fulfilment team to investigate the delay.
+          </fresh-ai-response>
+
+          <div style="margin-top:var(--space-4)">
+            <div class="preview-label">Resolved variables</div>
+            <div style="font-size:12px;color:var(--text-secondary);line-height:1.8">
+              <code style="background:var(--surface-overlay);padding:1px 5px;border-radius:3px;font-size:11px">company_name</code> → Acme<br>
+              <code style="background:var(--surface-overlay);padding:1px 5px;border-radius:3px;font-size:11px">tone</code> → empathetic<br>
+              <code style="background:var(--surface-overlay);padding:1px 5px;border-radius:3px;font-size:11px">knowledge_base</code> → Support docs v2.4
+            </div>
+          </div>
+
+          <div style="margin-top:var(--space-4)">
+            <div class="preview-label">Metrics</div>
+            <fresh-token-meter used="612" total="4096" label="Prompt tokens" show-bar></fresh-token-meter>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div>
+<script>
+  document.addEventListener('nav-toggle', function() {
+    document.getElementById('app-nav').classList.toggle('open');
+  });
+</script>
+<script src="../components/core/fresh-button.js"></script>
+<script src="../components/core/fresh-input.js"></script>
+<script src="../components/data/fresh-avatar.js"></script>
+<script src="../components/ai/fresh-ai-response.js"></script>
+<script src="../components/ai/fresh-model-selector.js"></script>
+<script src="../components/ai/fresh-token-meter.js"></script>
+</body>
+</html>

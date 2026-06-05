@@ -1,0 +1,101 @@
+/* ============================================================
+   FRESHDS — DATA VISUALIZATION COLOR TOKENS
+   Fixed palette — not customer-configurable. Never expose
+   in the Configurator. These tokens are owned by the DS and
+   must not vary by customer theme.
+
+   Use in data display and chart components only:
+     --dv-{n}         main fill — bars, lines, dots, pie slices
+     --dv-{n}-subtle  area fills, row highlights, backgrounds
+     --dv-{n}-label   annotations written on top of subtle fills
+
+   Series assignment: --dv-1 (Indigo) → --dv-8 (Driftwood)
+   ============================================================ */
+
+:root {
+  /* ── Light mode ── */
+
+  /* 1 — Indigo */
+  --dv-1:        #4D6EE3;
+  --dv-1-subtle: #E4E9FC;
+  --dv-1-label:  #1E3A9C;
+
+  /* 2 — Tangerine */
+  --dv-2:        #E8652A;
+  --dv-2-subtle: #FCEADE;
+  --dv-2-label:  #7A2E09;
+
+  /* 3 — Teal */
+  --dv-3:        #3AAFA9;
+  --dv-3-subtle: #D9F1F0;
+  --dv-3-label:  #145855;
+
+  /* 4 — Plum */
+  --dv-4:        #C94E8E;
+  --dv-4-subtle: #F7DDF0;
+  --dv-4-label:  #6A1847;
+
+  /* 5 — Marigold */
+  --dv-5:        #D4981A;
+  --dv-5-subtle: #FEF3D6;
+  --dv-5-label:  #7B5403;
+
+  /* 6 — Violet */
+  --dv-6:        #6B4FBB;
+  --dv-6-subtle: #EAE5F7;
+  --dv-6-label:  #3A2070;
+
+  /* 7 — Fern */
+  --dv-7:        #3DAA62;
+  --dv-7-subtle: #D6F0E2;
+  --dv-7-label:  #1A5732;
+
+  /* 8 — Driftwood */
+  --dv-8:        #8A7560;
+  --dv-8-subtle: #EDE9E4;
+  --dv-8-label:  #433829;
+}
+
+[data-mode="dark"] {
+  /* ── Dark mode ── */
+
+  /* 1 — Indigo */
+  --dv-1:        #7B96EC;
+  --dv-1-subtle: #1A2347;
+  --dv-1-label:  #B8C8F8;
+
+  /* 2 — Tangerine */
+  --dv-2:        #F0885A;
+  --dv-2-subtle: #2E1508;
+  --dv-2-label:  #FAC4A8;
+
+  /* 3 — Teal */
+  --dv-3:        #4EC9C3;
+  --dv-3-subtle: #0E2E2D;
+  --dv-3-label:  #A0E8E5;
+
+  /* 4 — Plum */
+  --dv-4:        #DC7DB5;
+  --dv-4-subtle: #2D1124;
+  --dv-4-label:  #F2B8D8;
+
+  /* 5 — Marigold */
+  --dv-5:        #F0C050;
+  --dv-5-subtle: #2B2008;
+  --dv-5-label:  #FAE0A0;
+
+  /* 6 — Violet */
+  --dv-6:        #9B80D6;
+  --dv-6-subtle: #1E1530;
+  --dv-6-label:  #CFC0F0;
+
+  /* 7 — Fern */
+  --dv-7:        #5DC87A;
+  --dv-7-subtle: #0F2B18;
+  --dv-7-label:  #A8E8BC;
+
+  /* 8 — Driftwood */
+  --dv-8:        #B09E8C;
+  --dv-8-subtle: #221C15;
+  --dv-8-label:  #D8CCBF;
+}

@@ -1,0 +1,28 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Backup files
+*.bak
+*.orig
+
+# Environment / secrets
+.env
+.env.local
+.env.*.local
+
+# Claude Code internals
+.claude/
+
+# Node (for future Astro migration)
+node_modules/
+dist/
+.astro/
+
+# Vercel
+.vercel/
+
+# Editor
+.vscode/
+.idea/

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dropdown Button — FreshDS</title>
+<base href="../../">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="tokens/primitives.css">
+<link rel="stylesheet" href="tokens/theme.css">
+<link rel="stylesheet" href="tokens/dataviz.css">
+<link rel="stylesheet" href="styles/reset.css">
+<link rel="stylesheet" href="styles/layout.css">
+<link rel="stylesheet" href="styles/components/core.css">
+<link rel="stylesheet" href="styles/docs.css">
+<script src="js/freshds.js"></script>
+<script src="js/freshds-site.js"></script>
+</head>
+<body>
+<div class="fds-app" id="app">
+  <ds-topbar active-section="ds"></ds-topbar>
+  <div class="fds-body">
+    <ds-shell active="dropdown-button"></ds-shell>
+    <main class="fds-main">
+      <div class="fds-page active" id="page-dropdown-button">
+        <div class="page-header">
+          <div class="page-eyebrow">Core UI</div>
+          <h1 class="page-title">Dropdown button</h1>
+          <p class="page-desc">A split button pairing a primary action label with a chevron that opens a contextual menu. Also known as a <strong>split button</strong> or <strong>menu button</strong> (W3C ARIA). Use when a single action has multiple related variants or destinations.</p>
+        </div>
+
+        <div class="page-section">
+          <div class="page-section-title">Variants</div>
+          <div class="demo-surface" style="align-items:center">
+            <fresh-dropdown-button label="Export" variant="primary">
+              <option value="csv">Export as CSV</option>
+              <option value="pdf">Export as PDF</option>
+              <option value="png">Export as PNG</option>
+            </fresh-dropdown-button>
+            <fresh-dropdown-button label="Actions" variant="secondary">
+              <option value="edit">Edit</option>
+              <option value="duplicate">Duplicate</option>
+              <option value="delete" class="danger">Delete</option>
+            </fresh-dropdown-button>
+            <fresh-dropdown-button label="More" variant="ghost">
+              <option value="share">Share</option>
+              <option value="archive">Archive</option>
+            </fresh-dropdown-button>
+            <fresh-dropdown-button label="Remove" variant="danger">
+              <option value="soft">Soft delete</option>
+              <option value="hard" class="danger">Permanently delete</option>
+            </fresh-dropdown-button>
+          </div>
+        </div>
+
+        <div class="page-section">
+          <div class="page-section-title">Sizes</div>
+          <div class="demo-surface" style="align-items:center">
+            <fresh-dropdown-button label="Small" variant="primary" size="sm">
+              <option value="a">Option A</option>
+              <option value="b">Option B</option>
+            </fresh-dropdown-button>
+            <fresh-dropdown-button label="Default" variant="primary">
+              <option value="a">Option A</option>
+              <option value="b">Option B</option>
+            </fresh-dropdown-button>
+            <fresh-dropdown-button label="Large" variant="primary" size="lg">
+              <option value="a">Option A</option>
+              <option value="b">Option B</option>
+            </fresh-dropdown-button>
+          </div>
+        </div>
+
+        <div class="page-section">
+          <div class="page-section-title">States</div>
+          <div class="demo-surface" style="align-items:center">
+            <fresh-dropdown-button label="Enabled" variant="primary">
+              <option value="a">Option A</option>
+            </fresh-dropdown-button>
+            <fresh-dropdown-button label="Disabled" variant="primary" disabled>
+              <option value="a">Option A</option>
+            </fresh-dropdown-button>
+            <fresh-dropdown-button label="With danger item" variant="danger">
+              <option value="edit">Edit</option>
+              <option value="delete" class="danger">Delete</option>
+            </fresh-dropdown-button>
+          </div>
+        </div>
+
+        <div class="page-section">
+          <div class="page-section-title">All variants × all sizes</div>
+          <div class="demo-surface col" style="gap:var(--space-4)">
+            <div style="display:flex;gap:var(--space-3);align-items:center">
+              <fresh-dropdown-button label="Primary"   variant="primary"   size="sm"><option value="a">Option</option></fresh-dropdown-button>
+              <fresh-dropdown-button label="Secondary" variant="secondary" size="sm"><option value="a">Option</option></fresh-dropdown-button>
+              <fresh-dropdown-button label="Ghost"     variant="ghost"     size="sm"><option value="a">Option</option></fresh-dropdown-button>
+              <fresh-dropdown-button label="Danger"    variant="danger"    size="sm"><option value="a">Option</option></fresh-dropdown-button>
+            </div>
+            <div style="display:flex;gap:var(--space-3);align-items:center">
+              <fresh-dropdown-button label="Primary"   variant="primary"  ><option value="a">Option</option></fresh-dropdown-button>
+              <fresh-dropdown-button label="Secondary" variant="secondary"><option value="a">Option</option></fresh-dropdown-button>
+              <fresh-dropdown-button label="Ghost"     variant="ghost"    ><option value="a">Option</option></fresh-dropdown-button>
+              <fresh-dropdown-button label="Danger"    variant="danger"   ><option value="a">Option</option></fresh-dropdown-button>
+            </div>
+            <div style="display:flex;gap:var(--space-3);align-items:center">
+              <fresh-dropdown-button label="Primary"   variant="primary"   size="lg"><option value="a">Option</option></fresh-dropdown-button>
+              <fresh-dropdown-button label="Secondary" variant="secondary" size="lg"><option value="a">Option</option></fresh-dropdown-button>
+              <fresh-dropdown-button label="Ghost"     variant="ghost"     size="lg"><option value="a">Option</option></fresh-dropdown-button>
+              <fresh-dropdown-button label="Danger"    variant="danger"    size="lg"><option value="a">Option</option></fresh-dropdown-button>
+            </div>
+          </div>
+        </div>
+
+        <div class="page-section">
+          <div class="page-section-title">Rich items</div>
+          <div class="demo-surface">
+            <fresh-dropdown-button label="Export" variant="primary" items='[{"value":"bundle","label":"Dev Kit","desc":"Theme-matched CSS tokens and components only. No docs — just the files your devs need."},{"separator":true},{"value":"dssite","label":"Full DS","desc":"Complete documentation site with all components, tokens, and guides. Host it for your team."}]'></fresh-dropdown-button>
+            <fresh-dropdown-button label="Deploy" variant="secondary" items='[{"value":"staging","label":"Staging","desc":"Preview environment — no customer traffic."},{"separator":true},{"value":"prod","label":"Production","desc":"Live environment. Requires approval.","danger":true}]'></fresh-dropdown-button>
+          </div>
+        </div>
+
+        <div class="page-section">
+          <div class="page-section-title">Attributes</div>
+          <table class="usage-table">
+            <thead><tr><th>Attribute</th><th>Values</th><th>Default</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td>label</td><td>string</td><td><code>Options</code></td><td>Text shown in the button label area</td></tr>
+              <tr><td>variant</td><td><code>primary</code> <code>secondary</code> <code>ghost</code> <code>danger</code></td><td><code>primary</code></td><td>Visual style — mirrors fresh-button variants</td></tr>
+              <tr><td>size</td><td><code>sm</code> <code>md</code> <code>lg</code></td><td><code>md</code></td><td>Height and padding scale (28 / 34 / 40px)</td></tr>
+              <tr><td>disabled</td><td>boolean</td><td>—</td><td>Disables the entire control</td></tr>
+              <tr><td>items</td><td>JSON array</td><td>—</td><td>Pass items as JSON instead of &lt;option&gt; children. Each item: <code>{ value, label, desc?, separator?, danger?, disabled? }</code></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="page-section">
+          <div class="page-section-title">Events</div>
+          <table class="usage-table">
+            <thead><tr><th>Event</th><th>Detail</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td>select</td><td><code>{ value, label }</code></td><td>Fired when a menu item is chosen</td></tr>
+              <tr><td>action</td><td>—</td><td>Fired when the label half is clicked directly</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="page-section">
+          <div class="page-section-title">Tokens</div>
+          <div style="display:flex;flex-wrap:wrap;gap:var(--space-2)">
+            <span class="token-pill"><span class="token-dot" style="background:var(--btn-primary-bg)"></span>--btn-primary-bg</span>
+            <span class="token-pill"><span class="token-dot" style="background:var(--btn-primary-text);border:1px solid var(--surface-border)"></span>--btn-primary-text</span>
+            <span class="token-pill"><span class="token-dot" style="background:var(--btn-secondary-border)"></span>--btn-secondary-border</span>
+            <span class="token-pill"><span class="token-dot" style="background:var(--surface-bg);border:1px solid var(--surface-border)"></span>--surface-bg</span>
+            <span class="token-pill"><span class="token-dot" style="background:var(--surface-border)"></span>--surface-border</span>
+            <span class="token-pill"><span class="token-dot" style="background:var(--color-danger)"></span>--color-danger</span>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+<script src="components/core/fresh-button.js"></script>
+<script src="components/core/fresh-input.js"></script>
+<script src="components/core/fresh-dropdown-button.js"></script>
+<script src="components/navigation/fresh-simple-tabs.js"></script>
+</body>
+</html>

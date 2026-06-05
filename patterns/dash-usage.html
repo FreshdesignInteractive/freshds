@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Usage & Quotas — Acme</title>
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="../tokens/primitives.css">
+<link rel="stylesheet" href="../tokens/theme.css">
+<link rel="stylesheet" href="../tokens/dataviz.css">
+<link rel="stylesheet" href="../styles/reset.css">
+<link rel="stylesheet" href="../styles/patterns/dashboard.css">
+<script>if(location.href.indexOf('?thumb')!==-1)document.write('<style>#demo-bar{display:none!important}</style>');</script>
+<script src="../js/pattern-topbar-v2.js"></script>
+<script src="../js/freshds.js"></script>
+<script src="../js/pattern-bar.js"></script>
+<style>
+  /* Quota card */
+  .quota-card {
+    background: var(--surface-canvas);
+    border: 1px solid var(--surface-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-5);
+    margin-bottom: var(--space-3);
+    transition: border-color 150ms;
+  }
+  .quota-card.warning { border-color: var(--color-warning-border); }
+  .quota-card.danger  { border-color: var(--color-danger-border); }
+
+  .quota-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: var(--space-4);
+  }
+  .quota-icon {
+    width: 34px; height: 34px;
+    border-radius: var(--radius-md);
+    background: var(--surface-subtle);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; color: var(--text-secondary);
+  }
+  .quota-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 2px;
+  }
+  .quota-desc { font-size: 12px; color: var(--text-tertiary); }
+  .quota-values {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-1);
+    margin-bottom: var(--space-3);
+  }
+  .quota-used {
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--text-primary);
+    letter-spacing: -0.03em;
+    font-variant-numeric: tabular-nums;
+  }
+  .quota-separator { font-size: 14px; color: var(--text-tertiary); }
+  .quota-total { font-size: 14px; color: var(--text-secondary); font-weight: 500; }
+  .quota-reset { font-size: 11px; color: var(--text-tertiary); margin-top: 4px; }
+
+  /* Plan card */
+  .plan-card {
+    background: var(--color-interactive-subtle);
+    border: 1.5px solid var(--color-interactive-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-5);
+    margin-bottom: var(--space-4);
+  }
+  .plan-name { font-size: 16px; font-weight: 700; color: var(--color-interactive-text); margin-bottom: var(--space-1); }
+  .plan-price { font-size: 24px; font-weight: 800; color: var(--text-primary); letter-spacing: -0.04em; margin-bottom: var(--space-1); }
+  .plan-price span { font-size: 13px; font-weight: 400; color: var(--text-secondary); }
+  .plan-renewal { font-size: 12px; color: var(--text-tertiary); margin-bottom: var(--space-4); }
+  .plan-feature-list { display: flex; flex-direction: column; gap: var(--space-2); margin-bottom: var(--space-4); }
+  .plan-feature {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: 13px;
+    color: var(--text-secondary);
+  }
+  .plan-feature i { color: var(--color-success); font-size: 14px; }
+</style>
+</head>
+<body>
+<div id="app">
+
+  <div class="demo-bar" id="demo-bar">
+    <div class="demo-inner" id="demo-inner">
+      <button class="demo-mode-btn" id="mode-toggle-btn" onclick="toggleDemoMode()" aria-label="Toggle dark mode">
+        <i class="ti ti-moon"></i>
+      </button>
+    </div>
+    <div class="demo-sep"></div>
+    <button class="demo-collapse-btn" id="demo-collapse-btn" onclick="toggleDemoBar()" aria-label="Collapse toolbar">
+      <i class="ti ti-minus"></i>
+    </button>
+  </div>
+
+  <div class="dash-shell">
+
+    <pattern-topbar logged-in></pattern-topbar>
+
+    <div class="dash-body">
+
+      <nav class="app-nav open" id="app-nav" aria-label="Main navigation">
+        <div class="app-nav-inner">
+          <button class="app-nav-item active"><i class="ti ti-home"></i> Home</button>
+          <button class="app-nav-item"><i class="ti ti-chart-bar"></i> Analytics</button>
+          <button class="app-nav-item"><i class="ti ti-activity"></i> Activity</button>
+          <button class="app-nav-item"><i class="ti ti-folders"></i> Projects</button>
+          <button class="app-nav-item"><i class="ti ti-check"></i> My tasks</button>
+          <button class="app-nav-item"><i class="ti ti-calendar-event"></i> Calendar</button>
+          <button class="app-nav-item"><i class="ti ti-users"></i> Members</button>
+          <button class="app-nav-item"><i class="ti ti-settings"></i> Settings</button>
+        </div>
+      </nav>
+
+      <main class="dash-main">
+        <div class="dash-page-header">
+          <div>
+            <div class="dash-page-title">Usage &amp; Quotas</div>
+            <div class="dash-page-subtitle">Your current plan usage · Resets Jul 1, 2026</div>
+          </div>
+          <div class="dash-page-actions">
+            <fresh-button variant="primary" size="sm"><i class="ti ti-arrow-up"></i> Upgrade plan</fresh-button>
+          </div>
+        </div>
+
+        <div class="dash-content">
+          <div class="dash-cols-2">
+
+            <!-- Left: quota meters -->
+            <div>
+              <!-- API calls — warning -->
+              <div class="quota-card warning">
+                <div class="quota-header">
+                  <div>
+                    <div class="quota-name">API calls</div>
+                    <div class="quota-desc">REST API &amp; webhook requests</div>
+                  </div>
+                  <div class="quota-icon"><i class="ti ti-api"></i></div>
+                </div>
+                <div class="quota-values">
+                  <span class="quota-used">820k</span>
+                  <span class="quota-separator">/</span>
+                  <span class="quota-total">1,000k</span>
+                </div>
+                <fresh-progress value="82" warn-at="80" show-percent></fresh-progress>
+                <div class="quota-reset">Resets in 28 days</div>
+              </div>
+
+              <!-- Storage — ok -->
+              <div class="quota-card">
+                <div class="quota-header">
+                  <div>
+                    <div class="quota-name">Storage</div>
+                    <div class="quota-desc">Uploaded files &amp; attachments</div>
+                  </div>
+                  <div class="quota-icon"><i class="ti ti-database"></i></div>
+                </div>
+                <div class="quota-values">
+                  <span class="quota-used">4.2 GB</span>
+                  <span class="quota-separator">/</span>
+                  <span class="quota-total">50 GB</span>
+                </div>
+                <fresh-progress value="8" show-percent></fresh-progress>
+                <div class="quota-reset">Resets in 28 days</div>
+              </div>
+
+              <!-- Seats — at limit -->
+              <div class="quota-card danger">
+                <div class="quota-header">
+                  <div>
+                    <div class="quota-name">Team seats</div>
+                    <div class="quota-desc">Active workspace members</div>
+                  </div>
+                  <div class="quota-icon"><i class="ti ti-users"></i></div>
+                </div>
+                <div class="quota-values">
+                  <span class="quota-used">5</span>
+                  <span class="quota-separator">/</span>
+                  <span class="quota-total">5</span>
+                </div>
+                <fresh-progress value="100" warn-at="90" show-percent></fresh-progress>
+                <div class="quota-reset" style="color:var(--color-danger)">Seat limit reached — upgrade to add more</div>
+              </div>
+
+              <!-- AI tokens — ok -->
+              <div class="quota-card">
+                <div class="quota-header">
+                  <div>
+                    <div class="quota-name">AI tokens</div>
+                    <div class="quota-desc">Tokens consumed across all AI features</div>
+                  </div>
+                  <div class="quota-icon"><i class="ti ti-sparkles"></i></div>
+                </div>
+                <div class="quota-values">
+                  <span class="quota-used">1.2M</span>
+                  <span class="quota-separator">/</span>
+                  <span class="quota-total">5M</span>
+                </div>
+                <fresh-token-meter used="1200000" total="5000000"></fresh-token-meter>
+                <div class="quota-reset">Resets in 28 days</div>
+              </div>
+            </div>
+
+            <!-- Right: plan card + usage chart -->
+            <div>
+              <div class="plan-card">
+                <div class="plan-name">Pro Plan</div>
+                <div class="plan-price">$149 <span>/ month</span></div>
+                <div class="plan-renewal">Renews Jul 1, 2026</div>
+                <div class="plan-feature-list">
+                  <div class="plan-feature"><i class="ti ti-check"></i> 1M API calls / month</div>
+                  <div class="plan-feature"><i class="ti ti-check"></i> 5 team seats</div>
+                  <div class="plan-feature"><i class="ti ti-check"></i> 50 GB storage</div>
+                  <div class="plan-feature"><i class="ti ti-check"></i> 5M AI tokens / month</div>
+                  <div class="plan-feature"><i class="ti ti-check"></i> Priority support</div>
+                </div>
+                <fresh-button variant="primary" style="width:100%">Upgrade to Enterprise</fresh-button>
+              </div>
+
+              <!-- Usage trend chart -->
+              <fresh-chart title="API usage trend" description="Daily API calls over last 30 days" height="180px">
+                <svg viewBox="0 0 300 120" style="width:100%;height:100%;display:block;" preserveAspectRatio="none">
+                  <defs>
+                    <linearGradient id="usage-grad" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stop-color="var(--dv-5)" stop-opacity="0.2"/>
+                      <stop offset="100%" stop-color="var(--dv-5)" stop-opacity="0"/>
+                    </linearGradient>
+                  </defs>
+                  <path d="M0,100 C20,96 40,90 60,84 C80,78 100,82 120,74 C140,66 160,60 180,54 C200,48 220,52 240,44 C260,36 280,30 300,22 L300,120 L0,120 Z" fill="url(#usage-grad)"/>
+                  <path d="M0,100 C20,96 40,90 60,84 C80,78 100,82 120,74 C140,66 160,60 180,54 C200,48 220,52 240,44 C260,36 280,30 300,22" fill="none" stroke="var(--dv-5)" stroke-width="2" stroke-linecap="round"/>
+                  <!-- warning threshold line -->
+                  <line x1="0" y1="32" x2="300" y2="32" stroke="var(--color-danger)" stroke-width="1" stroke-dasharray="4 3" opacity="0.6"/>
+                  <text x="4" y="28" font-size="8" fill="var(--color-danger)" opacity="0.8">80% limit</text>
+                </svg>
+              </fresh-chart>
+            </div>
+
+          </div>
+        </div>
+      </main>
+
+    </div>
+  </div>
+
+</div>
+<script>
+  document.addEventListener('nav-toggle', function() {
+    document.getElementById('app-nav').classList.toggle('open');
+  });
+</script>
+<script src="../components/core/fresh-button.js"></script>
+<script src="../components/data/fresh-avatar.js"></script>
+<script src="../components/data/fresh-chart.js"></script>
+<script src="../components/feedback/fresh-progress.js"></script>
+<script src="../components/ai/fresh-token-meter.js"></script>
+</body>
+</html>

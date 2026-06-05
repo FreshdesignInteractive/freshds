@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Metrics Overview — Acme</title>
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="../tokens/primitives.css">
+<link rel="stylesheet" href="../tokens/theme.css">
+<link rel="stylesheet" href="../tokens/dataviz.css">
+<link rel="stylesheet" href="../styles/reset.css">
+<link rel="stylesheet" href="../styles/patterns/dashboard.css">
+<script>if(location.href.indexOf('?thumb')!==-1)document.write('<style>#demo-bar{display:none!important}</style>');</script>
+<script src="../js/pattern-topbar-v2.js"></script>
+<script src="../js/freshds.js"></script>
+<script src="../js/pattern-bar.js"></script>
+</head>
+<body>
+<div id="app">
+
+  <div class="demo-bar" id="demo-bar">
+    <div class="demo-inner" id="demo-inner">
+      <button class="demo-mode-btn" id="mode-toggle-btn" onclick="toggleDemoMode()" aria-label="Toggle dark mode">
+        <i class="ti ti-moon"></i>
+      </button>
+    </div>
+    <div class="demo-sep"></div>
+    <button class="demo-collapse-btn" id="demo-collapse-btn" onclick="toggleDemoBar()" aria-label="Collapse toolbar">
+      <i class="ti ti-minus"></i>
+    </button>
+  </div>
+
+  <div class="dash-shell">
+
+    <pattern-topbar logged-in></pattern-topbar>
+
+    <div class="dash-body">
+
+      <nav class="app-nav open" id="app-nav" aria-label="Main navigation">
+        <div class="app-nav-inner">
+          <button class="app-nav-item active"><i class="ti ti-home"></i> Home</button>
+          <button class="app-nav-item"><i class="ti ti-chart-bar"></i> Analytics</button>
+          <button class="app-nav-item"><i class="ti ti-activity"></i> Activity</button>
+          <button class="app-nav-item"><i class="ti ti-folders"></i> Projects</button>
+          <button class="app-nav-item"><i class="ti ti-check"></i> My tasks</button>
+          <button class="app-nav-item"><i class="ti ti-calendar-event"></i> Calendar</button>
+          <button class="app-nav-item"><i class="ti ti-users"></i> Members</button>
+          <button class="app-nav-item"><i class="ti ti-settings"></i> Settings</button>
+        </div>
+      </nav>
+
+      <main class="dash-main">
+        <div class="dash-page-header">
+          <div>
+            <div class="dash-page-title">Metrics Overview</div>
+            <div class="dash-page-subtitle">Key performance indicators across your workspace.</div>
+          </div>
+          <div class="dash-page-actions">
+            <fresh-button variant="secondary" size="sm"><i class="ti ti-calendar"></i> Last 30 days</fresh-button>
+            <fresh-button variant="secondary" size="sm"><i class="ti ti-download"></i> Export</fresh-button>
+          </div>
+        </div>
+
+        <div class="dash-content">
+
+          <!-- 4 stat cards -->
+          <div class="dash-stat-row">
+            <fresh-stat-card value="$48,320" label="Monthly revenue" trend="12.4" trend-label="vs last month" icon="ti-currency-dollar"></fresh-stat-card>
+            <fresh-stat-card value="1,847"   label="Active users"    trend="8.1"  trend-label="vs last month" icon="ti-users"></fresh-stat-card>
+            <fresh-stat-card value="68ms"    label="Avg. response"   trend="-14"  trend-label="vs last month" icon="ti-bolt"></fresh-stat-card>
+            <fresh-stat-card value="4.8"     label="Satisfaction"    trend="0.3"  trend-label="vs last month" icon="ti-star"></fresh-stat-card>
+          </div>
+
+          <!-- Full-width line chart -->
+          <div style="margin-bottom:var(--space-4)">
+            <fresh-chart title="Revenue trend" description="Daily MRR over the past 30 days" height="200px">
+              <svg viewBox="0 0 600 140" style="width:100%;height:100%;display:block;" preserveAspectRatio="none">
+                <defs>
+                  <linearGradient id="m-rev-grad" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="var(--dv-1)" stop-opacity="0.15"/>
+                    <stop offset="100%" stop-color="var(--dv-1)" stop-opacity="0"/>
+                  </linearGradient>
+                </defs>
+                <path d="M0,100 C30,95 50,88 80,80 C110,72 130,65 160,58 C190,50 210,48 240,42 C270,36 290,38 320,32 C350,26 370,24 400,20 C430,16 460,18 480,14 C510,10 540,12 600,8 L600,140 L0,140 Z" fill="url(#m-rev-grad)"/>
+                <path d="M0,100 C30,95 50,88 80,80 C110,72 130,65 160,58 C190,50 210,48 240,42 C270,36 290,38 320,32 C350,26 370,24 400,20 C430,16 460,18 480,14 C510,10 540,12 600,8" fill="none" stroke="var(--dv-1)" stroke-width="2" stroke-linecap="round"/>
+                <!-- Comparison line (previous period) -->
+                <path d="M0,115 C30,112 50,105 80,100 C110,95 130,92 160,88 C190,84 210,82 240,78 C270,74 290,72 320,70 C350,68 370,68 400,66 C430,64 460,62 480,60 C510,58 540,56 600,52" fill="none" stroke="var(--dv-1)" stroke-width="1.5" stroke-dasharray="4 3" stroke-linecap="round" opacity="0.4"/>
+              </svg>
+            </fresh-chart>
+          </div>
+
+          <!-- Two charts side by side -->
+          <div class="dash-cols-2">
+            <fresh-chart title="User signups" description="New accounts per week" height="160px">
+              <svg viewBox="0 0 300 100" style="width:100%;height:100%;display:block;" preserveAspectRatio="none">
+                <!-- Bar chart -->
+                <rect x="10"  y="60" width="28" height="40" rx="3" fill="var(--dv-1)" opacity="0.6"/>
+                <rect x="55"  y="45" width="28" height="55" rx="3" fill="var(--dv-1)" opacity="0.7"/>
+                <rect x="100" y="35" width="28" height="65" rx="3" fill="var(--dv-1)" opacity="0.8"/>
+                <rect x="145" y="50" width="28" height="50" rx="3" fill="var(--dv-1)" opacity="0.75"/>
+                <rect x="190" y="25" width="28" height="75" rx="3" fill="var(--dv-1)" opacity="0.9"/>
+                <rect x="235" y="15" width="28" height="85" rx="3" fill="var(--dv-1)"/>
+                <!-- labels -->
+                <text x="24"  y="112" font-size="8" fill="var(--text-tertiary)" text-anchor="middle">W1</text>
+                <text x="69"  y="112" font-size="8" fill="var(--text-tertiary)" text-anchor="middle">W2</text>
+                <text x="114" y="112" font-size="8" fill="var(--text-tertiary)" text-anchor="middle">W3</text>
+                <text x="159" y="112" font-size="8" fill="var(--text-tertiary)" text-anchor="middle">W4</text>
+                <text x="204" y="112" font-size="8" fill="var(--text-tertiary)" text-anchor="middle">W5</text>
+                <text x="249" y="112" font-size="8" fill="var(--text-tertiary)" text-anchor="middle">W6</text>
+              </svg>
+            </fresh-chart>
+
+            <fresh-chart title="Response time" description="Average latency in ms" height="160px">
+              <svg viewBox="0 0 300 100" style="width:100%;height:100%;display:block;" preserveAspectRatio="none">
+                <defs>
+                  <linearGradient id="lat-grad" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="var(--dv-7)" stop-opacity="0.15"/>
+                    <stop offset="100%" stop-color="var(--dv-7)" stop-opacity="0"/>
+                  </linearGradient>
+                </defs>
+                <path d="M0,60 C30,58 60,55 90,50 C120,45 150,52 180,46 C210,40 240,38 300,32 L300,100 L0,100 Z" fill="url(#lat-grad)"/>
+                <path d="M0,60 C30,58 60,55 90,50 C120,45 150,52 180,46 C210,40 240,38 300,32" fill="none" stroke="var(--dv-7)" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </fresh-chart>
+          </div>
+
+        </div>
+      </main>
+
+    </div>
+  </div>
+
+</div>
+<script>
+  document.addEventListener('nav-toggle', function() {
+    document.getElementById('app-nav').classList.toggle('open');
+  });
+</script>
+<script src="../components/core/fresh-button.js"></script>
+<script src="../components/data/fresh-avatar.js"></script>
+<script src="../components/data/fresh-stat-card.js"></script>
+<script src="../components/data/fresh-chart.js"></script>
+</body>
+</html>

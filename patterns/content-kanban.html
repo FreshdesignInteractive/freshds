@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kanban Board — Acme</title>
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="../tokens/primitives.css">
+<link rel="stylesheet" href="../tokens/theme.css">
+<link rel="stylesheet" href="../tokens/dataviz.css">
+<link rel="stylesheet" href="../styles/reset.css">
+<link rel="stylesheet" href="../styles/patterns/dashboard.css">
+<link rel="stylesheet" href="../styles/patterns/content.css">
+<script>if(location.href.indexOf('?thumb')!==-1)document.write('<style>#demo-bar{display:none!important}</style>');</script>
+<script src="../js/pattern-topbar-v2.js"></script>
+<script src="../js/freshds.js"></script>
+<script src="../js/pattern-bar.js"></script>
+</head>
+<body>
+<div id="app">
+
+  <div class="demo-bar" id="demo-bar">
+    <div class="demo-inner" id="demo-inner">
+      <button class="demo-mode-btn" id="mode-toggle-btn" onclick="toggleDemoMode()" aria-label="Toggle dark mode">
+        <i class="ti ti-moon"></i>
+      </button>
+    </div>
+    <div class="demo-sep"></div>
+    <button class="demo-collapse-btn" id="demo-collapse-btn" onclick="toggleDemoBar()" aria-label="Collapse toolbar">
+      <i class="ti ti-minus"></i>
+    </button>
+  </div>
+
+  <div class="dash-shell">
+
+    <pattern-topbar logged-in></pattern-topbar>
+
+    <div class="dash-body">
+
+      <nav class="app-nav open" id="app-nav" aria-label="Main navigation">
+        <div class="app-nav-inner">
+          <button class="app-nav-item active"><i class="ti ti-home"></i> Home</button>
+          <button class="app-nav-item"><i class="ti ti-chart-bar"></i> Analytics</button>
+          <button class="app-nav-item"><i class="ti ti-activity"></i> Activity</button>
+          <button class="app-nav-item"><i class="ti ti-folders"></i> Projects</button>
+          <button class="app-nav-item"><i class="ti ti-check"></i> My tasks</button>
+          <button class="app-nav-item"><i class="ti ti-calendar-event"></i> Calendar</button>
+          <button class="app-nav-item"><i class="ti ti-users"></i> Members</button>
+          <button class="app-nav-item"><i class="ti ti-settings"></i> Settings</button>
+        </div>
+      </nav>
+
+      <main class="dash-main">
+
+        <div class="dash-page-header">
+          <div>
+            <div class="dash-page-title">Product Roadmap</div>
+            <div class="dash-page-subtitle">Q3 2026 · 18 tasks · 4 in progress</div>
+          </div>
+          <div class="dash-page-actions">
+            <fresh-button variant="secondary" size="sm"><i class="ti ti-filter"></i> Filter</fresh-button>
+            <fresh-button variant="secondary" size="sm"><i class="ti ti-users"></i> Assignees</fresh-button>
+            <fresh-button variant="primary" size="sm"><i class="ti ti-plus"></i> Add task</fresh-button>
+          </div>
+        </div>
+
+        <div class="cnt-kanban">
+
+          <!-- Backlog -->
+          <div class="cnt-kanban-col">
+            <div class="cnt-kanban-col-header">
+              <div class="cnt-kanban-col-label">
+                <span style="width:8px;height:8px;border-radius:50%;background:var(--surface-border-strong);display:inline-block;"></span>
+                Backlog
+                <span class="cnt-kanban-count">5</span>
+              </div>
+              <fresh-button variant="ghost" size="sm" icon-only aria-label="Add"><i class="ti ti-plus"></i></fresh-button>
+            </div>
+            <div class="cnt-kanban-card">
+              <div class="cnt-kanban-card-title">Define AI personalization spec</div>
+              <div class="cnt-kanban-card-tags"><fresh-badge variant="neutral">Research</fresh-badge></div>
+              <div class="cnt-kanban-card-meta">
+                <fresh-avatar name="Marcus Chen" size="xs"></fresh-avatar>
+                <span style="font-size:11px;color:var(--text-tertiary);">No due date</span>
+              </div>
+            </div>
+            <div class="cnt-kanban-card">
+              <div class="cnt-kanban-card-title">Evaluate third-party analytics SDK options</div>
+              <div class="cnt-kanban-card-tags"><fresh-badge variant="info">Spike</fresh-badge></div>
+              <div class="cnt-kanban-card-meta">
+                <fresh-avatar name="Tom Okeke" size="xs"></fresh-avatar>
+                <span style="font-size:11px;color:var(--text-tertiary);">No due date</span>
+              </div>
+            </div>
+            <div class="cnt-kanban-card">
+              <div class="cnt-kanban-card-title">Audit legacy API rate-limit handling</div>
+              <div class="cnt-kanban-card-tags"><fresh-badge variant="warning">Tech debt</fresh-badge></div>
+              <div class="cnt-kanban-card-meta">
+                <fresh-avatar name="Sarah Novak" size="xs"></fresh-avatar>
+                <span style="font-size:11px;color:var(--text-tertiary);">No due date</span>
+              </div>
+            </div>
+            <div class="cnt-kanban-add"><i class="ti ti-plus"></i> Add a card</div>
+          </div>
+
+          <!-- In Progress -->
+          <div class="cnt-kanban-col">
+            <div class="cnt-kanban-col-header">
+              <div class="cnt-kanban-col-label">
+                <span style="width:8px;height:8px;border-radius:50%;background:var(--color-interactive);display:inline-block;"></span>
+                In Progress
+                <span class="cnt-kanban-count">4</span>
+              </div>
+              <fresh-button variant="ghost" size="sm" icon-only aria-label="Add"><i class="ti ti-plus"></i></fresh-button>
+            </div>
+            <div class="cnt-kanban-card">
+              <div class="cnt-kanban-card-title">Build AI Copilot prompt history component</div>
+              <div class="cnt-kanban-card-tags"><fresh-badge variant="primary">Feature</fresh-badge><fresh-badge variant="info">AI</fresh-badge></div>
+              <div class="cnt-kanban-card-meta">
+                <fresh-avatar name="Priya Sharma" size="xs"></fresh-avatar>
+                <span style="font-size:11px;color:var(--color-warning-text);">Due Jun 10</span>
+              </div>
+            </div>
+            <div class="cnt-kanban-card">
+              <div class="cnt-kanban-card-title">Refactor token system for dark mode consistency</div>
+              <div class="cnt-kanban-card-tags"><fresh-badge variant="warning">Design System</fresh-badge></div>
+              <div class="cnt-kanban-card-meta">
+                <fresh-avatar name="Marcus Chen" size="xs"></fresh-avatar>
+                <span style="font-size:11px;color:var(--text-tertiary);">Due Jun 15</span>
+              </div>
+            </div>
+            <div class="cnt-kanban-card">
+              <div class="cnt-kanban-card-title">Write migration guide for v2 API clients</div>
+              <div class="cnt-kanban-card-tags"><fresh-badge variant="neutral">Docs</fresh-badge></div>
+              <div class="cnt-kanban-card-meta">
+                <fresh-avatar name="Jamie Rivera" size="xs"></fresh-avatar>
+                <span style="font-size:11px;color:var(--text-tertiary);">Due Jun 20</span>
+              </div>
+            </div>
+            <div class="cnt-kanban-add"><i class="ti ti-plus"></i> Add a card</div>
+          </div>
+
+          <!-- Review -->
+          <div class="cnt-kanban-col">
+            <div class="cnt-kanban-col-header">
+              <div class="cnt-kanban-col-label">
+                <span style="width:8px;height:8px;border-radius:50%;background:var(--color-warning);display:inline-block;"></span>
+                Review
+                <span class="cnt-kanban-count">3</span>
+              </div>
+              <fresh-button variant="ghost" size="sm" icon-only aria-label="Add"><i class="ti ti-plus"></i></fresh-button>
+            </div>
+            <div class="cnt-kanban-card">
+              <div class="cnt-kanban-card-title">New onboarding checklist flow — design review</div>
+              <div class="cnt-kanban-card-tags"><fresh-badge variant="primary">Feature</fresh-badge></div>
+              <div class="cnt-kanban-card-meta">
+                <fresh-avatar name="Anika Patel" size="xs"></fresh-avatar>
+                <span style="font-size:11px;color:var(--text-tertiary);">Jun 8</span>
+              </div>
+            </div>
+            <div class="cnt-kanban-card">
+              <div class="cnt-kanban-card-title">Accessibility audit: keyboard navigation</div>
+              <div class="cnt-kanban-card-tags"><fresh-badge variant="danger">A11y</fresh-badge></div>
+              <div class="cnt-kanban-card-meta">
+                <fresh-avatar name="Tom Okeke" size="xs"></fresh-avatar>
+                <span style="font-size:11px;color:var(--text-tertiary);">Jun 9</span>
+              </div>
+            </div>
+            <div class="cnt-kanban-add"><i class="ti ti-plus"></i> Add a card</div>
+          </div>
+
+          <!-- Done -->
+          <div class="cnt-kanban-col">
+            <div class="cnt-kanban-col-header">
+              <div class="cnt-kanban-col-label">
+                <span style="width:8px;height:8px;border-radius:50%;background:var(--color-success);display:inline-block;"></span>
+                Done
+                <span class="cnt-kanban-count">6</span>
+              </div>
+              <fresh-button variant="ghost" size="sm" icon-only aria-label="Add"><i class="ti ti-plus"></i></fresh-button>
+            </div>
+            <div class="cnt-kanban-card">
+              <div class="cnt-kanban-card-title">Launch AI Copilot beta to 50 test accounts</div>
+              <div class="cnt-kanban-card-tags"><fresh-badge variant="success">Done</fresh-badge><fresh-badge variant="info">AI</fresh-badge></div>
+              <div class="cnt-kanban-card-meta">
+                <fresh-avatar name="Priya Sharma" size="xs"></fresh-avatar>
+                <span style="font-size:11px;color:var(--text-tertiary);">Jun 1</span>
+              </div>
+            </div>
+            <div class="cnt-kanban-card">
+              <div class="cnt-kanban-card-title">SSO provider integration (Okta, Azure AD)</div>
+              <div class="cnt-kanban-card-tags"><fresh-badge variant="success">Done</fresh-badge></div>
+              <div class="cnt-kanban-card-meta">
+                <fresh-avatar name="Marcus Chen" size="xs"></fresh-avatar>
+                <span style="font-size:11px;color:var(--text-tertiary);">May 28</span>
+              </div>
+            </div>
+            <div class="cnt-kanban-card">
+              <div class="cnt-kanban-card-title">Export to CSV for all data tables</div>
+              <div class="cnt-kanban-card-tags"><fresh-badge variant="success">Done</fresh-badge></div>
+              <div class="cnt-kanban-card-meta">
+                <fresh-avatar name="Jamie Rivera" size="xs"></fresh-avatar>
+                <span style="font-size:11px;color:var(--text-tertiary);">May 25</span>
+              </div>
+            </div>
+            <div class="cnt-kanban-add"><i class="ti ti-plus"></i> Add a card</div>
+          </div>
+
+        </div>
+
+      </main>
+
+    </div>
+  </div>
+
+</div>
+<script>
+  document.addEventListener('nav-toggle', function() {
+    document.getElementById('app-nav').classList.toggle('open');
+  });
+</script>
+<script src="../components/core/fresh-button.js"></script>
+<script src="../components/data/fresh-avatar.js"></script>
+<script src="../components/feedback/fresh-badge.js"></script>
+</body>
+</html>

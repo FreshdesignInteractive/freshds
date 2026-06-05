@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Grid System — FreshDS</title>
+<base href="../../">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="tokens/primitives.css">
+<link rel="stylesheet" href="tokens/theme.css">
+<link rel="stylesheet" href="tokens/dataviz.css">
+<link rel="stylesheet" href="styles/reset.css">
+<link rel="stylesheet" href="styles/layout.css">
+<link rel="stylesheet" href="styles/components/core.css">
+<link rel="stylesheet" href="styles/docs.css">
+<script src="js/freshds.js"></script>
+<script src="js/freshds-site.js"></script>
+</head>
+<body>
+<div class="fds-app" id="app">
+  <ds-topbar active-section="ds"></ds-topbar>
+  <div class="fds-body">
+    <ds-shell active="gridsystem"></ds-shell>
+    <main class="fds-main">
+      <div class="fds-page active" id="page-gridsystem">
+        <div class="page-header">
+          <div class="page-eyebrow">Foundation</div>
+          <h1 class="page-title">Grid system</h1>
+          <p class="page-desc">A 12-column CSS grid with responsive breakpoints, composition layouts, and a max-width container — all driven by spacing and breakpoint tokens.</p>
+        </div>
+
+        <div class="page-section">
+          <div class="page-section-title">Breakpoints</div>
+          <table class="usage-table">
+            <thead><tr><th>Token</th><th>Value</th><th>Prefix</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td><code>--bp-sm</code></td><td>480px</td><td><code>sm</code></td><td>Large phones, small tablets</td></tr>
+              <tr><td><code>--bp-md</code></td><td>768px</td><td><code>md</code></td><td>Tablets, small laptops</td></tr>
+              <tr><td><code>--bp-lg</code></td><td>1024px</td><td><code>lg</code></td><td>Laptops, desktops</td></tr>
+              <tr><td><code>--bp-xl</code></td><td>1280px</td><td>—</td><td>Container max-width</td></tr>
+              <tr><td><code>--bp-2xl</code></td><td>1536px</td><td>—</td><td>Large displays</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="page-section">
+          <div class="page-section-title">Container</div>
+          <p style="font-size:13px;color:var(--text-secondary);margin-bottom:var(--space-4);line-height:1.6">Max-width <code>var(--bp-xl)</code> (1280px), centered, with responsive horizontal padding using spacing tokens.</p>
+          <div class="demo-surface col" style="padding:var(--space-4);gap:var(--space-3)">
+            <div style="background:var(--color-interactive-subtle);border:1px solid var(--color-interactive-border);border-radius:var(--radius-md);padding:var(--space-3) var(--space-4)">
+              <span style="font-size:11px;font-family:var(--font-mono);color:var(--color-interactive-text)">.fds-container</span>
+              <span style="font-size:11px;color:var(--text-tertiary);margin-left:var(--space-3)">max-width: var(--bp-xl) · margin: auto · padding: var(--space-4) → var(--space-10)</span>
+            </div>
+          </div>
+          <table class="usage-table" style="margin-top:var(--space-4)">
+            <thead><tr><th>Breakpoint</th><th>Padding</th><th>Token</th></tr></thead>
+            <tbody>
+              <tr><td>Default (mobile)</td><td>16px</td><td><code>--space-4</code></td></tr>
+              <tr><td>≥ 480px (sm)</td><td>24px</td><td><code>--space-6</code></td></tr>
+              <tr><td>≥ 768px (md)</td><td>32px</td><td><code>--space-8</code></td></tr>
+              <tr><td>≥ 1024px (lg)</td><td>40px</td><td><code>--space-10</code></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="page-section">
+          <div class="page-section-title">12-column grid</div>
+          <p style="font-size:13px;color:var(--text-secondary);margin-bottom:var(--space-5);line-height:1.6"><code>.fds-grid</code> creates a 12-column CSS grid with <code>gap: var(--space-4)</code>. On mobile (&lt;480px) it collapses to a single column.</p>
+          <div class="demo-surface col" style="padding:var(--space-5);gap:var(--space-3)">
+            <div class="fds-grid">
+              <div class="fds-col-12" style="background:var(--color-interactive-subtle);border:1px solid var(--color-interactive-border);border-radius:var(--radius-sm);padding:var(--space-2) var(--space-3);font-size:11px;font-family:var(--font-mono);color:var(--color-interactive-text);text-align:center">12</div>
+            </div>
+            <div class="fds-grid">
+              <div class="fds-col-6" style="background:var(--color-interactive-subtle);border:1px solid var(--color-interactive-border);border-radius:var(--radius-sm);padding:var(--space-2) var(--space-3);font-size:11px;font-family:var(--font-mono);color:var(--color-interactive-text);text-align:center">6</div>
+              <div class="fds-col-6" style="background:var(--color-interactive-subtle);border:1px solid var(--color-interactive-border);border-radius:var(--radius-sm);padding:var(--space-2) var(--space-3);font-size:11px;font-family:var(--font-mono);color:var(--color-interactive-text);text-align:center">6</div>
+            </div>
+            <div class="fds-grid">
+              <div class="fds-col-4" style="background:var(--color-interactive-subtle);border:1px solid var(--color-interactive-border);border-radius:var(--radius-sm);padding:var(--space-2) var(--space-3);font-size:11px;font-family:var(--font-mono);color:var(--color-interactive-text);text-align:center">4</div>
+              <div class="fds-col-4" style="background:var(--color-interactive-subtle);border:1px solid var(--color-interactive-border);border-radius:var(--radius-sm);padding:var(--space-2) var(--space-3);font-size:11px;font-family:var(--font-mono);color:var(--color-interactive-text);text-align:center">4</div>
+              <div class="fds-col-4" style="background:var(--color-interactive-subtle);border:1px solid var(--color-interactive-border);border-radius:var(--radius-sm);padding:var(--space-2) var(--space-3);font-size:11px;font-family:var(--font-mono);color:var(--color-interactive-text);text-align:center">4</div>
+            </div>
+            <div class="fds-grid">
+              <div class="fds-col-3" style="background:var(--color-interactive-subtle);border:1px solid var(--color-interactive-border);border-radius:var(--radius-sm);padding:var(--space-2) var(--space-3);font-size:11px;font-family:var(--font-mono);color:var(--color-interactive-text);text-align:center">3</div>
+              <div class="fds-col-3" style="background:var(--color-interactive-subtle);border:1px solid var(--color-interactive-border);border-radius:var(--radius-sm);padding:var(--space-2) var(--space-3);font-size:11px;font-family:var(--font-mono);color:var(--color-interactive-text);text-align:center">3</div>
+              <div class="fds-col-3" style="background:var(--color-interactive-subtle);border:1px solid var(--color-interactive-border);border-radius:var(--radius-sm);padding:var(--space-2) var(--space-3);font-size:11px;font-family:var(--font-mono);color:var(--color-interactive-text);text-align:center">3</div>
+              <div class="fds-col-3" style="background:var(--color-interactive-subtle);border:1px solid var(--color-interactive-border);border-radius:var(--radius-sm);padding:var(--space-2) var(--space-3);font-size:11px;font-family:var(--font-mono);color:var(--color-interactive-text);text-align:center">3</div>
+            </div>
+            <div class="fds-grid">
+              <div class="fds-col-2" style="background:var(--color-interactive-subtle);border:1px solid var(--color-interactive-border);border-radius:var(--radius-sm);padding:var(--space-2) var(--space-3);font-size:11px;font-family:var(--font-mono);color:var(--color-interactive-text);text-align:center">2</div>
+              <div class="fds-col-2" style="background:var(--color-interactive-subtle);border:1px solid var(--color-interactive-border);border-radius:var(--radius-sm);padding:var(--space-2) var(--space-3);font-size:11px;font-family:var(--font-mono);color:var(--color-interactive-text);text-align:center">2</div>
+              <div class="fds-col-2" style="background:var(--color-interactive-subtle);border:1px solid var(--color-interactive-border);border-radius:var(--radius-sm);padding:var(--space-2) var(--space-3);font-size:11px;font-family:var(--font-mono);color:var(--color-interactive-text);text-align:center">2</div>
+              <div class="fds-col-2" style="background:var(--color-interactive-subtle);border:1px solid var(--color-interactive-border);border-radius:var(--radius-sm);padding:var(--space-2) var(--space-3);font-size:11px;font-family:var(--font-mono);color:var(--color-interactive-text);text-align:center">2</div>
+              <div class="fds-col-2" style="background:var(--color-interactive-subtle);border:1px solid var(--color-interactive-border);border-radius:var(--radius-sm);padding:var(--space-2) var(--space-3);font-size:11px;font-family:var(--font-mono);color:var(--color-interactive-text);text-align:center">2</div>
+              <div class="fds-col-2" style="background:var(--color-interactive-subtle);border:1px solid var(--color-interactive-border);border-radius:var(--radius-sm);padding:var(--space-2) var(--space-3);font-size:11px;font-family:var(--font-mono);color:var(--color-interactive-text);text-align:center">2</div>
+            </div>
+            <div class="fds-grid">
+              <div class="fds-col-1" style="background:var(--color-interactive-subtle);border:1px solid var(--color-interactive-border);border-radius:var(--radius-sm);padding:var(--space-2) 0;font-size:11px;font-family:var(--font-mono);color:var(--color-interactive-text);text-align:center">1</div>
+              <div class="fds-col-1" style="background:var(--color-interactive-subtle);border:1px solid var(--color-interactive-border);border-radius:var(--radius-sm);padding:var(--space-2) 0;font-size:11px;font-family:var(--font-mono);color:var(--color-interactive-text);text-align:center">1</div>
+              <div class="fds-col-1" style="background:var(--color-interactive-subtle);border:1px solid var(--color-interactive-border);border-radius:var(--radius-sm);padding:var(--space-2) 0;font-size:11px;font-family:var(--font-mono);color:var(--color-interactive-text);text-align:center">1</div>
+              <div class="fds-col-1" style="background:var(--color-interactive-subtle);border:1px solid var(--color-interactive-border);border-radius:var(--radius-sm);padding:var(--space-2) 0;font-size:11px;font-family:var(--font-mono);color:var(--color-interactive-text);text-align:center">1</div>
+              <div class="fds-col-1" style="background:var(--color-interactive-subtle);border:1px solid var(--color-interactive-border);border-radius:var(--radius-sm);padding:var(--space-2) 0;font-size:11px;font-family:var(--font-mono);color:var(--color-interactive-text);text-align:center">1</div>
+              <div class="fds-col-1" style="background:var(--color-interactive-subtle);border:1px solid var(--color-interactive-border);border-radius:var(--radius-sm);padding:var(--space-2) 0;font-size:11px;font-family:var(--font-mono);color:var(--color-interactive-text);text-align:center">1</div>
+              <div class="fds-col-1" style="background:var(--color-interactive-subtle);border:1px solid var(--color-interactive-border);border-radius:var(--radius-sm);padding:var(--space-2) 0;font-size:11px;font-family:var(--font-mono);color:var(--color-interactive-text);text-align:center">1</div>
+              <div class="fds-col-1" style="background:var(--color-interactive-subtle);border:1px solid var(--color-interactive-border);border-radius:var(--radius-sm);padding:var(--space-2) 0;font-size:11px;font-family:var(--font-mono);color:var(--color-interactive-text);text-align:center">1</div>
+              <div class="fds-col-1" style="background:var(--color-interactive-subtle);border:1px solid var(--color-interactive-border);border-radius:var(--radius-sm);padding:var(--space-2) 0;font-size:11px;font-family:var(--font-mono);color:var(--color-interactive-text);text-align:center">1</div>
+              <div class="fds-col-1" style="background:var(--color-interactive-subtle);border:1px solid var(--color-interactive-border);border-radius:var(--radius-sm);padding:var(--space-2) 0;font-size:11px;font-family:var(--font-mono);color:var(--color-interactive-text);text-align:center">1</div>
+              <div class="fds-col-1" style="background:var(--color-interactive-subtle);border:1px solid var(--color-interactive-border);border-radius:var(--radius-sm);padding:var(--space-2) 0;font-size:11px;font-family:var(--font-mono);color:var(--color-interactive-text);text-align:center">1</div>
+              <div class="fds-col-1" style="background:var(--color-interactive-subtle);border:1px solid var(--color-interactive-border);border-radius:var(--radius-sm);padding:var(--space-2) 0;font-size:11px;font-family:var(--font-mono);color:var(--color-interactive-text);text-align:center">1</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="page-section">
+          <div class="page-section-title">Mixed spans</div>
+          <p style="font-size:13px;color:var(--text-secondary);margin-bottom:var(--space-5);line-height:1.6">Common enterprise layout patterns using asymmetric column spans.</p>
+          <div class="demo-surface col" style="padding:var(--space-5);gap:var(--space-3)">
+            <div class="fds-grid">
+              <div class="fds-col-8" style="background:var(--surface-overlay);border:1px solid var(--surface-border);border-radius:var(--radius-sm);padding:var(--space-4);font-size:12px;color:var(--text-secondary)"><span style="font-family:var(--font-mono);font-size:11px;color:var(--color-interactive-text)">.fds-col-8</span><br>Main content</div>
+              <div class="fds-col-4" style="background:var(--surface-overlay);border:1px solid var(--surface-border);border-radius:var(--radius-sm);padding:var(--space-4);font-size:12px;color:var(--text-secondary)"><span style="font-family:var(--font-mono);font-size:11px;color:var(--color-interactive-text)">.fds-col-4</span><br>Sidebar</div>
+            </div>
+            <div class="fds-grid">
+              <div class="fds-col-3" style="background:var(--surface-overlay);border:1px solid var(--surface-border);border-radius:var(--radius-sm);padding:var(--space-4);font-size:12px;color:var(--text-secondary)"><span style="font-family:var(--font-mono);font-size:11px;color:var(--color-interactive-text)">.fds-col-3</span><br>Nav</div>
+              <div class="fds-col-9" style="background:var(--surface-overlay);border:1px solid var(--surface-border);border-radius:var(--radius-sm);padding:var(--space-4);font-size:12px;color:var(--text-secondary)"><span style="font-family:var(--font-mono);font-size:11px;color:var(--color-interactive-text)">.fds-col-9</span><br>Content</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="page-section">
+          <div class="page-section-title">Responsive variants</div>
+          <p style="font-size:13px;color:var(--text-secondary);margin-bottom:var(--space-5);line-height:1.6">Prefix a span with a breakpoint to override it at that viewport width. Variants are additive — base class applies below the breakpoint.</p>
+          <table class="usage-table">
+            <thead><tr><th>Class</th><th>Applies at</th><th>Example use</th></tr></thead>
+            <tbody>
+              <tr><td><code>.fds-col-{n}</code></td><td>All sizes</td><td>Default (mobile-first) span</td></tr>
+              <tr><td><code>.fds-col-sm-{n}</code></td><td>≥ 480px</td><td>Large phone layout adjustment</td></tr>
+              <tr><td><code>.fds-col-md-{n}</code></td><td>≥ 768px</td><td>Tablet layout: 1→2 columns</td></tr>
+              <tr><td><code>.fds-col-lg-{n}</code></td><td>≥ 1024px</td><td>Desktop layout: 2→3 columns</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="page-section">
+          <div class="page-section-title">Composition layouts</div>
+          <p style="font-size:13px;color:var(--text-secondary);margin-bottom:var(--space-5);line-height:1.6">Higher-level layout primitives for common enterprise patterns.</p>
+
+          <div style="margin-bottom:var(--space-6)">
+            <div class="page-section-title" style="font-size:11px">Stack <code style="font-size:10px;font-weight:400">.fds-stack</code></div>
+            <p style="font-size:12px;color:var(--text-tertiary);margin-bottom:var(--space-3)">Vertical flex column with <code>gap: var(--space-4)</code>. Add <code>.fds-stack-sm</code> or <code>.fds-stack-lg</code> for tighter/looser gaps.</p>
+            <div class="demo-surface" style="padding:var(--space-5)">
+              <div class="fds-stack" style="width:200px">
+                <div style="background:var(--surface-overlay);border:1px solid var(--surface-border);border-radius:var(--radius-sm);padding:var(--space-3);font-size:12px;color:var(--text-secondary);text-align:center">Item 1</div>
+                <div style="background:var(--surface-overlay);border:1px solid var(--surface-border);border-radius:var(--radius-sm);padding:var(--space-3);font-size:12px;color:var(--text-secondary);text-align:center">Item 2</div>
+                <div style="background:var(--surface-overlay);border:1px solid var(--surface-border);border-radius:var(--radius-sm);padding:var(--space-3);font-size:12px;color:var(--text-secondary);text-align:center">Item 3</div>
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-bottom:var(--space-6)">
+            <div class="page-section-title" style="font-size:11px">Cluster <code style="font-size:10px;font-weight:400">.fds-cluster</code></div>
+            <p style="font-size:12px;color:var(--text-tertiary);margin-bottom:var(--space-3)">Horizontal wrapping flex row, centered items, <code>gap: var(--space-4)</code>. Use for tags, action groups, inline controls.</p>
+            <div class="demo-surface" style="padding:var(--space-5)">
+              <div class="fds-cluster">
+                <fresh-badge variant="primary">Dashboard</fresh-badge>
+                <fresh-badge variant="success">Active</fresh-badge>
+                <fresh-badge variant="warning">Pending</fresh-badge>
+                <fresh-badge variant="neutral">Archive</fresh-badge>
+                <fresh-badge variant="ai">AI</fresh-badge>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <div class="page-section-title" style="font-size:11px">Sidebar layout <code style="font-size:10px;font-weight:400">.fds-sidebar-layout</code></div>
+            <p style="font-size:12px;color:var(--text-tertiary);margin-bottom:var(--space-3)">Fixed-width sidebar (200–280px) + fluid main content. Collapses to single column below <code>--bp-md</code>.</p>
+            <div class="demo-surface" style="padding:var(--space-5)">
+              <div class="fds-sidebar-layout">
+                <div style="background:var(--surface-overlay);border:1px solid var(--surface-border);border-radius:var(--radius-sm);padding:var(--space-4);font-size:12px;color:var(--text-secondary);min-height:80px"><span style="font-family:var(--font-mono);font-size:11px;color:var(--color-interactive-text)">Sidebar</span><br>200–280px fixed</div>
+                <div style="background:var(--surface-overlay);border:1px solid var(--surface-border);border-radius:var(--radius-sm);padding:var(--space-4);font-size:12px;color:var(--text-secondary);min-height:80px"><span style="font-family:var(--font-mono);font-size:11px;color:var(--color-interactive-text)">Main</span><br>1fr fluid</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="page-section">
+          <div class="page-section-title">Column span reference</div>
+          <table class="usage-table">
+            <thead><tr><th>Class</th><th>Columns</th><th>Width %</th><th>Common use</th></tr></thead>
+            <tbody>
+              <tr><td><code>.fds-col-1</code></td><td>1 / 12</td><td>8.33%</td><td>Narrow labels, icons</td></tr>
+              <tr><td><code>.fds-col-2</code></td><td>2 / 12</td><td>16.67%</td><td>Small controls</td></tr>
+              <tr><td><code>.fds-col-3</code></td><td>3 / 12</td><td>25%</td><td>Quarter grid, sidebars</td></tr>
+              <tr><td><code>.fds-col-4</code></td><td>4 / 12</td><td>33.33%</td><td>Thirds, card grids</td></tr>
+              <tr><td><code>.fds-col-6</code></td><td>6 / 12</td><td>50%</td><td>Half-width panels</td></tr>
+              <tr><td><code>.fds-col-8</code></td><td>8 / 12</td><td>66.67%</td><td>Main content + sidebar</td></tr>
+              <tr><td><code>.fds-col-9</code></td><td>9 / 12</td><td>75%</td><td>Wide content area</td></tr>
+              <tr><td><code>.fds-col-12</code></td><td>12 / 12</td><td>100%</td><td>Full width</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+<script src="components/core/fresh-button.js"></script>
+<script src="components/core/fresh-input.js"></script>
+<script src="components/navigation/fresh-simple-tabs.js"></script>
+<script src="components/feedback/fresh-badge.js"></script>
+</body>
+</html>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Modal — FreshDS</title>
+<base href="../../">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="tokens/primitives.css">
+<link rel="stylesheet" href="tokens/theme.css">
+<link rel="stylesheet" href="tokens/dataviz.css">
+<link rel="stylesheet" href="styles/reset.css">
+<link rel="stylesheet" href="styles/layout.css">
+<link rel="stylesheet" href="styles/components/core.css">
+<link rel="stylesheet" href="styles/docs.css">
+<script src="js/freshds.js"></script>
+<script src="js/freshds-site.js"></script>
+</head>
+<body>
+<div class="fds-app" id="app">
+  <ds-topbar active-section="ds"></ds-topbar>
+  <div class="fds-body">
+    <ds-shell active="modal"></ds-shell>
+    <main class="fds-main">
+      <div class="fds-page active" id="page-modal">
+        <div class="page-header">
+          <div class="page-eyebrow">Containers</div>
+          <h1 class="page-title">Modal</h1>
+          <p class="page-desc">Overlay dialog for focused tasks. Locks body scroll while open, traps focus inside the panel, and closes on ESC or backdrop click.</p>
+        </div>
+        <div class="page-section">
+          <div class="page-section-title">Trigger</div>
+          <div class="demo-surface" style="gap:var(--space-3)">
+            <fresh-button variant="primary"    onclick="document.getElementById('modal-confirm').show()">Confirm action</fresh-button>
+            <fresh-button variant="secondary"  onclick="document.getElementById('modal-form').show()">Open form</fresh-button>
+            <fresh-button variant="ghost"      onclick="document.getElementById('modal-large').show()">Large modal</fresh-button>
+          </div>
+        </div>
+        <div class="page-section">
+          <div class="page-section-title">Sizes</div>
+          <div class="demo-surface">
+            <span style="font-family:var(--font-sans);font-size:13px;color:var(--text-tertiary)">sm · 400px &nbsp; md · 560px &nbsp; lg · 720px</span>
+          </div>
+        </div>
+        <div class="page-section">
+          <div class="page-section-title">Attributes &amp; methods</div>
+          <table class="usage-table">
+            <thead><tr><th>Attribute / Method</th><th>Values</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td>title</td><td>string</td><td>Modal header title</td></tr>
+              <tr><td>size</td><td><code>sm</code> <code>md</code> <code>lg</code></td><td>Max-width (400 / 560 / 720px)</td></tr>
+              <tr><td>open</td><td>boolean</td><td>Controlled open state</td></tr>
+              <tr><td>dismissible</td><td>boolean</td><td>Close on backdrop click (default: true)</td></tr>
+              <tr><td>show()</td><td>method</td><td>Opens the modal</td></tr>
+              <tr><td>close()</td><td>method</td><td>Closes with animation</td></tr>
+              <tr><td>slot="footer"</td><td>element</td><td>Action buttons in the footer</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <fresh-modal id="modal-confirm" title="Confirm deletion" size="sm">
+          <p>Are you sure you want to delete this workspace? This action is permanent and cannot be undone.</p>
+          <div slot="footer">
+            <fresh-button variant="danger" onclick="document.getElementById('modal-confirm').close()">Delete workspace</fresh-button>
+            <fresh-button variant="ghost"  onclick="document.getElementById('modal-confirm').close()">Cancel</fresh-button>
+          </div>
+        </fresh-modal>
+
+        <fresh-modal id="modal-form" title="Invite team member">
+          <div style="display:flex;flex-direction:column;gap:var(--space-4)">
+            <fresh-form-field label="Email address" required>
+              <fresh-input type="email" placeholder="colleague@company.com" icon="ti-mail"></fresh-input>
+            </fresh-form-field>
+            <fresh-form-field label="Role">
+              <fresh-select placeholder="Select a role">
+                <option value="admin">Admin</option>
+                <option value="editor">Editor</option>
+                <option value="viewer">Viewer</option>
+              </fresh-select>
+            </fresh-form-field>
+          </div>
+          <div slot="footer">
+            <fresh-button variant="primary" onclick="document.getElementById('modal-form').close()">Send invite</fresh-button>
+            <fresh-button variant="ghost"   onclick="document.getElementById('modal-form').close()">Cancel</fresh-button>
+          </div>
+        </fresh-modal>
+
+        <fresh-modal id="modal-large" title="Model performance report" size="lg">
+          <p style="margin-bottom:var(--space-4)">Review the performance metrics for your AI models over the last 30 days.</p>
+          <fresh-table
+            columns='[{"key":"model","label":"Model","sortable":true},{"key":"requests","label":"Requests","sortable":true,"align":"right"},{"key":"latency","label":"Avg latency","align":"right"},{"key":"cost","label":"Cost","align":"right"}]'
+            data='[{"model":"Claude Sonnet","requests":"48,200","latency":"1.2s","cost":"$24.10"},{"model":"Claude Haiku","requests":"124,800","latency":"0.4s","cost":"$12.48"},{"model":"Claude Opus","requests":"3,200","latency":"4.8s","cost":"$48.00"}]'>
+          </fresh-table>
+          <div slot="footer">
+            <fresh-button variant="ghost" size="sm" onclick="document.getElementById('modal-large').close()">Close</fresh-button>
+          </div>
+        </fresh-modal>
+      </div>
+    </main>
+  </div>
+</div>
+<script src="components/core/fresh-button.js"></script>
+<script src="components/core/fresh-input.js"></script>
+<script src="components/core/fresh-select.js"></script>
+<script src="components/core/fresh-form-field.js"></script>
+<script src="components/containers/fresh-modal.js"></script>
+<script src="components/containers/fresh-table.js"></script>
+<script src="components/navigation/fresh-simple-tabs.js"></script>
+</body>
+</html>

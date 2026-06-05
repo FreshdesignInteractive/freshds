@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stat card — FreshDS</title>
+<base href="../../">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="tokens/primitives.css">
+<link rel="stylesheet" href="tokens/theme.css">
+<link rel="stylesheet" href="tokens/dataviz.css">
+<link rel="stylesheet" href="styles/reset.css">
+<link rel="stylesheet" href="styles/layout.css">
+<link rel="stylesheet" href="styles/components/core.css">
+<link rel="stylesheet" href="styles/docs.css">
+<script src="js/freshds.js"></script>
+<script src="js/freshds-site.js"></script>
+</head>
+<body>
+<div class="fds-app" id="app">
+  <ds-topbar active-section="ds"></ds-topbar>
+  <div class="fds-body">
+    <ds-shell active="statcard"></ds-shell>
+    <main class="fds-main">
+      <div class="fds-page active" id="page-statcard">
+        <div class="page-header">
+          <div class="page-eyebrow">Data Display</div>
+          <h1 class="page-title">Stat card</h1>
+          <p class="page-desc">Metric display combining a primary value, label, optional trend indicator, and icon. Use in dashboard grids to surface KPIs at a glance.</p>
+        </div>
+        <div class="page-section">
+          <div class="page-section-title">Default</div>
+          <div class="demo-surface" style="gap:var(--space-4);flex-wrap:wrap;align-items:stretch">
+            <fresh-stat-card value="$24,580" label="Monthly revenue"  trend="12.4"  trend-label="vs last month" icon="ti-currency-dollar" style="flex:1;min-width:160px"></fresh-stat-card>
+            <fresh-stat-card value="98.7%"   label="Uptime"           trend="-0.2"  trend-label="this week"    icon="ti-server"         style="flex:1;min-width:160px"></fresh-stat-card>
+            <fresh-stat-card value="1,284"   label="Active users"     trend="5.1"   trend-label="vs yesterday" icon="ti-users"           style="flex:1;min-width:160px"></fresh-stat-card>
+            <fresh-stat-card value="42 ms"   label="Avg response time" trend="-8.3" trend-label="vs last week" icon="ti-bolt"            style="flex:1;min-width:160px"></fresh-stat-card>
+          </div>
+        </div>
+        <div class="page-section">
+          <div class="page-section-title">No trend (informational only)</div>
+          <div class="demo-surface" style="gap:var(--space-4);flex-wrap:wrap">
+            <fresh-stat-card value="60"   label="Total components" icon="ti-components" style="flex:1;min-width:160px"></fresh-stat-card>
+            <fresh-stat-card value="v1.0" label="Current version"  icon="ti-tag"        style="flex:1;min-width:160px"></fresh-stat-card>
+            <fresh-stat-card value="3"    label="Token tiers"      icon="ti-stack"      style="flex:1;min-width:160px"></fresh-stat-card>
+          </div>
+        </div>
+        <div class="page-section">
+          <div class="page-section-title">Attributes</div>
+          <table class="usage-table">
+            <thead><tr><th>Attribute</th><th>Values</th><th>Default</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td>value</td><td>string</td><td>—</td><td>The primary metric value to display</td></tr>
+              <tr><td>label</td><td>string</td><td>—</td><td>Metric name below the value</td></tr>
+              <tr><td>trend</td><td>number</td><td>—</td><td>Positive = up, negative = down, omit = no trend row</td></tr>
+              <tr><td>trend-label</td><td>string</td><td>—</td><td>Context phrase e.g. "vs last month"</td></tr>
+              <tr><td>icon</td><td>Tabler class e.g. <code>ti-users</code></td><td>—</td><td>Icon shown top-right</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+<script src="components/core/fresh-button.js"></script>
+<script src="components/core/fresh-input.js"></script>
+<script src="components/data/fresh-stat-card.js"></script>
+<script src="components/navigation/fresh-simple-tabs.js"></script>
+</body>
+</html>

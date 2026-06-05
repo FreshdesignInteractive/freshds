@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Slider — FreshDS</title>
+<base href="../../">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="tokens/primitives.css">
+<link rel="stylesheet" href="tokens/theme.css">
+<link rel="stylesheet" href="tokens/dataviz.css">
+<link rel="stylesheet" href="styles/reset.css">
+<link rel="stylesheet" href="styles/layout.css">
+<link rel="stylesheet" href="styles/components/core.css">
+<link rel="stylesheet" href="styles/docs.css">
+<script src="js/freshds.js"></script>
+<script src="js/freshds-site.js"></script>
+</head>
+<body>
+<div class="fds-app" id="app">
+  <ds-topbar active-section="ds"></ds-topbar>
+  <div class="fds-body">
+    <ds-shell active="slider"></ds-shell>
+    <main class="fds-main">
+      <div class="fds-page active" id="page-slider">
+        <div class="page-header">
+          <div class="page-eyebrow">Core UI</div>
+          <h1 class="page-title">Slider</h1>
+          <p class="page-desc">Continuous or stepped value selection along a range. The filled track uses the brand color to clearly communicate position. Fully keyboard accessible.</p>
+        </div>
+        <div class="page-section">
+          <div class="page-section-title">Default</div>
+          <div class="demo-surface col" style="max-width:480px">
+            <fresh-slider value="40"></fresh-slider>
+          </div>
+        </div>
+        <div class="page-section">
+          <div class="page-section-title">Stepped</div>
+          <div class="demo-surface col" style="gap:var(--space-6);max-width:480px">
+            <div>
+              <div style="font-size:12px;color:var(--text-tertiary);font-family:var(--font-sans);margin-bottom:4px">Steps of 10</div>
+              <fresh-slider value="30" step="10"></fresh-slider>
+            </div>
+            <div>
+              <div style="font-size:12px;color:var(--text-tertiary);font-family:var(--font-sans);margin-bottom:4px">1–5 rating</div>
+              <fresh-slider value="3" min="1" max="5" step="1"></fresh-slider>
+            </div>
+          </div>
+        </div>
+        <div class="page-section">
+          <div class="page-section-title">States</div>
+          <div class="demo-surface col" style="gap:var(--space-6);max-width:480px">
+            <fresh-slider value="65"></fresh-slider>
+            <fresh-slider value="65" disabled></fresh-slider>
+          </div>
+        </div>
+        <div class="page-section">
+          <div class="page-section-title">Attributes</div>
+          <table class="usage-table">
+            <thead><tr><th>Attribute</th><th>Values</th><th>Default</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td>value</td><td>number</td><td><code>50</code></td><td>Current value</td></tr>
+              <tr><td>min</td><td>number</td><td><code>0</code></td><td>Minimum value</td></tr>
+              <tr><td>max</td><td>number</td><td><code>100</code></td><td>Maximum value</td></tr>
+              <tr><td>step</td><td>number</td><td><code>1</code></td><td>Increment size</td></tr>
+              <tr><td>disabled</td><td>boolean</td><td>—</td><td>Prevents interaction</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+<script src="components/core/fresh-button.js"></script>
+<script src="components/core/fresh-input.js"></script>
+<script src="components/core/fresh-slider.js"></script>
+<script src="components/navigation/fresh-simple-tabs.js"></script>
+</body>
+</html>

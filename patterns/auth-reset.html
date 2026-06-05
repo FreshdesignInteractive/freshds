@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Create New Password — Acme</title>
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="../tokens/primitives.css">
+<link rel="stylesheet" href="../tokens/theme.css">
+<link rel="stylesheet" href="../tokens/dataviz.css">
+<link rel="stylesheet" href="../styles/reset.css">
+<link rel="stylesheet" href="../styles/patterns/auth.css">
+<script>if(location.href.indexOf('?thumb')!==-1)document.write('<style>#demo-bar{display:none!important}</style>');</script>
+<script src="../js/pattern-topbar.js"></script>
+<script src="../js/freshds.js"></script>
+<script src="../js/pattern-bar.js"></script>
+
+<style>
+  /* ── Password strength indicator ── */
+  .strength-bar {
+    display: flex;
+    gap: var(--space-1);
+    margin-top: var(--space-2);
+  }
+  .strength-seg {
+    flex: 1;
+    height: 3px;
+    border-radius: var(--radius-full);
+    background: var(--surface-border);
+    transition: background 250ms ease;
+  }
+  .strength-seg.weak   { background: var(--color-danger); }
+  .strength-seg.fair   { background: var(--color-warning); }
+  .strength-seg.strong { background: var(--color-success); }
+
+  .strength-label {
+    font-size: 11px;
+    color: var(--text-tertiary);
+    margin-top: var(--space-1);
+    min-height: 1em;
+    transition: color 250ms;
+  }
+  .strength-label.weak   { color: var(--color-danger-text); }
+  .strength-label.fair   { color: var(--color-warning-text); }
+  .strength-label.strong { color: var(--color-success-text); }
+
+  /* ── Requirements checklist ── */
+  .req-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    margin-top: var(--space-3);
+  }
+  .req-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: 12px;
+    color: var(--text-tertiary);
+    transition: color 200ms;
+  }
+  .req-item.met { color: var(--color-success-text); }
+  .req-item i   { font-size: 13px; }
+</style>
+</head>
+<body>
+<div id="app">
+
+  <div class="demo-bar" id="demo-bar">
+    <div class="demo-inner" id="demo-inner">
+      <button class="demo-mode-btn" id="mode-toggle-btn" onclick="toggleDemoMode()" aria-label="Toggle dark mode">
+        <i class="ti ti-moon"></i>
+      </button>
+    </div>
+    <div class="demo-sep"></div>
+    <button class="demo-collapse-btn" id="demo-collapse-btn" onclick="toggleDemoBar()" aria-label="Collapse toolbar">
+      <i class="ti ti-minus"></i>
+    </button>
+  </div>
+
+  <div class="auth-page">
+    <pattern-topbar>
+    </pattern-topbar>
+
+    <div class="auth-body">
+      <div class="auth-left" aria-hidden="true">
+        <div class="auth-left-inner">
+          <div class="auth-left-icon"><i class="ti ti-photo"></i></div>
+          <div class="auth-left-label">Customer image</div>
+        </div>
+      </div>
+
+      <div class="auth-right">
+        <div class="auth-form-wrap">
+          <div class="auth-form">
+            <h1 class="auth-title">Create new password</h1>
+            <p class="auth-sub">Your new password must be different from your previous password.</p>
+
+            <div class="field-stack">
+              <div class="field">
+                <label class="field-label" for="new-pass">New password</label>
+                <fresh-input id="new-pass" type="password" autocomplete="new-password"></fresh-input>
+                <div class="strength-bar" id="strength-bar" aria-hidden="true">
+                  <div class="strength-seg" id="seg-1"></div>
+                  <div class="strength-seg" id="seg-2"></div>
+                  <div class="strength-seg" id="seg-3"></div>
+                  <div class="strength-seg" id="seg-4"></div>
+                </div>
+                <div class="strength-label" id="strength-label" aria-live="polite"></div>
+                <div class="req-list" aria-label="Password requirements">
+                  <div class="req-item" id="req-len">
+                    <i class="ti ti-circle"></i> At least 8 characters
+                  </div>
+                  <div class="req-item" id="req-num">
+                    <i class="ti ti-circle"></i> Contains a number
+                  </div>
+                  <div class="req-item" id="req-sym">
+                    <i class="ti ti-circle"></i> Contains a special character
+                  </div>
+                </div>
+              </div>
+
+              <div class="field">
+                <label class="field-label" for="confirm-pass">Confirm password</label>
+                <fresh-input id="confirm-pass" type="password" autocomplete="new-password"></fresh-input>
+              </div>
+            </div>
+
+            <fresh-button id="submit-btn">Save new password</fresh-button>
+          </div>
+        </div>
+
+        <div class="auth-foot">
+          Remember your password?&nbsp;<a class="auth-link" href="auth-login.html">Sign in</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+<script src="../components/core/fresh-input.js"></script>
+<script src="../components/core/fresh-button.js"></script>
+<script>
+  /* ── Password strength meter ── */
+  document.addEventListener('DOMContentLoaded', function () {
+    var passEl    = document.getElementById('new-pass');
+    var segs      = [
+      document.getElementById('seg-1'),
+      document.getElementById('seg-2'),
+      document.getElementById('seg-3'),
+      document.getElementById('seg-4')
+    ];
+    var label     = document.getElementById('strength-label');
+    var reqLen    = document.getElementById('req-len');
+    var reqNum    = document.getElementById('req-num');
+    var reqSym    = document.getElementById('req-sym');
+    var confirmEl = document.getElementById('confirm-pass');
+
+    function score(v) {
+      var s = 0;
+      if (v.length >= 8)              s++;
+      if (v.length >= 12)             s++;
+      if (/[0-9]/.test(v))            s++;
+      if (/[^A-Za-z0-9]/.test(v))     s++;
+      return s;
+    }
+
+    function updateReq(el, met) {
+      el.classList.toggle('met', met);
+      el.querySelector('i').className = met ? 'ti ti-circle-check' : 'ti ti-circle';
+    }
+
+    passEl.addEventListener('input', function (e) {
+      var v  = e.detail ? e.detail.value : passEl.value;
+      var sc = score(v);
+      var strength = sc <= 1 ? 'weak' : sc <= 2 ? 'fair' : 'strong';
+      var labels   = { weak: 'Weak', fair: 'Fair', strong: 'Strong' };
+
+      segs.forEach(function (s, i) {
+        s.className = 'strength-seg' + (i < sc ? ' ' + strength : '');
+      });
+      label.className   = 'strength-label' + (v.length ? ' ' + strength : '');
+      label.textContent = v.length ? labels[strength] : '';
+
+      updateReq(reqLen, v.length >= 8);
+      updateReq(reqNum, /[0-9]/.test(v));
+      updateReq(reqSym, /[^A-Za-z0-9]/.test(v));
+    });
+  });
+</script>
+</body>
+</html>

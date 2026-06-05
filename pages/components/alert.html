@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alert — FreshDS</title>
+<base href="../../">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="tokens/primitives.css">
+<link rel="stylesheet" href="tokens/theme.css">
+<link rel="stylesheet" href="tokens/dataviz.css">
+<link rel="stylesheet" href="styles/reset.css">
+<link rel="stylesheet" href="styles/layout.css">
+<link rel="stylesheet" href="styles/components/core.css">
+<link rel="stylesheet" href="styles/docs.css">
+<script src="js/freshds.js"></script>
+<script src="js/freshds-site.js"></script>
+</head>
+<body>
+<div class="fds-app" id="app">
+  <ds-topbar active-section="ds"></ds-topbar>
+  <div class="fds-body">
+    <ds-shell active="alert"></ds-shell>
+    <main class="fds-main">
+      <div class="fds-page active" id="page-alert">
+        <div class="page-header">
+          <div class="page-eyebrow">Feedback &amp; Status</div>
+          <h1 class="page-title">Alert</h1>
+          <p class="page-desc">Inline notification banners for important messages that don't require an immediate response. Use for system status, warnings, or confirmations within a page context.</p>
+        </div>
+        <div class="page-section">
+          <div class="page-section-title">Variants</div>
+          <div class="demo-surface col" style="gap:var(--space-3)">
+            <fresh-alert variant="info"    title="Update available">A new version of FreshDS is ready. Refresh to apply.</fresh-alert>
+            <fresh-alert variant="success" title="Deployment complete">Your changes are live at production.freshdesign.com.</fresh-alert>
+            <fresh-alert variant="warning" title="Rate limit approaching">You've used 87% of your monthly API quota.</fresh-alert>
+            <fresh-alert variant="danger"  title="Build failed">Compilation error on line 42. Check the error log.</fresh-alert>
+          </div>
+        </div>
+        <div class="page-section">
+          <div class="page-section-title">Dismissible</div>
+          <div class="demo-surface col" style="gap:var(--space-3)">
+            <fresh-alert variant="info" dismissible>You have unsaved changes. They will be lost if you navigate away.</fresh-alert>
+            <fresh-alert variant="success" title="Profile updated" dismissible>Your display name and avatar have been saved.</fresh-alert>
+          </div>
+        </div>
+        <div class="page-section">
+          <div class="page-section-title">Attributes</div>
+          <table class="usage-table">
+            <thead><tr><th>Attribute</th><th>Values</th><th>Default</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td>variant</td><td><code>info</code> <code>success</code> <code>warning</code> <code>danger</code></td><td><code>info</code></td><td>Color and icon set</td></tr>
+              <tr><td>title</td><td>string</td><td>—</td><td>Bold headline above the message</td></tr>
+              <tr><td>dismissible</td><td>boolean</td><td>—</td><td>Shows close button, removes element on click</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+<script src="components/core/fresh-button.js"></script>
+<script src="components/core/fresh-input.js"></script>
+<script src="components/feedback/fresh-alert.js"></script>
+<script src="components/navigation/fresh-simple-tabs.js"></script>
+</body>
+</html>

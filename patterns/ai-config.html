@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Config / Tuning — Acme</title>
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="../tokens/primitives.css">
+<link rel="stylesheet" href="../tokens/theme.css">
+<link rel="stylesheet" href="../tokens/dataviz.css">
+<link rel="stylesheet" href="../styles/reset.css">
+<link rel="stylesheet" href="../styles/patterns/ai-chat.css">
+<style>
+.cfg-body { flex: 1; display: flex; overflow: hidden; }
+.cfg-nav {
+  width: 210px;
+  flex-shrink: 0;
+  background: var(--surface-bg);
+  border-right: 1px solid var(--surface-border);
+  padding: var(--space-4) 0;
+  overflow-y: auto;
+}
+.cfg-nav-section {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-tertiary);
+  padding: var(--space-3) var(--space-4) var(--space-1);
+}
+.cfg-nav-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  font-size: 13px;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: background 120ms, color 120ms;
+}
+.cfg-nav-item:hover { background: var(--surface-subtle); color: var(--text-primary); }
+.cfg-nav-item.active { background: var(--color-interactive-subtle); color: var(--color-interactive-text); font-weight: 600; }
+.cfg-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--space-6) var(--space-7);
+  max-width: 680px;
+}
+.cfg-section { margin-bottom: var(--space-7); }
+.cfg-section-title { font-size: 16px; font-weight: 700; color: var(--text-primary); margin-bottom: var(--space-1); }
+.cfg-section-desc { font-size: 13px; color: var(--text-secondary); margin-bottom: var(--space-4); }
+.cfg-card {
+  background: var(--surface-canvas);
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  margin-bottom: var(--space-4);
+}
+.cfg-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-5);
+  padding: var(--space-3) 0;
+  border-bottom: 1px solid var(--surface-border);
+}
+.cfg-row:last-child { border-bottom: none; }
+.cfg-row-label { font-size: 13px; font-weight: 600; color: var(--text-primary); margin-bottom: 2px; }
+.cfg-row-desc { font-size: 12px; color: var(--text-secondary); line-height: 1.5; }
+.cfg-control { flex-shrink: 0; min-width: 180px; }
+.param-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--space-1); }
+.param-label { font-size: 12px; font-weight: 500; color: var(--text-secondary); }
+.param-value { font-size: 12px; font-weight: 700; color: var(--text-primary); font-family: var(--font-mono); }
+</style>
+<script>if(location.href.indexOf('?thumb')!==-1)document.write('<style>#demo-bar{display:none!important}</style>');</script>
+<script src="../js/pattern-topbar-v2.js"></script>
+<script src="../js/freshds.js"></script>
+<script src="../js/pattern-bar.js"></script>
+</head>
+<body>
+<div id="app">
+
+  <div class="demo-bar" id="demo-bar">
+    <div class="demo-inner" id="demo-inner">
+      <button class="demo-mode-btn" id="mode-toggle-btn" onclick="toggleDemoMode()" aria-label="Toggle dark mode">
+        <i class="ti ti-moon"></i>
+      </button>
+    </div>
+    <div class="demo-sep"></div>
+    <button class="demo-collapse-btn" id="demo-collapse-btn" onclick="toggleDemoBar()" aria-label="Collapse toolbar">
+      <i class="ti ti-minus"></i>
+    </button>
+  </div>
+
+  <div class="ai-shell">
+    <pattern-topbar logged-in></pattern-topbar>
+
+    <div class="cfg-body">
+
+      <!-- Settings nav -->
+      <div class="cfg-nav">
+        <div class="cfg-nav-section">AI Settings</div>
+        <div class="cfg-nav-item active"><i class="ti ti-settings"></i> General defaults</div>
+        <div class="cfg-nav-item"><i class="ti ti-message-circle"></i> Chat</div>
+        <div class="cfg-nav-item"><i class="ti ti-robot"></i> Agents</div>
+        <div class="cfg-nav-item"><i class="ti ti-git-branch"></i> Automation</div>
+        <div class="cfg-nav-section">Safety</div>
+        <div class="cfg-nav-item"><i class="ti ti-shield"></i> Content filters</div>
+        <div class="cfg-nav-item"><i class="ti ti-lock"></i> Guardrails</div>
+        <div class="cfg-nav-item"><i class="ti ti-eye"></i> Audit & logging</div>
+        <div class="cfg-nav-section">Usage</div>
+        <div class="cfg-nav-item"><i class="ti ti-chart-bar"></i> Rate limits</div>
+        <div class="cfg-nav-item"><i class="ti ti-credit-card"></i> Cost controls</div>
+      </div>
+
+      <!-- Content -->
+      <div class="cfg-content">
+
+        <div class="cfg-section">
+          <div class="cfg-section-title">General AI defaults</div>
+          <div class="cfg-section-desc">These settings apply workspace-wide unless overridden per feature.</div>
+
+          <!-- Default model -->
+          <div class="cfg-card">
+            <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-tertiary);margin-bottom:var(--space-3);">Default model</div>
+            <fresh-model-selector value="claude-opus-4"></fresh-model-selector>
+            <div style="font-size:12px;color:var(--text-tertiary);margin-top:var(--space-2);">Used for all AI features unless a specific feature overrides it.</div>
+          </div>
+
+          <!-- Default parameters -->
+          <div class="cfg-card">
+            <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-tertiary);margin-bottom:var(--space-4);">Default parameters</div>
+
+            <div class="param-row"><span class="param-label">Temperature</span><span class="param-value" id="cfg-temp">0.7</span></div>
+            <fresh-slider value="0.7" min="0" max="1" step="0.05" style="display:block;margin-bottom:var(--space-4);" oninput="document.getElementById('cfg-temp').textContent=parseFloat(this.value).toFixed(2)"></fresh-slider>
+
+            <div class="param-row"><span class="param-label">Max tokens per response</span><span class="param-value" id="cfg-max">2048</span></div>
+            <fresh-slider value="2048" min="256" max="8192" step="256" style="display:block;margin-bottom:var(--space-4);" oninput="document.getElementById('cfg-max').textContent=this.value"></fresh-slider>
+
+            <div class="param-row"><span class="param-label">Top-p</span><span class="param-value" id="cfg-topp">0.95</span></div>
+            <fresh-slider value="0.95" min="0" max="1" step="0.01" style="display:block;" oninput="document.getElementById('cfg-topp').textContent=parseFloat(this.value).toFixed(2)"></fresh-slider>
+          </div>
+
+          <!-- System prompt -->
+          <div class="cfg-card">
+            <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-tertiary);margin-bottom:var(--space-3);">Default system prompt</div>
+            <textarea style="width:100%;min-height:100px;font-size:12px;font-family:var(--font-sans);color:var(--text-primary);background:var(--surface-subtle);border:1px solid var(--surface-border);border-radius:var(--radius-md);padding:var(--space-3);resize:vertical;line-height:1.5;outline:none;">You are a helpful AI assistant for Acme Corp. You help sales and operations teams with research, summarization, and data analysis. Be concise, accurate, and professional. Never make up information.</textarea>
+            <div style="font-size:11px;color:var(--text-tertiary);margin-top:var(--space-1);">Prepended to every AI interaction unless a feature overrides it.</div>
+          </div>
+        </div>
+
+        <!-- AI mode -->
+        <div class="cfg-section">
+          <div class="cfg-section-title">AI operating mode</div>
+          <div class="cfg-section-desc">Controls how autonomously AI agents can act across your workspace.</div>
+
+          <div class="cfg-card">
+            <div class="cfg-row" style="padding:0 0 var(--space-3);">
+              <div>
+                <div class="cfg-row-label">Default AI mode</div>
+                <div class="cfg-row-desc">Applies to all new agents unless overridden</div>
+              </div>
+              <fresh-ai-mode-toggle value="supervised" class="cfg-control"></fresh-ai-mode-toggle>
+            </div>
+            <div class="cfg-row" style="padding:var(--space-3) 0;">
+              <div>
+                <div class="cfg-row-label">Require approval for write actions</div>
+                <div class="cfg-row-desc">Agents must pause and wait for human approval before modifying records, sending messages, or calling external APIs</div>
+              </div>
+              <fresh-toggle checked></fresh-toggle>
+            </div>
+            <div class="cfg-row" style="padding:var(--space-3) 0 0;border-bottom:none;">
+              <div>
+                <div class="cfg-row-label">Max steps per agent run</div>
+                <div class="cfg-row-desc">Hard limit to prevent runaway agents</div>
+              </div>
+              <fresh-input value="25" type="number" size="sm" style="--input-width:80px;" class="cfg-control"></fresh-input>
+            </div>
+          </div>
+        </div>
+
+        <!-- Streaming & UX -->
+        <div class="cfg-section">
+          <div class="cfg-section-title">Response behavior</div>
+          <div class="cfg-card">
+            <div class="cfg-row" style="padding:0 0 var(--space-3);">
+              <div>
+                <div class="cfg-row-label">Streaming responses</div>
+                <div class="cfg-row-desc">Show text as it generates rather than waiting for completion</div>
+              </div>
+              <fresh-toggle checked></fresh-toggle>
+            </div>
+            <div class="cfg-row" style="padding:var(--space-3) 0;">
+              <div>
+                <div class="cfg-row-label">Show thinking / reasoning</div>
+                <div class="cfg-row-desc">Display extended thinking steps when available</div>
+              </div>
+              <fresh-toggle checked></fresh-toggle>
+            </div>
+            <div class="cfg-row" style="padding:var(--space-3) 0 0;border-bottom:none;">
+              <div>
+                <div class="cfg-row-label">Collect RLHF feedback</div>
+                <div class="cfg-row-desc">Show thumbs up/down prompts after each AI response</div>
+              </div>
+              <fresh-toggle checked></fresh-toggle>
+            </div>
+          </div>
+        </div>
+
+        <div style="display:flex;justify-content:flex-end;gap:var(--space-2);padding-bottom:var(--space-8);">
+          <fresh-button variant="ghost">Reset to defaults</fresh-button>
+          <fresh-button variant="primary"><i class="ti ti-device-floppy"></i> Save AI config</fresh-button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div>
+<script>
+  document.addEventListener('nav-toggle', function() {
+    document.getElementById('app-nav').classList.toggle('open');
+  });
+</script>
+<script src="../components/core/fresh-button.js"></script>
+<script src="../components/core/fresh-input.js"></script>
+<script src="../components/core/fresh-toggle.js"></script>
+<script src="../components/core/fresh-slider.js"></script>
+<script src="../components/ai/fresh-model-selector.js"></script>
+<script src="../components/ai/fresh-ai-mode-toggle.js"></script>
+</body>
+</html>

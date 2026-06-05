@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Share / Publish — Acme</title>
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="../tokens/primitives.css">
+<link rel="stylesheet" href="../tokens/theme.css">
+<link rel="stylesheet" href="../tokens/dataviz.css">
+<link rel="stylesheet" href="../styles/reset.css">
+<link rel="stylesheet" href="../styles/patterns/dashboard.css">
+<link rel="stylesheet" href="../styles/patterns/collab.css">
+<script>if(location.href.indexOf('?thumb')!==-1)document.write('<style>#demo-bar{display:none!important}</style>');</script>
+<script src="../js/pattern-topbar-v2.js"></script>
+<script src="../js/freshds.js"></script>
+<script src="../js/pattern-bar.js"></script>
+</head>
+<body>
+<div id="app">
+
+  <div class="demo-bar" id="demo-bar">
+    <div class="demo-inner" id="demo-inner">
+      <button class="demo-mode-btn" id="mode-toggle-btn" onclick="toggleDemoMode()" aria-label="Toggle dark mode">
+        <i class="ti ti-moon"></i>
+      </button>
+    </div>
+    <div class="demo-sep"></div>
+    <button class="demo-collapse-btn" id="demo-collapse-btn" onclick="toggleDemoBar()" aria-label="Collapse toolbar">
+      <i class="ti ti-minus"></i>
+    </button>
+  </div>
+
+  <div class="dash-shell">
+    <pattern-topbar logged-in></pattern-topbar>
+    <div class="dash-body">
+
+      <nav class="app-nav open" id="app-nav" aria-label="Main navigation">
+        <div class="app-nav-inner">
+          <button class="app-nav-item active"><i class="ti ti-home"></i> Home</button>
+          <button class="app-nav-item"><i class="ti ti-chart-bar"></i> Analytics</button>
+          <button class="app-nav-item"><i class="ti ti-activity"></i> Activity</button>
+          <button class="app-nav-item"><i class="ti ti-folders"></i> Projects</button>
+          <button class="app-nav-item"><i class="ti ti-check"></i> My tasks</button>
+          <button class="app-nav-item"><i class="ti ti-calendar-event"></i> Calendar</button>
+          <button class="app-nav-item"><i class="ti ti-users"></i> Members</button>
+          <button class="app-nav-item"><i class="ti ti-settings"></i> Settings</button>
+        </div>
+      </nav>
+
+      <main class="dash-main">
+
+        <div class="dash-page-header" style="flex-shrink:0;">
+          <div>
+            <div class="dash-page-title">Share — Q2 Targets & OKRs</div>
+            <div class="dash-page-subtitle">Manage who can access and view this document</div>
+          </div>
+        </div>
+
+        <div class="dash-content">
+          <div class="col-share-wrap">
+
+            <!-- Invite people -->
+            <div class="col-share-section">
+              <div class="col-share-section-header">Invite people</div>
+              <div class="col-share-section-body">
+                <div style="display:flex;gap:var(--space-2);margin-bottom:var(--space-4);">
+                  <fresh-input placeholder="Add names or emails…" clearable style="flex:1;"></fresh-input>
+                  <fresh-select style="min-width:120px;">
+                    <option selected>Can edit</option>
+                    <option>Can comment</option>
+                    <option>Can view</option>
+                  </fresh-select>
+                  <fresh-button variant="primary" size="sm">Invite</fresh-button>
+                </div>
+                <div style="font-size:12px;color:var(--text-secondary);margin-bottom:var(--space-3);">People with access</div>
+
+                <div class="col-access-row">
+                  <fresh-avatar name="Priya Sharma" size="sm"></fresh-avatar>
+                  <div class="col-access-info">
+                    <div class="col-access-name">Priya Sharma <span style="font-size:11px;font-weight:400;color:var(--color-interactive-text);">(owner)</span></div>
+                    <div class="col-access-email">priya@acme.io</div>
+                  </div>
+                  <div style="font-size:12px;color:var(--text-tertiary);">Owner</div>
+                </div>
+                <div class="col-access-row">
+                  <fresh-avatar name="Marcus Chen" size="sm"></fresh-avatar>
+                  <div class="col-access-info">
+                    <div class="col-access-name">Marcus Chen</div>
+                    <div class="col-access-email">m.chen@acme.io</div>
+                  </div>
+                  <fresh-select style="min-width:130px;">
+                    <option selected>Can edit</option>
+                    <option>Can comment</option>
+                    <option>Can view</option>
+                    <option style="color:var(--color-danger-text);">Remove</option>
+                  </fresh-select>
+                </div>
+                <div class="col-access-row">
+                  <fresh-avatar name="Tom Okeke" size="sm"></fresh-avatar>
+                  <div class="col-access-info">
+                    <div class="col-access-name">Tom Okeke</div>
+                    <div class="col-access-email">tom@acme.io</div>
+                  </div>
+                  <fresh-select style="min-width:130px;">
+                    <option>Can edit</option>
+                    <option selected>Can comment</option>
+                    <option>Can view</option>
+                    <option style="color:var(--color-danger-text);">Remove</option>
+                  </fresh-select>
+                </div>
+                <div class="col-access-row">
+                  <fresh-avatar name="Anika Patel" size="sm"></fresh-avatar>
+                  <div class="col-access-info">
+                    <div class="col-access-name">Anika Patel</div>
+                    <div class="col-access-email">anika@acme.io</div>
+                  </div>
+                  <fresh-select style="min-width:130px;">
+                    <option>Can edit</option>
+                    <option>Can comment</option>
+                    <option selected>Can view</option>
+                    <option style="color:var(--color-danger-text);">Remove</option>
+                  </fresh-select>
+                </div>
+
+              </div>
+            </div>
+
+            <!-- Workspace access -->
+            <div class="col-share-section">
+              <div class="col-share-section-header">Workspace access</div>
+              <div class="col-share-section-body">
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:var(--space-3);">
+                  <div>
+                    <div style="font-size:13px;font-weight:600;color:var(--text-primary);">Sales Q2 Workspace</div>
+                    <div style="font-size:12px;color:var(--text-secondary);">8 members can access</div>
+                  </div>
+                  <fresh-select style="min-width:130px;">
+                    <option>No access</option>
+                    <option>Can view</option>
+                    <option selected>Can comment</option>
+                    <option>Can edit</option>
+                  </fresh-select>
+                </div>
+                <fresh-alert variant="info">Changing workspace access updates permissions for all 8 members at once.</fresh-alert>
+              </div>
+            </div>
+
+            <!-- Link sharing -->
+            <div class="col-share-section">
+              <div class="col-share-section-header">
+                <span>Link sharing</span>
+                <fresh-badge variant="success" size="sm">On</fresh-badge>
+              </div>
+              <div class="col-share-section-body">
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:var(--space-4);">
+                  <div>
+                    <div style="font-size:13px;font-weight:600;color:var(--text-primary);">Anyone with the link</div>
+                    <div style="font-size:12px;color:var(--text-secondary);">No sign-in required</div>
+                  </div>
+                  <div style="display:flex;align-items:center;gap:var(--space-2);">
+                    <fresh-select style="min-width:130px;">
+                      <option>No access</option>
+                      <option selected>Can view</option>
+                      <option>Can comment</option>
+                      <option>Can edit</option>
+                    </fresh-select>
+                    <fresh-toggle checked></fresh-toggle>
+                  </div>
+                </div>
+                <div class="col-link-bar">
+                  <i class="ti ti-link" style="font-size:14px;color:var(--text-tertiary);flex-shrink:0;"></i>
+                  <div class="col-link-text">https://app.acme.io/docs/q2-targets?share=pub_7xKp9mNqT2vR</div>
+                  <fresh-button variant="ghost" size="sm"><i class="ti ti-copy"></i> Copy</fresh-button>
+                  <fresh-button variant="ghost" size="sm"><i class="ti ti-refresh"></i></fresh-button>
+                </div>
+                <div style="margin-top:var(--space-3);display:flex;gap:var(--space-2);">
+                  <fresh-button variant="secondary" size="sm"><i class="ti ti-brand-twitter"></i></fresh-button>
+                  <fresh-button variant="secondary" size="sm"><i class="ti ti-brand-linkedin"></i></fresh-button>
+                  <fresh-button variant="secondary" size="sm"><i class="ti ti-mail"></i> Email</fresh-button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Publish -->
+            <div class="col-share-section">
+              <div class="col-share-section-header">Publish to web</div>
+              <div class="col-share-section-body">
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:var(--space-3);">
+                  <div>
+                    <div style="font-size:13px;font-weight:600;color:var(--text-primary);">Publish as public page</div>
+                    <div style="font-size:12px;color:var(--text-secondary);">Indexed by search engines · Shows Acme branding</div>
+                  </div>
+                  <fresh-toggle></fresh-toggle>
+                </div>
+                <div style="display:flex;align-items:center;justify-content:space-between;">
+                  <div>
+                    <div style="font-size:13px;font-weight:600;color:var(--text-primary);">Allow comments from public</div>
+                    <div style="font-size:12px;color:var(--text-secondary);">Visitors can leave reactions and comments</div>
+                  </div>
+                  <fresh-toggle></fresh-toggle>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+</div>
+<script>
+  document.addEventListener('nav-toggle', function() {
+    document.getElementById('app-nav').classList.toggle('open');
+  });
+</script>
+<script src="../components/core/fresh-button.js"></script>
+<script src="../components/core/fresh-input.js"></script>
+<script src="../components/core/fresh-select.js"></script>
+<script src="../components/core/fresh-toggle.js"></script>
+<script src="../components/feedback/fresh-badge.js"></script>
+<script src="../components/feedback/fresh-alert.js"></script>
+<script src="../components/data/fresh-avatar.js"></script>
+</body>
+</html>

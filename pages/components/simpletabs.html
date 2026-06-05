@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simple tabs — FreshDS</title>
+<base href="../../">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="tokens/primitives.css">
+<link rel="stylesheet" href="tokens/theme.css">
+<link rel="stylesheet" href="tokens/dataviz.css">
+<link rel="stylesheet" href="styles/reset.css">
+<link rel="stylesheet" href="styles/layout.css">
+<link rel="stylesheet" href="styles/components/core.css">
+<link rel="stylesheet" href="styles/docs.css">
+<script src="js/freshds.js"></script>
+<script src="js/freshds-site.js"></script>
+</head>
+<body>
+<div class="fds-app" id="app">
+  <ds-topbar active-section="ds"></ds-topbar>
+  <div class="fds-body">
+    <ds-shell active="simpletabs"></ds-shell>
+    <main class="fds-main">
+      <div class="fds-page active" id="page-simpletabs">
+        <div class="page-header">
+          <div class="page-eyebrow">Navigation</div>
+          <h1 class="page-title">Simple tabs</h1>
+          <p class="page-desc">Text-first tab bar with a pill background on the active item. No underline — suited for top-level navigation, marketing pages, or any context where the underline style reads too heavy.</p>
+        </div>
+        <div class="page-section">
+          <div class="page-section-title">Default</div>
+          <div class="demo-surface">
+            <fresh-simple-tabs
+              tabs='[{"key":"overview","label":"Overview"},{"key":"usage","label":"Usage"},{"key":"tokens","label":"Tokens"},{"key":"guidelines","label":"Guidelines"},{"key":"changelog","label":"Changelog"}]'
+              active="usage">
+            </fresh-simple-tabs>
+          </div>
+        </div>
+        <div class="page-section">
+          <div class="page-section-title">Sizes</div>
+          <div class="demo-surface col" style="gap:var(--space-5)">
+            <fresh-simple-tabs size="sm"
+              tabs='[{"key":"a","label":"Small"},{"key":"b","label":"Tabs"},{"key":"c","label":"Example"}]'
+              active="b">
+            </fresh-simple-tabs>
+            <fresh-simple-tabs
+              tabs='[{"key":"a","label":"Default"},{"key":"b","label":"Tabs"},{"key":"c","label":"Example"}]'
+              active="a">
+            </fresh-simple-tabs>
+            <fresh-simple-tabs size="lg"
+              tabs='[{"key":"a","label":"Large"},{"key":"b","label":"Tabs"},{"key":"c","label":"Example"}]'
+              active="c">
+            </fresh-simple-tabs>
+          </div>
+        </div>
+        <div class="page-section">
+          <div class="page-section-title">With disabled item</div>
+          <div class="demo-surface">
+            <fresh-simple-tabs
+              tabs='[{"key":"a","label":"Overview"},{"key":"b","label":"Analytics"},{"key":"c","label":"Settings","disabled":true},{"key":"d","label":"Billing"}]'
+              active="a">
+            </fresh-simple-tabs>
+          </div>
+        </div>
+        <div class="page-section">
+          <div class="page-section-title">Attributes</div>
+          <table class="usage-table">
+            <thead><tr><th>Attribute</th><th>Values</th><th>Default</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td>tabs</td><td>JSON array</td><td>—</td><td><code>{ key, label, disabled? }</code></td></tr>
+              <tr><td>active</td><td>string</td><td>—</td><td>Key of the currently active tab</td></tr>
+              <tr><td>size</td><td><code>sm</code> <code>md</code> <code>lg</code></td><td><code>md</code></td><td>Matches btn-sm / btn / btn-lg height</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="page-section">
+          <div class="page-section-title">Events</div>
+          <table class="usage-table">
+            <thead><tr><th>Event</th><th>Detail</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td>change</td><td><code>{ key: string }</code></td><td>Fired when the active tab changes</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="page-section">
+          <div class="page-section-title">Tokens used</div>
+          <div style="display:flex;flex-wrap:wrap;gap:8px">
+            <span class="token-pill"><span class="token-dot" style="background:var(--surface-overlay)"></span>--surface-overlay</span>
+            <span class="token-pill"><span class="token-dot" style="background:var(--surface-subtle)"></span>--surface-subtle</span>
+            <span class="token-pill"><span class="token-dot" style="background:var(--text-primary)"></span>--text-primary</span>
+            <span class="token-pill"><span class="token-dot" style="background:var(--text-secondary)"></span>--text-secondary</span>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+<script src="components/core/fresh-button.js"></script>
+<script src="components/core/fresh-input.js"></script>
+<script src="components/navigation/fresh-simple-tabs.js"></script>
+</body>
+</html>

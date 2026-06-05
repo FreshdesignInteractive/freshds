@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Avatar — FreshDS</title>
+<base href="../../">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="tokens/primitives.css">
+<link rel="stylesheet" href="tokens/theme.css">
+<link rel="stylesheet" href="tokens/dataviz.css">
+<link rel="stylesheet" href="styles/reset.css">
+<link rel="stylesheet" href="styles/layout.css">
+<link rel="stylesheet" href="styles/components/core.css">
+<link rel="stylesheet" href="styles/docs.css">
+<script src="js/freshds.js"></script>
+<script src="js/freshds-site.js"></script>
+</head>
+<body>
+<div class="fds-app" id="app">
+  <ds-topbar active-section="ds"></ds-topbar>
+  <div class="fds-body">
+    <ds-shell active="avatar"></ds-shell>
+    <main class="fds-main">
+      <div class="fds-page active" id="page-avatar">
+        <div class="page-header">
+          <div class="page-eyebrow">Data Display</div>
+          <h1 class="page-title">Avatar</h1>
+          <p class="page-desc">User identity display. Shows a photo when available, falling back to initials on error or when no source is provided. Initials color is deterministically derived from the name — consistent across sessions.</p>
+        </div>
+        <div class="page-section">
+          <div class="page-section-title">Initials — color from name</div>
+          <div class="demo-surface" style="align-items:center;gap:var(--space-3)">
+            <fresh-avatar name="Jane Smith"></fresh-avatar>
+            <fresh-avatar name="Marcus Lee"></fresh-avatar>
+            <fresh-avatar name="Priya Nair"></fresh-avatar>
+            <fresh-avatar name="Tom Wu"></fresh-avatar>
+            <fresh-avatar name="Anya Patel"></fresh-avatar>
+            <fresh-avatar name="Carlos R"></fresh-avatar>
+            <fresh-avatar name="AI Agent"></fresh-avatar>
+          </div>
+        </div>
+        <div class="page-section">
+          <div class="page-section-title">Sizes</div>
+          <div class="demo-surface" style="align-items:center;gap:var(--space-4)">
+            <div style="text-align:center">
+              <fresh-avatar name="Jane Smith" size="xs"></fresh-avatar>
+              <div style="font-size:10px;color:var(--text-tertiary);font-family:var(--font-sans);margin-top:6px">xs · 20</div>
+            </div>
+            <div style="text-align:center">
+              <fresh-avatar name="Jane Smith" size="sm"></fresh-avatar>
+              <div style="font-size:10px;color:var(--text-tertiary);font-family:var(--font-sans);margin-top:6px">sm · 28</div>
+            </div>
+            <div style="text-align:center">
+              <fresh-avatar name="Jane Smith"></fresh-avatar>
+              <div style="font-size:10px;color:var(--text-tertiary);font-family:var(--font-sans);margin-top:6px">md · 36</div>
+            </div>
+            <div style="text-align:center">
+              <fresh-avatar name="Jane Smith" size="lg"></fresh-avatar>
+              <div style="font-size:10px;color:var(--text-tertiary);font-family:var(--font-sans);margin-top:6px">lg · 44</div>
+            </div>
+            <div style="text-align:center">
+              <fresh-avatar name="Jane Smith" size="xl"></fresh-avatar>
+              <div style="font-size:10px;color:var(--text-tertiary);font-family:var(--font-sans);margin-top:6px">xl · 64</div>
+            </div>
+          </div>
+        </div>
+        <div class="page-section">
+          <div class="page-section-title">Square shape (AI agents, bots)</div>
+          <div class="demo-surface" style="align-items:center;gap:var(--space-3)">
+            <fresh-avatar name="GPT-4o"      shape="square" size="sm"></fresh-avatar>
+            <fresh-avatar name="Claude"      shape="square"></fresh-avatar>
+            <fresh-avatar name="Gemini Pro"  shape="square" size="lg"></fresh-avatar>
+            <fresh-avatar name="Llama 3"     shape="square" size="xl"></fresh-avatar>
+          </div>
+        </div>
+        <div class="page-section">
+          <div class="page-section-title">With status indicator</div>
+          <div class="demo-surface" style="align-items:center;gap:var(--space-5)">
+            <div style="text-align:center">
+              <fresh-avatar name="Jane Smith" status="online"  size="lg"></fresh-avatar>
+              <div style="font-size:11px;color:var(--text-tertiary);font-family:var(--font-sans);margin-top:8px">online</div>
+            </div>
+            <div style="text-align:center">
+              <fresh-avatar name="Marcus Lee" status="away"    size="lg"></fresh-avatar>
+              <div style="font-size:11px;color:var(--text-tertiary);font-family:var(--font-sans);margin-top:8px">away</div>
+            </div>
+            <div style="text-align:center">
+              <fresh-avatar name="Priya Nair" status="busy"    size="lg"></fresh-avatar>
+              <div style="font-size:11px;color:var(--text-tertiary);font-family:var(--font-sans);margin-top:8px">busy</div>
+            </div>
+            <div style="text-align:center">
+              <fresh-avatar name="Tom Wu"     status="offline" size="lg"></fresh-avatar>
+              <div style="font-size:11px;color:var(--text-tertiary);font-family:var(--font-sans);margin-top:8px">offline</div>
+            </div>
+          </div>
+        </div>
+        <div class="page-section">
+          <div class="page-section-title">Image with initials fallback</div>
+          <div class="demo-surface" style="align-items:center;gap:var(--space-4)">
+            <fresh-avatar src="https://i.pravatar.cc/80?img=1" name="Jane Smith" size="lg" status="online"></fresh-avatar>
+            <fresh-avatar src="https://i.pravatar.cc/80?img=3" name="Marcus Lee" size="lg"></fresh-avatar>
+            <fresh-avatar src="broken-url.jpg"                 name="Fallback"  size="lg"></fresh-avatar>
+          </div>
+        </div>
+        <div class="page-section">
+          <div class="page-section-title">Attributes</div>
+          <table class="usage-table">
+            <thead><tr><th>Attribute</th><th>Values</th><th>Default</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td>src</td><td>URL</td><td>—</td><td>Image source. Falls back to initials on error.</td></tr>
+              <tr><td>name</td><td>string</td><td>—</td><td>Used for initials, color, and aria-label</td></tr>
+              <tr><td>size</td><td><code>xs</code> <code>sm</code> <code>md</code> <code>lg</code> <code>xl</code></td><td><code>md</code></td><td>Diameter in px (20/28/36/44/64)</td></tr>
+              <tr><td>shape</td><td><code>circle</code> <code>square</code></td><td><code>circle</code></td><td>Square is recommended for AI agents and bots</td></tr>
+              <tr><td>status</td><td><code>online</code> <code>away</code> <code>busy</code> <code>offline</code></td><td>—</td><td>Colored dot at bottom-right</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+<script src="components/core/fresh-button.js"></script>
+<script src="components/core/fresh-input.js"></script>
+<script src="components/data/fresh-avatar.js"></script>
+<script src="components/navigation/fresh-simple-tabs.js"></script>
+</body>
+</html>

@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Profile / Account — Acme</title>
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="../tokens/primitives.css">
+<link rel="stylesheet" href="../tokens/theme.css">
+<link rel="stylesheet" href="../tokens/dataviz.css">
+<link rel="stylesheet" href="../styles/reset.css">
+<link rel="stylesheet" href="../styles/patterns/dashboard.css">
+<link rel="stylesheet" href="../styles/patterns/settings.css">
+<script>if(location.href.indexOf('?thumb')!==-1)document.write('<style>#demo-bar{display:none!important}</style>');</script>
+<script src="../js/pattern-topbar-v2.js"></script>
+<script src="../js/freshds.js"></script>
+<script src="../js/pattern-bar.js"></script>
+</head>
+<body>
+<div id="app">
+  <div class="demo-bar" id="demo-bar">
+    <div class="demo-inner" id="demo-inner">
+      <button class="demo-mode-btn" id="mode-toggle-btn" onclick="toggleDemoMode()"><i class="ti ti-moon"></i></button>
+    </div>
+    <div class="demo-sep"></div>
+    <button class="demo-collapse-btn" id="demo-collapse-btn" onclick="toggleDemoBar()"><i class="ti ti-minus"></i></button>
+  </div>
+
+  <div class="dash-shell">
+    <pattern-topbar logged-in></pattern-topbar>
+    <div class="dash-body">
+
+      <nav class="app-nav open" id="app-nav" aria-label="Main navigation">
+        <div class="app-nav-inner">
+          <button class="app-nav-item active"><i class="ti ti-home"></i> Home</button>
+          <button class="app-nav-item"><i class="ti ti-chart-bar"></i> Analytics</button>
+          <button class="app-nav-item"><i class="ti ti-activity"></i> Activity</button>
+          <button class="app-nav-item"><i class="ti ti-folders"></i> Projects</button>
+          <button class="app-nav-item"><i class="ti ti-check"></i> My tasks</button>
+          <button class="app-nav-item"><i class="ti ti-calendar-event"></i> Calendar</button>
+          <button class="app-nav-item"><i class="ti ti-users"></i> Members</button>
+          <button class="app-nav-item"><i class="ti ti-settings"></i> Settings</button>
+        </div>
+      </nav>
+
+      <main class="dash-main">
+
+        <div style="padding:var(--space-5) var(--space-8);border-bottom:1px solid var(--surface-border);background:var(--surface-bg);flex-shrink:0;">
+          <div style="font-size:20px;font-weight:800;color:var(--text-primary);">Profile & Account</div>
+          <div style="font-size:13px;color:var(--text-secondary);margin-top:2px;">Your personal information and account settings</div>
+        </div>
+
+        <div class="dash-content">
+          <div class="stg-content" style="max-width:680px;">
+
+            <!-- Avatar -->
+            <div class="stg-section">
+              <div class="stg-section-title">Personal info</div>
+
+              <div class="stg-card">
+                <div class="stg-avatar-upload">
+                  <div class="stg-avatar-large">P</div>
+                  <div class="stg-avatar-upload-info">
+                    <div class="stg-avatar-upload-label">Profile photo</div>
+                    <div class="stg-avatar-upload-hint">PNG or JPG · Max 2MB · Will appear everywhere</div>
+                    <div style="display:flex;gap:var(--space-2);">
+                      <fresh-button variant="secondary" size="sm"><i class="ti ti-upload"></i> Upload photo</fresh-button>
+                      <fresh-button variant="ghost" size="sm">Remove</fresh-button>
+                    </div>
+                  </div>
+                </div>
+
+                <div style="display:flex;flex-direction:column;gap:var(--space-3);margin-top:var(--space-4);">
+                  <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-3);">
+                    <fresh-form-field label="First name" required>
+                      <fresh-input slot="input" value="Priya"></fresh-input>
+                    </fresh-form-field>
+                    <fresh-form-field label="Last name" required>
+                      <fresh-input slot="input" value="Sharma"></fresh-input>
+                    </fresh-form-field>
+                  </div>
+                  <fresh-form-field label="Display name">
+                    <fresh-input slot="input" value="Priya Sharma" hint="Shown in comments, activity, and notifications"></fresh-input>
+                  </fresh-form-field>
+                  <fresh-form-field label="Bio">
+                    <fresh-input slot="input" value="Head of Product at Acme. Building AI-native workflows."></fresh-input>
+                  </fresh-form-field>
+                  <fresh-form-field label="Job title">
+                    <fresh-input slot="input" value="Head of Product"></fresh-input>
+                  </fresh-form-field>
+                </div>
+              </div>
+            </div>
+
+            <!-- Contact -->
+            <div class="stg-section">
+              <div class="stg-section-title">Contact & login</div>
+
+              <div class="stg-card">
+                <div style="display:flex;flex-direction:column;gap:var(--space-3);">
+                  <div class="stg-row" style="padding:0 0 var(--space-3);">
+                    <div>
+                      <div class="stg-row-label">Email address</div>
+                      <div style="font-size:13px;color:var(--text-primary);margin-top:2px;">priya@acme.io</div>
+                      <div class="stg-row-desc">Primary email for notifications and login</div>
+                    </div>
+                    <fresh-button variant="secondary" size="sm" class="stg-row-control">Change email</fresh-button>
+                  </div>
+                  <div class="stg-row" style="padding:var(--space-3) 0;border-bottom:1px solid var(--surface-border);">
+                    <div>
+                      <div class="stg-row-label">Password</div>
+                      <div class="stg-row-desc">Last changed 3 months ago</div>
+                    </div>
+                    <fresh-button variant="secondary" size="sm" class="stg-row-control">Change password</fresh-button>
+                  </div>
+                  <div class="stg-row" style="padding:var(--space-3) 0 0;border-bottom:none;">
+                    <div>
+                      <div class="stg-row-label">Username</div>
+                      <div class="stg-row-desc">@priya-sharma · Used for @mentions</div>
+                    </div>
+                    <fresh-button variant="ghost" size="sm" class="stg-row-control">Edit</fresh-button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Connected accounts -->
+            <div class="stg-section">
+              <div class="stg-section-title">Connected accounts</div>
+              <div class="stg-section-desc">Sign in faster and sync data from other services.</div>
+
+              <div class="stg-card">
+                <div class="stg-row" style="padding:0 0 var(--space-3);">
+                  <div style="display:flex;align-items:center;gap:var(--space-3);">
+                    <div style="width:32px;height:32px;border-radius:var(--radius-md);background:var(--surface-subtle);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;"><i class="ti ti-brand-google"></i></div>
+                    <div>
+                      <div class="stg-row-label">Google</div>
+                      <div class="stg-row-desc">priya.sharma@gmail.com · Connected for SSO</div>
+                    </div>
+                  </div>
+                  <fresh-button variant="ghost" size="sm" class="stg-row-control">Disconnect</fresh-button>
+                </div>
+                <div class="stg-row" style="padding:var(--space-3) 0;">
+                  <div style="display:flex;align-items:center;gap:var(--space-3);">
+                    <div style="width:32px;height:32px;border-radius:var(--radius-md);background:var(--surface-subtle);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;"><i class="ti ti-brand-github"></i></div>
+                    <div>
+                      <div class="stg-row-label">GitHub</div>
+                      <div class="stg-row-desc">Not connected</div>
+                    </div>
+                  </div>
+                  <fresh-button variant="secondary" size="sm" class="stg-row-control">Connect</fresh-button>
+                </div>
+                <div class="stg-row" style="padding:var(--space-3) 0 0;border-bottom:none;">
+                  <div style="display:flex;align-items:center;gap:var(--space-3);">
+                    <div style="width:32px;height:32px;border-radius:var(--radius-md);background:var(--surface-subtle);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;"><i class="ti ti-brand-slack"></i></div>
+                    <div>
+                      <div class="stg-row-label">Slack</div>
+                      <div class="stg-row-desc">priya-sharma · Acme workspace · Connected</div>
+                    </div>
+                  </div>
+                  <fresh-button variant="ghost" size="sm" class="stg-row-control">Disconnect</fresh-button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Timezone personal override -->
+            <div class="stg-section">
+              <div class="stg-section-title">Preferences</div>
+              <div class="stg-card">
+                <div style="display:flex;flex-direction:column;gap:var(--space-3);">
+                  <fresh-form-field label="Personal timezone">
+                    <fresh-select slot="input">
+                      <option selected>US/Pacific (GMT-7)</option>
+                      <option>US/Eastern (GMT-4)</option>
+                      <option>UTC</option>
+                      <option>Europe/London (GMT+1)</option>
+                    </fresh-select>
+                  </fresh-form-field>
+                  <div class="stg-row" style="padding:0;border:none;">
+                    <div>
+                      <div class="stg-row-label">Show profile to workspace members</div>
+                      <div class="stg-row-desc">Others can see your name, photo, and role</div>
+                    </div>
+                    <fresh-toggle checked class="stg-row-control"></fresh-toggle>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div style="display:flex;justify-content:flex-end;gap:var(--space-2);padding-bottom:var(--space-8);">
+              <fresh-button variant="ghost">Discard</fresh-button>
+              <fresh-button variant="primary"><i class="ti ti-device-floppy"></i> Save profile</fresh-button>
+            </div>
+
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+</div>
+<script>
+  document.addEventListener('nav-toggle', function() {
+    document.getElementById('app-nav').classList.toggle('open');
+  });
+</script>
+<script src="../components/core/fresh-button.js"></script>
+<script src="../components/core/fresh-input.js"></script>
+<script src="../components/core/fresh-select.js"></script>
+<script src="../components/core/fresh-form-field.js"></script>
+<script src="../components/core/fresh-toggle.js"></script>
+</body>
+</html>

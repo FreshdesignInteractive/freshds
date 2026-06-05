@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Success State — Acme</title>
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="../tokens/primitives.css">
+<link rel="stylesheet" href="../tokens/theme.css">
+<link rel="stylesheet" href="../tokens/dataviz.css">
+<link rel="stylesheet" href="../styles/reset.css">
+<link rel="stylesheet" href="../styles/patterns/dashboard.css">
+<link rel="stylesheet" href="../styles/patterns/feedback.css">
+<style>
+  .success-icon-wrap {
+    width: 72px; height: 72px; border-radius: var(--radius-full);
+    background: var(--color-success-subtle); display: flex;
+    align-items: center; justify-content: center;
+    font-size: 32px; color: var(--color-success-text);
+    margin: 0 auto var(--space-5);
+    box-shadow: 0 0 0 8px var(--color-success-subtle);
+  }
+</style>
+<script>if(location.href.indexOf('?thumb')!==-1)document.write('<style>#demo-bar{display:none!important}</style>');</script>
+<script src="../js/pattern-topbar-v2.js"></script>
+<script src="../js/freshds.js"></script>
+<script src="../js/pattern-bar.js"></script>
+<script>
+  var _variants = ['import','payment','workflow','invite'];
+  var _current = 0;
+  function showVariant(n) {
+    _variants.forEach(function(v) {
+      document.getElementById('variant-'+v).style.display = 'none';
+      document.getElementById('btn-'+v).classList.remove('active');
+    });
+    document.getElementById('variant-'+_variants[n]).style.display = 'flex';
+    document.getElementById('btn-'+_variants[n]).classList.add('active');
+    _current = n;
+  }
+</script>
+</head>
+<body>
+<div id="app">
+  <div class="demo-bar" id="demo-bar">
+    <div class="demo-inner" id="demo-inner">
+      <button class="demo-mode-btn demo-mode-btn--variant" id="btn-import"
+        onclick="showVariant(0)"
+        style="width:auto;padding:0 var(--space-3);font-size:12px;font-weight:600;border-radius:var(--radius-full);background:var(--color-interactive-subtle);color:var(--color-interactive-text);">Import</button>
+      <button class="demo-mode-btn" id="btn-payment"
+        onclick="showVariant(1)"
+        style="width:auto;padding:0 var(--space-3);font-size:12px;font-weight:600;border-radius:var(--radius-full);">Payment</button>
+      <button class="demo-mode-btn" id="btn-workflow"
+        onclick="showVariant(2)"
+        style="width:auto;padding:0 var(--space-3);font-size:12px;font-weight:600;border-radius:var(--radius-full);">Workflow</button>
+      <button class="demo-mode-btn" id="btn-invite"
+        onclick="showVariant(3)"
+        style="width:auto;padding:0 var(--space-3);font-size:12px;font-weight:600;border-radius:var(--radius-full);">Invite</button>
+      <button class="demo-mode-btn" id="mode-toggle-btn" onclick="toggleDemoMode()"><i class="ti ti-moon"></i></button>
+    </div>
+    <div class="demo-sep"></div>
+    <button class="demo-collapse-btn" id="demo-collapse-btn" onclick="toggleDemoBar()"><i class="ti ti-minus"></i></button>
+  </div>
+
+  <div class="dash-shell">
+    <pattern-topbar logged-in></pattern-topbar>
+
+    <!-- Variant: Import complete -->
+    <div id="variant-import" style="flex:1;display:flex;align-items:center;justify-content:center;padding:var(--space-10);">
+      <div style="background:var(--surface-canvas);border:1px solid var(--surface-border);border-radius:var(--radius-xl);padding:var(--space-8) var(--space-8);text-align:center;max-width:480px;width:100%;box-shadow:var(--elev-2);">
+        <div class="success-icon-wrap"><i class="ti ti-circle-check"></i></div>
+        <div style="font-size:22px;font-weight:800;color:var(--text-primary);margin-bottom:var(--space-2);">Import complete</div>
+        <div style="font-size:14px;color:var(--text-secondary);line-height:1.6;margin-bottom:var(--space-6);">4,200 contacts imported successfully. 12 duplicates were skipped. AI enrichment is running in the background.</div>
+        <div style="background:var(--surface-subtle);border-radius:var(--radius-lg);padding:var(--space-4);margin-bottom:var(--space-5);display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-3);">
+          <div><div style="font-size:22px;font-weight:800;color:var(--color-success-text);">4,188</div><div style="font-size:11px;color:var(--text-tertiary);">Imported</div></div>
+          <div><div style="font-size:22px;font-weight:800;color:var(--color-warning-text);">12</div><div style="font-size:11px;color:var(--text-tertiary);">Skipped</div></div>
+          <div><div style="font-size:22px;font-weight:800;color:var(--text-primary);">0</div><div style="font-size:11px;color:var(--text-tertiary);">Failed</div></div>
+        </div>
+        <div style="display:flex;gap:var(--space-2);justify-content:center;">
+          <fresh-button variant="primary"><i class="ti ti-users"></i> View contacts</fresh-button>
+          <fresh-button variant="ghost">Import another file</fresh-button>
+        </div>
+        <div style="font-size:12px;color:var(--text-tertiary);margin-top:var(--space-4);">Jun 4, 2026 · 2:14 PM · priya@acme.io</div>
+      </div>
+    </div>
+
+    <!-- Variant: Payment success -->
+    <div id="variant-payment" style="flex:1;display:none;align-items:center;justify-content:center;padding:var(--space-10);">
+      <div style="background:var(--surface-canvas);border:1px solid var(--surface-border);border-radius:var(--radius-xl);padding:var(--space-8);text-align:center;max-width:440px;width:100%;box-shadow:var(--elev-2);">
+        <div class="success-icon-wrap"><i class="ti ti-credit-card"></i></div>
+        <div style="font-size:22px;font-weight:800;color:var(--text-primary);margin-bottom:var(--space-2);">Payment successful</div>
+        <div style="font-size:14px;color:var(--text-secondary);line-height:1.6;margin-bottom:var(--space-5);">You've upgraded to the <strong>Enterprise plan</strong>. Your new limits are active immediately.</div>
+        <div style="background:var(--color-success-subtle);border:1px solid var(--color-success);border-radius:var(--radius-lg);padding:var(--space-3) var(--space-4);margin-bottom:var(--space-5);text-align:left;">
+          <div style="font-size:12px;color:var(--color-success-text);font-weight:600;margin-bottom:var(--space-1);">Receipt details</div>
+          <div style="display:flex;justify-content:space-between;font-size:13px;"><span style="color:var(--text-secondary);">Plan</span><span style="color:var(--text-primary);font-weight:600;">Enterprise · 22 seats</span></div>
+          <div style="display:flex;justify-content:space-between;font-size:13px;margin-top:4px;"><span style="color:var(--text-secondary);">Amount</span><span style="color:var(--text-primary);font-weight:600;">$65,688 / year</span></div>
+          <div style="display:flex;justify-content:space-between;font-size:13px;margin-top:4px;"><span style="color:var(--text-secondary);">Card</span><span style="color:var(--text-primary);font-weight:600;">Visa ••••4242</span></div>
+        </div>
+        <div style="display:flex;gap:var(--space-2);justify-content:center;">
+          <fresh-button variant="primary"><i class="ti ti-download"></i> Download receipt</fresh-button>
+          <fresh-button variant="ghost">Go to dashboard</fresh-button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Variant: Workflow activated -->
+    <div id="variant-workflow" style="flex:1;display:none;align-items:center;justify-content:center;padding:var(--space-10);">
+      <div style="background:var(--surface-canvas);border:1px solid var(--surface-border);border-radius:var(--radius-xl);padding:var(--space-8);text-align:center;max-width:440px;width:100%;box-shadow:var(--elev-2);">
+        <div class="success-icon-wrap"><i class="ti ti-bolt"></i></div>
+        <div style="font-size:22px;font-weight:800;color:var(--text-primary);margin-bottom:var(--space-2);">Workflow is live</div>
+        <div style="font-size:14px;color:var(--text-secondary);line-height:1.6;margin-bottom:var(--space-5);"><strong>Lead enrichment pipeline</strong> is now active. It will run automatically whenever a new contact is created matching your trigger conditions.</div>
+        <div style="display:flex;flex-direction:column;gap:var(--space-2);margin-bottom:var(--space-5);">
+          <div style="display:flex;align-items:center;gap:var(--space-2);font-size:13px;color:var(--text-secondary);">
+            <i class="ti ti-check" style="color:var(--color-success-text);"></i> 5-node pipeline published
+          </div>
+          <div style="display:flex;align-items:center;gap:var(--space-2);font-size:13px;color:var(--text-secondary);">
+            <i class="ti ti-check" style="color:var(--color-success-text);"></i> Trigger: Contact created · Any status
+          </div>
+          <div style="display:flex;align-items:center;gap:var(--space-2);font-size:13px;color:var(--text-secondary);">
+            <i class="ti ti-check" style="color:var(--color-success-text);"></i> AI Enrich + Slack notification connected
+          </div>
+        </div>
+        <div style="display:flex;gap:var(--space-2);justify-content:center;">
+          <fresh-button variant="primary"><i class="ti ti-activity"></i> View run history</fresh-button>
+          <fresh-button variant="ghost">Back to workflows</fresh-button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Variant: Invites sent -->
+    <div id="variant-invite" style="flex:1;display:none;align-items:center;justify-content:center;padding:var(--space-10);">
+      <div style="background:var(--surface-canvas);border:1px solid var(--surface-border);border-radius:var(--radius-xl);padding:var(--space-8);text-align:center;max-width:440px;width:100%;box-shadow:var(--elev-2);">
+        <div class="success-icon-wrap"><i class="ti ti-mail-forward"></i></div>
+        <div style="font-size:22px;font-weight:800;color:var(--text-primary);margin-bottom:var(--space-2);">Invites sent</div>
+        <div style="font-size:14px;color:var(--text-secondary);line-height:1.6;margin-bottom:var(--space-5);">3 team members have been invited to join the <strong>Acme Corp</strong> workspace. They'll receive an email with a signup link valid for 14 days.</div>
+        <div style="background:var(--surface-subtle);border-radius:var(--radius-lg);padding:var(--space-4);margin-bottom:var(--space-5);display:flex;flex-direction:column;gap:var(--space-2);">
+          <div style="display:flex;align-items:center;gap:var(--space-2);font-size:13px;color:var(--text-primary);">
+            <div style="width:28px;height:28px;border-radius:var(--radius-full);background:var(--color-interactive-subtle);color:var(--color-interactive-text);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;">L</div>
+            leila@acme.io · Member
+          </div>
+          <div style="display:flex;align-items:center;gap:var(--space-2);font-size:13px;color:var(--text-primary);">
+            <div style="width:28px;height:28px;border-radius:var(--radius-full);background:var(--color-interactive-subtle);color:var(--color-interactive-text);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;">R</div>
+            raj.mehta@acme.io · Member
+          </div>
+          <div style="display:flex;align-items:center;gap:var(--space-2);font-size:13px;color:var(--text-primary);">
+            <div style="width:28px;height:28px;border-radius:var(--radius-full);background:var(--color-interactive-subtle);color:var(--color-interactive-text);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;">J</div>
+            jin.park@acme.io · Viewer
+          </div>
+        </div>
+        <div style="display:flex;gap:var(--space-2);justify-content:center;">
+          <fresh-button variant="primary"><i class="ti ti-users"></i> View team</fresh-button>
+          <fresh-button variant="ghost">Invite more</fresh-button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+<script>
+  document.addEventListener('nav-toggle', function() {
+    document.getElementById('app-nav').classList.toggle('open');
+  });
+</script>
+<script src="../components/core/fresh-button.js"></script>
+</body>
+</html>

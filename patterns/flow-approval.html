@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Approval Flow — Acme</title>
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="../tokens/primitives.css">
+<link rel="stylesheet" href="../tokens/theme.css">
+<link rel="stylesheet" href="../tokens/dataviz.css">
+<link rel="stylesheet" href="../styles/reset.css">
+<link rel="stylesheet" href="../styles/patterns/dashboard.css">
+<link rel="stylesheet" href="../styles/patterns/workflow.css">
+<script>if(location.href.indexOf('?thumb')!==-1)document.write('<style>#demo-bar{display:none!important}</style>');</script>
+<script src="../js/pattern-topbar-v2.js"></script>
+<script src="../js/freshds.js"></script>
+<script src="../js/pattern-bar.js"></script>
+</head>
+<body>
+<div id="app">
+
+  <div class="demo-bar" id="demo-bar">
+    <div class="demo-inner" id="demo-inner">
+      <button class="demo-mode-btn" id="mode-toggle-btn" onclick="toggleDemoMode()" aria-label="Toggle dark mode">
+        <i class="ti ti-moon"></i>
+      </button>
+    </div>
+    <div class="demo-sep"></div>
+    <button class="demo-collapse-btn" id="demo-collapse-btn" onclick="toggleDemoBar()" aria-label="Collapse toolbar">
+      <i class="ti ti-minus"></i>
+    </button>
+  </div>
+
+  <div class="dash-shell">
+
+    <pattern-topbar logged-in></pattern-topbar>
+
+    <div class="dash-body">
+
+      <nav class="app-nav open" id="app-nav" aria-label="Main navigation">
+        <div class="app-nav-inner">
+          <button class="app-nav-item active"><i class="ti ti-home"></i> Home</button>
+          <button class="app-nav-item"><i class="ti ti-chart-bar"></i> Analytics</button>
+          <button class="app-nav-item"><i class="ti ti-activity"></i> Activity</button>
+          <button class="app-nav-item"><i class="ti ti-folders"></i> Projects</button>
+          <button class="app-nav-item"><i class="ti ti-check"></i> My tasks</button>
+          <button class="app-nav-item"><i class="ti ti-calendar-event"></i> Calendar</button>
+          <button class="app-nav-item"><i class="ti ti-users"></i> Members</button>
+          <button class="app-nav-item"><i class="ti ti-settings"></i> Settings</button>
+        </div>
+      </nav>
+
+      <main class="dash-main">
+
+        <!-- Request header -->
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:var(--space-4) var(--space-5);border-bottom:1px solid var(--surface-border);background:var(--surface-bg);flex-shrink:0;">
+          <div>
+            <div style="font-size:15px;font-weight:700;color:var(--text-primary);">Discount approval — Orbis Labs</div>
+            <div style="font-size:12px;color:var(--text-secondary);margin-top:2px;">Submitted by Tom Okeke · Jun 2, 2026 · REQ-2041</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:var(--space-2);">
+            <fresh-badge variant="warning">Awaiting you</fresh-badge>
+            <fresh-button variant="ghost" size="sm"><i class="ti ti-dots"></i></fresh-button>
+          </div>
+        </div>
+
+        <!-- Stage progress -->
+        <div class="wf-approval-stages">
+
+          <div class="wf-approval-stage">
+            <div class="wf-stage-bubble">
+              <div class="wf-stage-dot done"><i class="ti ti-check"></i></div>
+              <div class="wf-stage-label">Submitted</div>
+              <div class="wf-stage-sublabel">Jun 2</div>
+            </div>
+          </div>
+          <div class="wf-stage-connector done"></div>
+
+          <div class="wf-approval-stage">
+            <div class="wf-stage-bubble">
+              <div class="wf-stage-dot done"><i class="ti ti-check"></i></div>
+              <div class="wf-stage-label">Sales review</div>
+              <div class="wf-stage-sublabel">Priya S.</div>
+            </div>
+          </div>
+          <div class="wf-stage-connector done"></div>
+
+          <div class="wf-approval-stage">
+            <div class="wf-stage-bubble">
+              <div class="wf-stage-dot active"><i class="ti ti-user"></i></div>
+              <div class="wf-stage-label">Finance</div>
+              <div class="wf-stage-sublabel">You</div>
+            </div>
+          </div>
+          <div class="wf-stage-connector"></div>
+
+          <div class="wf-approval-stage">
+            <div class="wf-stage-bubble">
+              <div class="wf-stage-dot pending"><i class="ti ti-user"></i></div>
+              <div class="wf-stage-label">VP Sales</div>
+              <div class="wf-stage-sublabel">Marcus C.</div>
+            </div>
+          </div>
+          <div class="wf-stage-connector"></div>
+
+          <div class="wf-approval-stage">
+            <div class="wf-stage-bubble">
+              <div class="wf-stage-dot pending"><i class="ti ti-flag"></i></div>
+              <div class="wf-stage-label">Complete</div>
+              <div class="wf-stage-sublabel">&nbsp;</div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="wf-approval-body">
+
+          <!-- Main: request details -->
+          <div class="wf-approval-main">
+
+            <div class="wf-request-card">
+              <div class="wf-request-card-title">Request details</div>
+              <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:var(--space-4);margin-bottom:var(--space-4);">
+                <div class="wf-field-pair">
+                  <div class="wf-field-label">Account</div>
+                  <div class="wf-field-value">Orbis Labs</div>
+                </div>
+                <div class="wf-field-pair">
+                  <div class="wf-field-label">Deal value</div>
+                  <div class="wf-field-value">$84,000</div>
+                </div>
+                <div class="wf-field-pair">
+                  <div class="wf-field-label">Requested discount</div>
+                  <div class="wf-field-value" style="color:var(--color-warning-text);font-size:15px;font-weight:700;">22%</div>
+                </div>
+                <div class="wf-field-pair">
+                  <div class="wf-field-label">Contract length</div>
+                  <div class="wf-field-value">24 months</div>
+                </div>
+                <div class="wf-field-pair">
+                  <div class="wf-field-label">Close date</div>
+                  <div class="wf-field-value">Jun 30, 2026</div>
+                </div>
+                <div class="wf-field-pair">
+                  <div class="wf-field-label">Plan</div>
+                  <div class="wf-field-value">Enterprise</div>
+                </div>
+              </div>
+              <div class="wf-field-pair">
+                <div class="wf-field-label">Justification</div>
+                <div style="font-size:13px;color:var(--text-primary);margin-top:var(--space-1);line-height:1.6;background:var(--surface-subtle);padding:var(--space-3);border-radius:var(--radius-md);border:1px solid var(--surface-border);">
+                  Orbis Labs is a strategic account with expansion potential across 3 product lines. They're evaluating us against a competitor offering 25% off. A 22% discount on the initial deal would lock in annual renewal commitments and likely result in 2 additional product upsells within the contract period.
+                </div>
+              </div>
+            </div>
+
+            <!-- Supporting data -->
+            <div class="wf-request-card">
+              <div class="wf-request-card-title">Supporting data</div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-3);">
+                <div style="background:var(--surface-subtle);border:1px solid var(--surface-border);border-radius:var(--radius-md);padding:var(--space-3);">
+                  <div style="font-size:11px;color:var(--text-tertiary);margin-bottom:var(--space-1);">Customer LTV estimate</div>
+                  <div style="font-size:18px;font-weight:700;color:var(--text-primary);">$320K</div>
+                  <div style="font-size:11px;color:var(--color-success-text);margin-top:2px;"><i class="ti ti-trending-up"></i> 3.8× deal value</div>
+                </div>
+                <div style="background:var(--surface-subtle);border:1px solid var(--surface-border);border-radius:var(--radius-md);padding:var(--space-3);">
+                  <div style="font-size:11px;color:var(--text-tertiary);margin-bottom:var(--space-1);">Comparable deals (discount)</div>
+                  <div style="font-size:18px;font-weight:700;color:var(--text-primary);">18.4%</div>
+                  <div style="font-size:11px;color:var(--text-secondary);margin-top:2px;">Avg. for Enterprise, 24mo</div>
+                </div>
+                <div style="background:var(--surface-subtle);border:1px solid var(--surface-border);border-radius:var(--radius-md);padding:var(--space-3);">
+                  <div style="font-size:11px;color:var(--text-tertiary);margin-bottom:var(--space-1);">Gross margin at 22% off</div>
+                  <div style="font-size:18px;font-weight:700;color:var(--color-warning-text);">61%</div>
+                  <div style="font-size:11px;color:var(--text-secondary);margin-top:2px;">Threshold: 60%</div>
+                </div>
+                <div style="background:var(--surface-subtle);border:1px solid var(--surface-border);border-radius:var(--radius-md);padding:var(--space-3);">
+                  <div style="font-size:11px;color:var(--text-tertiary);margin-bottom:var(--space-1);">Sales rep win rate</div>
+                  <div style="font-size:18px;font-weight:700;color:var(--text-primary);">73%</div>
+                  <div style="font-size:11px;color:var(--color-success-text);margin-top:2px;">Tom Okeke · Top 10%</div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Aside: actions + history -->
+          <div class="wf-approval-aside">
+
+            <div class="wf-approval-actions">
+              <div class="wf-approval-actions-title">Your decision</div>
+              <fresh-form-field label="Notes (optional)">
+                <fresh-input slot="input" placeholder="Add a comment for the next approver…"></fresh-input>
+              </fresh-form-field>
+              <div class="wf-approval-btns" style="margin-top:var(--space-3);">
+                <fresh-button variant="success" style="width:100%;"><i class="ti ti-check"></i> Approve</fresh-button>
+                <fresh-button variant="secondary" style="width:100%;"><i class="ti ti-message"></i> Request changes</fresh-button>
+                <fresh-button variant="danger" style="width:100%;"><i class="ti ti-x"></i> Reject</fresh-button>
+              </div>
+            </div>
+
+            <div class="wf-approval-actions-title" style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-tertiary);margin-bottom:var(--space-3);">Approval history</div>
+
+            <fresh-timeline>
+              <div slot="item" data-icon="ti-check" data-color="success">
+                <strong>Priya Sharma</strong> approved<br>
+                <span style="font-size:11px;color:var(--text-tertiary);">Jun 3, 9:42 AM · Sales review</span><br>
+                <span style="font-size:12px;color:var(--text-secondary);margin-top:var(--space-1);display:block;">"Strong account fit, strategic priority for Q2."</span>
+              </div>
+              <div slot="item" data-icon="ti-send" data-color="info">
+                <strong>Tom Okeke</strong> submitted<br>
+                <span style="font-size:11px;color:var(--text-tertiary);">Jun 2, 3:15 PM</span>
+              </div>
+            </fresh-timeline>
+
+          </div>
+
+        </div>
+
+      </main>
+
+    </div>
+  </div>
+
+</div>
+<script>
+  document.addEventListener('nav-toggle', function() {
+    document.getElementById('app-nav').classList.toggle('open');
+  });
+</script>
+<script src="../components/core/fresh-button.js"></script>
+<script src="../components/core/fresh-input.js"></script>
+<script src="../components/core/fresh-form-field.js"></script>
+<script src="../components/feedback/fresh-badge.js"></script>
+<script src="../components/data/fresh-timeline.js"></script>
+</body>
+</html>

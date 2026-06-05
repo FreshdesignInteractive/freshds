@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Notification Center — Acme</title>
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="../tokens/primitives.css">
+<link rel="stylesheet" href="../tokens/theme.css">
+<link rel="stylesheet" href="../tokens/dataviz.css">
+<link rel="stylesheet" href="../styles/reset.css">
+<link rel="stylesheet" href="../styles/patterns/dashboard.css">
+<script>if(location.href.indexOf('?thumb')!==-1)document.write('<style>#demo-bar{display:none!important}</style>');</script>
+<script src="../js/pattern-topbar-v2.js"></script>
+<script src="../js/freshds.js"></script>
+<script src="../js/pattern-bar.js"></script>
+<style>
+  .notif-layout {
+    display: grid;
+    grid-template-columns: 1fr 260px;
+    gap: var(--space-6);
+  }
+
+  /* Notification group label */
+  .notif-group-label {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-tertiary);
+    padding: var(--space-2) 0 var(--space-2);
+    margin-top: var(--space-2);
+  }
+  .notif-group-label:first-child { margin-top: 0; }
+
+  /* Notification item */
+  .notif-item {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-3);
+    padding: var(--space-4);
+    background: var(--surface-canvas);
+    border: 1px solid var(--surface-border);
+    border-radius: var(--radius-lg);
+    margin-bottom: var(--space-2);
+    cursor: pointer;
+    transition: background 150ms, border-color 150ms;
+    position: relative;
+  }
+  .notif-item:hover { background: var(--surface-subtle); }
+  .notif-item.unread {
+    border-color: var(--color-interactive-border);
+    background: var(--color-interactive-subtle);
+  }
+  .notif-item.unread:hover { background: var(--color-interactive-subtle); filter: brightness(0.98); }
+  .notif-unread-dot {
+    position: absolute;
+    top: var(--space-4);
+    right: var(--space-4);
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--color-interactive);
+  }
+  .notif-icon {
+    width: 34px; height: 34px;
+    border-radius: var(--radius-md);
+    background: var(--surface-subtle);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+    color: var(--text-secondary);
+    flex-shrink: 0;
+  }
+  .notif-icon.success { background: var(--color-success-subtle); color: var(--color-success); }
+  .notif-icon.warning { background: var(--color-warning-subtle); color: var(--color-warning); }
+  .notif-icon.danger  { background: var(--color-danger-subtle);  color: var(--color-danger);  }
+  .notif-icon.primary { background: var(--color-interactive-subtle); color: var(--color-interactive-text); }
+  .notif-content { flex: 1; min-width: 0; }
+  .notif-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 2px;
+    padding-right: var(--space-5);
+  }
+  .notif-body { font-size: 13px; color: var(--text-secondary); line-height: 1.4; margin-bottom: var(--space-2); }
+  .notif-time { font-size: 11px; color: var(--text-tertiary); }
+
+  /* Preferences sidebar */
+  .pref-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-3) 0;
+    border-bottom: 1px solid var(--surface-border);
+    font-size: 13px;
+  }
+  .pref-row:last-child { border-bottom: none; }
+  .pref-label { color: var(--text-primary); font-weight: 500; }
+  .pref-sub { font-size: 11px; color: var(--text-tertiary); margin-top: 1px; }
+
+  @media (max-width: 1023px) { .notif-layout { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div id="app">
+
+  <div class="demo-bar" id="demo-bar">
+    <div class="demo-inner" id="demo-inner">
+      <button class="demo-mode-btn" id="mode-toggle-btn" onclick="toggleDemoMode()" aria-label="Toggle dark mode">
+        <i class="ti ti-moon"></i>
+      </button>
+    </div>
+    <div class="demo-sep"></div>
+    <button class="demo-collapse-btn" id="demo-collapse-btn" onclick="toggleDemoBar()" aria-label="Collapse toolbar">
+      <i class="ti ti-minus"></i>
+    </button>
+  </div>
+
+  <div class="dash-shell">
+
+    <pattern-topbar logged-in></pattern-topbar>
+
+    <div class="dash-body">
+
+      <nav class="app-nav open" id="app-nav" aria-label="Main navigation">
+        <div class="app-nav-inner">
+          <button class="app-nav-item active"><i class="ti ti-home"></i> Home</button>
+          <button class="app-nav-item"><i class="ti ti-chart-bar"></i> Analytics</button>
+          <button class="app-nav-item"><i class="ti ti-activity"></i> Activity</button>
+          <button class="app-nav-item"><i class="ti ti-folders"></i> Projects</button>
+          <button class="app-nav-item"><i class="ti ti-check"></i> My tasks</button>
+          <button class="app-nav-item"><i class="ti ti-calendar-event"></i> Calendar</button>
+          <button class="app-nav-item"><i class="ti ti-users"></i> Members</button>
+          <button class="app-nav-item"><i class="ti ti-settings"></i> Settings</button>
+        </div>
+      </nav>
+
+      <main class="dash-main">
+        <div class="dash-page-header">
+          <div>
+            <div class="dash-page-title">Notification Center</div>
+            <div class="dash-page-subtitle">4 unread notifications</div>
+          </div>
+          <div class="dash-page-actions">
+            <fresh-button variant="secondary" size="sm"><i class="ti ti-checks"></i> Mark all read</fresh-button>
+            <fresh-button variant="secondary" size="sm"><i class="ti ti-filter"></i> Filter</fresh-button>
+          </div>
+        </div>
+
+        <div class="dash-content">
+          <div class="notif-layout">
+
+            <!-- Notifications list -->
+            <div>
+              <div class="notif-group-label">Today</div>
+
+              <div class="notif-item unread">
+                <div class="notif-icon primary"><i class="ti ti-at"></i></div>
+                <div class="notif-content">
+                  <div class="notif-title">Marcus Chen mentioned you</div>
+                  <div class="notif-body">In <strong>Design System spec</strong>: "@Jamie can you review the token naming section before we ship?"</div>
+                  <div class="notif-time">5 minutes ago</div>
+                </div>
+                <div class="notif-unread-dot"></div>
+              </div>
+
+              <div class="notif-item unread">
+                <div class="notif-icon danger"><i class="ti ti-alert-triangle"></i></div>
+                <div class="notif-content">
+                  <div class="notif-title">API quota warning</div>
+                  <div class="notif-body">Your workspace has reached <strong>82%</strong> of its monthly API quota. Upgrade to avoid service interruptions.</div>
+                  <div class="notif-time">2 hours ago</div>
+                </div>
+                <div class="notif-unread-dot"></div>
+              </div>
+
+              <div class="notif-item unread">
+                <div class="notif-icon success"><i class="ti ti-rocket"></i></div>
+                <div class="notif-content">
+                  <div class="notif-title">Deploy successful</div>
+                  <div class="notif-body"><strong>v2.6.0</strong> deployed to production by Tom Okeke. No errors detected.</div>
+                  <div class="notif-time">3 hours ago</div>
+                </div>
+                <div class="notif-unread-dot"></div>
+              </div>
+
+              <div class="notif-item unread">
+                <div class="notif-icon primary"><i class="ti ti-user-plus"></i></div>
+                <div class="notif-content">
+                  <div class="notif-title">Priya Sharma accepted your invite</div>
+                  <div class="notif-body">Priya Sharma has joined your workspace as a Member.</div>
+                  <div class="notif-time">5 hours ago</div>
+                </div>
+                <div class="notif-unread-dot"></div>
+              </div>
+
+              <div class="notif-group-label" style="margin-top:var(--space-4)">Yesterday</div>
+
+              <div class="notif-item">
+                <div class="notif-icon"><i class="ti ti-git-merge"></i></div>
+                <div class="notif-content">
+                  <div class="notif-title">PR #538 merged</div>
+                  <div class="notif-body">Marcus Chen merged <strong>feat: new dashboard layout</strong> into main.</div>
+                  <div class="notif-time">Yesterday at 16:44</div>
+                </div>
+              </div>
+
+              <div class="notif-item">
+                <div class="notif-icon warning"><i class="ti ti-shield"></i></div>
+                <div class="notif-content">
+                  <div class="notif-title">Incident #88 resolved</div>
+                  <div class="notif-body">API latency spike was resolved in 22 minutes. Post-mortem available.</div>
+                  <div class="notif-time">Yesterday at 11:03</div>
+                </div>
+              </div>
+
+              <div class="notif-item">
+                <div class="notif-icon"><i class="ti ti-file-analytics"></i></div>
+                <div class="notif-content">
+                  <div class="notif-title">Q2 revenue report is ready</div>
+                  <div class="notif-body">Your scheduled report <strong>Q2 Revenue Summary</strong> has been generated and is ready to view.</div>
+                  <div class="notif-time">Yesterday at 09:00</div>
+                </div>
+              </div>
+
+            </div><!-- /list -->
+
+            <!-- Preferences panel -->
+            <div>
+              <div class="dash-card">
+                <div class="dash-card-title" style="margin-bottom:var(--space-3)">Notification preferences</div>
+                <div class="pref-row">
+                  <div><div class="pref-label">Mentions</div><div class="pref-sub">When someone @mentions you</div></div>
+                  <fresh-toggle checked></fresh-toggle>
+                </div>
+                <div class="pref-row">
+                  <div><div class="pref-label">Deploys</div><div class="pref-sub">Deploy success &amp; failures</div></div>
+                  <fresh-toggle checked></fresh-toggle>
+                </div>
+                <div class="pref-row">
+                  <div><div class="pref-label">Alerts</div><div class="pref-sub">Quota &amp; system warnings</div></div>
+                  <fresh-toggle checked></fresh-toggle>
+                </div>
+                <div class="pref-row">
+                  <div><div class="pref-label">Reports</div><div class="pref-sub">Scheduled report delivery</div></div>
+                  <fresh-toggle></fresh-toggle>
+                </div>
+                <div class="pref-row">
+                  <div><div class="pref-label">Team activity</div><div class="pref-sub">Joins, PR merges, etc.</div></div>
+                  <fresh-toggle></fresh-toggle>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </main>
+
+    </div>
+  </div>
+
+</div>
+<script>
+  document.addEventListener('nav-toggle', function() {
+    document.getElementById('app-nav').classList.toggle('open');
+  });
+</script>
+<script src="../components/core/fresh-button.js"></script>
+<script src="../components/core/fresh-toggle.js"></script>
+<script src="../components/data/fresh-avatar.js"></script>
+<script src="../components/feedback/fresh-badge.js"></script>
+</body>
+</html>

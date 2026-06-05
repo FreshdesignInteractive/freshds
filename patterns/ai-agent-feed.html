@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agent Task Feed — Acme</title>
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="../tokens/primitives.css">
+<link rel="stylesheet" href="../tokens/theme.css">
+<link rel="stylesheet" href="../tokens/dataviz.css">
+<link rel="stylesheet" href="../styles/reset.css">
+<link rel="stylesheet" href="../styles/patterns/ai-chat.css">
+<script>if(location.href.indexOf('?thumb')!==-1)document.write('<style>#demo-bar{display:none!important}</style>');</script>
+<script src="../js/pattern-topbar-v2.js"></script>
+<script src="../js/freshds.js"></script>
+<script src="../js/pattern-bar.js"></script>
+<style>
+  .agent-layout {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 340px 1fr;
+    overflow: hidden;
+  }
+  .agent-feed-col {
+    border-right: 1px solid var(--surface-border);
+    overflow-y: auto;
+    padding: var(--space-4);
+  }
+  .agent-output-col {
+    overflow-y: auto;
+    padding: var(--space-5);
+    background: var(--surface-subtle);
+  }
+  .agent-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--space-4);
+  }
+  .agent-header-title { font-size: 13px; font-weight: 600; color: var(--text-primary); }
+  /* Running animation */
+  @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+  .agent-step-dot.running i { display: inline-block; animation: spin 1s linear infinite; }
+
+  @media (max-width: 900px) {
+    .agent-layout { grid-template-columns: 1fr; }
+    .agent-output-col { display: none; }
+  }
+</style>
+</head>
+<body>
+<div id="app">
+
+  <div class="demo-bar" id="demo-bar">
+    <div class="demo-inner" id="demo-inner">
+      <button class="demo-mode-btn" id="mode-toggle-btn" onclick="toggleDemoMode()" aria-label="Toggle dark mode">
+        <i class="ti ti-moon"></i>
+      </button>
+    </div>
+    <div class="demo-sep"></div>
+    <button class="demo-collapse-btn" id="demo-collapse-btn" onclick="toggleDemoBar()" aria-label="Collapse toolbar">
+      <i class="ti ti-minus"></i>
+    </button>
+  </div>
+
+  <div class="ai-shell">
+
+    <pattern-topbar logged-in></pattern-topbar>
+
+    <div class="ai-body">
+
+      <nav class="app-nav open" id="app-nav" aria-label="Main navigation">
+        <div class="app-nav-inner">
+          <button class="app-nav-item active"><i class="ti ti-home"></i> Home</button>
+          <button class="app-nav-item"><i class="ti ti-chart-bar"></i> Analytics</button>
+          <button class="app-nav-item"><i class="ti ti-activity"></i> Activity</button>
+          <button class="app-nav-item"><i class="ti ti-folders"></i> Projects</button>
+          <button class="app-nav-item"><i class="ti ti-check"></i> My tasks</button>
+          <button class="app-nav-item"><i class="ti ti-calendar-event"></i> Calendar</button>
+          <button class="app-nav-item"><i class="ti ti-users"></i> Members</button>
+          <button class="app-nav-item"><i class="ti ti-settings"></i> Settings</button>
+        </div>
+      </nav>
+      <div class="agent-layout">
+
+        <!-- Task feed -->
+        <div class="agent-feed-col">
+          <div class="agent-header">
+            <div>
+              <div class="agent-header-title">Churn risk analysis</div>
+              <div style="font-size:11px;color:var(--text-tertiary);margin-top:2px">Step 4 of 7 · ~2 min remaining</div>
+            </div>
+            <fresh-confidence-badge value="78" label="Confidence"></fresh-confidence-badge>
+          </div>
+
+          <!-- Step 1: done -->
+          <div class="agent-step">
+            <div class="agent-step-indicator">
+              <div class="agent-step-dot done"><i class="ti ti-check" style="font-size:10px"></i></div>
+              <div class="agent-step-line"></div>
+            </div>
+            <div class="agent-step-body">
+              <div class="agent-step-label">Load account data</div>
+              <div class="agent-step-desc">Retrieved 1,847 active accounts from the database.</div>
+              <div class="agent-step-time">Completed · 0.4s</div>
+            </div>
+          </div>
+
+          <!-- Step 2: done -->
+          <div class="agent-step">
+            <div class="agent-step-indicator">
+              <div class="agent-step-dot done"><i class="ti ti-check" style="font-size:10px"></i></div>
+              <div class="agent-step-line"></div>
+            </div>
+            <div class="agent-step-body">
+              <div class="agent-step-label">Filter by engagement signals</div>
+              <div class="agent-step-desc">Identified 312 accounts with declining activity over 30 days.</div>
+              <div class="agent-step-time">Completed · 1.2s</div>
+            </div>
+          </div>
+
+          <!-- Step 3: done -->
+          <div class="agent-step">
+            <div class="agent-step-indicator">
+              <div class="agent-step-dot done"><i class="ti ti-check" style="font-size:10px"></i></div>
+              <div class="agent-step-line"></div>
+            </div>
+            <div class="agent-step-body">
+              <div class="agent-step-label">Cross-reference support tickets</div>
+              <div class="agent-step-desc">Found 28 accounts with open unresolved tickets older than 7 days.</div>
+              <div class="agent-step-time">Completed · 2.1s</div>
+            </div>
+          </div>
+
+          <!-- Step 4: running -->
+          <div class="agent-step">
+            <div class="agent-step-indicator">
+              <div class="agent-step-dot running"><i class="ti ti-loader-2" style="font-size:10px"></i></div>
+              <div class="agent-step-line"></div>
+            </div>
+            <div class="agent-step-body">
+              <div class="agent-step-label">Score churn probability</div>
+              <div class="agent-step-desc">Applying ML risk model to shortlisted accounts…</div>
+              <div class="agent-step-time"><fresh-thinking label="Processing 312 accounts…"></fresh-thinking></div>
+            </div>
+          </div>
+
+          <!-- Steps 5-7: pending -->
+          <div class="agent-step">
+            <div class="agent-step-indicator">
+              <div class="agent-step-dot pending">5</div>
+              <div class="agent-step-line"></div>
+            </div>
+            <div class="agent-step-body">
+              <div class="agent-step-label" style="color:var(--text-tertiary)">Generate account summaries</div>
+              <div class="agent-step-time" style="color:var(--text-tertiary)">Pending</div>
+            </div>
+          </div>
+
+          <div class="agent-step">
+            <div class="agent-step-indicator">
+              <div class="agent-step-dot pending">6</div>
+              <div class="agent-step-line"></div>
+            </div>
+            <div class="agent-step-body">
+              <div class="agent-step-label" style="color:var(--text-tertiary)">Draft outreach emails</div>
+              <div class="agent-step-time" style="color:var(--text-tertiary)">Pending</div>
+            </div>
+          </div>
+
+          <div class="agent-step" style="margin-bottom:0">
+            <div class="agent-step-indicator">
+              <div class="agent-step-dot pending">7</div>
+            </div>
+            <div class="agent-step-body">
+              <div class="agent-step-label" style="color:var(--text-tertiary)">Compile final report</div>
+              <div class="agent-step-time" style="color:var(--text-tertiary)">Pending</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Output panel -->
+        <div class="agent-output-col">
+          <div style="font-size:13px;font-weight:600;color:var(--text-primary);margin-bottom:var(--space-4)">Intermediate results</div>
+
+          <fresh-ai-response role="assistant" model="Claude Sonnet 4 Agent">
+            <strong>Step 3 complete:</strong> Cross-referenced 312 declining accounts against open support tickets.<br><br>
+            Found <strong>28 high-priority accounts</strong> with both declining engagement AND unresolved support issues — these are the highest churn risk.<br><br>
+            Notable: <strong>NovaTech</strong> has 3 tickets open for 12+ days with no CSM follow-up. <strong>DataCo</strong> last logged in 21 days ago and has a billing dispute open.
+          </fresh-ai-response>
+
+          <div style="margin-top:var(--space-4);padding:var(--space-4);background:var(--surface-canvas);border:1px solid var(--surface-border);border-radius:var(--radius-lg)">
+            <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.07em;color:var(--text-tertiary);margin-bottom:var(--space-3)">Tools used so far</div>
+            <div style="display:flex;flex-direction:column;gap:var(--space-2);font-size:12px;color:var(--text-secondary)">
+              <div style="display:flex;gap:var(--space-2);align-items:center"><fresh-badge variant="success" size="sm">DB</fresh-badge> accounts.query({status:"active"})</div>
+              <div style="display:flex;gap:var(--space-2);align-items:center"><fresh-badge variant="success" size="sm">DB</fresh-badge> events.query({days:30, metric:"logins"})</div>
+              <div style="display:flex;gap:var(--space-2);align-items:center"><fresh-badge variant="success" size="sm">API</fresh-badge> support.getTickets({status:"open", age:">7d"})</div>
+              <div style="display:flex;gap:var(--space-2);align-items:center"><fresh-badge variant="primary" size="sm" dot>Running</fresh-badge> ml.scoreChurnRisk(accounts[])</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div>
+<script>
+  document.addEventListener('nav-toggle', function() {
+    document.getElementById('app-nav').classList.toggle('open');
+  });
+</script>
+<script src="../components/core/fresh-button.js"></script>
+<script src="../components/data/fresh-avatar.js"></script>
+<script src="../components/feedback/fresh-badge.js"></script>
+<script src="../components/ai/fresh-ai-response.js"></script>
+<script src="../components/ai/fresh-confidence-badge.js"></script>
+<script src="../components/ai/fresh-thinking.js"></script>
+</body>
+</html>

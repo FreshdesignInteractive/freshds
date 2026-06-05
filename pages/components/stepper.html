@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stepper — FreshDS</title>
+<base href="../../">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="tokens/primitives.css">
+<link rel="stylesheet" href="tokens/theme.css">
+<link rel="stylesheet" href="tokens/dataviz.css">
+<link rel="stylesheet" href="styles/reset.css">
+<link rel="stylesheet" href="styles/layout.css">
+<link rel="stylesheet" href="styles/components/core.css">
+<link rel="stylesheet" href="styles/docs.css">
+<script src="js/freshds.js"></script>
+<script src="js/freshds-site.js"></script>
+</head>
+<body>
+<div class="fds-app" id="app">
+  <ds-topbar active-section="ds"></ds-topbar>
+  <div class="fds-body">
+    <ds-shell active="stepper"></ds-shell>
+    <main class="fds-main">
+      <div class="fds-page active" id="page-stepper">
+        <div class="page-header">
+          <div class="page-eyebrow">Navigation</div>
+          <h1 class="page-title">Stepper</h1>
+          <p class="page-desc">Linear progress indicator for multi-step flows. Completed steps show a checkmark; the active step is highlighted; upcoming steps are muted. Supports horizontal and vertical orientations.</p>
+        </div>
+        <div class="page-section">
+          <div class="page-section-title">Step 1 of 4</div>
+          <div class="demo-surface">
+            <fresh-stepper step="1" style="width:100%" steps='[{"label":"Account","description":"Basic info"},{"label":"Profile","description":"Your details"},{"label":"Billing","description":"Payment method"},{"label":"Review","description":"Confirm"}]'></fresh-stepper>
+          </div>
+        </div>
+        <div class="page-section">
+          <div class="page-section-title">Step 3 of 4</div>
+          <div class="demo-surface">
+            <fresh-stepper step="3" style="width:100%" steps='[{"label":"Account","description":"Basic info"},{"label":"Profile","description":"Your details"},{"label":"Billing","description":"Payment method"},{"label":"Review","description":"Confirm"}]'></fresh-stepper>
+          </div>
+        </div>
+        <div class="page-section">
+          <div class="page-section-title">Vertical orientation</div>
+          <div class="demo-surface">
+            <fresh-stepper step="2" orientation="vertical" steps='[{"label":"Create account","description":"Set up your login credentials"},{"label":"Verify email","description":"Check your inbox for a confirmation link"},{"label":"Set up workspace","description":"Name your team and invite members"},{"label":"Start building"}]'></fresh-stepper>
+          </div>
+        </div>
+        <div class="page-section">
+          <div class="page-section-title">Attributes</div>
+          <table class="usage-table">
+            <thead><tr><th>Attribute</th><th>Values</th><th>Default</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td>step</td><td>number</td><td><code>1</code></td><td>Current step (1-based). Steps before this are complete.</td></tr>
+              <tr><td>steps</td><td>JSON array</td><td>—</td><td><code>{ label, description? }</code></td></tr>
+              <tr><td>orientation</td><td><code>horizontal</code> <code>vertical</code></td><td><code>horizontal</code></td><td>Layout direction</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+<script src="components/core/fresh-button.js"></script>
+<script src="components/core/fresh-input.js"></script>
+<script src="components/navigation/fresh-stepper.js"></script>
+<script src="components/navigation/fresh-simple-tabs.js"></script>
+</body>
+</html>

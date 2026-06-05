@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Border Radius — FreshDS</title>
+<base href="../../">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="tokens/primitives.css">
+<link rel="stylesheet" href="tokens/theme.css">
+<link rel="stylesheet" href="tokens/dataviz.css">
+<link rel="stylesheet" href="styles/reset.css">
+<link rel="stylesheet" href="styles/layout.css">
+<link rel="stylesheet" href="styles/components/core.css">
+<link rel="stylesheet" href="styles/docs.css">
+<script src="js/freshds.js"></script>
+<script src="js/freshds-site.js"></script>
+</head>
+<body>
+<div class="fds-app" id="app">
+  <ds-topbar active-section="ds"></ds-topbar>
+  <div class="fds-body">
+    <ds-shell active="radius"></ds-shell>
+    <main class="fds-main">
+      <div class="fds-page active" id="page-radius">
+        <div class="page-header">
+          <div class="page-eyebrow">Foundation</div>
+          <h1 class="page-title">Border radius</h1>
+          <p class="page-desc">Five radius tokens cover every rounding need — from tight control corners to fully circular pills. All components reference these tokens exclusively.</p>
+        </div>
+
+        <div class="page-section">
+          <div class="page-section-title">Scale</div>
+          <div class="demo-surface" style="gap:var(--space-8);align-items:flex-end;flex-wrap:wrap">
+            <div style="text-align:center">
+              <div style="width:72px;height:72px;background:var(--color-interactive);border-radius:var(--radius-sm);margin:0 auto"></div>
+              <div style="font-size:11px;font-family:var(--font-mono);color:var(--color-interactive-text);margin-top:var(--space-3)">--radius-sm</div>
+              <div style="font-size:11px;color:var(--text-tertiary);margin-top:2px">4px</div>
+            </div>
+            <div style="text-align:center">
+              <div style="width:72px;height:72px;background:var(--color-interactive);border-radius:var(--radius-md);margin:0 auto"></div>
+              <div style="font-size:11px;font-family:var(--font-mono);color:var(--color-interactive-text);margin-top:var(--space-3)">--radius-md</div>
+              <div style="font-size:11px;color:var(--text-tertiary);margin-top:2px">8px</div>
+            </div>
+            <div style="text-align:center">
+              <div style="width:72px;height:72px;background:var(--color-interactive);border-radius:var(--radius-lg);margin:0 auto"></div>
+              <div style="font-size:11px;font-family:var(--font-mono);color:var(--color-interactive-text);margin-top:var(--space-3)">--radius-lg</div>
+              <div style="font-size:11px;color:var(--text-tertiary);margin-top:2px">12px</div>
+            </div>
+            <div style="text-align:center">
+              <div style="width:72px;height:72px;background:var(--color-interactive);border-radius:var(--radius-xl);margin:0 auto"></div>
+              <div style="font-size:11px;font-family:var(--font-mono);color:var(--color-interactive-text);margin-top:var(--space-3)">--radius-xl</div>
+              <div style="font-size:11px;color:var(--text-tertiary);margin-top:2px">20px</div>
+            </div>
+            <div style="text-align:center">
+              <div style="width:72px;height:72px;background:var(--color-interactive);border-radius:var(--radius-full);margin:0 auto"></div>
+              <div style="font-size:11px;font-family:var(--font-mono);color:var(--color-interactive-text);margin-top:var(--space-3)">--radius-full</div>
+              <div style="font-size:11px;color:var(--text-tertiary);margin-top:2px">9999px</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="page-section">
+          <div class="page-section-title">Token reference</div>
+          <table class="usage-table">
+            <thead><tr><th>Token</th><th>Value</th><th>Used in</th></tr></thead>
+            <tbody>
+              <tr><td><code>--radius-sm</code></td><td>4px</td><td>Badges, code chips, small tags, checkboxes</td></tr>
+              <tr><td><code>--radius-md</code></td><td>8px</td><td>Buttons, inputs, selects, dropdowns (default)</td></tr>
+              <tr><td><code>--radius-lg</code></td><td>12px</td><td>Cards, modals, drawers, panels</td></tr>
+              <tr><td><code>--radius-xl</code></td><td>20px</td><td>Floating surfaces, large feature cards</td></tr>
+              <tr><td><code>--radius-full</code></td><td>9999px</td><td>Pills, avatar circles, toggle tracks, status dots</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="page-section">
+          <div class="page-section-title">In context</div>
+          <div class="demo-surface" style="gap:var(--space-4);flex-wrap:wrap;align-items:center">
+            <fresh-button variant="primary">Button — md</fresh-button>
+            <fresh-badge variant="primary">Badge — sm</fresh-badge>
+            <fresh-badge variant="success" dot>Live — full</fresh-badge>
+            <fresh-avatar name="Jane Smith" size="md"></fresh-avatar>
+            <fresh-toggle checked>Toggle — full</fresh-toggle>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+<script src="components/core/fresh-button.js"></script>
+<script src="components/core/fresh-input.js"></script>
+<script src="components/navigation/fresh-simple-tabs.js"></script>
+<script src="components/feedback/fresh-badge.js"></script>
+<script src="components/data/fresh-avatar.js"></script>
+<script src="components/core/fresh-toggle.js"></script>
+</body>
+</html>

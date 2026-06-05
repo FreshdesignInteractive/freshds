@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Feedback Form — Acme</title>
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="../tokens/primitives.css">
+<link rel="stylesheet" href="../tokens/theme.css">
+<link rel="stylesheet" href="../tokens/dataviz.css">
+<link rel="stylesheet" href="../styles/reset.css">
+<link rel="stylesheet" href="../styles/patterns/dashboard.css">
+<link rel="stylesheet" href="../styles/patterns/feedback.css">
+<style>
+.fb-panel { position:fixed;bottom:calc(var(--space-6)+56px);right:var(--space-6);width:340px;background:var(--surface-canvas);border:1px solid var(--surface-border);border-radius:var(--radius-xl);box-shadow:var(--elev-4);overflow:hidden;z-index:100; }
+.fb-panel-header { padding:var(--space-4);background:var(--color-interactive);color:var(--text-inverse); }
+.fb-panel-body { padding:var(--space-4); }
+.fb-trigger { position:fixed;bottom:var(--space-6);right:var(--space-6);z-index:100; }
+.fb-emoji-row { display:flex;justify-content:space-around;margin-bottom:var(--space-4); }
+.fb-emoji-btn { display:flex;flex-direction:column;align-items:center;gap:var(--space-1);cursor:pointer;padding:var(--space-2) var(--space-3);border-radius:var(--radius-md);border:1.5px solid transparent;transition:all 120ms;background:transparent; }
+.fb-emoji-btn:hover { background:var(--surface-subtle);border-color:var(--surface-border); }
+.fb-emoji-btn.sel { background:var(--color-interactive-subtle);border-color:var(--color-interactive); }
+.fb-type-tabs { display:flex;gap:var(--space-1);margin-bottom:var(--space-3); }
+.fb-type-tab { flex:1;padding:var(--space-1) var(--space-2);border:1.5px solid var(--surface-border);border-radius:var(--radius-md);font-size:11px;font-weight:600;color:var(--text-secondary);cursor:pointer;text-align:center;background:var(--surface-subtle);transition:all 120ms; }
+.fb-type-tab.a { border-color:var(--color-interactive);background:var(--color-interactive-subtle);color:var(--color-interactive-text); }
+</style>
+<script>if(location.href.indexOf('?thumb')!==-1)document.write('<style>#demo-bar{display:none!important}</style>');</script>
+<script src="../js/pattern-topbar-v2.js"></script>
+<script src="../js/freshds.js"></script>
+<script src="../js/pattern-bar.js"></script>
+<script>
+  function selEmoji(el) { document.querySelectorAll('.fb-emoji-btn').forEach(function(b){b.classList.remove('sel');}); el.classList.add('sel'); }
+  function selTab(el) { document.querySelectorAll('.fb-type-tab').forEach(function(b){b.classList.remove('a');}); el.classList.add('a'); }
+  function showPanel(id) {
+    ['panel-main','panel-bug','panel-idea','panel-done'].forEach(function(p){ document.getElementById(p).style.display='none'; });
+    document.getElementById(id).style.display='block';
+  }
+</script>
+</head>
+<body>
+<div id="app">
+  <div class="demo-bar" id="demo-bar">
+    <div class="demo-inner" id="demo-inner">
+      <button class="demo-mode-btn" id="mode-toggle-btn" onclick="toggleDemoMode()"><i class="ti ti-moon"></i></button>
+    </div>
+    <div class="demo-sep"></div>
+    <button class="demo-collapse-btn" id="demo-collapse-btn" onclick="toggleDemoBar()"><i class="ti ti-minus"></i></button>
+  </div>
+
+  <div class="dash-shell">
+    <pattern-topbar logged-in></pattern-topbar>
+    <!-- Background app -->
+    <div class="dash-body" style="pointer-events:none;filter:brightness(0.85);">
+      <main class="dash-main">
+        <div class="dash-page-header"><div class="dash-page-title">Lead enrichment pipeline</div></div>
+        <div class="dash-card" style="height:120px;margin-bottom:var(--space-4);"></div>
+        <div class="dash-card" style="height:80px;"></div>
+      </main>
+    </div>
+
+    <!-- Feedback trigger button -->
+    <div class="fb-trigger">
+      <fresh-button variant="primary" style="border-radius:var(--radius-full);box-shadow:var(--elev-3);" onclick="showPanel('panel-main')">
+        <i class="ti ti-message-circle"></i> Feedback
+      </fresh-button>
+    </div>
+
+    <!-- Panel: Main (emoji + type select) -->
+    <div id="panel-main" class="fb-panel">
+      <div class="fb-panel-header">
+        <div style="display:flex;align-items:center;justify-content:space-between;">
+          <div>
+            <div style="font-size:14px;font-weight:700;margin-bottom:2px;">Share feedback</div>
+            <div style="font-size:12px;opacity:0.85;">Help us build a better Acme</div>
+          </div>
+          <button onclick="document.getElementById('panel-main').style.display='none'" style="background:rgba(255,255,255,0.2);border:none;color:#fff;width:28px;height:28px;border-radius:var(--radius-full);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:15px;"><i class="ti ti-x"></i></button>
+        </div>
+      </div>
+      <div class="fb-panel-body">
+        <div style="font-size:13px;font-weight:600;color:var(--text-primary);margin-bottom:var(--space-3);">How's your experience?</div>
+        <div class="fb-emoji-row">
+          <div class="fb-emoji-btn" onclick="selEmoji(this)"><span style="font-size:28px;">😞</span><span style="font-size:10px;color:var(--text-tertiary);">Poor</span></div>
+          <div class="fb-emoji-btn" onclick="selEmoji(this)"><span style="font-size:28px;">😐</span><span style="font-size:10px;color:var(--text-tertiary);">OK</span></div>
+          <div class="fb-emoji-btn sel" onclick="selEmoji(this)"><span style="font-size:28px;">😊</span><span style="font-size:10px;color:var(--text-tertiary);">Good</span></div>
+          <div class="fb-emoji-btn" onclick="selEmoji(this)"><span style="font-size:28px;">🤩</span><span style="font-size:10px;color:var(--text-tertiary);">Amazing</span></div>
+        </div>
+        <div style="font-size:13px;font-weight:600;color:var(--text-primary);margin-bottom:var(--space-2);">What type of feedback?</div>
+        <div class="fb-type-tabs">
+          <div class="fb-type-tab a" onclick="selTab(this)"><i class="ti ti-message"></i> General</div>
+          <div class="fb-type-tab" onclick="selTab(this);showPanel('panel-bug')"><i class="ti ti-bug"></i> Bug</div>
+          <div class="fb-type-tab" onclick="selTab(this);showPanel('panel-idea')"><i class="ti ti-bulb"></i> Idea</div>
+        </div>
+        <fresh-form-field label="Tell us more">
+          <fresh-input slot="input" placeholder="What's on your mind?"></fresh-input>
+        </fresh-form-field>
+        <div style="margin-top:var(--space-3);">
+          <label style="display:flex;align-items:center;gap:var(--space-2);font-size:12px;color:var(--text-secondary);cursor:pointer;margin-bottom:var(--space-3);">
+            <fresh-checkbox checked></fresh-checkbox> Include a screenshot
+          </label>
+          <fresh-button variant="primary" style="width:100%;" onclick="showPanel('panel-done')">Send feedback</fresh-button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Panel: Bug report -->
+    <div id="panel-bug" class="fb-panel" style="display:none;">
+      <div class="fb-panel-header" style="background:var(--color-danger);">
+        <div style="display:flex;align-items:center;justify-content:space-between;">
+          <div style="font-size:14px;font-weight:700;"><i class="ti ti-bug" style="margin-right:6px;"></i> Report a bug</div>
+          <button onclick="showPanel('panel-main')" style="background:rgba(255,255,255,0.2);border:none;color:#fff;width:28px;height:28px;border-radius:var(--radius-full);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:15px;"><i class="ti ti-arrow-left"></i></button>
+        </div>
+      </div>
+      <div class="fb-panel-body">
+        <div style="display:flex;flex-direction:column;gap:var(--space-3);">
+          <fresh-form-field label="What went wrong?">
+            <fresh-input slot="input" placeholder="Describe what happened"></fresh-input>
+          </fresh-form-field>
+          <fresh-form-field label="Steps to reproduce">
+            <fresh-input slot="input" placeholder="1. Go to… 2. Click… 3. See error"></fresh-input>
+          </fresh-form-field>
+          <fresh-form-field label="Severity">
+            <fresh-select slot="input">
+              <option>Low — cosmetic issue</option>
+              <option selected>Medium — functionality broken</option>
+              <option>High — data loss or security</option>
+            </fresh-select>
+          </fresh-form-field>
+          <label style="display:flex;align-items:center;gap:var(--space-2);font-size:12px;color:var(--text-secondary);cursor:pointer;">
+            <fresh-checkbox checked></fresh-checkbox> Attach console logs automatically
+          </label>
+          <fresh-button variant="danger" style="width:100%;" onclick="showPanel('panel-done')"><i class="ti ti-bug"></i> Submit bug report</fresh-button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Panel: Idea -->
+    <div id="panel-idea" class="fb-panel" style="display:none;">
+      <div class="fb-panel-header" style="background:var(--color-success);">
+        <div style="display:flex;align-items:center;justify-content:space-between;">
+          <div style="font-size:14px;font-weight:700;"><i class="ti ti-bulb" style="margin-right:6px;"></i> Request a feature</div>
+          <button onclick="showPanel('panel-main')" style="background:rgba(255,255,255,0.2);border:none;color:#fff;width:28px;height:28px;border-radius:var(--radius-full);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:15px;"><i class="ti ti-arrow-left"></i></button>
+        </div>
+      </div>
+      <div class="fb-panel-body">
+        <div style="display:flex;flex-direction:column;gap:var(--space-3);">
+          <fresh-form-field label="What would you like to see?">
+            <fresh-input slot="input" value="Bulk AI enrichment trigger from contact list"></fresh-input>
+          </fresh-form-field>
+          <fresh-form-field label="Why is this important to you?">
+            <fresh-input slot="input" placeholder="What problem does this solve?"></fresh-input>
+          </fresh-form-field>
+          <fresh-button variant="success" style="width:100%;" onclick="showPanel('panel-done')"><i class="ti ti-bulb"></i> Submit idea</fresh-button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Panel: Done -->
+    <div id="panel-done" class="fb-panel" style="display:none;text-align:center;padding:var(--space-6);">
+      <div style="font-size:40px;margin-bottom:var(--space-3);">💫</div>
+      <div style="font-size:15px;font-weight:700;color:var(--text-primary);margin-bottom:var(--space-2);">Feedback received!</div>
+      <div style="font-size:13px;color:var(--text-secondary);margin-bottom:var(--space-4);">Thank you — your input goes directly to our product team. We read every response.</div>
+      <fresh-button variant="ghost" size="sm" style="width:100%;" onclick="showPanel('panel-main')">Send more feedback</fresh-button>
+    </div>
+
+  </div>
+</div>
+<script>
+  document.addEventListener('nav-toggle', function() {
+    document.getElementById('app-nav').classList.toggle('open');
+  });
+</script>
+<script src="../components/core/fresh-button.js"></script>
+<script src="../components/core/fresh-input.js"></script>
+<script src="../components/core/fresh-select.js"></script>
+<script src="../components/core/fresh-form-field.js"></script>
+<script src="../components/core/fresh-checkbox.js"></script>
+</body>
+</html>

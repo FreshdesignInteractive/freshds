@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Feedback & Rating — Acme</title>
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="../tokens/primitives.css">
+<link rel="stylesheet" href="../tokens/theme.css">
+<link rel="stylesheet" href="../tokens/dataviz.css">
+<link rel="stylesheet" href="../styles/reset.css">
+<link rel="stylesheet" href="../styles/patterns/ai-chat.css">
+<script>if(location.href.indexOf('?thumb')!==-1)document.write('<style>#demo-bar{display:none!important}</style>');</script>
+<script src="../js/pattern-topbar-v2.js"></script>
+<script src="../js/freshds.js"></script>
+<script src="../js/pattern-bar.js"></script>
+<style>
+  /* Feedback inline form */
+  .feedback-form {
+    background: var(--surface-canvas);
+    border: 1px solid var(--color-interactive-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-4);
+    margin-top: var(--space-3);
+  }
+  .feedback-form-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: var(--space-3);
+  }
+  .feedback-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin-bottom: var(--space-3);
+  }
+  .feedback-tag {
+    padding: var(--space-1) var(--space-3);
+    border-radius: var(--radius-full);
+    border: 1.5px solid var(--surface-border);
+    background: var(--surface-canvas);
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 150ms;
+    user-select: none;
+  }
+  .feedback-tag.selected {
+    border-color: var(--color-danger);
+    background: var(--color-danger-subtle);
+    color: var(--color-danger);
+  }
+  .feedback-textarea {
+    width: 100%;
+    padding: var(--space-3);
+    background: var(--surface-input);
+    border: 1px solid var(--surface-border);
+    border-radius: var(--radius-md);
+    font-family: var(--font-sans);
+    font-size: 13px;
+    color: var(--text-primary);
+    line-height: 1.5;
+    resize: none;
+    outline: none;
+    min-height: 72px;
+    margin-bottom: var(--space-3);
+    transition: border-color 0.15s;
+  }
+  .feedback-textarea:focus { border-color: var(--color-interactive); }
+  .feedback-textarea::placeholder { color: var(--text-tertiary); }
+</style>
+</head>
+<body>
+<div id="app">
+
+  <div class="demo-bar" id="demo-bar">
+    <div class="demo-inner" id="demo-inner">
+      <button class="demo-mode-btn" id="mode-toggle-btn" onclick="toggleDemoMode()" aria-label="Toggle dark mode">
+        <i class="ti ti-moon"></i>
+      </button>
+    </div>
+    <div class="demo-sep"></div>
+    <button class="demo-collapse-btn" id="demo-collapse-btn" onclick="toggleDemoBar()" aria-label="Collapse toolbar">
+      <i class="ti ti-minus"></i>
+    </button>
+  </div>
+
+  <div class="ai-shell">
+
+    <pattern-topbar logged-in></pattern-topbar>
+
+    <div class="ai-body">
+
+      <nav class="app-nav open" id="app-nav" aria-label="Main navigation">
+        <div class="app-nav-inner">
+          <button class="app-nav-item active"><i class="ti ti-home"></i> Home</button>
+          <button class="app-nav-item"><i class="ti ti-chart-bar"></i> Analytics</button>
+          <button class="app-nav-item"><i class="ti ti-activity"></i> Activity</button>
+          <button class="app-nav-item"><i class="ti ti-folders"></i> Projects</button>
+          <button class="app-nav-item"><i class="ti ti-check"></i> My tasks</button>
+          <button class="app-nav-item"><i class="ti ti-calendar-event"></i> Calendar</button>
+          <button class="app-nav-item"><i class="ti ti-users"></i> Members</button>
+          <button class="app-nav-item"><i class="ti ti-settings"></i> Settings</button>
+        </div>
+      </nav>
+      <main class="ai-main">
+        <div class="ai-chat-header">
+          <div>
+            <div class="ai-chat-title">Revenue analysis Q2</div>
+            <div class="ai-chat-meta">Claude Sonnet 4</div>
+          </div>
+        </div>
+
+        <div class="ai-messages">
+          <fresh-ai-response role="user">Which accounts are most likely to upgrade to Enterprise this quarter?</fresh-ai-response>
+
+          <!-- Response with positive feedback already given -->
+          <fresh-ai-response role="assistant" model="Claude Sonnet 4">
+            Based on usage patterns and expansion signals, <strong>4 Pro accounts</strong> show strong upgrade indicators this quarter:<br><br>
+            1. <strong>BuildCo</strong> — Added 4 new seats last month. Power usage of AI features. Reached 95% of Pro limits twice.<br>
+            2. <strong>Spark Design</strong> — 3 decision-makers active. High engagement on the Enterprise features page.<br>
+            3. <strong>Loop Analytics</strong> — Exceeded API quota 2 months running. Direct request to sales about pricing.<br>
+            4. <strong>Meridian Health</strong> — HIPAA compliance inquiry suggests they need Enterprise data controls.
+          </fresh-ai-response>
+          <!-- Feedback row: positive state -->
+          <div style="display:flex;gap:var(--space-2);align-items:center;padding:0 var(--space-1)">
+            <fresh-feedback positive></fresh-feedback>
+            <fresh-confidence-badge value="88" label="Accuracy" show-bar></fresh-confidence-badge>
+          </div>
+
+          <fresh-ai-response role="user">The BuildCo analysis seems off — they actually downgraded last month.</fresh-ai-response>
+
+          <!-- Response after negative feedback — shows correction -->
+          <fresh-ai-response role="assistant" model="Claude Sonnet 4">
+            You're right to flag that — thank you. Let me correct the analysis:<br><br>
+            BuildCo downgraded from Pro to Starter last month, which I missed. Removing them from the list, the <strong>top 3 upgrade candidates</strong> are:<br><br>
+            1. <strong>Spark Design</strong><br>
+            2. <strong>Loop Analytics</strong><br>
+            3. <strong>Meridian Health</strong><br><br>
+            Would you like me to generate outreach talking points for each?
+          </fresh-ai-response>
+
+          <!-- Negative feedback inline form -->
+          <div style="padding:0 var(--space-1)">
+            <fresh-feedback></fresh-feedback>
+
+            <div class="feedback-form">
+              <div class="feedback-form-title">What was wrong with the previous response?</div>
+              <div class="feedback-tags">
+                <div class="feedback-tag selected">Factually incorrect</div>
+                <div class="feedback-tag">Incomplete</div>
+                <div class="feedback-tag">Poorly formatted</div>
+                <div class="feedback-tag">Not relevant</div>
+                <div class="feedback-tag">Too long</div>
+              </div>
+              <textarea class="feedback-textarea" placeholder="Optional: add more detail to help improve the model…">BuildCo downgraded last month, not upgraded. The account status data seems to be stale.</textarea>
+              <div style="display:flex;justify-content:flex-end;gap:var(--space-2)">
+                <fresh-button variant="ghost" size="sm">Skip</fresh-button>
+                <fresh-button variant="primary" size="sm">Submit feedback</fresh-button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="ai-input-area">
+          <fresh-prompt-input placeholder="Ask a follow-up…"></fresh-prompt-input>
+          <div class="ai-input-meta">
+            <span>Your feedback helps improve the model</span>
+            <span>Claude Sonnet 4</span>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+</div>
+<script>
+  document.addEventListener('nav-toggle', function() {
+    document.getElementById('app-nav').classList.toggle('open');
+  });
+</script>
+<script src="../components/core/fresh-button.js"></script>
+<script src="../components/data/fresh-avatar.js"></script>
+<script src="../components/ai/fresh-ai-mode-toggle.js"></script>
+<script src="../components/ai/fresh-ai-response.js"></script>
+<script src="../components/ai/fresh-feedback.js"></script>
+<script src="../components/ai/fresh-confidence-badge.js"></script>
+<script src="../components/ai/fresh-prompt-input.js"></script>
+</body>
+</html>

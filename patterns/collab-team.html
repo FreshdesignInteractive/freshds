@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Team Members — Acme</title>
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="../tokens/primitives.css">
+<link rel="stylesheet" href="../tokens/theme.css">
+<link rel="stylesheet" href="../tokens/dataviz.css">
+<link rel="stylesheet" href="../styles/reset.css">
+<link rel="stylesheet" href="../styles/patterns/dashboard.css">
+<link rel="stylesheet" href="../styles/patterns/collab.css">
+<script>if(location.href.indexOf('?thumb')!==-1)document.write('<style>#demo-bar{display:none!important}</style>');</script>
+<script src="../js/pattern-topbar-v2.js"></script>
+<script src="../js/freshds.js"></script>
+<script src="../js/pattern-bar.js"></script>
+</head>
+<body>
+<div id="app">
+
+  <div class="demo-bar" id="demo-bar">
+    <div class="demo-inner" id="demo-inner">
+      <button class="demo-mode-btn" id="mode-toggle-btn" onclick="toggleDemoMode()" aria-label="Toggle dark mode">
+        <i class="ti ti-moon"></i>
+      </button>
+    </div>
+    <div class="demo-sep"></div>
+    <button class="demo-collapse-btn" id="demo-collapse-btn" onclick="toggleDemoBar()" aria-label="Collapse toolbar">
+      <i class="ti ti-minus"></i>
+    </button>
+  </div>
+
+  <div class="dash-shell">
+    <pattern-topbar logged-in></pattern-topbar>
+    <div class="dash-body">
+
+      <nav class="app-nav open" id="app-nav" aria-label="Main navigation">
+        <div class="app-nav-inner">
+          <button class="app-nav-item active"><i class="ti ti-home"></i> Home</button>
+          <button class="app-nav-item"><i class="ti ti-chart-bar"></i> Analytics</button>
+          <button class="app-nav-item"><i class="ti ti-activity"></i> Activity</button>
+          <button class="app-nav-item"><i class="ti ti-folders"></i> Projects</button>
+          <button class="app-nav-item"><i class="ti ti-check"></i> My tasks</button>
+          <button class="app-nav-item"><i class="ti ti-calendar-event"></i> Calendar</button>
+          <button class="app-nav-item"><i class="ti ti-users"></i> Members</button>
+          <button class="app-nav-item"><i class="ti ti-settings"></i> Settings</button>
+        </div>
+      </nav>
+
+
+      <main class="dash-main">
+
+        <div class="dash-page-header" style="flex-shrink:0;">
+          <div>
+            <div class="dash-page-title">Team Members</div>
+            <div class="dash-page-subtitle">14 members · 3 pending invites</div>
+          </div>
+          <div class="dash-page-actions">
+            <fresh-input placeholder="Search members…" clearable style="--input-width:200px;"></fresh-input>
+            <fresh-button variant="primary" size="sm"><i class="ti ti-user-plus"></i> Invite members</fresh-button>
+          </div>
+        </div>
+
+        <!-- Filter tabs -->
+        <div style="padding: 0 var(--space-5);border-bottom:1px solid var(--surface-border);flex-shrink:0;background:var(--surface-bg);">
+          <fresh-simple-tabs>
+            <button slot="tab" class="active">All members</button>
+            <button slot="tab">Active</button>
+            <button slot="tab">Pending</button>
+            <button slot="tab">Suspended</button>
+          </fresh-simple-tabs>
+        </div>
+
+        <!-- Column header -->
+        <div style="display:grid;grid-template-columns:2fr 1fr 1fr 120px 80px 40px;align-items:center;gap:var(--space-4);padding:var(--space-2) var(--space-5);border-bottom:1px solid var(--surface-border);background:var(--surface-subtle);flex-shrink:0;">
+          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-tertiary);">Member</div>
+          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-tertiary);">Role</div>
+          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-tertiary);">Status</div>
+          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-tertiary);">Last active</div>
+          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-tertiary);">2FA</div>
+          <div></div>
+        </div>
+
+        <!-- Member list -->
+        <div class="dash-content">
+
+          <div style="display:grid;grid-template-columns:2fr 1fr 1fr 120px 80px 40px;align-items:center;gap:var(--space-4);padding:var(--space-3) var(--space-5);border-bottom:1px solid var(--surface-border);transition:background 120ms;" onmouseenter="this.style.background='var(--surface-subtle)'" onmouseleave="this.style.background=''">
+            <div style="display:flex;align-items:center;gap:var(--space-3);">
+              <fresh-avatar name="Priya Sharma" size="sm"></fresh-avatar>
+              <div>
+                <div style="font-size:13px;font-weight:600;color:var(--text-primary);">Priya Sharma <span style="font-size:11px;font-weight:400;color:var(--color-interactive-text);">(you)</span></div>
+                <div style="font-size:11px;color:var(--text-secondary);">priya@acme.io</div>
+              </div>
+            </div>
+            <div><fresh-badge variant="danger" size="sm">Admin</fresh-badge></div>
+            <div><fresh-badge variant="success" size="sm">Active</fresh-badge></div>
+            <div style="font-size:12px;color:var(--text-secondary);">Now</div>
+            <div><i class="ti ti-shield-check" style="color:var(--color-success-text);font-size:16px;"></i></div>
+            <div><fresh-button variant="ghost" size="sm" icon-only><i class="ti ti-dots"></i></fresh-button></div>
+          </div>
+
+          <div style="display:grid;grid-template-columns:2fr 1fr 1fr 120px 80px 40px;align-items:center;gap:var(--space-4);padding:var(--space-3) var(--space-5);border-bottom:1px solid var(--surface-border);transition:background 120ms;" onmouseenter="this.style.background='var(--surface-subtle)'" onmouseleave="this.style.background=''">
+            <div style="display:flex;align-items:center;gap:var(--space-3);">
+              <fresh-avatar name="Marcus Chen" size="sm"></fresh-avatar>
+              <div>
+                <div style="font-size:13px;font-weight:600;color:var(--text-primary);">Marcus Chen</div>
+                <div style="font-size:11px;color:var(--text-secondary);">m.chen@acme.io</div>
+              </div>
+            </div>
+            <div><fresh-badge variant="danger" size="sm">Admin</fresh-badge></div>
+            <div><fresh-badge variant="success" size="sm">Active</fresh-badge></div>
+            <div style="font-size:12px;color:var(--text-secondary);">2h ago</div>
+            <div><i class="ti ti-shield-check" style="color:var(--color-success-text);font-size:16px;"></i></div>
+            <div><fresh-button variant="ghost" size="sm" icon-only><i class="ti ti-dots"></i></fresh-button></div>
+          </div>
+
+          <div style="display:grid;grid-template-columns:2fr 1fr 1fr 120px 80px 40px;align-items:center;gap:var(--space-4);padding:var(--space-3) var(--space-5);border-bottom:1px solid var(--surface-border);transition:background 120ms;" onmouseenter="this.style.background='var(--surface-subtle)'" onmouseleave="this.style.background=''">
+            <div style="display:flex;align-items:center;gap:var(--space-3);">
+              <fresh-avatar name="Anika Patel" size="sm"></fresh-avatar>
+              <div>
+                <div style="font-size:13px;font-weight:600;color:var(--text-primary);">Anika Patel</div>
+                <div style="font-size:11px;color:var(--text-secondary);">anika@acme.io</div>
+              </div>
+            </div>
+            <div><fresh-badge variant="neutral" size="sm">Member</fresh-badge></div>
+            <div><fresh-badge variant="success" size="sm">Active</fresh-badge></div>
+            <div style="font-size:12px;color:var(--text-secondary);">Yesterday</div>
+            <div><i class="ti ti-shield-check" style="color:var(--color-success-text);font-size:16px;"></i></div>
+            <div><fresh-button variant="ghost" size="sm" icon-only><i class="ti ti-dots"></i></fresh-button></div>
+          </div>
+
+          <div style="display:grid;grid-template-columns:2fr 1fr 1fr 120px 80px 40px;align-items:center;gap:var(--space-4);padding:var(--space-3) var(--space-5);border-bottom:1px solid var(--surface-border);transition:background 120ms;" onmouseenter="this.style.background='var(--surface-subtle)'" onmouseleave="this.style.background=''">
+            <div style="display:flex;align-items:center;gap:var(--space-3);">
+              <fresh-avatar name="Tom Okeke" size="sm"></fresh-avatar>
+              <div>
+                <div style="font-size:13px;font-weight:600;color:var(--text-primary);">Tom Okeke</div>
+                <div style="font-size:11px;color:var(--text-secondary);">tom@acme.io</div>
+              </div>
+            </div>
+            <div><fresh-badge variant="neutral" size="sm">Member</fresh-badge></div>
+            <div><fresh-badge variant="success" size="sm">Active</fresh-badge></div>
+            <div style="font-size:12px;color:var(--text-secondary);">3d ago</div>
+            <div><i class="ti ti-shield-off" style="color:var(--text-tertiary);font-size:16px;"></i></div>
+            <div><fresh-button variant="ghost" size="sm" icon-only><i class="ti ti-dots"></i></fresh-button></div>
+          </div>
+
+          <div style="display:grid;grid-template-columns:2fr 1fr 1fr 120px 80px 40px;align-items:center;gap:var(--space-4);padding:var(--space-3) var(--space-5);border-bottom:1px solid var(--surface-border);transition:background 120ms;" onmouseenter="this.style.background='var(--surface-subtle)'" onmouseleave="this.style.background=''">
+            <div style="display:flex;align-items:center;gap:var(--space-3);">
+              <fresh-avatar name="Sarah Novak" size="sm"></fresh-avatar>
+              <div>
+                <div style="font-size:13px;font-weight:600;color:var(--text-primary);">Sarah Novak</div>
+                <div style="font-size:11px;color:var(--text-secondary);">s.novak@acme.io</div>
+              </div>
+            </div>
+            <div><fresh-badge variant="neutral" size="sm">Member</fresh-badge></div>
+            <div><fresh-badge variant="success" size="sm">Active</fresh-badge></div>
+            <div style="font-size:12px;color:var(--text-secondary);">1 week ago</div>
+            <div><i class="ti ti-shield-check" style="color:var(--color-success-text);font-size:16px;"></i></div>
+            <div><fresh-button variant="ghost" size="sm" icon-only><i class="ti ti-dots"></i></fresh-button></div>
+          </div>
+
+          <div style="display:grid;grid-template-columns:2fr 1fr 1fr 120px 80px 40px;align-items:center;gap:var(--space-4);padding:var(--space-3) var(--space-5);border-bottom:1px solid var(--surface-border);transition:background 120ms;" onmouseenter="this.style.background='var(--surface-subtle)'" onmouseleave="this.style.background=''">
+            <div style="display:flex;align-items:center;gap:var(--space-3);">
+              <fresh-avatar name="David Kim" size="sm"></fresh-avatar>
+              <div>
+                <div style="font-size:13px;font-weight:600;color:var(--text-primary);">David Kim</div>
+                <div style="font-size:11px;color:var(--text-secondary);">dkim@acme.io</div>
+              </div>
+            </div>
+            <div><fresh-badge variant="info" size="sm">Viewer</fresh-badge></div>
+            <div><fresh-badge variant="success" size="sm">Active</fresh-badge></div>
+            <div style="font-size:12px;color:var(--text-secondary);">Today</div>
+            <div><i class="ti ti-shield-off" style="color:var(--text-tertiary);font-size:16px;"></i></div>
+            <div><fresh-button variant="ghost" size="sm" icon-only><i class="ti ti-dots"></i></fresh-button></div>
+          </div>
+
+          <!-- Pending invites section -->
+          <div style="padding:var(--space-3) var(--space-5);background:var(--surface-subtle);border-bottom:1px solid var(--surface-border);">
+            <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-tertiary);">Pending invites</div>
+          </div>
+
+          <div style="display:grid;grid-template-columns:2fr 1fr 1fr 120px 80px 40px;align-items:center;gap:var(--space-4);padding:var(--space-3) var(--space-5);border-bottom:1px solid var(--surface-border);opacity:0.7;">
+            <div style="display:flex;align-items:center;gap:var(--space-3);">
+              <div class="col-invite-avatar"><i class="ti ti-mail"></i></div>
+              <div>
+                <div style="font-size:13px;font-weight:600;color:var(--text-primary);">leila@acme.io</div>
+                <div style="font-size:11px;color:var(--text-tertiary);">Invited Jun 1 · Expires Jun 15</div>
+              </div>
+            </div>
+            <div><fresh-badge variant="neutral" size="sm">Member</fresh-badge></div>
+            <div><fresh-badge variant="warning" size="sm">Pending</fresh-badge></div>
+            <div style="font-size:12px;color:var(--text-tertiary);">—</div>
+            <div style="font-size:12px;color:var(--text-tertiary);">—</div>
+            <div><fresh-button variant="ghost" size="sm" icon-only><i class="ti ti-dots"></i></fresh-button></div>
+          </div>
+
+          <div style="display:grid;grid-template-columns:2fr 1fr 1fr 120px 80px 40px;align-items:center;gap:var(--space-4);padding:var(--space-3) var(--space-5);border-bottom:1px solid var(--surface-border);opacity:0.7;">
+            <div style="display:flex;align-items:center;gap:var(--space-3);">
+              <div class="col-invite-avatar"><i class="ti ti-mail"></i></div>
+              <div>
+                <div style="font-size:13px;font-weight:600;color:var(--text-primary);">raj.mehta@acme.io</div>
+                <div style="font-size:11px;color:var(--text-tertiary);">Invited Jun 3 · Expires Jun 17</div>
+              </div>
+            </div>
+            <div><fresh-badge variant="neutral" size="sm">Member</fresh-badge></div>
+            <div><fresh-badge variant="warning" size="sm">Pending</fresh-badge></div>
+            <div style="font-size:12px;color:var(--text-tertiary);">—</div>
+            <div style="font-size:12px;color:var(--text-tertiary);">—</div>
+            <div><fresh-button variant="ghost" size="sm" icon-only><i class="ti ti-dots"></i></fresh-button></div>
+          </div>
+
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+</div>
+<script>
+  document.addEventListener('nav-toggle', function() {
+    document.getElementById('app-nav').classList.toggle('open');
+  });
+</script>
+<script src="../components/core/fresh-button.js"></script>
+<script src="../components/core/fresh-input.js"></script>
+<script src="../components/feedback/fresh-badge.js"></script>
+<script src="../components/data/fresh-avatar.js"></script>
+<script src="../components/navigation/fresh-simple-tabs.js"></script>
+</body>
+</html>

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Feature Gates — Acme</title>
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="../tokens/primitives.css">
+<link rel="stylesheet" href="../tokens/theme.css">
+<link rel="stylesheet" href="../tokens/dataviz.css">
+<link rel="stylesheet" href="../styles/reset.css">
+<link rel="stylesheet" href="../styles/patterns/dashboard.css">
+<link rel="stylesheet" href="../styles/patterns/commerce.css">
+<script>if(location.href.indexOf('?thumb')!==-1)document.write('<style>#demo-bar{display:none!important}</style>');</script>
+<script src="../js/pattern-topbar-v2.js"></script>
+<script src="../js/freshds.js"></script>
+<script src="../js/pattern-bar.js"></script>
+</head>
+<body>
+<div id="app">
+
+  <div class="demo-bar" id="demo-bar">
+    <div class="demo-inner" id="demo-inner">
+      <button class="demo-mode-btn" id="mode-toggle-btn" onclick="toggleDemoMode()"><i class="ti ti-moon"></i></button>
+    </div>
+    <div class="demo-sep"></div>
+    <button class="demo-collapse-btn" id="demo-collapse-btn" onclick="toggleDemoBar()"><i class="ti ti-minus"></i></button>
+  </div>
+
+  <div class="dash-shell">
+    <pattern-topbar logged-in></pattern-topbar>
+
+    <div class="dash-body">
+            <nav class="app-nav open" id="app-nav" aria-label="Main navigation">
+        <div class="app-nav-inner">
+          <button class="app-nav-item active"><i class="ti ti-home"></i> Home</button>
+          <button class="app-nav-item"><i class="ti ti-chart-bar"></i> Analytics</button>
+          <button class="app-nav-item"><i class="ti ti-activity"></i> Activity</button>
+          <button class="app-nav-item"><i class="ti ti-folders"></i> Projects</button>
+          <button class="app-nav-item"><i class="ti ti-check"></i> My tasks</button>
+          <button class="app-nav-item"><i class="ti ti-calendar-event"></i> Calendar</button>
+          <button class="app-nav-item"><i class="ti ti-users"></i> Members</button>
+          <button class="app-nav-item"><i class="ti ti-settings"></i> Settings</button>
+        </div>
+      </nav>
+
+      <main class="dash-main">
+        <div class="dash-page-header">
+          <div>
+            <div class="dash-page-title">AI Insights</div>
+            <div class="dash-page-subtitle">Automated analysis and recommendations powered by AI</div>
+          </div>
+        </div>
+
+        <div class="dash-content">
+
+          <!-- Inline gate banner -->
+          <fresh-alert variant="info" title="Upgrade to Pro to unlock AI Insights" style="margin-bottom:var(--space-5);">
+            AI Insights is a Pro feature. Upgrade your plan to get automated analysis, anomaly detection, and smart recommendations.
+            <fresh-button slot="action" variant="primary" size="sm">Upgrade now</fresh-button>
+          </fresh-alert>
+
+          <!-- Gated content area -->
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-4);margin-bottom:var(--space-4);">
+
+            <!-- Card 1 — gated -->
+            <div class="com-gate-wrap">
+              <div class="com-gate-blur dash-card">
+                <div class="dash-card-title">Trend Analysis</div>
+                <div class="dash-card-sub">7-day rolling average</div>
+                <div style="height:120px;background:var(--surface-subtle);border-radius:var(--radius-md);"></div>
+              </div>
+              <div class="com-gate-overlay">
+                <div class="com-gate-icon"><i class="ti ti-lock"></i></div>
+                <div class="com-gate-title">AI Trend Analysis</div>
+                <div class="com-gate-desc">Automatically surface trends and patterns across your data. Available on Pro and above.</div>
+                <fresh-button variant="primary" size="sm"><i class="ti ti-sparkles"></i> Unlock with Pro</fresh-button>
+              </div>
+            </div>
+
+            <!-- Card 2 — gated -->
+            <div class="com-gate-wrap">
+              <div class="com-gate-blur dash-card">
+                <div class="dash-card-title">Anomaly Detection</div>
+                <div class="dash-card-sub">Real-time alerts</div>
+                <div style="height:120px;background:var(--surface-subtle);border-radius:var(--radius-md);"></div>
+              </div>
+              <div class="com-gate-overlay">
+                <div class="com-gate-icon"><i class="ti ti-lock"></i></div>
+                <div class="com-gate-title">Anomaly Detection</div>
+                <div class="com-gate-desc">Get alerted when metrics deviate from expected patterns. Available on Pro and above.</div>
+                <fresh-button variant="primary" size="sm"><i class="ti ti-sparkles"></i> Unlock with Pro</fresh-button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Partial gate — table with locked rows -->
+          <div class="dash-card" style="padding:0;overflow:hidden;">
+            <div style="padding:var(--space-4) var(--space-5);border-bottom:1px solid var(--surface-border);display:flex;align-items:center;justify-content:space-between;">
+              <div>
+                <div class="dash-card-title" style="margin:0;">Smart Recommendations</div>
+                <div style="font-size:12px;color:var(--text-secondary);margin-top:2px;">AI-generated action items based on your data</div>
+              </div>
+              <fresh-badge variant="warning">Pro feature</fresh-badge>
+            </div>
+            <div style="padding:var(--space-4) var(--space-5);">
+              <!-- 2 unlocked rows -->
+              <div style="display:flex;align-items:flex-start;gap:var(--space-3);padding:var(--space-3) 0;border-bottom:1px solid var(--surface-border);">
+                <div style="width:32px;height:32px;background:var(--color-success-subtle);border-radius:var(--radius-md);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i class="ti ti-trending-up" style="color:var(--color-success-text);"></i></div>
+                <div><div style="font-size:13px;font-weight:500;color:var(--text-primary);">Increase outreach cadence on Thursdays</div><div style="font-size:12px;color:var(--text-secondary);">Conversion rate is 23% higher on Thursdays based on 90-day data.</div></div>
+                <fresh-badge variant="success" style="flex-shrink:0;">+23%</fresh-badge>
+              </div>
+              <div style="display:flex;align-items:flex-start;gap:var(--space-3);padding:var(--space-3) 0;border-bottom:1px solid var(--surface-border);">
+                <div style="width:32px;height:32px;background:var(--color-info-subtle);border-radius:var(--radius-md);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i class="ti ti-users" style="color:var(--color-info-text);"></i></div>
+                <div><div style="font-size:13px;font-weight:500;color:var(--text-primary);">Re-engage 14 inactive leads from Q1</div><div style="font-size:12px;color:var(--text-secondary);">These contacts showed high intent but went cold. Now is a good re-engagement window.</div></div>
+                <fresh-badge variant="info" style="flex-shrink:0;">14 leads</fresh-badge>
+              </div>
+              <!-- Blurred/locked rows -->
+              <div style="position:relative;">
+                <div style="filter:blur(3px);pointer-events:none;user-select:none;opacity:0.4;">
+                  <div style="padding:var(--space-3) 0;border-bottom:1px solid var(--surface-border);font-size:13px;color:var(--text-primary);">Reduce churn risk for 8 accounts by scheduling QBR calls</div>
+                  <div style="padding:var(--space-3) 0;border-bottom:1px solid var(--surface-border);font-size:13px;color:var(--text-primary);">Your NPS score dropped 12% — here are 3 root causes</div>
+                  <div style="padding:var(--space-3) 0;font-size:13px;color:var(--text-primary);">Upsell opportunity: 6 accounts are approaching usage limits</div>
+                </div>
+                <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;">
+                  <div style="background:var(--surface-canvas);border:1px solid var(--surface-border);border-radius:var(--radius-lg);padding:var(--space-3) var(--space-5);display:flex;align-items:center;gap:var(--space-3);box-shadow:var(--elev-2);">
+                    <i class="ti ti-lock" style="color:var(--color-interactive-text);font-size:16px;"></i>
+                    <span style="font-size:13px;font-weight:500;color:var(--text-primary);">3 more recommendations on Pro</span>
+                    <fresh-button variant="primary" size="sm">Upgrade</fresh-button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </main>
+    </div>
+  </div>
+
+</div>
+<script>
+  document.addEventListener('nav-toggle', function() {
+    document.getElementById('app-nav').classList.toggle('open');
+  });
+</script>
+<script src="../components/core/fresh-button.js"></script>
+<script src="../components/feedback/fresh-alert.js"></script>
+<script src="../components/feedback/fresh-badge.js"></script>
+</body>
+</html>

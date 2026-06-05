@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Badge — FreshDS</title>
+<base href="../../">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="tokens/primitives.css">
+<link rel="stylesheet" href="tokens/theme.css">
+<link rel="stylesheet" href="tokens/dataviz.css">
+<link rel="stylesheet" href="styles/reset.css">
+<link rel="stylesheet" href="styles/layout.css">
+<link rel="stylesheet" href="styles/components/core.css">
+<link rel="stylesheet" href="styles/docs.css">
+<script src="js/freshds.js"></script>
+<script src="js/freshds-site.js"></script>
+</head>
+<body>
+<div class="fds-app" id="app">
+  <ds-topbar active-section="ds"></ds-topbar>
+  <div class="fds-body">
+    <ds-shell active="badge"></ds-shell>
+    <main class="fds-main">
+      <div class="fds-page active" id="page-badge">
+        <div class="page-header">
+          <div class="page-eyebrow">Feedback &amp; Status</div>
+          <h1 class="page-title">Badge</h1>
+          <p class="page-desc">Compact status labels for categories, states, and counts. The pulsing dot variant signals live system status.</p>
+        </div>
+        <div class="page-section">
+          <div class="page-section-title">Variants</div>
+          <div class="demo-surface">
+            <fresh-badge variant="primary">Primary</fresh-badge>
+            <fresh-badge variant="success">Success</fresh-badge>
+            <fresh-badge variant="warning">Warning</fresh-badge>
+            <fresh-badge variant="danger">Danger</fresh-badge>
+            <fresh-badge variant="neutral">Neutral</fresh-badge>
+            <fresh-badge variant="ai">AI</fresh-badge>
+          </div>
+        </div>
+        <div class="page-section">
+          <div class="page-section-title">With status dot</div>
+          <div class="demo-surface">
+            <fresh-badge variant="success" dot>Operational</fresh-badge>
+            <fresh-badge variant="warning" dot>Degraded</fresh-badge>
+            <fresh-badge variant="danger"  dot>Outage</fresh-badge>
+            <fresh-badge variant="neutral" dot>Maintenance</fresh-badge>
+          </div>
+        </div>
+        <div class="page-section">
+          <div class="page-section-title">Sizes</div>
+          <div class="demo-surface" style="align-items:center">
+            <fresh-badge variant="primary" size="sm">Small</fresh-badge>
+            <fresh-badge variant="primary">Default</fresh-badge>
+          </div>
+        </div>
+        <div class="page-section">
+          <div class="page-section-title">Attributes</div>
+          <table class="usage-table">
+            <thead><tr><th>Attribute</th><th>Values</th><th>Default</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td>variant</td><td><code>primary</code> <code>success</code> <code>warning</code> <code>danger</code> <code>neutral</code> <code>ai</code></td><td><code>primary</code></td><td>Color intent</td></tr>
+              <tr><td>size</td><td><code>sm</code> <code>md</code></td><td><code>md</code></td><td>Height (18 / 22px)</td></tr>
+              <tr><td>dot</td><td>boolean</td><td>—</td><td>Prepends a pulsing status indicator dot</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+<script src="components/core/fresh-button.js"></script>
+<script src="components/core/fresh-input.js"></script>
+<script src="components/feedback/fresh-badge.js"></script>
+<script src="components/navigation/fresh-simple-tabs.js"></script>
+</body>
+</html>

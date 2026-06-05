@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tooltip — FreshDS</title>
+<base href="../../">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="tokens/primitives.css">
+<link rel="stylesheet" href="tokens/theme.css">
+<link rel="stylesheet" href="tokens/dataviz.css">
+<link rel="stylesheet" href="styles/reset.css">
+<link rel="stylesheet" href="styles/layout.css">
+<link rel="stylesheet" href="styles/components/core.css">
+<link rel="stylesheet" href="styles/docs.css">
+<script src="js/freshds.js"></script>
+<script src="js/freshds-site.js"></script>
+</head>
+<body>
+<div class="fds-app" id="app">
+  <ds-topbar active-section="ds"></ds-topbar>
+  <div class="fds-body">
+    <ds-shell active="tooltip"></ds-shell>
+    <main class="fds-main">
+      <div class="fds-page active" id="page-tooltip">
+        <div class="page-header">
+          <div class="page-eyebrow">Feedback &amp; Status</div>
+          <h1 class="page-title">Tooltip</h1>
+          <p class="page-desc">Contextual labels that appear on hover or focus to clarify icon-only buttons and dense UI. Wraps any trigger element.</p>
+        </div>
+        <div class="page-section">
+          <div class="page-section-title">Placements</div>
+          <div class="demo-surface" style="justify-content:center;gap:var(--space-8);padding:var(--space-12) var(--space-8)">
+            <fresh-tooltip tip="Appears on top" placement="top">
+              <fresh-button variant="secondary" size="sm">Top</fresh-button>
+            </fresh-tooltip>
+            <fresh-tooltip tip="Appears on right" placement="right">
+              <fresh-button variant="secondary" size="sm">Right</fresh-button>
+            </fresh-tooltip>
+            <fresh-tooltip tip="Appears below" placement="bottom">
+              <fresh-button variant="secondary" size="sm">Bottom</fresh-button>
+            </fresh-tooltip>
+            <fresh-tooltip tip="Appears on left" placement="left">
+              <fresh-button variant="secondary" size="sm">Left</fresh-button>
+            </fresh-tooltip>
+          </div>
+        </div>
+        <div class="page-section">
+          <div class="page-section-title">On icon buttons</div>
+          <div class="demo-surface" style="gap:var(--space-3)">
+            <fresh-tooltip tip="Copy">
+              <fresh-button variant="ghost" icon-only><i class="ti ti-copy"></i></fresh-button>
+            </fresh-tooltip>
+            <fresh-tooltip tip="Download">
+              <fresh-button variant="ghost" icon-only><i class="ti ti-download"></i></fresh-button>
+            </fresh-tooltip>
+            <fresh-tooltip tip="Settings">
+              <fresh-button variant="ghost" icon-only><i class="ti ti-settings"></i></fresh-button>
+            </fresh-tooltip>
+            <fresh-tooltip tip="Delete permanently" placement="bottom">
+              <fresh-button variant="ghost" icon-only><i class="ti ti-trash"></i></fresh-button>
+            </fresh-tooltip>
+          </div>
+        </div>
+        <div class="page-section">
+          <div class="page-section-title">Attributes</div>
+          <table class="usage-table">
+            <thead><tr><th>Attribute</th><th>Values</th><th>Default</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td>tip</td><td>string</td><td>—</td><td>Tooltip text content</td></tr>
+              <tr><td>placement</td><td><code>top</code> <code>bottom</code> <code>left</code> <code>right</code></td><td><code>top</code></td><td>Position relative to the trigger</td></tr>
+              <tr><td>delay</td><td>number (ms)</td><td><code>200</code></td><td>Hover delay before appearing</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+<script src="components/core/fresh-button.js"></script>
+<script src="components/core/fresh-input.js"></script>
+<script src="components/feedback/fresh-tooltip.js"></script>
+<script src="components/navigation/fresh-simple-tabs.js"></script>
+</body>
+</html>

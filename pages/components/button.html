@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Button — FreshDS</title>
+<base href="../../">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="tokens/primitives.css">
+<link rel="stylesheet" href="tokens/theme.css">
+<link rel="stylesheet" href="tokens/dataviz.css">
+<link rel="stylesheet" href="styles/reset.css">
+<link rel="stylesheet" href="styles/layout.css">
+<link rel="stylesheet" href="styles/components/core.css">
+<link rel="stylesheet" href="styles/docs.css">
+<script src="js/freshds.js"></script>
+<script src="js/freshds-site.js"></script>
+</head>
+<body>
+<div class="fds-app" id="app">
+  <ds-topbar active-section="ds"></ds-topbar>
+  <div class="fds-body">
+    <ds-shell active="button"></ds-shell>
+    <main class="fds-main">
+      <div class="fds-page active" id="page-button">
+        <div class="page-header">
+          <div class="page-eyebrow">Core UI</div>
+          <h1 class="page-title">Button</h1>
+          <p class="page-desc">Triggers actions. Use the variant that matches the weight the action deserves — primary for the definitive action, secondary for alternatives, ghost for low-emphasis or repeated actions, danger for destructive ones.</p>
+        </div>
+
+        <div class="page-section">
+          <div class="page-section-title">Variants</div>
+          <div class="demo-surface">
+            <fresh-button variant="primary"><i class="ti ti-check"></i> Save changes</fresh-button>
+            <fresh-button variant="secondary">Cancel</fresh-button>
+            <fresh-button variant="ghost">Learn more</fresh-button>
+            <fresh-button variant="danger"><i class="ti ti-trash"></i> Delete</fresh-button>
+          </div>
+        </div>
+
+        <div class="page-section">
+          <div class="page-section-title">Sizes</div>
+          <div class="demo-surface" style="align-items:center">
+            <fresh-button variant="primary" size="sm">Small</fresh-button>
+            <fresh-button variant="primary">Default</fresh-button>
+            <fresh-button variant="primary" size="lg">Large</fresh-button>
+          </div>
+        </div>
+
+        <div class="page-section">
+          <div class="page-section-title">States</div>
+          <div class="demo-surface" style="align-items:center">
+            <fresh-button variant="primary">Default</fresh-button>
+            <fresh-button variant="primary" disabled>Disabled</fresh-button>
+            <fresh-button variant="primary" loading>Loading…</fresh-button>
+            <fresh-button variant="ghost" icon-only aria-label="Settings"><i class="ti ti-settings"></i></fresh-button>
+            <fresh-button variant="ghost" icon-only aria-label="Search"><i class="ti ti-search"></i></fresh-button>
+          </div>
+        </div>
+
+        <div class="page-section">
+          <div class="page-section-title">All variants × all sizes</div>
+          <div class="demo-surface col" style="gap:var(--space-4)">
+            <div style="display:flex;gap:var(--space-3);align-items:center">
+              <fresh-button variant="primary"   size="sm">Primary</fresh-button>
+              <fresh-button variant="secondary" size="sm">Secondary</fresh-button>
+              <fresh-button variant="ghost"     size="sm">Ghost</fresh-button>
+              <fresh-button variant="danger"    size="sm">Danger</fresh-button>
+            </div>
+            <div style="display:flex;gap:var(--space-3);align-items:center">
+              <fresh-button variant="primary">Primary</fresh-button>
+              <fresh-button variant="secondary">Secondary</fresh-button>
+              <fresh-button variant="ghost">Ghost</fresh-button>
+              <fresh-button variant="danger">Danger</fresh-button>
+            </div>
+            <div style="display:flex;gap:var(--space-3);align-items:center">
+              <fresh-button variant="primary"   size="lg">Primary</fresh-button>
+              <fresh-button variant="secondary" size="lg">Secondary</fresh-button>
+              <fresh-button variant="ghost"     size="lg">Ghost</fresh-button>
+              <fresh-button variant="danger"    size="lg">Danger</fresh-button>
+            </div>
+          </div>
+        </div>
+
+        <div class="page-section">
+          <div class="page-section-title">Attributes</div>
+          <table class="usage-table">
+            <thead><tr><th>Attribute</th><th>Values</th><th>Default</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td>variant</td><td><code>primary</code> <code>secondary</code> <code>ghost</code> <code>danger</code></td><td><code>primary</code></td><td>Visual intent of the action</td></tr>
+              <tr><td>size</td><td><code>sm</code> <code>md</code> <code>lg</code></td><td><code>md</code></td><td>Height and padding scale (28 / 34 / 40px)</td></tr>
+              <tr><td>disabled</td><td>boolean</td><td>—</td><td>Prevents interaction, reduces opacity to 38%</td></tr>
+              <tr><td>loading</td><td>boolean</td><td>—</td><td>Shows spinner, disables interaction, sets aria-busy</td></tr>
+              <tr><td>icon-only</td><td>boolean</td><td>—</td><td>Square proportions — center a single icon</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="page-section">
+          <div class="page-section-title">Tokens</div>
+          <div style="display:flex;flex-wrap:wrap;gap:var(--space-2)">
+            <span class="token-pill"><span class="token-dot" style="background:var(--btn-primary-bg)"></span>--btn-primary-bg</span>
+            <span class="token-pill"><span class="token-dot" style="background:var(--btn-primary-text);border:1px solid var(--surface-border)"></span>--btn-primary-text</span>
+            <span class="token-pill"><span class="token-dot" style="background:var(--btn-primary-hover)"></span>--btn-primary-hover</span>
+            <span class="token-pill"><span class="token-dot" style="background:var(--btn-secondary-border)"></span>--btn-secondary-border</span>
+            <span class="token-pill"><span class="token-dot" style="background:var(--surface-overlay)"></span>--surface-overlay</span>
+            <span class="token-pill"><span class="token-dot" style="background:var(--color-interactive)"></span>--color-interactive</span>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+<script src="components/core/fresh-button.js"></script>
+<script src="components/core/fresh-input.js"></script>
+<script src="components/navigation/fresh-simple-tabs.js"></script>
+</body>
+</html>

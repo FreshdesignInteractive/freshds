@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Table — FreshDS</title>
+<base href="../../">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="tokens/primitives.css">
+<link rel="stylesheet" href="tokens/theme.css">
+<link rel="stylesheet" href="tokens/dataviz.css">
+<link rel="stylesheet" href="styles/reset.css">
+<link rel="stylesheet" href="styles/layout.css">
+<link rel="stylesheet" href="styles/components/core.css">
+<link rel="stylesheet" href="styles/docs.css">
+<script src="js/freshds.js"></script>
+<script src="js/freshds-site.js"></script>
+</head>
+<body>
+<div class="fds-app" id="app">
+  <ds-topbar active-section="ds"></ds-topbar>
+  <div class="fds-body">
+    <ds-shell active="table"></ds-shell>
+    <main class="fds-main">
+      <div class="fds-page active" id="page-table">
+        <div class="page-header">
+          <div class="page-eyebrow">Containers</div>
+          <h1 class="page-title">Table</h1>
+          <p class="page-desc">Structured data display with column sorting. Click any sortable header to toggle ascending / descending. Horizontally scrollable on overflow.</p>
+        </div>
+        <div class="page-section">
+          <div class="page-section-title">Default</div>
+          <div class="demo-surface col" style="padding:0;overflow:hidden">
+            <fresh-table
+              columns='[{"key":"name","label":"Name","sortable":true},{"key":"role","label":"Role"},{"key":"status","label":"Status"},{"key":"model","label":"Model"},{"key":"joined","label":"Joined","sortable":true,"align":"right"}]'
+              data='[
+                {"name":"Jane Smith",  "role":"Admin",  "status":"Active",   "model":"Claude Sonnet","joined":"Jan 12, 2024"},
+                {"name":"Marcus Lee",  "role":"Editor", "status":"Active",   "model":"Claude Haiku", "joined":"Feb 3, 2024"},
+                {"name":"Priya Nair",  "role":"Editor", "status":"Inactive", "model":"Claude Haiku", "joined":"Mar 8, 2024"},
+                {"name":"Tom Wu",      "role":"Viewer", "status":"Active",   "model":"Claude Opus",  "joined":"Apr 1, 2024"},
+                {"name":"Anya Patel",  "role":"Viewer", "status":"Active",   "model":"Claude Haiku", "joined":"Apr 19, 2024"}
+              ]'>
+            </fresh-table>
+          </div>
+        </div>
+        <div class="page-section">
+          <div class="page-section-title">Striped</div>
+          <div class="demo-surface col" style="padding:0;overflow:hidden">
+            <fresh-table
+              striped
+              columns='[{"key":"model","label":"Model","sortable":true},{"key":"provider","label":"Provider"},{"key":"context","label":"Context window","align":"right"},{"key":"cost","label":"Input cost / 1M","align":"right"}]'
+              data='[
+                {"model":"Claude Opus 4",   "provider":"Anthropic","context":"200K","cost":"$15.00"},
+                {"model":"Claude Sonnet 4", "provider":"Anthropic","context":"200K","cost":"$3.00"},
+                {"model":"Claude Haiku 4",  "provider":"Anthropic","context":"200K","cost":"$0.80"},
+                {"model":"GPT-4o",          "provider":"OpenAI",   "context":"128K","cost":"$5.00"},
+                {"model":"Gemini Pro 1.5",  "provider":"Google",   "context":"1M",  "cost":"$3.50"}
+              ]'>
+            </fresh-table>
+          </div>
+        </div>
+        <div class="page-section">
+          <div class="page-section-title">Column attributes</div>
+          <table class="usage-table">
+            <thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td>key</td><td>string</td><td>Maps to the property name in each row object</td></tr>
+              <tr><td>label</td><td>string</td><td>Column header text</td></tr>
+              <tr><td>sortable</td><td>boolean</td><td>Click-to-sort with asc/desc toggle</td></tr>
+              <tr><td>align</td><td><code>left</code> <code>center</code> <code>right</code></td><td>Text alignment (default: left)</td></tr>
+              <tr><td>width</td><td>CSS value</td><td>Optional fixed column width</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+<script src="components/core/fresh-button.js"></script>
+<script src="components/core/fresh-input.js"></script>
+<script src="components/containers/fresh-table.js"></script>
+<script src="components/navigation/fresh-simple-tabs.js"></script>
+</body>
+</html>

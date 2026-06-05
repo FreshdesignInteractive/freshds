@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Spacing — FreshDS</title>
+<base href="../../">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="tokens/primitives.css">
+<link rel="stylesheet" href="tokens/theme.css">
+<link rel="stylesheet" href="tokens/dataviz.css">
+<link rel="stylesheet" href="styles/reset.css">
+<link rel="stylesheet" href="styles/layout.css">
+<link rel="stylesheet" href="styles/components/core.css">
+<link rel="stylesheet" href="styles/docs.css">
+<script src="js/freshds.js"></script>
+<script src="js/freshds-site.js"></script>
+</head>
+<body>
+<div class="fds-app" id="app">
+  <ds-topbar active-section="ds"></ds-topbar>
+  <div class="fds-body">
+    <ds-shell active="spacing"></ds-shell>
+    <main class="fds-main">
+      <div class="fds-page active" id="page-spacing">
+        <div class="page-header">
+          <div class="page-eyebrow">Foundation</div>
+          <h1 class="page-title">Spacing</h1>
+          <p class="page-desc">A 4px base unit drives the entire spacing system. Every component, gap, and padding is a multiple of 4 — creating consistent, predictable rhythm across the UI.</p>
+        </div>
+
+        <div class="page-section">
+          <div class="page-section-title">Spacing scale</div>
+          <div class="demo-surface col" style="padding:var(--space-6)">
+            <div class="space-row"><div class="space-meta"><span class="space-token">--space-1</span><span class="space-val">4px</span></div><div class="space-bar" style="width:4px"></div></div>
+            <div class="space-row"><div class="space-meta"><span class="space-token">--space-2</span><span class="space-val">8px</span></div><div class="space-bar" style="width:8px"></div></div>
+            <div class="space-row"><div class="space-meta"><span class="space-token">--space-3</span><span class="space-val">12px</span></div><div class="space-bar" style="width:12px"></div></div>
+            <div class="space-row"><div class="space-meta"><span class="space-token">--space-4</span><span class="space-val">16px</span></div><div class="space-bar" style="width:16px"></div></div>
+            <div class="space-row"><div class="space-meta"><span class="space-token">--space-5</span><span class="space-val">20px</span></div><div class="space-bar" style="width:20px"></div></div>
+            <div class="space-row"><div class="space-meta"><span class="space-token">--space-6</span><span class="space-val">24px</span></div><div class="space-bar" style="width:24px"></div></div>
+            <div class="space-row"><div class="space-meta"><span class="space-token">--space-8</span><span class="space-val">32px</span></div><div class="space-bar" style="width:32px"></div></div>
+            <div class="space-row"><div class="space-meta"><span class="space-token">--space-10</span><span class="space-val">40px</span></div><div class="space-bar" style="width:40px"></div></div>
+            <div class="space-row"><div class="space-meta"><span class="space-token">--space-12</span><span class="space-val">48px</span></div><div class="space-bar" style="width:48px"></div></div>
+          </div>
+        </div>
+
+        <div class="page-section">
+          <div class="page-section-title">Usage guide</div>
+          <table class="usage-table">
+            <thead><tr><th>Token</th><th>Value</th><th>Use for</th></tr></thead>
+            <tbody>
+              <tr><td>--space-1</td><td>4px</td><td>Icon gaps, tight inline spacing</td></tr>
+              <tr><td>--space-2</td><td>8px</td><td>Between related labels and inputs</td></tr>
+              <tr><td>--space-3</td><td>12px</td><td>Button padding (sm), nav item gaps</td></tr>
+              <tr><td>--space-4</td><td>16px</td><td>Button padding (default), card inner gaps</td></tr>
+              <tr><td>--space-5</td><td>20px</td><td>Card padding (sm), form field spacing</td></tr>
+              <tr><td>--space-6</td><td>24px</td><td>Card padding (default), section gaps</td></tr>
+              <tr><td>--space-8</td><td>32px</td><td>Demo surface padding, between sections</td></tr>
+              <tr><td>--space-10</td><td>40px</td><td>Page content padding</td></tr>
+              <tr><td>--space-12</td><td>48px</td><td>Page bottom margin, layout spacing</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+<script src="components/core/fresh-button.js"></script>
+<script src="components/core/fresh-input.js"></script>
+<script src="components/navigation/fresh-simple-tabs.js"></script>
+</body>
+</html>

@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tokens — FreshDS</title>
+<base href="../../">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="tokens/primitives.css">
+<link rel="stylesheet" href="tokens/theme.css">
+<link rel="stylesheet" href="tokens/dataviz.css">
+<link rel="stylesheet" href="styles/reset.css">
+<link rel="stylesheet" href="styles/layout.css">
+<link rel="stylesheet" href="styles/components/core.css">
+<link rel="stylesheet" href="styles/docs.css">
+<script src="js/freshds.js"></script>
+<script src="js/freshds-site.js"></script>
+</head>
+<body>
+<div class="fds-app" id="app">
+  <ds-topbar active-section="ds"></ds-topbar>
+  <div class="fds-body">
+    <ds-shell active="tokens"></ds-shell>
+    <main class="fds-main">
+      <div class="fds-page active" id="page-tokens">
+        <div class="page-header">
+          <div class="page-eyebrow">Foundation</div>
+          <h1 class="page-title">Tokens</h1>
+          <p class="page-desc">Complete reference for every CSS custom property. Always use Tier 2 semantic tokens in your components — they resolve correctly in both light and dark mode without any extra work.</p>
+        </div>
+
+        <div class="page-section">
+          <div class="page-section-title">Usage</div>
+          <div class="usage-callout">
+            <div class="usage-callout-title">Reference tokens in CSS</div>
+            <pre><span class="uc-good">/* ✓ Use semantic tokens */</span>
+.card {
+  background: <span class="uc-good">var(--surface-canvas)</span>;
+  border: 1px solid <span class="uc-good">var(--surface-border)</span>;
+  color: <span class="uc-good">var(--text-primary)</span>;
+}
+
+<span class="uc-bad">/* ✗ Never reference raw scale steps */</span>
+.card { background: <span class="uc-bad">var(--scale-1)</span>; }
+
+<span class="uc-bad">/* ✗ Never hardcode hex */</span>
+.card { background: <span class="uc-bad">#ffffff</span>; }</pre>
+          </div>
+          <p style="font-size:13px;color:var(--text-secondary);line-height:1.6">The Light and Dark columns show the scale step each token maps to. Since step assignments flip between modes, components automatically invert — no <code style="font-size:11px">@media (prefers-color-scheme)</code> or class conditionals needed.</p>
+        </div>
+
+        <div class="page-section">
+          <div class="page-section-title">Surfaces</div>
+          <table class="token-ref-table">
+            <thead><tr><th style="width:220px">Token</th><th>Description</th><th style="width:110px">Light</th><th style="width:110px">Dark</th></tr></thead>
+            <tbody>
+              <tr><td><div class="tok-cell"><span class="tok-dot" style="background:var(--surface-bg);box-shadow:inset 0 0 0 1px var(--surface-border)"></span><span class="tok-name">--surface-bg</span></div></td><td class="tok-desc">Page background and navbar. Absolute color — never derived from the neutral scale. Set via <code class="tok-val">--color-page-bg</code>.</td><td class="tok-val">--color-page-bg</td><td class="tok-val">--scale-12</td></tr>
+              <tr><td><div class="tok-cell"><span class="tok-dot" style="background:var(--surface-canvas);box-shadow:inset 0 0 0 1px var(--surface-border)"></span><span class="tok-name">--surface-canvas</span></div></td><td class="tok-desc">Cards, panels, and elevated surfaces.</td><td class="tok-val">--color-page-bg</td><td class="tok-val">--scale-10</td></tr>
+              <tr><td><div class="tok-cell"><span class="tok-dot" style="background:var(--surface-input);box-shadow:inset 0 0 0 1px var(--surface-border)"></span><span class="tok-name">--surface-input</span></div></td><td class="tok-desc">Form control fill. User-defined via <code class="tok-val">--color-input-surface</code>.</td><td class="tok-val">--color-input-surface</td><td class="tok-val">--scale-11</td></tr>
+              <tr><td><div class="tok-cell"><span class="tok-dot" style="background:var(--surface-subtle)"></span><span class="tok-name">--surface-subtle</span></div></td><td class="tok-desc">Hover tints, section backgrounds, zebra rows.</td><td class="tok-val">--scale-2</td><td class="tok-val">--scale-11</td></tr>
+              <tr><td><div class="tok-cell"><span class="tok-dot" style="background:var(--surface-overlay)"></span><span class="tok-name">--surface-overlay</span></div></td><td class="tok-desc">Dropdowns, tooltips, prominent overlays.</td><td class="tok-val">--scale-3</td><td class="tok-val">--scale-9</td></tr>
+              <tr><td><div class="tok-cell"><span class="tok-dot" style="background:var(--surface-border)"></span><span class="tok-name">--surface-border</span></div></td><td class="tok-desc">Default borders and dividers.</td><td class="tok-val">--scale-4</td><td class="tok-val">--scale-8</td></tr>
+              <tr><td><div class="tok-cell"><span class="tok-dot" style="background:var(--surface-border-strong)"></span><span class="tok-name">--surface-border-strong</span></div></td><td class="tok-desc">Emphasized borders, focused states (outline).</td><td class="tok-val">--scale-5</td><td class="tok-val">--scale-7</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="page-section">
+          <div class="page-section-title">Text</div>
+          <table class="token-ref-table">
+            <thead><tr><th style="width:220px">Token</th><th>Description</th><th style="width:110px">Light</th><th style="width:110px">Dark</th></tr></thead>
+            <tbody>
+              <tr><td><div class="tok-cell"><span class="tok-dot" style="background:var(--text-primary)"></span><span class="tok-name">--text-primary</span></div></td><td class="tok-desc">Headings, labels, primary body copy.</td><td class="tok-val">--scale-11</td><td class="tok-val">--scale-1</td></tr>
+              <tr><td><div class="tok-cell"><span class="tok-dot" style="background:var(--text-secondary)"></span><span class="tok-name">--text-secondary</span></div></td><td class="tok-desc">Supporting text, descriptions, placeholder.</td><td class="tok-val">--scale-9</td><td class="tok-val">--scale-3</td></tr>
+              <tr><td><div class="tok-cell"><span class="tok-dot" style="background:var(--text-tertiary)"></span><span class="tok-name">--text-tertiary</span></div></td><td class="tok-desc">Captions, metadata, disabled labels.</td><td class="tok-val">--scale-8</td><td class="tok-val">--scale-5</td></tr>
+              <tr><td><div class="tok-cell"><span class="tok-dot" style="background:var(--text-inverse)"></span><span class="tok-name">--text-inverse</span></div></td><td class="tok-desc">Text on dark/filled backgrounds (e.g. primary button).</td><td class="tok-val">--scale-1</td><td class="tok-val">--scale-12</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="page-section">
+          <div class="page-section-title">Interactive — Primary brand</div>
+          <table class="token-ref-table">
+            <thead><tr><th style="width:220px">Token</th><th>Description</th><th style="width:110px">Light</th><th style="width:110px">Dark</th></tr></thead>
+            <tbody>
+              <tr><td><div class="tok-cell"><span class="tok-dot" style="background:var(--color-interactive)"></span><span class="tok-name">--color-interactive</span></div></td><td class="tok-desc">Primary interactive color. Buttons, active states, links.</td><td class="tok-val">--primary-9</td><td class="tok-val">--primary-9</td></tr>
+              <tr><td><div class="tok-cell"><span class="tok-dot" style="background:var(--color-interactive-hover)"></span><span class="tok-name">--color-interactive-hover</span></div></td><td class="tok-desc">Hover state of interactive elements.</td><td class="tok-val">--primary-10</td><td class="tok-val">--primary-10</td></tr>
+              <tr><td><div class="tok-cell"><span class="tok-dot" style="background:var(--color-interactive-subtle)"></span><span class="tok-name">--color-interactive-subtle</span></div></td><td class="tok-desc">Tinted background for selected/active rows, ghost hover.</td><td class="tok-val">--primary-2</td><td class="tok-val">--primary-11</td></tr>
+              <tr><td><div class="tok-cell"><span class="tok-dot" style="background:var(--color-interactive-border)"></span><span class="tok-name">--color-interactive-border</span></div></td><td class="tok-desc">Border for focused or outlined interactive elements.</td><td class="tok-val">--primary-5</td><td class="tok-val">--primary-7</td></tr>
+              <tr><td><div class="tok-cell"><span class="tok-dot" style="background:var(--color-interactive-text)"></span><span class="tok-name">--color-interactive-text</span></div></td><td class="tok-desc">Colored text — links, active nav items, token labels.</td><td class="tok-val">--primary-9</td><td class="tok-val">--primary-4</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="page-section">
+          <div class="page-section-title">Accent — Secondary brand</div>
+          <table class="token-ref-table">
+            <thead><tr><th style="width:220px">Token</th><th>Description</th><th style="width:110px">Light</th><th style="width:110px">Dark</th></tr></thead>
+            <tbody>
+              <tr><td><div class="tok-cell"><span class="tok-dot" style="background:var(--color-accent)"></span><span class="tok-name">--color-accent</span></div></td><td class="tok-desc">Secondary brand accent. AI features, highlights.</td><td class="tok-val">--secondary-9</td><td class="tok-val">--secondary-9</td></tr>
+              <tr><td><div class="tok-cell"><span class="tok-dot" style="background:var(--color-accent-subtle)"></span><span class="tok-name">--color-accent-subtle</span></div></td><td class="tok-desc">Tinted background for accent-colored regions.</td><td class="tok-val">--secondary-2</td><td class="tok-val">--secondary-11</td></tr>
+              <tr><td><div class="tok-cell"><span class="tok-dot" style="background:var(--color-accent-border)"></span><span class="tok-name">--color-accent-border</span></div></td><td class="tok-desc">Border for accent elements.</td><td class="tok-val">--secondary-5</td><td class="tok-val">--secondary-7</td></tr>
+              <tr><td><div class="tok-cell"><span class="tok-dot" style="background:var(--color-accent-text)"></span><span class="tok-name">--color-accent-text</span></div></td><td class="tok-desc">Colored text in accent hue.</td><td class="tok-val">--secondary-11</td><td class="tok-val">--secondary-4</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="page-section">
+          <div class="page-section-title">Status</div>
+          <p style="font-size:13px;color:var(--text-secondary);line-height:1.6;margin-bottom:var(--space-5)">Each status has four tokens. The <strong>main</strong> color is used for icons and indicators. Use <strong>subtle</strong> + <strong>border</strong> + <strong>text</strong> together for alert and badge patterns.</p>
+          <table class="token-ref-table">
+            <thead><tr><th style="width:220px">Token</th><th>Description</th><th style="width:110px">Light</th><th style="width:110px">Dark</th></tr></thead>
+            <tbody>
+              <tr><td colspan="4" style="padding:8px 12px 4px;font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--text-tertiary)">Success</td></tr>
+              <tr><td><div class="tok-cell"><span class="tok-dot" style="background:var(--color-success)"></span><span class="tok-name">--color-success</span></div></td><td class="tok-desc">Icons, checkmarks, success indicators.</td><td class="tok-val">--success-9</td><td class="tok-val">--success-6</td></tr>
+              <tr><td><div class="tok-cell"><span class="tok-dot" style="background:var(--color-success-subtle)"></span><span class="tok-name">--color-success-subtle</span></div></td><td class="tok-desc">Alert and badge background.</td><td class="tok-val">--success-2</td><td class="tok-val">--success-12</td></tr>
+              <tr><td><div class="tok-cell"><span class="tok-dot" style="background:var(--color-success-border)"></span><span class="tok-name">--color-success-border</span></div></td><td class="tok-desc">Alert and badge border.</td><td class="tok-val">--success-5</td><td class="tok-val">--success-11</td></tr>
+              <tr><td><div class="tok-cell"><span class="tok-dot" style="background:var(--color-success-text)"></span><span class="tok-name">--color-success-text</span></div></td><td class="tok-desc">Alert and badge text.</td><td class="tok-val">--success-11</td><td class="tok-val">--success-5</td></tr>
+              <tr><td colspan="4" style="padding:8px 12px 4px;font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--text-tertiary)">Warning</td></tr>
+              <tr><td><div class="tok-cell"><span class="tok-dot" style="background:var(--color-warning)"></span><span class="tok-name">--color-warning</span></div></td><td class="tok-desc">Icons and indicators.</td><td class="tok-val">--warning-9</td><td class="tok-val">--warning-6</td></tr>
+              <tr><td><div class="tok-cell"><span class="tok-dot" style="background:var(--color-warning-subtle)"></span><span class="tok-name">--color-warning-subtle</span></div></td><td class="tok-desc">Alert and badge background.</td><td class="tok-val">--warning-2</td><td class="tok-val">--warning-12</td></tr>
+              <tr><td><div class="tok-cell"><span class="tok-dot" style="background:var(--color-warning-border)"></span><span class="tok-name">--color-warning-border</span></div></td><td class="tok-desc">Alert and badge border.</td><td class="tok-val">--warning-5</td><td class="tok-val">--warning-11</td></tr>
+              <tr><td><div class="tok-cell"><span class="tok-dot" style="background:var(--color-warning-text)"></span><span class="tok-name">--color-warning-text</span></div></td><td class="tok-desc">Alert and badge text.</td><td class="tok-val">--warning-11</td><td class="tok-val">--warning-4</td></tr>
+              <tr><td colspan="4" style="padding:8px 12px 4px;font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--text-tertiary)">Danger</td></tr>
+              <tr><td><div class="tok-cell"><span class="tok-dot" style="background:var(--color-danger)"></span><span class="tok-name">--color-danger</span></div></td><td class="tok-desc">Icons, destructive actions.</td><td class="tok-val">--danger-9</td><td class="tok-val">--danger-6</td></tr>
+              <tr><td><div class="tok-cell"><span class="tok-dot" style="background:var(--color-danger-subtle)"></span><span class="tok-name">--color-danger-subtle</span></div></td><td class="tok-desc">Alert and badge background.</td><td class="tok-val">--danger-2</td><td class="tok-val">--danger-12</td></tr>
+              <tr><td><div class="tok-cell"><span class="tok-dot" style="background:var(--color-danger-border)"></span><span class="tok-name">--color-danger-border</span></div></td><td class="tok-desc">Alert and badge border.</td><td class="tok-val">--danger-5</td><td class="tok-val">--danger-11</td></tr>
+              <tr><td><div class="tok-cell"><span class="tok-dot" style="background:var(--color-danger-text)"></span><span class="tok-name">--color-danger-text</span></div></td><td class="tok-desc">Alert and badge text.</td><td class="tok-val">--danger-11</td><td class="tok-val">--danger-5</td></tr>
+              <tr><td colspan="4" style="padding:8px 12px 4px;font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--text-tertiary)">Info</td></tr>
+              <tr><td><div class="tok-cell"><span class="tok-dot" style="background:var(--color-info)"></span><span class="tok-name">--color-info</span></div></td><td class="tok-desc">Icons and informational indicators.</td><td class="tok-val">--info-9</td><td class="tok-val">--info-6</td></tr>
+              <tr><td><div class="tok-cell"><span class="tok-dot" style="background:var(--color-info-subtle)"></span><span class="tok-name">--color-info-subtle</span></div></td><td class="tok-desc">Alert and badge background.</td><td class="tok-val">--info-2</td><td class="tok-val">--info-12</td></tr>
+              <tr><td><div class="tok-cell"><span class="tok-dot" style="background:var(--color-info-border)"></span><span class="tok-name">--color-info-border</span></div></td><td class="tok-desc">Alert and badge border.</td><td class="tok-val">--info-5</td><td class="tok-val">--info-11</td></tr>
+              <tr><td><div class="tok-cell"><span class="tok-dot" style="background:var(--color-info-text)"></span><span class="tok-name">--color-info-text</span></div></td><td class="tok-desc">Alert and badge text.</td><td class="tok-val">--info-11</td><td class="tok-val">--info-5</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="page-section">
+          <div class="page-section-title">Component — Buttons</div>
+          <table class="token-ref-table">
+            <thead><tr><th style="width:220px">Token</th><th>Description</th><th style="width:110px">Light</th><th style="width:110px">Dark</th></tr></thead>
+            <tbody>
+              <tr><td><div class="tok-cell"><span class="tok-dot" style="background:var(--btn-primary-bg)"></span><span class="tok-name">--btn-primary-bg</span></div></td><td class="tok-desc">Primary button fill.</td><td class="tok-val">--primary-9</td><td class="tok-val">--primary-9</td></tr>
+              <tr><td><div class="tok-cell"><span class="tok-dot" style="background:var(--btn-primary-text)"></span><span class="tok-name">--btn-primary-text</span></div></td><td class="tok-desc">Primary button label.</td><td class="tok-val">--scale-1</td><td class="tok-val">--scale-1</td></tr>
+              <tr><td><div class="tok-cell"><span class="tok-dot" style="background:var(--btn-primary-hover)"></span><span class="tok-name">--btn-primary-hover</span></div></td><td class="tok-desc">Primary button hover fill.</td><td class="tok-val">--primary-10</td><td class="tok-val">--primary-10</td></tr>
+              <tr><td><div class="tok-cell"><span class="tok-dot" style="background:var(--btn-secondary-border)"></span><span class="tok-name">--btn-secondary-border</span></div></td><td class="tok-desc">Secondary (outlined) button border.</td><td class="tok-val">--primary-9</td><td class="tok-val">--primary-4</td></tr>
+              <tr><td><div class="tok-cell"><span class="tok-dot" style="background:var(--btn-secondary-text)"></span><span class="tok-name">--btn-secondary-text</span></div></td><td class="tok-desc">Secondary button label.</td><td class="tok-val">--primary-9</td><td class="tok-val">--primary-4</td></tr>
+              <tr><td><div class="tok-cell"><span class="tok-dot" style="background:var(--btn-danger-bg)"></span><span class="tok-name">--btn-danger-bg</span></div></td><td class="tok-desc">Danger button fill (soft style).</td><td class="tok-val">--danger-2</td><td class="tok-val">--danger-11</td></tr>
+              <tr><td><div class="tok-cell"><span class="tok-dot" style="background:var(--btn-danger-text)"></span><span class="tok-name">--btn-danger-text</span></div></td><td class="tok-desc">Danger button label.</td><td class="tok-val">--danger-9</td><td class="tok-val">--danger-5</td></tr>
+              <tr><td><div class="tok-cell"><span class="tok-dot" style="background:var(--btn-danger-border)"></span><span class="tok-name">--btn-danger-border</span></div></td><td class="tok-desc">Danger button border.</td><td class="tok-val">--danger-5</td><td class="tok-val">--danger-11</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="page-section">
+          <div class="page-section-title">Component — Inputs</div>
+          <table class="token-ref-table">
+            <thead><tr><th style="width:220px">Token</th><th>Description</th><th style="width:110px">Light</th><th style="width:110px">Dark</th></tr></thead>
+            <tbody>
+              <tr><td><div class="tok-cell"><span class="tok-dot" style="background:var(--input-focus-border)"></span><span class="tok-name">--input-focus-border</span></div></td><td class="tok-desc">Border color when input is focused.</td><td class="tok-val">--primary-8</td><td class="tok-val">--primary-5</td></tr>
+              <tr><td><div class="tok-cell"><span class="tok-dot" style="background:var(--input-focus-ring)"></span><span class="tok-name">--input-focus-ring</span></div></td><td class="tok-desc">Outer focus ring / box-shadow.</td><td class="tok-val">--primary-3</td><td class="tok-val">--primary-11</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="page-section">
+          <div class="page-section-title">Component — Badges</div>
+          <p style="font-size:13px;color:var(--text-secondary);line-height:1.6;margin-bottom:var(--space-5)">Each badge variant has a bg / text / border triplet that pairs with the same-named status tokens above.</p>
+          <table class="token-ref-table">
+            <thead><tr><th style="width:220px">Token</th><th>Description</th><th style="width:110px">Light</th><th style="width:110px">Dark</th></tr></thead>
+            <tbody>
+              <tr><td colspan="4" style="padding:8px 12px 4px;font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--text-tertiary)">Primary</td></tr>
+              <tr><td><div class="tok-cell"><span class="tok-dot" style="background:var(--badge-primary-bg)"></span><span class="tok-name">--badge-primary-bg</span></div></td><td class="tok-desc">Badge fill.</td><td class="tok-val">--primary-2</td><td class="tok-val">--primary-11</td></tr>
+              <tr><td><div class="tok-cell"><span class="tok-dot" style="background:var(--badge-primary-text)"></span><span class="tok-name">--badge-primary-text</span></div></td><td class="tok-desc">Badge label.</td><td class="tok-val">--primary-10</td><td class="tok-val">--primary-4</td></tr>
+              <tr><td><div class="tok-cell"><span class="tok-dot" style="background:var(--badge-primary-border)"></span><span class="tok-name">--badge-primary-border</span></div></td><td class="tok-desc">Badge border.</td><td class="tok-val">--primary-5</td><td class="tok-val">--primary-8</td></tr>
+              <tr><td colspan="4" style="padding:8px 12px 4px;font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--text-tertiary)">Neutral</td></tr>
+              <tr><td><div class="tok-cell"><span class="tok-dot" style="background:var(--badge-neutral-bg)"></span><span class="tok-name">--badge-neutral-bg</span></div></td><td class="tok-desc">Neutral badge fill.</td><td class="tok-val">--surface-overlay</td><td class="tok-val">—</td></tr>
+              <tr><td><div class="tok-cell"><span class="tok-dot" style="background:var(--badge-neutral-text)"></span><span class="tok-name">--badge-neutral-text</span></div></td><td class="tok-desc">Neutral badge label.</td><td class="tok-val">--text-secondary</td><td class="tok-val">—</td></tr>
+              <tr><td><div class="tok-cell"><span class="tok-dot" style="background:var(--badge-neutral-border)"></span><span class="tok-name">--badge-neutral-border</span></div></td><td class="tok-desc">Neutral badge border.</td><td class="tok-val">--surface-border</td><td class="tok-val">—</td></tr>
+              <tr><td colspan="4" style="padding:8px 12px 4px;font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--text-tertiary)">AI</td></tr>
+              <tr><td><div class="tok-cell"><span class="tok-dot" style="background:var(--badge-ai-bg)"></span><span class="tok-name">--badge-ai-bg</span></div></td><td class="tok-desc">AI badge fill.</td><td class="tok-val">--secondary-2</td><td class="tok-val">--secondary-11</td></tr>
+              <tr><td><div class="tok-cell"><span class="tok-dot" style="background:var(--badge-ai-text)"></span><span class="tok-name">--badge-ai-text</span></div></td><td class="tok-desc">AI badge label.</td><td class="tok-val">--secondary-11</td><td class="tok-val">--secondary-3</td></tr>
+              <tr><td><div class="tok-cell"><span class="tok-dot" style="background:var(--badge-ai-border)"></span><span class="tok-name">--badge-ai-border</span></div></td><td class="tok-desc">AI badge border.</td><td class="tok-val">--secondary-5</td><td class="tok-val">--secondary-8</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="page-section">
+          <div class="page-section-title">Component — Navigation</div>
+          <table class="token-ref-table">
+            <thead><tr><th style="width:220px">Token</th><th>Description</th><th style="width:110px">Light</th><th style="width:110px">Dark</th></tr></thead>
+            <tbody>
+              <tr><td><div class="tok-cell"><span class="tok-dot" style="background:var(--nav-active-bg)"></span><span class="tok-name">--nav-active-bg</span></div></td><td class="tok-desc">Background of the active nav item.</td><td class="tok-val">--primary-2</td><td class="tok-val">--primary-11</td></tr>
+              <tr><td><div class="tok-cell"><span class="tok-dot" style="background:var(--nav-active-text)"></span><span class="tok-name">--nav-active-text</span></div></td><td class="tok-desc">Label of the active nav item.</td><td class="tok-val">--primary-9</td><td class="tok-val">--primary-4</td></tr>
+              <tr><td><div class="tok-cell"><span class="tok-dot" style="background:var(--card-accent)"></span><span class="tok-name">--card-accent</span></div></td><td class="tok-desc">Accent stripe or highlight on cards.</td><td class="tok-val">--color-interactive</td><td class="tok-val">—</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+<script src="components/core/fresh-button.js"></script>
+<script src="components/core/fresh-input.js"></script>
+<script src="components/navigation/fresh-simple-tabs.js"></script>
+</body>
+</html>

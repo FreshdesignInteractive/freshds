@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Session Expired — Acme</title>
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="../tokens/primitives.css">
+<link rel="stylesheet" href="../tokens/theme.css">
+<link rel="stylesheet" href="../tokens/dataviz.css">
+<link rel="stylesheet" href="../styles/reset.css">
+<link rel="stylesheet" href="../styles/patterns/auth.css">
+<script>if(location.href.indexOf('?thumb')!==-1)document.write('<style>#demo-bar{display:none!important}</style>');</script>
+<script src="../js/pattern-topbar.js"></script>
+<script src="../js/freshds.js"></script>
+<script src="../js/pattern-bar.js"></script>
+
+<style>
+  .expired-user-row {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-4);
+    background: var(--surface-canvas);
+    border: 1px solid var(--surface-border);
+    border-radius: var(--radius-lg);
+    margin-bottom: var(--space-5);
+  }
+
+  .expired-user-info { flex: 1; min-width: 0; }
+
+  .expired-user-name {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-primary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .expired-user-email {
+    font-size: 12px;
+    color: var(--text-secondary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-top: 2px;
+  }
+
+  .expired-switch {
+    font-size: 12px;
+    color: var(--color-interactive-text);
+    text-decoration: none;
+    font-weight: 500;
+    flex-shrink: 0;
+  }
+  .expired-switch:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+<div id="app">
+
+  <div class="demo-bar" id="demo-bar">
+    <div class="demo-inner" id="demo-inner">
+      <button class="demo-mode-btn" id="mode-toggle-btn" onclick="toggleDemoMode()" aria-label="Toggle dark mode">
+        <i class="ti ti-moon"></i>
+      </button>
+    </div>
+    <div class="demo-sep"></div>
+    <button class="demo-collapse-btn" id="demo-collapse-btn" onclick="toggleDemoBar()" aria-label="Collapse toolbar">
+      <i class="ti ti-minus"></i>
+    </button>
+  </div>
+
+  <div class="auth-page">
+    <pattern-topbar>
+    </pattern-topbar>
+
+    <div class="auth-body">
+      <div class="auth-left" aria-hidden="true">
+        <div class="auth-left-inner">
+          <div class="auth-left-icon"><i class="ti ti-photo"></i></div>
+          <div class="auth-left-label">Customer image</div>
+        </div>
+      </div>
+
+      <div class="auth-right">
+        <div class="auth-form-wrap">
+          <div class="auth-form">
+
+            <div class="auth-success-icon" style="background:var(--color-warning-subtle);border-color:var(--color-warning-border);color:var(--color-warning)" aria-hidden="true">
+              <i class="ti ti-clock-pause" style="font-size:24px"></i>
+            </div>
+
+            <h1 class="auth-title">Session expired</h1>
+            <p class="auth-sub">You've been signed out due to inactivity. Enter your password to pick up right where you left off.</p>
+
+            <div class="expired-user-row">
+              <fresh-avatar name="Jamie Rivera" size="md"></fresh-avatar>
+              <div class="expired-user-info">
+                <div class="expired-user-name">Jamie Rivera</div>
+                <div class="expired-user-email">jamie@acmecorp.com</div>
+              </div>
+              <a class="expired-switch" href="auth-login.html">Switch</a>
+            </div>
+
+            <div class="field-stack">
+              <div class="field">
+                <label class="field-label" for="exp-password">Password</label>
+                <fresh-input id="exp-password" type="password" autocomplete="current-password"></fresh-input>
+              </div>
+            </div>
+
+            <div class="auth-options">
+              <span></span>
+              <a class="auth-link" href="auth-forgot-password.html">Forgot password?</a>
+            </div>
+
+            <fresh-button>Sign back in</fresh-button>
+
+          </div>
+        </div>
+
+        <div class="auth-foot">
+          Not you?&nbsp;<a class="auth-link" href="auth-login.html">Sign in as a different user</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+<script src="../components/core/fresh-input.js"></script>
+<script src="../components/core/fresh-button.js"></script>
+<script src="../components/data/fresh-avatar.js"></script>
+</body>
+</html>

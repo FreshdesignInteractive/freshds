@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Navbar — FreshDS</title>
+<base href="../../">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="tokens/primitives.css">
+<link rel="stylesheet" href="tokens/theme.css">
+<link rel="stylesheet" href="tokens/dataviz.css">
+<link rel="stylesheet" href="styles/reset.css">
+<link rel="stylesheet" href="styles/layout.css">
+<link rel="stylesheet" href="styles/components/core.css">
+<link rel="stylesheet" href="styles/docs.css">
+<script src="js/freshds.js"></script>
+<script src="js/freshds-site.js"></script>
+</head>
+<body>
+<div class="fds-app" id="app">
+  <ds-topbar active-section="ds"></ds-topbar>
+  <div class="fds-body">
+    <ds-shell active="navbar"></ds-shell>
+    <main class="fds-main">
+      <div class="fds-page active" id="page-navbar">
+        <div class="page-header">
+          <div class="page-eyebrow">Navigation</div>
+          <h1 class="page-title">Navbar</h1>
+          <p class="page-desc">Top-level application header. Three slots — brand, nav links, and actions — compose into any layout pattern. Sticks to the top of its container.</p>
+        </div>
+        <div class="page-section">
+          <div class="page-section-title">Default</div>
+          <div class="demo-surface" style="padding:0;overflow:hidden;display:block">
+            <fresh-navbar>
+              <nav slot="nav" style="display:flex;align-items:center;gap:2px">
+                <a href="#" style="font-family:var(--font-sans);font-size:13px;color:var(--text-secondary);text-decoration:none;padding:5px 10px;border-radius:var(--radius-md)">Dashboard</a>
+                <a href="#" style="font-family:var(--font-sans);font-size:13px;color:var(--text-primary);text-decoration:none;padding:5px 10px;border-radius:var(--radius-md);background:var(--surface-overlay)">Projects</a>
+                <a href="#" style="font-family:var(--font-sans);font-size:13px;color:var(--text-secondary);text-decoration:none;padding:5px 10px;border-radius:var(--radius-md)">Settings</a>
+              </nav>
+              <div slot="actions" style="display:flex;align-items:center;gap:8px">
+                <fresh-button variant="ghost" icon-only size="sm"><i class="ti ti-search"></i></fresh-button>
+                <fresh-button variant="ghost" icon-only size="sm"><i class="ti ti-bell"></i></fresh-button>
+                <fresh-avatar name="Jane Smith" size="sm" status="online"></fresh-avatar>
+              </div>
+            </fresh-navbar>
+          </div>
+        </div>
+        <div class="page-section">
+          <div class="page-section-title">With hamburger</div>
+          <div class="demo-surface" style="padding:0;overflow:hidden;display:block">
+            <fresh-navbar hamburger>
+              <nav slot="nav" style="display:flex;align-items:center;gap:2px">
+                <a href="#" style="font-family:var(--font-sans);font-size:13px;color:var(--text-secondary);text-decoration:none;padding:5px 10px;border-radius:var(--radius-md)">Dashboard</a>
+                <a href="#" style="font-family:var(--font-sans);font-size:13px;color:var(--text-primary);text-decoration:none;padding:5px 10px;border-radius:var(--radius-md);background:var(--surface-overlay)">Projects</a>
+                <a href="#" style="font-family:var(--font-sans);font-size:13px;color:var(--text-secondary);text-decoration:none;padding:5px 10px;border-radius:var(--radius-md)">Settings</a>
+              </nav>
+              <div slot="actions" style="display:flex;align-items:center;gap:8px">
+                <fresh-button variant="ghost" icon-only size="sm"><i class="ti ti-search"></i></fresh-button>
+                <fresh-avatar name="Jane Smith" size="sm" status="online"></fresh-avatar>
+              </div>
+            </fresh-navbar>
+          </div>
+        </div>
+        <div class="page-section">
+          <div class="page-section-title">With actions</div>
+          <div class="demo-surface" style="padding:0;overflow:hidden;display:block">
+            <fresh-navbar>
+              <div slot="actions" style="display:flex;align-items:center;gap:8px">
+                <fresh-button variant="ghost" size="sm">Docs</fresh-button>
+                <fresh-button variant="secondary" size="sm">Sign in</fresh-button>
+                <fresh-button variant="primary" size="sm">Get started</fresh-button>
+              </div>
+            </fresh-navbar>
+          </div>
+        </div>
+        <div class="page-section">
+          <div class="page-section-title">Slots</div>
+          <table class="usage-table">
+            <thead><tr><th>Slot</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td>brand</td><td>Logo, wordmark, or any brand element — left side, after hamburger if present</td></tr>
+              <tr><td>nav</td><td>Navigation links — left side, after brand</td></tr>
+              <tr><td>actions</td><td>Search, notifications, avatar — right side</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="page-section">
+          <div class="page-section-title">Attributes</div>
+          <table class="usage-table">
+            <thead><tr><th>Attribute</th><th>Values</th><th>Default</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td>border</td><td>boolean</td><td>true</td><td>Show bottom border</td></tr>
+              <tr><td>hamburger</td><td>boolean</td><td>—</td><td>Show hamburger menu button to the left of the brand slot. Fires <code>hamburger-click</code> event.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+<script src="components/core/fresh-button.js"></script>
+<script src="components/core/fresh-input.js"></script>
+<script src="components/data/fresh-avatar.js"></script>
+<script src="components/navigation/fresh-navbar.js"></script>
+<script src="components/navigation/fresh-simple-tabs.js"></script>
+</body>
+</html>

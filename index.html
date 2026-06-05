@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FreshDS — Design System</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<!-- Icons -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+
+<!-- JSZip — browser-side ZIP for export -->
+<script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+
+<!-- Tokens (listed individually — @import doesn't work on file://) -->
+<link rel="stylesheet" href="tokens/primitives.css">
+<link rel="stylesheet" href="tokens/theme.css">
+<link rel="stylesheet" href="tokens/dataviz.css">
+
+<!-- Styles -->
+<link rel="stylesheet" href="styles/reset.css">
+<link rel="stylesheet" href="styles/layout.css">
+<link rel="stylesheet" href="styles/components/core.css">
+<link rel="stylesheet" href="styles/docs.css">
+
+<!-- Theme engine: runs before body renders to set color scale vars, eliminating FOUC -->
+<script src="js/freshds.js"></script>
+<script src="js/freshds-site.js"></script>
+</head>
+<body>
+<div class="fds-app" id="app">
+
+  <ds-topbar active-section="ds"></ds-topbar>
+
+  <div class="fds-body">
+
+    <ds-shell active="home"></ds-shell>
+
+    <!-- MAIN CONTENT -->
+    <main class="fds-main">
+
+      <!-- HOME -->
+      <div class="fds-page active" id="page-home">
+        <div class="page-header">
+          <div class="page-eyebrow">FreshDS · v1.0.0</div>
+          <h1 class="page-title">Design system for modern enterprise</h1>
+          <p class="page-desc">A token-driven, framework-agnostic design system built for AI-native enterprise applications. Two colors. Infinite client themes.</p>
+        </div>
+        <div class="home-stat-row">
+          <div class="home-stat"><div class="home-stat-num">60</div><div class="home-stat-label">Components</div></div>
+          <div class="home-stat"><div class="home-stat-num">12</div><div class="home-stat-label">AI-specific</div></div>
+          <div class="home-stat"><div class="home-stat-num">3</div><div class="home-stat-label">Token tiers</div></div>
+          <div class="home-stat"><div class="home-stat-num">∞</div><div class="home-stat-label">Client themes</div></div>
+        </div>
+        <div class="home-grid" style="margin-top:32px">
+          <div class="home-card" onclick="window.location.href='configurator.html'"><div class="home-card-icon"><i class="ti ti-adjustments-horizontal"></i></div><div class="home-card-title">Configurator</div><div class="home-card-desc">Set brand colors and export tokens for any client.</div></div>
+          <div class="home-card" onclick="navigate('button')"><div class="home-card-icon"><i class="ti ti-cursor"></i></div><div class="home-card-title">Components</div><div class="home-card-desc">60 components across 8 categories, all token-driven.</div></div>
+          <div class="home-card" onclick="navigate('promptinput')"><div class="home-card-icon"><i class="ti ti-sparkles"></i></div><div class="home-card-title">AI components</div><div class="home-card-desc">12 AI-specific components for intelligent enterprise apps.</div></div>
+        </div>
+      </div>
+
+      <!-- CONFIGURATOR -->
+      <!-- Configurator lives at configurator.html -->
+
+      <div class="fds-page" id="page-configurator">
+        <div class="page-header">
+          <div class="page-eyebrow">System</div>
+          <h1 class="page-title">Configurator</h1>
+          <p class="page-desc">The Configurator is now a standalone page.</p>
+        </div>
+        <div style="padding:var(--space-6);background:var(--surface-subtle);border-radius:var(--radius-lg);border:1px solid var(--surface-border);display:flex;align-items:center;gap:var(--space-4)">
+          <i class="ti ti-adjustments-horizontal" style="font-size:24px;color:var(--color-interactive-text)"></i>
+          <div>
+            <div style="font-weight:600;margin-bottom:4px">Open Configurator</div>
+            <div style="font-size:13px;color:var(--text-secondary)">Theme configuration has moved to its own page.</div>
+          </div>
+          <button class="cfg-apply-site-btn" onclick="window.location.href='configurator.html'" style="margin-left:auto"><i class="ti ti-arrow-right"></i> Open Configurator</button>
+        </div>
+        <div class="config-grid" style="display:none">
+
+          <!-- Single wide card: Themes + Colors + Scale + Typography -->
+          <div class="config-card config-section-full">
+            <div class="cfg-hd">
+              <div class="config-card-title">System Themes</div>
+              <button class="cfg-new-btn" onclick="addCustomTheme()"><i class="ti ti-plus"></i> New theme</button>
+            </div>
+            <div class="theme-cards" id="theme-cards"></div>
+            <div class="cfg-divider"></div>
+
+            <!-- Colors row -->
+            <div class="cfg-colors-row">
+              <div class="cfg-color-block">
+                <div class="cfg-color-label">Primary</div>
+                <div class="cfg-color-wrap">
+                  <input type="color" class="color-picker" id="cfg-primary" value="#7c6af7">
+                  <span class="config-hex" id="cfg-hex-primary"></span>
+                </div>
+              </div>
+              <div class="cfg-color-block">
+                <div class="cfg-color-label">Secondary</div>
+                <div class="cfg-color-wrap">
+                  <input type="color" class="color-picker" id="cfg-secondary" value="#2dd4bf">
+                  <span class="config-hex" id="cfg-hex-secondary"></span>
+                </div>
+              </div>
+              <div class="cfg-color-block">
+                <div class="cfg-color-label">Dark</div>
+                <div class="cfg-color-wrap">
+                  <input type="color" class="color-picker" id="cfg-scale-dark" value="#1f2328">
+                  <span class="config-hex" id="cfg-hex-dark"></span>
+                </div>
+              </div>
+              <div class="cfg-color-block">
+                <div class="cfg-color-label">Light</div>
+                <div class="cfg-color-wrap">
+                  <input type="color" class="color-picker" id="cfg-scale-light" value="#ffffff">
+                  <span class="config-hex" id="cfg-hex-light"></span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Neutral scale strip -->
+            <div class="cfg-scale-strip">
+              <div class="cfg-scale-label">Neutral scale</div>
+              <div class="cfg-scale-chips">
+                <div class="cfg-scale-chip" id="scale-chip-1"><span class="cfg-scale-num">1</span></div>
+                <div class="cfg-scale-chip" id="scale-chip-2"><span class="cfg-scale-num">2</span></div>
+                <div class="cfg-scale-chip" id="scale-chip-3"><span class="cfg-scale-num">3</span></div>
+                <div class="cfg-scale-chip" id="scale-chip-4"><span class="cfg-scale-num">4</span></div>
+                <div class="cfg-scale-chip" id="scale-chip-5"><span class="cfg-scale-num">5</span></div>
+                <div class="cfg-scale-chip" id="scale-chip-6"><span class="cfg-scale-num">6</span></div>
+                <div class="cfg-scale-chip" id="scale-chip-7"><span class="cfg-scale-num">7</span></div>
+                <div class="cfg-scale-chip" id="scale-chip-8"><span class="cfg-scale-num">8</span></div>
+                <div class="cfg-scale-chip" id="scale-chip-9"><span class="cfg-scale-num">9</span></div>
+                <div class="cfg-scale-chip" id="scale-chip-10"><span class="cfg-scale-num">10</span></div>
+                <div class="cfg-scale-chip" id="scale-chip-11"><span class="cfg-scale-num">11</span></div>
+                <div class="cfg-scale-chip" id="scale-chip-12"><span class="cfg-scale-num">12</span></div>
+              </div>
+            </div>
+            <div class="cfg-divider"></div>
+
+            <!-- Typography row -->
+            <div class="cfg-type-row">
+              <div class="cfg-type-field">
+                <div class="cfg-color-label">UI font</div>
+                <select class="cfg-select" id="font-sans-select" onchange="applyFont('sans', this.value)">
+                  <option value="Inter">Inter</option>
+                  <option value="Geist">Geist</option>
+                  <option value="Outfit">Outfit</option>
+                  <option value="Sora">Sora</option>
+                  <option value="Figtree">Figtree</option>
+                  <option value="DM Sans">DM Sans</option>
+                  <option value="Plus Jakarta Sans">Plus Jakarta Sans</option>
+                  <option value="Be Vietnam Pro">Be Vietnam Pro</option>
+                  <option value="Nunito">Nunito</option>
+                  <option value="Manrope">Manrope</option>
+                </select>
+              </div>
+              <div class="cfg-type-field">
+                <div class="cfg-color-label">Mono font</div>
+                <select class="cfg-select" id="font-mono-select" onchange="applyFont('mono', this.value)">
+                  <option value="JetBrains Mono">JetBrains Mono</option>
+                  <option value="Fira Code">Fira Code</option>
+                  <option value="IBM Plex Mono">IBM Plex Mono</option>
+                  <option value="Roboto Mono">Roboto Mono</option>
+                  <option value="Inconsolata">Inconsolata</option>
+                </select>
+              </div>
+            </div>
+            <div class="cfg-divider"></div>
+            <div class="cfg-apply-row">
+              <span class="cfg-preview-pill" id="cfg-preview-label">Showing applied theme</span>
+              <button class="cfg-apply-site-btn" id="cfg-apply-btn" onclick="applyStagedToSite()" disabled>
+                <i class="ti ti-check"></i> Apply to site
+              </button>
+            </div>
+          </div>
+
+          <!-- Tabbed card: Live preview + Token output -->
+          <div class="config-card config-section-full">
+            <div class="cfg-tabs-header">
+              <button class="cfg-tab active" data-tab="preview" onclick="switchCfgTab('preview')">Live preview</button>
+              <button class="cfg-tab" data-tab="tokens" onclick="switchCfgTab('tokens')">Token output</button>
+            </div>
+
+            <!-- Preview tab -->
+            <div class="cfg-tab-panel active" data-tab="preview">
+              <div class="preview-live" id="preview-live">
+
+                <!-- Buttons + Badges -->
+                <div class="preview-section">
+                  <div class="preview-row">
+                    <fresh-button variant="primary"><i class="ti ti-check"></i> Save</fresh-button>
+                    <fresh-button variant="secondary">Cancel</fresh-button>
+                    <fresh-button variant="ghost">Learn more</fresh-button>
+                    <fresh-button variant="danger"><i class="ti ti-trash"></i> Delete</fresh-button>
+                    <fresh-button variant="primary" disabled>Disabled</fresh-button>
+                    <fresh-button variant="primary" loading>Loading</fresh-button>
+                  </div>
+                  <div class="preview-row">
+                    <fresh-badge variant="primary">Primary</fresh-badge>
+                    <fresh-badge variant="success" dot>Live</fresh-badge>
+                    <fresh-badge variant="warning" dot>Degraded</fresh-badge>
+                    <fresh-badge variant="danger" dot>Failed</fresh-badge>
+                    <fresh-badge variant="neutral">Draft</fresh-badge>
+                    <fresh-badge variant="ai">AI</fresh-badge>
+                  </div>
+                </div>
+
+                <!-- Inputs -->
+                <div class="preview-section">
+                  <div class="preview-row" style="align-items:flex-start">
+                    <div style="flex:1;min-width:180px;max-width:280px">
+                      <fresh-input icon="ti-search" placeholder="Search components…"></fresh-input>
+                    </div>
+                    <div style="flex:1;min-width:180px;max-width:280px">
+                      <fresh-input placeholder="Enter email" type="email" error="Invalid email"></fresh-input>
+                    </div>
+                    <div style="flex:1;min-width:160px;max-width:220px">
+                      <fresh-select placeholder="Select role">
+                        <option value="admin">Admin</option>
+                        <option value="editor">Editor</option>
+                        <option value="viewer">Viewer</option>
+                      </fresh-select>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Toggles + Alert -->
+                <div class="preview-section">
+                  <div class="preview-row">
+                    <fresh-checkbox checked>Remember me</fresh-checkbox>
+                    <fresh-checkbox>Subscribe</fresh-checkbox>
+                    <fresh-toggle checked>Notifications</fresh-toggle>
+                    <fresh-toggle>Dark mode</fresh-toggle>
+                  </div>
+                  <fresh-alert variant="info" title="Theme staged">Click Apply to push this theme to the whole site.</fresh-alert>
+                </div>
+
+                <!-- Stat cards + Progress -->
+                <div class="preview-section">
+                  <div class="preview-row" style="align-items:stretch;flex-wrap:wrap">
+                    <fresh-stat-card value="$24.5k" label="Revenue" trend="12.4" trend-label="vs last month" icon="ti-currency-dollar" style="flex:1;min-width:140px"></fresh-stat-card>
+                    <fresh-stat-card value="98.7%" label="Uptime" trend="-0.2" trend-label="this week" icon="ti-server" style="flex:1;min-width:140px"></fresh-stat-card>
+                    <fresh-stat-card value="1,284" label="Users" trend="5.1" trend-label="vs yesterday" icon="ti-users" style="flex:1;min-width:140px"></fresh-stat-card>
+                  </div>
+                  <div class="preview-row" style="gap:var(--space-5)">
+                    <div style="flex:1">
+                      <div style="font-size:11px;color:var(--text-tertiary);margin-bottom:6px">Context window — 68%</div>
+                      <fresh-progress value="68" label="Context window"></fresh-progress>
+                    </div>
+                    <div style="flex:1">
+                      <div style="font-size:11px;color:var(--text-tertiary);margin-bottom:6px">Upload — 91%</div>
+                      <fresh-progress value="91" variant="danger" label="Upload"></fresh-progress>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Avatars + AI components -->
+                <div class="preview-section">
+                  <div class="preview-row">
+                    <fresh-avatar name="Jane Smith" size="md" status="online"></fresh-avatar>
+                    <fresh-avatar name="Marcus Lee" size="md" status="away"></fresh-avatar>
+                    <fresh-avatar name="Claude" shape="square" size="md"></fresh-avatar>
+                    <fresh-thinking label="Analyzing data"></fresh-thinking>
+                    <fresh-confidence-badge value="87" show-bar></fresh-confidence-badge>
+                    <fresh-token-meter used="68000" total="100000"></fresh-token-meter>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+            <!-- Tokens tab -->
+            <div class="cfg-tab-panel" data-tab="tokens">
+              <div class="token-output" id="token-output"></div>
+              <div class="config-export-row">
+                <button class="config-apply-btn" onclick="exportDeveloperBundle()"><i class="ti ti-package"></i> Export bundle</button>
+                <button class="config-apply-btn" onclick="exportDSSite()" style="background:var(--surface-overlay);color:var(--text-primary);border:1px solid var(--surface-border)"><i class="ti ti-world"></i> Export DS site</button>
+              </div>
+              <div style="font-size:11px;color:var(--text-tertiary);margin-top:var(--space-3);line-height:1.6">
+                <strong style="color:var(--text-secondary)">Bundle</strong> — tokens + all components. Drop into any project.<br>
+                <strong style="color:var(--text-secondary)">DS site</strong> — full documentation site. Host internally for your team.
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+
+</div>
+
+<script src="components/core/fresh-button.js"></script>
+<script src="components/core/fresh-dropdown-button.js"></script>
+<script src="components/core/fresh-input.js"></script>
+<script src="components/core/fresh-select.js"></script>
+<script src="components/core/fresh-checkbox.js"></script>
+<script src="components/core/fresh-radio.js"></script>
+<script src="components/core/fresh-toggle.js"></script>
+<script src="components/core/fresh-slider.js"></script>
+<script src="components/core/fresh-form-field.js"></script>
+<script src="components/feedback/fresh-spinner.js"></script>
+<script src="components/feedback/fresh-badge.js"></script>
+<script src="components/feedback/fresh-progress.js"></script>
+<script src="components/feedback/fresh-skeleton.js"></script>
+<script src="components/feedback/fresh-alert.js"></script>
+<script src="components/feedback/fresh-toast.js"></script>
+<script src="components/feedback/fresh-tooltip.js"></script>
+<script src="components/feedback/fresh-empty-state.js"></script>
+<script src="components/data/fresh-avatar.js"></script>
+<script src="components/navigation/fresh-navbar.js"></script>
+<script src="components/navigation/fresh-sidebar.js"></script>
+<script src="components/navigation/fresh-tabs.js"></script>
+<script src="components/navigation/fresh-simple-tabs.js"></script>
+<script src="components/navigation/fresh-breadcrumb.js"></script>
+<script src="components/navigation/fresh-pagination.js"></script>
+<script src="components/navigation/fresh-stepper.js"></script>
+<script src="components/containers/fresh-card.js"></script>
+<script src="components/containers/fresh-media-card.js"></script>
+<script src="components/containers/fresh-accordion.js"></script>
+<script src="components/containers/fresh-popover.js"></script>
+<script src="components/containers/fresh-modal.js"></script>
+<script src="components/containers/fresh-drawer.js"></script>
+<script src="components/containers/fresh-table.js"></script>
+<script src="components/data/fresh-stat-card.js"></script>
+<script src="components/data/fresh-data-table.js"></script>
+<script src="components/data/fresh-chart.js"></script>
+<script src="components/data/fresh-timeline.js"></script>
+<script src="components/ai/fresh-prompt-input.js"></script>
+<script src="components/ai/fresh-ai-response.js"></script>
+<script src="components/ai/fresh-thinking.js"></script>
+<script src="components/ai/fresh-confidence-badge.js"></script>
+<script src="components/ai/fresh-citation-chip.js"></script>
+<script src="components/ai/fresh-suggestion-card.js"></script>
+<script src="components/ai/fresh-model-selector.js"></script>
+<script src="components/ai/fresh-token-meter.js"></script>
+<script src="components/ai/fresh-feedback.js"></script>
+<script src="components/ai/fresh-diff-viewer.js"></script>
+<script src="components/ai/fresh-prompt-history.js"></script>
+<script src="components/ai/fresh-ai-mode-toggle.js"></script>
+</body>
+</html>

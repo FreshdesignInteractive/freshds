@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Error / 404 Page — Acme</title>
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="../tokens/primitives.css">
+<link rel="stylesheet" href="../tokens/theme.css">
+<link rel="stylesheet" href="../tokens/dataviz.css">
+<link rel="stylesheet" href="../styles/reset.css">
+<link rel="stylesheet" href="../styles/patterns/dashboard.css">
+<link rel="stylesheet" href="../styles/patterns/feedback.css">
+<script>if(location.href.indexOf('?thumb')!==-1)document.write('<style>#demo-bar{display:none!important}</style>');</script>
+<script src="../js/pattern-topbar-v2.js"></script>
+<script src="../js/freshds.js"></script>
+<script src="../js/pattern-bar.js"></script>
+<script>
+  var _variants = ['404','500','403','offline'];
+  var _current = 0;
+  function showVariant(n) {
+    _variants.forEach(function(v,i) {
+      document.getElementById('v-'+v).style.display = 'none';
+      document.getElementById('vbtn-'+v).style.background = 'transparent';
+      document.getElementById('vbtn-'+v).style.color = 'var(--text-secondary)';
+    });
+    document.getElementById('v-'+_variants[n]).style.display = 'flex';
+    document.getElementById('vbtn-'+_variants[n]).style.background = 'var(--color-interactive-subtle)';
+    document.getElementById('vbtn-'+_variants[n]).style.color = 'var(--color-interactive-text)';
+    _current = n;
+  }
+</script>
+</head>
+<body>
+<div id="app">
+  <div class="demo-bar" id="demo-bar">
+    <div class="demo-inner" id="demo-inner">
+      <button id="vbtn-404" onclick="showVariant(0)" style="width:auto;padding:0 var(--space-3);font-size:12px;font-weight:600;border-radius:var(--radius-full);border:none;cursor:pointer;height:28px;background:var(--color-interactive-subtle);color:var(--color-interactive-text);">404</button>
+      <button id="vbtn-500" onclick="showVariant(1)" style="width:auto;padding:0 var(--space-3);font-size:12px;font-weight:600;border-radius:var(--radius-full);border:none;cursor:pointer;height:28px;color:var(--text-secondary);">500</button>
+      <button id="vbtn-403" onclick="showVariant(2)" style="width:auto;padding:0 var(--space-3);font-size:12px;font-weight:600;border-radius:var(--radius-full);border:none;cursor:pointer;height:28px;color:var(--text-secondary);">403</button>
+      <button id="vbtn-offline" onclick="showVariant(3)" style="width:auto;padding:0 var(--space-3);font-size:12px;font-weight:600;border-radius:var(--radius-full);border:none;cursor:pointer;height:28px;color:var(--text-secondary);">Offline</button>
+      <button class="demo-mode-btn" id="mode-toggle-btn" onclick="toggleDemoMode()"><i class="ti ti-moon"></i></button>
+    </div>
+    <div class="demo-sep"></div>
+    <button class="demo-collapse-btn" id="demo-collapse-btn" onclick="toggleDemoBar()"><i class="ti ti-minus"></i></button>
+  </div>
+
+  <div class="dash-shell">
+    <pattern-topbar logged-in></pattern-topbar>
+
+    <!-- 404 -->
+    <div id="v-404" style="flex:1;display:flex;align-items:center;justify-content:center;padding:var(--space-10);">
+      <div style="text-align:center;max-width:480px;">
+        <div style="font-size:96px;font-weight:900;color:var(--surface-border-strong);letter-spacing:-0.05em;line-height:1;margin-bottom:var(--space-4);">404</div>
+        <div style="font-size:24px;font-weight:800;color:var(--text-primary);margin-bottom:var(--space-3);">Page not found</div>
+        <div style="font-size:14px;color:var(--text-secondary);line-height:1.6;margin-bottom:var(--space-6);">The page you're looking for doesn't exist or has been moved. Double-check the URL, or head back to the dashboard.</div>
+        <div style="display:flex;gap:var(--space-2);justify-content:center;margin-bottom:var(--space-5);">
+          <fresh-button variant="primary"><i class="ti ti-home"></i> Go to dashboard</fresh-button>
+          <fresh-button variant="secondary"><i class="ti ti-arrow-left"></i> Go back</fresh-button>
+        </div>
+        <div style="background:var(--surface-subtle);border:1px solid var(--surface-border);border-radius:var(--radius-md);padding:var(--space-3);text-align:left;">
+          <div style="font-size:12px;color:var(--text-tertiary);margin-bottom:var(--space-2);">You might be looking for:</div>
+          <div style="display:flex;flex-direction:column;gap:var(--space-1);">
+            <a style="font-size:13px;color:var(--color-interactive-text);text-decoration:none;display:flex;align-items:center;gap:var(--space-1);"><i class="ti ti-users"></i> Contacts list</a>
+            <a style="font-size:13px;color:var(--color-interactive-text);text-decoration:none;display:flex;align-items:center;gap:var(--space-1);"><i class="ti ti-chart-bar"></i> Dashboards</a>
+            <a style="font-size:13px;color:var(--color-interactive-text);text-decoration:none;display:flex;align-items:center;gap:var(--space-1);"><i class="ti ti-settings"></i> Settings</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 500 -->
+    <div id="v-500" style="flex:1;display:none;align-items:center;justify-content:center;padding:var(--space-10);">
+      <div style="text-align:center;max-width:480px;">
+        <div style="font-size:96px;font-weight:900;color:var(--color-danger);opacity:0.25;letter-spacing:-0.05em;line-height:1;margin-bottom:var(--space-4);">500</div>
+        <div style="font-size:24px;font-weight:800;color:var(--text-primary);margin-bottom:var(--space-3);">Something went wrong</div>
+        <div style="font-size:14px;color:var(--text-secondary);line-height:1.6;margin-bottom:var(--space-4);">We're experiencing an unexpected server error. Our team has been notified and is working on a fix.</div>
+        <fresh-alert variant="warning" style="margin-bottom:var(--space-5);text-align:left;">Incident reported · <a style="color:var(--color-interactive-text);">status.acme.io</a> for live updates</fresh-alert>
+        <div style="display:flex;gap:var(--space-2);justify-content:center;">
+          <fresh-button variant="primary"><i class="ti ti-refresh"></i> Retry</fresh-button>
+          <fresh-button variant="secondary"><i class="ti ti-message"></i> Contact support</fresh-button>
+        </div>
+        <div style="font-size:12px;color:var(--text-tertiary);margin-top:var(--space-4);">Error ID: err_9mKxNpR3sTvY · Jun 4, 2026 14:22 UTC</div>
+      </div>
+    </div>
+
+    <!-- 403 -->
+    <div id="v-403" style="flex:1;display:none;align-items:center;justify-content:center;padding:var(--space-10);">
+      <div style="text-align:center;max-width:480px;">
+        <div style="width:80px;height:80px;border-radius:var(--radius-full);background:var(--color-warning-subtle);color:var(--color-warning-text);display:flex;align-items:center;justify-content:center;font-size:36px;margin:0 auto var(--space-5);">
+          <i class="ti ti-lock"></i>
+        </div>
+        <div style="font-size:24px;font-weight:800;color:var(--text-primary);margin-bottom:var(--space-3);">Access denied</div>
+        <div style="font-size:14px;color:var(--text-secondary);line-height:1.6;margin-bottom:var(--space-6);">You don't have permission to view this page. If you think this is a mistake, contact your workspace admin or request access.</div>
+        <div style="display:flex;gap:var(--space-2);justify-content:center;">
+          <fresh-button variant="primary"><i class="ti ti-mail"></i> Request access</fresh-button>
+          <fresh-button variant="ghost"><i class="ti ti-home"></i> Go home</fresh-button>
+        </div>
+        <div style="font-size:12px;color:var(--text-tertiary);margin-top:var(--space-5);">Logged in as priya@acme.io · <a style="color:var(--color-interactive-text);">Wrong account?</a></div>
+      </div>
+    </div>
+
+    <!-- Offline -->
+    <div id="v-offline" style="flex:1;display:none;align-items:center;justify-content:center;padding:var(--space-10);">
+      <div style="text-align:center;max-width:480px;">
+        <div style="width:80px;height:80px;border-radius:var(--radius-full);background:var(--surface-overlay);color:var(--text-tertiary);display:flex;align-items:center;justify-content:center;font-size:36px;margin:0 auto var(--space-5);">
+          <i class="ti ti-wifi-off"></i>
+        </div>
+        <div style="font-size:24px;font-weight:800;color:var(--text-primary);margin-bottom:var(--space-3);">No internet connection</div>
+        <div style="font-size:14px;color:var(--text-secondary);line-height:1.6;margin-bottom:var(--space-6);">Check your connection and try again. Some features may be available in offline mode.</div>
+        <div style="background:var(--surface-subtle);border:1px solid var(--surface-border);border-radius:var(--radius-lg);padding:var(--space-4);margin-bottom:var(--space-5);text-align:left;">
+          <div style="font-size:12px;font-weight:600;color:var(--text-secondary);margin-bottom:var(--space-2);">Available offline:</div>
+          <div style="display:flex;flex-direction:column;gap:var(--space-1);">
+            <div style="display:flex;align-items:center;gap:var(--space-2);font-size:13px;color:var(--text-secondary);"><i class="ti ti-check" style="color:var(--color-success-text);"></i> Recently viewed contacts</div>
+            <div style="display:flex;align-items:center;gap:var(--space-2);font-size:13px;color:var(--text-secondary);"><i class="ti ti-check" style="color:var(--color-success-text);"></i> Cached dashboards (read-only)</div>
+            <div style="display:flex;align-items:center;gap:var(--space-2);font-size:13px;color:var(--text-tertiary);"><i class="ti ti-x"></i> AI features require connection</div>
+          </div>
+        </div>
+        <fresh-button variant="primary"><i class="ti ti-refresh"></i> Try again</fresh-button>
+      </div>
+    </div>
+
+  </div>
+</div>
+<script>
+  document.addEventListener('nav-toggle', function() {
+    document.getElementById('app-nav').classList.toggle('open');
+  });
+</script>
+<script src="../components/core/fresh-button.js"></script>
+<script src="../components/feedback/fresh-alert.js"></script>
+</body>
+</html>

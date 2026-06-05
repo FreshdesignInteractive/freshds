@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Token meter — FreshDS</title>
+<base href="../../">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="tokens/primitives.css">
+<link rel="stylesheet" href="tokens/theme.css">
+<link rel="stylesheet" href="tokens/dataviz.css">
+<link rel="stylesheet" href="styles/reset.css">
+<link rel="stylesheet" href="styles/layout.css">
+<link rel="stylesheet" href="styles/components/core.css">
+<link rel="stylesheet" href="styles/docs.css">
+<script src="js/freshds.js"></script>
+<script src="js/freshds-site.js"></script>
+</head>
+<body>
+<div class="fds-app" id="app">
+  <ds-topbar active-section="ds"></ds-topbar>
+  <div class="fds-body">
+    <ds-shell active="tokenmeter"></ds-shell>
+    <main class="fds-main">
+      <div class="fds-page active" id="page-tokenmeter">
+        <div class="page-header">
+          <div class="page-eyebrow">AI Components</div>
+          <h1 class="page-title">Token meter</h1>
+          <p class="page-desc">Visual indicator of context window or API token consumption. Color shifts to amber at the warn threshold (default 80%) and red at 95%.</p>
+        </div>
+        <div class="page-section">
+          <div class="page-section-title">Usage levels</div>
+          <div class="demo-surface col" style="gap:var(--space-5);max-width:400px">
+            <div>
+              <div style="font-size:11px;color:var(--text-tertiary);margin-bottom:8px;font-family:var(--font-sans)">Low usage</div>
+              <fresh-token-meter used="12000" total="100000"></fresh-token-meter>
+            </div>
+            <div>
+              <div style="font-size:11px;color:var(--text-tertiary);margin-bottom:8px;font-family:var(--font-sans)">Near warning threshold</div>
+              <fresh-token-meter used="75000" total="100000"></fresh-token-meter>
+            </div>
+            <div>
+              <div style="font-size:11px;color:var(--text-tertiary);margin-bottom:8px;font-family:var(--font-sans)">Warning (≥ 80%)</div>
+              <fresh-token-meter used="84000" total="100000"></fresh-token-meter>
+            </div>
+            <div>
+              <div style="font-size:11px;color:var(--text-tertiary);margin-bottom:8px;font-family:var(--font-sans)">Critical (≥ 95%)</div>
+              <fresh-token-meter used="97000" total="100000"></fresh-token-meter>
+            </div>
+          </div>
+        </div>
+        <div class="page-section">
+          <div class="page-section-title">Compact mode</div>
+          <div class="demo-surface" style="align-items:center;gap:var(--space-4);flex-wrap:wrap">
+            <fresh-token-meter used="24500"  total="200000" compact></fresh-token-meter>
+            <fresh-token-meter used="160000" total="200000" compact></fresh-token-meter>
+            <fresh-token-meter used="195000" total="200000" compact></fresh-token-meter>
+          </div>
+        </div>
+        <div class="page-section">
+          <div class="page-section-title">Attributes</div>
+          <table class="usage-table">
+            <thead><tr><th>Attribute</th><th>Values</th><th>Default</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td>used</td><td>number</td><td><code>0</code></td><td>Tokens consumed so far</td></tr>
+              <tr><td>total</td><td>number</td><td><code>4096</code></td><td>Total context window size</td></tr>
+              <tr><td>warn-at</td><td>0–100</td><td><code>80</code></td><td>Percentage at which color shifts to amber</td></tr>
+              <tr><td>compact</td><td>boolean</td><td>—</td><td>Minimal bar + percentage display (no label row)</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+<script src="components/core/fresh-button.js"></script>
+<script src="components/core/fresh-input.js"></script>
+<script src="components/ai/fresh-token-meter.js"></script>
+<script src="components/navigation/fresh-simple-tabs.js"></script>
+</body>
+</html>

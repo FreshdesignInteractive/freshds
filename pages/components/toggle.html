@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Toggle — FreshDS</title>
+<base href="../../">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="tokens/primitives.css">
+<link rel="stylesheet" href="tokens/theme.css">
+<link rel="stylesheet" href="tokens/dataviz.css">
+<link rel="stylesheet" href="styles/reset.css">
+<link rel="stylesheet" href="styles/layout.css">
+<link rel="stylesheet" href="styles/components/core.css">
+<link rel="stylesheet" href="styles/docs.css">
+<script src="js/freshds.js"></script>
+<script src="js/freshds-site.js"></script>
+</head>
+<body>
+<div class="fds-app" id="app">
+  <ds-topbar active-section="ds"></ds-topbar>
+  <div class="fds-body">
+    <ds-shell active="toggle"></ds-shell>
+    <main class="fds-main">
+      <div class="fds-page active" id="page-toggle">
+        <div class="page-header">
+          <div class="page-eyebrow">Core UI</div>
+          <h1 class="page-title">Toggle</h1>
+          <p class="page-desc">Binary on/off switch. Use for settings that take immediate effect — no Save button needed. The thumb slides smoothly using the brand color to signal active state.</p>
+        </div>
+        <div class="page-section">
+          <div class="page-section-title">Sizes</div>
+          <div class="demo-surface col" style="gap:var(--space-4)">
+            <fresh-toggle size="sm" checked label="Small"></fresh-toggle>
+            <fresh-toggle checked label="Default"></fresh-toggle>
+            <fresh-toggle size="lg" checked label="Large"></fresh-toggle>
+          </div>
+        </div>
+        <div class="page-section">
+          <div class="page-section-title">States</div>
+          <div class="demo-surface col" style="gap:var(--space-4)">
+            <fresh-toggle label="Off"></fresh-toggle>
+            <fresh-toggle checked label="On"></fresh-toggle>
+            <fresh-toggle disabled label="Disabled off"></fresh-toggle>
+            <fresh-toggle checked disabled label="Disabled on"></fresh-toggle>
+          </div>
+        </div>
+        <div class="page-section">
+          <div class="page-section-title">In a settings group</div>
+          <div class="demo-surface col" style="gap:var(--space-5)">
+            <div style="display:flex;justify-content:space-between;align-items:center;width:100%;max-width:460px">
+              <div><div style="font-size:13px;color:var(--text-primary);font-family:var(--font-sans)">AI suggestions</div><div style="font-size:12px;color:var(--text-tertiary);font-family:var(--font-sans);margin-top:2px">Show inline completions while typing</div></div>
+              <fresh-toggle checked></fresh-toggle>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;width:100%;max-width:460px">
+              <div><div style="font-size:13px;color:var(--text-primary);font-family:var(--font-sans)">Auto-save</div><div style="font-size:12px;color:var(--text-tertiary);font-family:var(--font-sans);margin-top:2px">Save changes automatically every 30 seconds</div></div>
+              <fresh-toggle checked></fresh-toggle>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;width:100%;max-width:460px">
+              <div><div style="font-size:13px;color:var(--text-primary);font-family:var(--font-sans)">Usage analytics</div><div style="font-size:12px;color:var(--text-tertiary);font-family:var(--font-sans);margin-top:2px">Help improve the product</div></div>
+              <fresh-toggle></fresh-toggle>
+            </div>
+          </div>
+        </div>
+        <div class="page-section">
+          <div class="page-section-title">Attributes</div>
+          <table class="usage-table">
+            <thead><tr><th>Attribute</th><th>Values</th><th>Default</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td>checked</td><td>boolean</td><td>—</td><td>On state</td></tr>
+              <tr><td>size</td><td><code>sm</code> <code>md</code> <code>lg</code></td><td><code>md</code></td><td>Track dimensions</td></tr>
+              <tr><td>label</td><td>string</td><td>—</td><td>Text label to the right</td></tr>
+              <tr><td>disabled</td><td>boolean</td><td>—</td><td>Prevents interaction</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+<script src="components/core/fresh-button.js"></script>
+<script src="components/core/fresh-input.js"></script>
+<script src="components/core/fresh-toggle.js"></script>
+<script src="components/navigation/fresh-simple-tabs.js"></script>
+</body>
+</html>

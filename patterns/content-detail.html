@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Detail / Record — Acme</title>
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="../tokens/primitives.css">
+<link rel="stylesheet" href="../tokens/theme.css">
+<link rel="stylesheet" href="../tokens/dataviz.css">
+<link rel="stylesheet" href="../styles/reset.css">
+<link rel="stylesheet" href="../styles/patterns/dashboard.css">
+<link rel="stylesheet" href="../styles/patterns/content.css">
+<script>if(location.href.indexOf('?thumb')!==-1)document.write('<style>#demo-bar{display:none!important}</style>');</script>
+<script src="../js/pattern-topbar-v2.js"></script>
+<script src="../js/freshds.js"></script>
+<script src="../js/pattern-bar.js"></script>
+</head>
+<body>
+<div id="app">
+
+  <div class="demo-bar" id="demo-bar">
+    <div class="demo-inner" id="demo-inner">
+      <button class="demo-mode-btn" id="mode-toggle-btn" onclick="toggleDemoMode()" aria-label="Toggle dark mode">
+        <i class="ti ti-moon"></i>
+      </button>
+    </div>
+    <div class="demo-sep"></div>
+    <button class="demo-collapse-btn" id="demo-collapse-btn" onclick="toggleDemoBar()" aria-label="Collapse toolbar">
+      <i class="ti ti-minus"></i>
+    </button>
+  </div>
+
+  <div class="dash-shell">
+
+    <pattern-topbar logged-in></pattern-topbar>
+
+    <div class="dash-body">
+
+      <nav class="app-nav open" id="app-nav" aria-label="Main navigation">
+        <div class="app-nav-inner">
+          <button class="app-nav-item active"><i class="ti ti-home"></i> Home</button>
+          <button class="app-nav-item"><i class="ti ti-chart-bar"></i> Analytics</button>
+          <button class="app-nav-item"><i class="ti ti-activity"></i> Activity</button>
+          <button class="app-nav-item"><i class="ti ti-folders"></i> Projects</button>
+          <button class="app-nav-item"><i class="ti ti-check"></i> My tasks</button>
+          <button class="app-nav-item"><i class="ti ti-calendar-event"></i> Calendar</button>
+          <button class="app-nav-item"><i class="ti ti-users"></i> Members</button>
+          <button class="app-nav-item"><i class="ti ti-settings"></i> Settings</button>
+        </div>
+      </nav>
+
+      <main class="dash-main">
+
+        <!-- Record hero -->
+        <div class="dash-page-header" style="align-items:flex-start;">
+          <div style="display:flex;align-items:center;gap:var(--space-4);">
+            <fresh-avatar name="Priya Sharma" size="lg"></fresh-avatar>
+            <div>
+              <div class="dash-page-title">Priya Sharma</div>
+              <div class="dash-page-subtitle">Head of Product · Techvault Inc</div>
+              <div style="display:flex;align-items:center;gap:var(--space-2);margin-top:var(--space-2);">
+                <fresh-badge variant="success">Active</fresh-badge>
+                <fresh-badge variant="neutral">Enterprise</fresh-badge>
+                <fresh-badge variant="info">Tier 1</fresh-badge>
+              </div>
+            </div>
+          </div>
+          <div class="dash-page-actions">
+            <fresh-button variant="secondary" size="sm"><i class="ti ti-mail"></i> Email</fresh-button>
+            <fresh-button variant="secondary" size="sm"><i class="ti ti-phone"></i> Call</fresh-button>
+            <fresh-button variant="primary" size="sm"><i class="ti ti-plus"></i> Log activity</fresh-button>
+          </div>
+        </div>
+
+        <div class="cnt-detail-body">
+
+          <div class="cnt-detail-main">
+
+            <!-- Contact info -->
+            <div class="cnt-field-group">
+              <div class="cnt-field-group-title">Contact information</div>
+              <div class="cnt-field-row">
+                <div class="cnt-field">
+                  <div class="cnt-field-label">Email</div>
+                  <div class="cnt-field-value" style="color:var(--color-interactive);">priya@techvault.io</div>
+                </div>
+                <div class="cnt-field">
+                  <div class="cnt-field-label">Phone</div>
+                  <div class="cnt-field-value">+1 (415) 555-0182</div>
+                </div>
+                <div class="cnt-field">
+                  <div class="cnt-field-label">Location</div>
+                  <div class="cnt-field-value">San Francisco, CA</div>
+                </div>
+                <div class="cnt-field">
+                  <div class="cnt-field-label">Timezone</div>
+                  <div class="cnt-field-value">Pacific Time (UTC−7)</div>
+                </div>
+                <div class="cnt-field">
+                  <div class="cnt-field-label">LinkedIn</div>
+                  <div class="cnt-field-value" style="color:var(--color-interactive);">linkedin.com/in/priya-s</div>
+                </div>
+                <div class="cnt-field">
+                  <div class="cnt-field-label">Last contact</div>
+                  <div class="cnt-field-value">Jun 2, 2026</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Company info -->
+            <div class="cnt-field-group">
+              <div class="cnt-field-group-title">Company details</div>
+              <div class="cnt-field-row">
+                <div class="cnt-field">
+                  <div class="cnt-field-label">Company</div>
+                  <div class="cnt-field-value">Techvault Inc</div>
+                </div>
+                <div class="cnt-field">
+                  <div class="cnt-field-label">Industry</div>
+                  <div class="cnt-field-value">Enterprise Software</div>
+                </div>
+                <div class="cnt-field">
+                  <div class="cnt-field-label">Company size</div>
+                  <div class="cnt-field-value">501–1,000 employees</div>
+                </div>
+                <div class="cnt-field">
+                  <div class="cnt-field-label">Annual revenue</div>
+                  <div class="cnt-field-value">$40M–$100M</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Activity feed -->
+            <div class="cnt-field-group">
+              <div class="cnt-field-group-title">Recent activity</div>
+              <fresh-timeline
+                items='[
+                  {"date":"Jun 2, 2026",  "title":"Email sent: Q3 proposal follow-up", "body":"Sent updated pricing deck and next steps.", "icon":"mail",  "variant":"primary"},
+                  {"date":"May 28, 2026", "title":"Call · 24 min",                    "body":"Discussed integration requirements and timeline with Priya and her team.", "icon":"phone", "variant":"success"},
+                  {"date":"May 20, 2026", "title":"Meeting: Product demo",             "body":"Live demo of the AI Copilot feature. Priya requested a sandbox environment.", "icon":"video", "variant":"info"},
+                  {"date":"May 10, 2026", "title":"Deal created: Enterprise Expansion Q3", "body":"$128,000 deal added to pipeline.", "icon":"briefcase", "variant":"warning"}
+                ]'>
+              </fresh-timeline>
+            </div>
+
+          </div>
+
+          <!-- Right aside -->
+          <aside class="cnt-detail-aside">
+
+            <div class="cnt-aside-section">
+              <div class="cnt-aside-title">Open deals</div>
+              <div style="display:flex;flex-direction:column;gap:var(--space-3);">
+                <div class="dash-card" style="padding:var(--space-3);">
+                  <div style="font-size:13px;font-weight:600;color:var(--text-primary);margin-bottom:var(--space-1);">Enterprise Expansion Q3</div>
+                  <div style="display:flex;align-items:center;justify-content:space-between;">
+                    <fresh-badge variant="warning">Proposal</fresh-badge>
+                    <span style="font-size:13px;font-weight:600;color:var(--text-primary);">$128K</span>
+                  </div>
+                </div>
+                <div class="dash-card" style="padding:var(--space-3);">
+                  <div style="font-size:13px;font-weight:600;color:var(--text-primary);margin-bottom:var(--space-1);">Compliance Module Add-on</div>
+                  <div style="display:flex;align-items:center;justify-content:space-between;">
+                    <fresh-badge variant="info">Proposal</fresh-badge>
+                    <span style="font-size:13px;font-weight:600;color:var(--text-primary);">$32K</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="cnt-aside-section">
+              <div class="cnt-aside-title">Team members</div>
+              <div class="cnt-people-row">
+                <fresh-avatar name="Jamie Rivera" size="xs"></fresh-avatar>
+                <div>
+                  <div class="cnt-people-name">Jamie Rivera</div>
+                  <div class="cnt-people-role">Account Owner</div>
+                </div>
+              </div>
+              <div class="cnt-people-row">
+                <fresh-avatar name="Marcus Chen" size="xs"></fresh-avatar>
+                <div>
+                  <div class="cnt-people-name">Marcus Chen</div>
+                  <div class="cnt-people-role">Solutions Engineer</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="cnt-aside-section">
+              <div class="cnt-aside-title">Tags</div>
+              <div style="display:flex;flex-wrap:wrap;gap:var(--space-1);">
+                <fresh-badge variant="neutral">Enterprise</fresh-badge>
+                <fresh-badge variant="neutral">Tier 1</fresh-badge>
+                <fresh-badge variant="neutral">AI buyer</fresh-badge>
+                <fresh-badge variant="neutral">Renewal risk</fresh-badge>
+              </div>
+            </div>
+
+          </aside>
+
+        </div>
+      </main>
+
+    </div>
+  </div>
+
+</div>
+<script>
+  document.addEventListener('nav-toggle', function() {
+    document.getElementById('app-nav').classList.toggle('open');
+  });
+</script>
+<script src="../components/core/fresh-button.js"></script>
+<script src="../components/data/fresh-avatar.js"></script>
+<script src="../components/data/fresh-timeline.js"></script>
+<script src="../components/feedback/fresh-badge.js"></script>
+</body>
+</html>

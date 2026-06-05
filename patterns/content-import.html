@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Import / Export — Acme</title>
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="../tokens/primitives.css">
+<link rel="stylesheet" href="../tokens/theme.css">
+<link rel="stylesheet" href="../tokens/dataviz.css">
+<link rel="stylesheet" href="../styles/reset.css">
+<link rel="stylesheet" href="../styles/patterns/dashboard.css">
+<link rel="stylesheet" href="../styles/patterns/content.css">
+<script>if(location.href.indexOf('?thumb')!==-1)document.write('<style>#demo-bar{display:none!important}</style>');</script>
+<script src="../js/pattern-topbar-v2.js"></script>
+<script src="../js/freshds.js"></script>
+<script src="../js/pattern-bar.js"></script>
+</head>
+<body>
+<div id="app">
+
+  <div class="demo-bar" id="demo-bar">
+    <div class="demo-inner" id="demo-inner">
+      <button class="demo-mode-btn" id="mode-toggle-btn" onclick="toggleDemoMode()" aria-label="Toggle dark mode">
+        <i class="ti ti-moon"></i>
+      </button>
+    </div>
+    <div class="demo-sep"></div>
+    <button class="demo-collapse-btn" id="demo-collapse-btn" onclick="toggleDemoBar()" aria-label="Collapse toolbar">
+      <i class="ti ti-minus"></i>
+    </button>
+  </div>
+
+  <div class="dash-shell">
+
+    <pattern-topbar logged-in></pattern-topbar>
+
+    <div class="dash-body">
+
+      <nav class="app-nav open" id="app-nav" aria-label="Main navigation">
+        <div class="app-nav-inner">
+          <button class="app-nav-item active"><i class="ti ti-home"></i> Home</button>
+          <button class="app-nav-item"><i class="ti ti-chart-bar"></i> Analytics</button>
+          <button class="app-nav-item"><i class="ti ti-activity"></i> Activity</button>
+          <button class="app-nav-item"><i class="ti ti-folders"></i> Projects</button>
+          <button class="app-nav-item"><i class="ti ti-check"></i> My tasks</button>
+          <button class="app-nav-item"><i class="ti ti-calendar-event"></i> Calendar</button>
+          <button class="app-nav-item"><i class="ti ti-users"></i> Members</button>
+          <button class="app-nav-item"><i class="ti ti-settings"></i> Settings</button>
+        </div>
+      </nav>
+
+      <main class="dash-main">
+
+        <div class="dash-page-header">
+          <div>
+            <div class="dash-page-title">Import contacts</div>
+            <div class="dash-page-subtitle">Upload a CSV or Excel file and map columns to contact fields.</div>
+          </div>
+          <div class="dash-page-actions">
+            <fresh-button variant="secondary" size="sm"><i class="ti ti-file-download"></i> Download template</fresh-button>
+          </div>
+        </div>
+
+        <!-- Stepper -->
+        <div style="padding: var(--space-4) var(--space-6); border-bottom: 1px solid var(--surface-border); flex-shrink: 0; background: var(--surface-bg);">
+          <fresh-stepper
+            steps='["Upload file","Map fields","Preview","Import"]'
+            current="2">
+          </fresh-stepper>
+        </div>
+
+        <div class="dash-content">
+          <div class="cnt-import-wrap" style="padding:0;">
+
+            <!-- Step 1: Upload (done) -->
+            <div class="cnt-import-step">
+              <div class="cnt-import-step-header">
+                <div class="cnt-import-step-num done"><i class="ti ti-check" style="font-size:12px;"></i></div>
+                <div>
+                  <div class="cnt-import-step-title">Upload file</div>
+                  <div class="cnt-import-step-sub">contacts_export_2026.csv · 847 rows detected</div>
+                </div>
+                <fresh-button variant="ghost" size="sm" style="margin-left:auto;">Change file</fresh-button>
+              </div>
+              <div style="display:flex;align-items:center;gap:var(--space-3);padding:var(--space-3);background:var(--color-success-subtle);border-radius:var(--radius-md);">
+                <i class="ti ti-file-type-csv" style="font-size:20px;color:var(--color-success-text);"></i>
+                <div>
+                  <div style="font-size:13px;font-weight:600;color:var(--color-success-text);">contacts_export_2026.csv</div>
+                  <div style="font-size:12px;color:var(--color-success-text);opacity:0.8;">847 rows · 12 columns · 142 KB</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Step 2: Map fields (active) -->
+            <div class="cnt-import-step" style="border-color:var(--color-interactive);box-shadow:0 0 0 2px var(--color-interactive-subtle);">
+              <div class="cnt-import-step-header">
+                <div class="cnt-import-step-num">2</div>
+                <div>
+                  <div class="cnt-import-step-title">Map fields</div>
+                  <div class="cnt-import-step-sub">Match your CSV columns to contact fields in Acme.</div>
+                </div>
+              </div>
+
+              <!-- Column headers -->
+              <div style="display:grid;grid-template-columns:1fr auto 1fr;gap:var(--space-3);padding:var(--space-2) 0;border-bottom:2px solid var(--surface-border);margin-bottom:var(--space-2);">
+                <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-tertiary);">Your column (CSV)</div>
+                <div></div>
+                <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-tertiary);">Acme field</div>
+              </div>
+
+              <div class="cnt-map-row">
+                <div class="cnt-map-source">full_name</div>
+                <div class="cnt-map-arrow"><i class="ti ti-arrow-right"></i></div>
+                <fresh-select><option selected>Full name</option><option>First name</option><option>Last name</option><option>— Skip —</option></fresh-select>
+              </div>
+              <div class="cnt-map-row">
+                <div class="cnt-map-source">email_address</div>
+                <div class="cnt-map-arrow"><i class="ti ti-arrow-right"></i></div>
+                <fresh-select><option selected>Email</option><option>Work email</option><option>— Skip —</option></fresh-select>
+              </div>
+              <div class="cnt-map-row">
+                <div class="cnt-map-source">phone</div>
+                <div class="cnt-map-arrow"><i class="ti ti-arrow-right"></i></div>
+                <fresh-select><option selected>Phone</option><option>Mobile</option><option>— Skip —</option></fresh-select>
+              </div>
+              <div class="cnt-map-row">
+                <div class="cnt-map-source">company_name</div>
+                <div class="cnt-map-arrow"><i class="ti ti-arrow-right"></i></div>
+                <fresh-select><option selected>Company</option><option>— Skip —</option></fresh-select>
+              </div>
+              <div class="cnt-map-row">
+                <div class="cnt-map-source">job_title</div>
+                <div class="cnt-map-arrow"><i class="ti ti-arrow-right"></i></div>
+                <fresh-select><option selected>Job title</option><option>— Skip —</option></fresh-select>
+              </div>
+              <div class="cnt-map-row">
+                <div class="cnt-map-source">location</div>
+                <div class="cnt-map-arrow"><i class="ti ti-arrow-right"></i></div>
+                <fresh-select><option selected>Location</option><option>City</option><option>Country</option><option>— Skip —</option></fresh-select>
+              </div>
+              <div class="cnt-map-row" style="opacity:0.6;">
+                <div class="cnt-map-source">notes_internal</div>
+                <div class="cnt-map-arrow"><i class="ti ti-arrow-right"></i></div>
+                <fresh-select><option>— Skip —</option><option>Notes</option></fresh-select>
+              </div>
+
+              <div style="margin-top:var(--space-4);display:flex;align-items:center;justify-content:space-between;">
+                <fresh-alert variant="info" title="Auto-mapped" style="flex:1;margin-right:var(--space-4);">6 of 12 columns mapped automatically. Review and adjust before continuing.</fresh-alert>
+                <fresh-button variant="primary"><i class="ti ti-arrow-right"></i> Next: Preview</fresh-button>
+              </div>
+            </div>
+
+            <!-- Step 3: Preview (pending) -->
+            <div class="cnt-import-step" style="opacity:0.6;">
+              <div class="cnt-import-step-header">
+                <div class="cnt-import-step-num pending">3</div>
+                <div>
+                  <div class="cnt-import-step-title">Preview import</div>
+                  <div class="cnt-import-step-sub">Review a sample of records before importing.</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Step 4: Import (pending) -->
+            <div class="cnt-import-step" style="opacity:0.6;">
+              <div class="cnt-import-step-header">
+                <div class="cnt-import-step-num pending">4</div>
+                <div>
+                  <div class="cnt-import-step-title">Import</div>
+                  <div class="cnt-import-step-sub">Confirm settings and start the import.</div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </main>
+
+    </div>
+  </div>
+
+</div>
+<script>
+  document.addEventListener('nav-toggle', function() {
+    document.getElementById('app-nav').classList.toggle('open');
+  });
+</script>
+<script src="../components/core/fresh-button.js"></script>
+<script src="../components/core/fresh-select.js"></script>
+<script src="../components/data/fresh-avatar.js"></script>
+<script src="../components/feedback/fresh-alert.js"></script>
+<script src="../components/navigation/fresh-stepper.js"></script>
+</body>
+</html>

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Audit Log — Acme</title>
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="../tokens/primitives.css">
+<link rel="stylesheet" href="../tokens/theme.css">
+<link rel="stylesheet" href="../tokens/dataviz.css">
+<link rel="stylesheet" href="../styles/reset.css">
+<link rel="stylesheet" href="../styles/patterns/dashboard.css">
+<link rel="stylesheet" href="../styles/patterns/content.css">
+<script>if(location.href.indexOf('?thumb')!==-1)document.write('<style>#demo-bar{display:none!important}</style>');</script>
+<script src="../js/pattern-topbar-v2.js"></script>
+<script src="../js/freshds.js"></script>
+<script src="../js/pattern-bar.js"></script>
+</head>
+<body>
+<div id="app">
+
+  <div class="demo-bar" id="demo-bar">
+    <div class="demo-inner" id="demo-inner">
+      <button class="demo-mode-btn" id="mode-toggle-btn" onclick="toggleDemoMode()" aria-label="Toggle dark mode">
+        <i class="ti ti-moon"></i>
+      </button>
+    </div>
+    <div class="demo-sep"></div>
+    <button class="demo-collapse-btn" id="demo-collapse-btn" onclick="toggleDemoBar()" aria-label="Collapse toolbar">
+      <i class="ti ti-minus"></i>
+    </button>
+  </div>
+
+  <div class="dash-shell">
+
+    <pattern-topbar logged-in></pattern-topbar>
+
+    <div class="dash-body">
+
+      <nav class="app-nav open" id="app-nav" aria-label="Main navigation">
+        <div class="app-nav-inner">
+          <button class="app-nav-item active"><i class="ti ti-home"></i> Home</button>
+          <button class="app-nav-item"><i class="ti ti-chart-bar"></i> Analytics</button>
+          <button class="app-nav-item"><i class="ti ti-activity"></i> Activity</button>
+          <button class="app-nav-item"><i class="ti ti-folders"></i> Projects</button>
+          <button class="app-nav-item"><i class="ti ti-check"></i> My tasks</button>
+          <button class="app-nav-item"><i class="ti ti-calendar-event"></i> Calendar</button>
+          <button class="app-nav-item"><i class="ti ti-users"></i> Members</button>
+          <button class="app-nav-item"><i class="ti ti-settings"></i> Settings</button>
+        </div>
+      </nav>
+
+      <main class="dash-main">
+
+        <div class="dash-page-header">
+          <div>
+            <div class="dash-page-title">Audit log</div>
+            <div class="dash-page-subtitle">All user and system actions across your workspace. Retained for 90 days.</div>
+          </div>
+          <div class="dash-page-actions">
+            <fresh-button variant="secondary" size="sm"><i class="ti ti-download"></i> Export log</fresh-button>
+          </div>
+        </div>
+
+        <div class="dash-content">
+
+          <!-- Filters -->
+          <div class="dash-filter-bar" style="margin-bottom:var(--space-4);">
+            <fresh-input placeholder="Search events…" clearable style="max-width:280px;"></fresh-input>
+            <fresh-select style="--input-width:160px;">
+              <option>All event types</option>
+              <option>User actions</option>
+              <option>Data changes</option>
+              <option>Auth events</option>
+              <option>Settings changes</option>
+              <option>API calls</option>
+            </fresh-select>
+            <fresh-select style="--input-width:140px;">
+              <option>All users</option>
+              <option>Priya Sharma</option>
+              <option>Marcus Chen</option>
+              <option>Jamie Rivera</option>
+              <option>Tom Okeke</option>
+            </fresh-select>
+            <fresh-select style="--input-width:140px;">
+              <option>Last 24 hours</option>
+              <option>Last 7 days</option>
+              <option>Last 30 days</option>
+              <option>Custom range</option>
+            </fresh-select>
+          </div>
+
+          <fresh-data-table
+            searchable="false"
+            columns='[
+              {"key":"timestamp",  "label":"Timestamp",     "sortable":true},
+              {"key":"user",       "label":"User",          "sortable":false},
+              {"key":"action",     "label":"Action",        "sortable":false},
+              {"key":"resource",   "label":"Resource",      "sortable":false},
+              {"key":"ip",         "label":"IP address",    "sortable":false},
+              {"key":"result",     "label":"Result",        "sortable":false}
+            ]'
+            data='[
+              {"timestamp":"Jun 4, 2026 15:41:02", "user":"Priya Sharma",  "action":"document.update",   "resource":"Q3 Roadmap Brief",         "ip":"104.21.8.9",   "result":"Success"},
+              {"timestamp":"Jun 4, 2026 15:38:11", "user":"Marcus Chen",   "action":"user.login",        "resource":"—",                        "ip":"89.47.12.201", "result":"Success"},
+              {"timestamp":"Jun 4, 2026 14:22:44", "user":"Jamie Rivera",  "action":"deal.delete",       "resource":"Deal #4821 (Stale)",        "ip":"74.125.0.18",  "result":"Success"},
+              {"timestamp":"Jun 4, 2026 13:55:31", "user":"Tom Okeke",     "action":"role.update",       "resource":"Marcus Chen → Admin",       "ip":"216.239.38.1", "result":"Success"},
+              {"timestamp":"Jun 4, 2026 13:11:09", "user":"Priya Sharma",  "action":"export.contacts",   "resource":"All contacts (CSV)",        "ip":"104.21.8.9",   "result":"Success"},
+              {"timestamp":"Jun 4, 2026 12:44:18", "user":"Marcus Chen",   "action":"api_key.create",    "resource":"Key: prod-analytics-v2",    "ip":"89.47.12.201", "result":"Success"},
+              {"timestamp":"Jun 4, 2026 11:30:55", "user":"System",        "action":"backup.complete",   "resource":"Workspace backup",          "ip":"—",            "result":"Success"},
+              {"timestamp":"Jun 4, 2026 10:52:07", "user":"Jamie Rivera",  "action":"user.login",        "resource":"—",                        "ip":"45.33.32.156", "result":"Failed"},
+              {"timestamp":"Jun 4, 2026 10:51:43", "user":"Jamie Rivera",  "action":"user.login",        "resource":"—",                        "ip":"45.33.32.156", "result":"Failed"},
+              {"timestamp":"Jun 4, 2026 10:50:12", "user":"Jamie Rivera",  "action":"user.login",        "resource":"—",                        "ip":"45.33.32.156", "result":"Success"},
+              {"timestamp":"Jun 4, 2026 09:30:00", "user":"Priya Sharma",  "action":"sso.configure",     "resource":"Okta integration",          "ip":"104.21.8.9",   "result":"Success"},
+              {"timestamp":"Jun 4, 2026 09:15:44", "user":"Tom Okeke",     "action":"contact.import",    "resource":"contacts_export_2026.csv",  "ip":"216.239.38.1", "result":"Success"},
+              {"timestamp":"Jun 3, 2026 17:05:20", "user":"Marcus Chen",   "action":"settings.update",   "resource":"Data retention policy",     "ip":"89.47.12.201", "result":"Success"},
+              {"timestamp":"Jun 3, 2026 16:41:33", "user":"System",        "action":"alert.trigger",     "resource":"Unusual login location",    "ip":"—",            "result":"Warning"}
+            ]'>
+          </fresh-data-table>
+
+          <!-- Pagination -->
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-top:var(--space-4);">
+            <span style="font-size:13px;color:var(--text-secondary)">Showing 14 of 1,842 events</span>
+            <fresh-pagination total="1842" page-size="14" current-page="1"></fresh-pagination>
+          </div>
+
+        </div>
+      </main>
+
+    </div>
+  </div>
+
+</div>
+<script>
+  document.addEventListener('nav-toggle', function() {
+    document.getElementById('app-nav').classList.toggle('open');
+  });
+</script>
+<script src="../components/core/fresh-button.js"></script>
+<script src="../components/core/fresh-input.js"></script>
+<script src="../components/core/fresh-select.js"></script>
+<script src="../components/data/fresh-avatar.js"></script>
+<script src="../components/data/fresh-data-table.js"></script>
+<script src="../components/navigation/fresh-pagination.js"></script>
+</body>
+</html>

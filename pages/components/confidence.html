@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Confidence badge — FreshDS</title>
+<base href="../../">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="tokens/primitives.css">
+<link rel="stylesheet" href="tokens/theme.css">
+<link rel="stylesheet" href="tokens/dataviz.css">
+<link rel="stylesheet" href="styles/reset.css">
+<link rel="stylesheet" href="styles/layout.css">
+<link rel="stylesheet" href="styles/components/core.css">
+<link rel="stylesheet" href="styles/docs.css">
+<script src="js/freshds.js"></script>
+<script src="js/freshds-site.js"></script>
+</head>
+<body>
+<div class="fds-app" id="app">
+  <ds-topbar active-section="ds"></ds-topbar>
+  <div class="fds-body">
+    <ds-shell active="confidence"></ds-shell>
+    <main class="fds-main">
+      <div class="fds-page active" id="page-confidence">
+        <div class="page-header">
+          <div class="page-eyebrow">AI Components</div>
+          <h1 class="page-title">Confidence badge</h1>
+          <p class="page-desc">Displays the AI model's certainty level as a percentage with semantic color coding. Green ≥ 80%, amber ≥ 50%, red below 50%.</p>
+        </div>
+        <div class="page-section">
+          <div class="page-section-title">Pill style (default)</div>
+          <div class="demo-surface" style="gap:var(--space-3);align-items:center;flex-wrap:wrap">
+            <fresh-confidence-badge value="94"></fresh-confidence-badge>
+            <fresh-confidence-badge value="82"></fresh-confidence-badge>
+            <fresh-confidence-badge value="67"></fresh-confidence-badge>
+            <fresh-confidence-badge value="51"></fresh-confidence-badge>
+            <fresh-confidence-badge value="31"></fresh-confidence-badge>
+            <fresh-confidence-badge value="12"></fresh-confidence-badge>
+          </div>
+        </div>
+        <div class="page-section">
+          <div class="page-section-title">With progress bar</div>
+          <div class="demo-surface" style="gap:var(--space-4);align-items:center;flex-wrap:wrap">
+            <fresh-confidence-badge value="94" show-bar></fresh-confidence-badge>
+            <fresh-confidence-badge value="67" show-bar></fresh-confidence-badge>
+            <fresh-confidence-badge value="31" show-bar></fresh-confidence-badge>
+          </div>
+        </div>
+        <div class="page-section">
+          <div class="page-section-title">Inline with AI response</div>
+          <div class="demo-surface col" style="gap:var(--space-3);max-width:560px">
+            <div style="display:flex;align-items:center;gap:var(--space-3)">
+              <span style="font-size:13px;color:var(--text-secondary)">Revenue will grow 12–15% next quarter</span>
+              <fresh-confidence-badge value="87"></fresh-confidence-badge>
+            </div>
+            <div style="display:flex;align-items:center;gap:var(--space-3)">
+              <span style="font-size:13px;color:var(--text-secondary)">Churn rate will remain below 3%</span>
+              <fresh-confidence-badge value="61"></fresh-confidence-badge>
+            </div>
+            <div style="display:flex;align-items:center;gap:var(--space-3)">
+              <span style="font-size:13px;color:var(--text-secondary)">Enterprise tier will exceed 100 accounts</span>
+              <fresh-confidence-badge value="28"></fresh-confidence-badge>
+            </div>
+          </div>
+        </div>
+        <div class="page-section">
+          <div class="page-section-title">Attributes</div>
+          <table class="usage-table">
+            <thead><tr><th>Attribute</th><th>Values</th><th>Default</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td>value</td><td>0–100</td><td><code>0</code></td><td>Confidence percentage. Drives color: ≥80 green, ≥50 amber, &lt;50 red.</td></tr>
+              <tr><td>label</td><td>string</td><td><code>"Confidence"</code></td><td>Aria label and label text in show-bar mode</td></tr>
+              <tr><td>show-bar</td><td>boolean</td><td>—</td><td>Renders a mini progress bar below the percentage</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+<script src="components/core/fresh-button.js"></script>
+<script src="components/core/fresh-input.js"></script>
+<script src="components/ai/fresh-confidence-badge.js"></script>
+<script src="components/navigation/fresh-simple-tabs.js"></script>
+</body>
+</html>

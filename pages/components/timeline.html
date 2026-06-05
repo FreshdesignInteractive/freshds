@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Timeline — FreshDS</title>
+<base href="../../">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="tokens/primitives.css">
+<link rel="stylesheet" href="tokens/theme.css">
+<link rel="stylesheet" href="tokens/dataviz.css">
+<link rel="stylesheet" href="styles/reset.css">
+<link rel="stylesheet" href="styles/layout.css">
+<link rel="stylesheet" href="styles/components/core.css">
+<link rel="stylesheet" href="styles/docs.css">
+<script src="js/freshds.js"></script>
+<script src="js/freshds-site.js"></script>
+</head>
+<body>
+<div class="fds-app" id="app">
+  <ds-topbar active-section="ds"></ds-topbar>
+  <div class="fds-body">
+    <ds-shell active="timeline"></ds-shell>
+    <main class="fds-main">
+      <div class="fds-page active" id="page-timeline">
+        <div class="page-header">
+          <div class="page-eyebrow">Data Display</div>
+          <h1 class="page-title">Timeline</h1>
+          <p class="page-desc">Vertical chronological list for activity feeds, audit logs, and process history. Each item shows a timestamp, title, optional description, and a variant-colored icon dot.</p>
+        </div>
+        <div class="page-section">
+          <div class="page-section-title">Activity feed</div>
+          <div class="demo-surface col" style="max-width:560px">
+            <fresh-timeline items='[
+              {"timestamp":"2 min ago","title":"Deployment complete","description":"v2.4.1 deployed to production by Jane Smith.","icon":"ti-rocket","variant":"success"},
+              {"timestamp":"1 hr ago","title":"PR #482 merged","description":"feat: add AI response bubble component","icon":"ti-git-merge","variant":"primary"},
+              {"timestamp":"3 hrs ago","title":"Review requested","description":"2 reviewers assigned to PR #481.","icon":"ti-eye","variant":"neutral"},
+              {"timestamp":"Yesterday","title":"Build failed","description":"CI pipeline failed on tests — 3 errors found.","icon":"ti-alert-triangle","variant":"danger"},
+              {"timestamp":"2 days ago","title":"New release branch","description":"Branch v2.4 cut from main.","icon":"ti-git-branch","variant":"warning"}
+            ]'></fresh-timeline>
+          </div>
+        </div>
+        <div class="page-section">
+          <div class="page-section-title">Compact (no descriptions)</div>
+          <div class="demo-surface col" style="max-width:400px">
+            <fresh-timeline items='[
+              {"timestamp":"10:32","title":"Model response received","icon":"ti-message-bolt","variant":"primary"},
+              {"timestamp":"10:31","title":"Prompt sent","icon":"ti-send","variant":"neutral"},
+              {"timestamp":"10:30","title":"Context loaded","icon":"ti-database","variant":"success"},
+              {"timestamp":"10:28","title":"Session started","icon":"ti-player-play","variant":"neutral"}
+            ]'></fresh-timeline>
+          </div>
+        </div>
+        <div class="page-section">
+          <div class="page-section-title">Item attributes</div>
+          <table class="usage-table">
+            <thead><tr><th>Key</th><th>Values</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td>timestamp</td><td>string</td><td>Time label shown above the title</td></tr>
+              <tr><td>title</td><td>string</td><td>Primary text for this event</td></tr>
+              <tr><td>description</td><td>string</td><td>Optional detail text below the title</td></tr>
+              <tr><td>icon</td><td>Tabler class e.g. <code>ti-rocket</code></td><td>Icon inside the dot</td></tr>
+              <tr><td>variant</td><td><code>primary</code> <code>success</code> <code>warning</code> <code>danger</code> <code>neutral</code></td><td>Controls the dot color</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+<script src="components/core/fresh-button.js"></script>
+<script src="components/core/fresh-input.js"></script>
+<script src="components/data/fresh-timeline.js"></script>
+<script src="components/navigation/fresh-simple-tabs.js"></script>
+</body>
+</html>

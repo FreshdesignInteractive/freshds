@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NPS / Survey — Acme</title>
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="../tokens/primitives.css">
+<link rel="stylesheet" href="../tokens/theme.css">
+<link rel="stylesheet" href="../tokens/dataviz.css">
+<link rel="stylesheet" href="../styles/reset.css">
+<link rel="stylesheet" href="../styles/patterns/dashboard.css">
+<link rel="stylesheet" href="../styles/patterns/feedback.css">
+<script>if(location.href.indexOf('?thumb')!==-1)document.write('<style>#demo-bar{display:none!important}</style>');</script>
+<script src="../js/pattern-topbar-v2.js"></script>
+<script src="../js/freshds.js"></script>
+<script src="../js/pattern-bar.js"></script>
+<script>
+  var _steps = ['score','followup','done'];
+  function goStep(s) {
+    _steps.forEach(function(x){ document.getElementById('step-'+x).style.display='none'; });
+    document.getElementById('step-'+s).style.display='block';
+  }
+  function selectScore(btn, score) {
+    document.querySelectorAll('.nps-btn').forEach(function(b){ b.classList.remove('selected','detractor','passive','promoter'); });
+    btn.classList.add('selected');
+    if(score<=6) btn.style.background='var(--color-danger)';
+    else if(score<=8) btn.style.background='var(--color-warning)';
+    else btn.style.background='var(--color-success)';
+    btn.style.color='var(--text-inverse)';
+    setTimeout(function(){ goStep('followup'); }, 400);
+  }
+</script>
+</head>
+<body>
+<div id="app">
+  <div class="demo-bar" id="demo-bar">
+    <div class="demo-inner" id="demo-inner">
+      <button class="demo-mode-btn" id="mode-toggle-btn" onclick="toggleDemoMode()"><i class="ti ti-moon"></i></button>
+    </div>
+    <div class="demo-sep"></div>
+    <button class="demo-collapse-btn" id="demo-collapse-btn" onclick="toggleDemoBar()"><i class="ti ti-minus"></i></button>
+  </div>
+
+  <div class="dash-shell">
+    <pattern-topbar logged-in></pattern-topbar>
+
+    <!-- Background app (dimmed) -->
+    <div class="dash-body" style="pointer-events:none;filter:brightness(0.85);">
+      <main class="dash-main">
+        <div class="dash-page-header"><div class="dash-page-title">Home Dashboard</div></div>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:var(--space-4);">
+          <div class="dash-card" style="height:80px;"></div>
+          <div class="dash-card" style="height:80px;"></div>
+          <div class="dash-card" style="height:80px;"></div>
+          <div class="dash-card" style="height:80px;"></div>
+        </div>
+      </main>
+    </div>
+
+    <!-- NPS widget (bottom-right fixed) -->
+    <div style="position:fixed;bottom:var(--space-6);right:var(--space-6);z-index:100;width:440px;max-width:calc(100vw - 32px);">
+
+      <!-- Step 1: Score -->
+      <div id="step-score" class="fb-nps-widget">
+        <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:var(--space-1);">
+          <div class="fb-nps-title">How likely are you to recommend Acme?</div>
+          <button onclick="goStep('done')" style="background:transparent;border:none;cursor:pointer;color:var(--text-tertiary);font-size:18px;line-height:1;padding:0;"><i class="ti ti-x"></i></button>
+        </div>
+        <div class="fb-nps-sub">To a colleague or friend · 0 = Not at all, 10 = Extremely likely</div>
+        <div class="fb-nps-scale">
+          <div class="fb-nps-btn nps-btn" onclick="selectScore(this,0)">0</div>
+          <div class="fb-nps-btn nps-btn" onclick="selectScore(this,1)">1</div>
+          <div class="fb-nps-btn nps-btn" onclick="selectScore(this,2)">2</div>
+          <div class="fb-nps-btn nps-btn" onclick="selectScore(this,3)">3</div>
+          <div class="fb-nps-btn nps-btn" onclick="selectScore(this,4)">4</div>
+          <div class="fb-nps-btn nps-btn" onclick="selectScore(this,5)">5</div>
+          <div class="fb-nps-btn nps-btn" onclick="selectScore(this,6)">6</div>
+          <div class="fb-nps-btn nps-btn" onclick="selectScore(this,7)">7</div>
+          <div class="fb-nps-btn nps-btn" onclick="selectScore(this,8)">8</div>
+          <div class="fb-nps-btn nps-btn" onclick="selectScore(this,9)">9</div>
+          <div class="fb-nps-btn nps-btn" onclick="selectScore(this,10)">10</div>
+        </div>
+        <div class="fb-nps-labels"><span>Not likely</span><span>Extremely likely</span></div>
+        <div style="font-size:11px;color:var(--text-tertiary);text-align:center;">Takes 30 seconds · <a onclick="goStep('done')" style="cursor:pointer;color:var(--text-tertiary);">Remind me later</a></div>
+      </div>
+
+      <!-- Step 2: Follow-up -->
+      <div id="step-followup" class="fb-nps-widget" style="display:none;">
+        <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:var(--space-1);">
+          <div class="fb-nps-title">You rated us 9 — thank you! <span style="font-size:20px;">🎉</span></div>
+          <button onclick="goStep('done')" style="background:transparent;border:none;cursor:pointer;color:var(--text-tertiary);font-size:18px;line-height:1;padding:0;"><i class="ti ti-x"></i></button>
+        </div>
+        <div class="fb-nps-sub" style="margin-bottom:var(--space-4);">What's the biggest reason for your score?</div>
+
+        <div style="display:flex;flex-wrap:wrap;gap:var(--space-2);margin-bottom:var(--space-4);">
+          <div class="fb-nps-tag" onclick="this.classList.toggle('selected')">Easy to use</div>
+          <div class="fb-nps-tag selected" onclick="this.classList.toggle('selected')">AI features</div>
+          <div class="fb-nps-tag" onclick="this.classList.toggle('selected')">Workflow automation</div>
+          <div class="fb-nps-tag" onclick="this.classList.toggle('selected')">Saves time</div>
+          <div class="fb-nps-tag" onclick="this.classList.toggle('selected')">Great support</div>
+          <div class="fb-nps-tag" onclick="this.classList.toggle('selected')">Team collaboration</div>
+        </div>
+
+        <fresh-form-field label="Anything else to share? (optional)">
+          <fresh-input slot="input" placeholder="Tell us more…"></fresh-input>
+        </fresh-form-field>
+
+        <div style="display:flex;gap:var(--space-2);margin-top:var(--space-4);">
+          <fresh-button variant="ghost" size="sm" onclick="goStep('done')">Skip</fresh-button>
+          <fresh-button variant="primary" size="sm" style="flex:1;" onclick="goStep('done')">Submit feedback</fresh-button>
+        </div>
+      </div>
+
+      <!-- Step 3: Thank you -->
+      <div id="step-done" class="fb-nps-widget" style="display:none;text-align:center;">
+        <div style="font-size:32px;margin-bottom:var(--space-3);">🙏</div>
+        <div class="fb-nps-title" style="margin-bottom:var(--space-2);">Thanks for your feedback!</div>
+        <div class="fb-nps-sub" style="margin-bottom:var(--space-4);">Your input helps us build a better product for you and your team.</div>
+        <fresh-button variant="primary" size="sm" onclick="goStep('score')" style="width:100%;">Reset demo</fresh-button>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+<script>
+  document.addEventListener('nav-toggle', function() {
+    document.getElementById('app-nav').classList.toggle('open');
+  });
+</script>
+<script src="../components/core/fresh-button.js"></script>
+<script src="../components/core/fresh-input.js"></script>
+<script src="../components/core/fresh-form-field.js"></script>
+</body>
+</html>

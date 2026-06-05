@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FreshDS — Configurator</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<!-- Icons -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+
+<!-- JSZip -->
+<script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+
+<!-- Tokens -->
+<link rel="stylesheet" href="tokens/primitives.css">
+<link rel="stylesheet" href="tokens/theme.css">
+<link rel="stylesheet" href="tokens/dataviz.css">
+
+<!-- Styles -->
+<link rel="stylesheet" href="styles/reset.css">
+<link rel="stylesheet" href="styles/layout.css">
+<link rel="stylesheet" href="styles/components/core.css">
+<link rel="stylesheet" href="styles/docs.css">
+
+<!-- Theme engine -->
+<script src="js/freshds.js"></script>
+<script src="js/freshds-site.js"></script>
+
+<style>
+  .cfg-page {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 100%;
+    overflow: hidden;
+    background: var(--surface-bg);
+    color: var(--text-primary);
+    font-family: var(--font-sans);
+  }
+  .cfg-body {
+    flex: 1;
+    overflow-y: auto;
+  }
+  .cfg-body-inner {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: var(--space-8) var(--space-8) var(--space-12);
+  }
+
+  /* ── Sticky footer ── */
+  .cfg-footer {
+    flex-shrink: 0;
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 220ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .cfg-footer.visible { max-height: 60px; }
+  .cfg-footer-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 var(--space-8);
+    height: 56px;
+    background: var(--surface-bg);
+    border-top: 1px solid var(--surface-border);
+    gap: var(--space-4);
+  }
+  .cfg-footer-label {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-family: var(--font-sans);
+    font-size: 13px;
+    color: var(--text-secondary);
+    -webkit-font-smoothing: antialiased;
+  }
+  .cfg-footer-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--color-warning);
+    flex-shrink: 0;
+  }
+  .cfg-footer-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+  }
+  .cfg-footer-discard {
+    all: unset;
+    padding: 6px 14px;
+    font-family: var(--font-sans);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    cursor: pointer;
+    border-radius: var(--radius-md);
+    transition: background 120ms ease, color 120ms ease;
+    -webkit-font-smoothing: antialiased;
+  }
+  .cfg-footer-discard:hover { background: var(--surface-overlay); color: var(--text-primary); }
+  .cfg-footer-save {
+    all: unset;
+    padding: 6px 14px;
+    font-family: var(--font-sans);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--color-interactive-text);
+    border: 1px solid var(--color-interactive-border);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: background 120ms ease;
+    -webkit-font-smoothing: antialiased;
+  }
+  .cfg-footer-save:hover { background: var(--color-interactive-subtle); }
+  .cfg-footer-apply {
+    all: unset;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 16px;
+    font-family: var(--font-sans);
+    font-size: 13px;
+    font-weight: 500;
+    background: var(--color-interactive);
+    color: var(--btn-primary-text);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: filter 120ms ease;
+    -webkit-font-smoothing: antialiased;
+  }
+  .cfg-footer-apply:hover { filter: brightness(1.08); }
+  .cfg-section-label {
+    font-size: 11px; font-weight: 600; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--color-interactive-text);
+    font-family: var(--font-mono); margin-bottom: var(--space-6);
+  }
+  .cfg-back-btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 12px; font-weight: 500; font-family: var(--font-sans);
+    color: var(--text-secondary); background: none; border: none;
+    cursor: pointer; padding: 0; transition: color 0.15s;
+  }
+  .cfg-back-btn:hover { color: var(--text-primary); }
+  .cfg-header-title {
+    font-size: 14px; font-weight: 600; letter-spacing: -0.01em;
+    color: var(--text-primary);
+  }
+</style>
+</head>
+
+<body id="app">
+<div class="cfg-page">
+
+  <!-- Header -->
+  <fresh-navbar>
+    <div slot="brand" style="display:flex;align-items:center;gap:var(--space-4)">
+      <img class="fds-logotype fds-logotype-light" src="freshdesign-logo.svg" alt="Freshdesign">
+      <img class="fds-logotype fds-logotype-dark"  src="freshdesign-logo-dark.svg" alt="Freshdesign">
+      <span style="color:var(--surface-border-strong);font-size:18px;font-weight:300">|</span>
+      <span class="cfg-header-title">Configurator</span>
+    </div>
+    <div slot="actions">
+      <fresh-button variant="secondary" id="mode-btn" onclick="toggleMode()"><i class="ti ti-moon"></i> Dark</fresh-button>
+      <fresh-dropdown-button id="cfg-export-btn" label="Export" variant="secondary" size="md" items='[{"value":"bundle","label":"Dev Kit","desc":"Theme-matched CSS tokens and components only. No docs — just the files your devs need."},{"separator":true},{"value":"dssite","label":"Full DS","desc":"Complete documentation site with all components, tokens, and guides. Host it for your team."}]'></fresh-dropdown-button>
+      <fresh-button variant="secondary" id="cfg-exit-btn"><i class="ti ti-arrow-left"></i> Exit Configurator</fresh-button>
+    </div>
+  </fresh-navbar>
+
+  <!-- Body -->
+  <main class="cfg-body">
+    <div class="cfg-body-inner">
+    <div class="config-grid">
+
+      <!-- Themes + Selected theme (single card) -->
+      <div class="config-card config-section-full">
+        <div class="cfg-hd">
+          <div class="config-card-title">Themes</div>
+          <div style="display:flex;align-items:center;gap:var(--space-2)">
+            <button class="cfg-reset-btn" onclick="resetDefaultThemes()">Reset all default themes</button>
+            <button class="cfg-new-btn" onclick="addCustomTheme()"><i class="ti ti-plus"></i> New theme</button>
+          </div>
+        </div>
+        <div class="theme-cards" id="theme-cards"></div>
+
+        <div class="cfg-divider"></div>
+
+        <!-- Selected theme settings -->
+        <div class="cfg-hd">
+          <div class="config-card-title">Selected theme — <span id="cfg-theme-name-label" style="color:var(--color-interactive-text)"></div>
+          <span class="cfg-preview-pill" id="cfg-preview-label">Showing applied theme</span>
+        </div>
+
+        <!-- Colors: all in one 6-col grid — rows wrap naturally -->
+        <div class="cfg-scale-label">Colors</div>
+        <div class="cfg-colors-row" style="display:grid;grid-template-columns:repeat(6,1fr);gap:var(--space-3)">
+          <div class="cfg-color-block">
+            <div class="cfg-color-label">Primary</div>
+            <div class="cfg-color-wrap">
+              <input type="color" class="color-picker" id="cfg-primary" value="#7c6af7">
+            </div>
+            <fresh-input size="sm" id="cfg-hex-primary" maxlength="7"></fresh-input>
+          </div>
+          <div class="cfg-color-block">
+            <div class="cfg-color-label">Secondary</div>
+            <div class="cfg-color-wrap">
+              <input type="color" class="color-picker" id="cfg-secondary" value="#2dd4bf">
+            </div>
+            <fresh-input size="sm" id="cfg-hex-secondary" maxlength="7"></fresh-input>
+          </div>
+          <div class="cfg-color-block">
+            <div class="cfg-color-label">Dark</div>
+            <div class="cfg-color-wrap">
+              <input type="color" class="color-picker" id="cfg-scale-dark" value="#1f2328">
+            </div>
+            <fresh-input size="sm" id="cfg-hex-dark" maxlength="7"></fresh-input>
+          </div>
+          <div class="cfg-color-block">
+            <div class="cfg-color-label">Light</div>
+            <div class="cfg-color-wrap outlined">
+              <input type="color" class="color-picker" id="cfg-scale-light" value="#ffffff">
+            </div>
+            <fresh-input size="sm" id="cfg-hex-light" maxlength="7"></fresh-input>
+          </div>
+          <div class="cfg-color-block">
+            <div class="cfg-color-label">Page background</div>
+            <div class="cfg-color-wrap outlined">
+              <input type="color" class="color-picker" id="cfg-page-bg" value="#ffffff">
+            </div>
+            <fresh-input size="sm" id="cfg-hex-page-bg" maxlength="7"></fresh-input>
+          </div>
+          <div class="cfg-color-block">
+            <div class="cfg-color-label">Input surface</div>
+            <div class="cfg-color-wrap outlined">
+              <input type="color" class="color-picker" id="cfg-input-surface" value="#ffffff">
+            </div>
+            <fresh-input size="sm" id="cfg-hex-input-surface" maxlength="7"></fresh-input>
+          </div>
+          <div class="cfg-color-block">
+            <div class="cfg-color-label">Success</div>
+            <div class="cfg-color-wrap">
+              <input type="color" class="color-picker" id="cfg-success" value="#22c55e">
+            </div>
+            <fresh-input size="sm" id="cfg-hex-success" maxlength="7"></fresh-input>
+          </div>
+          <div class="cfg-color-block">
+            <div class="cfg-color-label">Warning</div>
+            <div class="cfg-color-wrap">
+              <input type="color" class="color-picker" id="cfg-warning" value="#f59e0b">
+            </div>
+            <fresh-input size="sm" id="cfg-hex-warning" maxlength="7"></fresh-input>
+          </div>
+          <div class="cfg-color-block">
+            <div class="cfg-color-label">Danger</div>
+            <div class="cfg-color-wrap">
+              <input type="color" class="color-picker" id="cfg-danger" value="#f43f5e">
+            </div>
+            <fresh-input size="sm" id="cfg-hex-danger" maxlength="7"></fresh-input>
+          </div>
+          <div class="cfg-color-block">
+            <div class="cfg-color-label">Info</div>
+            <div class="cfg-color-wrap">
+              <input type="color" class="color-picker" id="cfg-info" value="#3b82f6">
+            </div>
+            <fresh-input size="sm" id="cfg-hex-info" maxlength="7"></fresh-input>
+          </div>
+        </div>
+
+        <div class="cfg-divider"></div>
+
+        <!-- Typography -->
+        <div class="cfg-scale-label" style="margin-bottom:var(--space-3)">Typography</div>
+        <div class="cfg-type-row">
+          <div class="cfg-type-field">
+            <div class="cfg-color-label">UI font</div>
+            <fresh-select id="font-sans-select">
+              <option value="Inter">Inter</option>
+              <option value="Geist">Geist</option>
+              <option value="Outfit">Outfit</option>
+              <option value="Sora">Sora</option>
+              <option value="Figtree">Figtree</option>
+              <option value="DM Sans">DM Sans</option>
+              <option value="Plus Jakarta Sans">Plus Jakarta Sans</option>
+              <option value="Be Vietnam Pro">Be Vietnam Pro</option>
+              <option value="Nunito">Nunito</option>
+              <option value="Manrope">Manrope</option>
+            </fresh-select>
+          </div>
+          <div class="cfg-type-field">
+            <div class="cfg-color-label">Mono font</div>
+            <fresh-select id="font-mono-select">
+              <option value="JetBrains Mono">JetBrains Mono</option>
+              <option value="Fira Code">Fira Code</option>
+              <option value="IBM Plex Mono">IBM Plex Mono</option>
+              <option value="Roboto Mono">Roboto Mono</option>
+              <option value="Inconsolata">Inconsolata</option>
+            </fresh-select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Live preview -->
+      <div class="config-card config-section-full">
+        <div class="cfg-hd">
+          <div class="config-card-title">Live preview</div>
+        </div>
+
+        <div class="preview-live" id="preview-live">
+          <div class="preview-comp-grid">
+            <div class="preview-comp-item"><fresh-media-card no-hover title="Button" fill>
+              <div slot="thumb" style="display:flex;align-items:center;justify-content:center;height:100%">
+                <div style="display:flex;flex-direction:column;gap:var(--space-2);width:160px">
+                  <fresh-button variant="primary"   size="sm" style="width:100%">Save changes</fresh-button>
+                  <fresh-button variant="secondary" size="sm" style="width:100%">Cancel</fresh-button>
+                  <fresh-button variant="ghost"     size="sm" style="width:100%">Learn more</fresh-button>
+                  <fresh-button variant="danger"    size="sm" style="width:100%">Delete</fresh-button>
+                </div>
+              </div>
+            </fresh-media-card></div>
+            <div class="preview-comp-item"><fresh-media-card no-hover title="Input" fill>
+              <div slot="thumb" style="display:flex;align-items:center;justify-content:center;height:100%">
+                <div style="display:flex;flex-direction:column;gap:var(--space-2);width:200px">
+                  <fresh-input size="sm" placeholder="Search…" icon="ti-search"></fresh-input>
+                  <fresh-input size="sm" placeholder="Email address" type="email"></fresh-input>
+                  <fresh-input size="sm" placeholder="Password" type="password"></fresh-input>
+                  <fresh-input size="sm" placeholder="Required field" error="This field is required"></fresh-input>
+                </div>
+              </div>
+            </fresh-media-card></div>
+            <div class="preview-comp-item"><fresh-media-card no-hover title="Checkbox" fill>
+              <div slot="thumb" style="display:flex;align-items:center;justify-content:center;height:100%">
+                <div style="display:flex;flex-direction:column;gap:var(--space-3)">
+                  <fresh-checkbox checked>Send email notifications</fresh-checkbox>
+                  <fresh-checkbox checked>Send push notifications</fresh-checkbox>
+                  <fresh-checkbox>Send SMS notifications</fresh-checkbox>
+                  <fresh-checkbox>Send weekly digest</fresh-checkbox>
+                </div>
+              </div>
+            </fresh-media-card></div>
+            <div class="preview-comp-item"><fresh-media-card no-hover title="Toggle" fill>
+              <div slot="thumb" style="display:flex;align-items:center;justify-content:center;height:100%">
+                <div style="display:flex;flex-direction:column;gap:var(--space-3)">
+                  <fresh-toggle size="sm">Off</fresh-toggle>
+                  <fresh-toggle size="sm" checked>On</fresh-toggle>
+                  <fresh-toggle size="sm" disabled>Disabled off</fresh-toggle>
+                  <fresh-toggle size="sm" checked disabled>Disabled on</fresh-toggle>
+                </div>
+              </div>
+            </fresh-media-card></div>
+            <div class="preview-comp-item"><fresh-media-card no-hover title="Badge" fill>
+              <div slot="thumb" style="display:flex;align-items:center;justify-content:center;height:100%;padding:var(--space-4)">
+                <div style="display:flex;flex-wrap:wrap;gap:var(--space-2);justify-content:center">
+                  <fresh-badge variant="primary">Primary</fresh-badge>
+                  <fresh-badge variant="success">Success</fresh-badge>
+                  <fresh-badge variant="warning">Warning</fresh-badge>
+                  <fresh-badge variant="danger">Danger</fresh-badge>
+                  <fresh-badge variant="neutral">Neutral</fresh-badge>
+                  <fresh-badge variant="ai">AI</fresh-badge>
+                </div>
+              </div>
+            </fresh-media-card></div>
+            <div class="preview-comp-item"><fresh-media-card no-hover title="Progress" fill>
+              <div slot="thumb" style="display:flex;align-items:center;justify-content:center;height:100%">
+                <div style="display:flex;flex-direction:column;gap:var(--space-4);width:220px">
+                  <fresh-progress value="82" label="Uploading files" show-percent size="sm"></fresh-progress>
+                  <fresh-progress value="45" label="Processing" show-percent size="sm"></fresh-progress>
+                  <fresh-progress value="100" label="Complete" show-percent size="sm"></fresh-progress>
+                  <fresh-progress value="12" label="Syncing" show-percent size="sm"></fresh-progress>
+                </div>
+              </div>
+            </fresh-media-card></div>
+            <div class="preview-comp-item"><fresh-media-card no-hover title="Table" fill>
+              <div slot="thumb" style="display:flex;flex-direction:column;justify-content:center;height:100%;padding:var(--space-3)">
+                <fresh-data-table
+                  columns='[{"key":"name","label":"Name"},{"key":"role","label":"Role"},{"key":"status","label":"Status"}]'
+                  data='[{"name":"Jane Smith","role":"Admin","status":"Active"},{"name":"Marcus Lee","role":"Editor","status":"Active"},{"name":"Sam K.","role":"Viewer","status":"Away"},{"name":"Priya M.","role":"Admin","status":"Offline"}]'>
+                </fresh-data-table>
+              </div>
+            </fresh-media-card></div>
+            <div class="preview-comp-item"><fresh-media-card no-hover title="Avatar" fill>
+              <div slot="thumb" style="display:flex;align-items:center;justify-content:center;height:100%">
+                <div style="display:flex;flex-direction:column;gap:var(--space-4);align-items:center">
+                  <div style="display:flex;gap:var(--space-3);align-items:center">
+                    <fresh-avatar name="Jane Smith" size="md" status="online"></fresh-avatar>
+                    <fresh-avatar name="Marcus Lee" size="md" status="away"></fresh-avatar>
+                    <fresh-avatar name="Sam K" size="md" status="busy"></fresh-avatar>
+                    <fresh-avatar name="Priya M" size="md" status="offline"></fresh-avatar>
+                  </div>
+                  <div style="display:flex;gap:var(--space-3);align-items:center">
+                    <fresh-avatar name="Claude AI" shape="square" size="md"></fresh-avatar>
+                    <fresh-avatar name="Bot System" shape="square" size="md"></fresh-avatar>
+                    <fresh-avatar name="Fresh DS" shape="square" size="md"></fresh-avatar>
+                  </div>
+                </div>
+              </div>
+            </fresh-media-card></div>
+            <div class="preview-comp-item"><fresh-media-card no-hover title="Confidence badge" fill>
+              <div slot="thumb" style="display:flex;align-items:center;justify-content:center;height:100%">
+                <div style="display:flex;flex-direction:column;gap:var(--space-4)">
+                  <fresh-confidence-badge value="94" show-bar></fresh-confidence-badge>
+                  <fresh-confidence-badge value="67" show-bar></fresh-confidence-badge>
+                  <fresh-confidence-badge value="31" show-bar></fresh-confidence-badge>
+                </div>
+              </div>
+            </fresh-media-card></div>
+            <div class="preview-comp-item"><fresh-media-card no-hover title="Alert" fill>
+              <div slot="thumb" style="display:flex;align-items:center;justify-content:center;height:100%">
+                <div style="display:flex;flex-direction:column;gap:var(--space-2);width:240px">
+                  <fresh-alert variant="info">New version ready to deploy.</fresh-alert>
+                  <fresh-alert variant="success">All edits have been published.</fresh-alert>
+                  <fresh-alert variant="warning">You're at 90% of your quota.</fresh-alert>
+                </div>
+              </div>
+            </fresh-media-card></div>
+            <div class="preview-comp-item"><fresh-media-card no-hover title="Typography" fill>
+              <div slot="thumb" style="display:flex;align-items:center;justify-content:center;height:100%">
+                <div style="display:flex;flex-direction:column;gap:var(--space-3);padding:var(--space-5)">
+                  <div style="font-family:var(--font-sans);font-size:22px;font-weight:700;color:var(--text-primary);letter-spacing:-0.025em;line-height:1.15">Heading</div>
+                  <div style="font-family:var(--font-sans);font-size:15px;font-weight:600;color:var(--text-primary);letter-spacing:-0.01em;line-height:1.3">Subheading</div>
+                  <div style="font-family:var(--font-sans);font-size:13px;font-weight:400;color:var(--text-secondary);line-height:1.55">Body — readable paragraph text</div>
+                  <div style="font-family:var(--font-sans);font-size:11px;font-weight:500;color:var(--text-tertiary);letter-spacing:0.05em;text-transform:uppercase">Label / Caption</div>
+                  <div style="font-family:var(--font-mono);font-size:11px;color:var(--color-interactive-text);background:var(--badge-primary-bg);padding:2px 7px;border-radius:var(--radius-sm);width:fit-content">monospace</div>
+                </div>
+              </div>
+            </fresh-media-card></div>
+            <div class="preview-comp-item"><fresh-media-card no-hover title="AI" fill>
+              <div slot="thumb" style="display:flex;align-items:center;justify-content:center;height:100%">
+                <div style="display:flex;flex-direction:column;gap:var(--space-5);align-items:flex-start">
+                  <fresh-thinking label="Analyzing your data"></fresh-thinking>
+                  <fresh-thinking label="Writing code" size="sm"></fresh-thinking>
+                  <fresh-token-meter used="68000" total="100000"></fresh-token-meter>
+                  <fresh-token-meter used="88000" total="100000"></fresh-token-meter>
+                </div>
+              </div>
+            </fresh-media-card></div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+    </div>
+  </main>
+
+  <!-- Sticky apply footer -->
+  <div class="cfg-footer" id="cfg-footer">
+    <div class="cfg-footer-inner">
+      <span class="cfg-footer-label" id="cfg-footer-label-wrap">
+        <span class="cfg-footer-dot"></span>
+        <span id="cfg-footer-label-text"></span>
+      </span>
+      <div class="cfg-footer-actions">
+        <button class="cfg-footer-discard" onclick="discardStagedChanges()">Discard changes</button>
+        <button class="cfg-footer-save" id="cfg-footer-save-btn" onclick="saveCurrentTheme()" style="display:none">Save theme</button>
+        <button class="cfg-footer-apply" onclick="applyStagedToSite()">
+          <i class="ti ti-check"></i> Apply to site
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Exit configurator warning modal -->
+  <fresh-modal id="exit-cfg-modal" title="Unsaved changes" size="md" dismissible>
+    <p style="font-size:13px;color:var(--text-secondary);line-height:1.6;margin-bottom:var(--space-3)" id="exit-cfg-modal-body"></p>
+    <p style="font-size:13px;color:var(--text-secondary);line-height:1.6">
+      You can go back and apply or save your changes, or exit now and discard them.
+    </p>
+    <div slot="footer" style="display:flex;gap:var(--space-2);justify-content:flex-end;white-space:nowrap;">
+      <fresh-button variant="ghost" id="exit-back-btn">Back to configurator</fresh-button>
+      <fresh-button variant="secondary" id="exit-discard-btn">Discard &amp; exit</fresh-button>
+      <fresh-button variant="primary" id="exit-apply-btn">Apply &amp; exit</fresh-button>
+    </div>
+  </fresh-modal>
+
+  <!-- Delete theme confirmation modal -->
+  <fresh-modal id="delete-theme-modal" title="Delete theme" size="sm" dismissible>
+    <p style="font-size:13px;color:var(--text-secondary);line-height:1.6;margin-bottom:var(--space-4)">
+      You are about to delete <strong id="delete-theme-name" style="color:var(--text-primary)"></strong>.
+      This cannot be undone.
+    </p>
+    <p style="font-size:13px;color:var(--text-secondary);margin-bottom:var(--space-3)">
+      Type <strong style="color:var(--color-danger);font-family:var(--font-mono)">DELETE</strong> to confirm.
+    </p>
+    <fresh-input id="delete-confirm-input" placeholder="Type DELETE here" autocomplete="off"></fresh-input>
+    <div slot="footer" style="display:flex;gap:var(--space-2);justify-content:flex-end">
+      <fresh-button variant="ghost" id="delete-cancel-btn">Cancel</fresh-button>
+      <fresh-button variant="danger" id="delete-confirm-btn" disabled>Delete theme</fresh-button>
+    </div>
+  </fresh-modal>
+
+  <script>
+    (function() {
+      var _pendingDeleteId = null;
+
+      window.openDeleteModal = function(id, name) {
+        _pendingDeleteId = id;
+        document.getElementById('delete-theme-name').textContent = '"' + name + '"';
+        var input = document.getElementById('delete-confirm-input');
+        var confirmBtn = document.getElementById('delete-confirm-btn');
+        // Reset state
+        input.value = '';
+        confirmBtn.setAttribute('disabled', '');
+        document.getElementById('delete-theme-modal').show();
+        setTimeout(function() { input.focus(); }, 100);
+      };
+
+      document.addEventListener('DOMContentLoaded', function() {
+        var input      = document.getElementById('delete-confirm-input');
+        var confirmBtn = document.getElementById('delete-confirm-btn');
+        var cancelBtn  = document.getElementById('delete-cancel-btn');
+        var modal      = document.getElementById('delete-theme-modal');
+
+        input.addEventListener('input', function(e) {
+          var val = (e.detail && e.detail.value !== undefined) ? e.detail.value : input.value;
+          var valid = val === 'DELETE';
+          if (valid) {
+            confirmBtn.removeAttribute('disabled');
+          } else {
+            confirmBtn.setAttribute('disabled', '');
+          }
+        });
+
+        confirmBtn.addEventListener('click', function() {
+          if (!_pendingDeleteId) return;
+          var idToDelete = _pendingDeleteId;
+          _pendingDeleteId = null;
+          modal.close();
+          _doDeleteTheme(idToDelete);
+        });
+
+        cancelBtn.addEventListener('click', function() {
+          modal.close();
+          _pendingDeleteId = null;
+        });
+
+        modal.addEventListener('close', function() {
+          _pendingDeleteId = null;
+        });
+      });
+    })();
+  </script>
+
+</div>
+
+<!-- Components needed for preview and modal -->
+<script src="components/navigation/fresh-navbar.js"></script>
+<script src="components/core/fresh-button.js"></script>
+<script src="components/core/fresh-dropdown-button.js"></script>
+<script src="components/containers/fresh-modal.js"></script>
+<script src="components/core/fresh-input.js"></script>
+<script src="components/core/fresh-select.js"></script>
+<script src="components/core/fresh-checkbox.js"></script>
+<script src="components/core/fresh-radio.js"></script>
+<script src="components/core/fresh-toggle.js"></script>
+<script src="components/core/fresh-slider.js"></script>
+<script src="components/core/fresh-form-field.js"></script>
+<script src="components/feedback/fresh-badge.js"></script>
+<script src="components/feedback/fresh-alert.js"></script>
+<script src="components/feedback/fresh-progress.js"></script>
+<script src="components/feedback/fresh-spinner.js"></script>
+<script src="components/data/fresh-avatar.js"></script>
+<script src="components/containers/fresh-media-card.js"></script>
+<script src="components/data/fresh-stat-card.js"></script>
+<script src="components/data/fresh-data-table.js"></script>
+<script src="components/ai/fresh-thinking.js"></script>
+<script src="components/ai/fresh-confidence-badge.js"></script>
+<script src="components/ai/fresh-token-meter.js"></script>
+<script>
+  document.getElementById('cfg-export-btn').addEventListener('select', function(e) {
+    if (e.detail.value === 'bundle') exportDeveloperBundle();
+    else if (e.detail.value === 'dssite') exportDSSite();
+  });
+
+  (function() {
+    var exitBtn     = document.getElementById('cfg-exit-btn');
+    var exitModal   = document.getElementById('exit-cfg-modal');
+    var exitBack    = document.getElementById('exit-back-btn');
+    var exitDiscard = document.getElementById('exit-discard-btn');
+    var exitApply   = document.getElementById('exit-apply-btn');
+    var modalBody   = document.getElementById('exit-cfg-modal-body');
+
+    exitBtn.addEventListener('click', function() {
+      var footer       = document.getElementById('cfg-footer');
+      var hasChanges   = footer && footer.classList.contains('visible');
+      if (!hasChanges) { window.location.href = 'index.html'; return; }
+
+      var saveBtn      = document.getElementById('cfg-footer-save-btn');
+      var hasUnsaved   = saveBtn && saveBtn.style.display !== 'none';
+      var hasUnapplied = footer.classList.contains('visible') && !hasUnsaved;
+
+      if (hasUnsaved && hasChanges) {
+        modalBody.textContent = 'You have unsaved edits to the current theme and changes that haven\'t been applied to the site yet.';
+      } else if (hasUnsaved) {
+        modalBody.textContent = 'You have unsaved edits to the current theme.';
+      } else {
+        modalBody.textContent = 'You have changes that haven\'t been applied to the site yet.';
+      }
+
+      exitModal.show();
+    });
+
+    exitBack.addEventListener('click', function() {
+      exitModal.close();
+    });
+
+    exitDiscard.addEventListener('click', function() {
+      exitModal.close();
+      discardStagedChanges();
+      window.location.href = 'index.html';
+    });
+
+    exitApply.addEventListener('click', function() {
+      exitModal.close();
+      applyStagedToSite();
+      window.location.href = 'index.html';
+    });
+  })();
+</script>
+</body>
+</html>

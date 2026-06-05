@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Insights Panel — Acme</title>
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="../tokens/primitives.css">
+<link rel="stylesheet" href="../tokens/theme.css">
+<link rel="stylesheet" href="../tokens/dataviz.css">
+<link rel="stylesheet" href="../styles/reset.css">
+<link rel="stylesheet" href="../styles/patterns/dashboard.css">
+<script>if(location.href.indexOf('?thumb')!==-1)document.write('<style>#demo-bar{display:none!important}</style>');</script>
+<script src="../js/pattern-topbar-v2.js"></script>
+<script src="../js/freshds.js"></script>
+<script src="../js/pattern-bar.js"></script>
+<style>
+  .insights-layout {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: var(--space-4);
+  }
+
+  /* AI chat area */
+  .insights-chat {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    margin-bottom: var(--space-4);
+  }
+
+  /* Insight summary card */
+  .insight-card {
+    background: var(--surface-canvas);
+    border: 1px solid var(--surface-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-4) var(--space-5);
+    margin-bottom: var(--space-3);
+  }
+  .insight-card-header {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-3);
+    margin-bottom: var(--space-3);
+  }
+  .insight-card-icon {
+    width: 32px; height: 32px;
+    border-radius: var(--radius-md);
+    background: var(--color-interactive-subtle);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 15px; color: var(--color-interactive-text);
+    flex-shrink: 0;
+  }
+  .insight-card-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 3px;
+  }
+  .insight-card-meta {
+    font-size: 11px;
+    color: var(--text-tertiary);
+  }
+  .insight-card-body {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.55;
+    margin-bottom: var(--space-3);
+  }
+  .insight-card-footer {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    flex-wrap: wrap;
+  }
+
+  /* Context stat list */
+  .context-stat {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--space-2) 0;
+    border-bottom: 1px solid var(--surface-border);
+    font-size: 13px;
+  }
+  .context-stat:last-child { border-bottom: none; }
+  .context-stat-label { color: var(--text-secondary); }
+  .context-stat-value { font-weight: 600; color: var(--text-primary); }
+
+  @media (max-width: 1023px) { .insights-layout { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div id="app">
+
+  <div class="demo-bar" id="demo-bar">
+    <div class="demo-inner" id="demo-inner">
+      <button class="demo-mode-btn" id="mode-toggle-btn" onclick="toggleDemoMode()" aria-label="Toggle dark mode">
+        <i class="ti ti-moon"></i>
+      </button>
+    </div>
+    <div class="demo-sep"></div>
+    <button class="demo-collapse-btn" id="demo-collapse-btn" onclick="toggleDemoBar()" aria-label="Collapse toolbar">
+      <i class="ti ti-minus"></i>
+    </button>
+  </div>
+
+  <div class="dash-shell">
+
+    <pattern-topbar logged-in></pattern-topbar>
+
+    <div class="dash-body">
+
+      <nav class="app-nav open" id="app-nav" aria-label="Main navigation">
+        <div class="app-nav-inner">
+          <button class="app-nav-item active"><i class="ti ti-home"></i> Home</button>
+          <button class="app-nav-item"><i class="ti ti-chart-bar"></i> Analytics</button>
+          <button class="app-nav-item"><i class="ti ti-activity"></i> Activity</button>
+          <button class="app-nav-item"><i class="ti ti-folders"></i> Projects</button>
+          <button class="app-nav-item"><i class="ti ti-check"></i> My tasks</button>
+          <button class="app-nav-item"><i class="ti ti-calendar-event"></i> Calendar</button>
+          <button class="app-nav-item"><i class="ti ti-users"></i> Members</button>
+          <button class="app-nav-item"><i class="ti ti-settings"></i> Settings</button>
+        </div>
+      </nav>
+
+      <main class="dash-main">
+        <div class="dash-page-header">
+          <div>
+            <div class="dash-page-title">AI Insights</div>
+            <div class="dash-page-subtitle">Automated analysis and recommendations for your workspace.</div>
+          </div>
+          <div class="dash-page-actions">
+            <fresh-button variant="secondary" size="sm"><i class="ti ti-refresh"></i> Refresh insights</fresh-button>
+            <fresh-button variant="primary" size="sm"><i class="ti ti-sparkles"></i> Ask a question</fresh-button>
+          </div>
+        </div>
+
+        <div class="dash-content">
+          <div class="insights-layout">
+
+            <!-- Left: AI insights + response -->
+            <div>
+
+              <!-- Proactive suggestion card -->
+              <fresh-suggestion-card
+                icon="ti-trending-up"
+                title="Revenue up 18% this week"
+                description="This is above your typical 12% weekly growth rate. Enterprise plan upgrades are the primary driver. Would you like a breakdown by customer segment?">
+              </fresh-suggestion-card>
+
+              <div style="margin-top:var(--space-4)"></div>
+
+              <fresh-suggestion-card
+                icon="ti-users-minus"
+                title="3 accounts at churn risk"
+                description="Based on usage patterns, 3 Pro plan accounts haven't logged in for 14+ days. Early outreach now could prevent churn.">
+              </fresh-suggestion-card>
+
+              <div style="margin-top:var(--space-5)"></div>
+
+              <!-- AI Q&A exchange -->
+              <div class="dash-section-title">Recent conversation</div>
+
+              <div class="insights-chat">
+                <fresh-ai-response role="user">What drove the spike in API calls on May 28th?</fresh-ai-response>
+                <fresh-ai-response role="assistant" model="Claude Sonnet 4">
+                  The spike on May 28th was primarily caused by two factors:<br><br>
+                  1. <strong>Batch export job</strong> — Priya Sharma ran a full data export at 14:32 UTC, generating ~42k API calls in under 4 minutes.<br>
+                  2. <strong>Webhook retry storm</strong> — A downstream service returned 503s for ~18 minutes, triggering exponential retry logic on 6 active webhooks.<br><br>
+                  Combined, these two events account for 94% of the anomalous traffic. I recommend adding rate limiting to export jobs and a circuit breaker on webhook retries.
+                </fresh-ai-response>
+              </div>
+
+              <!-- Confidence breakdown -->
+              <div class="insight-card">
+                <div class="insight-card-header">
+                  <div class="insight-card-icon"><i class="ti ti-brain"></i></div>
+                  <div>
+                    <div class="insight-card-title">Analysis confidence</div>
+                    <div class="insight-card-meta">Based on 30 days of event logs · Updated 4 min ago</div>
+                  </div>
+                </div>
+                <div class="insight-card-body">
+                  The root cause attribution above is based on correlated event timestamps and API call patterns. High confidence on the batch export factor; moderate confidence on the webhook retry attribution (some retry logs were truncated).
+                </div>
+                <div class="insight-card-footer">
+                  <fresh-confidence-badge value="94" label="Export attribution"></fresh-confidence-badge>
+                  <fresh-confidence-badge value="71" label="Retry attribution" show-bar></fresh-confidence-badge>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Right: context + data -->
+            <div>
+              <div class="dash-card" style="margin-bottom:var(--space-4)">
+                <div class="dash-card-title" style="margin-bottom:var(--space-3)">Data context</div>
+                <div class="context-stat"><span class="context-stat-label">Analysis window</span><span class="context-stat-value">30 days</span></div>
+                <div class="context-stat"><span class="context-stat-label">Events analyzed</span><span class="context-stat-value">2.4M</span></div>
+                <div class="context-stat"><span class="context-stat-label">Anomalies detected</span><span class="context-stat-value">7</span></div>
+                <div class="context-stat"><span class="context-stat-label">Insights generated</span><span class="context-stat-value">12</span></div>
+                <div class="context-stat"><span class="context-stat-label">Last updated</span><span class="context-stat-value">4 min ago</span></div>
+              </div>
+
+              <div class="dash-card">
+                <div class="dash-card-title" style="margin-bottom:var(--space-3)">Recommended actions</div>
+                <fresh-suggestion-card
+                  icon="ti-shield"
+                  title="Add rate limiting to exports"
+                  description="Prevent future API spikes from batch operations."
+                  accept-label="Set up now">
+                </fresh-suggestion-card>
+                <div style="margin-top:var(--space-3)"></div>
+                <fresh-suggestion-card
+                  icon="ti-mail"
+                  title="Reach out to at-risk accounts"
+                  description="Send a re-engagement email to 3 dormant Pro accounts."
+                  accept-label="Draft email">
+                </fresh-suggestion-card>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </main>
+
+    </div>
+  </div>
+
+</div>
+<script>
+  document.addEventListener('nav-toggle', function() {
+    document.getElementById('app-nav').classList.toggle('open');
+  });
+</script>
+<script src="../components/core/fresh-button.js"></script>
+<script src="../components/data/fresh-avatar.js"></script>
+<script src="../components/feedback/fresh-badge.js"></script>
+<script src="../components/ai/fresh-ai-response.js"></script>
+<script src="../components/ai/fresh-suggestion-card.js"></script>
+<script src="../components/ai/fresh-confidence-badge.js"></script>
+</body>
+</html>

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chat Interface — Acme</title>
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="../tokens/primitives.css">
+<link rel="stylesheet" href="../tokens/theme.css">
+<link rel="stylesheet" href="../tokens/dataviz.css">
+<link rel="stylesheet" href="../styles/reset.css">
+<link rel="stylesheet" href="../styles/patterns/ai-chat.css">
+<script>if(location.href.indexOf('?thumb')!==-1)document.write('<style>#demo-bar{display:none!important}</style>');</script>
+<script src="../js/pattern-topbar-v2.js"></script>
+<script src="../js/freshds.js"></script>
+<script src="../js/pattern-bar.js"></script>
+</head>
+<body>
+<div id="app">
+
+  <div class="demo-bar" id="demo-bar">
+    <div class="demo-inner" id="demo-inner">
+      <button class="demo-mode-btn" id="mode-toggle-btn" onclick="toggleDemoMode()" aria-label="Toggle dark mode">
+        <i class="ti ti-moon"></i>
+      </button>
+    </div>
+    <div class="demo-sep"></div>
+    <button class="demo-collapse-btn" id="demo-collapse-btn" onclick="toggleDemoBar()" aria-label="Collapse toolbar">
+      <i class="ti ti-minus"></i>
+    </button>
+  </div>
+
+  <div class="ai-shell">
+
+    <pattern-topbar logged-in></pattern-topbar>
+
+    <div class="ai-body">
+
+      <nav class="app-nav open" id="app-nav" aria-label="Main navigation">
+        <div class="app-nav-inner">
+          <button class="app-nav-item active"><i class="ti ti-home"></i> Home</button>
+          <button class="app-nav-item"><i class="ti ti-chart-bar"></i> Analytics</button>
+          <button class="app-nav-item"><i class="ti ti-activity"></i> Activity</button>
+          <button class="app-nav-item"><i class="ti ti-folders"></i> Projects</button>
+          <button class="app-nav-item"><i class="ti ti-check"></i> My tasks</button>
+          <button class="app-nav-item"><i class="ti ti-calendar-event"></i> Calendar</button>
+          <button class="app-nav-item"><i class="ti ti-users"></i> Members</button>
+          <button class="app-nav-item"><i class="ti ti-settings"></i> Settings</button>
+        </div>
+      </nav>
+
+      <!-- Conversation history sidebar -->
+      <aside class="ai-sidebar">
+        <div class="ai-sidebar-header">
+          <fresh-button variant="primary" size="sm" style="width:100%">
+            <i class="ti ti-plus"></i> New chat
+          </fresh-button>
+        </div>
+        <div class="ai-sidebar-list">
+          <div class="ai-sidebar-title" style="padding:var(--space-2) var(--space-3) var(--space-1)">Today</div>
+          <div class="ai-conv-item active">
+            <i class="ti ti-message ai-conv-item-icon"></i>
+            <div class="ai-conv-item-body">
+              <div class="ai-conv-item-title">Revenue analysis Q2</div>
+              <div class="ai-conv-item-time">2 min ago</div>
+            </div>
+          </div>
+          <div class="ai-conv-item">
+            <i class="ti ti-message ai-conv-item-icon"></i>
+            <div class="ai-conv-item-body">
+              <div class="ai-conv-item-title">Summarise support tickets</div>
+              <div class="ai-conv-item-time">1 hr ago</div>
+            </div>
+          </div>
+          <div class="ai-conv-item">
+            <i class="ti ti-message ai-conv-item-icon"></i>
+            <div class="ai-conv-item-body">
+              <div class="ai-conv-item-title">Draft release notes v2.6</div>
+              <div class="ai-conv-item-time">4 hrs ago</div>
+            </div>
+          </div>
+          <div class="ai-sidebar-title" style="padding:var(--space-3) var(--space-3) var(--space-1)">Yesterday</div>
+          <div class="ai-conv-item">
+            <i class="ti ti-message ai-conv-item-icon"></i>
+            <div class="ai-conv-item-body">
+              <div class="ai-conv-item-title">Churn risk report</div>
+              <div class="ai-conv-item-time">Yesterday</div>
+            </div>
+          </div>
+          <div class="ai-conv-item">
+            <i class="ti ti-message ai-conv-item-icon"></i>
+            <div class="ai-conv-item-body">
+              <div class="ai-conv-item-title">API docs refactor plan</div>
+              <div class="ai-conv-item-time">Yesterday</div>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Chat main -->
+      <main class="ai-main">
+        <div class="ai-chat-header">
+          <div>
+            <div class="ai-chat-title">Revenue analysis Q2</div>
+            <div class="ai-chat-meta">Claude Sonnet 4 · 4,820 tokens used</div>
+          </div>
+          <div class="ai-chat-actions">
+            <fresh-button variant="ghost" size="sm" icon-only aria-label="Share"><i class="ti ti-share"></i></fresh-button>
+            <fresh-button variant="ghost" size="sm" icon-only aria-label="More"><i class="ti ti-dots"></i></fresh-button>
+          </div>
+        </div>
+
+        <div class="ai-messages">
+          <fresh-ai-response role="user">What drove the revenue growth in Q2? Break it down by plan tier.</fresh-ai-response>
+
+          <fresh-ai-response role="assistant" model="Claude Sonnet 4">
+            Q2 revenue grew <strong>18.4% MoM</strong> to $48,320. Here's the breakdown by plan tier:<br><br>
+            <strong>Enterprise</strong> — $34,790 (+22%) · Drove most of the growth. 3 new logos from outbound, 2 expansions from existing accounts (Globex, Initech).<br><br>
+            <strong>Pro</strong> — $9,180 (+12%) · Steady seat expansion within existing teams. Churn remains low at 1.4%.<br><br>
+            <strong>Starter</strong> — $4,350 (+8%) · Slower growth but healthy conversion to Pro at 14% monthly.
+          </fresh-ai-response>
+
+          <fresh-ai-response role="user">Which accounts are at risk of churning this quarter?</fresh-ai-response>
+
+          <fresh-ai-response role="assistant" model="Claude Sonnet 4">
+            Based on usage patterns and engagement signals, <strong>3 accounts show elevated churn risk</strong>:<br><br>
+            1. <strong>Acme Labs</strong> (Pro, $480/mo) — No logins in 18 days. Last active user was the primary admin who left the company.<br>
+            2. <strong>DataCo</strong> (Starter, $149/mo) — Usage dropped 60% after their Q1 project ended. No new projects started.<br>
+            3. <strong>NovaTech</strong> (Pro, $320/mo) — Filed 3 support tickets in the last week, all unresolved.<br><br>
+            Recommended action: reach out to all three within 48 hours.
+          </fresh-ai-response>
+        </div>
+
+        <div class="ai-input-area">
+          <fresh-prompt-input placeholder="Ask a follow-up…" value=""></fresh-prompt-input>
+          <div class="ai-input-meta">
+            <span><fresh-token-meter used="4820" total="200000" compact></fresh-token-meter></span>
+            <span>Claude Sonnet 4</span>
+          </div>
+        </div>
+      </main>
+
+    </div>
+  </div>
+
+</div>
+<script>
+  document.addEventListener('nav-toggle', function() {
+    document.getElementById('app-nav').classList.toggle('open');
+  });
+</script>
+<script src="../components/core/fresh-button.js"></script>
+<script src="../components/data/fresh-avatar.js"></script>
+<script src="../components/ai/fresh-ai-mode-toggle.js"></script>
+<script src="../components/ai/fresh-ai-response.js"></script>
+<script src="../components/ai/fresh-prompt-input.js"></script>
+<script src="../components/ai/fresh-token-meter.js"></script>
+</body>
+</html>

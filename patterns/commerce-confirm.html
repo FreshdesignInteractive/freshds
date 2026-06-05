@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Order Confirmation — Acme</title>
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="../tokens/primitives.css">
+<link rel="stylesheet" href="../tokens/theme.css">
+<link rel="stylesheet" href="../tokens/dataviz.css">
+<link rel="stylesheet" href="../styles/reset.css">
+<link rel="stylesheet" href="../styles/patterns/commerce.css">
+<script>if(location.href.indexOf('?thumb')!==-1)document.write('<style>#demo-bar{display:none!important}</style>');</script>
+<script src="../js/pattern-topbar-v2.js"></script>
+<script src="../js/freshds.js"></script>
+<script src="../js/pattern-bar.js"></script>
+</head>
+<body>
+<div id="app">
+
+  <div class="demo-bar" id="demo-bar">
+    <div class="demo-inner" id="demo-inner">
+      <button class="demo-mode-btn" id="mode-toggle-btn" onclick="toggleDemoMode()"><i class="ti ti-moon"></i></button>
+    </div>
+    <div class="demo-sep"></div>
+    <button class="demo-collapse-btn" id="demo-collapse-btn" onclick="toggleDemoBar()"><i class="ti ti-minus"></i></button>
+  </div>
+
+  <div class="com-shell">
+    <pattern-topbar logged-in></pattern-topbar>
+
+    <div class="page-body-row">
+      <nav class="app-nav open" id="app-nav" aria-label="Main navigation">
+        <div class="app-nav-inner">
+          <button class="app-nav-item active"><i class="ti ti-home"></i> Home</button>
+          <button class="app-nav-item"><i class="ti ti-chart-bar"></i> Analytics</button>
+          <button class="app-nav-item"><i class="ti ti-activity"></i> Activity</button>
+          <button class="app-nav-item"><i class="ti ti-folders"></i> Projects</button>
+          <button class="app-nav-item"><i class="ti ti-check"></i> My tasks</button>
+          <button class="app-nav-item"><i class="ti ti-calendar-event"></i> Calendar</button>
+          <button class="app-nav-item"><i class="ti ti-users"></i> Members</button>
+          <button class="app-nav-item"><i class="ti ti-settings"></i> Settings</button>
+        </div>
+      </nav>
+    <div class="com-page">
+      <div class="com-container-sm">
+
+        <div style="text-align:center;">
+          <div class="com-confirm-icon"><i class="ti ti-check"></i></div>
+          <div class="com-page-title" style="margin-bottom:var(--space-2);">You're all set!</div>
+          <div class="com-page-subtitle" style="margin-bottom:0;">
+            Your Acme Pro subscription is now active. A receipt has been sent to <strong>jamie@techvault.io</strong>.
+          </div>
+        </div>
+
+        <div class="com-confirm-card">
+          <div style="padding:var(--space-4) var(--space-5);border-bottom:1px solid var(--surface-border);display:flex;align-items:center;justify-content:space-between;">
+            <div style="font-size:14px;font-weight:700;color:var(--text-primary);">Order #INV-2026-006</div>
+            <div class="com-invoice-status paid"><i class="ti ti-check"></i> Paid</div>
+          </div>
+          <div class="com-confirm-row">
+            <div class="com-confirm-label">Plan</div>
+            <div class="com-confirm-value">Acme Pro · Annual</div>
+          </div>
+          <div class="com-confirm-row">
+            <div class="com-confirm-label">Seats</div>
+            <div class="com-confirm-value">5 seats</div>
+          </div>
+          <div class="com-confirm-row">
+            <div class="com-confirm-label">Amount charged</div>
+            <div class="com-confirm-value">$2,026.00</div>
+          </div>
+          <div class="com-confirm-row">
+            <div class="com-confirm-label">Payment method</div>
+            <div class="com-confirm-value">Visa ···· 4242</div>
+          </div>
+          <div class="com-confirm-row">
+            <div class="com-confirm-label">Billing period</div>
+            <div class="com-confirm-value">Jun 4, 2026 – Jun 4, 2027</div>
+          </div>
+          <div class="com-confirm-row">
+            <div class="com-confirm-label">Next renewal</div>
+            <div class="com-confirm-value">Jun 4, 2027</div>
+          </div>
+        </div>
+
+        <!-- Next steps -->
+        <div style="margin-top:var(--space-8);">
+          <div style="font-size:13px;font-weight:700;color:var(--text-primary);margin-bottom:var(--space-4);text-align:center;">What's next?</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:var(--space-4);">
+            <div style="text-align:center;padding:var(--space-4);background:var(--surface-canvas);border:1px solid var(--surface-border);border-radius:var(--radius-lg);">
+              <i class="ti ti-users" style="font-size:24px;color:var(--color-interactive-text);display:block;margin-bottom:var(--space-2);"></i>
+              <div style="font-size:13px;font-weight:600;color:var(--text-primary);margin-bottom:4px;">Invite your team</div>
+              <div style="font-size:12px;color:var(--text-secondary);">Add teammates to your new Pro workspace</div>
+            </div>
+            <div style="text-align:center;padding:var(--space-4);background:var(--surface-canvas);border:1px solid var(--surface-border);border-radius:var(--radius-lg);">
+              <i class="ti ti-sparkles" style="font-size:24px;color:var(--color-interactive-text);display:block;margin-bottom:var(--space-2);"></i>
+              <div style="font-size:13px;font-weight:600;color:var(--text-primary);margin-bottom:4px;">Try AI Copilot</div>
+              <div style="font-size:12px;color:var(--text-secondary);">Your new Pro AI features are ready</div>
+            </div>
+            <div style="text-align:center;padding:var(--space-4);background:var(--surface-canvas);border:1px solid var(--surface-border);border-radius:var(--radius-lg);">
+              <i class="ti ti-plug" style="font-size:24px;color:var(--color-interactive-text);display:block;margin-bottom:var(--space-2);"></i>
+              <div style="font-size:13px;font-weight:600;color:var(--text-primary);margin-bottom:4px;">Connect tools</div>
+              <div style="font-size:12px;color:var(--text-secondary);">Set up your favourite integrations</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="display:flex;align-items:center;justify-content:center;gap:var(--space-3);margin-top:var(--space-8);">
+          <fresh-button variant="primary"><i class="ti ti-layout-dashboard"></i> Go to dashboard</fresh-button>
+          <fresh-button variant="secondary"><i class="ti ti-download"></i> Download receipt</fresh-button>
+        </div>
+
+      </div>
+    </div>
+    </div>
+  </div>
+
+</div>
+<script>
+  document.addEventListener('nav-toggle', function() {
+    document.getElementById('app-nav').classList.toggle('open');
+  });
+</script>
+<script src="../components/core/fresh-button.js"></script>
+</body>
+</html>

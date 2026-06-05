@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Diff viewer — FreshDS</title>
+<base href="../../">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="tokens/primitives.css">
+<link rel="stylesheet" href="tokens/theme.css">
+<link rel="stylesheet" href="tokens/dataviz.css">
+<link rel="stylesheet" href="styles/reset.css">
+<link rel="stylesheet" href="styles/layout.css">
+<link rel="stylesheet" href="styles/components/core.css">
+<link rel="stylesheet" href="styles/docs.css">
+<script src="js/freshds.js"></script>
+<script src="js/freshds-site.js"></script>
+</head>
+<body>
+<div class="fds-app" id="app">
+  <ds-topbar active-section="ds"></ds-topbar>
+  <div class="fds-body">
+    <ds-shell active="diffviewer"></ds-shell>
+    <main class="fds-main">
+      <div class="fds-page active" id="page-diffviewer">
+        <div class="page-header">
+          <div class="page-eyebrow">AI Components</div>
+          <h1 class="page-title">Diff viewer</h1>
+          <p class="page-desc">Side-by-side or inline comparison of original and AI-edited content. Word-level diffing highlights additions in green and deletions in red. Accept or reject the revision with one click.</p>
+        </div>
+        <div class="page-section">
+          <div class="page-section-title">Side-by-side (default)</div>
+          <div class="demo-surface col">
+            <fresh-diff-viewer
+              original="Revenue grew moderately in Q1, with some gains in the enterprise segment and a slight decline in SMB. Overall performance was in line with internal expectations."
+              revised="Revenue surged 18.4% in Q1, driven by strong enterprise expansion and improved net retention. SMB softened by 3.2%, which is being monitored closely.">
+            </fresh-diff-viewer>
+          </div>
+        </div>
+        <div class="page-section">
+          <div class="page-section-title">Inline diff</div>
+          <div class="demo-surface col">
+            <fresh-diff-viewer
+              mode="inline"
+              original="The system processes requests quickly and returns accurate results in most cases."
+              revised="The system processes requests in under 200ms and returns highly accurate results across all supported query types.">
+            </fresh-diff-viewer>
+          </div>
+        </div>
+        <div class="page-section">
+          <div class="page-section-title">Attributes</div>
+          <table class="usage-table">
+            <thead><tr><th>Attribute</th><th>Values</th><th>Default</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td>original</td><td>string</td><td>—</td><td>The original (before) text</td></tr>
+              <tr><td>revised</td><td>string</td><td>—</td><td>The AI-edited (after) text</td></tr>
+              <tr><td>mode</td><td><code>side-by-side</code> <code>inline</code></td><td><code>side-by-side</code></td><td>Diff display layout</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="page-section">
+          <div class="page-section-title">Events</div>
+          <table class="usage-table">
+            <thead><tr><th>Event</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td>accept</td><td>Fired when the user clicks "Accept" — apply the revised version</td></tr>
+              <tr><td>reject</td><td>Fired when the user clicks "Reject" — revert to original</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+<script src="components/core/fresh-button.js"></script>
+<script src="components/core/fresh-input.js"></script>
+<script src="components/ai/fresh-diff-viewer.js"></script>
+<script src="components/navigation/fresh-simple-tabs.js"></script>
+</body>
+</html>

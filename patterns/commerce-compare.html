@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Plan Comparison — Acme</title>
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="../tokens/primitives.css">
+<link rel="stylesheet" href="../tokens/theme.css">
+<link rel="stylesheet" href="../tokens/dataviz.css">
+<link rel="stylesheet" href="../styles/reset.css">
+<link rel="stylesheet" href="../styles/patterns/commerce.css">
+<script>if(location.href.indexOf('?thumb')!==-1)document.write('<style>#demo-bar{display:none!important}</style>');</script>
+<script src="../js/pattern-topbar-v2.js"></script>
+<script src="../js/freshds.js"></script>
+<script src="../js/pattern-bar.js"></script>
+</head>
+<body>
+<div id="app">
+
+  <div class="demo-bar" id="demo-bar">
+    <div class="demo-inner" id="demo-inner">
+      <button class="demo-mode-btn" id="mode-toggle-btn" onclick="toggleDemoMode()"><i class="ti ti-moon"></i></button>
+    </div>
+    <div class="demo-sep"></div>
+    <button class="demo-collapse-btn" id="demo-collapse-btn" onclick="toggleDemoBar()"><i class="ti ti-minus"></i></button>
+  </div>
+
+  <div class="com-shell">
+    <pattern-topbar logged-in></pattern-topbar>
+
+    <div class="page-body-row">
+      <nav class="app-nav open" id="app-nav" aria-label="Main navigation">
+        <div class="app-nav-inner">
+          <button class="app-nav-item active"><i class="ti ti-home"></i> Home</button>
+          <button class="app-nav-item"><i class="ti ti-chart-bar"></i> Analytics</button>
+          <button class="app-nav-item"><i class="ti ti-activity"></i> Activity</button>
+          <button class="app-nav-item"><i class="ti ti-folders"></i> Projects</button>
+          <button class="app-nav-item"><i class="ti ti-check"></i> My tasks</button>
+          <button class="app-nav-item"><i class="ti ti-calendar-event"></i> Calendar</button>
+          <button class="app-nav-item"><i class="ti ti-users"></i> Members</button>
+          <button class="app-nav-item"><i class="ti ti-settings"></i> Settings</button>
+        </div>
+      </nav>
+    <div class="com-page">
+      <div class="com-container-lg">
+
+        <div class="com-page-title">Compare plans</div>
+        <div class="com-page-subtitle">See exactly what's included in each plan.</div>
+
+        <div style="background:var(--surface-canvas);border:1px solid var(--surface-border);border-radius:var(--radius-lg);overflow:hidden;">
+          <table class="com-compare-table">
+            <thead>
+              <tr>
+                <th style="width:35%;text-align:left;">Features</th>
+                <th>Starter<br><span style="font-weight:500;font-size:12px;color:var(--text-secondary)">Free</span></th>
+                <th class="featured">Pro<br><span style="font-weight:600;font-size:12px;">$48/seat/mo</span></th>
+                <th>Enterprise<br><span style="font-weight:500;font-size:12px;color:var(--text-secondary)">Custom</span></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="com-compare-section"><td colspan="4">Core</td></tr>
+              <tr><td>Team members</td><td>Up to 3</td><td>Unlimited</td><td>Unlimited</td></tr>
+              <tr><td>Projects</td><td>5</td><td>Unlimited</td><td>Unlimited</td></tr>
+              <tr><td>Storage</td><td>2 GB</td><td>100 GB</td><td>1 TB+</td></tr>
+              <tr><td>API access</td><td><i class="ti ti-x com-dash"></i></td><td><i class="ti ti-check com-check"></i></td><td><i class="ti ti-check com-check"></i></td></tr>
+              <tr><td>Custom domain</td><td><i class="ti ti-x com-dash"></i></td><td><i class="ti ti-check com-check"></i></td><td><i class="ti ti-check com-check"></i></td></tr>
+
+              <tr class="com-compare-section"><td colspan="4">AI Features</td></tr>
+              <tr><td>AI Copilot</td><td><i class="ti ti-x com-dash"></i></td><td>500 queries/mo</td><td>Unlimited</td></tr>
+              <tr><td>AI-generated reports</td><td><i class="ti ti-x com-dash"></i></td><td><i class="ti ti-check com-check"></i></td><td><i class="ti ti-check com-check"></i></td></tr>
+              <tr><td>Custom AI models</td><td><i class="ti ti-x com-dash"></i></td><td><i class="ti ti-x com-dash"></i></td><td><i class="ti ti-check com-check"></i></td></tr>
+              <tr><td>Knowledge base</td><td><i class="ti ti-x com-dash"></i></td><td>Up to 10 sources</td><td>Unlimited</td></tr>
+
+              <tr class="com-compare-section"><td colspan="4">Security & Compliance</td></tr>
+              <tr><td>SSO / SAML</td><td><i class="ti ti-x com-dash"></i></td><td><i class="ti ti-x com-dash"></i></td><td><i class="ti ti-check com-check"></i></td></tr>
+              <tr><td>Audit log</td><td><i class="ti ti-x com-dash"></i></td><td>30 days</td><td>1 year</td></tr>
+              <tr><td>SOC 2 Type II</td><td><i class="ti ti-x com-dash"></i></td><td><i class="ti ti-check com-check"></i></td><td><i class="ti ti-check com-check"></i></td></tr>
+              <tr><td>GDPR DPA</td><td><i class="ti ti-x com-dash"></i></td><td><i class="ti ti-check com-check"></i></td><td><i class="ti ti-check com-check"></i></td></tr>
+              <tr><td>Role-based access</td><td>Basic</td><td>Advanced</td><td>Custom</td></tr>
+
+              <tr class="com-compare-section"><td colspan="4">Support</td></tr>
+              <tr><td>Support channel</td><td>Community</td><td>Priority email</td><td>Dedicated CSM</td></tr>
+              <tr><td>Response time</td><td>Best effort</td><td>&lt; 4 hours</td><td>&lt; 1 hour + SLA</td></tr>
+              <tr><td>Onboarding</td><td>Self-serve</td><td>Guided setup</td><td>White-glove</td></tr>
+
+              <tr>
+                <td></td>
+                <td style="padding:var(--space-4);"><fresh-button variant="secondary" style="width:100%">Get started</fresh-button></td>
+                <td style="padding:var(--space-4);"><fresh-button variant="primary" style="width:100%">Start trial</fresh-button></td>
+                <td style="padding:var(--space-4);"><fresh-button variant="secondary" style="width:100%">Talk to sales</fresh-button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </div>
+    </div>
+  </div>
+
+</div>
+<script>
+  document.addEventListener('nav-toggle', function() {
+    document.getElementById('app-nav').classList.toggle('open');
+  });
+</script>
+<script src="../components/core/fresh-button.js"></script>
+</body>
+</html>

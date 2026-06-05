@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Card — FreshDS</title>
+<base href="../../">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="tokens/primitives.css">
+<link rel="stylesheet" href="tokens/theme.css">
+<link rel="stylesheet" href="tokens/dataviz.css">
+<link rel="stylesheet" href="styles/reset.css">
+<link rel="stylesheet" href="styles/layout.css">
+<link rel="stylesheet" href="styles/components/core.css">
+<link rel="stylesheet" href="styles/docs.css">
+<script src="js/freshds.js"></script>
+<script src="js/freshds-site.js"></script>
+</head>
+<body>
+<div class="fds-app" id="app">
+  <ds-topbar active-section="ds"></ds-topbar>
+  <div class="fds-body">
+    <ds-shell active="card"></ds-shell>
+    <main class="fds-main">
+      <div class="fds-page active" id="page-card">
+        <div class="page-header">
+          <div class="page-eyebrow">Containers</div>
+          <h1 class="page-title">Card</h1>
+          <p class="page-desc">Contained surface for grouping related content. Three slots — header, body (default), and footer — compose into any card layout. Add <code style="font-family:var(--font-mono);font-size:13px;background:var(--surface-overlay);padding:1px 6px;border-radius:4px">interactive</code> for hover lift.</p>
+        </div>
+        <div class="page-section">
+          <div class="page-section-title">Basic</div>
+          <div class="demo-surface" style="gap:var(--space-4);align-items:stretch">
+            <fresh-card style="flex:1;min-width:180px">
+              <div style="font-family:var(--font-sans);font-size:13px;color:var(--text-secondary);line-height:1.6">A simple card with body content only.</div>
+            </fresh-card>
+            <fresh-card style="flex:1;min-width:180px">
+              <div slot="header" style="display:flex;align-items:center;justify-content:space-between">
+                <span style="font-family:var(--font-sans);font-size:13px;font-weight:600;color:var(--text-primary)">Card with header</span>
+                <fresh-button variant="ghost" icon-only size="sm"><i class="ti ti-dots"></i></fresh-button>
+              </div>
+              <div style="font-family:var(--font-sans);font-size:13px;color:var(--text-secondary);line-height:1.6">Card body content here.</div>
+            </fresh-card>
+          </div>
+        </div>
+        <div class="page-section">
+          <div class="page-section-title">With header and footer</div>
+          <div class="demo-surface col" style="max-width:400px">
+            <fresh-card>
+              <div slot="header" style="font-family:var(--font-sans);font-size:13px;font-weight:600;color:var(--text-primary)">Delete workspace</div>
+              <div style="font-family:var(--font-sans);font-size:13px;color:var(--text-secondary);line-height:1.65">This action is permanent and cannot be undone. All projects and data within this workspace will be deleted.</div>
+              <div slot="footer" style="display:flex;gap:var(--space-2);justify-content:flex-end">
+                <fresh-button variant="ghost" size="sm">Cancel</fresh-button>
+                <fresh-button variant="danger" size="sm">Delete workspace</fresh-button>
+              </div>
+            </fresh-card>
+          </div>
+        </div>
+        <div class="page-section">
+          <div class="page-section-title">Interactive (hover)</div>
+          <div class="demo-surface" style="gap:var(--space-4)">
+            <fresh-card interactive style="flex:1;min-width:160px">
+              <div style="font-family:var(--font-sans)">
+                <div style="font-size:20px;color:var(--color-interactive);margin-bottom:var(--space-3)"><i class="ti ti-sparkles"></i></div>
+                <div style="font-size:13px;font-weight:600;color:var(--text-primary);margin-bottom:4px">AI components</div>
+                <div style="font-size:12px;color:var(--text-secondary)">12 AI-specific components</div>
+              </div>
+            </fresh-card>
+            <fresh-card interactive style="flex:1;min-width:160px">
+              <div style="font-family:var(--font-sans)">
+                <div style="font-size:20px;color:var(--color-interactive);margin-bottom:var(--space-3)"><i class="ti ti-cursor"></i></div>
+                <div style="font-size:13px;font-weight:600;color:var(--text-primary);margin-bottom:4px">Core UI</div>
+                <div style="font-size:12px;color:var(--text-secondary)">8 foundation components</div>
+              </div>
+            </fresh-card>
+            <fresh-card interactive style="flex:1;min-width:160px">
+              <div style="font-family:var(--font-sans)">
+                <div style="font-size:20px;color:var(--color-interactive);margin-bottom:var(--space-3)"><i class="ti ti-adjustments-horizontal"></i></div>
+                <div style="font-size:13px;font-weight:600;color:var(--text-primary);margin-bottom:4px">Configurator</div>
+                <div style="font-size:12px;color:var(--text-secondary)">Set brand colors + export</div>
+              </div>
+            </fresh-card>
+          </div>
+        </div>
+        <div class="page-section">
+          <div class="page-section-title">Attributes &amp; slots</div>
+          <table class="usage-table">
+            <thead><tr><th>Attribute / Slot</th><th>Values</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td>padding</td><td><code>none</code> <code>sm</code> <code>md</code> <code>lg</code></td><td>Body padding (default: md)</td></tr>
+              <tr><td>interactive</td><td>boolean</td><td>Adds hover lift and pointer cursor</td></tr>
+              <tr><td>href</td><td>URL</td><td>Renders as <code>&lt;a&gt;</code>, implies interactive</td></tr>
+              <tr><td>slot="header"</td><td>element</td><td>Top section with bottom border</td></tr>
+              <tr><td>slot="footer"</td><td>element</td><td>Bottom section with top border</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+<script src="components/core/fresh-button.js"></script>
+<script src="components/core/fresh-input.js"></script>
+<script src="components/containers/fresh-card.js"></script>
+<script src="components/navigation/fresh-simple-tabs.js"></script>
+</body>
+</html>

@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Model Setup — Acme</title>
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="../tokens/primitives.css">
+<link rel="stylesheet" href="../tokens/theme.css">
+<link rel="stylesheet" href="../tokens/dataviz.css">
+<link rel="stylesheet" href="../styles/reset.css">
+<link rel="stylesheet" href="../styles/patterns/onboarding.css">
+<script>if(location.href.indexOf('?thumb')!==-1)document.write('<style>#demo-bar{display:none!important}</style>');</script>
+<script src="../js/pattern-topbar-v2.js"></script>
+<script src="../js/freshds.js"></script>
+<script src="../js/pattern-bar.js"></script>
+<style>
+  .ai-setup-section {
+    background: var(--surface-canvas);
+    border: 1px solid var(--surface-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-5);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+  .ai-setup-section + .ai-setup-section { margin-top: var(--space-4); }
+  .ai-section-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    margin-bottom: var(--space-1);
+  }
+  .ai-model-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+  }
+  .ai-model-info { flex: 1; }
+  .ai-model-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 2px;
+  }
+  .ai-model-desc {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.4;
+  }
+
+  /* temperature slider */
+  .temp-row {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+  }
+  .temp-slider {
+    flex: 1;
+    -webkit-appearance: none;
+    appearance: none;
+    height: 4px;
+    border-radius: var(--radius-full);
+    background: var(--surface-border-strong);
+    outline: none;
+    cursor: pointer;
+  }
+  .temp-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border-radius: var(--radius-full);
+    background: var(--color-interactive);
+    border: 2px solid var(--surface-bg);
+    box-shadow: 0 0 0 2px var(--color-interactive);
+    cursor: pointer;
+    transition: box-shadow 150ms;
+  }
+  .temp-slider::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+    border-radius: var(--radius-full);
+    background: var(--color-interactive);
+    border: 2px solid var(--surface-bg);
+    cursor: pointer;
+  }
+  .temp-value {
+    min-width: 32px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-primary);
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+  }
+  .temp-labels {
+    display: flex;
+    justify-content: space-between;
+    margin-top: var(--space-2);
+    font-size: 11px;
+    color: var(--text-tertiary);
+  }
+  .system-prompt-textarea {
+    width: 100%;
+    min-height: 100px;
+    padding: var(--space-3);
+    background: var(--surface-input);
+    border: 1px solid var(--surface-border);
+    border-radius: var(--radius-md);
+    font-family: var(--font-sans);
+    font-size: 13px;
+    color: var(--text-primary);
+    line-height: 1.5;
+    resize: vertical;
+    outline: none;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  .system-prompt-textarea::placeholder { color: var(--text-tertiary); }
+  .system-prompt-textarea:focus {
+    border-color: var(--color-interactive);
+    box-shadow: 0 0 0 3px var(--color-interactive-subtle);
+  }
+  .ai-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1);
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--color-interactive-text);
+    background: var(--color-interactive-subtle);
+    border: 1px solid var(--color-interactive-border);
+    border-radius: var(--radius-full);
+    padding: 2px var(--space-2);
+    letter-spacing: 0.02em;
+  }
+</style>
+</head>
+<body>
+<div id="app">
+
+  <div class="demo-bar" id="demo-bar">
+    <div class="demo-inner" id="demo-inner">
+      <button class="demo-mode-btn" id="mode-toggle-btn" onclick="toggleDemoMode()" aria-label="Toggle dark mode">
+        <i class="ti ti-moon"></i>
+      </button>
+    </div>
+    <div class="demo-sep"></div>
+    <button class="demo-collapse-btn" id="demo-collapse-btn" onclick="toggleDemoBar()" aria-label="Collapse toolbar">
+      <i class="ti ti-minus"></i>
+    </button>
+  </div>
+
+  <div class="onb-page">
+    <pattern-topbar logged-in></pattern-topbar>
+
+    <div class="page-body-row">
+      <nav class="app-nav open" id="app-nav" aria-label="Main navigation">
+        <div class="app-nav-inner">
+          <button class="app-nav-item active"><i class="ti ti-home"></i> Home</button>
+          <button class="app-nav-item"><i class="ti ti-chart-bar"></i> Analytics</button>
+          <button class="app-nav-item"><i class="ti ti-activity"></i> Activity</button>
+          <button class="app-nav-item"><i class="ti ti-folders"></i> Projects</button>
+          <button class="app-nav-item"><i class="ti ti-check"></i> My tasks</button>
+          <button class="app-nav-item"><i class="ti ti-calendar-event"></i> Calendar</button>
+          <button class="app-nav-item"><i class="ti ti-users"></i> Members</button>
+          <button class="app-nav-item"><i class="ti ti-settings"></i> Settings</button>
+        </div>
+      </nav>
+    <div class="onb-body">
+      <div class="onb-wrap">
+
+        <div class="onb-eyebrow"><span class="ai-badge"><i class="ti ti-sparkles"></i> AI Setup</span></div>
+        <h1 class="onb-title">Configure your AI assistant</h1>
+        <p class="onb-sub">Choose a model and tune how the AI behaves for your workspace. These settings can be changed anytime.</p>
+
+        <!-- Model selection -->
+        <div class="ai-setup-section">
+          <div class="ai-section-label">Model</div>
+          <div class="ai-model-row">
+            <div class="ai-model-info">
+              <div class="ai-model-name">Choose your default model</div>
+              <div class="ai-model-desc">This model is used across all AI features unless overridden per-workflow.</div>
+            </div>
+            <fresh-model-selector
+              selected="sonnet"
+              models='[
+                {"key":"opus",    "name":"Claude Opus 4",    "badge":"Most capable", "description":"Best for complex reasoning and analysis"},
+                {"key":"sonnet",  "name":"Claude Sonnet 4",  "badge":"Balanced",     "description":"Great quality at lower cost"},
+                {"key":"haiku",   "name":"Claude Haiku 4",   "badge":"Fast",         "description":"Fastest responses for simple tasks"}
+              ]'>
+            </fresh-model-selector>
+          </div>
+          <fresh-token-meter used="24500" total="200000"></fresh-token-meter>
+        </div>
+
+        <!-- Temperature -->
+        <div class="ai-setup-section">
+          <div class="ai-section-label">Creativity (Temperature)</div>
+          <div class="onb-field">
+            <div class="temp-row">
+              <input
+                class="temp-slider"
+                type="range"
+                id="temp-slider"
+                min="0" max="1" step="0.1" value="0.7"
+                oninput="document.getElementById('temp-val').textContent = parseFloat(this.value).toFixed(1)">
+              <span class="temp-value" id="temp-val">0.7</span>
+            </div>
+            <div class="temp-labels">
+              <span>Precise</span>
+              <span>Balanced</span>
+              <span>Creative</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- System prompt -->
+        <div class="ai-setup-section">
+          <div class="ai-section-label">System Prompt</div>
+          <div class="onb-field">
+            <div class="onb-label" style="font-size:13px;color:var(--text-secondary);font-weight:400;line-height:1.5">
+              Customize how the AI introduces itself and what tone it takes. Leave blank to use the default.
+            </div>
+            <textarea
+              class="system-prompt-textarea"
+              id="system-prompt"
+              placeholder="You are a helpful assistant for the Acme Design Team. Be concise, professional, and creative…"
+            ></textarea>
+          </div>
+        </div>
+
+        <div class="onb-nav">
+          <fresh-button variant="ghost"><i class="ti ti-arrow-left"></i> Back</fresh-button>
+          <fresh-button variant="primary">Save and continue <i class="ti ti-arrow-right"></i></fresh-button>
+        </div>
+
+      </div>
+    </div>
+    </div>
+  </div>
+
+</div>
+<script>
+  document.addEventListener('nav-toggle', function() {
+    document.getElementById('app-nav').classList.toggle('open');
+  });
+</script>
+<script src="../components/core/fresh-button.js"></script>
+<script src="../components/ai/fresh-model-selector.js"></script>
+<script src="../components/ai/fresh-token-meter.js"></script>
+</body>
+</html>

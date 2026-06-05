@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Feedback row — FreshDS</title>
+<base href="../../">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="tokens/primitives.css">
+<link rel="stylesheet" href="tokens/theme.css">
+<link rel="stylesheet" href="tokens/dataviz.css">
+<link rel="stylesheet" href="styles/reset.css">
+<link rel="stylesheet" href="styles/layout.css">
+<link rel="stylesheet" href="styles/components/core.css">
+<link rel="stylesheet" href="styles/docs.css">
+<script src="js/freshds.js"></script>
+<script src="js/freshds-site.js"></script>
+</head>
+<body>
+<div class="fds-app" id="app">
+  <ds-topbar active-section="ds"></ds-topbar>
+  <div class="fds-body">
+    <ds-shell active="feedback"></ds-shell>
+    <main class="fds-main">
+      <div class="fds-page active" id="page-feedback">
+        <div class="page-header">
+          <div class="page-eyebrow">AI Components</div>
+          <h1 class="page-title">Feedback row</h1>
+          <p class="page-desc">Thumbs up/down and optional flag controls for collecting user ratings on AI-generated responses. Toggle the active state by clicking again.</p>
+        </div>
+        <div class="page-section">
+          <div class="page-section-title">Default</div>
+          <div class="demo-surface col" style="gap:var(--space-4)">
+            <fresh-feedback></fresh-feedback>
+            <fresh-feedback show-flag></fresh-feedback>
+          </div>
+        </div>
+        <div class="page-section">
+          <div class="page-section-title">Compact (icon-only)</div>
+          <div class="demo-surface" style="align-items:center;gap:var(--space-4)">
+            <fresh-feedback compact></fresh-feedback>
+            <fresh-feedback compact show-flag></fresh-feedback>
+          </div>
+        </div>
+        <div class="page-section">
+          <div class="page-section-title">After a response bubble</div>
+          <div class="demo-surface col" style="gap:var(--space-3);max-width:600px">
+            <fresh-ai-response role="assistant" model="Claude Sonnet 4.6">Revenue grew 18.4% quarter-over-quarter, driven primarily by the enterprise tier.</fresh-ai-response>
+            <div style="padding-left:40px">
+              <fresh-feedback compact show-flag></fresh-feedback>
+            </div>
+          </div>
+        </div>
+        <div class="page-section">
+          <div class="page-section-title">Attributes</div>
+          <table class="usage-table">
+            <thead><tr><th>Attribute</th><th>Values</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td>show-flag</td><td>boolean</td><td>Adds a flag/report button separated by a divider</td></tr>
+              <tr><td>compact</td><td>boolean</td><td>Icon-only layout with no text labels</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="page-section">
+          <div class="page-section-title">Events</div>
+          <table class="usage-table">
+            <thead><tr><th>Event</th><th>Detail</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td>rate</td><td><code>{ value: 'up' | 'down' | null }</code></td><td>Fired on every vote change — null when toggled off</td></tr>
+              <tr><td>flag</td><td>—</td><td>Fired when the flag button is clicked</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+<script src="components/core/fresh-button.js"></script>
+<script src="components/core/fresh-input.js"></script>
+<script src="components/ai/fresh-ai-response.js"></script>
+<script src="components/ai/fresh-feedback.js"></script>
+<script src="components/navigation/fresh-simple-tabs.js"></script>
+</body>
+</html>

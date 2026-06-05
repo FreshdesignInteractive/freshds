@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thinking indicator — FreshDS</title>
+<base href="../../">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="tokens/primitives.css">
+<link rel="stylesheet" href="tokens/theme.css">
+<link rel="stylesheet" href="tokens/dataviz.css">
+<link rel="stylesheet" href="styles/reset.css">
+<link rel="stylesheet" href="styles/layout.css">
+<link rel="stylesheet" href="styles/components/core.css">
+<link rel="stylesheet" href="styles/docs.css">
+<script src="js/freshds.js"></script>
+<script src="js/freshds-site.js"></script>
+</head>
+<body>
+<div class="fds-app" id="app">
+  <ds-topbar active-section="ds"></ds-topbar>
+  <div class="fds-body">
+    <ds-shell active="thinking"></ds-shell>
+    <main class="fds-main">
+      <div class="fds-page active" id="page-thinking">
+        <div class="page-header">
+          <div class="page-eyebrow">AI Components</div>
+          <h1 class="page-title">Thinking indicator</h1>
+          <p class="page-desc">Animated dots shown while the AI processes a request. Communicates that the system is working without exposing technical loading details.</p>
+        </div>
+        <div class="page-section">
+          <div class="page-section-title">Default</div>
+          <div class="demo-surface col" style="gap:var(--space-4)">
+            <fresh-thinking></fresh-thinking>
+            <fresh-thinking label="Analyzing your data"></fresh-thinking>
+            <fresh-thinking label="Writing code"></fresh-thinking>
+            <fresh-thinking label="Searching documents"></fresh-thinking>
+          </div>
+        </div>
+        <div class="page-section">
+          <div class="page-section-title">Sizes</div>
+          <div class="demo-surface" style="align-items:center;gap:var(--space-6)">
+            <div style="text-align:center">
+              <fresh-thinking label="Thinking" size="sm"></fresh-thinking>
+              <div style="font-size:11px;color:var(--text-tertiary);font-family:var(--font-sans);margin-top:8px">sm</div>
+            </div>
+            <div style="text-align:center">
+              <fresh-thinking label="Thinking"></fresh-thinking>
+              <div style="font-size:11px;color:var(--text-tertiary);font-family:var(--font-sans);margin-top:8px">md</div>
+            </div>
+          </div>
+        </div>
+        <div class="page-section">
+          <div class="page-section-title">In a chat thread</div>
+          <div class="demo-surface col" style="gap:var(--space-4);max-width:560px">
+            <fresh-ai-response role="user">Summarize the key risks from the board report.</fresh-ai-response>
+            <fresh-thinking label="Reading board report"></fresh-thinking>
+          </div>
+        </div>
+        <div class="page-section">
+          <div class="page-section-title">Attributes</div>
+          <table class="usage-table">
+            <thead><tr><th>Attribute</th><th>Values</th><th>Default</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td>label</td><td>string</td><td><code>"Thinking"</code></td><td>Text shown next to the animated dots</td></tr>
+              <tr><td>size</td><td><code>sm</code> <code>md</code></td><td><code>md</code></td><td>Controls dot size and font size</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+<script src="components/core/fresh-button.js"></script>
+<script src="components/core/fresh-input.js"></script>
+<script src="components/ai/fresh-ai-response.js"></script>
+<script src="components/ai/fresh-thinking.js"></script>
+<script src="components/navigation/fresh-simple-tabs.js"></script>
+</body>
+</html>

@@ -1,0 +1,57 @@
+/* ============================================================
+   FRESHDS — TIER 1: PRIMITIVES
+   Raw values. Never used directly in components.
+   Scale steps (--scale-*, --primary-*, etc.) are computed
+   at runtime by freshds.js and written to :root.
+   ============================================================ */
+:root {
+  /* Dark / Light — define the neutral scale endpoints */
+  --scale-dark:  #1f2328;
+  --scale-light: #ffffff;
+
+  /* User-defined absolute surface colors — set by JS engine, never derived from scale */
+  --color-page-bg:       #ffffff;   /* page background + navbar */
+  --color-input-surface: #ffffff;   /* form control fill */
+
+  /* Brand anchors — step 9 of their respective generated scales */
+  --primitive-primary:   #7c6af7;
+  --primitive-secondary: #2dd4bf;
+
+  /* Status anchors — step 9 of their generated scales */
+  --primitive-success: #22c55e;
+  --primitive-warning: #f59e0b;
+  --primitive-danger:  #f43f5e;
+
+  /* Typography */
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+
+  /* Spacing (4px base) */
+  --space-1:  4px;   --space-2:  8px;   --space-3: 12px;
+  --space-4:  16px;  --space-5:  20px;  --space-6: 24px;
+  --space-8:  32px;  --space-10: 40px;  --space-12: 48px;
+
+  /* Border radius */
+  --radius-sm:   4px;
+  --radius-md:   8px;
+  --radius-lg:   12px;
+  --radius-xl:   20px;
+  --radius-full: 9999px;
+
+  /* Elevation */
+  --elev-0: none;
+  --elev-1: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  --elev-2: 0 4px 12px rgba(0,0,0,0.08), 0 2px 4px rgba(0,0,0,0.04);
+  --elev-3: 0 8px 24px rgba(0,0,0,0.12), 0 4px 8px rgba(0,0,0,0.06);
+
+  /* Layout */
+  --sidebar-w: 240px;
+  --topbar-h:  52px;
+
+  /* Breakpoints */
+  --bp-sm:  480px;
+  --bp-md:  768px;
+  --bp-lg:  1024px;
+  --bp-xl:  1280px;
+  --bp-2xl: 1536px;
+}

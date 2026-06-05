@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Response bubble — FreshDS</title>
+<base href="../../">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="tokens/primitives.css">
+<link rel="stylesheet" href="tokens/theme.css">
+<link rel="stylesheet" href="tokens/dataviz.css">
+<link rel="stylesheet" href="styles/reset.css">
+<link rel="stylesheet" href="styles/layout.css">
+<link rel="stylesheet" href="styles/components/core.css">
+<link rel="stylesheet" href="styles/docs.css">
+<script src="js/freshds.js"></script>
+<script src="js/freshds-site.js"></script>
+</head>
+<body>
+<div class="fds-app" id="app">
+  <ds-topbar active-section="ds"></ds-topbar>
+  <div class="fds-body">
+    <ds-shell active="airesponse"></ds-shell>
+    <main class="fds-main">
+      <div class="fds-page active" id="page-airesponse">
+        <div class="page-header">
+          <div class="page-eyebrow">AI Components</div>
+          <h1 class="page-title">Response bubble</h1>
+          <p class="page-desc">Chat bubble for displaying user messages and AI assistant responses. Supports streaming animation, model attribution, and deterministic avatar colors derived from the name.</p>
+        </div>
+        <div class="page-section">
+          <div class="page-section-title">Conversation thread</div>
+          <div class="demo-surface col" style="gap:var(--space-4);max-width:600px">
+            <fresh-ai-response role="user">What's the revenue trend for Q1 2025?</fresh-ai-response>
+            <fresh-ai-response role="assistant" model="Claude Sonnet 4.6">Revenue grew 18.4% quarter-over-quarter, driven primarily by the enterprise tier expansion. The mid-market segment remained flat at $2.1M MRR, while SMB showed early-stage churn of 3.2%.</fresh-ai-response>
+            <fresh-ai-response role="user">Can you break down the enterprise growth?</fresh-ai-response>
+            <fresh-ai-response role="assistant" model="Claude Sonnet 4.6" streaming>Analyzing enterprise cohort data</fresh-ai-response>
+          </div>
+        </div>
+        <div class="page-section">
+          <div class="page-section-title">Named assistant avatars</div>
+          <div class="demo-surface col" style="gap:var(--space-4);max-width:600px">
+            <fresh-ai-response role="assistant" avatar="Data Agent" model="claude-opus-4-8">Enterprise ARR reached $4.8M, a 31% YoY increase. Top contributors: Acme Corp (+$420k), Globex (+$310k), and Initech (+$190k).</fresh-ai-response>
+            <fresh-ai-response role="assistant" avatar="Code Bot" model="claude-haiku-4-5">Here's the SQL query to pull enterprise cohort data from your warehouse.</fresh-ai-response>
+          </div>
+        </div>
+        <div class="page-section">
+          <div class="page-section-title">Attributes</div>
+          <table class="usage-table">
+            <thead><tr><th>Attribute</th><th>Values</th><th>Default</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td>role</td><td><code>user</code> <code>assistant</code></td><td><code>assistant</code></td><td>Determines layout direction and bubble style</td></tr>
+              <tr><td>model</td><td>string</td><td>—</td><td>Model name shown as a small badge in the header</td></tr>
+              <tr><td>streaming</td><td>boolean</td><td>—</td><td>Shows blinking cursor at end of content</td></tr>
+              <tr><td>avatar</td><td>string</td><td><code>"AI"</code></td><td>Avatar initials + deterministic color seed</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="page-section">
+          <div class="page-section-title">Tokens used</div>
+          <div style="display:flex;flex-wrap:wrap;gap:8px">
+            <span class="token-pill"><span class="token-dot" style="background:var(--color-interactive)"></span>--color-interactive</span>
+            <span class="token-pill"><span class="token-dot" style="background:var(--surface-subtle)"></span>--surface-subtle</span>
+            <span class="token-pill"><span class="token-dot" style="background:var(--surface-border)"></span>--surface-border</span>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+<script src="components/core/fresh-button.js"></script>
+<script src="components/core/fresh-input.js"></script>
+<script src="components/ai/fresh-ai-response.js"></script>
+<script src="components/navigation/fresh-simple-tabs.js"></script>
+</body>
+</html>

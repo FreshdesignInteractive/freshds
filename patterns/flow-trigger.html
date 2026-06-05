@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trigger Config — Acme</title>
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="../tokens/primitives.css">
+<link rel="stylesheet" href="../tokens/theme.css">
+<link rel="stylesheet" href="../tokens/dataviz.css">
+<link rel="stylesheet" href="../styles/reset.css">
+<link rel="stylesheet" href="../styles/patterns/dashboard.css">
+<link rel="stylesheet" href="../styles/patterns/workflow.css">
+<script>if(location.href.indexOf('?thumb')!==-1)document.write('<style>#demo-bar{display:none!important}</style>');</script>
+<script src="../js/pattern-topbar-v2.js"></script>
+<script src="../js/freshds.js"></script>
+<script src="../js/pattern-bar.js"></script>
+</head>
+<body>
+<div id="app">
+
+  <div class="demo-bar" id="demo-bar">
+    <div class="demo-inner" id="demo-inner">
+      <button class="demo-mode-btn" id="mode-toggle-btn" onclick="toggleDemoMode()" aria-label="Toggle dark mode">
+        <i class="ti ti-moon"></i>
+      </button>
+    </div>
+    <div class="demo-sep"></div>
+    <button class="demo-collapse-btn" id="demo-collapse-btn" onclick="toggleDemoBar()" aria-label="Collapse toolbar">
+      <i class="ti ti-minus"></i>
+    </button>
+  </div>
+
+  <div class="dash-shell">
+
+    <pattern-topbar logged-in></pattern-topbar>
+
+    <div class="dash-body">
+
+      <nav class="app-nav open" id="app-nav" aria-label="Main navigation">
+        <div class="app-nav-inner">
+          <button class="app-nav-item active"><i class="ti ti-home"></i> Home</button>
+          <button class="app-nav-item"><i class="ti ti-chart-bar"></i> Analytics</button>
+          <button class="app-nav-item"><i class="ti ti-activity"></i> Activity</button>
+          <button class="app-nav-item"><i class="ti ti-folders"></i> Projects</button>
+          <button class="app-nav-item"><i class="ti ti-check"></i> My tasks</button>
+          <button class="app-nav-item"><i class="ti ti-calendar-event"></i> Calendar</button>
+          <button class="app-nav-item"><i class="ti ti-users"></i> Members</button>
+          <button class="app-nav-item"><i class="ti ti-settings"></i> Settings</button>
+        </div>
+      </nav>
+
+      <main class="dash-main">
+
+        <div class="dash-page-header" style="flex-shrink:0;">
+          <div>
+            <div class="dash-page-title">Configure Trigger</div>
+            <div class="dash-page-subtitle">Choose what starts this workflow</div>
+          </div>
+          <div class="dash-page-actions">
+            <fresh-button variant="secondary" size="sm">Cancel</fresh-button>
+            <fresh-button variant="primary" size="sm"><i class="ti ti-check"></i> Save trigger</fresh-button>
+          </div>
+        </div>
+
+        <div class="wf-layout" style="flex:1;overflow:hidden;">
+
+          <!-- Trigger type selector -->
+          <div class="wf-left" style="width:340px;">
+            <div class="wf-panel-title">Trigger type</div>
+            <div class="wf-trigger-grid">
+              <div class="wf-trigger-card">
+                <div class="wf-trigger-icon" style="background:var(--color-info-subtle);color:var(--color-info-text);"><i class="ti ti-database"></i></div>
+                <div class="wf-trigger-name">Record event</div>
+                <div class="wf-trigger-desc">When a record is created, updated, or deleted</div>
+              </div>
+              <div class="wf-trigger-card active">
+                <div class="wf-trigger-icon" style="background:var(--color-interactive-subtle);color:var(--color-interactive-text);"><i class="ti ti-git-branch"></i></div>
+                <div class="wf-trigger-name">Field changed</div>
+                <div class="wf-trigger-desc">When a specific field value changes</div>
+              </div>
+              <div class="wf-trigger-card">
+                <div class="wf-trigger-icon" style="background:var(--color-warning-subtle);color:var(--color-warning-text);"><i class="ti ti-clock"></i></div>
+                <div class="wf-trigger-name">Schedule</div>
+                <div class="wf-trigger-desc">Run on a recurring time-based schedule</div>
+              </div>
+              <div class="wf-trigger-card">
+                <div class="wf-trigger-icon" style="background:var(--color-success-subtle);color:var(--color-success-text);"><i class="ti ti-webhook"></i></div>
+                <div class="wf-trigger-name">Webhook</div>
+                <div class="wf-trigger-desc">Triggered by an incoming HTTP webhook</div>
+              </div>
+              <div class="wf-trigger-card">
+                <div class="wf-trigger-icon" style="background:var(--surface-overlay);color:var(--text-secondary);"><i class="ti ti-forms"></i></div>
+                <div class="wf-trigger-name">Form submit</div>
+                <div class="wf-trigger-desc">When a user submits a specific form</div>
+              </div>
+              <div class="wf-trigger-card">
+                <div class="wf-trigger-icon" style="background:var(--surface-overlay);color:var(--text-secondary);"><i class="ti ti-hand-stop"></i></div>
+                <div class="wf-trigger-name">Manual</div>
+                <div class="wf-trigger-desc">Triggered manually from a record view</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Trigger config panel -->
+          <div class="wf-right">
+            <div class="wf-trigger-config-panel">
+
+              <div style="display:flex;align-items:center;gap:var(--space-3);margin-bottom:var(--space-5);padding-bottom:var(--space-4);border-bottom:1px solid var(--surface-border);">
+                <div class="wf-node-icon action" style="width:40px;height:40px;font-size:20px;border-radius:var(--radius-lg);background:var(--color-interactive-subtle);color:var(--color-interactive-text);"><i class="ti ti-git-branch"></i></div>
+                <div>
+                  <div style="font-size:15px;font-weight:700;color:var(--text-primary);">Field Changed</div>
+                  <div style="font-size:12px;color:var(--text-secondary);">Fires when a specific field is updated on a record</div>
+                </div>
+              </div>
+
+              <div class="wf-config-section">
+                <div class="wf-config-section-title">Object</div>
+                <div class="wf-config-field">
+                  <div class="wf-config-label">Object type</div>
+                  <fresh-select>
+                    <option>Contact</option>
+                    <option selected>Deal</option>
+                    <option>Company</option>
+                    <option>Task</option>
+                  </fresh-select>
+                </div>
+                <div class="wf-config-field">
+                  <div class="wf-config-label">Watch field</div>
+                  <fresh-select>
+                    <option>Status</option>
+                    <option selected>Stage</option>
+                    <option>Owner</option>
+                    <option>Close date</option>
+                    <option>Amount</option>
+                  </fresh-select>
+                </div>
+              </div>
+
+              <div class="wf-config-section">
+                <div class="wf-config-section-title">Change conditions</div>
+                <div class="wf-config-field">
+                  <div class="wf-config-label">Previous value</div>
+                  <fresh-select>
+                    <option selected>Any value</option>
+                    <option>Specific value</option>
+                    <option>Not set</option>
+                  </fresh-select>
+                </div>
+                <div class="wf-config-field">
+                  <div class="wf-config-label">New value (must become)</div>
+                  <fresh-select>
+                    <option>Any value</option>
+                    <option selected>Specific value</option>
+                  </fresh-select>
+                </div>
+                <div class="wf-config-field">
+                  <div class="wf-config-label">New value</div>
+                  <fresh-select>
+                    <option>Prospecting</option>
+                    <option>Qualified</option>
+                    <option selected>Proposal sent</option>
+                    <option>Negotiation</option>
+                    <option>Closed won</option>
+                    <option>Closed lost</option>
+                  </fresh-select>
+                </div>
+              </div>
+
+              <div class="wf-config-section">
+                <div class="wf-config-section-title">Execution settings</div>
+                <div class="wf-config-field">
+                  <div class="wf-config-label">Run frequency</div>
+                  <fresh-select>
+                    <option selected>Every time triggered</option>
+                    <option>Once per record</option>
+                    <option>Once per record per day</option>
+                  </fresh-select>
+                </div>
+                <div class="wf-config-field" style="display:flex;align-items:center;justify-content:space-between;">
+                  <div>
+                    <div class="wf-config-label">Run on existing records</div>
+                    <div style="font-size:11px;color:var(--text-tertiary);margin-top:2px;">Backfill matching records when rule activates</div>
+                  </div>
+                  <fresh-toggle></fresh-toggle>
+                </div>
+              </div>
+
+              <div class="wf-config-section">
+                <div class="wf-config-section-title">Additional filters <fresh-badge variant="neutral" size="sm" style="vertical-align:middle;">Optional</fresh-badge></div>
+                <div class="wf-condition-group">
+                  <div class="wf-condition-group-header">
+                    <span style="font-size:11px;color:var(--text-secondary);">Only fire if record also matches</span>
+                    <button class="wf-condition-logic-badge">ALL</button>
+                  </div>
+                  <div class="wf-condition-row">
+                    <div class="wf-condition-field">
+                      <fresh-select><option selected>Deal value</option></fresh-select>
+                    </div>
+                    <div class="wf-condition-op">
+                      <fresh-select><option selected>≥</option></fresh-select>
+                    </div>
+                    <div class="wf-condition-val">
+                      <fresh-input value="5000" placeholder="Value"></fresh-input>
+                    </div>
+                    <button class="wf-condition-del"><i class="ti ti-x"></i></button>
+                  </div>
+                  <div class="wf-add-condition-row">
+                    <fresh-button variant="ghost" size="sm"><i class="ti ti-plus"></i> Add filter</fresh-button>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
+      </main>
+
+    </div>
+  </div>
+
+</div>
+<script>
+  document.addEventListener('nav-toggle', function() {
+    document.getElementById('app-nav').classList.toggle('open');
+  });
+</script>
+<script src="../components/core/fresh-button.js"></script>
+<script src="../components/core/fresh-input.js"></script>
+<script src="../components/core/fresh-select.js"></script>
+<script src="../components/core/fresh-toggle.js"></script>
+<script src="../components/feedback/fresh-badge.js"></script>
+</body>
+</html>

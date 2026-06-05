@@ -1,0 +1,71 @@
+/* ── Button ── */
+.btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-family: var(--font-sans); font-size: 13px; font-weight: 500;
+  padding: 8px 16px; border-radius: var(--radius-md);
+  border: 1.5px solid transparent;
+  cursor: pointer; transition: all 0.15s; white-space: nowrap;
+}
+.btn-primary   { background: var(--btn-primary-bg);   color: var(--btn-primary-text);  border-color: var(--btn-primary-bg); }
+.btn-primary:hover { background: var(--btn-primary-hover); border-color: var(--btn-primary-hover); transform: translateY(-1px); box-shadow: var(--elev-1); }
+.btn-primary:active { transform: translateY(0); }
+.btn-secondary { background: transparent; color: var(--btn-secondary-text); border-color: var(--btn-secondary-border); }
+.btn-secondary:hover { background: var(--badge-primary-bg); }
+.btn-ghost     { background: transparent; color: var(--text-secondary); border-color: var(--surface-border-strong); }
+.btn-ghost:hover { background: var(--surface-overlay); color: var(--text-primary); }
+.btn-danger    { background: var(--btn-danger-bg); color: var(--btn-danger-text); border-color: var(--btn-danger-border); }
+.btn-danger:hover { background: var(--btn-danger-hover); }
+.btn-sm        { font-size: 11px; padding: 5px 10px; border-radius: var(--radius-sm); }
+.btn-lg        { font-size: 15px; padding: 11px 22px; border-radius: var(--radius-lg); }
+.btn:disabled  { opacity: 0.38; cursor: not-allowed; transform: none !important; box-shadow: none !important; }
+.btn-icon-only { width: 34px; height: 34px; padding: 0; justify-content: center; border-radius: var(--radius-md); }
+
+/* ── Input ── */
+.input {
+  font-family: var(--font-sans); font-size: 13px;
+  padding: 8px 12px; border-radius: var(--radius-md);
+  border: 1px solid var(--surface-border-strong);
+  background: var(--surface-bg); color: var(--text-primary);
+  outline: none; width: 100%;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.input::placeholder { color: var(--text-tertiary); }
+.input:focus        { border-color: var(--input-focus-border); box-shadow: 0 0 0 3px var(--input-focus-ring); }
+.input:disabled     { opacity: 0.4; cursor: not-allowed; background: var(--surface-subtle); }
+.input.error        { border-color: var(--color-danger); }
+.input.error:focus  { box-shadow: 0 0 0 3px var(--color-danger-subtle); }
+.input-wrap         { position: relative; }
+.input-icon-left    { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); color: var(--text-tertiary); pointer-events: none; font-size: 15px; }
+.input-wrap .input  { padding-left: 32px; }
+
+/* ── Form field ── */
+.field         { display: flex; flex-direction: column; gap: 5px; }
+.field-label   { font-size: 12px; font-weight: 500; color: var(--text-primary); }
+.field-hint    { font-size: 11px; color: var(--text-tertiary); }
+.field-error   { font-size: 11px; color: var(--color-danger); }
+
+/* ── Badge ── */
+.badge         { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; font-weight: 500; padding: 3px 8px; border-radius: var(--radius-full); }
+.badge-primary { background: var(--badge-primary-bg);  color: var(--badge-primary-text);  border: 1px solid var(--badge-primary-border); }
+.badge-success { background: var(--badge-success-bg);  color: var(--badge-success-text);  border: 1px solid var(--badge-success-border); }
+.badge-warning { background: var(--badge-warning-bg);  color: var(--badge-warning-text);  border: 1px solid var(--badge-warning-border); }
+.badge-danger  { background: var(--badge-danger-bg);   color: var(--badge-danger-text);   border: 1px solid var(--badge-danger-border); }
+.badge-neutral { background: var(--badge-neutral-bg);  color: var(--badge-neutral-text);  border: 1px solid var(--badge-neutral-border); }
+.badge-ai      { background: var(--badge-ai-bg);       color: var(--badge-ai-text);       border: 1px solid var(--badge-ai-border); }
+
+/* ── Toggle ── */
+.toggle-wrap  { display: flex; align-items: center; gap: var(--space-3); cursor: pointer; }
+.toggle {
+  width: 38px; height: 22px; border-radius: var(--radius-full);
+  border: 1px solid var(--surface-border-strong);
+  background: var(--surface-overlay); position: relative;
+  cursor: pointer; transition: background 0.2s, border-color 0.2s; flex-shrink: 0;
+}
+.toggle::after {
+  content: ''; width: 16px; height: 16px; border-radius: 50%;
+  background: var(--text-tertiary); position: absolute;
+  top: 2px; left: 2px; transition: transform 0.2s, background 0.2s;
+}
+.toggle.on { background: var(--color-interactive); border-color: var(--color-interactive); }
+.toggle.on::after { transform: translateX(16px); background: var(--btn-primary-text); }
+.toggle-label { font-size: 13px; color: var(--text-secondary); }

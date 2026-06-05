@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sidebar — FreshDS</title>
+<base href="../../">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="tokens/primitives.css">
+<link rel="stylesheet" href="tokens/theme.css">
+<link rel="stylesheet" href="tokens/dataviz.css">
+<link rel="stylesheet" href="styles/reset.css">
+<link rel="stylesheet" href="styles/layout.css">
+<link rel="stylesheet" href="styles/components/core.css">
+<link rel="stylesheet" href="styles/docs.css">
+<script src="js/freshds.js"></script>
+<script src="js/freshds-site.js"></script>
+</head>
+<body>
+<div class="fds-app" id="app">
+  <ds-topbar active-section="ds"></ds-topbar>
+  <div class="fds-body">
+    <ds-shell active="sidebar-comp"></ds-shell>
+    <main class="fds-main">
+      <div class="fds-page active" id="page-sidebar-comp">
+        <div class="page-header">
+          <div class="page-eyebrow">Navigation</div>
+          <h1 class="page-title">Sidebar</h1>
+          <p class="page-desc">Vertical navigation panel. Composed from three parts: <code style="font-family:var(--font-mono);font-size:13px;background:var(--surface-overlay);padding:1px 6px;border-radius:4px">fresh-sidebar</code>, <code style="font-family:var(--font-mono);font-size:13px;background:var(--surface-overlay);padding:1px 6px;border-radius:4px">fresh-nav-group</code>, and <code style="font-family:var(--font-mono);font-size:13px;background:var(--surface-overlay);padding:1px 6px;border-radius:4px">fresh-nav-item</code>.</p>
+        </div>
+        <div class="page-section">
+          <div class="page-section-title">Full sidebar</div>
+          <div class="demo-surface" style="padding:0;height:440px;overflow:hidden;align-items:stretch;display:block">
+            <fresh-sidebar style="height:100%">
+              <div slot="brand" style="display:flex;align-items:center;gap:8px">
+                <div style="width:22px;height:22px;border-radius:5px;background:linear-gradient(135deg,var(--color-interactive),var(--color-accent));flex-shrink:0"></div>
+                <span style="font-family:var(--font-sans);font-size:14px;font-weight:600;letter-spacing:-0.02em;color:var(--text-primary)">Workspace</span>
+              </div>
+              <fresh-nav-group label="Getting started" open>
+                <fresh-nav-item icon="ti-home" active>Overview</fresh-nav-item>
+                <fresh-nav-item icon="ti-adjustments-horizontal">Configurator</fresh-nav-item>
+              </fresh-nav-group>
+              <fresh-nav-group label="Foundation" open>
+                <fresh-nav-item icon="ti-typography">Typography</fresh-nav-item>
+                <fresh-nav-item icon="ti-palette">Color &amp; tokens</fresh-nav-item>
+                <fresh-nav-item icon="ti-spacing">Spacing</fresh-nav-item>
+              </fresh-nav-group>
+              <fresh-nav-group label="Components">
+                <fresh-nav-item icon="ti-cursor">Button</fresh-nav-item>
+                <fresh-nav-item icon="ti-forms">Input</fresh-nav-item>
+                <fresh-nav-item icon="ti-sparkles" badge="AI">Prompt input</fresh-nav-item>
+              </fresh-nav-group>
+              <div slot="footer" style="display:flex;align-items:center;gap:10px;width:100%">
+                <fresh-avatar name="Jane Smith" size="sm" status="online"></fresh-avatar>
+                <div style="flex:1;min-width:0">
+                  <div style="font-family:var(--font-sans);font-size:12px;font-weight:500;color:var(--text-primary);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Jane Smith</div>
+                  <div style="font-family:var(--font-sans);font-size:11px;color:var(--text-tertiary)">Admin</div>
+                </div>
+                <fresh-button variant="ghost" icon-only size="sm"><i class="ti ti-dots-vertical"></i></fresh-button>
+              </div>
+            </fresh-sidebar>
+          </div>
+        </div>
+        <div class="page-section">
+          <div class="page-section-title">Components</div>
+          <table class="usage-table">
+            <thead><tr><th>Tag</th><th>Attribute</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td>fresh-sidebar</td><td><code>collapsed</code></td><td>Container with brand / content / footer slots</td></tr>
+              <tr><td>fresh-nav-group</td><td><code>label</code> <code>open</code></td><td>Collapsible labeled section</td></tr>
+              <tr><td>fresh-nav-item</td><td><code>active</code> <code>icon</code> <code>href</code> <code>badge</code></td><td>Individual navigation link</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+<script src="components/core/fresh-button.js"></script>
+<script src="components/core/fresh-input.js"></script>
+<script src="components/data/fresh-avatar.js"></script>
+<script src="components/navigation/fresh-sidebar.js"></script>
+<script src="components/navigation/fresh-simple-tabs.js"></script>
+</body>
+</html>

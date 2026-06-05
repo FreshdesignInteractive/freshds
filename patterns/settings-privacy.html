@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Privacy Controls — Acme</title>
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="../tokens/primitives.css">
+<link rel="stylesheet" href="../tokens/theme.css">
+<link rel="stylesheet" href="../tokens/dataviz.css">
+<link rel="stylesheet" href="../styles/reset.css">
+<link rel="stylesheet" href="../styles/patterns/dashboard.css">
+<link rel="stylesheet" href="../styles/patterns/settings.css">
+<script>if(location.href.indexOf('?thumb')!==-1)document.write('<style>#demo-bar{display:none!important}</style>');</script>
+<script src="../js/pattern-topbar-v2.js"></script>
+<script src="../js/freshds.js"></script>
+<script src="../js/pattern-bar.js"></script>
+</head>
+<body>
+<div id="app">
+  <div class="demo-bar" id="demo-bar">
+    <div class="demo-inner" id="demo-inner">
+      <button class="demo-mode-btn" id="mode-toggle-btn" onclick="toggleDemoMode()"><i class="ti ti-moon"></i></button>
+    </div>
+    <div class="demo-sep"></div>
+    <button class="demo-collapse-btn" id="demo-collapse-btn" onclick="toggleDemoBar()"><i class="ti ti-minus"></i></button>
+  </div>
+
+  <div class="dash-shell">
+    <pattern-topbar logged-in></pattern-topbar>
+    <div class="dash-body">
+
+      <nav class="app-nav open" id="app-nav" aria-label="Main navigation">
+        <div class="app-nav-inner">
+          <button class="app-nav-item active"><i class="ti ti-home"></i> Home</button>
+          <button class="app-nav-item"><i class="ti ti-chart-bar"></i> Analytics</button>
+          <button class="app-nav-item"><i class="ti ti-activity"></i> Activity</button>
+          <button class="app-nav-item"><i class="ti ti-folders"></i> Projects</button>
+          <button class="app-nav-item"><i class="ti ti-check"></i> My tasks</button>
+          <button class="app-nav-item"><i class="ti ti-calendar-event"></i> Calendar</button>
+          <button class="app-nav-item"><i class="ti ti-users"></i> Members</button>
+          <button class="app-nav-item"><i class="ti ti-settings"></i> Settings</button>
+        </div>
+      </nav>
+
+      <main class="dash-main">
+
+        <div style="padding:var(--space-5) var(--space-8);border-bottom:1px solid var(--surface-border);background:var(--surface-bg);flex-shrink:0;">
+          <div style="font-size:20px;font-weight:800;color:var(--text-primary);">Privacy Controls</div>
+          <div style="font-size:13px;color:var(--text-secondary);margin-top:2px;">Control how your data is used and stored</div>
+        </div>
+
+        <div class="dash-content">
+          <div class="stg-content" style="max-width:680px;">
+
+            <!-- Data & AI -->
+            <div class="stg-section">
+              <div class="stg-section-title">AI & product improvement</div>
+              <div class="stg-section-desc">Control whether your data helps improve Acme's AI models and product.</div>
+
+              <div class="stg-card">
+                <div class="stg-row" style="padding:0 0 var(--space-3);">
+                  <div>
+                    <div class="stg-row-label">AI model training</div>
+                    <div class="stg-row-desc">Allow anonymized interactions to improve AI accuracy and suggestions. Data is never linked to your account.</div>
+                  </div>
+                  <fresh-toggle class="stg-row-control"></fresh-toggle>
+                </div>
+                <div class="stg-row" style="padding:var(--space-3) 0;">
+                  <div>
+                    <div class="stg-row-label">Product analytics</div>
+                    <div class="stg-row-desc">Share usage patterns to help us improve features. No content or PII is shared.</div>
+                  </div>
+                  <fresh-toggle checked class="stg-row-control"></fresh-toggle>
+                </div>
+                <div class="stg-row" style="padding:var(--space-3) 0 0;border-bottom:none;">
+                  <div>
+                    <div class="stg-row-label">Marketing communications</div>
+                    <div class="stg-row-desc">Receive product updates, tips, and occasional promotions</div>
+                  </div>
+                  <fresh-toggle checked class="stg-row-control"></fresh-toggle>
+                </div>
+              </div>
+            </div>
+
+            <!-- Profile visibility -->
+            <div class="stg-section">
+              <div class="stg-section-title">Profile visibility</div>
+
+              <div class="stg-card">
+                <div class="stg-row" style="padding:0 0 var(--space-3);">
+                  <div>
+                    <div class="stg-row-label">Show profile to workspace members</div>
+                    <div class="stg-row-desc">Name, photo, and job title visible to colleagues</div>
+                  </div>
+                  <fresh-toggle checked class="stg-row-control"></fresh-toggle>
+                </div>
+                <div class="stg-row" style="padding:var(--space-3) 0;">
+                  <div>
+                    <div class="stg-row-label">Show last active status</div>
+                    <div class="stg-row-desc">Others can see when you were last online</div>
+                  </div>
+                  <fresh-toggle class="stg-row-control"></fresh-toggle>
+                </div>
+                <div class="stg-row" style="padding:var(--space-3) 0 0;border-bottom:none;">
+                  <div>
+                    <div class="stg-row-label">Appear in people search</div>
+                    <div class="stg-row-desc">Discoverable when workspace members search for team members</div>
+                  </div>
+                  <fresh-toggle checked class="stg-row-control"></fresh-toggle>
+                </div>
+              </div>
+            </div>
+
+            <!-- Data retention -->
+            <div class="stg-section">
+              <div class="stg-section-title">Data retention</div>
+
+              <div class="stg-card">
+                <div class="stg-row" style="padding:0 0 var(--space-3);">
+                  <div>
+                    <div class="stg-row-label">AI chat history</div>
+                    <div class="stg-row-desc">How long your AI conversation history is kept</div>
+                  </div>
+                  <fresh-select class="stg-row-control" style="min-width:140px;">
+                    <option>30 days</option>
+                    <option>90 days</option>
+                    <option selected>1 year</option>
+                    <option>Forever</option>
+                  </fresh-select>
+                </div>
+                <div class="stg-row" style="padding:var(--space-3) 0 0;border-bottom:none;">
+                  <div>
+                    <div class="stg-row-label">Activity log retention</div>
+                    <div class="stg-row-desc">How long your personal activity log is kept</div>
+                  </div>
+                  <fresh-select class="stg-row-control" style="min-width:140px;">
+                    <option>30 days</option>
+                    <option selected>90 days</option>
+                    <option>1 year</option>
+                  </fresh-select>
+                </div>
+              </div>
+            </div>
+
+            <!-- Data export -->
+            <div class="stg-section">
+              <div class="stg-section-title">Your data</div>
+
+              <div class="stg-card">
+                <div class="stg-row" style="padding:0 0 var(--space-3);">
+                  <div>
+                    <div class="stg-row-label">Export your data</div>
+                    <div class="stg-row-desc">Download a copy of all your personal data · Last export: never</div>
+                  </div>
+                  <fresh-button variant="secondary" size="sm" class="stg-row-control"><i class="ti ti-download"></i> Request export</fresh-button>
+                </div>
+                <div class="stg-row" style="padding:var(--space-3) 0;">
+                  <div>
+                    <div class="stg-row-label">AI chat history</div>
+                    <div class="stg-row-desc">Clear all AI conversation history · This cannot be undone</div>
+                  </div>
+                  <fresh-button variant="ghost" size="sm" class="stg-row-control" style="color:var(--color-danger-text);">Clear history</fresh-button>
+                </div>
+                <div class="stg-row" style="padding:var(--space-3) 0 0;border-bottom:none;">
+                  <div>
+                    <div class="stg-row-label">Cookie preferences</div>
+                    <div class="stg-row-desc">Manage which cookies Acme uses in your browser</div>
+                  </div>
+                  <fresh-button variant="ghost" size="sm" class="stg-row-control">Manage cookies</fresh-button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Legal links -->
+            <div style="display:flex;gap:var(--space-4);padding-bottom:var(--space-8);">
+              <a style="font-size:12px;color:var(--color-interactive-text);text-decoration:none;">Privacy Policy</a>
+              <a style="font-size:12px;color:var(--color-interactive-text);text-decoration:none;">Terms of Service</a>
+              <a style="font-size:12px;color:var(--color-interactive-text);text-decoration:none;">Cookie Policy</a>
+              <a style="font-size:12px;color:var(--color-interactive-text);text-decoration:none;">GDPR Request</a>
+            </div>
+
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+</div>
+<script>
+  document.addEventListener('nav-toggle', function() {
+    document.getElementById('app-nav').classList.toggle('open');
+  });
+</script>
+<script src="../components/core/fresh-button.js"></script>
+<script src="../components/core/fresh-select.js"></script>
+<script src="../components/core/fresh-toggle.js"></script>
+</body>
+</html>

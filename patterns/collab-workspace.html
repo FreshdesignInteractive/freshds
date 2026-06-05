@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shared Workspace — Acme</title>
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="../tokens/primitives.css">
+<link rel="stylesheet" href="../tokens/theme.css">
+<link rel="stylesheet" href="../tokens/dataviz.css">
+<link rel="stylesheet" href="../styles/reset.css">
+<link rel="stylesheet" href="../styles/patterns/dashboard.css">
+<link rel="stylesheet" href="../styles/patterns/collab.css">
+<script>if(location.href.indexOf('?thumb')!==-1)document.write('<style>#demo-bar{display:none!important}</style>');</script>
+<script src="../js/pattern-topbar-v2.js"></script>
+<script src="../js/freshds.js"></script>
+<script src="../js/pattern-bar.js"></script>
+</head>
+<body>
+<div id="app">
+
+  <div class="demo-bar" id="demo-bar">
+    <div class="demo-inner" id="demo-inner">
+      <button class="demo-mode-btn" id="mode-toggle-btn" onclick="toggleDemoMode()" aria-label="Toggle dark mode">
+        <i class="ti ti-moon"></i>
+      </button>
+    </div>
+    <div class="demo-sep"></div>
+    <button class="demo-collapse-btn" id="demo-collapse-btn" onclick="toggleDemoBar()" aria-label="Collapse toolbar">
+      <i class="ti ti-minus"></i>
+    </button>
+  </div>
+
+  <div class="dash-shell">
+    <pattern-topbar logged-in></pattern-topbar>
+    <div class="dash-body">
+
+      <nav class="app-nav open" id="app-nav" aria-label="Main navigation">
+        <div class="app-nav-inner">
+          <button class="app-nav-item active"><i class="ti ti-home"></i> Home</button>
+          <button class="app-nav-item"><i class="ti ti-chart-bar"></i> Analytics</button>
+          <button class="app-nav-item"><i class="ti ti-activity"></i> Activity</button>
+          <button class="app-nav-item"><i class="ti ti-folders"></i> Projects</button>
+          <button class="app-nav-item"><i class="ti ti-check"></i> My tasks</button>
+          <button class="app-nav-item"><i class="ti ti-calendar-event"></i> Calendar</button>
+          <button class="app-nav-item"><i class="ti ti-users"></i> Members</button>
+          <button class="app-nav-item"><i class="ti ti-settings"></i> Settings</button>
+        </div>
+      </nav>
+
+
+      <main class="dash-main">
+
+        <!-- Workspace header -->
+        <div style="padding:var(--space-5) var(--space-6);border-bottom:1px solid var(--surface-border);background:var(--surface-bg);flex-shrink:0;">
+          <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:var(--space-3);">
+            <div style="display:flex;align-items:center;gap:var(--space-3);">
+              <div style="width:44px;height:44px;border-radius:var(--radius-lg);background:var(--color-interactive-subtle);color:var(--color-interactive-text);display:flex;align-items:center;justify-content:center;font-size:22px;">📊</div>
+              <div>
+                <div style="font-size:18px;font-weight:800;color:var(--text-primary);">Sales Q2 Planning</div>
+                <div style="font-size:12px;color:var(--text-secondary);margin-top:2px;">Shared with 8 members · Updated 20 min ago</div>
+              </div>
+            </div>
+            <div style="display:flex;align-items:center;gap:var(--space-2);">
+              <div class="col-presence-avatars">
+                <div class="col-presence-avatar" style="background:var(--primary-9);">P</div>
+                <div class="col-presence-avatar" style="background:var(--secondary-9);">M</div>
+                <div class="col-presence-avatar" style="background:var(--success-7,var(--color-success));">A</div>
+                <div class="col-presence-avatar" style="background:var(--surface-border-strong);color:var(--text-secondary);font-size:10px;">+2</div>
+              </div>
+              <fresh-button variant="secondary" size="sm"><i class="ti ti-share"></i> Share</fresh-button>
+              <fresh-button variant="ghost" size="sm"><i class="ti ti-settings"></i></fresh-button>
+            </div>
+          </div>
+          <div style="font-size:13px;color:var(--text-secondary);line-height:1.6;max-width:640px;">Central hub for Q2 sales planning — deal reviews, target tracking, pipeline forecasting, and team alignment. Pinned resources and live dashboards below.</div>
+        </div>
+
+        <div class="col-workspace-body">
+
+          <!-- Main content -->
+          <div class="col-workspace-main">
+
+            <!-- Quick actions -->
+            <div style="display:flex;gap:var(--space-2);margin-bottom:var(--space-5);flex-wrap:wrap;">
+              <fresh-button variant="secondary" size="sm"><i class="ti ti-plus"></i> Add resource</fresh-button>
+              <fresh-button variant="ghost" size="sm"><i class="ti ti-file-text"></i> New doc</fresh-button>
+              <fresh-button variant="ghost" size="sm"><i class="ti ti-list-check"></i> New task</fresh-button>
+              <fresh-button variant="ghost" size="sm"><i class="ti ti-link"></i> Add link</fresh-button>
+            </div>
+
+            <!-- Pinned section -->
+            <div style="margin-bottom:var(--space-5);">
+              <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-tertiary);margin-bottom:var(--space-3);display:flex;align-items:center;gap:var(--space-2);"><i class="ti ti-pin"></i> Pinned</div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-3);">
+                <div class="col-resource-row">
+                  <div class="col-resource-icon" style="background:var(--color-info-subtle);color:var(--color-info-text);"><i class="ti ti-chart-bar"></i></div>
+                  <div style="flex:1;min-width:0;">
+                    <div class="col-resource-name">Q2 Pipeline Dashboard</div>
+                    <div class="col-resource-meta">Dashboard · Updated 1h ago · 5 viewing</div>
+                  </div>
+                  <i class="ti ti-pin" style="font-size:12px;color:var(--text-tertiary);"></i>
+                </div>
+                <div class="col-resource-row">
+                  <div class="col-resource-icon" style="background:var(--color-warning-subtle);color:var(--color-warning-text);"><i class="ti ti-target"></i></div>
+                  <div style="flex:1;min-width:0;">
+                    <div class="col-resource-name">Q2 Targets & OKRs</div>
+                    <div class="col-resource-meta">Document · Updated 2d ago · Read by all</div>
+                  </div>
+                  <i class="ti ti-pin" style="font-size:12px;color:var(--text-tertiary);"></i>
+                </div>
+                <div class="col-resource-row">
+                  <div class="col-resource-icon" style="background:var(--color-success-subtle);color:var(--color-success-text);"><i class="ti ti-list-check"></i></div>
+                  <div style="flex:1;min-width:0;">
+                    <div class="col-resource-name">Weekly Review Checklist</div>
+                    <div class="col-resource-meta">Task list · 7/12 done · Due Friday</div>
+                  </div>
+                  <i class="ti ti-pin" style="font-size:12px;color:var(--text-tertiary);"></i>
+                </div>
+                <div class="col-resource-row">
+                  <div class="col-resource-icon" style="background:var(--surface-overlay);color:var(--text-secondary);"><i class="ti ti-brand-notion"></i></div>
+                  <div style="flex:1;min-width:0;">
+                    <div class="col-resource-name">Sales Playbook 2026</div>
+                    <div class="col-resource-meta">External link · Notion</div>
+                  </div>
+                  <i class="ti ti-pin" style="font-size:12px;color:var(--text-tertiary);"></i>
+                </div>
+              </div>
+            </div>
+
+            <!-- Recent section -->
+            <div>
+              <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-tertiary);margin-bottom:var(--space-3);display:flex;align-items:center;gap:var(--space-2);"><i class="ti ti-clock"></i> Recent</div>
+              <div style="display:flex;flex-direction:column;gap:var(--space-2);">
+                <div class="col-resource-row">
+                  <div class="col-resource-icon" style="background:var(--color-interactive-subtle);color:var(--color-interactive-text);"><i class="ti ti-file-text"></i></div>
+                  <div style="flex:1;min-width:0;">
+                    <div class="col-resource-name">Deal Review — Orbis Labs</div>
+                    <div class="col-resource-meta">Document · Edited by Tom · 20 min ago</div>
+                  </div>
+                  <fresh-badge variant="info" size="sm">Active</fresh-badge>
+                </div>
+                <div class="col-resource-row">
+                  <div class="col-resource-icon" style="background:var(--surface-overlay);color:var(--text-secondary);"><i class="ti ti-table"></i></div>
+                  <div style="flex:1;min-width:0;">
+                    <div class="col-resource-name">Prospect List — June</div>
+                    <div class="col-resource-meta">Spreadsheet · Edited by Anika · 2h ago</div>
+                  </div>
+                </div>
+                <div class="col-resource-row">
+                  <div class="col-resource-icon" style="background:var(--color-danger-subtle);color:var(--color-danger-text);"><i class="ti ti-presentation"></i></div>
+                  <div style="flex:1;min-width:0;">
+                    <div class="col-resource-name">Enterprise Pitch Deck v3</div>
+                    <div class="col-resource-meta">Presentation · Edited by Priya · Yesterday</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Aside: members + activity -->
+          <div class="col-workspace-aside">
+
+            <!-- Online now -->
+            <div style="margin-bottom:var(--space-4);">
+              <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-tertiary);margin-bottom:var(--space-2);">Online now</div>
+              <div style="display:flex;flex-direction:column;gap:var(--space-2);">
+                <div class="col-viewer-row">
+                  <fresh-avatar name="Priya Sharma" size="xs" style="flex-shrink:0;"></fresh-avatar>
+                  <div class="col-viewer-name">Priya Sharma</div>
+                  <div class="col-online-dot"></div>
+                  <div class="col-viewer-action">Q2 Dashboard</div>
+                </div>
+                <div class="col-viewer-row">
+                  <fresh-avatar name="Marcus Chen" size="xs" style="flex-shrink:0;"></fresh-avatar>
+                  <div class="col-viewer-name">Marcus Chen</div>
+                  <div class="col-online-dot"></div>
+                  <div class="col-viewer-action">Deal Review</div>
+                </div>
+                <div class="col-viewer-row">
+                  <fresh-avatar name="Anika Patel" size="xs" style="flex-shrink:0;"></fresh-avatar>
+                  <div class="col-viewer-name">Anika Patel</div>
+                  <div class="col-online-dot"></div>
+                  <div class="col-viewer-action">Prospect List</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Recent activity -->
+            <div>
+              <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-tertiary);margin-bottom:var(--space-2);">Activity</div>
+              <fresh-timeline>
+                <div slot="item" data-icon="ti-pencil" data-color="info">
+                  <strong>Tom</strong> edited <a style="color:var(--color-interactive-text);">Orbis Labs deal review</a><br>
+                  <span style="font-size:11px;color:var(--text-tertiary);">20 min ago</span>
+                </div>
+                <div slot="item" data-icon="ti-message" data-color="success">
+                  <strong>Priya</strong> commented on <a style="color:var(--color-interactive-text);">Q2 Targets</a><br>
+                  <span style="font-size:11px;color:var(--text-tertiary);">1h ago</span>
+                </div>
+                <div slot="item" data-icon="ti-upload" data-color="neutral">
+                  <strong>Anika</strong> uploaded <a style="color:var(--color-interactive-text);">Prospect List June</a><br>
+                  <span style="font-size:11px;color:var(--text-tertiary);">2h ago</span>
+                </div>
+                <div slot="item" data-icon="ti-user-plus" data-color="neutral">
+                  <strong>Marcus</strong> added Tom to workspace<br>
+                  <span style="font-size:11px;color:var(--text-tertiary);">Yesterday</span>
+                </div>
+              </fresh-timeline>
+            </div>
+
+          </div>
+
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+</div>
+<script>
+  document.addEventListener('nav-toggle', function() {
+    document.getElementById('app-nav').classList.toggle('open');
+  });
+</script>
+<script src="../components/core/fresh-button.js"></script>
+<script src="../components/feedback/fresh-badge.js"></script>
+<script src="../components/data/fresh-avatar.js"></script>
+<script src="../components/data/fresh-timeline.js"></script>
+</body>
+</html>

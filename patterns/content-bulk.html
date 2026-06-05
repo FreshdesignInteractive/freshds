@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bulk Actions — Acme</title>
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="../tokens/primitives.css">
+<link rel="stylesheet" href="../tokens/theme.css">
+<link rel="stylesheet" href="../tokens/dataviz.css">
+<link rel="stylesheet" href="../styles/reset.css">
+<link rel="stylesheet" href="../styles/patterns/dashboard.css">
+<link rel="stylesheet" href="../styles/patterns/content.css">
+<script>if(location.href.indexOf('?thumb')!==-1)document.write('<style>#demo-bar{display:none!important}</style>');</script>
+<script src="../js/pattern-topbar-v2.js"></script>
+<script src="../js/freshds.js"></script>
+<script src="../js/pattern-bar.js"></script>
+<style>
+  .bulk-row {
+    display: grid;
+    grid-template-columns: 40px 1fr 140px 120px 120px 100px 48px;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-3) var(--space-4);
+    border-bottom: 1px solid var(--surface-border);
+    font-size: 13px;
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: background 120ms;
+    user-select: none;
+  }
+  .bulk-row:hover { background: var(--surface-subtle); }
+  .bulk-row.selected { background: var(--color-interactive-subtle); }
+  .bulk-row.header-row {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-tertiary);
+    cursor: default;
+    background: var(--surface-bg);
+    border-bottom: 2px solid var(--surface-border);
+    position: sticky;
+    top: 0;
+    z-index: 2;
+  }
+  .bulk-row.header-row:hover { background: var(--surface-bg); }
+  .bulk-cell-name { font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .bulk-cell-meta { font-size: 12px; color: var(--text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  @media (max-width: 767px) {
+    .bulk-row { grid-template-columns: 40px 1fr 100px 40px; }
+    .bulk-row .bulk-col-owner, .bulk-row .bulk-col-date, .bulk-row .bulk-col-prob { display: none; }
+  }
+</style>
+</head>
+<body>
+<div id="app">
+
+  <div class="demo-bar" id="demo-bar">
+    <div class="demo-inner" id="demo-inner">
+      <button class="demo-mode-btn" id="mode-toggle-btn" onclick="toggleDemoMode()" aria-label="Toggle dark mode">
+        <i class="ti ti-moon"></i>
+      </button>
+    </div>
+    <div class="demo-sep"></div>
+    <button class="demo-collapse-btn" id="demo-collapse-btn" onclick="toggleDemoBar()" aria-label="Collapse toolbar">
+      <i class="ti ti-minus"></i>
+    </button>
+  </div>
+
+  <div class="dash-shell">
+
+    <pattern-topbar logged-in></pattern-topbar>
+
+    <div class="dash-body">
+
+      <nav class="app-nav open" id="app-nav" aria-label="Main navigation">
+        <div class="app-nav-inner">
+          <button class="app-nav-item active"><i class="ti ti-home"></i> Home</button>
+          <button class="app-nav-item"><i class="ti ti-chart-bar"></i> Analytics</button>
+          <button class="app-nav-item"><i class="ti ti-activity"></i> Activity</button>
+          <button class="app-nav-item"><i class="ti ti-folders"></i> Projects</button>
+          <button class="app-nav-item"><i class="ti ti-check"></i> My tasks</button>
+          <button class="app-nav-item"><i class="ti ti-calendar-event"></i> Calendar</button>
+          <button class="app-nav-item"><i class="ti ti-users"></i> Members</button>
+          <button class="app-nav-item"><i class="ti ti-settings"></i> Settings</button>
+        </div>
+      </nav>
+
+      <main class="dash-main">
+
+        <div class="dash-page-header">
+          <div>
+            <div class="dash-page-title">All contacts</div>
+            <div class="dash-page-subtitle">248 contacts · Select items to take bulk actions</div>
+          </div>
+          <div class="dash-page-actions">
+            <fresh-button variant="secondary" size="sm"><i class="ti ti-download"></i> Export</fresh-button>
+            <fresh-button variant="primary" size="sm"><i class="ti ti-plus"></i> Add contact</fresh-button>
+          </div>
+        </div>
+
+        <!-- Bulk action bar (shown when items selected) -->
+        <div class="cnt-bulk-bar" id="bulk-bar">
+          <fresh-button variant="ghost" size="sm" icon-only aria-label="Clear selection" onclick="clearSelection()"><i class="ti ti-x"></i></fresh-button>
+          <div class="cnt-bulk-count" id="bulk-count">5 selected</div>
+          <div class="cnt-bulk-actions">
+            <fresh-button variant="secondary" size="sm"><i class="ti ti-user-check"></i> Assign owner</fresh-button>
+            <fresh-button variant="secondary" size="sm"><i class="ti ti-tag"></i> Add tag</fresh-button>
+            <fresh-button variant="secondary" size="sm"><i class="ti ti-mail"></i> Send email</fresh-button>
+            <fresh-button variant="secondary" size="sm"><i class="ti ti-download"></i> Export</fresh-button>
+            <fresh-button variant="danger" size="sm"><i class="ti ti-trash"></i> Delete</fresh-button>
+          </div>
+        </div>
+
+        <!-- Search + filter bar -->
+        <div style="padding:var(--space-3) var(--space-4);border-bottom:1px solid var(--surface-border);display:flex;align-items:center;gap:var(--space-3);flex-shrink:0;background:var(--surface-bg);">
+          <fresh-input placeholder="Search contacts…" clearable style="max-width:260px;"></fresh-input>
+          <fresh-button variant="secondary" size="sm"><i class="ti ti-filter"></i> Filter</fresh-button>
+          <div style="margin-left:auto;font-size:13px;color:var(--text-secondary);">5 of 248 selected</div>
+        </div>
+
+        <div class="dash-content">
+          <!-- Header row -->
+          <div class="bulk-row header-row">
+            <div><fresh-checkbox checked indeterminate></fresh-checkbox></div>
+            <div>Name / Email</div>
+            <div class="bulk-col-owner">Owner</div>
+            <div class="bulk-col-date">Last contact</div>
+            <div class="bulk-col-prob">Stage</div>
+            <div>Status</div>
+            <div></div>
+          </div>
+
+          <!-- Data rows (5 selected) -->
+          <div class="bulk-row selected">
+            <div><fresh-checkbox checked></fresh-checkbox></div>
+            <div><div class="bulk-cell-name">Priya Sharma</div><div class="bulk-cell-meta">priya@techvault.io</div></div>
+            <div class="bulk-col-owner"><div class="bulk-cell-meta">Jamie Rivera</div></div>
+            <div class="bulk-col-date"><div class="bulk-cell-meta">Jun 2</div></div>
+            <div class="bulk-col-prob"><fresh-badge variant="success">Active</fresh-badge></div>
+            <div><fresh-badge variant="success">Active</fresh-badge></div>
+            <div><fresh-button variant="ghost" size="sm" icon-only><i class="ti ti-dots"></i></fresh-button></div>
+          </div>
+
+          <div class="bulk-row selected">
+            <div><fresh-checkbox checked></fresh-checkbox></div>
+            <div><div class="bulk-cell-name">Marcus Chen</div><div class="bulk-cell-meta">m.chen@luminate.health</div></div>
+            <div class="bulk-col-owner"><div class="bulk-cell-meta">Priya Sharma</div></div>
+            <div class="bulk-col-date"><div class="bulk-cell-meta">May 28</div></div>
+            <div class="bulk-col-prob"><fresh-badge variant="warning">Lead</fresh-badge></div>
+            <div><fresh-badge variant="warning">Lead</fresh-badge></div>
+            <div><fresh-button variant="ghost" size="sm" icon-only><i class="ti ti-dots"></i></fresh-button></div>
+          </div>
+
+          <div class="bulk-row selected">
+            <div><fresh-checkbox checked></fresh-checkbox></div>
+            <div><div class="bulk-cell-name">Anika Patel</div><div class="bulk-cell-meta">anika.p@fincore.com</div></div>
+            <div class="bulk-col-owner"><div class="bulk-cell-meta">Marcus Chen</div></div>
+            <div class="bulk-col-date"><div class="bulk-cell-meta">May 25</div></div>
+            <div class="bulk-col-prob"><fresh-badge variant="success">Active</fresh-badge></div>
+            <div><fresh-badge variant="success">Active</fresh-badge></div>
+            <div><fresh-button variant="ghost" size="sm" icon-only><i class="ti ti-dots"></i></fresh-button></div>
+          </div>
+
+          <div class="bulk-row selected">
+            <div><fresh-checkbox checked></fresh-checkbox></div>
+            <div><div class="bulk-cell-name">Tom Okeke</div><div class="bulk-cell-meta">tom@orbislabs.com</div></div>
+            <div class="bulk-col-owner"><div class="bulk-cell-meta">Jamie Rivera</div></div>
+            <div class="bulk-col-date"><div class="bulk-cell-meta">May 22</div></div>
+            <div class="bulk-col-prob"><fresh-badge variant="info">Lead</fresh-badge></div>
+            <div><fresh-badge variant="info">Lead</fresh-badge></div>
+            <div><fresh-button variant="ghost" size="sm" icon-only><i class="ti ti-dots"></i></fresh-button></div>
+          </div>
+
+          <div class="bulk-row selected">
+            <div><fresh-checkbox checked></fresh-checkbox></div>
+            <div><div class="bulk-cell-name">Sarah Novak</div><div class="bulk-cell-meta">s.novak@arctus.io</div></div>
+            <div class="bulk-col-owner"><div class="bulk-cell-meta">Tom Okeke</div></div>
+            <div class="bulk-col-date"><div class="bulk-cell-meta">May 20</div></div>
+            <div class="bulk-col-prob"><fresh-badge variant="success">Active</fresh-badge></div>
+            <div><fresh-badge variant="success">Active</fresh-badge></div>
+            <div><fresh-button variant="ghost" size="sm" icon-only><i class="ti ti-dots"></i></fresh-button></div>
+          </div>
+
+          <!-- Unselected rows -->
+          <div class="bulk-row">
+            <div><fresh-checkbox></fresh-checkbox></div>
+            <div><div class="bulk-cell-name">David Kim</div><div class="bulk-cell-meta">dkim@cloudspan.co</div></div>
+            <div class="bulk-col-owner"><div class="bulk-cell-meta">Marcus Chen</div></div>
+            <div class="bulk-col-date"><div class="bulk-cell-meta">May 15</div></div>
+            <div class="bulk-col-prob"><fresh-badge variant="neutral">Inactive</fresh-badge></div>
+            <div><fresh-badge variant="neutral">Inactive</fresh-badge></div>
+            <div><fresh-button variant="ghost" size="sm" icon-only><i class="ti ti-dots"></i></fresh-button></div>
+          </div>
+
+          <div class="bulk-row">
+            <div><fresh-checkbox></fresh-checkbox></div>
+            <div><div class="bulk-cell-name">Leila Rostami</div><div class="bulk-cell-meta">l.rostami@datastack.dev</div></div>
+            <div class="bulk-col-owner"><div class="bulk-cell-meta">Priya Sharma</div></div>
+            <div class="bulk-col-date"><div class="bulk-cell-meta">May 10</div></div>
+            <div class="bulk-col-prob"><fresh-badge variant="warning">Lead</fresh-badge></div>
+            <div><fresh-badge variant="warning">Lead</fresh-badge></div>
+            <div><fresh-button variant="ghost" size="sm" icon-only><i class="ti ti-dots"></i></fresh-button></div>
+          </div>
+
+          <div class="bulk-row">
+            <div><fresh-checkbox></fresh-checkbox></div>
+            <div><div class="bulk-cell-name">Raj Mehta</div><div class="bulk-cell-meta">raj.mehta@nexussw.com</div></div>
+            <div class="bulk-col-owner"><div class="bulk-cell-meta">Tom Okeke</div></div>
+            <div class="bulk-col-date"><div class="bulk-cell-meta">May 8</div></div>
+            <div class="bulk-col-prob"><fresh-badge variant="success">Active</fresh-badge></div>
+            <div><fresh-badge variant="success">Active</fresh-badge></div>
+            <div><fresh-button variant="ghost" size="sm" icon-only><i class="ti ti-dots"></i></fresh-button></div>
+          </div>
+
+        </div>
+      </main>
+
+    </div>
+  </div>
+
+</div>
+<script>
+function clearSelection() {
+  document.querySelectorAll('.bulk-row.selected').forEach(r => r.classList.remove('selected'));
+}
+</script>
+<script>
+  document.addEventListener('nav-toggle', function() {
+    document.getElementById('app-nav').classList.toggle('open');
+  });
+</script>
+<script src="../components/core/fresh-button.js"></script>
+<script src="../components/core/fresh-input.js"></script>
+<script src="../components/core/fresh-checkbox.js"></script>
+<script src="../components/data/fresh-avatar.js"></script>
+<script src="../components/feedback/fresh-badge.js"></script>
+</body>
+</html>

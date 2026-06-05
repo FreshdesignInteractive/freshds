@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI mode toggle — FreshDS</title>
+<base href="../../">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="tokens/primitives.css">
+<link rel="stylesheet" href="tokens/theme.css">
+<link rel="stylesheet" href="tokens/dataviz.css">
+<link rel="stylesheet" href="styles/reset.css">
+<link rel="stylesheet" href="styles/layout.css">
+<link rel="stylesheet" href="styles/components/core.css">
+<link rel="stylesheet" href="styles/docs.css">
+<script src="js/freshds.js"></script>
+<script src="js/freshds-site.js"></script>
+</head>
+<body>
+<div class="fds-app" id="app">
+  <ds-topbar active-section="ds"></ds-topbar>
+  <div class="fds-body">
+    <ds-shell active="aimodetoggle"></ds-shell>
+    <main class="fds-main">
+      <div class="fds-page active" id="page-aimodetoggle">
+        <div class="page-header">
+          <div class="page-eyebrow">AI Components</div>
+          <h1 class="page-title">AI mode toggle</h1>
+          <p class="page-desc">Global switch for enabling or disabling AI features across an application. Animated pill toggle with a sparkle icon knob and a glowing active state.</p>
+        </div>
+        <div class="page-section">
+          <div class="page-section-title">States</div>
+          <div class="demo-surface" style="align-items:center;gap:var(--space-8);flex-wrap:wrap">
+            <div style="text-align:center">
+              <fresh-ai-mode-toggle></fresh-ai-mode-toggle>
+              <div style="font-size:11px;color:var(--text-tertiary);font-family:var(--font-sans);margin-top:10px">Off</div>
+            </div>
+            <div style="text-align:center">
+              <fresh-ai-mode-toggle on></fresh-ai-mode-toggle>
+              <div style="font-size:11px;color:var(--text-tertiary);font-family:var(--font-sans);margin-top:10px">On</div>
+            </div>
+          </div>
+        </div>
+        <div class="page-section">
+          <div class="page-section-title">Custom labels</div>
+          <div class="demo-surface col" style="gap:var(--space-4)">
+            <fresh-ai-mode-toggle label="AI Copilot" on></fresh-ai-mode-toggle>
+            <fresh-ai-mode-toggle label="Smart Suggestions"></fresh-ai-mode-toggle>
+            <fresh-ai-mode-toggle label="Auto-complete" on></fresh-ai-mode-toggle>
+          </div>
+        </div>
+        <div class="page-section">
+          <div class="page-section-title">Small size</div>
+          <div class="demo-surface" style="align-items:center;gap:var(--space-6)">
+            <fresh-ai-mode-toggle size="sm" label="AI mode"></fresh-ai-mode-toggle>
+            <fresh-ai-mode-toggle size="sm" label="AI mode" on></fresh-ai-mode-toggle>
+          </div>
+        </div>
+        <div class="page-section">
+          <div class="page-section-title">In a settings panel</div>
+          <div class="demo-surface col" style="gap:0;max-width:480px">
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:var(--space-4) var(--space-5);border-bottom:1px solid var(--surface-border)">
+              <div>
+                <div style="font-size:13px;font-weight:500;color:var(--text-primary)">AI Copilot</div>
+                <div style="font-size:12px;color:var(--text-tertiary);margin-top:2px">Context-aware suggestions and summaries</div>
+              </div>
+              <fresh-ai-mode-toggle size="sm" on></fresh-ai-mode-toggle>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:var(--space-4) var(--space-5);border-bottom:1px solid var(--surface-border)">
+              <div>
+                <div style="font-size:13px;font-weight:500;color:var(--text-primary)">Smart autocomplete</div>
+                <div style="font-size:12px;color:var(--text-tertiary);margin-top:2px">Complete your queries as you type</div>
+              </div>
+              <fresh-ai-mode-toggle size="sm"></fresh-ai-mode-toggle>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:var(--space-4) var(--space-5)">
+              <div>
+                <div style="font-size:13px;font-weight:500;color:var(--text-primary)">Proactive insights</div>
+                <div style="font-size:12px;color:var(--text-tertiary);margin-top:2px">Surface anomalies and trends automatically</div>
+              </div>
+              <fresh-ai-mode-toggle size="sm" on></fresh-ai-mode-toggle>
+            </div>
+          </div>
+        </div>
+        <div class="page-section">
+          <div class="page-section-title">Attributes</div>
+          <table class="usage-table">
+            <thead><tr><th>Attribute</th><th>Values</th><th>Default</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td>on</td><td>boolean</td><td>—</td><td>When present, AI mode is active</td></tr>
+              <tr><td>label</td><td>string</td><td><code>"AI mode"</code></td><td>Text label shown next to the toggle</td></tr>
+              <tr><td>size</td><td><code>sm</code> <code>md</code></td><td><code>md</code></td><td>Toggle size</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="page-section">
+          <div class="page-section-title">Events</div>
+          <table class="usage-table">
+            <thead><tr><th>Event</th><th>Detail</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td>change</td><td><code>{ on: boolean }</code></td><td>Fired whenever the toggle state changes</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+<script src="components/core/fresh-button.js"></script>
+<script src="components/core/fresh-input.js"></script>
+<script src="components/ai/fresh-ai-mode-toggle.js"></script>
+<script src="components/navigation/fresh-simple-tabs.js"></script>
+</body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Breadcrumb — FreshDS</title>
+<base href="../../">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="tokens/primitives.css">
+<link rel="stylesheet" href="tokens/theme.css">
+<link rel="stylesheet" href="tokens/dataviz.css">
+<link rel="stylesheet" href="styles/reset.css">
+<link rel="stylesheet" href="styles/layout.css">
+<link rel="stylesheet" href="styles/components/core.css">
+<link rel="stylesheet" href="styles/docs.css">
+<script src="js/freshds.js"></script>
+<script src="js/freshds-site.js"></script>
+</head>
+<body>
+<div class="fds-app" id="app">
+  <ds-topbar active-section="ds"></ds-topbar>
+  <div class="fds-body">
+    <ds-shell active="breadcrumb"></ds-shell>
+    <main class="fds-main">
+      <div class="fds-page active" id="page-breadcrumb">
+        <div class="page-header">
+          <div class="page-eyebrow">Navigation</div>
+          <h1 class="page-title">Breadcrumb</h1>
+          <p class="page-desc">Hierarchical path indicator showing the user's location within the application. Previous levels are linked; the current page is non-interactive.</p>
+        </div>
+        <div class="page-section">
+          <div class="page-section-title">Examples</div>
+          <div class="demo-surface col" style="gap:var(--space-5)">
+            <fresh-breadcrumb items='[{"label":"Home","href":"/"},{"label":"Settings"}]'></fresh-breadcrumb>
+            <fresh-breadcrumb items='[{"label":"Home","href":"/"},{"label":"Projects","href":"/projects"},{"label":"FreshDS","href":"/projects/freshds"},{"label":"Components"}]'></fresh-breadcrumb>
+            <fresh-breadcrumb items='[{"label":"Workspace","href":"/"},{"label":"AI Models","href":"/models"},{"label":"Claude Sonnet","href":"/models/sonnet"},{"label":"API Keys"}]'></fresh-breadcrumb>
+          </div>
+        </div>
+        <div class="page-section">
+          <div class="page-section-title">Sizes</div>
+          <div class="demo-surface col" style="gap:var(--space-4)">
+            <fresh-breadcrumb size="sm" items='[{"label":"Home","href":"/"},{"label":"Settings","href":"/settings"},{"label":"Billing"}]'></fresh-breadcrumb>
+            <fresh-breadcrumb items='[{"label":"Home","href":"/"},{"label":"Settings","href":"/settings"},{"label":"Billing"}]'></fresh-breadcrumb>
+          </div>
+        </div>
+        <div class="page-section">
+          <div class="page-section-title">Attributes</div>
+          <table class="usage-table">
+            <thead><tr><th>Attribute</th><th>Values</th><th>Default</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td>items</td><td>JSON array</td><td>—</td><td><code>{ label, href? }</code> — last item is always current page</td></tr>
+              <tr><td>size</td><td><code>sm</code> <code>md</code></td><td><code>md</code></td><td>Font size (11 / 13px)</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+<script src="components/core/fresh-button.js"></script>
+<script src="components/core/fresh-input.js"></script>
+<script src="components/navigation/fresh-breadcrumb.js"></script>
+<script src="components/navigation/fresh-simple-tabs.js"></script>
+</body>
+</html>

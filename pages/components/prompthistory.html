@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prompt history — FreshDS</title>
+<base href="../../">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="tokens/primitives.css">
+<link rel="stylesheet" href="tokens/theme.css">
+<link rel="stylesheet" href="tokens/dataviz.css">
+<link rel="stylesheet" href="styles/reset.css">
+<link rel="stylesheet" href="styles/layout.css">
+<link rel="stylesheet" href="styles/components/core.css">
+<link rel="stylesheet" href="styles/docs.css">
+<script src="js/freshds.js"></script>
+<script src="js/freshds-site.js"></script>
+</head>
+<body>
+<div class="fds-app" id="app">
+  <ds-topbar active-section="ds"></ds-topbar>
+  <div class="fds-body">
+    <ds-shell active="prompthistory"></ds-shell>
+    <main class="fds-main">
+      <div class="fds-page active" id="page-prompthistory">
+        <div class="page-header">
+          <div class="page-eyebrow">AI Components</div>
+          <h1 class="page-title">Prompt history</h1>
+          <p class="page-desc">Horizontally scrollable row of recent prompts rendered as clickable chips. Placed above or below the prompt input to give users one-click access to past queries.</p>
+        </div>
+        <div class="page-section">
+          <div class="page-section-title">Default</div>
+          <div class="demo-surface col">
+            <fresh-prompt-history
+              prompts='[
+                "Summarize last quarter revenue",
+                "Show active users by region",
+                "Compare Q3 vs Q4 enterprise MRR",
+                "Top 10 churned accounts",
+                "Forecast next 90 days",
+                "Identify churn risk factors"
+              ]'>
+            </fresh-prompt-history>
+          </div>
+        </div>
+        <div class="page-section">
+          <div class="page-section-title">Above a prompt input</div>
+          <div class="demo-surface col" style="gap:var(--space-3);max-width:560px">
+            <fresh-prompt-history
+              prompts='[
+                "What drove the revenue spike in March?",
+                "Show me enterprise cohort retention",
+                "Break down costs by model"
+              ]'>
+            </fresh-prompt-history>
+            <div style="width:100%;background:var(--surface-bg);border:1px solid var(--surface-border-strong);border-radius:var(--radius-xl);padding:10px 14px;display:flex;align-items:center;gap:10px;box-shadow:0 0 0 3px var(--input-focus-ring);border-color:var(--input-focus-border)">
+              <i class="ti ti-sparkles" style="font-size:15px;color:var(--color-interactive)"></i>
+              <input style="font-family:var(--font-sans);font-size:13px;border:none;outline:none;flex:1;background:transparent;color:var(--text-primary)" placeholder="Ask anything about your data…" type="text">
+              <div style="width:28px;height:28px;border-radius:50%;background:var(--color-interactive);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0">
+                <i class="ti ti-arrow-up" style="font-size:13px;color:var(--btn-primary-text)"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="page-section">
+          <div class="page-section-title">Empty state</div>
+          <div class="demo-surface col">
+            <fresh-prompt-history prompts='[]'></fresh-prompt-history>
+          </div>
+        </div>
+        <div class="page-section">
+          <div class="page-section-title">Attributes</div>
+          <table class="usage-table">
+            <thead><tr><th>Attribute</th><th>Values</th><th>Default</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td>prompts</td><td>JSON array of strings</td><td><code>[]</code></td><td>Ordered list of recent prompts (most recent first)</td></tr>
+              <tr><td>max-chars</td><td>number</td><td><code>40</code></td><td>Maximum characters before truncation with ellipsis</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="page-section">
+          <div class="page-section-title">Events</div>
+          <table class="usage-table">
+            <thead><tr><th>Event</th><th>Detail</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td>select</td><td><code>{ prompt: string, index: number }</code></td><td>Fired when a chip is clicked</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+<script src="components/core/fresh-button.js"></script>
+<script src="components/core/fresh-input.js"></script>
+<script src="components/ai/fresh-prompt-history.js"></script>
+<script src="components/navigation/fresh-simple-tabs.js"></script>
+</body>
+</html>

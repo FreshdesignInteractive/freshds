@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pagination — FreshDS</title>
+<base href="../../">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="tokens/primitives.css">
+<link rel="stylesheet" href="tokens/theme.css">
+<link rel="stylesheet" href="tokens/dataviz.css">
+<link rel="stylesheet" href="styles/reset.css">
+<link rel="stylesheet" href="styles/layout.css">
+<link rel="stylesheet" href="styles/components/core.css">
+<link rel="stylesheet" href="styles/docs.css">
+<script src="js/freshds.js"></script>
+<script src="js/freshds-site.js"></script>
+</head>
+<body>
+<div class="fds-app" id="app">
+  <ds-topbar active-section="ds"></ds-topbar>
+  <div class="fds-body">
+    <ds-shell active="pagination"></ds-shell>
+    <main class="fds-main">
+      <div class="fds-page active" id="page-pagination">
+        <div class="page-header">
+          <div class="page-eyebrow">Navigation</div>
+          <h1 class="page-title">Pagination</h1>
+          <p class="page-desc">Page navigation for long lists and data tables. Handles ellipsis logic automatically for large page counts. Emits <code style="font-family:var(--font-mono);font-size:13px;background:var(--surface-overlay);padding:1px 6px;border-radius:4px">change</code> with the new page number.</p>
+        </div>
+        <div class="page-section">
+          <div class="page-section-title">Default</div>
+          <div class="demo-surface col" style="align-items:flex-start;gap:var(--space-5)">
+            <fresh-pagination page="1"  total="5"></fresh-pagination>
+            <fresh-pagination page="3"  total="10"></fresh-pagination>
+            <fresh-pagination page="6"  total="20"></fresh-pagination>
+            <fresh-pagination page="8"  total="50" siblings="2"></fresh-pagination>
+          </div>
+        </div>
+        <div class="page-section">
+          <div class="page-section-title">Sizes</div>
+          <div class="demo-surface col" style="align-items:flex-start;gap:var(--space-4)">
+            <fresh-pagination page="4" total="10" size="sm"></fresh-pagination>
+            <fresh-pagination page="4" total="10"></fresh-pagination>
+          </div>
+        </div>
+        <div class="page-section">
+          <div class="page-section-title">Attributes</div>
+          <table class="usage-table">
+            <thead><tr><th>Attribute</th><th>Values</th><th>Default</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td>page</td><td>number</td><td><code>1</code></td><td>Current page (1-based)</td></tr>
+              <tr><td>total</td><td>number</td><td><code>1</code></td><td>Total number of pages</td></tr>
+              <tr><td>siblings</td><td>number</td><td><code>1</code></td><td>Pages shown either side of current before ellipsis</td></tr>
+              <tr><td>size</td><td><code>sm</code> <code>md</code></td><td><code>md</code></td><td>Button size (28 / 32px)</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+<script src="components/core/fresh-button.js"></script>
+<script src="components/core/fresh-input.js"></script>
+<script src="components/navigation/fresh-pagination.js"></script>
+<script src="components/navigation/fresh-simple-tabs.js"></script>
+</body>
+</html>

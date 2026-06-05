@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Activity Feed — Acme</title>
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="../tokens/primitives.css">
+<link rel="stylesheet" href="../tokens/theme.css">
+<link rel="stylesheet" href="../tokens/dataviz.css">
+<link rel="stylesheet" href="../styles/reset.css">
+<link rel="stylesheet" href="../styles/patterns/dashboard.css">
+<script>if(location.href.indexOf('?thumb')!==-1)document.write('<style>#demo-bar{display:none!important}</style>');</script>
+<script src="../js/pattern-topbar-v2.js"></script>
+<script src="../js/freshds.js"></script>
+<script src="../js/pattern-bar.js"></script>
+<style>
+  .activity-layout {
+    display: grid;
+    grid-template-columns: 1fr 280px;
+    gap: var(--space-4);
+  }
+  /* Filter bar with tabs */
+  .activity-tab-bar {
+    margin-bottom: var(--space-5);
+  }
+
+  /* Summary sidebar */
+  .summary-stat {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-3) 0;
+    border-bottom: 1px solid var(--surface-border);
+    font-size: 13px;
+  }
+  .summary-stat:last-child { border-bottom: none; }
+  .summary-stat-label { color: var(--text-secondary); }
+  .summary-stat-value { font-weight: 600; color: var(--text-primary); }
+
+  .team-member-row {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-2) 0;
+  }
+  .team-member-info { flex: 1; min-width: 0; }
+  .team-member-name { font-size: 13px; font-weight: 500; color: var(--text-primary); }
+  .team-member-activity { font-size: 11px; color: var(--text-tertiary); }
+  .team-member-count {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    flex-shrink: 0;
+  }
+
+  @media (max-width: 1023px) { .activity-layout { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div id="app">
+
+  <div class="demo-bar" id="demo-bar">
+    <div class="demo-inner" id="demo-inner">
+      <button class="demo-mode-btn" id="mode-toggle-btn" onclick="toggleDemoMode()" aria-label="Toggle dark mode">
+        <i class="ti ti-moon"></i>
+      </button>
+    </div>
+    <div class="demo-sep"></div>
+    <button class="demo-collapse-btn" id="demo-collapse-btn" onclick="toggleDemoBar()" aria-label="Collapse toolbar">
+      <i class="ti ti-minus"></i>
+    </button>
+  </div>
+
+  <div class="dash-shell">
+
+    <pattern-topbar logged-in></pattern-topbar>
+
+    <div class="dash-body">
+
+      <nav class="app-nav open" id="app-nav" aria-label="Main navigation">
+        <div class="app-nav-inner">
+          <button class="app-nav-item active"><i class="ti ti-home"></i> Home</button>
+          <button class="app-nav-item"><i class="ti ti-chart-bar"></i> Analytics</button>
+          <button class="app-nav-item"><i class="ti ti-activity"></i> Activity</button>
+          <button class="app-nav-item"><i class="ti ti-folders"></i> Projects</button>
+          <button class="app-nav-item"><i class="ti ti-check"></i> My tasks</button>
+          <button class="app-nav-item"><i class="ti ti-calendar-event"></i> Calendar</button>
+          <button class="app-nav-item"><i class="ti ti-users"></i> Members</button>
+          <button class="app-nav-item"><i class="ti ti-settings"></i> Settings</button>
+        </div>
+      </nav>
+
+      <main class="dash-main">
+        <div class="dash-page-header">
+          <div>
+            <div class="dash-page-title">Activity Feed</div>
+            <div class="dash-page-subtitle">All events across projects and team members.</div>
+          </div>
+          <div class="dash-page-actions">
+            <fresh-button variant="secondary" size="sm"><i class="ti ti-filter"></i> Filter</fresh-button>
+            <fresh-button variant="secondary" size="sm"><i class="ti ti-calendar"></i> Last 7 days</fresh-button>
+          </div>
+        </div>
+
+        <div class="dash-content">
+
+          <div class="activity-layout">
+
+            <!-- Main timeline -->
+            <div>
+              <div class="activity-tab-bar">
+                <fresh-simple-tabs
+                  id="activity-tabs"
+                  tabs='[
+                    {"key":"all","label":"All"},
+                    {"key":"deploys","label":"Deploys"},
+                    {"key":"comments","label":"Comments"},
+                    {"key":"tasks","label":"Tasks"}
+                  ]'
+                  active="all">
+                </fresh-simple-tabs>
+              </div>
+
+              <fresh-timeline items='[
+                {"timestamp":"5 min ago",   "title":"PR #541 merged to main",              "description":"Merged by Marcus Chen · 3 files changed",        "icon":"ti-git-merge",       "variant":"success"},
+                {"timestamp":"23 min ago",  "title":"Comment on Design System spec",        "description":"Priya Sharma: \"Love the new token naming…\"",    "icon":"ti-message-circle",  "variant":"primary"},
+                {"timestamp":"1 hr ago",    "title":"v2.6.0 deployed to production",        "description":"Deploy took 3m 12s · 0 errors",                  "icon":"ti-rocket",          "variant":"success"},
+                {"timestamp":"2 hrs ago",   "title":"Task: Update onboarding flow",         "description":"Assigned to Jamie Rivera · Due Jun 10",           "icon":"ti-check",           "variant":"neutral"},
+                {"timestamp":"3 hrs ago",   "title":"API quota warning",                    "description":"Usage reached 82% of monthly limit",             "icon":"ti-alert-triangle",  "variant":"warning"},
+                {"timestamp":"4 hrs ago",   "title":"PR #539 opened",                       "description":"Opened by Tom Okeke · 8 files changed",          "icon":"ti-git-pull-request","variant":"primary"},
+                {"timestamp":"Yesterday",   "title":"New member: Jamie Rivera joined",      "description":"Invited by Tom Okeke",                           "icon":"ti-user-plus",       "variant":"neutral"},
+                {"timestamp":"Yesterday",   "title":"Incident #88 resolved",                "description":"API latency spike — resolved in 22 min",         "icon":"ti-shield-check",    "variant":"success"},
+                {"timestamp":"2 days ago",  "title":"v2.5.2 deployed to production",        "description":"Hotfix for auth timeout",                        "icon":"ti-rocket",          "variant":"success"},
+                {"timestamp":"2 days ago",  "title":"Report: Q2 metrics exported",          "description":"Exported by Priya Sharma",                       "icon":"ti-file-analytics",  "variant":"neutral"}
+              ]'></fresh-timeline>
+            </div>
+
+            <!-- Summary sidebar -->
+            <div>
+              <div class="dash-card" style="margin-bottom:var(--space-4)">
+                <div class="dash-card-title" style="margin-bottom:var(--space-3)">This week at a glance</div>
+                <div class="summary-stat"><span class="summary-stat-label">Deploys</span><span class="summary-stat-value">5</span></div>
+                <div class="summary-stat"><span class="summary-stat-label">PRs merged</span><span class="summary-stat-value">12</span></div>
+                <div class="summary-stat"><span class="summary-stat-label">Tasks completed</span><span class="summary-stat-value">34</span></div>
+                <div class="summary-stat"><span class="summary-stat-label">Comments</span><span class="summary-stat-value">87</span></div>
+                <div class="summary-stat"><span class="summary-stat-label">Incidents</span><span class="summary-stat-value">1</span></div>
+              </div>
+
+              <div class="dash-card">
+                <div class="dash-card-title" style="margin-bottom:var(--space-3)">Most active</div>
+                <div class="team-member-row">
+                  <fresh-avatar name="Marcus Chen" size="sm"></fresh-avatar>
+                  <div class="team-member-info">
+                    <div class="team-member-name">Marcus Chen</div>
+                    <div class="team-member-activity">18 events</div>
+                  </div>
+                  <span class="team-member-count">18</span>
+                </div>
+                <div class="team-member-row">
+                  <fresh-avatar name="Priya Sharma" size="sm"></fresh-avatar>
+                  <div class="team-member-info">
+                    <div class="team-member-name">Priya Sharma</div>
+                    <div class="team-member-activity">14 events</div>
+                  </div>
+                  <span class="team-member-count">14</span>
+                </div>
+                <div class="team-member-row">
+                  <fresh-avatar name="Tom Okeke" size="sm"></fresh-avatar>
+                  <div class="team-member-info">
+                    <div class="team-member-name">Tom Okeke</div>
+                    <div class="team-member-activity">11 events</div>
+                  </div>
+                  <span class="team-member-count">11</span>
+                </div>
+                <div class="team-member-row">
+                  <fresh-avatar name="Jamie Rivera" size="sm"></fresh-avatar>
+                  <div class="team-member-info">
+                    <div class="team-member-name">Jamie Rivera</div>
+                    <div class="team-member-activity">9 events</div>
+                  </div>
+                  <span class="team-member-count">9</span>
+                </div>
+              </div>
+            </div>
+
+          </div><!-- /activity-layout -->
+        </div>
+      </main>
+
+    </div>
+  </div>
+
+</div>
+<script>
+  document.addEventListener('nav-toggle', function() {
+    document.getElementById('app-nav').classList.toggle('open');
+  });
+</script>
+<script src="../components/core/fresh-button.js"></script>
+<script src="../components/data/fresh-avatar.js"></script>
+<script src="../components/data/fresh-timeline.js"></script>
+<script src="../components/navigation/fresh-simple-tabs.js"></script>
+</body>
+</html>

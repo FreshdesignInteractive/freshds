@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Usage & Limits — Acme</title>
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="../tokens/primitives.css">
+<link rel="stylesheet" href="../tokens/theme.css">
+<link rel="stylesheet" href="../tokens/dataviz.css">
+<link rel="stylesheet" href="../styles/reset.css">
+<link rel="stylesheet" href="../styles/patterns/dashboard.css">
+<link rel="stylesheet" href="../styles/patterns/settings.css">
+<script>if(location.href.indexOf('?thumb')!==-1)document.write('<style>#demo-bar{display:none!important}</style>');</script>
+<script src="../js/pattern-topbar-v2.js"></script>
+<script src="../js/freshds.js"></script>
+<script src="../js/pattern-bar.js"></script>
+</head>
+<body>
+<div id="app">
+  <div class="demo-bar" id="demo-bar">
+    <div class="demo-inner" id="demo-inner">
+      <button class="demo-mode-btn" id="mode-toggle-btn" onclick="toggleDemoMode()"><i class="ti ti-moon"></i></button>
+    </div>
+    <div class="demo-sep"></div>
+    <button class="demo-collapse-btn" id="demo-collapse-btn" onclick="toggleDemoBar()"><i class="ti ti-minus"></i></button>
+  </div>
+
+  <div class="dash-shell">
+    <pattern-topbar logged-in></pattern-topbar>
+    <div class="dash-body">
+
+      <nav class="app-nav open" id="app-nav" aria-label="Main navigation">
+        <div class="app-nav-inner">
+          <button class="app-nav-item active"><i class="ti ti-home"></i> Home</button>
+          <button class="app-nav-item"><i class="ti ti-chart-bar"></i> Analytics</button>
+          <button class="app-nav-item"><i class="ti ti-activity"></i> Activity</button>
+          <button class="app-nav-item"><i class="ti ti-folders"></i> Projects</button>
+          <button class="app-nav-item"><i class="ti ti-check"></i> My tasks</button>
+          <button class="app-nav-item"><i class="ti ti-calendar-event"></i> Calendar</button>
+          <button class="app-nav-item"><i class="ti ti-users"></i> Members</button>
+          <button class="app-nav-item"><i class="ti ti-settings"></i> Settings</button>
+        </div>
+      </nav>
+
+      <main class="dash-main">
+
+        <div style="padding:var(--space-5) var(--space-8);border-bottom:1px solid var(--surface-border);background:var(--surface-bg);flex-shrink:0;">
+          <div style="font-size:20px;font-weight:800;color:var(--text-primary);">Usage & Limits</div>
+          <div style="font-size:13px;color:var(--text-secondary);margin-top:2px;">Enterprise plan · Resets July 1, 2026</div>
+        </div>
+
+        <div class="dash-content">
+          <div class="stg-content" style="max-width:720px;">
+
+            <!-- Summary cards -->
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-4);margin-bottom:var(--space-6);">
+              <div class="stg-card" style="text-align:center;padding:var(--space-4);">
+                <div style="font-size:28px;font-weight:800;color:var(--text-primary);">14</div>
+                <div style="font-size:12px;color:var(--text-secondary);">of 22 seats used</div>
+              </div>
+              <div class="stg-card" style="text-align:center;padding:var(--space-4);">
+                <div style="font-size:28px;font-weight:800;color:var(--color-warning-text);">342K</div>
+                <div style="font-size:12px;color:var(--text-secondary);">of 500K AI credits used</div>
+              </div>
+              <div class="stg-card" style="text-align:center;padding:var(--space-4);">
+                <div style="font-size:28px;font-weight:800;color:var(--text-primary);">47GB</div>
+                <div style="font-size:12px;color:var(--text-secondary);">of 100GB storage used</div>
+              </div>
+            </div>
+
+            <!-- Usage bars section -->
+            <div class="stg-section">
+              <div class="stg-section-title">Resource usage</div>
+
+              <div class="stg-card">
+
+                <div class="stg-usage-item">
+                  <div class="stg-usage-header">
+                    <div>
+                      <div class="stg-usage-label"><i class="ti ti-sparkles" style="margin-right:4px;color:var(--color-interactive-text);"></i> AI credits</div>
+                      <div class="stg-usage-meta">342,180 used · Resets Jul 1</div>
+                    </div>
+                    <div class="stg-usage-value">342K / 500K</div>
+                  </div>
+                  <div class="stg-usage-bar-wrap">
+                    <div class="stg-usage-bar warning" style="width:68.4%;"></div>
+                  </div>
+                  <div style="display:flex;justify-content:space-between;margin-top:var(--space-1);">
+                    <div class="stg-usage-meta">68.4% used</div>
+                    <fresh-button variant="ghost" size="sm" style="font-size:11px;padding:0;height:auto;">Buy more credits</fresh-button>
+                  </div>
+                </div>
+
+                <div class="stg-card-divider"></div>
+
+                <div class="stg-usage-item">
+                  <div class="stg-usage-header">
+                    <div>
+                      <div class="stg-usage-label"><i class="ti ti-users" style="margin-right:4px;color:var(--color-interactive-text);"></i> Seats</div>
+                      <div class="stg-usage-meta">14 active members · 3 pending invites</div>
+                    </div>
+                    <div class="stg-usage-value">14 / 22</div>
+                  </div>
+                  <div class="stg-usage-bar-wrap">
+                    <div class="stg-usage-bar ok" style="width:63.6%;"></div>
+                  </div>
+                  <div class="stg-usage-meta" style="margin-top:var(--space-1);">63.6% used · 8 seats available</div>
+                </div>
+
+                <div class="stg-card-divider"></div>
+
+                <div class="stg-usage-item">
+                  <div class="stg-usage-header">
+                    <div>
+                      <div class="stg-usage-label"><i class="ti ti-database" style="margin-right:4px;color:var(--color-interactive-text);"></i> Storage</div>
+                      <div class="stg-usage-meta">47.2 GB used across documents, attachments, and data</div>
+                    </div>
+                    <div class="stg-usage-value">47GB / 100GB</div>
+                  </div>
+                  <div class="stg-usage-bar-wrap">
+                    <div class="stg-usage-bar ok" style="width:47.2%;"></div>
+                  </div>
+                  <div class="stg-usage-meta" style="margin-top:var(--space-1);">47.2% used</div>
+                </div>
+
+                <div class="stg-card-divider"></div>
+
+                <div class="stg-usage-item">
+                  <div class="stg-usage-header">
+                    <div>
+                      <div class="stg-usage-label"><i class="ti ti-api" style="margin-right:4px;color:var(--color-interactive-text);"></i> API calls</div>
+                      <div class="stg-usage-meta">Monthly rolling window · 1M included</div>
+                    </div>
+                    <div class="stg-usage-value">892K / 1M</div>
+                  </div>
+                  <div class="stg-usage-bar-wrap">
+                    <div class="stg-usage-bar warning" style="width:89.2%;"></div>
+                  </div>
+                  <div style="display:flex;justify-content:space-between;margin-top:var(--space-1);">
+                    <div class="stg-usage-meta" style="color:var(--color-warning-text);">89.2% used — approaching limit</div>
+                    <fresh-button variant="ghost" size="sm" style="font-size:11px;padding:0;height:auto;">Set alert threshold</fresh-button>
+                  </div>
+                </div>
+
+                <div class="stg-card-divider"></div>
+
+                <div class="stg-usage-item" style="margin-bottom:0;">
+                  <div class="stg-usage-header">
+                    <div>
+                      <div class="stg-usage-label"><i class="ti ti-robot" style="margin-right:4px;color:var(--color-interactive-text);"></i> AI agents (active)</div>
+                      <div class="stg-usage-meta">Deployed and running agents</div>
+                    </div>
+                    <div class="stg-usage-value">3 / Unlimited</div>
+                  </div>
+                  <div class="stg-usage-bar-wrap">
+                    <div class="stg-usage-bar ok" style="width:30%;"></div>
+                  </div>
+                  <div class="stg-usage-meta" style="margin-top:var(--space-1);">No hard limit on Enterprise</div>
+                </div>
+
+              </div>
+            </div>
+
+            <!-- Breakdown by member -->
+            <div class="stg-section">
+              <div class="stg-section-title">AI credits by member</div>
+              <div class="stg-card" style="padding:0;overflow:hidden;">
+                <div style="padding:var(--space-2) var(--space-4);background:var(--surface-subtle);border-bottom:1px solid var(--surface-border);display:grid;grid-template-columns:1fr auto auto;gap:var(--space-4);">
+                  <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-tertiary);">Member</div>
+                  <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-tertiary);min-width:80px;">Credits used</div>
+                  <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-tertiary);min-width:120px;">This month</div>
+                </div>
+                <div style="display:grid;grid-template-columns:1fr auto auto;gap:var(--space-4);align-items:center;padding:var(--space-3) var(--space-4);border-bottom:1px solid var(--surface-border);">
+                  <div style="font-size:13px;font-weight:600;color:var(--text-primary);">Priya Sharma</div>
+                  <div style="font-size:12px;color:var(--text-secondary);min-width:80px;">124,200</div>
+                  <div style="min-width:120px;"><fresh-token-meter value="124200" max="500000"></fresh-token-meter></div>
+                </div>
+                <div style="display:grid;grid-template-columns:1fr auto auto;gap:var(--space-4);align-items:center;padding:var(--space-3) var(--space-4);border-bottom:1px solid var(--surface-border);">
+                  <div style="font-size:13px;font-weight:600;color:var(--text-primary);">Marcus Chen</div>
+                  <div style="font-size:12px;color:var(--text-secondary);min-width:80px;">98,500</div>
+                  <div style="min-width:120px;"><fresh-token-meter value="98500" max="500000"></fresh-token-meter></div>
+                </div>
+                <div style="display:grid;grid-template-columns:1fr auto auto;gap:var(--space-4);align-items:center;padding:var(--space-3) var(--space-4);border-bottom:1px solid var(--surface-border);">
+                  <div style="font-size:13px;font-weight:600;color:var(--text-primary);">Anika Patel</div>
+                  <div style="font-size:12px;color:var(--text-secondary);min-width:80px;">62,000</div>
+                  <div style="min-width:120px;"><fresh-token-meter value="62000" max="500000"></fresh-token-meter></div>
+                </div>
+                <div style="display:grid;grid-template-columns:1fr auto auto;gap:var(--space-4);align-items:center;padding:var(--space-3) var(--space-4);">
+                  <div style="font-size:13px;color:var(--text-secondary);">11 others</div>
+                  <div style="font-size:12px;color:var(--text-secondary);min-width:80px;">57,480</div>
+                  <div style="min-width:120px;"><fresh-button variant="ghost" size="sm">View all</fresh-button></div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+</div>
+<script>
+  document.addEventListener('nav-toggle', function() {
+    document.getElementById('app-nav').classList.toggle('open');
+  });
+</script>
+<script src="../components/core/fresh-button.js"></script>
+<script src="../components/ai/fresh-token-meter.js"></script>
+</body>
+</html>

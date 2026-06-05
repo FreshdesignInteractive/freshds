@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Input — FreshDS</title>
+<base href="../../">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="tokens/primitives.css">
+<link rel="stylesheet" href="tokens/theme.css">
+<link rel="stylesheet" href="tokens/dataviz.css">
+<link rel="stylesheet" href="styles/reset.css">
+<link rel="stylesheet" href="styles/layout.css">
+<link rel="stylesheet" href="styles/components/core.css">
+<link rel="stylesheet" href="styles/docs.css">
+<script src="js/freshds.js"></script>
+<script src="js/freshds-site.js"></script>
+</head>
+<body>
+<div class="fds-app" id="app">
+  <ds-topbar active-section="ds"></ds-topbar>
+  <div class="fds-body">
+    <ds-shell active="input"></ds-shell>
+    <main class="fds-main">
+      <div class="fds-page active" id="page-input">
+        <div class="page-header">
+          <div class="page-eyebrow">Core UI</div>
+          <h1 class="page-title">Input</h1>
+          <p class="page-desc">Text fields for user input. Consistent height scale with Button for seamless inline composition. Supports icons, error states, and all standard input types.</p>
+        </div>
+        <div class="page-section">
+          <div class="page-section-title">Default</div>
+          <div class="demo-surface col" style="max-width:400px">
+            <fresh-input placeholder="Search components…"></fresh-input>
+            <fresh-input placeholder="Enter your email" type="email"></fresh-input>
+            <fresh-input placeholder="Password" type="password"></fresh-input>
+          </div>
+        </div>
+        <div class="page-section">
+          <div class="page-section-title">With icon</div>
+          <div class="demo-surface col" style="max-width:400px">
+            <fresh-input icon="ti-search" placeholder="Search…"></fresh-input>
+            <fresh-input icon="ti-mail" placeholder="Email address" type="email"></fresh-input>
+            <fresh-input icon="ti-user" placeholder="Username"></fresh-input>
+          </div>
+        </div>
+        <div class="page-section">
+          <div class="page-section-title">Sizes</div>
+          <div class="demo-surface col" style="max-width:400px">
+            <fresh-input size="sm" placeholder="Small — 28px"></fresh-input>
+            <fresh-input placeholder="Default — 34px"></fresh-input>
+            <fresh-input size="lg" placeholder="Large — 40px"></fresh-input>
+          </div>
+        </div>
+        <div class="page-section">
+          <div class="page-section-title">States</div>
+          <div class="demo-surface col" style="max-width:400px">
+            <fresh-input placeholder="Default"></fresh-input>
+            <fresh-input disabled placeholder="Disabled"></fresh-input>
+            <fresh-input readonly value="Read-only value"></fresh-input>
+            <fresh-input error="This field is required" placeholder="Error state"></fresh-input>
+            <fresh-input icon="ti-mail" error="Invalid email address" value="not-an-email"></fresh-input>
+          </div>
+        </div>
+        <div class="page-section">
+          <div class="page-section-title">Attributes</div>
+          <table class="usage-table">
+            <thead><tr><th>Attribute</th><th>Values</th><th>Default</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td>type</td><td><code>text</code> <code>email</code> <code>password</code> <code>number</code> <code>search</code></td><td><code>text</code></td><td>Native input type</td></tr>
+              <tr><td>placeholder</td><td>string</td><td>—</td><td>Hint text when empty</td></tr>
+              <tr><td>value</td><td>string</td><td>—</td><td>Current value</td></tr>
+              <tr><td>size</td><td><code>sm</code> <code>md</code> <code>lg</code></td><td><code>md</code></td><td>Height (28 / 34 / 40px)</td></tr>
+              <tr><td>icon</td><td>Tabler class e.g. <code>ti-search</code></td><td>—</td><td>Leading icon</td></tr>
+              <tr><td>error</td><td>string</td><td>—</td><td>Error message, activates red border</td></tr>
+              <tr><td>disabled</td><td>boolean</td><td>—</td><td>Prevents interaction</td></tr>
+              <tr><td>readonly</td><td>boolean</td><td>—</td><td>Displays value, prevents editing</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+<script src="components/core/fresh-button.js"></script>
+<script src="components/core/fresh-input.js"></script>
+<script src="components/navigation/fresh-simple-tabs.js"></script>
+</body>
+</html>

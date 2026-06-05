@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Empty First-Run — Acme</title>
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="../tokens/primitives.css">
+<link rel="stylesheet" href="../tokens/theme.css">
+<link rel="stylesheet" href="../tokens/dataviz.css">
+<link rel="stylesheet" href="../styles/reset.css">
+<link rel="stylesheet" href="../styles/patterns/onboarding.css">
+<script>if(location.href.indexOf('?thumb')!==-1)document.write('<style>#demo-bar{display:none!important}</style>');</script>
+<script src="../js/pattern-topbar-v2.js"></script>
+<script src="../js/freshds.js"></script>
+<script src="../js/pattern-bar.js"></script>
+<style>
+  /* ── Full app shell ── */
+  body { overflow: hidden; }
+
+  .app-shell {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    background: var(--surface-subtle);
+  }
+
+  .app-topbar {
+    height: 52px;
+    background: var(--surface-bg);
+    border-bottom: 1px solid var(--surface-border);
+    display: flex;
+    align-items: center;
+    padding: 0 var(--space-4);
+    gap: var(--space-3);
+    flex-shrink: 0;
+  }
+  .app-topbar-brand {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: -0.02em;
+    margin-right: var(--space-2);
+  }
+  .app-topbar-nav { display: flex; gap: var(--space-1); }
+  .app-nav-item {
+    padding: var(--space-1) var(--space-3);
+    border-radius: var(--radius-md);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    cursor: pointer;
+  }
+  .app-nav-item.active {
+    background: var(--surface-subtle);
+    color: var(--text-primary);
+  }
+  .app-topbar-right { margin-left: auto; display: flex; align-items: center; gap: var(--space-2); }
+
+  .app-body { flex: 1; display: flex; overflow: hidden; }
+
+  .app-sidebar {
+    width: 220px;
+    background: var(--surface-bg);
+    border-right: 1px solid var(--surface-border);
+    padding: var(--space-4) var(--space-3);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    flex-shrink: 0;
+  }
+  .sidebar-section-label {
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-tertiary);
+    padding: var(--space-2) var(--space-3) var(--space-1);
+    margin-top: var(--space-2);
+  }
+  .app-sidebar-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-2) var(--space-3);
+    border-radius: var(--radius-md);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    cursor: pointer;
+  }
+  .app-sidebar-item.active {
+    background: var(--color-interactive-subtle);
+    color: var(--color-interactive-text);
+  }
+  .app-sidebar-item i { font-size: 15px; }
+
+  .app-main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+  }
+
+  /* Inner page topbar / breadcrumb */
+  .page-topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-4) var(--space-6);
+    background: var(--surface-bg);
+    border-bottom: 1px solid var(--surface-border);
+    flex-shrink: 0;
+  }
+  .page-topbar-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: -0.02em;
+  }
+
+  /* Empty state container — fills remaining height */
+  .page-content {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-12) var(--space-6);
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 767px) {
+    .app-sidebar { display: none; }
+  }
+</style>
+</head>
+<body>
+<div id="app">
+
+  <div class="demo-bar" id="demo-bar">
+    <div class="demo-inner" id="demo-inner">
+      <button class="demo-mode-btn" id="mode-toggle-btn" onclick="toggleDemoMode()" aria-label="Toggle dark mode">
+        <i class="ti ti-moon"></i>
+      </button>
+    </div>
+    <div class="demo-sep"></div>
+    <button class="demo-collapse-btn" id="demo-collapse-btn" onclick="toggleDemoBar()" aria-label="Collapse toolbar">
+      <i class="ti ti-minus"></i>
+    </button>
+  </div>
+
+  <div class="app-shell">
+
+    <!-- Global topbar -->
+    <pattern-topbar logged-in></pattern-topbar>
+
+    <div class="app-body">
+
+      <!-- Sidebar -->
+      <aside class="app-sidebar">
+        <div class="sidebar-section-label">Workspace</div>
+        <div class="app-sidebar-item active"><i class="ti ti-layout-dashboard"></i> Dashboard</div>
+        <div class="app-sidebar-item"><i class="ti ti-folders"></i> Projects</div>
+        <div class="app-sidebar-item"><i class="ti ti-check"></i> My tasks</div>
+        <div class="sidebar-section-label">Team</div>
+        <div class="app-sidebar-item"><i class="ti ti-users"></i> Members</div>
+        <div class="app-sidebar-item"><i class="ti ti-chart-bar"></i> Analytics</div>
+        <div class="app-sidebar-item"><i class="ti ti-settings"></i> Settings</div>
+      </aside>
+
+      <!-- Main content -->
+      <main class="app-main">
+        <div class="page-topbar">
+          <span class="page-topbar-title">Projects</span>
+          <fresh-button variant="primary" size="sm"><i class="ti ti-plus"></i> New project</fresh-button>
+        </div>
+
+        <div class="page-content">
+          <fresh-empty-state
+            icon="ti-folders"
+            title="No projects yet"
+            description="Create your first project to start organizing tasks, collaborating with your team, and tracking progress.">
+            <fresh-button slot="action" variant="primary">
+              <i class="ti ti-plus"></i> Create first project
+            </fresh-button>
+          </fresh-empty-state>
+        </div>
+      </main>
+
+    </div>
+  </div>
+
+</div>
+<script src="../components/core/fresh-button.js"></script>
+<script src="../components/data/fresh-avatar.js"></script>
+<script src="../components/feedback/fresh-empty-state.js"></script>
+</body>
+</html>

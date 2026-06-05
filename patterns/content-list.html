@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>List / Index — Acme</title>
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="../tokens/primitives.css">
+<link rel="stylesheet" href="../tokens/theme.css">
+<link rel="stylesheet" href="../tokens/dataviz.css">
+<link rel="stylesheet" href="../styles/reset.css">
+<link rel="stylesheet" href="../styles/patterns/dashboard.css">
+<link rel="stylesheet" href="../styles/patterns/content.css">
+<script>if(location.href.indexOf('?thumb')!==-1)document.write('<style>#demo-bar{display:none!important}</style>');</script>
+<script src="../js/pattern-topbar-v2.js"></script>
+<script src="../js/freshds.js"></script>
+<script src="../js/pattern-bar.js"></script>
+</head>
+<body>
+<div id="app">
+
+  <div class="demo-bar" id="demo-bar">
+    <div class="demo-inner" id="demo-inner">
+      <button class="demo-mode-btn" id="mode-toggle-btn" onclick="toggleDemoMode()" aria-label="Toggle dark mode">
+        <i class="ti ti-moon"></i>
+      </button>
+    </div>
+    <div class="demo-sep"></div>
+    <button class="demo-collapse-btn" id="demo-collapse-btn" onclick="toggleDemoBar()" aria-label="Collapse toolbar">
+      <i class="ti ti-minus"></i>
+    </button>
+  </div>
+
+  <div class="dash-shell">
+
+    <pattern-topbar logged-in></pattern-topbar>
+
+    <div class="dash-body">
+
+      <nav class="app-nav open" id="app-nav" aria-label="Main navigation">
+        <div class="app-nav-inner">
+          <button class="app-nav-item active"><i class="ti ti-home"></i> Home</button>
+          <button class="app-nav-item"><i class="ti ti-chart-bar"></i> Analytics</button>
+          <button class="app-nav-item"><i class="ti ti-activity"></i> Activity</button>
+          <button class="app-nav-item"><i class="ti ti-folders"></i> Projects</button>
+          <button class="app-nav-item"><i class="ti ti-check"></i> My tasks</button>
+          <button class="app-nav-item"><i class="ti ti-calendar-event"></i> Calendar</button>
+          <button class="app-nav-item"><i class="ti ti-users"></i> Members</button>
+          <button class="app-nav-item"><i class="ti ti-settings"></i> Settings</button>
+        </div>
+      </nav>
+
+      <main class="dash-main">
+        <div class="dash-page-header">
+          <div>
+            <div class="dash-page-title">All contacts</div>
+            <div class="dash-page-subtitle">248 contacts · 12 new this week</div>
+          </div>
+          <div class="dash-page-actions">
+            <fresh-button variant="secondary" size="sm"><i class="ti ti-download"></i> Export</fresh-button>
+            <fresh-button variant="primary" size="sm"><i class="ti ti-plus"></i> Add contact</fresh-button>
+          </div>
+        </div>
+
+        <div class="dash-content" style="padding-top: var(--space-4);">
+
+          <!-- Search + filter bar -->
+          <div class="dash-filter-bar">
+            <fresh-input placeholder="Search contacts…" clearable style="max-width:280px;--input-width:280px;"></fresh-input>
+            <fresh-simple-tabs id="status-tabs">
+              <button slot="tab" class="active">All</button>
+              <button slot="tab">Active</button>
+              <button slot="tab">Lead</button>
+              <button slot="tab">Inactive</button>
+            </fresh-simple-tabs>
+            <div class="dash-filter-right">
+              <fresh-button variant="secondary" size="sm"><i class="ti ti-filter"></i> Filter</fresh-button>
+              <fresh-button variant="secondary" size="sm"><i class="ti ti-arrows-sort"></i> Sort</fresh-button>
+            </div>
+          </div>
+
+          <!-- List -->
+          <div class="dash-card" style="padding: 0; overflow: hidden;">
+            <div class="cnt-list">
+
+              <div class="cnt-list-row">
+                <fresh-avatar name="Priya Sharma" size="sm"></fresh-avatar>
+                <div class="cnt-list-info">
+                  <div class="cnt-list-name">Priya Sharma</div>
+                  <div class="cnt-list-meta">Head of Product · Techvault Inc · priya@techvault.io</div>
+                </div>
+                <div class="cnt-list-aside">
+                  <fresh-badge variant="success">Active</fresh-badge>
+                  <fresh-button variant="ghost" size="sm" icon-only aria-label="More"><i class="ti ti-dots"></i></fresh-button>
+                </div>
+              </div>
+
+              <div class="cnt-list-row">
+                <fresh-avatar name="Marcus Chen" size="sm"></fresh-avatar>
+                <div class="cnt-list-info">
+                  <div class="cnt-list-name">Marcus Chen</div>
+                  <div class="cnt-list-meta">CTO · Luminate Health · m.chen@luminate.health</div>
+                </div>
+                <div class="cnt-list-aside">
+                  <fresh-badge variant="warning">Lead</fresh-badge>
+                  <fresh-button variant="ghost" size="sm" icon-only aria-label="More"><i class="ti ti-dots"></i></fresh-button>
+                </div>
+              </div>
+
+              <div class="cnt-list-row">
+                <fresh-avatar name="Anika Patel" size="sm"></fresh-avatar>
+                <div class="cnt-list-info">
+                  <div class="cnt-list-name">Anika Patel</div>
+                  <div class="cnt-list-meta">VP Engineering · FinCore · anika.p@fincore.com</div>
+                </div>
+                <div class="cnt-list-aside">
+                  <fresh-badge variant="success">Active</fresh-badge>
+                  <fresh-button variant="ghost" size="sm" icon-only aria-label="More"><i class="ti ti-dots"></i></fresh-button>
+                </div>
+              </div>
+
+              <div class="cnt-list-row">
+                <fresh-avatar name="Tom Okeke" size="sm"></fresh-avatar>
+                <div class="cnt-list-info">
+                  <div class="cnt-list-name">Tom Okeke</div>
+                  <div class="cnt-list-meta">CEO · Orbis Labs · tom@orbislabs.com</div>
+                </div>
+                <div class="cnt-list-aside">
+                  <fresh-badge variant="info">Lead</fresh-badge>
+                  <fresh-button variant="ghost" size="sm" icon-only aria-label="More"><i class="ti ti-dots"></i></fresh-button>
+                </div>
+              </div>
+
+              <div class="cnt-list-row">
+                <fresh-avatar name="Sarah Novak" size="sm"></fresh-avatar>
+                <div class="cnt-list-info">
+                  <div class="cnt-list-name">Sarah Novak</div>
+                  <div class="cnt-list-meta">Director of Sales · Arctus Systems · s.novak@arctus.io</div>
+                </div>
+                <div class="cnt-list-aside">
+                  <fresh-badge variant="success">Active</fresh-badge>
+                  <fresh-button variant="ghost" size="sm" icon-only aria-label="More"><i class="ti ti-dots"></i></fresh-button>
+                </div>
+              </div>
+
+              <div class="cnt-list-row">
+                <fresh-avatar name="David Kim" size="sm"></fresh-avatar>
+                <div class="cnt-list-info">
+                  <div class="cnt-list-name">David Kim</div>
+                  <div class="cnt-list-meta">Product Manager · Cloudspan · dkim@cloudspan.co</div>
+                </div>
+                <div class="cnt-list-aside">
+                  <fresh-badge variant="neutral">Inactive</fresh-badge>
+                  <fresh-button variant="ghost" size="sm" icon-only aria-label="More"><i class="ti ti-dots"></i></fresh-button>
+                </div>
+              </div>
+
+              <div class="cnt-list-row">
+                <fresh-avatar name="Leila Rostami" size="sm"></fresh-avatar>
+                <div class="cnt-list-info">
+                  <div class="cnt-list-name">Leila Rostami</div>
+                  <div class="cnt-list-meta">Head of Engineering · DataStack · l.rostami@datastack.dev</div>
+                </div>
+                <div class="cnt-list-aside">
+                  <fresh-badge variant="warning">Lead</fresh-badge>
+                  <fresh-button variant="ghost" size="sm" icon-only aria-label="More"><i class="ti ti-dots"></i></fresh-button>
+                </div>
+              </div>
+
+              <div class="cnt-list-row">
+                <fresh-avatar name="Raj Mehta" size="sm"></fresh-avatar>
+                <div class="cnt-list-info">
+                  <div class="cnt-list-name">Raj Mehta</div>
+                  <div class="cnt-list-meta">COO · Nexus Software · raj.mehta@nexussw.com</div>
+                </div>
+                <div class="cnt-list-aside">
+                  <fresh-badge variant="success">Active</fresh-badge>
+                  <fresh-button variant="ghost" size="sm" icon-only aria-label="More"><i class="ti ti-dots"></i></fresh-button>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Pagination -->
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-top:var(--space-4);">
+            <span style="font-size:13px;color:var(--text-secondary)">Showing 8 of 248 contacts</span>
+            <fresh-pagination total="248" page-size="8" current-page="1"></fresh-pagination>
+          </div>
+
+        </div>
+      </main>
+
+    </div>
+  </div>
+
+</div>
+<script>
+  document.addEventListener('nav-toggle', function() {
+    document.getElementById('app-nav').classList.toggle('open');
+  });
+</script>
+<script src="../components/core/fresh-button.js"></script>
+<script src="../components/core/fresh-input.js"></script>
+<script src="../components/data/fresh-avatar.js"></script>
+<script src="../components/feedback/fresh-badge.js"></script>
+<script src="../components/navigation/fresh-simple-tabs.js"></script>
+<script src="../components/navigation/fresh-pagination.js"></script>
+</body>
+</html>
