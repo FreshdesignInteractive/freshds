@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact — Freshdesign</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --purple: #7c6af7;
+  --purple-dark: #6255d4;
+  --purple-light: #ece9fe;
+  --text-primary: #111;
+  --text-secondary: #555;
+  --text-tertiary: #999;
+  --border: #e4e4e7;
+  --bg: #f7f7f8;
+  --card: #fff;
+  --radius: 12px;
+  --radius-pill: 999px;
+}
+body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text-primary); -webkit-font-smoothing: antialiased; min-height: 100dvh; }
+
+/* Nav */
+.nav {
+  background: var(--card);
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 40px; height: 60px;
+}
+.nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+.nav-logo-icon {
+  width: 32px; height: 32px; background: var(--purple); border-radius: 8px;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 3px; padding: 7px;
+}
+.nav-logo-icon span { background: white; border-radius: 2px; }
+.nav-logo-icon span:nth-child(2), .nav-logo-icon span:nth-child(3) { opacity: 0.6; }
+.nav-logo-icon span:nth-child(4) { opacity: 0.3; }
+.nav-wordmark { font-size: 15px; font-weight: 600; color: var(--text-primary); letter-spacing: -0.02em; }
+.nav-back { font-size: 13.5px; color: var(--text-secondary); text-decoration: none; transition: color 0.15s; }
+.nav-back:hover { color: var(--text-primary); }
+
+/* Layout */
+.page {
+  max-width: 960px; margin: 0 auto;
+  padding: 64px 24px 80px;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start;
+}
+
+/* Left */
+.page-eyebrow {
+  font-size: 11.5px; font-weight: 700; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--purple); margin-bottom: 14px;
+}
+.page-title {
+  font-size: clamp(28px, 3.5vw, 38px); font-weight: 700;
+  letter-spacing: -0.03em; line-height: 1.15; margin-bottom: 16px;
+}
+.page-desc {
+  font-size: 15px; color: var(--text-secondary); line-height: 1.75; margin-bottom: 40px;
+}
+
+.info-list { list-style: none; display: flex; flex-direction: column; gap: 20px; }
+.info-item { display: flex; align-items: flex-start; gap: 14px; }
+.info-icon {
+  width: 36px; height: 36px; background: var(--purple-light); border-radius: 10px;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px;
+}
+.info-icon svg { width: 16px; height: 16px; color: var(--purple); }
+.info-label { font-size: 12px; font-weight: 600; color: var(--text-tertiary); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 2px; }
+.info-value { font-size: 14.5px; color: var(--text-primary); font-weight: 500; }
+.info-value a { color: var(--purple); text-decoration: none; }
+.info-value a:hover { text-decoration: underline; }
+
+/* Form card */
+.form-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 36px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.05);
+}
+
+.form-title { font-size: 17px; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 4px; }
+.form-sub { font-size: 13.5px; color: var(--text-secondary); margin-bottom: 28px; }
+
+.field { margin-bottom: 18px; }
+.field label {
+  display: block; font-size: 13px; font-weight: 600;
+  color: var(--text-primary); margin-bottom: 6px;
+}
+.field input, .field select, .field textarea {
+  width: 100%;
+  padding: 11px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg);
+  font-family: inherit;
+  font-size: 14px;
+  color: var(--text-primary);
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+  resize: none;
+  -webkit-appearance: none;
+}
+.field input::placeholder, .field textarea::placeholder { color: var(--text-tertiary); }
+.field input:focus, .field select:focus, .field textarea:focus {
+  border-color: var(--purple);
+  box-shadow: 0 0 0 3px rgba(124,106,247,0.12);
+  background: var(--card);
+}
+.field textarea { min-height: 120px; line-height: 1.6; }
+.field select { cursor: pointer; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M4 6l4 4 4-4' stroke='%23999' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; background-size: 16px; padding-right: 36px; }
+
+.field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+
+.btn-submit {
+  width: 100%;
+  padding: 13px 24px;
+  background: var(--purple);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-pill);
+  font-family: inherit;
+  font-size: 14.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.1s;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  margin-top: 8px;
+}
+.btn-submit:hover { background: var(--purple-dark); }
+.btn-submit:active { transform: scale(0.98); }
+.btn-submit:disabled { opacity: 0.6; cursor: default; transform: none; }
+
+/* Success / error states */
+.form-success {
+  display: none; text-align: center; padding: 16px 0;
+}
+.form-success .check {
+  width: 52px; height: 52px; background: #dcfce7; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 16px;
+}
+.form-success .check svg { width: 24px; height: 24px; color: #16a34a; }
+.form-success h3 { font-size: 17px; font-weight: 700; margin-bottom: 6px; }
+.form-success p { font-size: 14px; color: var(--text-secondary); line-height: 1.6; }
+
+.form-error {
+  display: none;
+  background: #fef2f2; border: 1px solid #fecaca; border-radius: 10px;
+  padding: 12px 14px; margin-top: 14px;
+  font-size: 13.5px; color: #dc2626; line-height: 1.5;
+}
+
+/* Footer */
+.footer {
+  border-top: 1px solid var(--border); background: var(--card);
+  padding: 24px 40px; display: flex; align-items: center; justify-content: space-between;
+}
+.footer-copy { font-size: 13px; color: var(--text-tertiary); }
+.footer-links { display: flex; gap: 24px; list-style: none; }
+.footer-links a { font-size: 13px; color: var(--purple); text-decoration: none; }
+.footer-links a:hover { color: var(--purple-dark); }
+
+@media (max-width: 768px) {
+  .page { grid-template-columns: 1fr; gap: 40px; }
+  .nav { padding: 0 16px; }
+  .footer { flex-direction: column; gap: 16px; text-align: center; }
+  .field-row { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-logo" href="/">
+    
+    <img src="/assets/freshdesign-logo.svg" alt="Freshdesign" style="height:28px;width:auto;display:block">
+  </a>
+  <a class="nav-back" href="/">← Back to home</a>
+</nav>
+
+<div class="page">
+
+  <!-- Left: info -->
+  <div>
+    <div class="page-eyebrow">Contact</div>
+    <h1 class="page-title">Let's talk about your project</h1>
+    <p class="page-desc">Whether you're exploring consulting, have a question about FreshDS, or want to discuss a design system for your team — send a message and I'll get back to you within one business day.</p>
+
+    <ul class="info-list">
+      <li class="info-item">
+        <div class="info-icon">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="1" y="3" width="14" height="10" rx="2"/>
+            <path d="M1 5l7 5 7-5"/>
+          </svg>
+        </div>
+        <div>
+          <div class="info-label">Email</div>
+          <div class="info-value"><a href="mailto:raj.sidharthan@freshdesign.com">raj.sidharthan@freshdesign.com</a></div>
+        </div>
+      </li>
+      <li class="info-item">
+        <div class="info-icon">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="8" cy="8" r="6"/>
+            <path d="M8 4v4l2.5 2.5"/>
+          </svg>
+        </div>
+        <div>
+          <div class="info-label">Response time</div>
+          <div class="info-value">Within 1 business day</div>
+        </div>
+      </li>
+      <li class="info-item">
+        <div class="info-icon">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M8 2C5.8 2 4 3.8 4 6c0 3.3 4 8 4 8s4-4.7 4-8c0-2.2-1.8-4-4-4z"/>
+            <circle cx="8" cy="6" r="1.5"/>
+          </svg>
+        </div>
+        <div>
+          <div class="info-label">Based in</div>
+          <div class="info-value">California, USA</div>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Right: form -->
+  <div class="form-card">
+    <div class="form-title">Send a message</div>
+    <div class="form-sub">No commitment. Just a conversation.</div>
+
+    <form id="contact-form">
+      <!-- Web3Forms access key — replace with your key from web3forms.com -->
+      <input type="hidden" name="access_key" value="86907fa3-bde9-406a-b44b-71b7ed8e3086">
+      <input type="hidden" name="subject" value="Freshdesign contact form">
+      <input type="hidden" name="from_name" value="Freshdesign Website">
+      <input type="checkbox" name="botcheck" style="display:none">
+
+      <div class="field-row">
+        <div class="field">
+          <label for="name">Your name</label>
+          <input type="text" id="name" name="name" placeholder="Jane Smith" required>
+        </div>
+        <div class="field">
+          <label for="email">Email address</label>
+          <input type="email" id="email" name="email" placeholder="jane@company.com" required>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="inquiry">What can I help with?</label>
+        <select id="inquiry" name="inquiry" required>
+          <option value="" disabled selected>Select a topic…</option>
+          <option value="Consulting inquiry">Consulting — rapid prototype or design system setup</option>
+          <option value="Beta access question">Beta access question</option>
+          <option value="Product feedback">Product feedback</option>
+          <option value="Partnership or press">Partnership or press</option>
+          <option value="Other">Something else</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="message">Message</label>
+        <textarea id="message" name="message" placeholder="Tell me about your project, timeline, or what you're trying to build…" required></textarea>
+      </div>
+
+      <button type="submit" class="btn-submit" id="submit-btn">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M2 8h12M9 3l5 5-5 5"/>
+        </svg>
+        Send message
+      </button>
+
+      <div class="form-error" id="form-error"></div>
+    </form>
+
+    <div class="form-success" id="form-success">
+      <div class="check">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M5 13l4 4L19 7"/>
+        </svg>
+      </div>
+      <h3>Message sent!</h3>
+      <p>Thanks for reaching out. I'll get back to you within one business day.</p>
+    </div>
+  </div>
+</div>
+
+<footer class="footer">
+  <span class="footer-copy">© 2026 Freshdesign. Currently in private beta.</span>
+  <ul class="footer-links">
+    <li><a href="privacy.html">Privacy</a></li>
+    <li><a href="terms.html">Terms</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+</footer>
+
+<script>
+document.getElementById('contact-form').addEventListener('submit', async function(e) {
+  e.preventDefault()
+
+  const btn = document.getElementById('submit-btn')
+  const errorEl = document.getElementById('form-error')
+  btn.disabled = true
+  btn.textContent = 'Sending…'
+  errorEl.style.display = 'none'
+
+  const data = Object.fromEntries(new FormData(this))
+
+  try {
+    const res = await fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify(data)
+    })
+    const json = await res.json()
+
+    if (json.success) {
+      document.getElementById('contact-form').style.display = 'none'
+      document.getElementById('form-success').style.display = 'block'
+    } else {
+      throw new Error(json.message || 'Submission failed')
+    }
+  } catch (err) {
+    errorEl.textContent = 'Something went wrong — please email raj.sidharthan@freshdesign.com directly.'
+    errorEl.style.display = 'block'
+    btn.disabled = false
+    btn.innerHTML = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 8h12M9 3l5 5-5 5"/></svg> Send message`
+  }
+})
+</script>
+
+</body>
+</html>

@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FreshDS — AI-native design system</title>
-<meta name="description" content="A token-driven design system built for the AI era. 60 components, 108 patterns, brand configurator. Private beta.">
+<title>Freshdesign — From brand colors to AI-ready prototype in minutes</title>
+<meta name="description" content="A design system built for the AI era. Set your brand colors once, then use Claude Code, Cursor, or any AI tool to build production-ready interfaces.">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -16,14 +16,13 @@
   --purple: #7c6af7;
   --purple-dark: #6255d4;
   --purple-light: #ece9fe;
-  --purple-mid: #c4bdfb;
-  --text-primary: #0f0e1a;
-  --text-secondary: #555;
+  --text-primary: #111;
+  --text-secondary: #666;
   --text-tertiary: #999;
-  --border: #e5e4f0;
-  --bg: #fafafa;
-  --card: #ffffff;
-  --radius: 14px;
+  --border: #e4e4e7;
+  --bg: #f7f7f8;
+  --card: #fff;
+  --radius-pill: 999px;
 }
 
 body {
@@ -39,15 +38,13 @@ body {
   position: sticky;
   top: 0;
   z-index: 100;
-  background: rgba(250,250,250,0.88);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background: var(--card);
   border-bottom: 1px solid var(--border);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 32px;
-  height: 56px;
+  padding: 0 40px;
+  height: 60px;
 }
 
 .nav-logo {
@@ -55,19 +52,28 @@ body {
   align-items: center;
   gap: 10px;
   text-decoration: none;
+  flex-shrink: 0;
 }
 
-.nav-logo-mark {
-  width: 28px;
-  height: 28px;
+.nav-logo-icon {
+  width: 32px;
+  height: 32px;
   background: var(--purple);
   border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3px;
+  padding: 7px;
 }
 
-.nav-logo-mark svg { width: 16px; height: 16px; }
+.nav-logo-icon span {
+  background: white;
+  border-radius: 2px;
+}
+
+.nav-logo-icon span:nth-child(2),
+.nav-logo-icon span:nth-child(3) { opacity: 0.6; }
+.nav-logo-icon span:nth-child(4) { opacity: 0.3; }
 
 .nav-wordmark {
   font-size: 15px;
@@ -79,43 +85,41 @@ body {
 .nav-links {
   display: flex;
   align-items: center;
-  gap: 28px;
+  gap: 32px;
   list-style: none;
 }
 
 .nav-links a {
-  font-size: 13.5px;
-  font-weight: 500;
+  font-size: 14px;
+  font-weight: 450;
   color: var(--text-secondary);
   text-decoration: none;
   transition: color 0.15s;
 }
 .nav-links a:hover { color: var(--text-primary); }
 
-.btn-join {
+.btn-nav {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  padding: 8px 18px;
-  background: var(--purple);
-  color: #fff;
-  border: none;
-  border-radius: 8px;
+  padding: 8px 20px;
+  border: 1.5px solid var(--text-primary);
+  border-radius: var(--radius-pill);
+  background: transparent;
   font-family: inherit;
-  font-size: 13.5px;
+  font-size: 14px;
   font-weight: 600;
+  color: var(--text-primary);
   cursor: pointer;
   text-decoration: none;
-  transition: background 0.15s, transform 0.1s;
+  transition: background 0.15s, color 0.15s;
 }
-.btn-join:hover { background: var(--purple-dark); }
-.btn-join:active { transform: scale(0.97); }
+.btn-nav:hover { background: var(--text-primary); color: #fff; }
 
 /* ── Hero ── */
 .hero {
-  max-width: 760px;
+  max-width: 720px;
   margin: 0 auto;
-  padding: 80px 24px 64px;
+  padding: 88px 24px 80px;
   text-align: center;
 }
 
@@ -123,128 +127,168 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background: var(--purple-light);
-  color: var(--purple-dark);
-  font-size: 12px;
-  font-weight: 600;
-  padding: 5px 12px;
-  border-radius: 999px;
-  margin-bottom: 28px;
-  letter-spacing: 0.01em;
+  background: #eee;
+  color: #555;
+  font-size: 13px;
+  font-weight: 500;
+  padding: 6px 16px;
+  border-radius: var(--radius-pill);
+  margin-bottom: 36px;
 }
 
 .badge-dot {
   width: 6px;
   height: 6px;
-  background: var(--purple);
+  background: #999;
   border-radius: 50%;
-  animation: pulse 2s ease-in-out infinite;
-}
-
-@keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.4; }
 }
 
 .hero h1 {
-  font-size: clamp(32px, 5vw, 52px);
+  font-size: clamp(36px, 5.5vw, 58px);
   font-weight: 700;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.035em;
   line-height: 1.1;
   color: var(--text-primary);
-  margin-bottom: 20px;
+  margin-bottom: 24px;
 }
 
-.hero h1 span { color: var(--purple); }
+.hero h1 .accent { color: var(--purple); }
 
 .hero-sub {
   font-size: 17px;
   color: var(--text-secondary);
-  line-height: 1.65;
-  max-width: 540px;
+  line-height: 1.7;
+  max-width: 560px;
   margin: 0 auto 40px;
   font-weight: 400;
 }
 
-/* ── Auth card ── */
-.auth-card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 20px;
-  padding: 32px;
-  max-width: 380px;
-  margin: 0 auto;
-  box-shadow: 0 4px 32px rgba(124,106,247,0.08), 0 1px 4px rgba(0,0,0,0.04);
-}
-
-.auth-card-title {
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--text-primary);
-  text-align: center;
-  margin-bottom: 6px;
-}
-
-.auth-card-sub {
-  font-size: 12.5px;
-  color: var(--text-tertiary);
-  text-align: center;
-  margin-bottom: 20px;
-  line-height: 1.5;
-}
-
-.seat-bar {
-  background: var(--purple-light);
-  border-radius: 8px;
-  padding: 10px 14px;
+/* ── CTAs ── */
+.cta-row {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.btn-primary-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 13px 24px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-pill);
+  background: var(--card);
+  font-family: inherit;
+  font-size: 14.5px;
+  font-weight: 500;
+  color: var(--text-primary);
+  cursor: pointer;
+  text-decoration: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+  white-space: nowrap;
+}
+.btn-primary-cta:hover {
+  border-color: #aaa;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.btn-secondary-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 13px 24px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-pill);
+  background: var(--card);
+  font-family: inherit;
+  font-size: 14.5px;
+  font-weight: 500;
+  color: var(--text-primary);
+  cursor: pointer;
+  text-decoration: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+  white-space: nowrap;
+}
+.btn-secondary-cta:hover {
+  border-color: #aaa;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+/* Google G icon */
+.google-icon { width: 18px; height: 18px; flex-shrink: 0; }
+
+.cta-note {
+  font-size: 12.5px;
+  color: var(--text-tertiary);
   margin-bottom: 20px;
 }
 
-.seat-label {
-  font-size: 12px;
-  color: var(--purple-dark);
-  font-weight: 500;
+/* ── Seat progress ── */
+.seat-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
 }
 
-.seat-count {
-  font-size: 12px;
-  font-weight: 700;
-  color: var(--purple);
-}
-
-.seat-progress {
+.seat-bar-track {
+  width: 120px;
   height: 4px;
-  background: var(--purple-mid);
+  background: #ddd;
   border-radius: 2px;
-  margin-top: 8px;
   overflow: hidden;
 }
 
-.seat-progress-fill {
+.seat-bar-fill {
   height: 100%;
   background: var(--purple);
   border-radius: 2px;
-  transition: width 0.5s ease;
+  transition: width 0.6s ease;
+  width: 0%;
 }
 
-.auth-divider {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin: 16px 0;
+.seat-text {
+  font-size: 13px;
   color: var(--text-tertiary);
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.05em;
 }
-.auth-divider::before, .auth-divider::after {
-  content: '';
-  flex: 1;
-  height: 1px;
-  background: var(--border);
+
+/* ── Auth modal overlay ── */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  z-index: 200;
+  align-items: center;
+  justify-content: center;
+}
+.modal-overlay.open { display: flex; }
+
+.modal {
+  background: var(--card);
+  border-radius: 20px;
+  padding: 36px 32px;
+  width: 100%;
+  max-width: 360px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+  text-align: center;
+}
+
+.modal-title {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: 6px;
+}
+
+.modal-sub {
+  font-size: 13.5px;
+  color: var(--text-secondary);
+  margin-bottom: 28px;
+  line-height: 1.5;
 }
 
 .btn-oauth {
@@ -253,149 +297,322 @@ body {
   align-items: center;
   justify-content: center;
   gap: 10px;
-  padding: 11px 16px;
-  border: 1px solid var(--border);
-  border-radius: 10px;
+  padding: 12px 16px;
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
   background: var(--card);
   font-family: inherit;
-  font-size: 13.5px;
+  font-size: 14px;
   font-weight: 500;
   color: var(--text-primary);
   cursor: pointer;
-  transition: background 0.12s, border-color 0.12s, box-shadow 0.12s;
-  text-decoration: none;
+  transition: border-color 0.12s, box-shadow 0.12s;
   margin-bottom: 10px;
 }
-.btn-oauth:last-child { margin-bottom: 0; }
+.btn-oauth:last-of-type { margin-bottom: 0; }
 .btn-oauth:hover {
-  background: #f5f4ff;
-  border-color: var(--purple-mid);
-  box-shadow: 0 1px 6px rgba(124,106,247,0.1);
+  border-color: #bbb;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
 }
-.btn-oauth:active { background: var(--purple-light); }
-
+.btn-oauth:disabled { opacity: 0.55; cursor: default; }
 .btn-oauth svg { width: 18px; height: 18px; flex-shrink: 0; }
 
-.auth-note {
-  text-align: center;
+.modal-note {
   font-size: 11.5px;
   color: var(--text-tertiary);
   margin-top: 18px;
   line-height: 1.5;
 }
 
-/* ── Full state ── */
-.full-state {
-  display: none;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;
-  text-align: center;
+.modal-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: none;
+  border: none;
+  font-size: 20px;
+  color: var(--text-tertiary);
+  cursor: pointer;
+  line-height: 1;
+  padding: 4px;
 }
-.full-state h3 { font-size: 15px; font-weight: 600; }
-.full-state p { font-size: 13px; color: var(--text-secondary); line-height: 1.5; }
 
+.modal { position: relative; }
+
+/* Full beta state */
+.full-state { display: none; }
+.full-state h3 { font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+.full-state p { font-size: 13.5px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 20px; }
 .btn-waitlist {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  padding: 10px 20px;
+  padding: 11px 22px;
   background: var(--purple);
   color: #fff;
   border: none;
-  border-radius: 10px;
+  border-radius: var(--radius-pill);
   font-family: inherit;
-  font-size: 13.5px;
+  font-size: 14px;
   font-weight: 600;
   cursor: pointer;
   text-decoration: none;
   transition: background 0.15s;
-  margin-top: 4px;
 }
 .btn-waitlist:hover { background: var(--purple-dark); }
 
-/* ── Features ── */
-.features {
+/* ── Section shared ── */
+.section {
+  padding: 80px 40px;
+  border-top: 1px solid var(--border);
+}
+
+.section-inner {
   max-width: 960px;
-  margin: 80px auto 0;
-  padding: 0 24px 80px;
+  margin: 0 auto;
 }
 
-.features-title {
-  text-align: center;
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--text-tertiary);
-  letter-spacing: 0.06em;
+.section-bg-warm { background: #f0ede8; }
+.section-bg-white { background: #fff; }
+
+.eyebrow {
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  margin-bottom: 40px;
+  color: var(--purple);
+  margin-bottom: 16px;
 }
 
-.features-grid {
+.section-title {
+  font-size: clamp(26px, 3.5vw, 36px);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  color: var(--text-primary);
+  margin-bottom: 16px;
+  line-height: 1.15;
+}
+
+.section-desc {
+  font-size: 16px;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  max-width: 600px;
+  margin-bottom: 48px;
+}
+
+/* ── What it is cards ── */
+.tool-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 16px;
 }
 
-@media (max-width: 640px) {
-  .features-grid { grid-template-columns: 1fr; }
-  .nav-links { display: none; }
-  .nav { padding: 0 16px; }
-  .hero { padding: 48px 16px 40px; }
+.tool-card {
+  background: #e8e4dd;
+  border-radius: 16px;
+  padding: 28px;
 }
 
-.feature-card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 24px;
-}
-
-.feature-icon {
-  width: 36px;
-  height: 36px;
+.tool-icon {
+  width: 40px;
+  height: 40px;
   background: var(--purple-light);
   border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 16px;
-  font-size: 17px;
+  margin-bottom: 20px;
 }
 
-.feature-title {
+.tool-icon svg { width: 20px; height: 20px; color: var(--purple); }
+
+.tool-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--purple);
+  margin-bottom: 10px;
+  letter-spacing: -0.01em;
+}
+
+.tool-desc {
   font-size: 14px;
-  font-weight: 600;
-  margin-bottom: 6px;
-  color: var(--text-primary);
+  color: var(--text-secondary);
+  line-height: 1.65;
 }
 
-.feature-desc {
+/* ── How it works ── */
+.steps-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.step-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 24px;
+}
+
+.step-num {
   font-size: 13px;
+  font-weight: 600;
+  color: var(--purple);
+  margin-bottom: 16px;
+}
+
+.step-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 10px;
+  letter-spacing: -0.01em;
+}
+
+.step-desc {
+  font-size: 13.5px;
   color: var(--text-secondary);
   line-height: 1.6;
 }
 
-.feature-pill {
-  display: inline-block;
-  font-size: 11px;
-  font-weight: 600;
-  color: var(--purple);
-  background: var(--purple-light);
-  padding: 2px 8px;
-  border-radius: 999px;
-  margin-top: 10px;
+/* ── Consulting ── */
+.consulting-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: start;
 }
 
-/* ── Loading skeleton ── */
-.skeleton {
-  background: linear-gradient(90deg, #ece9fe 25%, #ddd8fd 50%, #ece9fe 75%);
-  background-size: 200% 100%;
-  animation: shimmer 1.2s infinite;
-  border-radius: 4px;
-  height: 12px;
+.checklist {
+  list-style: none;
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
-@keyframes shimmer { to { background-position: -200% 0; } }
+
+.checklist li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 15px;
+  color: var(--text-secondary);
+}
+
+.checklist li::before {
+  content: '';
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M3 8l3.5 3.5L13 4.5' stroke='%237c6af7' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.consulting-card {
+  background: var(--bg);
+  border-radius: 20px;
+  padding: 32px;
+}
+
+.consulting-avatar {
+  width: 48px;
+  height: 48px;
+  background: var(--purple-light);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--purple);
+  margin-bottom: 20px;
+}
+
+.consulting-card-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+  letter-spacing: -0.01em;
+}
+
+.consulting-card-role {
+  font-size: 13px;
+  color: var(--text-tertiary);
+  margin-bottom: 16px;
+}
+
+.consulting-card-desc {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.65;
+  margin-bottom: 24px;
+}
+
+.btn-contact {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 20px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-pill);
+  background: var(--card);
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-primary);
+  cursor: pointer;
+  text-decoration: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.btn-contact:hover { border-color: #aaa; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+
+/* ── Footer ── */
+.footer {
+  border-top: 1px solid var(--border);
+  background: #fff;
+  padding: 24px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.footer-copy {
+  font-size: 13px;
+  color: var(--text-tertiary);
+}
+
+.footer-links {
+  display: flex;
+  gap: 24px;
+  list-style: none;
+}
+
+.footer-links a {
+  font-size: 13px;
+  color: var(--purple);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+.footer-links a:hover { color: var(--purple-dark); }
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .tool-grid { grid-template-columns: 1fr; }
+  .steps-grid { grid-template-columns: 1fr 1fr; }
+  .consulting-grid { grid-template-columns: 1fr; }
+  .section { padding: 56px 20px; }
+}
+
+@media (max-width: 640px) {
+  .nav { padding: 0 16px; }
+  .nav-links { display: none; }
+  .hero { padding: 56px 20px 56px; }
+  .cta-row { flex-direction: column; align-items: stretch; }
+  .btn-primary-cta, .btn-secondary-cta { justify-content: center; }
+  .steps-grid { grid-template-columns: 1fr; }
+  .footer { flex-direction: column; gap: 16px; text-align: center; }
+}
 </style>
 </head>
 <body>
@@ -403,52 +620,188 @@ body {
 <!-- ── Nav ── -->
 <nav class="nav">
   <a class="nav-logo" href="/">
-    <div class="nav-logo-mark">
-      <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect x="2" y="2" width="5" height="5" rx="1.5" fill="white"/>
-        <rect x="9" y="2" width="5" height="5" rx="1.5" fill="white" opacity="0.6"/>
-        <rect x="2" y="9" width="5" height="5" rx="1.5" fill="white" opacity="0.6"/>
-        <rect x="9" y="9" width="5" height="5" rx="1.5" fill="white" opacity="0.3"/>
-      </svg>
+    <div class="nav-logo-icon">
+      <span></span><span></span><span></span><span></span>
     </div>
-    <span class="nav-wordmark">Freshdesign</span>
+    <img src="/assets/freshdesign-logo.svg" alt="Freshdesign" style="height:28px;width:auto;display:block">
   </a>
   <ul class="nav-links">
-    <li><a href="#features">Components</a></li>
-    <li><a href="#features">Patterns</a></li>
-    <li><a href="#features">Configurator</a></li>
+    <li><a href="#how-it-works">How it works</a></li>
+    <li><a href="patterns.html">Pattern library</a></li>
+    <li><a href="#consulting">Consulting</a></li>
   </ul>
-  <a class="btn-join" href="#auth-card">Join beta →</a>
+  <button class="btn-nav" onclick="openModal()">Join beta</button>
 </nav>
 
 <!-- ── Hero ── -->
 <section class="hero">
   <div class="beta-badge">
     <span class="badge-dot"></span>
-    Private beta · <span id="hero-seat-text">limited seats</span>
+    Private beta — limited seats
   </div>
 
-  <h1>The design system<br>built for the <span>AI era</span></h1>
+  <h1>From brand colors to<br><span class="accent">AI-ready prototype</span><br>in minutes</h1>
 
   <p class="hero-sub">
-    Set your brand colors once. Get a complete, token-driven component library your team can use with Claude Code, Cursor, or any AI tool — without starting from scratch.
+    A design system built for the AI era. Set your brand colors once,
+    then use Claude Code, Cursor, or any AI tool to build
+    production-ready interfaces — without starting from scratch.
   </p>
 
-  <!-- ── Auth card ── -->
-  <div class="auth-card" id="auth-card">
+  <div class="cta-row">
+    <button class="btn-primary-cta" onclick="openModal()">
+      <svg class="google-icon" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
+        <path d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844a4.14 4.14 0 0 1-1.796 2.716v2.259h2.908c1.702-1.567 2.684-3.875 2.684-6.615Z" fill="#4285F4"/>
+        <path d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18Z" fill="#34A853"/>
+        <path d="M3.964 10.71A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.042l3.007-2.332Z" fill="#FBBC05"/>
+        <path d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.958L3.964 7.29C4.672 5.163 6.656 3.58 9 3.58Z" fill="#EA4335"/>
+      </svg>
+      Sign in to request access
+    </button>
+    <a class="btn-secondary-cta" href="patterns.html">
+      See the pattern library
+    </a>
+  </div>
 
-    <!-- Seat counter -->
-    <div class="seat-bar" id="seat-bar">
-      <span class="seat-label">Beta seats claimed</span>
-      <span class="seat-count" id="seat-count"><span class="skeleton" style="width:48px;display:inline-block"></span></span>
+  <p class="cta-note">No credit card. No setup. Cancel anytime when we go paid.</p>
+
+  <div class="seat-row">
+    <div class="seat-bar-track">
+      <div class="seat-bar-fill" id="seat-fill"></div>
     </div>
-    <div class="seat-progress">
-      <div class="seat-progress-fill" id="seat-fill" style="width:0%"></div>
+    <span class="seat-text" id="seat-text">Loading seats…</span>
+  </div>
+</section>
+
+<!-- ── What it is ── -->
+<section class="section section-bg-warm" id="what-it-is">
+  <div class="section-inner">
+    <div class="eyebrow">What it is</div>
+    <h2 class="section-title">Three tools. One workflow.</h2>
+    <p class="section-desc">Freshdesign gives product managers and designers everything needed to go from brand brief to working prototype — without a front-end engineer in the room.</p>
+
+    <div class="tool-grid">
+      <div class="tool-card">
+        <div class="tool-icon">
+          <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M10 2l2.5 4.5L18 7.5l-4 3.9 1 5.6L10 14.5 5 17l1-5.6-4-3.9 5.5-1z"/>
+          </svg>
+        </div>
+        <div class="tool-title">Design system</div>
+        <div class="tool-desc">60+ components built as standard web components. Token-driven, framework-agnostic, dark and light mode out of the box.</div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-icon">
+          <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="2" width="7" height="7" rx="1.5"/>
+            <rect x="11" y="2" width="7" height="7" rx="1.5"/>
+            <rect x="2" y="11" width="7" height="7" rx="1.5"/>
+            <rect x="11" y="11" width="7" height="7" rx="1.5"/>
+          </svg>
+        </div>
+        <div class="tool-title">Pattern library</div>
+        <div class="tool-desc">Hundreds of pre-built screens across every major category — auth, onboarding, dashboards, AI & chat, settings, and more.</div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-icon">
+          <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="3" y1="6" x2="17" y2="6"/>
+            <line x1="3" y1="10" x2="17" y2="10"/>
+            <line x1="3" y1="14" x2="17" y2="14"/>
+            <circle cx="7" cy="6" r="2" fill="currentColor" stroke="none"/>
+            <circle cx="13" cy="10" r="2" fill="currentColor" stroke="none"/>
+            <circle cx="8" cy="14" r="2" fill="currentColor" stroke="none"/>
+          </svg>
+        </div>
+        <div class="tool-title">Configurator</div>
+        <div class="tool-desc">Point, click, set your brand colors and fonts. Export a token file your AI coding tool can use immediately.</div>
+      </div>
     </div>
+  </div>
+</section>
+
+<!-- ── How it works ── -->
+<section class="section section-bg-warm" id="how-it-works">
+  <div class="section-inner">
+    <div class="eyebrow">How it works</div>
+    <h2 class="section-title">Four steps from brief to prototype</h2>
+
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-num">01</div>
+        <div class="step-title">Set your brand</div>
+        <div class="step-desc">Open the configurator. Drop in your primary color, pick a font. Done in under a minute.</div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">02</div>
+        <div class="step-title">Browse patterns</div>
+        <div class="step-desc">Find the screens you need from hundreds of ready-made layouts. Filter by category.</div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">03</div>
+        <div class="step-title">Export tokens</div>
+        <div class="step-desc">Download your brand tokens as a single file. Every component inherits them automatically.</div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">04</div>
+        <div class="step-title">Build with AI</div>
+        <div class="step-desc">Hand the tokens to Claude Code or Cursor. Get brand-correct screens in seconds, not hours.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Consulting ── -->
+<section class="section section-bg-white" id="consulting">
+  <div class="section-inner">
+    <div class="consulting-grid">
+      <div>
+        <div class="eyebrow">Consulting</div>
+        <h2 class="section-title">Need a hand building it?</h2>
+        <p class="section-desc" style="margin-bottom:0">I'm available for focused UX engagements — from rapid prototypes and concept validation to full design system implementation for your product team.</p>
+        <ul class="checklist">
+          <li>Rapid prototype for stakeholder review</li>
+          <li>Design system setup for your brand</li>
+          <li>Usability testing and concept validation</li>
+          <li>AI-assisted product discovery sprints</li>
+        </ul>
+      </div>
+      <div class="consulting-card">
+        <div class="consulting-avatar">FD</div>
+        <div class="consulting-card-title">Work directly with the maker</div>
+        <div class="consulting-card-role">UX designer &amp; design systems specialist</div>
+        <div class="consulting-card-desc">Every engagement is hands-on. I use the same tools you're getting access to — which means fast turnaround, high fidelity, and no handoff friction.</div>
+        <a class="btn-contact" href="contact.html">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="1" y="3" width="14" height="10" rx="2"/>
+            <path d="M1 5l7 5 7-5"/>
+          </svg>
+          Get in touch
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Footer ── -->
+<footer class="footer">
+  <span class="footer-copy">© 2026 Freshdesign. Currently in private beta.</span>
+  <ul class="footer-links">
+    <li><a href="privacy.html">Privacy</a></li>
+    <li><a href="terms.html">Terms</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+</footer>
+
+<!-- ── Auth modal ── -->
+<div class="modal-overlay" id="modal-overlay" onclick="handleOverlayClick(event)">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
 
     <!-- Sign-in state -->
     <div id="signin-state">
-      <div class="auth-divider" style="margin-top:20px">sign in to join beta</div>
+      <div class="modal-title">Join the beta</div>
+      <div class="modal-sub">Sign in to claim your seat.<br>No password required.</div>
 
       <button class="btn-oauth" id="btn-google" onclick="signIn('google')">
         <svg viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
@@ -467,89 +820,72 @@ body {
         Continue with GitHub
       </button>
 
-      <p class="auth-note">No password. One click. Your data is never shared.</p>
+      <p class="modal-note">No password. One click. Your data is never shared.</p>
     </div>
 
     <!-- Beta full state -->
     <div class="full-state" id="full-state">
-      <div style="font-size:32px">⏳</div>
+      <div style="font-size:36px;margin-bottom:16px">⏳</div>
       <h3>Beta seats are full</h3>
-      <p>We've reached our limit of 100 beta users.<br>Join the waitlist for the next opening.</p>
+      <p>We've reached our limit of 100 beta users. Join the waitlist for the next opening.</p>
       <a class="btn-waitlist" href="waitlist.html">Join waitlist →</a>
     </div>
-
   </div>
-</section>
-
-<!-- ── Features ── -->
-<section class="features" id="features">
-  <div class="features-title">What's inside</div>
-  <div class="features-grid">
-    <div class="feature-card">
-      <div class="feature-icon">🧩</div>
-      <div class="feature-title">60 components</div>
-      <div class="feature-desc">Every component token-driven and theme-aware. Core UI, navigation, containers, data display — all with live docs.</div>
-      <span class="feature-pill">Dark mode included</span>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon">✦</div>
-      <div class="feature-title">12 AI components</div>
-      <div class="feature-desc">Prompt input, response bubbles, thinking indicators, confidence badges, diff viewer — built for AI-native products.</div>
-      <span class="feature-pill">AI-native</span>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon">🗂</div>
-      <div class="feature-title">108 patterns</div>
-      <div class="feature-desc">Full working screens across dashboards, auth, settings, onboarding, commerce, and AI workflows. All real HTML.</div>
-      <span class="feature-pill">10 categories</span>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon">🎨</div>
-      <div class="feature-title">Brand configurator</div>
-      <div class="feature-desc">Set two colors, pick fonts, preview the full system live. Export tokens or the entire DS site for your team.</div>
-      <span class="feature-pill">Instant export</span>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon">🤖</div>
-      <div class="feature-title">AI tool ready</div>
-      <div class="feature-desc">Designed to work with Claude Code, Cursor, and Copilot. Your AI knows the token system. Zero hallucination on components.</div>
-      <span class="feature-pill">Claude Code optimized</span>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon">⚡</div>
-      <div class="feature-title">No framework</div>
-      <div class="feature-desc">Vanilla HTML, CSS custom properties, and web components. Drop it into any stack — React, Vue, Svelte, or plain HTML.</div>
-      <span class="feature-pill">Framework agnostic</span>
-    </div>
-  </div>
-</section>
+</div>
 
 <script type="module">
   import { supabase, BETA_SEAT_LIMIT } from '/js/supabase-client.js'
 
   const LIMIT = BETA_SEAT_LIMIT
+  let isFull = false
 
   // If already signed in, go straight to the app
-  async function checkExistingSession() {
+  ;(async () => {
     const { data: { session } } = await supabase.auth.getSession()
     if (session) window.location.replace('/app.html')
-  }
+  })()
 
   // Load seat count
   async function loadSeatCount() {
     const { data: count, error } = await supabase.rpc('beta_seat_count')
-    if (error || count === null) return
+    if (error || count === null) {
+      document.getElementById('seat-text').textContent = '— of 100 beta seats claimed'
+      return
+    }
 
     const pct = Math.min(100, Math.round((count / LIMIT) * 100))
-    document.getElementById('seat-count').textContent = `${count} / ${LIMIT}`
     document.getElementById('seat-fill').style.width = pct + '%'
-    document.getElementById('hero-seat-text').textContent = `${LIMIT - count} seats left`
+    document.getElementById('seat-text').textContent = `${count} of ${LIMIT} beta seats claimed`
 
     if (count >= LIMIT) {
-      document.getElementById('signin-state').style.display = 'none'
-      document.getElementById('full-state').style.display = 'flex'
+      isFull = true
     }
   }
+
+  loadSeatCount()
+
+  // Modal
+  window.openModal = function() {
+    if (isFull) {
+      document.getElementById('signin-state').style.display = 'none'
+      document.getElementById('full-state').style.display = 'block'
+    }
+    document.getElementById('modal-overlay').classList.add('open')
+    document.body.style.overflow = 'hidden'
+  }
+
+  window.closeModal = function() {
+    document.getElementById('modal-overlay').classList.remove('open')
+    document.body.style.overflow = ''
+  }
+
+  window.handleOverlayClick = function(e) {
+    if (e.target === document.getElementById('modal-overlay')) closeModal()
+  }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeModal()
+  })
 
   // OAuth sign-in
   window.signIn = async function(provider) {
@@ -558,9 +894,7 @@ body {
 
     const { error } = await supabase.auth.signInWithOAuth({
       provider,
-      options: {
-        redirectTo: window.location.origin + '/auth/callback.html'
-      }
+      options: { redirectTo: window.location.origin + '/auth/callback.html' }
     })
 
     if (error) {
@@ -568,9 +902,6 @@ body {
       alert('Sign-in failed: ' + error.message)
     }
   }
-
-  checkExistingSession()
-  loadSeatCount()
 </script>
 
 </body>
