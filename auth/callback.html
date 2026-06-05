@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Signing you in — FreshDS</title>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #fafafa;
+    color: #1a1a2e;
+    min-height: 100dvh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .wrap {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+  .spinner {
+    width: 36px;
+    height: 36px;
+    border: 3px solid #ece9fe;
+    border-top-color: #7c6af7;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .label {
+    font-size: 14px;
+    color: #666;
+    font-weight: 500;
+  }
+  .error-msg {
+    font-size: 13px;
+    color: #dc2626;
+    max-width: 280px;
+    line-height: 1.5;
+  }
+  .back-link {
+    font-size: 13px;
+    color: #7c6af7;
+    text-decoration: none;
+    margin-top: 4px;
+  }
+  .back-link:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+<div class="wrap" id="wrap">
+  <div class="spinner"></div>
+  <div class="label">Signing you in…</div>
+</div>
+
+<script type="module">
+  import { supabase, BETA_SEAT_LIMIT } from '/js/supabase-client.js'
+
+  async function handleCallback() {
+    const wrap = document.getElementById('wrap')
+
+    try {
+      // Let Supabase exchange the OAuth code for a session
+      const { data: { session }, error } = await supabase.auth.getSession()
+
+      if (error || !session) {
+        throw new Error(error?.message || 'Sign-in failed. Please try again.')
+      }
+
+      // Check beta seat count
+      const { data: count, error: rpcError } = await supabase.rpc('beta_seat_count')
+
+      if (rpcError) throw new Error('Could not check beta availability.')
+
+      if (count > BETA_SEAT_LIMIT) {
+        // Beta full — send to waitlist
+        window.location.replace('/waitlist.html?reason=full')
+        return
+      }
+
+      // Access granted — send to product app
+      window.location.replace('/app.html')
+
+    } catch (err) {
+      wrap.innerHTML = `
+        <div class="error-msg">${err.message}</div>
+        <a class="back-link" href="/">← Back to sign in</a>
+      `
+    }
+  }
+
+  handleCallback()
+</script>
+</body>
+</html>

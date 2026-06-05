@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Join the waitlist — FreshDS</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #fafafa;
+    color: #1a1a2e;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+
+  .card {
+    background: #fff;
+    border: 1px solid #e8e8f0;
+    border-radius: 20px;
+    padding: 48px 40px;
+    max-width: 440px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+  }
+
+  .icon {
+    width: 56px;
+    height: 56px;
+    background: #ece9fe;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 24px;
+    font-size: 24px;
+  }
+
+  h1 {
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    margin-bottom: 10px;
+    color: #1a1a2e;
+  }
+
+  .sub {
+    font-size: 14px;
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 32px;
+  }
+
+  .form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  input[type="text"],
+  input[type="email"] {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid #e0dff5;
+    border-radius: 10px;
+    font-family: inherit;
+    font-size: 14px;
+    color: #1a1a2e;
+    background: #fafafa;
+    outline: none;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+
+  input:focus {
+    border-color: #7c6af7;
+    box-shadow: 0 0 0 3px rgba(124,106,247,0.12);
+    background: #fff;
+  }
+
+  input::placeholder { color: #aaa; }
+
+  .btn-submit {
+    width: 100%;
+    padding: 13px;
+    background: #7c6af7;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s, transform 0.1s;
+    margin-top: 4px;
+  }
+
+  .btn-submit:hover { background: #6b59e8; }
+  .btn-submit:active { transform: scale(0.98); }
+  .btn-submit:disabled { background: #c4bdfb; cursor: not-allowed; }
+
+  .success {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 0;
+  }
+
+  .success-icon {
+    width: 48px;
+    height: 48px;
+    background: #d1fae5;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+  }
+
+  .success h2 {
+    font-size: 17px;
+    font-weight: 600;
+    color: #1a1a2e;
+  }
+
+  .success p {
+    font-size: 13px;
+    color: #666;
+    line-height: 1.6;
+  }
+
+  .error-msg {
+    font-size: 12px;
+    color: #dc2626;
+    text-align: left;
+    margin-top: -4px;
+  }
+
+  .footer-note {
+    margin-top: 24px;
+    font-size: 12px;
+    color: #aaa;
+    line-height: 1.6;
+  }
+</style>
+</head>
+<body>
+
+<div class="card">
+  <div class="icon">⏳</div>
+  <h1>Beta seats are full</h1>
+  <p class="sub">We've reached our limit of 100 beta users. Leave your details and we'll notify you when we expand or launch publicly.</p>
+
+  <form class="form" id="waitlist-form">
+    <input type="text" id="wl-name" placeholder="Your name" autocomplete="name">
+    <input type="email" id="wl-email" placeholder="Work email" required autocomplete="email">
+    <div class="error-msg" id="wl-error"></div>
+    <button type="submit" class="btn-submit" id="wl-btn">Notify me</button>
+  </form>
+
+  <div class="success" id="wl-success">
+    <div class="success-icon">✓</div>
+    <h2>You're on the list</h2>
+    <p>We'll email you the moment more seats open up.</p>
+  </div>
+
+  <p class="footer-note">No spam. One email when it's your turn.</p>
+</div>
+
+<script type="module">
+  import { supabase } from '/js/supabase-client.js'
+
+  const form   = document.getElementById('waitlist-form')
+  const btn    = document.getElementById('wl-btn')
+  const errEl  = document.getElementById('wl-error')
+  const success = document.getElementById('wl-success')
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault()
+    errEl.textContent = ''
+    btn.disabled = true
+    btn.textContent = 'Saving…'
+
+    const email = document.getElementById('wl-email').value.trim()
+    const name  = document.getElementById('wl-name').value.trim()
+
+    const { error } = await supabase
+      .from('waitlist')
+      .insert({ email, name: name || null })
+
+    if (error) {
+      if (error.code === '23505') {
+        errEl.textContent = 'That email is already on the list.'
+      } else {
+        errEl.textContent = 'Something went wrong. Please try again.'
+      }
+      btn.disabled = false
+      btn.textContent = 'Notify me'
+      return
+    }
+
+    form.style.display = 'none'
+    success.style.display = 'flex'
+  })
+</script>
+
+</body>
+</html>

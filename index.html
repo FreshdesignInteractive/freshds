@@ -3,350 +3,575 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FreshDS — Design System</title>
+<title>FreshDS — AI-native design system</title>
+<meta name="description" content="A token-driven design system built for the AI era. 60 components, 108 patterns, brand configurator. Private beta.">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
-
-<!-- Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-<!-- Icons -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+:root {
+  --purple: #7c6af7;
+  --purple-dark: #6255d4;
+  --purple-light: #ece9fe;
+  --purple-mid: #c4bdfb;
+  --text-primary: #0f0e1a;
+  --text-secondary: #555;
+  --text-tertiary: #999;
+  --border: #e5e4f0;
+  --bg: #fafafa;
+  --card: #ffffff;
+  --radius: 14px;
+}
 
-<!-- JSZip — browser-side ZIP for export -->
-<script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--bg);
+  color: var(--text-primary);
+  min-height: 100dvh;
+  -webkit-font-smoothing: antialiased;
+}
 
-<!-- Tokens (listed individually — @import doesn't work on file://) -->
-<link rel="stylesheet" href="tokens/primitives.css">
-<link rel="stylesheet" href="tokens/theme.css">
-<link rel="stylesheet" href="tokens/dataviz.css">
+/* ── Nav ── */
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(250,250,250,0.88);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 32px;
+  height: 56px;
+}
 
-<!-- Styles -->
-<link rel="stylesheet" href="styles/reset.css">
-<link rel="stylesheet" href="styles/layout.css">
-<link rel="stylesheet" href="styles/components/core.css">
-<link rel="stylesheet" href="styles/docs.css">
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+}
 
-<!-- Theme engine: runs before body renders to set color scale vars, eliminating FOUC -->
-<script src="js/freshds.js"></script>
-<script src="js/freshds-site.js"></script>
+.nav-logo-mark {
+  width: 28px;
+  height: 28px;
+  background: var(--purple);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-logo-mark svg { width: 16px; height: 16px; }
+
+.nav-wordmark {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  list-style: none;
+}
+
+.nav-links a {
+  font-size: 13.5px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+.nav-links a:hover { color: var(--text-primary); }
+
+.btn-join {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 18px;
+  background: var(--purple);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 13.5px;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.15s, transform 0.1s;
+}
+.btn-join:hover { background: var(--purple-dark); }
+.btn-join:active { transform: scale(0.97); }
+
+/* ── Hero ── */
+.hero {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 80px 24px 64px;
+  text-align: center;
+}
+
+.beta-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--purple-light);
+  color: var(--purple-dark);
+  font-size: 12px;
+  font-weight: 600;
+  padding: 5px 12px;
+  border-radius: 999px;
+  margin-bottom: 28px;
+  letter-spacing: 0.01em;
+}
+
+.badge-dot {
+  width: 6px;
+  height: 6px;
+  background: var(--purple);
+  border-radius: 50%;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+.hero h1 {
+  font-size: clamp(32px, 5vw, 52px);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  color: var(--text-primary);
+  margin-bottom: 20px;
+}
+
+.hero h1 span { color: var(--purple); }
+
+.hero-sub {
+  font-size: 17px;
+  color: var(--text-secondary);
+  line-height: 1.65;
+  max-width: 540px;
+  margin: 0 auto 40px;
+  font-weight: 400;
+}
+
+/* ── Auth card ── */
+.auth-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 32px;
+  max-width: 380px;
+  margin: 0 auto;
+  box-shadow: 0 4px 32px rgba(124,106,247,0.08), 0 1px 4px rgba(0,0,0,0.04);
+}
+
+.auth-card-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+  text-align: center;
+  margin-bottom: 6px;
+}
+
+.auth-card-sub {
+  font-size: 12.5px;
+  color: var(--text-tertiary);
+  text-align: center;
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+
+.seat-bar {
+  background: var(--purple-light);
+  border-radius: 8px;
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.seat-label {
+  font-size: 12px;
+  color: var(--purple-dark);
+  font-weight: 500;
+}
+
+.seat-count {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--purple);
+}
+
+.seat-progress {
+  height: 4px;
+  background: var(--purple-mid);
+  border-radius: 2px;
+  margin-top: 8px;
+  overflow: hidden;
+}
+
+.seat-progress-fill {
+  height: 100%;
+  background: var(--purple);
+  border-radius: 2px;
+  transition: width 0.5s ease;
+}
+
+.auth-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 16px 0;
+  color: var(--text-tertiary);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+}
+.auth-divider::before, .auth-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+.btn-oauth {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 11px 16px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--card);
+  font-family: inherit;
+  font-size: 13.5px;
+  font-weight: 500;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: background 0.12s, border-color 0.12s, box-shadow 0.12s;
+  text-decoration: none;
+  margin-bottom: 10px;
+}
+.btn-oauth:last-child { margin-bottom: 0; }
+.btn-oauth:hover {
+  background: #f5f4ff;
+  border-color: var(--purple-mid);
+  box-shadow: 0 1px 6px rgba(124,106,247,0.1);
+}
+.btn-oauth:active { background: var(--purple-light); }
+
+.btn-oauth svg { width: 18px; height: 18px; flex-shrink: 0; }
+
+.auth-note {
+  text-align: center;
+  font-size: 11.5px;
+  color: var(--text-tertiary);
+  margin-top: 18px;
+  line-height: 1.5;
+}
+
+/* ── Full state ── */
+.full-state {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  text-align: center;
+}
+.full-state h3 { font-size: 15px; font-weight: 600; }
+.full-state p { font-size: 13px; color: var(--text-secondary); line-height: 1.5; }
+
+.btn-waitlist {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 20px;
+  background: var(--purple);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-family: inherit;
+  font-size: 13.5px;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.15s;
+  margin-top: 4px;
+}
+.btn-waitlist:hover { background: var(--purple-dark); }
+
+/* ── Features ── */
+.features {
+  max-width: 960px;
+  margin: 80px auto 0;
+  padding: 0 24px 80px;
+}
+
+.features-title {
+  text-align: center;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-tertiary);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 40px;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+@media (max-width: 640px) {
+  .features-grid { grid-template-columns: 1fr; }
+  .nav-links { display: none; }
+  .nav { padding: 0 16px; }
+  .hero { padding: 48px 16px 40px; }
+}
+
+.feature-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+}
+
+.feature-icon {
+  width: 36px;
+  height: 36px;
+  background: var(--purple-light);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+  font-size: 17px;
+}
+
+.feature-title {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: var(--text-primary);
+}
+
+.feature-desc {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.feature-pill {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--purple);
+  background: var(--purple-light);
+  padding: 2px 8px;
+  border-radius: 999px;
+  margin-top: 10px;
+}
+
+/* ── Loading skeleton ── */
+.skeleton {
+  background: linear-gradient(90deg, #ece9fe 25%, #ddd8fd 50%, #ece9fe 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.2s infinite;
+  border-radius: 4px;
+  height: 12px;
+}
+@keyframes shimmer { to { background-position: -200% 0; } }
+</style>
 </head>
 <body>
-<div class="fds-app" id="app">
 
-  <ds-topbar active-section="ds"></ds-topbar>
+<!-- ── Nav ── -->
+<nav class="nav">
+  <a class="nav-logo" href="/">
+    <div class="nav-logo-mark">
+      <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="2" y="2" width="5" height="5" rx="1.5" fill="white"/>
+        <rect x="9" y="2" width="5" height="5" rx="1.5" fill="white" opacity="0.6"/>
+        <rect x="2" y="9" width="5" height="5" rx="1.5" fill="white" opacity="0.6"/>
+        <rect x="9" y="9" width="5" height="5" rx="1.5" fill="white" opacity="0.3"/>
+      </svg>
+    </div>
+    <span class="nav-wordmark">Freshdesign</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#features">Components</a></li>
+    <li><a href="#features">Patterns</a></li>
+    <li><a href="#features">Configurator</a></li>
+  </ul>
+  <a class="btn-join" href="#auth-card">Join beta →</a>
+</nav>
 
-  <div class="fds-body">
-
-    <ds-shell active="home"></ds-shell>
-
-    <!-- MAIN CONTENT -->
-    <main class="fds-main">
-
-      <!-- HOME -->
-      <div class="fds-page active" id="page-home">
-        <div class="page-header">
-          <div class="page-eyebrow">FreshDS · v1.0.0</div>
-          <h1 class="page-title">Design system for modern enterprise</h1>
-          <p class="page-desc">A token-driven, framework-agnostic design system built for AI-native enterprise applications. Two colors. Infinite client themes.</p>
-        </div>
-        <div class="home-stat-row">
-          <div class="home-stat"><div class="home-stat-num">60</div><div class="home-stat-label">Components</div></div>
-          <div class="home-stat"><div class="home-stat-num">12</div><div class="home-stat-label">AI-specific</div></div>
-          <div class="home-stat"><div class="home-stat-num">3</div><div class="home-stat-label">Token tiers</div></div>
-          <div class="home-stat"><div class="home-stat-num">∞</div><div class="home-stat-label">Client themes</div></div>
-        </div>
-        <div class="home-grid" style="margin-top:32px">
-          <div class="home-card" onclick="window.location.href='configurator.html'"><div class="home-card-icon"><i class="ti ti-adjustments-horizontal"></i></div><div class="home-card-title">Configurator</div><div class="home-card-desc">Set brand colors and export tokens for any client.</div></div>
-          <div class="home-card" onclick="navigate('button')"><div class="home-card-icon"><i class="ti ti-cursor"></i></div><div class="home-card-title">Components</div><div class="home-card-desc">60 components across 8 categories, all token-driven.</div></div>
-          <div class="home-card" onclick="navigate('promptinput')"><div class="home-card-icon"><i class="ti ti-sparkles"></i></div><div class="home-card-title">AI components</div><div class="home-card-desc">12 AI-specific components for intelligent enterprise apps.</div></div>
-        </div>
-      </div>
-
-      <!-- CONFIGURATOR -->
-      <!-- Configurator lives at configurator.html -->
-
-      <div class="fds-page" id="page-configurator">
-        <div class="page-header">
-          <div class="page-eyebrow">System</div>
-          <h1 class="page-title">Configurator</h1>
-          <p class="page-desc">The Configurator is now a standalone page.</p>
-        </div>
-        <div style="padding:var(--space-6);background:var(--surface-subtle);border-radius:var(--radius-lg);border:1px solid var(--surface-border);display:flex;align-items:center;gap:var(--space-4)">
-          <i class="ti ti-adjustments-horizontal" style="font-size:24px;color:var(--color-interactive-text)"></i>
-          <div>
-            <div style="font-weight:600;margin-bottom:4px">Open Configurator</div>
-            <div style="font-size:13px;color:var(--text-secondary)">Theme configuration has moved to its own page.</div>
-          </div>
-          <button class="cfg-apply-site-btn" onclick="window.location.href='configurator.html'" style="margin-left:auto"><i class="ti ti-arrow-right"></i> Open Configurator</button>
-        </div>
-        <div class="config-grid" style="display:none">
-
-          <!-- Single wide card: Themes + Colors + Scale + Typography -->
-          <div class="config-card config-section-full">
-            <div class="cfg-hd">
-              <div class="config-card-title">System Themes</div>
-              <button class="cfg-new-btn" onclick="addCustomTheme()"><i class="ti ti-plus"></i> New theme</button>
-            </div>
-            <div class="theme-cards" id="theme-cards"></div>
-            <div class="cfg-divider"></div>
-
-            <!-- Colors row -->
-            <div class="cfg-colors-row">
-              <div class="cfg-color-block">
-                <div class="cfg-color-label">Primary</div>
-                <div class="cfg-color-wrap">
-                  <input type="color" class="color-picker" id="cfg-primary" value="#7c6af7">
-                  <span class="config-hex" id="cfg-hex-primary"></span>
-                </div>
-              </div>
-              <div class="cfg-color-block">
-                <div class="cfg-color-label">Secondary</div>
-                <div class="cfg-color-wrap">
-                  <input type="color" class="color-picker" id="cfg-secondary" value="#2dd4bf">
-                  <span class="config-hex" id="cfg-hex-secondary"></span>
-                </div>
-              </div>
-              <div class="cfg-color-block">
-                <div class="cfg-color-label">Dark</div>
-                <div class="cfg-color-wrap">
-                  <input type="color" class="color-picker" id="cfg-scale-dark" value="#1f2328">
-                  <span class="config-hex" id="cfg-hex-dark"></span>
-                </div>
-              </div>
-              <div class="cfg-color-block">
-                <div class="cfg-color-label">Light</div>
-                <div class="cfg-color-wrap">
-                  <input type="color" class="color-picker" id="cfg-scale-light" value="#ffffff">
-                  <span class="config-hex" id="cfg-hex-light"></span>
-                </div>
-              </div>
-            </div>
-
-            <!-- Neutral scale strip -->
-            <div class="cfg-scale-strip">
-              <div class="cfg-scale-label">Neutral scale</div>
-              <div class="cfg-scale-chips">
-                <div class="cfg-scale-chip" id="scale-chip-1"><span class="cfg-scale-num">1</span></div>
-                <div class="cfg-scale-chip" id="scale-chip-2"><span class="cfg-scale-num">2</span></div>
-                <div class="cfg-scale-chip" id="scale-chip-3"><span class="cfg-scale-num">3</span></div>
-                <div class="cfg-scale-chip" id="scale-chip-4"><span class="cfg-scale-num">4</span></div>
-                <div class="cfg-scale-chip" id="scale-chip-5"><span class="cfg-scale-num">5</span></div>
-                <div class="cfg-scale-chip" id="scale-chip-6"><span class="cfg-scale-num">6</span></div>
-                <div class="cfg-scale-chip" id="scale-chip-7"><span class="cfg-scale-num">7</span></div>
-                <div class="cfg-scale-chip" id="scale-chip-8"><span class="cfg-scale-num">8</span></div>
-                <div class="cfg-scale-chip" id="scale-chip-9"><span class="cfg-scale-num">9</span></div>
-                <div class="cfg-scale-chip" id="scale-chip-10"><span class="cfg-scale-num">10</span></div>
-                <div class="cfg-scale-chip" id="scale-chip-11"><span class="cfg-scale-num">11</span></div>
-                <div class="cfg-scale-chip" id="scale-chip-12"><span class="cfg-scale-num">12</span></div>
-              </div>
-            </div>
-            <div class="cfg-divider"></div>
-
-            <!-- Typography row -->
-            <div class="cfg-type-row">
-              <div class="cfg-type-field">
-                <div class="cfg-color-label">UI font</div>
-                <select class="cfg-select" id="font-sans-select" onchange="applyFont('sans', this.value)">
-                  <option value="Inter">Inter</option>
-                  <option value="Geist">Geist</option>
-                  <option value="Outfit">Outfit</option>
-                  <option value="Sora">Sora</option>
-                  <option value="Figtree">Figtree</option>
-                  <option value="DM Sans">DM Sans</option>
-                  <option value="Plus Jakarta Sans">Plus Jakarta Sans</option>
-                  <option value="Be Vietnam Pro">Be Vietnam Pro</option>
-                  <option value="Nunito">Nunito</option>
-                  <option value="Manrope">Manrope</option>
-                </select>
-              </div>
-              <div class="cfg-type-field">
-                <div class="cfg-color-label">Mono font</div>
-                <select class="cfg-select" id="font-mono-select" onchange="applyFont('mono', this.value)">
-                  <option value="JetBrains Mono">JetBrains Mono</option>
-                  <option value="Fira Code">Fira Code</option>
-                  <option value="IBM Plex Mono">IBM Plex Mono</option>
-                  <option value="Roboto Mono">Roboto Mono</option>
-                  <option value="Inconsolata">Inconsolata</option>
-                </select>
-              </div>
-            </div>
-            <div class="cfg-divider"></div>
-            <div class="cfg-apply-row">
-              <span class="cfg-preview-pill" id="cfg-preview-label">Showing applied theme</span>
-              <button class="cfg-apply-site-btn" id="cfg-apply-btn" onclick="applyStagedToSite()" disabled>
-                <i class="ti ti-check"></i> Apply to site
-              </button>
-            </div>
-          </div>
-
-          <!-- Tabbed card: Live preview + Token output -->
-          <div class="config-card config-section-full">
-            <div class="cfg-tabs-header">
-              <button class="cfg-tab active" data-tab="preview" onclick="switchCfgTab('preview')">Live preview</button>
-              <button class="cfg-tab" data-tab="tokens" onclick="switchCfgTab('tokens')">Token output</button>
-            </div>
-
-            <!-- Preview tab -->
-            <div class="cfg-tab-panel active" data-tab="preview">
-              <div class="preview-live" id="preview-live">
-
-                <!-- Buttons + Badges -->
-                <div class="preview-section">
-                  <div class="preview-row">
-                    <fresh-button variant="primary"><i class="ti ti-check"></i> Save</fresh-button>
-                    <fresh-button variant="secondary">Cancel</fresh-button>
-                    <fresh-button variant="ghost">Learn more</fresh-button>
-                    <fresh-button variant="danger"><i class="ti ti-trash"></i> Delete</fresh-button>
-                    <fresh-button variant="primary" disabled>Disabled</fresh-button>
-                    <fresh-button variant="primary" loading>Loading</fresh-button>
-                  </div>
-                  <div class="preview-row">
-                    <fresh-badge variant="primary">Primary</fresh-badge>
-                    <fresh-badge variant="success" dot>Live</fresh-badge>
-                    <fresh-badge variant="warning" dot>Degraded</fresh-badge>
-                    <fresh-badge variant="danger" dot>Failed</fresh-badge>
-                    <fresh-badge variant="neutral">Draft</fresh-badge>
-                    <fresh-badge variant="ai">AI</fresh-badge>
-                  </div>
-                </div>
-
-                <!-- Inputs -->
-                <div class="preview-section">
-                  <div class="preview-row" style="align-items:flex-start">
-                    <div style="flex:1;min-width:180px;max-width:280px">
-                      <fresh-input icon="ti-search" placeholder="Search components…"></fresh-input>
-                    </div>
-                    <div style="flex:1;min-width:180px;max-width:280px">
-                      <fresh-input placeholder="Enter email" type="email" error="Invalid email"></fresh-input>
-                    </div>
-                    <div style="flex:1;min-width:160px;max-width:220px">
-                      <fresh-select placeholder="Select role">
-                        <option value="admin">Admin</option>
-                        <option value="editor">Editor</option>
-                        <option value="viewer">Viewer</option>
-                      </fresh-select>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Toggles + Alert -->
-                <div class="preview-section">
-                  <div class="preview-row">
-                    <fresh-checkbox checked>Remember me</fresh-checkbox>
-                    <fresh-checkbox>Subscribe</fresh-checkbox>
-                    <fresh-toggle checked>Notifications</fresh-toggle>
-                    <fresh-toggle>Dark mode</fresh-toggle>
-                  </div>
-                  <fresh-alert variant="info" title="Theme staged">Click Apply to push this theme to the whole site.</fresh-alert>
-                </div>
-
-                <!-- Stat cards + Progress -->
-                <div class="preview-section">
-                  <div class="preview-row" style="align-items:stretch;flex-wrap:wrap">
-                    <fresh-stat-card value="$24.5k" label="Revenue" trend="12.4" trend-label="vs last month" icon="ti-currency-dollar" style="flex:1;min-width:140px"></fresh-stat-card>
-                    <fresh-stat-card value="98.7%" label="Uptime" trend="-0.2" trend-label="this week" icon="ti-server" style="flex:1;min-width:140px"></fresh-stat-card>
-                    <fresh-stat-card value="1,284" label="Users" trend="5.1" trend-label="vs yesterday" icon="ti-users" style="flex:1;min-width:140px"></fresh-stat-card>
-                  </div>
-                  <div class="preview-row" style="gap:var(--space-5)">
-                    <div style="flex:1">
-                      <div style="font-size:11px;color:var(--text-tertiary);margin-bottom:6px">Context window — 68%</div>
-                      <fresh-progress value="68" label="Context window"></fresh-progress>
-                    </div>
-                    <div style="flex:1">
-                      <div style="font-size:11px;color:var(--text-tertiary);margin-bottom:6px">Upload — 91%</div>
-                      <fresh-progress value="91" variant="danger" label="Upload"></fresh-progress>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Avatars + AI components -->
-                <div class="preview-section">
-                  <div class="preview-row">
-                    <fresh-avatar name="Jane Smith" size="md" status="online"></fresh-avatar>
-                    <fresh-avatar name="Marcus Lee" size="md" status="away"></fresh-avatar>
-                    <fresh-avatar name="Claude" shape="square" size="md"></fresh-avatar>
-                    <fresh-thinking label="Analyzing data"></fresh-thinking>
-                    <fresh-confidence-badge value="87" show-bar></fresh-confidence-badge>
-                    <fresh-token-meter used="68000" total="100000"></fresh-token-meter>
-                  </div>
-                </div>
-
-              </div>
-            </div>
-
-            <!-- Tokens tab -->
-            <div class="cfg-tab-panel" data-tab="tokens">
-              <div class="token-output" id="token-output"></div>
-              <div class="config-export-row">
-                <button class="config-apply-btn" onclick="exportDeveloperBundle()"><i class="ti ti-package"></i> Export bundle</button>
-                <button class="config-apply-btn" onclick="exportDSSite()" style="background:var(--surface-overlay);color:var(--text-primary);border:1px solid var(--surface-border)"><i class="ti ti-world"></i> Export DS site</button>
-              </div>
-              <div style="font-size:11px;color:var(--text-tertiary);margin-top:var(--space-3);line-height:1.6">
-                <strong style="color:var(--text-secondary)">Bundle</strong> — tokens + all components. Drop into any project.<br>
-                <strong style="color:var(--text-secondary)">DS site</strong> — full documentation site. Host internally for your team.
-              </div>
-            </div>
-
-          </div>
-
-        </div>
-      </div>
-
-    </main>
+<!-- ── Hero ── -->
+<section class="hero">
+  <div class="beta-badge">
+    <span class="badge-dot"></span>
+    Private beta · <span id="hero-seat-text">limited seats</span>
   </div>
 
+  <h1>The design system<br>built for the <span>AI era</span></h1>
 
-</div>
+  <p class="hero-sub">
+    Set your brand colors once. Get a complete, token-driven component library your team can use with Claude Code, Cursor, or any AI tool — without starting from scratch.
+  </p>
 
-<script src="components/core/fresh-button.js"></script>
-<script src="components/core/fresh-dropdown-button.js"></script>
-<script src="components/core/fresh-input.js"></script>
-<script src="components/core/fresh-select.js"></script>
-<script src="components/core/fresh-checkbox.js"></script>
-<script src="components/core/fresh-radio.js"></script>
-<script src="components/core/fresh-toggle.js"></script>
-<script src="components/core/fresh-slider.js"></script>
-<script src="components/core/fresh-form-field.js"></script>
-<script src="components/feedback/fresh-spinner.js"></script>
-<script src="components/feedback/fresh-badge.js"></script>
-<script src="components/feedback/fresh-progress.js"></script>
-<script src="components/feedback/fresh-skeleton.js"></script>
-<script src="components/feedback/fresh-alert.js"></script>
-<script src="components/feedback/fresh-toast.js"></script>
-<script src="components/feedback/fresh-tooltip.js"></script>
-<script src="components/feedback/fresh-empty-state.js"></script>
-<script src="components/data/fresh-avatar.js"></script>
-<script src="components/navigation/fresh-navbar.js"></script>
-<script src="components/navigation/fresh-sidebar.js"></script>
-<script src="components/navigation/fresh-tabs.js"></script>
-<script src="components/navigation/fresh-simple-tabs.js"></script>
-<script src="components/navigation/fresh-breadcrumb.js"></script>
-<script src="components/navigation/fresh-pagination.js"></script>
-<script src="components/navigation/fresh-stepper.js"></script>
-<script src="components/containers/fresh-card.js"></script>
-<script src="components/containers/fresh-media-card.js"></script>
-<script src="components/containers/fresh-accordion.js"></script>
-<script src="components/containers/fresh-popover.js"></script>
-<script src="components/containers/fresh-modal.js"></script>
-<script src="components/containers/fresh-drawer.js"></script>
-<script src="components/containers/fresh-table.js"></script>
-<script src="components/data/fresh-stat-card.js"></script>
-<script src="components/data/fresh-data-table.js"></script>
-<script src="components/data/fresh-chart.js"></script>
-<script src="components/data/fresh-timeline.js"></script>
-<script src="components/ai/fresh-prompt-input.js"></script>
-<script src="components/ai/fresh-ai-response.js"></script>
-<script src="components/ai/fresh-thinking.js"></script>
-<script src="components/ai/fresh-confidence-badge.js"></script>
-<script src="components/ai/fresh-citation-chip.js"></script>
-<script src="components/ai/fresh-suggestion-card.js"></script>
-<script src="components/ai/fresh-model-selector.js"></script>
-<script src="components/ai/fresh-token-meter.js"></script>
-<script src="components/ai/fresh-feedback.js"></script>
-<script src="components/ai/fresh-diff-viewer.js"></script>
-<script src="components/ai/fresh-prompt-history.js"></script>
-<script src="components/ai/fresh-ai-mode-toggle.js"></script>
+  <!-- ── Auth card ── -->
+  <div class="auth-card" id="auth-card">
+
+    <!-- Seat counter -->
+    <div class="seat-bar" id="seat-bar">
+      <span class="seat-label">Beta seats claimed</span>
+      <span class="seat-count" id="seat-count"><span class="skeleton" style="width:48px;display:inline-block"></span></span>
+    </div>
+    <div class="seat-progress">
+      <div class="seat-progress-fill" id="seat-fill" style="width:0%"></div>
+    </div>
+
+    <!-- Sign-in state -->
+    <div id="signin-state">
+      <div class="auth-divider" style="margin-top:20px">sign in to join beta</div>
+
+      <button class="btn-oauth" id="btn-google" onclick="signIn('google')">
+        <svg viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
+          <path d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844a4.14 4.14 0 0 1-1.796 2.716v2.259h2.908c1.702-1.567 2.684-3.875 2.684-6.615Z" fill="#4285F4"/>
+          <path d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18Z" fill="#34A853"/>
+          <path d="M3.964 10.71A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.042l3.007-2.332Z" fill="#FBBC05"/>
+          <path d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.958L3.964 7.29C4.672 5.163 6.656 3.58 9 3.58Z" fill="#EA4335"/>
+        </svg>
+        Continue with Google
+      </button>
+
+      <button class="btn-oauth" id="btn-github" onclick="signIn('github')">
+        <svg viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M9 0C4.025 0 0 4.025 0 9c0 3.978 2.578 7.353 6.156 8.547.45.084.614-.196.614-.434 0-.214-.008-.782-.012-1.533-2.503.544-3.03-1.206-3.03-1.206-.41-1.04-1-1.317-1-1.317-.817-.559.062-.547.062-.547.903.063 1.378.927 1.378.927.802 1.374 2.103.977 2.616.747.082-.581.314-.977.57-1.201-1.997-.227-4.098-1-4.098-4.448 0-.983.351-1.786.927-2.416-.093-.228-.402-1.143.088-2.382 0 0 .756-.242 2.475.922A8.62 8.62 0 0 1 9 4.364c.765.004 1.535.104 2.254.304 1.718-1.164 2.473-.922 2.473-.922.491 1.24.182 2.154.09 2.382.577.63.926 1.433.926 2.416 0 3.457-2.104 4.218-4.107 4.44.323.279.61.828.61 1.668 0 1.203-.011 2.174-.011 2.47 0 .24.162.521.618.433C15.424 16.35 18 12.977 18 9c0-4.975-4.025-9-9-9Z" fill="#24292F"/>
+        </svg>
+        Continue with GitHub
+      </button>
+
+      <p class="auth-note">No password. One click. Your data is never shared.</p>
+    </div>
+
+    <!-- Beta full state -->
+    <div class="full-state" id="full-state">
+      <div style="font-size:32px">⏳</div>
+      <h3>Beta seats are full</h3>
+      <p>We've reached our limit of 100 beta users.<br>Join the waitlist for the next opening.</p>
+      <a class="btn-waitlist" href="waitlist.html">Join waitlist →</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── Features ── -->
+<section class="features" id="features">
+  <div class="features-title">What's inside</div>
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feature-icon">🧩</div>
+      <div class="feature-title">60 components</div>
+      <div class="feature-desc">Every component token-driven and theme-aware. Core UI, navigation, containers, data display — all with live docs.</div>
+      <span class="feature-pill">Dark mode included</span>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">✦</div>
+      <div class="feature-title">12 AI components</div>
+      <div class="feature-desc">Prompt input, response bubbles, thinking indicators, confidence badges, diff viewer — built for AI-native products.</div>
+      <span class="feature-pill">AI-native</span>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🗂</div>
+      <div class="feature-title">108 patterns</div>
+      <div class="feature-desc">Full working screens across dashboards, auth, settings, onboarding, commerce, and AI workflows. All real HTML.</div>
+      <span class="feature-pill">10 categories</span>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🎨</div>
+      <div class="feature-title">Brand configurator</div>
+      <div class="feature-desc">Set two colors, pick fonts, preview the full system live. Export tokens or the entire DS site for your team.</div>
+      <span class="feature-pill">Instant export</span>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🤖</div>
+      <div class="feature-title">AI tool ready</div>
+      <div class="feature-desc">Designed to work with Claude Code, Cursor, and Copilot. Your AI knows the token system. Zero hallucination on components.</div>
+      <span class="feature-pill">Claude Code optimized</span>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">⚡</div>
+      <div class="feature-title">No framework</div>
+      <div class="feature-desc">Vanilla HTML, CSS custom properties, and web components. Drop it into any stack — React, Vue, Svelte, or plain HTML.</div>
+      <span class="feature-pill">Framework agnostic</span>
+    </div>
+  </div>
+</section>
+
+<script type="module">
+  import { supabase, BETA_SEAT_LIMIT } from '/js/supabase-client.js'
+
+  const LIMIT = BETA_SEAT_LIMIT
+
+  // If already signed in, go straight to the app
+  async function checkExistingSession() {
+    const { data: { session } } = await supabase.auth.getSession()
+    if (session) window.location.replace('/app.html')
+  }
+
+  // Load seat count
+  async function loadSeatCount() {
+    const { data: count, error } = await supabase.rpc('beta_seat_count')
+    if (error || count === null) return
+
+    const pct = Math.min(100, Math.round((count / LIMIT) * 100))
+    document.getElementById('seat-count').textContent = `${count} / ${LIMIT}`
+    document.getElementById('seat-fill').style.width = pct + '%'
+    document.getElementById('hero-seat-text').textContent = `${LIMIT - count} seats left`
+
+    if (count >= LIMIT) {
+      document.getElementById('signin-state').style.display = 'none'
+      document.getElementById('full-state').style.display = 'flex'
+    }
+  }
+
+  // OAuth sign-in
+  window.signIn = async function(provider) {
+    const btn = document.getElementById('btn-' + provider)
+    if (btn) { btn.disabled = true; btn.style.opacity = '0.6'; }
+
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider,
+      options: {
+        redirectTo: window.location.origin + '/auth/callback.html'
+      }
+    })
+
+    if (error) {
+      if (btn) { btn.disabled = false; btn.style.opacity = '1'; }
+      alert('Sign-in failed: ' + error.message)
+    }
+  }
+
+  checkExistingSession()
+  loadSeatCount()
+</script>
+
 </body>
 </html>
