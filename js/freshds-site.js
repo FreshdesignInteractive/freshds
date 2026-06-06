@@ -1328,6 +1328,37 @@ document.addEventListener('DOMContentLoaded', function() {
 // ── DsTopbar web component ─────────────────────────────────────
 (function() {
   if (customElements.get('ds-topbar')) return;
+
+  // Inject avatar dropdown CSS once
+  if (!document.getElementById('fds-topbar-avatar-css')) {
+    var s = document.createElement('style');
+    s.id = 'fds-topbar-avatar-css';
+    s.textContent = [
+      '.fds-topbar-avatar { position: relative; margin-left: 4px; display: flex; align-items: center; }',
+      '.fds-topbar-avatar fresh-avatar { cursor: pointer; display: block; }',
+      '.fds-topbar-avatar-menu {',
+      '  display: none; position: absolute; right: 0; top: calc(100% + 10px);',
+      '  background: var(--surface-canvas); border: 1px solid var(--surface-border);',
+      '  border-radius: var(--radius-md); box-shadow: var(--shadow-md);',
+      '  min-width: 200px; padding: 6px 0; z-index: 300;',
+      '}',
+      '.fds-topbar-avatar-menu.open { display: block; }',
+      '.fds-topbar-avatar-user {',
+      '  padding: 10px 14px 8px; font-size: 12.5px; font-weight: 500;',
+      '  color: var(--text-secondary); white-space: nowrap; overflow: hidden;',
+      '  text-overflow: ellipsis; border-bottom: 1px solid var(--surface-border); margin-bottom: 4px;',
+      '}',
+      '.fds-topbar-signout-btn {',
+      '  display: flex; align-items: center; gap: 8px; width: 100%; padding: 8px 14px;',
+      '  background: none; border: none; text-align: left; font-family: inherit;',
+      '  font-size: 13.5px; font-weight: 500; color: var(--text-primary); cursor: pointer;',
+      '  transition: background 0.1s;',
+      '}',
+      '.fds-topbar-signout-btn:hover { background: var(--surface-subtle); }',
+    ].join('');
+    document.head.appendChild(s);
+  }
+
   class DsTopbar extends HTMLElement {
     static get observedAttributes() { return ['active-section']; }
     connectedCallback() { this._render(); }
@@ -1347,14 +1378,38 @@ document.addEventListener('DOMContentLoaded', function() {
         '  <div class="fds-topbar-right">',
         '    <fresh-button variant="secondary" id="mode-btn" onclick="toggleMode()"><i class="ti ti-moon"></i> Dark</fresh-button>',
         '    <fresh-button variant="primary" onclick="window.location.href=\'configurator.html\'"><i class="ti ti-adjustments-horizontal"></i> Configurator</fresh-button>',
+        '    <div class="fds-topbar-avatar" id="topbar-avatar-wrap">',
+        '      <fresh-avatar id="topbar-user-avatar" size="sm" name="U"></fresh-avatar>',
+        '      <div class="fds-topbar-avatar-menu" id="topbar-avatar-menu">',
+        '        <div class="fds-topbar-avatar-user" id="topbar-avatar-name">Account</div>',
+        '        <button class="fds-topbar-signout-btn" onclick="window.__appSignOut && window.__appSignOut()">',
+        '          <i class="ti ti-logout"></i> Sign out',
+        '        </button>',
+        '      </div>',
+        '    </div>',
         '  </div>',
         '</header>'
       ].join('\n');
+
       var tabsEl = this.querySelector('#section-tabs');
       if (tabsEl) tabsEl.addEventListener('change', function(e) {
         if (e.detail && e.detail.key === 'patterns') window.location.href = 'patterns.html';
         else if (e.detail && e.detail.key === 'ds') window.location.href = 'app.html';
       });
+
+      var avatarEl = this.querySelector('#topbar-user-avatar');
+      var menuEl = this.querySelector('#topbar-avatar-menu');
+      if (avatarEl && menuEl) {
+        avatarEl.addEventListener('click', function(e) {
+          e.stopPropagation();
+          menuEl.classList.toggle('open');
+        });
+        document.addEventListener('click', function(e) {
+          if (menuEl && !e.target.closest('#topbar-avatar-wrap')) {
+            menuEl.classList.remove('open');
+          }
+        });
+      }
     }
   }
   customElements.define('ds-topbar', DsTopbar);
