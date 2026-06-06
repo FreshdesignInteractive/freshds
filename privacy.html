@@ -41,8 +41,17 @@ body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--tex
 .nav-logo-icon span:nth-child(2), .nav-logo-icon span:nth-child(3) { opacity: 0.6; }
 .nav-logo-icon span:nth-child(4) { opacity: 0.3; }
 .nav-wordmark { font-size: 15px; font-weight: 600; color: var(--text-primary); letter-spacing: -0.02em; }
-.nav-back { font-size: 13.5px; color: var(--text-secondary); text-decoration: none; }
-.nav-back:hover { color: var(--text-primary); }
+.nav-links { display: flex; align-items: center; gap: 32px; list-style: none; }
+.nav-links a { font-size: 14px; font-weight: 450; color: var(--text-secondary); text-decoration: none; transition: color 0.15s; }
+.nav-links a:hover, .nav-links a.active { color: var(--text-primary); }
+.btn-nav {
+  display: inline-flex; align-items: center; padding: 8px 20px;
+  border: 1.5px solid var(--text-primary); border-radius: 999px;
+  background: transparent; font-family: inherit; font-size: 14px; font-weight: 600;
+  color: var(--text-primary); cursor: pointer; text-decoration: none;
+  transition: background 0.15s, color 0.15s;
+}
+.btn-nav:hover { background: var(--text-primary); color: #fff; }
 
 /* Content */
 .page { max-width: 720px; margin: 0 auto; padding: 64px 24px 80px; }
@@ -86,6 +95,7 @@ body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--tex
 
 @media (max-width: 640px) {
   .nav { padding: 0 16px; }
+  .nav-links { display: none; }
   .footer { flex-direction: column; gap: 16px; text-align: center; }
 }
 </style>
@@ -94,10 +104,17 @@ body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--tex
 
 <nav class="nav">
   <a class="nav-logo" href="/">
-    
     <img src="/assets/freshdesign-logo.svg" alt="Freshdesign" style="height:28px;width:auto;display:block">
   </a>
-  <a class="nav-back" href="/">← Back to home</a>
+  <ul class="nav-links">
+    <li><a href="/">Home</a></li>
+    <li><a href="/#how-it-works">How it works</a></li>
+    <li><a href="patterns.html">Pattern library</a></li>
+    <li><a href="/#consulting">Consulting</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <a class="btn-nav" href="/">Join beta</a>
 </nav>
 
 <div class="page">
@@ -193,7 +210,7 @@ body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--tex
 </div>
 
 <footer class="footer">
-  <span class="footer-copy">© 2026 Freshdesign. Currently in private beta.</span>
+  <span class="footer-copy">© 2026 Freshdesign. All Rights Reserved, Freshdesign Interactive, Inc.</span>
   <ul class="footer-links">
     <li><a href="privacy.html">Privacy</a></li>
     <li><a href="terms.html">Terms</a></li>

@@ -62,37 +62,79 @@
 </div>
 
 <script type="module">
-  import { supabase, BETA_SEAT_LIMIT } from '/js/supabase-client.js'
+  import { supabase } from '/js/supabase-client.js'
+
+  async function waitForSession() {
+    // Try immediately first (works if session already exists)
+    const { data: { session } } = await supabase.auth.getSession()
+    if (session) return session
+
+    // Otherwise wait for PKCE code exchange to complete (up to 15s)
+    return new Promise((resolve, reject) => {
+      const timer = setTimeout(() => {
+        subscription.unsubscribe()
+        reject(new Error('Sign-in timed out. Please try again.'))
+      }, 15000)
+
+      const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+        if (session) {
+          clearTimeout(timer)
+          subscription.unsubscribe()
+          resolve(session)
+        }
+      })
+    })
+  }
 
   async function handleCallback() {
     const wrap = document.getElementById('wrap')
 
     try {
-      // Let Supabase exchange the OAuth code for a session
-      const { data: { session }, error } = await supabase.auth.getSession()
+      const session = await waitForSession()
 
-      if (error || !session) {
-        throw new Error(error?.message || 'Sign-in failed. Please try again.')
-      }
+      if (!session) throw new Error('Sign-in failed. Please try again.')
 
-      // Check beta seat count
-      const { data: count, error: rpcError } = await supabase.rpc('beta_seat_count')
+      const email = session.user.email?.toLowerCase()
 
-      if (rpcError) throw new Error('Could not check beta availability.')
-
-      if (count > BETA_SEAT_LIMIT) {
-        // Beta full — send to waitlist
-        window.location.replace('/waitlist.html?reason=full')
+      if (!email) {
+        await supabase.auth.signOut()
+        window.location.replace('/?signin=not-approved')
         return
       }
 
-      // Access granted — send to product app
-      window.location.replace('/app.html')
+      // Check approval status — RLS ensures the user can only read their own record
+      const { data: request, error: reqError } = await supabase
+        .from('beta_requests')
+        .select('status')
+        .maybeSingle()
+
+      if (reqError) throw new Error('Could not verify access. Please try again.')
+
+      if (!request) {
+        await supabase.auth.signOut()
+        window.location.replace('/?signin=not-approved')
+        return
+      }
+
+      if (request.status === 'approved') {
+        window.location.replace('/app.html')
+        return
+      }
+
+      if (request.status === 'pending') {
+        await supabase.auth.signOut()
+        window.location.replace('/?signin=pending')
+        return
+      }
+
+      // rejected or unknown status
+      await supabase.auth.signOut()
+      window.location.replace('/?signin=rejected')
 
     } catch (err) {
       wrap.innerHTML = `
         <div class="error-msg">${err.message}</div>
-        <a class="back-link" href="/">← Back to sign in</a>
+        <a class="back-link" href="/">← Back to home</a>
       `
     }
   }

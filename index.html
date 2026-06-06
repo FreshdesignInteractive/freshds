@@ -115,6 +115,25 @@ body {
 }
 .btn-nav:hover { background: var(--text-primary); color: #fff; }
 
+/* ── Notify banner ── */
+.notify-banner {
+  display: none;
+  padding: 11px 40px;
+  text-align: center;
+  font-size: 13.5px;
+  font-weight: 500;
+  border-bottom: 1px solid;
+}
+.notify-banner.show { display: flex; align-items: center; justify-content: center; gap: 12px; }
+.notify-banner.info  { background: var(--purple-light); border-color: #c4b8fd; color: var(--purple-dark); }
+.notify-banner.warn  { background: #fffbeb; border-color: #fde68a; color: #92400e; }
+.notify-banner.error { background: #fef2f2; border-color: #fecaca; color: #dc2626; }
+.notify-dismiss {
+  background: none; border: none; cursor: pointer;
+  font-size: 16px; opacity: 0.5; line-height: 1; padding: 0 2px; flex-shrink: 0;
+}
+.notify-dismiss:hover { opacity: 1; }
+
 /* ── Hero ── */
 .hero {
   max-width: 720px;
@@ -169,11 +188,11 @@ body {
   align-items: center;
   justify-content: center;
   gap: 12px;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
   flex-wrap: wrap;
 }
 
-.btn-primary-cta {
+.btn-hero-oauth {
   display: inline-flex;
   align-items: center;
   gap: 10px;
@@ -190,41 +209,35 @@ body {
   transition: border-color 0.15s, box-shadow 0.15s;
   white-space: nowrap;
 }
-.btn-primary-cta:hover {
+.btn-hero-oauth:hover {
   border-color: #aaa;
   box-shadow: 0 2px 8px rgba(0,0,0,0.08);
 }
-
-.btn-secondary-cta {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  padding: 13px 24px;
-  border: 1.5px solid var(--border);
-  border-radius: var(--radius-pill);
-  background: var(--card);
-  font-family: inherit;
-  font-size: 14.5px;
-  font-weight: 500;
-  color: var(--text-primary);
-  cursor: pointer;
-  text-decoration: none;
-  transition: border-color 0.15s, box-shadow 0.15s;
-  white-space: nowrap;
+.btn-hero-oauth:disabled {
+  opacity: 0.55;
+  cursor: default;
+  box-shadow: none;
+  border-color: var(--border);
 }
-.btn-secondary-cta:hover {
-  border-color: #aaa;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-}
-
-/* Google G icon */
-.google-icon { width: 18px; height: 18px; flex-shrink: 0; }
+.hero-icon { width: 18px; height: 18px; flex-shrink: 0; }
 
 .cta-note {
   font-size: 12.5px;
   color: var(--text-tertiary);
-  margin-bottom: 20px;
+  margin-bottom: 8px;
 }
+
+.request-link {
+  font-size: 13px;
+  color: var(--text-tertiary);
+  margin-bottom: 28px;
+}
+.request-link a {
+  color: var(--purple);
+  text-decoration: none;
+  font-weight: 500;
+}
+.request-link a:hover { text-decoration: underline; }
 
 /* ── Seat progress ── */
 .seat-row {
@@ -255,7 +268,7 @@ body {
   color: var(--text-tertiary);
 }
 
-/* ── Auth modal overlay ── */
+/* ── Modal overlay ── */
 .modal-overlay {
   display: none;
   position: fixed;
@@ -272,9 +285,9 @@ body {
   border-radius: 20px;
   padding: 36px 32px;
   width: 100%;
-  max-width: 360px;
+  max-width: 380px;
   box-shadow: 0 20px 60px rgba(0,0,0,0.15);
-  text-align: center;
+  position: relative;
 }
 
 .modal-title {
@@ -287,41 +300,8 @@ body {
 .modal-sub {
   font-size: 13.5px;
   color: var(--text-secondary);
-  margin-bottom: 28px;
-  line-height: 1.5;
-}
-
-.btn-oauth {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  padding: 12px 16px;
-  border: 1.5px solid var(--border);
-  border-radius: 12px;
-  background: var(--card);
-  font-family: inherit;
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--text-primary);
-  cursor: pointer;
-  transition: border-color 0.12s, box-shadow 0.12s;
-  margin-bottom: 10px;
-}
-.btn-oauth:last-of-type { margin-bottom: 0; }
-.btn-oauth:hover {
-  border-color: #bbb;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-}
-.btn-oauth:disabled { opacity: 0.55; cursor: default; }
-.btn-oauth svg { width: 18px; height: 18px; flex-shrink: 0; }
-
-.modal-note {
-  font-size: 11.5px;
-  color: var(--text-tertiary);
-  margin-top: 18px;
-  line-height: 1.5;
+  margin-bottom: 24px;
+  line-height: 1.55;
 }
 
 .modal-close {
@@ -337,28 +317,62 @@ body {
   padding: 4px;
 }
 
-.modal { position: relative; }
+/* ── Request form ── */
+.req-field { margin-bottom: 12px; }
+.req-field input,
+.req-field textarea {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  background: var(--bg);
+  font-family: inherit;
+  font-size: 14px;
+  color: var(--text-primary);
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+  resize: none;
+}
+.req-field input::placeholder,
+.req-field textarea::placeholder { color: var(--text-tertiary); font-size: 13.5px; }
+.req-field input:focus,
+.req-field textarea:focus {
+  border-color: var(--purple);
+  box-shadow: 0 0 0 3px rgba(124,106,247,0.12);
+  background: var(--card);
+}
+.req-field textarea { min-height: 80px; line-height: 1.6; }
 
-/* Full beta state */
-.full-state { display: none; }
-.full-state h3 { font-size: 16px; font-weight: 700; margin-bottom: 8px; }
-.full-state p { font-size: 13.5px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 20px; }
-.btn-waitlist {
-  display: inline-flex;
-  align-items: center;
-  padding: 11px 22px;
+.btn-req-submit {
+  width: 100%;
+  padding: 12px 24px;
   background: var(--purple);
   color: #fff;
   border: none;
   border-radius: var(--radius-pill);
   font-family: inherit;
-  font-size: 14px;
+  font-size: 14.5px;
   font-weight: 600;
   cursor: pointer;
-  text-decoration: none;
   transition: background 0.15s;
+  margin-top: 4px;
 }
-.btn-waitlist:hover { background: var(--purple-dark); }
+.btn-req-submit:hover { background: var(--purple-dark); }
+.btn-req-submit:disabled { opacity: 0.6; cursor: default; }
+
+.req-success {
+  display: none;
+  text-align: center;
+  padding: 12px 0;
+}
+.req-success .req-check {
+  width: 48px; height: 48px; background: #dcfce7; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 14px;
+}
+.req-success .req-check svg { width: 22px; height: 22px; color: #16a34a; }
+.req-success h3 { font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+.req-success p { font-size: 13.5px; color: var(--text-secondary); line-height: 1.6; }
 
 /* ── Section shared ── */
 .section {
@@ -609,9 +623,10 @@ body {
   .nav-links { display: none; }
   .hero { padding: 56px 20px 56px; }
   .cta-row { flex-direction: column; align-items: stretch; }
-  .btn-primary-cta, .btn-secondary-cta { justify-content: center; }
+  .btn-hero-oauth { justify-content: center; }
   .steps-grid { grid-template-columns: 1fr; }
   .footer { flex-direction: column; gap: 16px; text-align: center; }
+  .notify-banner { padding: 11px 16px; }
 }
 </style>
 </head>
@@ -620,18 +635,24 @@ body {
 <!-- ── Nav ── -->
 <nav class="nav">
   <a class="nav-logo" href="/">
-    <div class="nav-logo-icon">
-      <span></span><span></span><span></span><span></span>
-    </div>
     <img src="/assets/freshdesign-logo.svg" alt="Freshdesign" style="height:28px;width:auto;display:block">
   </a>
   <ul class="nav-links">
+    <li><a href="/">Home</a></li>
     <li><a href="#how-it-works">How it works</a></li>
     <li><a href="patterns.html">Pattern library</a></li>
     <li><a href="#consulting">Consulting</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="contact.html">Contact</a></li>
   </ul>
-  <button class="btn-nav" onclick="openModal()">Join beta</button>
+  <button class="btn-nav" onclick="openRequestModal()">Join beta</button>
 </nav>
+
+<!-- ── Notify banner ── -->
+<div class="notify-banner" id="notify-banner">
+  <span id="notify-text"></span>
+  <button class="notify-dismiss" onclick="document.getElementById('notify-banner').classList.remove('show')">✕</button>
+</div>
 
 <!-- ── Hero ── -->
 <section class="hero">
@@ -649,21 +670,25 @@ body {
   </p>
 
   <div class="cta-row">
-    <button class="btn-primary-cta" onclick="openModal()">
-      <svg class="google-icon" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
+    <button class="btn-hero-oauth" id="btn-google" onclick="signIn('google')">
+      <svg class="hero-icon" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
         <path d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844a4.14 4.14 0 0 1-1.796 2.716v2.259h2.908c1.702-1.567 2.684-3.875 2.684-6.615Z" fill="#4285F4"/>
         <path d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18Z" fill="#34A853"/>
         <path d="M3.964 10.71A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.042l3.007-2.332Z" fill="#FBBC05"/>
         <path d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.958L3.964 7.29C4.672 5.163 6.656 3.58 9 3.58Z" fill="#EA4335"/>
       </svg>
-      Sign in to request access
+      Continue with Google
     </button>
-    <a class="btn-secondary-cta" href="patterns.html">
-      See the pattern library
-    </a>
+    <button class="btn-hero-oauth" id="btn-github" onclick="signIn('github')">
+      <svg class="hero-icon" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M9 0C4.025 0 0 4.025 0 9c0 3.978 2.578 7.353 6.156 8.547.45.084.614-.196.614-.434 0-.214-.008-.782-.012-1.533-2.503.544-3.03-1.206-3.03-1.206-.41-1.04-1-1.317-1-1.317-.817-.559.062-.547.062-.547.903.063 1.378.927 1.378.927.802 1.374 2.103.977 2.616.747.082-.581.314-.977.57-1.201-1.997-.227-4.098-1-4.098-4.448 0-.983.351-1.786.927-2.416-.093-.228-.402-1.143.088-2.382 0 0 .756-.242 2.475.922A8.62 8.62 0 0 1 9 4.364c.765.004 1.535.104 2.254.304 1.718-1.164 2.473-.922 2.473-.922.491 1.24.182 2.154.09 2.382.577.63.926 1.433.926 2.416 0 3.457-2.104 4.218-4.107 4.44.323.279.61.828.61 1.668 0 1.203-.011 2.174-.011 2.47 0 .24.162.521.618.433C15.424 16.35 18 12.977 18 9c0-4.975-4.025-9-9-9Z" fill="#24292F"/>
+      </svg>
+      Continue with GitHub
+    </button>
   </div>
 
-  <p class="cta-note">No credit card. No setup. Cancel anytime when we go paid.</p>
+  <p class="cta-note">Complimentary access for all beta members.</p>
+  <p class="request-link">Don't have access yet? <a href="#" onclick="openRequestModal(); return false;">Request access →</a></p>
 
   <div class="seat-row">
     <div class="seat-bar-track">
@@ -785,7 +810,7 @@ body {
 
 <!-- ── Footer ── -->
 <footer class="footer">
-  <span class="footer-copy">© 2026 Freshdesign. Currently in private beta.</span>
+  <span class="footer-copy">© 2026 Freshdesign. All Rights Reserved, Freshdesign Interactive, Inc.</span>
   <ul class="footer-links">
     <li><a href="privacy.html">Privacy</a></li>
     <li><a href="terms.html">Terms</a></li>
@@ -793,42 +818,41 @@ body {
   </ul>
 </footer>
 
-<!-- ── Auth modal ── -->
-<div class="modal-overlay" id="modal-overlay" onclick="handleOverlayClick(event)">
+<!-- ── Request access modal ── -->
+<div class="modal-overlay" id="request-overlay" onclick="handleRequestOverlayClick(event)">
   <div class="modal">
-    <button class="modal-close" onclick="closeModal()">✕</button>
+    <button class="modal-close" onclick="closeRequestModal()">✕</button>
 
-    <!-- Sign-in state -->
-    <div id="signin-state">
-      <div class="modal-title">Join the beta</div>
-      <div class="modal-sub">Sign in to claim your seat.<br>No password required.</div>
+    <div id="request-form-state">
+      <div class="modal-title">Request beta access</div>
+      <div class="modal-sub">Tell us about yourself and what you're building. We'll review and get back to you within a few days.</div>
 
-      <button class="btn-oauth" id="btn-google" onclick="signIn('google')">
-        <svg viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
-          <path d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844a4.14 4.14 0 0 1-1.796 2.716v2.259h2.908c1.702-1.567 2.684-3.875 2.684-6.615Z" fill="#4285F4"/>
-          <path d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18Z" fill="#34A853"/>
-          <path d="M3.964 10.71A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.042l3.007-2.332Z" fill="#FBBC05"/>
-          <path d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.958L3.964 7.29C4.672 5.163 6.656 3.58 9 3.58Z" fill="#EA4335"/>
-        </svg>
-        Continue with Google
-      </button>
-
-      <button class="btn-oauth" id="btn-github" onclick="signIn('github')">
-        <svg viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
-          <path fill-rule="evenodd" clip-rule="evenodd" d="M9 0C4.025 0 0 4.025 0 9c0 3.978 2.578 7.353 6.156 8.547.45.084.614-.196.614-.434 0-.214-.008-.782-.012-1.533-2.503.544-3.03-1.206-3.03-1.206-.41-1.04-1-1.317-1-1.317-.817-.559.062-.547.062-.547.903.063 1.378.927 1.378.927.802 1.374 2.103.977 2.616.747.082-.581.314-.977.57-1.201-1.997-.227-4.098-1-4.098-4.448 0-.983.351-1.786.927-2.416-.093-.228-.402-1.143.088-2.382 0 0 .756-.242 2.475.922A8.62 8.62 0 0 1 9 4.364c.765.004 1.535.104 2.254.304 1.718-1.164 2.473-.922 2.473-.922.491 1.24.182 2.154.09 2.382.577.63.926 1.433.926 2.416 0 3.457-2.104 4.218-4.107 4.44.323.279.61.828.61 1.668 0 1.203-.011 2.174-.011 2.47 0 .24.162.521.618.433C15.424 16.35 18 12.977 18 9c0-4.975-4.025-9-9-9Z" fill="#24292F"/>
-        </svg>
-        Continue with GitHub
-      </button>
-
-      <p class="modal-note">No password. One click. Your data is never shared.</p>
+      <form id="request-form" onsubmit="submitRequest(event)">
+        <div class="req-field">
+          <input type="text" name="name" placeholder="Your name" required autocomplete="name">
+        </div>
+        <div class="req-field">
+          <input type="email" name="email" placeholder="Email — use the same account as Google or GitHub" required autocomplete="email">
+        </div>
+        <div class="req-field">
+          <input type="text" name="company" placeholder="Company or project (optional)">
+        </div>
+        <div class="req-field">
+          <textarea name="message" placeholder="What are you building? (optional)"></textarea>
+        </div>
+        <div id="req-error" style="display:none;font-size:13px;color:#dc2626;margin-bottom:10px;"></div>
+        <button type="submit" class="btn-req-submit" id="req-submit-btn">Send request</button>
+      </form>
     </div>
 
-    <!-- Beta full state -->
-    <div class="full-state" id="full-state">
-      <div style="font-size:36px;margin-bottom:16px">⏳</div>
-      <h3>Beta seats are full</h3>
-      <p>We've reached our limit of 100 beta users. Join the waitlist for the next opening.</p>
-      <a class="btn-waitlist" href="waitlist.html">Join waitlist →</a>
+    <div class="req-success" id="req-success">
+      <div class="req-check">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M5 13l4 4L19 7"/>
+        </svg>
+      </div>
+      <h3 id="req-success-title">Request received!</h3>
+      <p id="req-success-msg">We'll review your request and email you within a few business days.</p>
     </div>
   </div>
 </div>
@@ -837,13 +861,29 @@ body {
   import { supabase, BETA_SEAT_LIMIT } from '/js/supabase-client.js'
 
   const LIMIT = BETA_SEAT_LIMIT
-  let isFull = false
 
-  // If already signed in, go straight to the app
+  // If already signed in and approved, go straight to app
   ;(async () => {
     const { data: { session } } = await supabase.auth.getSession()
     if (session) window.location.replace('/app.html')
   })()
+
+  // Show status banner returned from auth callback
+  const params = new URLSearchParams(window.location.search)
+  const signinStatus = params.get('signin')
+  if (signinStatus) {
+    const banner = document.getElementById('notify-banner')
+    const text   = document.getElementById('notify-text')
+    const msgs = {
+      pending:      ['info',  'Your request is still under review. We\'ll email you when you\'re approved.'],
+      'not-approved': ['warn',  'We don\'t have an approved request for this account. Request access below.'],
+      rejected:     ['error', 'Unfortunately your request wasn\'t approved. Email us if you think this is a mistake.'],
+    }
+    const [type, msg] = msgs[signinStatus] || ['warn', 'Sign-in failed. Please try again.']
+    banner.classList.add('show', type)
+    text.textContent = msg
+    window.history.replaceState({}, '', '/')
+  }
 
   // Load seat count
   async function loadSeatCount() {
@@ -852,45 +892,72 @@ body {
       document.getElementById('seat-text').textContent = '— of 100 beta seats claimed'
       return
     }
-
     const pct = Math.min(100, Math.round((count / LIMIT) * 100))
     document.getElementById('seat-fill').style.width = pct + '%'
     document.getElementById('seat-text').textContent = `${count} of ${LIMIT} beta seats claimed`
-
-    if (count >= LIMIT) {
-      isFull = true
-    }
   }
-
   loadSeatCount()
 
-  // Modal
-  window.openModal = function() {
-    if (isFull) {
-      document.getElementById('signin-state').style.display = 'none'
-      document.getElementById('full-state').style.display = 'block'
-    }
-    document.getElementById('modal-overlay').classList.add('open')
+  // Request modal
+  window.openRequestModal = async function() {
+    const { data: { session } } = await supabase.auth.getSession()
+    if (session) { window.location.replace('/app.html'); return }
+    document.getElementById('request-overlay').classList.add('open')
     document.body.style.overflow = 'hidden'
   }
 
-  window.closeModal = function() {
-    document.getElementById('modal-overlay').classList.remove('open')
+  window.closeRequestModal = function() {
+    document.getElementById('request-overlay').classList.remove('open')
     document.body.style.overflow = ''
   }
 
-  window.handleOverlayClick = function(e) {
-    if (e.target === document.getElementById('modal-overlay')) closeModal()
+  window.handleRequestOverlayClick = function(e) {
+    if (e.target === document.getElementById('request-overlay')) closeRequestModal()
   }
 
-  document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') closeModal()
-  })
+  // Submit request
+  window.submitRequest = async function(e) {
+    e.preventDefault()
+    const form   = e.target
+    const btn    = document.getElementById('req-submit-btn')
+    const errEl  = document.getElementById('req-error')
+    btn.disabled = true
+    btn.textContent = 'Sending…'
+    errEl.style.display = 'none'
 
-  // OAuth sign-in
+    const name    = form.name.value.trim()
+    const email   = form.email.value.trim().toLowerCase()
+    const company = form.company.value.trim() || null
+    const message = form.message.value.trim() || null
+
+    const { error } = await supabase
+      .from('beta_requests')
+      .insert({ name, email, company, message })
+
+    if (error) {
+      btn.disabled = false
+      btn.textContent = 'Send request'
+      if (error.code === '23505') {
+        // Duplicate email — show a friendly success-style message
+        document.getElementById('req-success-title').textContent = 'Already on the list!'
+        document.getElementById('req-success-msg').textContent = 'We already have a request from this email. We\'ll be in touch when you\'re approved.'
+        document.getElementById('request-form-state').style.display = 'none'
+        document.getElementById('req-success').style.display = 'block'
+      } else {
+        errEl.textContent = 'Something went wrong. Please try again or email raj.sidharthan@freshdesign.com.'
+        errEl.style.display = 'block'
+      }
+      return
+    }
+
+    document.getElementById('request-form-state').style.display = 'none'
+    document.getElementById('req-success').style.display = 'block'
+  }
+
+  // OAuth sign-in (for approved members)
   window.signIn = async function(provider) {
     const btn = document.getElementById('btn-' + provider)
-    if (btn) { btn.disabled = true; btn.style.opacity = '0.6'; }
+    if (btn) btn.disabled = true
 
     const { error } = await supabase.auth.signInWithOAuth({
       provider,
@@ -898,10 +965,14 @@ body {
     })
 
     if (error) {
-      if (btn) { btn.disabled = false; btn.style.opacity = '1'; }
+      if (btn) btn.disabled = false
       alert('Sign-in failed: ' + error.message)
     }
   }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeRequestModal()
+  })
 </script>
 
 </body>
