@@ -73,21 +73,72 @@
       <!-- HOME -->
       <div class="fds-page active" id="page-home">
         <div class="page-header">
-          <div class="page-eyebrow">FreshDS · v1.0.0</div>
-          <h1 class="page-title">Design system for modern enterprise</h1>
-          <p class="page-desc">A token-driven, framework-agnostic design system built for AI-native enterprise applications. Two colors. Infinite client themes.</p>
+          <div class="page-eyebrow">Welcome to FreshDS</div>
+          <h1 class="page-title">Get started</h1>
+          <p class="page-desc">Explore the design system live, then download the files to use with your own brand and AI coding tools.</p>
         </div>
-        <div class="home-stat-row">
-          <div class="home-stat"><div class="home-stat-num">60</div><div class="home-stat-label">Components</div></div>
-          <div class="home-stat"><div class="home-stat-num">12</div><div class="home-stat-label">AI-specific</div></div>
-          <div class="home-stat"><div class="home-stat-num">3</div><div class="home-stat-label">Token tiers</div></div>
-          <div class="home-stat"><div class="home-stat-num">∞</div><div class="home-stat-label">Client themes</div></div>
+
+        <!-- Download options -->
+        <div style="margin-bottom:var(--space-8)">
+          <div style="font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-tertiary);margin-bottom:var(--space-4)">Download your kit</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-4)">
+
+            <!-- Dev Kit -->
+            <div style="background:var(--surface-canvas);border:1px solid var(--surface-border);border-radius:var(--radius-lg);padding:var(--space-6);display:flex;flex-direction:column">
+              <div style="display:flex;align-items:center;gap:var(--space-3);margin-bottom:var(--space-4)">
+                <div style="width:40px;height:40px;background:var(--surface-subtle);border-radius:var(--radius-md);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+                  <i class="ti ti-package" style="font-size:20px;color:var(--color-interactive-text)"></i>
+                </div>
+                <div>
+                  <div style="font-size:16px;font-weight:700;color:var(--text-primary);letter-spacing:-0.01em">Dev Kit</div>
+                  <div style="font-size:12px;color:var(--text-tertiary)">For developers</div>
+                </div>
+              </div>
+              <p style="font-size:14px;color:var(--text-secondary);line-height:1.65;margin-bottom:var(--space-4)">Theme-matched CSS tokens and components only. No docs — just the files your devs need.</p>
+              <ul style="list-style:none;display:flex;flex-direction:column;gap:var(--space-2);margin-bottom:var(--space-5);flex:1">
+                <li style="font-size:13px;color:var(--text-secondary);display:flex;align-items:center;gap:var(--space-2)"><i class="ti ti-check" style="color:var(--color-interactive-text);flex-shrink:0"></i>Generated token CSS file</li>
+                <li style="font-size:13px;color:var(--text-secondary);display:flex;align-items:center;gap:var(--space-2)"><i class="ti ti-check" style="color:var(--color-interactive-text);flex-shrink:0"></i>All 60 web components</li>
+                <li style="font-size:13px;color:var(--text-secondary);display:flex;align-items:center;gap:var(--space-2)"><i class="ti ti-check" style="color:var(--color-interactive-text);flex-shrink:0"></i>Theme engine (freshds.js)</li>
+              </ul>
+              <fresh-button variant="primary" onclick="exportDeveloperBundle()" style="display:block"><i class="ti ti-download"></i> Download Dev Kit</fresh-button>
+            </div>
+
+            <!-- Full DS -->
+            <div style="background:var(--surface-canvas);border:1px solid var(--surface-border);border-radius:var(--radius-lg);padding:var(--space-6);display:flex;flex-direction:column">
+              <div style="display:flex;align-items:center;gap:var(--space-3);margin-bottom:var(--space-4)">
+                <div style="width:40px;height:40px;background:var(--surface-subtle);border-radius:var(--radius-md);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+                  <i class="ti ti-world" style="font-size:20px;color:var(--color-interactive-text)"></i>
+                </div>
+                <div>
+                  <div style="font-size:16px;font-weight:700;color:var(--text-primary);letter-spacing:-0.01em">Full DS</div>
+                  <div style="font-size:12px;color:var(--text-tertiary)">For teams</div>
+                </div>
+              </div>
+              <p style="font-size:14px;color:var(--text-secondary);line-height:1.65;margin-bottom:var(--space-4)">Complete documentation site with all components, tokens, and guides. Host it for your team.</p>
+              <ul style="list-style:none;display:flex;flex-direction:column;gap:var(--space-2);margin-bottom:var(--space-5);flex:1">
+                <li style="font-size:13px;color:var(--text-secondary);display:flex;align-items:center;gap:var(--space-2)"><i class="ti ti-check" style="color:var(--color-interactive-text);flex-shrink:0"></i>Everything in Dev Kit</li>
+                <li style="font-size:13px;color:var(--text-secondary);display:flex;align-items:center;gap:var(--space-2)"><i class="ti ti-check" style="color:var(--color-interactive-text);flex-shrink:0"></i>Full docs site — host anywhere</li>
+                <li style="font-size:13px;color:var(--text-secondary);display:flex;align-items:center;gap:var(--space-2)"><i class="ti ti-check" style="color:var(--color-interactive-text);flex-shrink:0"></i>Pattern library + Configurator</li>
+              </ul>
+              <fresh-button variant="secondary" onclick="exportDSSite()" style="display:block"><i class="ti ti-download"></i> Download Full DS</fresh-button>
+            </div>
+
+          </div>
+          <div style="margin-top:var(--space-3)">
+            <fresh-alert variant="info">Customize your theme in the <a href="configurator.html" style="color:var(--color-interactive-text);font-weight:600">Configurator</a> before downloading — your brand colors will be baked into the exported files.</fresh-alert>
+          </div>
         </div>
-        <div class="home-grid" style="margin-top:32px">
-          <div class="home-card" onclick="window.location.href='configurator.html'"><div class="home-card-icon"><i class="ti ti-adjustments-horizontal"></i></div><div class="home-card-title">Configurator</div><div class="home-card-desc">Set brand colors and export tokens for any client.</div></div>
-          <div class="home-card" onclick="navigate('button')"><div class="home-card-icon"><i class="ti ti-cursor"></i></div><div class="home-card-title">Components</div><div class="home-card-desc">60 components across 8 categories, all token-driven.</div></div>
-          <div class="home-card" onclick="navigate('promptinput')"><div class="home-card-icon"><i class="ti ti-sparkles"></i></div><div class="home-card-title">AI components</div><div class="home-card-desc">12 AI-specific components for intelligent enterprise apps.</div></div>
+
+        <!-- Explore section -->
+        <div>
+          <div style="font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-tertiary);margin-bottom:var(--space-4)">Explore the live demo</div>
+          <div class="home-grid">
+            <div class="home-card" onclick="window.location.href='configurator.html'"><div class="home-card-icon"><i class="ti ti-adjustments-horizontal"></i></div><div class="home-card-title">Configurator</div><div class="home-card-desc">Set your brand colors and preview the full theme live.</div></div>
+            <div class="home-card" onclick="navigate('button')"><div class="home-card-icon"><i class="ti ti-cursor"></i></div><div class="home-card-title">Components</div><div class="home-card-desc">60 components across 8 categories, all token-driven.</div></div>
+            <div class="home-card" onclick="window.location.href='patterns.html'"><div class="home-card-icon"><i class="ti ti-layout-grid"></i></div><div class="home-card-title">Pattern library</div><div class="home-card-desc">100+ pre-built screens ready to use with AI tools.</div></div>
+          </div>
         </div>
+
       </div>
 
       <!-- CONFIGURATOR -->
