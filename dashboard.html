@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FreshDS — Get Started</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+<!-- Auth guard -->
+<script type="module" src="/js/auth-guard.js"></script>
+
+<!-- User info + sign out -->
+<script type="module">
+  import { supabase } from '/js/supabase-client.js'
+  window.__signOut = async function() {
+    await supabase.auth.signOut()
+    window.location.replace('/')
+  }
+  const { data: { user } } = await supabase.auth.getUser()
+  if (user) {
+    const meta = user.user_metadata || {}
+    const name = meta.full_name || meta.name || meta.user_name || user.email || ''
+    const el = document.getElementById('nav-user-name')
+    if (el && name) el.textContent = name
+  }
+</script>
+
+<!-- JSZip + DS engine (needed for exportDSSite) -->
+<script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+<script src="js/freshds.js"></script>
+<script src="js/freshds-site.js"></script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --red: #EA4350;
+  --red-dark: #c73040;
+  --red-light: #fde8ea;
+  --text-primary: #111;
+  --text-secondary: #555;
+  --text-tertiary: #999;
+  --border: #e4e4e7;
+  --bg: #f7f7f8;
+  --card: #fff;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--bg);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Nav */
+.nav {
+  background: var(--card);
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 40px; height: 60px; flex-shrink: 0;
+}
+.nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+.nav-right { display: flex; align-items: center; gap: 20px; }
+.nav-user { font-size: 13.5px; color: var(--text-secondary); font-weight: 500; }
+.btn-signout {
+  font-family: inherit; font-size: 13.5px; font-weight: 500;
+  color: var(--text-tertiary); background: none; border: none;
+  cursor: pointer; padding: 0; transition: color 0.15s;
+}
+.btn-signout:hover { color: var(--text-primary); }
+
+/* Page */
+.page {
+  max-width: 960px;
+  margin: 0 auto;
+  width: 100%;
+  padding: 56px 24px 80px;
+  flex: 1;
+}
+
+/* Section label */
+.section-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  margin-bottom: 16px;
+}
+
+/* Download card */
+.download-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 32px;
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  margin-bottom: 56px;
+}
+.download-icon {
+  width: 52px; height: 52px;
+  background: var(--red-light);
+  border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.download-icon i { font-size: 24px; color: var(--red); }
+.download-body { flex: 1; }
+.download-title { font-size: 18px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 6px; }
+.download-desc { font-size: 14.5px; color: var(--text-secondary); line-height: 1.65; margin-bottom: 18px; max-width: 540px; }
+.download-features { display: flex; gap: 28px; flex-wrap: wrap; }
+.download-feature {
+  font-size: 13px; color: var(--text-secondary);
+  display: flex; align-items: center; gap: 6px;
+}
+.download-feature i { color: var(--red); font-size: 14px; }
+.btn-download {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 12px 24px;
+  background: var(--red); color: #fff;
+  border: none; border-radius: 999px;
+  font-family: inherit; font-size: 14px; font-weight: 600;
+  cursor: pointer; flex-shrink: 0;
+  transition: background 0.15s, transform 0.1s;
+  white-space: nowrap;
+}
+.btn-download:hover { background: var(--red-dark); }
+.btn-download:active { transform: scale(0.98); }
+
+/* Demo section header */
+.demo-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 16px;
+}
+.btn-open-demo {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-family: inherit; font-size: 14px; font-weight: 500;
+  color: var(--text-secondary); background: none; border: none;
+  cursor: pointer; text-decoration: none; transition: color 0.15s;
+  padding: 0;
+}
+.btn-open-demo:hover { color: var(--text-primary); }
+.btn-open-demo i { font-size: 14px; }
+
+/* Demo cards */
+.demo-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+.demo-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 28px;
+}
+.demo-card-icon {
+  width: 36px; height: 36px;
+  background: var(--red-light);
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 20px;
+}
+.demo-card-icon i { font-size: 18px; color: var(--red); }
+.demo-card-title { font-size: 15px; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 8px; }
+.demo-card-desc { font-size: 14px; color: var(--text-secondary); line-height: 1.6; }
+
+/* Footer */
+.footer {
+  border-top: 1px solid var(--border); background: var(--card);
+  padding: 20px 40px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.footer-copy { font-size: 13px; color: var(--text-tertiary); }
+
+@media (max-width: 768px) {
+  .demo-grid { grid-template-columns: 1fr; }
+  .download-card { flex-direction: column; align-items: flex-start; }
+}
+@media (max-width: 640px) {
+  .nav { padding: 0 16px; }
+  .download-features { gap: 12px; flex-direction: column; }
+  .footer { padding: 20px 16px; }
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-logo" href="/dashboard.html">
+    <img src="/assets/freshdesign-logo.svg" alt="Freshdesign" style="height:28px;width:auto;display:block">
+  </a>
+  <div class="nav-right">
+    <span class="nav-user" id="nav-user-name"></span>
+    <button class="btn-signout" onclick="window.__signOut && window.__signOut()">Sign out</button>
+  </div>
+</nav>
+
+<div class="page">
+
+  <!-- Download -->
+  <div class="section-label">Download</div>
+  <div class="download-card">
+    <div class="download-icon">
+      <i class="ti ti-world"></i>
+    </div>
+    <div class="download-body">
+      <div class="download-title">Full DS</div>
+      <p class="download-desc">Complete documentation site with all components, tokens, and guides. Host it for your team, configure your brand, then export the Dev Kit for your developers.</p>
+      <div class="download-features">
+        <span class="download-feature"><i class="ti ti-check"></i>60 components</span>
+        <span class="download-feature"><i class="ti ti-check"></i>100+ patterns</span>
+        <span class="download-feature"><i class="ti ti-check"></i>Configurator + Dev Kit export</span>
+        <span class="download-feature"><i class="ti ti-check"></i>Host anywhere</span>
+      </div>
+    </div>
+    <button class="btn-download" onclick="exportDSSite()">
+      <i class="ti ti-download"></i> Download Full DS
+    </button>
+  </div>
+
+  <!-- Explore -->
+  <div class="demo-header">
+    <div class="section-label" style="margin-bottom:0">Explore the live demo</div>
+    <a class="btn-open-demo" href="app.html" target="_blank">
+      Open demo <i class="ti ti-arrow-up-right"></i>
+    </a>
+  </div>
+  <div class="demo-grid">
+    <div class="demo-card">
+      <div class="demo-card-icon"><i class="ti ti-adjustments-horizontal"></i></div>
+      <div class="demo-card-title">Configurator</div>
+      <p class="demo-card-desc">Set your brand colors and preview the full theme live.</p>
+    </div>
+    <div class="demo-card">
+      <div class="demo-card-icon"><i class="ti ti-cursor"></i></div>
+      <div class="demo-card-title">Components</div>
+      <p class="demo-card-desc">60 components across 8 categories, all token-driven.</p>
+    </div>
+    <div class="demo-card">
+      <div class="demo-card-icon"><i class="ti ti-layout-grid"></i></div>
+      <div class="demo-card-title">Pattern library</div>
+      <p class="demo-card-desc">100+ pre-built screens ready to use with AI tools.</p>
+    </div>
+  </div>
+
+</div>
+
+<footer class="footer">
+  <span class="footer-copy">© 2026 Freshdesign. All Rights Reserved, Freshdesign Interactive, Inc.</span>
+</footer>
+
+</body>
+</html>

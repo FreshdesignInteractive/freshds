@@ -865,7 +865,7 @@ body {
   // If already signed in and approved, go straight to app
   ;(async () => {
     const { data: { session } } = await supabase.auth.getSession()
-    if (session) window.location.replace('/app.html')
+    if (session) window.location.replace('/dashboard.html')
   })()
 
   // Show status banner returned from auth callback
@@ -901,7 +901,7 @@ body {
   // Sign-in modal (opened from nav "Join beta" button)
   window.openRequestModal = async function() {
     const { data: { session } } = await supabase.auth.getSession()
-    if (session) { window.location.replace('/app.html'); return }
+    if (session) { window.location.replace('/dashboard.html'); return }
     document.getElementById('request-overlay').classList.add('open')
     document.body.style.overflow = 'hidden'
   }
