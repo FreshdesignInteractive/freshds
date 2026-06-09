@@ -9,6 +9,51 @@
 <!-- Auth guard — redirects to / if no session -->
 <script type="module" src="/js/auth-guard.js"></script>
 
+<!-- Supabase theme sync — load cloud config, expose cloud save hook -->
+<script type="module">
+  import { supabase } from '/js/supabase-client.js'
+
+  // Debounced save: waits 1.5s after last change before writing to Supabase
+  // Prevents hammering the DB while the user drags a color picker
+  var _cloudSaveTimer = null;
+  window.__saveThemeToCloud = function(themeData) {
+    clearTimeout(_cloudSaveTimer);
+    _cloudSaveTimer = setTimeout(async function() {
+      try {
+        const { data: { user } } = await supabase.auth.getUser();
+        if (!user) return;
+        await supabase.from('profiles').update({ theme_config: themeData }).eq('id', user.id);
+      } catch(e) {}
+    }, 1500);
+  };
+
+  // On load: fetch theme from Supabase and apply if different from localStorage
+  // This syncs the theme when the user logs in from a new machine
+  try {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (user) {
+      const { data: profile } = await supabase
+        .from('profiles')
+        .select('theme_config')
+        .eq('id', user.id)
+        .single();
+
+      if (profile?.theme_config) {
+        const cloud = profile.theme_config;
+        const local = localStorage.getItem('freshds-theme');
+        // Only apply cloud theme if it differs from what's currently loaded
+        // (avoids unnecessary repaint on same machine)
+        if (!local || cloud.appliedId !== (JSON.parse(local).appliedId) ||
+            cloud.primary !== (JSON.parse(local).primary)) {
+          localStorage.setItem('freshds-theme', JSON.stringify(cloud));
+          // Reload applies the cloud theme cleanly without FOUC
+          location.reload();
+        }
+      }
+    }
+  } catch(e) {}
+</script>
+
 
 <!-- Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">

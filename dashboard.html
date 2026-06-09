@@ -9,15 +9,17 @@
 <!-- Auth guard -->
 <script type="module" src="/js/auth-guard.js"></script>
 
-<!-- User info + sign out -->
+<!-- User info, sign out, payment gate -->
 <script type="module">
   import { supabase } from '/js/supabase-client.js'
 
+  // ── Sign out ───────────────────────────────────────────────────
   window.__signOut = async function() {
     await supabase.auth.signOut()
     window.location.replace('/')
   }
 
+  // ── Avatar dropdown ────────────────────────────────────────────
   window.__toggleAvatarMenu = function() {
     document.getElementById('nav-avatar-dropdown').classList.toggle('open')
   }
@@ -30,23 +32,116 @@
     }
   })
 
+  // ── Stripe checkout ────────────────────────────────────────────
+  window.__initiateCheckout = async function() {
+    const btn = document.getElementById('download-btn')
+    if (btn) { btn.disabled = true; btn.innerHTML = '<i class="ti ti-loader-2 spin"></i> Redirecting…' }
+
+    const { data: { session } } = await supabase.auth.getSession()
+    const res = await fetch('/api/create-checkout', {
+      method: 'POST',
+      headers: { 'Authorization': 'Bearer ' + session.access_token }
+    })
+    const data = await res.json()
+
+    if (data.already_paid) {
+      // Race: webhook already fired before UI updated — just download
+      window.__triggerDownload()
+      return
+    }
+    if (data.url) {
+      window.location.href = data.url
+    } else {
+      if (btn) { btn.disabled = false; btn.innerHTML = '<i class="ti ti-credit-card"></i> Get access — $1' }
+      alert('Could not start checkout. Please try again.')
+    }
+  }
+
+  // ── Download trigger ───────────────────────────────────────────
+  window.__triggerDownload = function() {
+    if (typeof exportDSSite === 'function') {
+      exportDSSite()
+    } else {
+      alert('Download engine not ready. Please refresh and try again.')
+    }
+  }
+
+  // ── Update button state ────────────────────────────────────────
+  function setDownloadBtn(hasPaid) {
+    const btn = document.getElementById('download-btn')
+    if (!btn) return
+    if (hasPaid) {
+      btn.disabled = false
+      btn.onclick = window.__triggerDownload
+      btn.innerHTML = '<i class="ti ti-download"></i> Download Full DS'
+    } else {
+      btn.disabled = false
+      btn.onclick = window.__initiateCheckout
+      btn.innerHTML = '<i class="ti ti-credit-card"></i> Get access — $1'
+    }
+  }
+
+  // ── Payment success flow ───────────────────────────────────────
+  async function handlePaymentSuccess(userId) {
+    const banner = document.getElementById('payment-banner')
+    if (banner) banner.style.display = 'flex'
+
+    // Poll until webhook sets has_paid (max 12s)
+    for (let i = 0; i < 12; i++) {
+      await new Promise(r => setTimeout(r, 1000))
+      const { data } = await supabase.from('profiles').select('has_paid').eq('id', userId).single()
+      if (data?.has_paid) {
+        setDownloadBtn(true)
+        if (banner) banner.querySelector('.banner-text').textContent = 'Payment confirmed — your download is starting…'
+        setTimeout(() => window.__triggerDownload(), 800)
+        return
+      }
+    }
+    // Webhook delayed — tell user to refresh
+    if (banner) banner.querySelector('.banner-text').textContent = 'Payment received — please refresh the page to download.'
+  }
+
+  // ── Init ───────────────────────────────────────────────────────
   const { data: { user } } = await supabase.auth.getUser()
   if (user) {
-    const meta = user.user_metadata || {}
-    const name = meta.full_name || meta.name || meta.user_name || user.email || ''
+    // Populate avatar
+    const meta    = user.user_metadata || {}
+    const name    = meta.full_name || meta.name || meta.user_name || user.email || ''
     const initial = name ? name.charAt(0).toUpperCase() : 'U'
-
     const avatarEl = document.getElementById('nav-avatar')
     const nameEl   = document.getElementById('nav-dropdown-name')
-
     if (nameEl) nameEl.textContent = name
-
     if (avatarEl) {
       if (meta.avatar_url) {
         avatarEl.innerHTML = `<img src="${meta.avatar_url}" alt="${name}" style="width:100%;height:100%;object-fit:cover;border-radius:50%">`
       } else {
         avatarEl.textContent = initial
       }
+    }
+
+    // Check payment status
+    const { data: profile } = await supabase
+      .from('profiles').select('has_paid').eq('id', user.id).single()
+    const hasPaid = profile?.has_paid || false
+
+    // Handle Stripe redirect back after payment
+    const params = new URLSearchParams(window.location.search)
+    if (params.get('payment') === 'success') {
+      history.replaceState({}, '', '/dashboard.html')
+      if (hasPaid) {
+        // Webhook already fired — download immediately
+        const banner = document.getElementById('payment-banner')
+        if (banner) {
+          banner.style.display = 'flex'
+          banner.querySelector('.banner-text').textContent = 'Payment confirmed — your download is starting…'
+        }
+        setDownloadBtn(true)
+        setTimeout(() => window.__triggerDownload(), 1200)
+      } else {
+        await handlePaymentSuccess(user.id)
+      }
+    } else {
+      setDownloadBtn(hasPaid)
     }
   }
 </script>
@@ -245,6 +340,25 @@ body {
 }
 .footer-copy { font-size: 13px; color: var(--text-tertiary); }
 
+/* Payment banner */
+.payment-banner {
+  display: none;
+  align-items: center;
+  gap: 10px;
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  border-radius: 12px;
+  padding: 14px 20px;
+  margin-bottom: 24px;
+  font-size: 14px;
+  color: #166534;
+}
+.payment-banner i { font-size: 18px; color: #16a34a; flex-shrink: 0; }
+
+/* Spinner animation */
+@keyframes spin { to { transform: rotate(360deg); } }
+.spin { display: inline-block; animation: spin 0.7s linear infinite; }
+
 @media (max-width: 768px) {
   .demo-grid { grid-template-columns: 1fr; }
   .download-card { flex-direction: column; align-items: flex-start; }
@@ -277,6 +391,12 @@ body {
 
 <div class="page">
 
+  <!-- Payment confirmation banner (shown after Stripe redirect) -->
+  <div class="payment-banner" id="payment-banner">
+    <i class="ti ti-circle-check"></i>
+    <span class="banner-text">Payment received — confirming your access…</span>
+  </div>
+
   <!-- Download -->
   <div class="section-label">Download</div>
   <div class="download-card">
@@ -293,8 +413,8 @@ body {
         <span class="download-feature"><i class="ti ti-check"></i>Host anywhere</span>
       </div>
     </div>
-    <button class="btn-download" onclick="exportDSSite()">
-      <i class="ti ti-download"></i> Download Full DS
+    <button class="btn-download" id="download-btn" disabled>
+      <i class="ti ti-loader-2 spin"></i> Loading…
     </button>
   </div>
 

@@ -461,7 +461,7 @@ function switchCfgTab(tab) {
 // ── Theme persistence ──────────────────────────────────────────
 function _saveTheme() {
   try {
-    localStorage.setItem('freshds-theme', JSON.stringify({
+    var themeData = {
       primary:      ds.primary,
       secondary:    ds.secondary,
       scaleDark:    ds.scaleDark,
@@ -480,7 +480,11 @@ function _saveTheme() {
       _customCount:      ds._customCount,
       systemThemeStates: SYSTEM_THEMES.map(function(t){ return { id: t.id, name: t.name, primary: t.primary, secondary: t.secondary, dark: t.dark, light: t.light, success: t.success, warning: t.warning, danger: t.danger, info: t.info, pageBg: t.pageBg, inputSurface: t.inputSurface }; }),
       deletedSystemIds:  ds.deletedSystemIds || []
-    }));
+    };
+    localStorage.setItem('freshds-theme', JSON.stringify(themeData));
+    if (typeof window.__saveThemeToCloud === 'function') {
+      window.__saveThemeToCloud(themeData);
+    }
   } catch(e) {}
 }
 
@@ -1032,7 +1036,8 @@ function _generateThemeVarsCss() {
   }
 
   return (
-    '/* FreshDS — Generated theme variables\n' +
+    '/* © Freshdesign Interactive, Inc. — Do not redistribute.\n' +
+    '   FreshDS — Generated theme variables\n' +
     '   Theme    : ' + (ds.stagedId || 'custom') + '\n' +
     '   Primary  : ' + ds.stagedPrimary + '\n' +
     '   Secondary: ' + ds.stagedSecondary + '\n' +
