@@ -124,7 +124,7 @@ class FreshDrawer extends HTMLElement {
 
         .title {
           font-family: var(--font-sans);
-          font-size: 14px;
+          font-size: var(--font-size-lg);
           font-weight: 600;
           color: var(--text-primary);
           letter-spacing: -0.01em;
@@ -154,7 +154,7 @@ class FreshDrawer extends HTMLElement {
           overflow-y: auto;
           padding: var(--space-6);
           font-family: var(--font-sans);
-          font-size: 13px;
+          font-size: var(--font-size-md);
           color: var(--text-secondary);
           line-height: 1.65;
           -webkit-font-smoothing: antialiased;

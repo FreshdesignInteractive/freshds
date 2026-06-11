@@ -76,7 +76,7 @@ class FreshAiResponse extends HTMLElement {
           align-items: center;
           justify-content: center;
           font-family: var(--font-sans);
-          font-size: 10px;
+          font-size: var(--font-size-2xs);
           font-weight: 600;
           color: var(--text-inverse);
           flex-shrink: 0;
@@ -96,7 +96,7 @@ class FreshAiResponse extends HTMLElement {
 
         .name {
           font-family: var(--font-sans);
-          font-size: 11px;
+          font-size: var(--font-size-xs);
           font-weight: 600;
           color: var(--text-tertiary);
           -webkit-font-smoothing: antialiased;
@@ -104,7 +104,7 @@ class FreshAiResponse extends HTMLElement {
 
         .model-badge {
           font-family: var(--font-mono);
-          font-size: 9px;
+          font-size: var(--font-size-3xs);
           font-weight: 500;
           letter-spacing: 0.04em;
           padding: 1px 6px;
@@ -121,7 +121,7 @@ class FreshAiResponse extends HTMLElement {
           background: ${isUser ? 'var(--color-interactive)' : 'var(--surface-subtle)'};
           border: ${isUser ? 'none' : '1px solid var(--surface-border)'};
           font-family: var(--font-sans);
-          font-size: 13px;
+          font-size: var(--font-size-md);
           color: ${isUser ? 'var(--text-inverse)' : 'var(--text-primary)'};
           line-height: 1.6;
           -webkit-font-smoothing: antialiased;

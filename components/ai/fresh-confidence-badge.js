@@ -66,7 +66,7 @@ class FreshConfidenceBadge extends HTMLElement {
 
         .text {
           font-family: var(--font-sans);
-          font-size: 12px;
+          font-size: var(--font-size-sm);
           font-weight: 500;
           color: ${color};
           -webkit-font-smoothing: antialiased;
@@ -75,7 +75,7 @@ class FreshConfidenceBadge extends HTMLElement {
 
         .label {
           font-family: var(--font-sans);
-          font-size: 10px;
+          font-size: var(--font-size-2xs);
           color: var(--text-tertiary);
           -webkit-font-smoothing: antialiased;
         }

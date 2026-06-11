@@ -80,7 +80,7 @@ class FreshInput extends HTMLElement {
 
     const heights = { sm: '28px', md: '34px', lg: '40px' };
     const pads    = { sm: '9px',  md: '11px', lg: '13px' };
-    const fsize   = { sm: '12px', md: '13px', lg: '14px' };
+    const fsize   = { sm: 'var(--font-size-sm)', md: 'var(--font-size-md)', lg: 'var(--font-size-lg)' };
     const radius  = { sm: 'calc(var(--radius-md) - 2px)', md: 'var(--radius-md)', lg: 'var(--radius-md)' };
 
     this.shadowRoot.innerHTML = `
@@ -100,7 +100,7 @@ class FreshInput extends HTMLElement {
         .icon {
           position: absolute;
           left: ${size === 'sm' ? '8px' : '10px'};
-          font-size: ${size === 'sm' ? '13px' : '15px'};
+          font-size: ${size === 'sm' ? 'var(--font-size-md)' : 'var(--font-size-xl)'};
           color: var(--text-tertiary);
           pointer-events: none;
           line-height: 1;
@@ -187,7 +187,7 @@ class FreshInput extends HTMLElement {
         .error-msg {
           margin-top: 5px;
           font-family: var(--font-sans);
-          font-size: 11px;
+          font-size: var(--font-size-xs);
           color: var(--color-danger);
           display: flex;
           align-items: center;

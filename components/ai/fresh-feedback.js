@@ -64,7 +64,7 @@ class FreshFeedback extends HTMLElement {
           padding: 0 ${compact ? '7px' : '10px'};
           border-radius: var(--radius-md);
           font-family: var(--font-sans);
-          font-size: 12px;
+          font-size: var(--font-size-sm);
           font-weight: 500;
           color: var(--text-tertiary);
           cursor: pointer;
@@ -91,15 +91,15 @@ class FreshFeedback extends HTMLElement {
 
       <div class="row" role="group" aria-label="Rate this response">
         <button class="btn up ${vote === 'up' ? 'active' : ''}" aria-label="Helpful" aria-pressed="${vote === 'up'}">
-          <i class="ti ti-thumb-up" style="font-size:14px"></i>
+          <i class="ti ti-thumb-up" style="font-size:var(--font-size-lg)"></i>
           ${compact ? '' : '<span>Helpful</span>'}
         </button>
         <button class="btn down ${vote === 'down' ? 'active' : ''}" aria-label="Not helpful" aria-pressed="${vote === 'down'}">
-          <i class="ti ti-thumb-down" style="font-size:14px"></i>
+          <i class="ti ti-thumb-down" style="font-size:var(--font-size-lg)"></i>
           ${compact ? '' : '<span>Not helpful</span>'}
         </button>
         <div class="divider" aria-hidden="true"></div>
-        ${showFlag ? `<button class="btn flag" aria-label="Report issue"><i class="ti ti-flag" style="font-size:14px"></i></button>` : ''}
+        ${showFlag ? `<button class="btn flag" aria-label="Report issue"><i class="ti ti-flag" style="font-size:var(--font-size-lg)"></i></button>` : ''}
       </div>
     `;
 

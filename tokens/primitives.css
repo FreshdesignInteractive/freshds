@@ -26,6 +26,21 @@
   --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
   --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
 
+  /* Fixed colors */
+  --color-white: #ffffff;
+
+  /* Component font sizes */
+  --font-size-3xs: 9px;    /* micro labels, tiny badges */
+  --font-size-2xs: 10px;   /* badge sm */
+  --font-size-xs:  11px;   /* badge md, input helper text */
+  --font-size-sm:  12px;   /* button sm, input sm */
+  --font-size-md:  13px;   /* button md, input md */
+  --font-size-lg:  14px;   /* button lg, input lg */
+  --font-size-xl:  15px;   /* input label (sm size) */
+  --font-size-2xl: 18px;   /* icon buttons, small headings */
+  --font-size-3xl: 24px;   /* empty state headings */
+  --font-size-4xl: 28px;   /* stat card display numbers */
+
   /* Spacing (4px base) */
   --space-1:  4px;   --space-2:  8px;   --space-3: 12px;
   --space-4:  16px;  --space-5:  20px;  --space-6: 24px;

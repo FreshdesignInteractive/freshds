@@ -50,14 +50,14 @@ class FreshProgress extends HTMLElement {
 
         .label {
           font-family: var(--font-sans);
-          font-size: 12px;
+          font-size: var(--font-size-sm);
           color: var(--text-secondary);
           -webkit-font-smoothing: antialiased;
         }
 
         .pct {
           font-family: var(--font-mono);
-          font-size: 11px;
+          font-size: var(--font-size-xs);
           color: var(--text-tertiary);
         }
 

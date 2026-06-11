@@ -119,7 +119,7 @@ class FreshTooltip extends HTMLElement {
           background: var(--tooltip-bg);
           color: var(--tooltip-text);
           font-family: var(--font-sans);
-          font-size: 12px;
+          font-size: var(--font-size-sm);
           line-height: 1.4;
           white-space: nowrap;
           max-width: 240px;

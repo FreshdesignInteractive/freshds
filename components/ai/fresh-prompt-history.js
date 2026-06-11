@@ -62,7 +62,7 @@ class FreshPromptHistory extends HTMLElement {
           align-items: center;
           gap: 5px;
           font-family: var(--font-sans);
-          font-size: 11px;
+          font-size: var(--font-size-xs);
           font-weight: 500;
           color: var(--text-tertiary);
           white-space: nowrap;
@@ -81,7 +81,7 @@ class FreshPromptHistory extends HTMLElement {
           background: var(--surface-overlay);
           border: 1px solid var(--surface-border-strong);
           font-family: var(--font-sans);
-          font-size: 12px;
+          font-size: var(--font-size-sm);
           color: var(--text-secondary);
           cursor: pointer;
           white-space: nowrap;
@@ -103,7 +103,7 @@ class FreshPromptHistory extends HTMLElement {
 
         .empty {
           font-family: var(--font-sans);
-          font-size: 12px;
+          font-size: var(--font-size-sm);
           color: var(--text-tertiary);
           padding: 4px 0;
         }
@@ -111,7 +111,7 @@ class FreshPromptHistory extends HTMLElement {
 
       <div class="row" role="list" aria-label="Recent prompts">
         <span class="label" aria-hidden="true">
-          <i class="ti ti-history" style="font-size:13px"></i>
+          <i class="ti ti-history" style="font-size:var(--font-size-md)"></i>
           Recent
         </span>
         ${prompts.length ? chips : '<span class="empty">No recent prompts</span>'}

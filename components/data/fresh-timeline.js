@@ -104,7 +104,7 @@ class FreshTimeline extends HTMLElement {
           display: flex;
           align-items: center;
           justify-content: center;
-          font-size: 13px;
+          font-size: var(--font-size-md);
           flex-shrink: 0;
           z-index: 1;
         }
@@ -135,7 +135,7 @@ class FreshTimeline extends HTMLElement {
 
         .title {
           font-family: var(--font-sans);
-          font-size: 13px;
+          font-size: var(--font-size-md);
           font-weight: 500;
           color: var(--text-primary);
           -webkit-font-smoothing: antialiased;
@@ -143,7 +143,7 @@ class FreshTimeline extends HTMLElement {
 
         .timestamp {
           font-family: var(--font-sans);
-          font-size: 11px;
+          font-size: var(--font-size-xs);
           color: var(--text-tertiary);
           white-space: nowrap;
           flex-shrink: 0;
@@ -151,7 +151,7 @@ class FreshTimeline extends HTMLElement {
 
         .desc {
           font-family: var(--font-sans);
-          font-size: 12px;
+          font-size: var(--font-size-sm);
           color: var(--text-secondary);
           margin-top: 4px;
           line-height: 1.55;
@@ -160,7 +160,7 @@ class FreshTimeline extends HTMLElement {
       </style>
 
       <div part="timeline">
-        ${entries || '<span style="font-family:var(--font-sans);font-size:13px;color:var(--text-tertiary)">No items</span>'}
+        ${entries || '<span style="font-family:var(--font-sans);font-size:var(--font-size-md);color:var(--text-tertiary)">No items</span>'}
       </div>
     `;
   }

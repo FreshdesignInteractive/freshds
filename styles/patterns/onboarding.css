@@ -49,7 +49,7 @@ body {
 }
 .demo-bar.collapsed { padding: 0; width: 36px; height: 36px; gap: 0; justify-content: center; }
 .demo-bar.collapsed .demo-inner { max-width: 0; width: 0; padding: 0; margin: 0; opacity: 0; pointer-events: none; }
-.demo-bar.collapsed .demo-collapse-btn { width: 36px; height: 36px; font-size: 15px; color: var(--text-primary); }
+.demo-bar.collapsed .demo-collapse-btn { width: 36px; height: 36px; font-size: var(--font-size-xl); color: var(--text-primary); }
 .demo-sep { width: 1px; height: 16px; background: var(--surface-border); flex-shrink: 0; margin: 0 2px; }
 .demo-mode-btn, .demo-collapse-btn {
   width: 28px; height: 28px;
@@ -57,11 +57,11 @@ body {
   background: transparent;
   display: flex; align-items: center; justify-content: center;
   color: var(--text-secondary);
-  cursor: pointer; font-size: 14px; flex-shrink: 0;
+  cursor: pointer; font-size: var(--font-size-lg); flex-shrink: 0;
   transition: background 150ms, color 150ms;
 }
 .demo-mode-btn:hover, .demo-collapse-btn:hover { background: var(--surface-subtle); color: var(--text-primary); }
-.demo-collapse-btn { color: var(--text-tertiary); font-size: 13px; }
+.demo-collapse-btn { color: var(--text-tertiary); font-size: var(--font-size-md); }
 
 /* ── Page shell ── */
 .onb-page {
@@ -81,13 +81,13 @@ body {
   flex-shrink: 0;
 }
 .onb-brand {
-  font-size: 15px;
+  font-size: var(--font-size-xl);
   font-weight: 600;
   color: var(--text-primary);
   letter-spacing: -0.02em;
 }
 .onb-signout {
-  font-size: 13px;
+  font-size: var(--font-size-md);
   font-weight: 500;
   color: var(--text-secondary);
   text-decoration: none;
@@ -124,7 +124,7 @@ body {
 
 /* ── Headings ── */
 .onb-eyebrow {
-  font-size: 11px;
+  font-size: var(--font-size-xs);
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -140,7 +140,7 @@ body {
   line-height: 1.2;
 }
 .onb-sub {
-  font-size: 14px;
+  font-size: var(--font-size-lg);
   color: var(--text-secondary);
   line-height: 1.6;
   margin-bottom: var(--space-8);
@@ -157,7 +157,7 @@ body {
 }
 .onb-nav-right { display: flex; align-items: center; gap: var(--space-3); }
 .onb-skip {
-  font-size: 13px;
+  font-size: var(--font-size-md);
   font-weight: 500;
   color: var(--text-tertiary);
   text-decoration: none;
@@ -210,14 +210,14 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 10px;
+  font-size: var(--font-size-2xs);
   color: transparent;
   transition: all 150ms;
 }
 .pick-card.selected .pick-card-check {
   background: var(--color-interactive);
   border-color: var(--color-interactive);
-  color: #fff;
+  color: var(--color-white);
 }
 .pick-card-icon {
   width: 36px;
@@ -231,13 +231,13 @@ body {
   color: var(--color-interactive-text);
 }
 .pick-card-label {
-  font-size: 13px;
+  font-size: var(--font-size-md);
   font-weight: 600;
   color: var(--text-primary);
   line-height: 1.3;
 }
 .pick-card-desc {
-  font-size: 12px;
+  font-size: var(--font-size-sm);
   color: var(--text-secondary);
   line-height: 1.4;
 }
@@ -247,12 +247,12 @@ body {
 .onb-field { display: flex; flex-direction: column; gap: var(--space-2); }
 .onb-field-row { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3); }
 .onb-label {
-  font-size: 13px;
+  font-size: var(--font-size-md);
   font-weight: 500;
   color: var(--text-primary);
 }
 .onb-hint {
-  font-size: 12px;
+  font-size: var(--font-size-sm);
   color: var(--text-tertiary);
   margin-top: var(--space-1);
 }
@@ -281,8 +281,8 @@ body {
   flex-shrink: 0;
 }
 .avatar-upload-info { flex: 1; }
-.avatar-upload-title { font-size: 13px; font-weight: 500; color: var(--text-primary); margin-bottom: var(--space-1); }
-.avatar-upload-sub { font-size: 12px; color: var(--text-tertiary); }
+.avatar-upload-title { font-size: var(--font-size-md); font-weight: 500; color: var(--text-primary); margin-bottom: var(--space-1); }
+.avatar-upload-sub { font-size: var(--font-size-sm); color: var(--text-tertiary); }
 
 /* ── Invite rows ── */
 .invite-input-row {
@@ -308,14 +308,14 @@ body {
   border: 1px solid var(--surface-border);
   border-radius: var(--radius-md);
 }
-.invited-item-email { flex: 1; font-size: 13px; color: var(--text-primary); }
-.invited-item-role { font-size: 12px; color: var(--text-tertiary); }
+.invited-item-email { flex: 1; font-size: var(--font-size-md); color: var(--text-primary); }
+.invited-item-role { font-size: var(--font-size-sm); color: var(--text-tertiary); }
 .invited-item-remove {
   width: 24px; height: 24px;
   border: none; background: none;
   cursor: pointer; border-radius: var(--radius-sm);
   display: flex; align-items: center; justify-content: center;
-  color: var(--text-tertiary); font-size: 14px;
+  color: var(--text-tertiary); font-size: var(--font-size-lg);
   transition: background 150ms, color 150ms;
 }
 .invited-item-remove:hover { background: var(--color-danger-subtle); color: var(--color-danger); }
@@ -348,8 +348,8 @@ body {
   flex-shrink: 0;
 }
 .int-info { flex: 1; min-width: 0; }
-.int-name { font-size: 13px; font-weight: 500; color: var(--text-primary); }
-.int-desc { font-size: 12px; color: var(--text-tertiary); margin-top: 2px; }
+.int-name { font-size: var(--font-size-md); font-weight: 500; color: var(--text-primary); }
+.int-desc { font-size: var(--font-size-sm); color: var(--text-tertiary); margin-top: 2px; }
 
 /* ── Import tabs ── */
 .import-drop {
@@ -371,12 +371,12 @@ body {
   margin-bottom: var(--space-3);
 }
 .import-drop-title {
-  font-size: 14px;
+  font-size: var(--font-size-lg);
   font-weight: 500;
   color: var(--text-primary);
   margin-bottom: var(--space-1);
 }
-.import-drop-sub { font-size: 13px; color: var(--text-secondary); }
+.import-drop-sub { font-size: var(--font-size-md); color: var(--text-secondary); }
 .import-drop-link {
   color: var(--color-interactive-text);
   text-decoration: none;
@@ -390,7 +390,7 @@ body {
   gap: var(--space-3);
   margin: var(--space-5) 0;
   color: var(--text-tertiary);
-  font-size: 12px;
+  font-size: var(--font-size-sm);
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.06em;
@@ -419,7 +419,7 @@ body {
   border: 2px solid var(--surface-border-strong);
   background: var(--surface-canvas);
   display: flex; align-items: center; justify-content: center;
-  font-size: 14px; color: var(--text-tertiary); flex-shrink: 0;
+  font-size: var(--font-size-lg); color: var(--text-tertiary); flex-shrink: 0;
   transition: all 150ms;
 }
 .checklist-item.done .checklist-icon {
@@ -428,8 +428,8 @@ body {
   color: var(--color-success);
 }
 .checklist-content { flex: 1; min-width: 0; }
-.checklist-title { font-size: 14px; font-weight: 500; color: var(--text-primary); margin-bottom: 2px; }
-.checklist-desc { font-size: 13px; color: var(--text-secondary); line-height: 1.4; }
+.checklist-title { font-size: var(--font-size-lg); font-weight: 500; color: var(--text-primary); margin-bottom: 2px; }
+.checklist-desc { font-size: var(--font-size-md); color: var(--text-secondary); line-height: 1.4; }
 .checklist-cta { margin-top: var(--space-3); }
 
 /* ── Welcome ── */
@@ -464,13 +464,13 @@ body {
   line-height: 1.15;
 }
 .onb-welcome-sub {
-  font-size: 15px;
+  font-size: var(--font-size-xl);
   color: var(--text-secondary);
   line-height: 1.6;
   margin-bottom: var(--space-8);
 }
 .onb-welcome-actions { display: flex; flex-direction: column; align-items: center; gap: var(--space-3); }
-.onb-welcome-hint { font-size: 12px; color: var(--text-tertiary); }
+.onb-welcome-hint { font-size: var(--font-size-sm); color: var(--text-tertiary); }
 
 /* ── Responsive ── */
 @media (max-width: 767px) {
@@ -504,11 +504,11 @@ body {
 .app-nav-item {
   all: unset; display: flex; align-items: center; gap: var(--space-2);
   padding: var(--space-2) var(--space-3); border-radius: var(--radius-md);
-  font-family: var(--font-sans); font-size: 13px; font-weight: 500;
+  font-family: var(--font-sans); font-size: var(--font-size-md); font-weight: 500;
   color: var(--text-secondary); cursor: pointer; white-space: nowrap;
   transition: background 150ms, color 150ms; user-select: none;
 }
-.app-nav-item i { font-size: 15px; flex-shrink: 0; }
+.app-nav-item i { font-size: var(--font-size-xl); flex-shrink: 0; }
 .app-nav-item:hover { background: var(--surface-subtle); color: var(--text-primary); }
 .app-nav-item.active { background: var(--color-interactive-subtle); color: var(--color-interactive-text); }
 

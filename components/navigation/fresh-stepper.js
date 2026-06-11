@@ -197,7 +197,7 @@ class FreshStepper extends HTMLElement {
 
         .num {
           font-family: var(--font-sans);
-          font-size: 11px;
+          font-size: var(--font-size-xs);
           font-weight: 600;
           line-height: 1;
           -webkit-font-smoothing: antialiased;
@@ -209,7 +209,7 @@ class FreshStepper extends HTMLElement {
         /* ── Labels ── */
         .label {
           font-family: var(--font-sans);
-          font-size: 12px;
+          font-size: var(--font-size-sm);
           font-weight: 500;
           -webkit-font-smoothing: antialiased;
           white-space: nowrap;
@@ -221,7 +221,7 @@ class FreshStepper extends HTMLElement {
 
         .desc {
           font-family: var(--font-sans);
-          font-size: 11px;
+          font-size: var(--font-size-xs);
           color: var(--text-tertiary);
           margin-top: 2px;
           -webkit-font-smoothing: antialiased;

@@ -4,6 +4,12 @@
       "maxDuration": 30
     }
   },
+  "redirects": [
+    { "source": "/about.html",   "destination": "/site/about.html",   "permanent": true },
+    { "source": "/contact.html", "destination": "/site/contact.html", "permanent": true },
+    { "source": "/privacy.html", "destination": "/site/privacy.html", "permanent": true },
+    { "source": "/terms.html",   "destination": "/site/terms.html",   "permanent": true }
+  ],
   "headers": [
     {
       "source": "/api/(.*)",

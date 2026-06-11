@@ -48,7 +48,7 @@ class FreshCitationChip extends HTMLElement {
           background: var(--surface-overlay);
           border: 1px solid var(--surface-border-strong);
           font-family: var(--font-sans);
-          font-size: 11px;
+          font-size: var(--font-size-xs);
           font-weight: 500;
           color: var(--text-secondary);
           text-decoration: none;

@@ -84,7 +84,7 @@ class FreshSidebar extends HTMLElement {
           align-items: center;
           gap: var(--space-2);
           font-family: var(--font-sans);
-          font-size: 14px;
+          font-size: var(--font-size-lg);
           font-weight: 600;
           letter-spacing: -0.02em;
           color: var(--text-primary);
@@ -177,7 +177,7 @@ class FreshNavGroup extends HTMLElement {
           justify-content: space-between;
           padding: var(--space-2) var(--space-4);
           font-family: var(--font-sans);
-          font-size: 11px;
+          font-size: var(--font-size-xs);
           font-weight: 600;
           letter-spacing: 0.07em;
           text-transform: uppercase;
@@ -191,7 +191,7 @@ class FreshNavGroup extends HTMLElement {
         .header:hover { color: var(--text-secondary); }
 
         .chevron {
-          font-size: 11px;
+          font-size: var(--font-size-xs);
           transition: transform 200ms ease;
         }
 
@@ -251,7 +251,7 @@ class FreshNavItem extends HTMLElement {
           gap: var(--space-2);
           padding: 6px var(--space-4) 6px calc(var(--space-4) + 8px);
           font-family: var(--font-sans);
-          font-size: 13px;
+          font-size: var(--font-size-md);
           font-weight: ${active ? '500' : '400'};
           color: ${active ? 'var(--nav-active-text)' : 'var(--text-secondary)'};
           background: ${active ? 'var(--nav-active-bg)' : 'transparent'};
@@ -270,7 +270,7 @@ class FreshNavItem extends HTMLElement {
         }
 
         .icon {
-          font-size: 14px;
+          font-size: var(--font-size-lg);
           opacity: ${active ? '1' : '0.6'};
           flex-shrink: 0;
           transition: opacity 120ms ease;
@@ -281,7 +281,7 @@ class FreshNavItem extends HTMLElement {
         .label { flex: 1; min-width: 0; }
 
         .badge-chip {
-          font-size: 9px;
+          font-size: var(--font-size-3xs);
           font-weight: 600;
           letter-spacing: 0.05em;
           text-transform: uppercase;

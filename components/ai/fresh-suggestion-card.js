@@ -73,7 +73,7 @@ class FreshSuggestionCard extends HTMLElement {
           align-items: center;
           justify-content: center;
           color: var(--color-interactive-text);
-          font-size: 15px;
+          font-size: var(--font-size-xl);
           flex-shrink: 0;
         }
 
@@ -81,7 +81,7 @@ class FreshSuggestionCard extends HTMLElement {
 
         .title {
           font-family: var(--font-sans);
-          font-size: 13px;
+          font-size: var(--font-size-md);
           font-weight: 600;
           color: var(--text-primary);
           margin-bottom: 3px;
@@ -90,7 +90,7 @@ class FreshSuggestionCard extends HTMLElement {
 
         .desc {
           font-family: var(--font-sans);
-          font-size: 12px;
+          font-size: var(--font-size-sm);
           color: var(--text-secondary);
           line-height: 1.55;
           margin-bottom: 10px;
@@ -114,7 +114,7 @@ class FreshSuggestionCard extends HTMLElement {
           background: var(--color-interactive);
           color: var(--text-inverse);
           font-family: var(--font-sans);
-          font-size: 12px;
+          font-size: var(--font-size-sm);
           font-weight: 500;
           cursor: pointer;
           transition: background 120ms, transform 80ms;
@@ -132,7 +132,7 @@ class FreshSuggestionCard extends HTMLElement {
           border-radius: var(--radius-md);
           color: var(--text-tertiary);
           font-family: var(--font-sans);
-          font-size: 12px;
+          font-size: var(--font-size-sm);
           cursor: pointer;
           transition: color 120ms, background 120ms;
         }
@@ -148,7 +148,7 @@ class FreshSuggestionCard extends HTMLElement {
           ${description ? `<div class="desc">${description}</div>`  : ''}
           <div class="actions">
             <button class="accept">
-              <i class="ti ti-sparkles" style="font-size:11px"></i>
+              <i class="ti ti-sparkles" style="font-size:var(--font-size-xs)"></i>
               ${acceptLabel}
             </button>
             <button class="dismiss">Dismiss</button>

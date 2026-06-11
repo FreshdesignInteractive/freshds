@@ -64,7 +64,7 @@ class FreshTokenMeter extends HTMLElement {
 
         .label {
           font-family: var(--font-sans);
-          font-size: 11px;
+          font-size: var(--font-size-xs);
           font-weight: 500;
           color: var(--text-tertiary);
           letter-spacing: 0.01em;
@@ -73,7 +73,7 @@ class FreshTokenMeter extends HTMLElement {
 
         .counts {
           font-family: var(--font-mono);
-          font-size: 11px;
+          font-size: var(--font-size-xs);
           color: ${isWarn ? color : 'var(--text-tertiary)'};
           white-space: nowrap;
         }
@@ -101,7 +101,7 @@ class FreshTokenMeter extends HTMLElement {
 
         .compact-label {
           font-family: var(--font-mono);
-          font-size: 10px;
+          font-size: var(--font-size-2xs);
           color: var(--text-tertiary);
           white-space: nowrap;
         }

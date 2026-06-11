@@ -70,13 +70,13 @@ class FreshEmptyState extends HTMLElement {
         }
 
         .icon-wrap .ti {
-          font-size: 24px;
+          font-size: var(--font-size-3xl);
           color: var(--text-tertiary);
         }
 
         .title {
           font-family: var(--font-sans);
-          font-size: 14px;
+          font-size: var(--font-size-lg);
           font-weight: 600;
           color: var(--text-primary);
           letter-spacing: -0.01em;
@@ -85,7 +85,7 @@ class FreshEmptyState extends HTMLElement {
 
         .desc {
           font-family: var(--font-sans);
-          font-size: 13px;
+          font-size: var(--font-size-md);
           color: var(--text-tertiary);
           line-height: 1.6;
           max-width: 300px;

@@ -128,7 +128,7 @@ class FreshModal extends HTMLElement {
 
         .title {
           font-family: var(--font-sans);
-          font-size: 15px;
+          font-size: var(--font-size-xl);
           font-weight: 600;
           color: var(--text-primary);
           letter-spacing: -0.01em;
@@ -159,7 +159,7 @@ class FreshModal extends HTMLElement {
           overflow-y: auto;
           padding: var(--space-6);
           font-family: var(--font-sans);
-          font-size: 13px;
+          font-size: var(--font-size-md);
           color: var(--text-secondary);
           line-height: 1.65;
           -webkit-font-smoothing: antialiased;

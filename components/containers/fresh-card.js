@@ -92,7 +92,7 @@ class FreshCard extends HTMLElement {
           padding: var(--space-4) ${p};
           border-bottom: 1px solid var(--surface-border);
           font-family: var(--font-sans);
-          font-size: 13px;
+          font-size: var(--font-size-md);
           font-weight: 600;
           color: var(--text-primary);
           -webkit-font-smoothing: antialiased;

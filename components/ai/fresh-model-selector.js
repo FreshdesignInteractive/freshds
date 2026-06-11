@@ -70,7 +70,7 @@ class FreshModelSelector extends HTMLElement {
           border: 1px solid var(--surface-border-strong);
           border-radius: var(--radius-md);
           font-family: var(--font-sans);
-          font-size: 13px;
+          font-size: var(--font-size-md);
           color: var(--text-primary);
           cursor: pointer;
           transition: border-color 150ms, background 150ms;
@@ -79,9 +79,9 @@ class FreshModelSelector extends HTMLElement {
         .trigger:hover { border-color: var(--text-tertiary); }
         .trigger:focus-visible { outline: 2px solid var(--color-interactive-text); outline-offset: 2px; }
 
-        .ai-icon { color: var(--color-interactive-text); font-size: 14px; }
+        .ai-icon { color: var(--color-interactive-text); font-size: var(--font-size-lg); }
         .name    { font-weight: 500; }
-        .chevron { color: var(--text-tertiary); font-size: 12px; transition: transform 200ms ease; }
+        .chevron { color: var(--text-tertiary); font-size: var(--font-size-sm); transition: transform 200ms ease; }
         .chevron.open { transform: rotate(180deg); }
 
         .dropdown {
@@ -132,14 +132,14 @@ class FreshModelSelector extends HTMLElement {
 
         .opt-name {
           font-family: var(--font-mono);
-          font-size: 12px;
+          font-size: var(--font-size-sm);
           font-weight: 500;
           color: var(--text-primary);
         }
 
         .opt-badge {
           font-family: var(--font-sans);
-          font-size: 10px;
+          font-size: var(--font-size-2xs);
           font-weight: 500;
           padding: 2px 7px;
           border-radius: 9999px;

@@ -140,7 +140,7 @@ class FreshDataTable extends HTMLElement {
           left: 10px;
           top: 50%;
           transform: translateY(-50%);
-          font-size: 14px;
+          font-size: var(--font-size-lg);
           color: var(--text-tertiary);
           pointer-events: none;
         }
@@ -151,7 +151,7 @@ class FreshDataTable extends HTMLElement {
           height: 34px;
           padding: 0 12px 0 32px;
           font-family: var(--font-sans);
-          font-size: 13px;
+          font-size: var(--font-size-md);
           color: var(--text-primary);
           background: var(--surface-bg);
           border: 1px solid var(--surface-border-strong);
@@ -172,7 +172,7 @@ class FreshDataTable extends HTMLElement {
         }
         .bulk-count {
           font-family: var(--font-sans);
-          font-size: 12px;
+          font-size: var(--font-size-sm);
           font-weight: 500;
           color: var(--text-inverse);
           flex: 1;
@@ -187,9 +187,9 @@ class FreshDataTable extends HTMLElement {
         .scroll::-webkit-scrollbar { height: 4px; }
         .scroll::-webkit-scrollbar-thumb { background: var(--surface-border-strong); border-radius: 2px; }
 
-        table { width: 100%; border-collapse: collapse; font-family: var(--font-sans); font-size: 13px; -webkit-font-smoothing: antialiased; }
+        table { width: 100%; border-collapse: collapse; font-family: var(--font-sans); font-size: var(--font-size-md); -webkit-font-smoothing: antialiased; }
 
-        .th { padding: var(--space-2) var(--space-4); font-size: 11px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: var(--text-tertiary); background: var(--surface-subtle); border-bottom: 1px solid var(--surface-border); white-space: nowrap; user-select: none; }
+        .th { padding: var(--space-2) var(--space-4); font-size: var(--font-size-xs); font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: var(--text-tertiary); background: var(--surface-subtle); border-bottom: 1px solid var(--surface-border); white-space: nowrap; user-select: none; }
         .th.sortable { cursor: pointer; transition: color 120ms, background 120ms; }
         .th.sortable:hover { color: var(--text-secondary); background: var(--surface-overlay); }
         .th.sorted { color: var(--color-interactive-text); }

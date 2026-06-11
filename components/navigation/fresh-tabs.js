@@ -152,7 +152,7 @@ class FreshTabs extends HTMLElement {
           border-radius: 9999px;
           background: var(--surface-overlay);
           color: var(--text-tertiary);
-          font-size: 10px;
+          font-size: var(--font-size-2xs);
           font-weight: 600;
         }
 

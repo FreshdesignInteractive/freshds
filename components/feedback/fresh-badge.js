@@ -43,7 +43,7 @@ class FreshBadge extends HTMLElement {
     const s  = styles[variant] || styles.primary;
     const h  = size === 'sm' ? '18px' : '22px';
     const px = size === 'sm' ? '7px'  : '9px';
-    const fs = size === 'sm' ? '10px' : '11px';
+    const fs = size === 'sm' ? 'var(--font-size-2xs)' : 'var(--font-size-xs)';
 
     this.shadowRoot.innerHTML = `
       <style>

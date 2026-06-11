@@ -87,7 +87,7 @@ class FreshNavbar extends HTMLElement {
           background: var(--surface-subtle);
           color: var(--text-primary);
         }
-        .hamburger-btn .ti { font-size: 18px; line-height: 1; }
+        .hamburger-btn .ti { font-size: var(--font-size-2xl); line-height: 1; }
 
         /* Brand logo */
         .brand {
@@ -117,7 +117,7 @@ class FreshNavbar extends HTMLElement {
 
         ::slotted(a), ::slotted([slot="nav"] a) {
           font-family: var(--font-sans);
-          font-size: 13px;
+          font-size: var(--font-size-md);
           color: var(--text-secondary);
           text-decoration: none;
           padding: 5px 10px;

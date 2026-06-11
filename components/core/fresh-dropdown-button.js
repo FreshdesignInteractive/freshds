@@ -298,7 +298,7 @@ class FreshDropdownButton extends HTMLElement {
           font-weight: 600;
         }
         .menu-item-desc {
-          font-size: 12px;
+          font-size: var(--font-size-sm);
           font-weight: 400;
           color: var(--text-secondary);
           white-space: normal;

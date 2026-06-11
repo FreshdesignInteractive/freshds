@@ -84,7 +84,7 @@ class FreshAlert extends HTMLElement {
 
         .title {
           font-family: var(--font-sans);
-          font-size: 13px;
+          font-size: var(--font-size-md);
           font-weight: 600;
           color: var(--text-primary);
           margin-bottom: 1px;
@@ -93,7 +93,7 @@ class FreshAlert extends HTMLElement {
 
         .message {
           font-family: var(--font-sans);
-          font-size: 13px;
+          font-size: var(--font-size-md);
           color: var(--text-secondary);
           line-height: 1.55;
         }

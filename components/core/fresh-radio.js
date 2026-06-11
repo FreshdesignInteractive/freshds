@@ -96,7 +96,7 @@ class FreshRadio extends HTMLElement {
 
         label {
           font-family: var(--font-sans);
-          font-size: 13px;
+          font-size: var(--font-size-md);
           color: var(--text-primary);
           line-height: 1;
           cursor: inherit;

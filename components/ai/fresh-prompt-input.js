@@ -148,7 +148,7 @@ class FreshPromptInput extends HTMLElement {
           outline: none;
           background: transparent;
           font-family: var(--font-sans);
-          font-size: 13px;
+          font-size: var(--font-size-md);
           color: var(--text-primary);
           -webkit-font-smoothing: antialiased;
           padding: var(--space-1) 0;
@@ -175,7 +175,7 @@ class FreshPromptInput extends HTMLElement {
           cursor: pointer;
           flex-shrink: 0;
           transition: background 120ms ease, opacity 120ms ease;
-          font-size: 13px;
+          font-size: var(--font-size-md);
           padding: 0;
         }
 

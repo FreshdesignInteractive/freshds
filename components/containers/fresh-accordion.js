@@ -123,7 +123,7 @@ class FreshAccordionItem extends HTMLElement {
           width: 100%;
           padding: var(--space-4) var(--space-5);
           font-family: var(--font-sans);
-          font-size: 13px;
+          font-size: var(--font-size-md);
           font-weight: 500;
           color: ${disabled ? 'var(--text-tertiary)' : 'var(--text-primary)'};
           cursor: ${disabled ? 'not-allowed' : 'pointer'};
@@ -167,7 +167,7 @@ class FreshAccordionItem extends HTMLElement {
         .panel-inner {
           padding: 0 var(--space-5) var(--space-5);
           font-family: var(--font-sans);
-          font-size: 13px;
+          font-size: var(--font-size-md);
           color: var(--text-secondary);
           line-height: 1.65;
           -webkit-font-smoothing: antialiased;

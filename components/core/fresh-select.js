@@ -141,7 +141,7 @@ class FreshSelect extends HTMLElement {
         .error-msg {
           margin-top: 5px;
           font-family: var(--font-sans);
-          font-size: 11px;
+          font-size: var(--font-size-xs);
           color: var(--color-danger);
         }
       </style>

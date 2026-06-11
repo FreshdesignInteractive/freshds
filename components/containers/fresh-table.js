@@ -135,13 +135,13 @@ class FreshTable extends HTMLElement {
           width: 100%;
           border-collapse: collapse;
           font-family: var(--font-sans);
-          font-size: 13px;
+          font-size: var(--font-size-md);
           -webkit-font-smoothing: antialiased;
         }
 
         .th {
           padding: var(--space-2) var(--space-4);
-          font-size: 11px;
+          font-size: var(--font-size-xs);
           font-weight: 600;
           letter-spacing: 0.05em;
           text-transform: uppercase;
@@ -195,7 +195,7 @@ class FreshTable extends HTMLElement {
           padding: var(--space-10) var(--space-4);
           text-align: center;
           color: var(--text-tertiary);
-          font-size: 13px;
+          font-size: var(--font-size-md);
         }
       </style>
 

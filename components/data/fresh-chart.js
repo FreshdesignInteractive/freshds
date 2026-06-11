@@ -72,7 +72,7 @@ class FreshChart extends HTMLElement {
 
         .title {
           font-family: var(--font-sans);
-          font-size: 13px;
+          font-size: var(--font-size-md);
           font-weight: 600;
           color: var(--text-primary);
           letter-spacing: -0.01em;
@@ -81,7 +81,7 @@ class FreshChart extends HTMLElement {
 
         .desc {
           font-family: var(--font-sans);
-          font-size: 12px;
+          font-size: var(--font-size-sm);
           color: var(--text-tertiary);
           margin-top: 2px;
           -webkit-font-smoothing: antialiased;
@@ -114,7 +114,7 @@ class FreshChart extends HTMLElement {
           gap: var(--space-2);
           color: var(--text-tertiary);
           font-family: var(--font-sans);
-          font-size: 13px;
+          font-size: var(--font-size-md);
         }
 
         ::slotted(*) { width: 100%; height: 100%; }

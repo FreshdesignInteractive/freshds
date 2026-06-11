@@ -73,7 +73,7 @@ class FreshStatCard extends HTMLElement {
 
         .label {
           font-family: var(--font-sans);
-          font-size: 12px;
+          font-size: var(--font-size-sm);
           font-weight: 500;
           color: var(--text-tertiary);
           letter-spacing: 0.01em;
@@ -89,13 +89,13 @@ class FreshStatCard extends HTMLElement {
           align-items: center;
           justify-content: center;
           color: var(--color-interactive-text);
-          font-size: 15px;
+          font-size: var(--font-size-xl);
           flex-shrink: 0;
         }
 
         .value {
           font-family: var(--font-sans);
-          font-size: 28px;
+          font-size: var(--font-size-4xl);
           font-weight: 600;
           letter-spacing: -0.03em;
           color: var(--text-primary);
@@ -109,14 +109,14 @@ class FreshStatCard extends HTMLElement {
           align-items: center;
           gap: 3px;
           font-family: var(--font-sans);
-          font-size: 12px;
+          font-size: var(--font-size-sm);
           font-weight: 500;
           color: ${trendColor};
           -webkit-font-smoothing: antialiased;
         }
 
         .trend-label {
-          font-size: 12px;
+          font-size: var(--font-size-sm);
           color: var(--text-tertiary);
           font-family: var(--font-sans);
           margin-left: 4px;

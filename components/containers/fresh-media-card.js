@@ -118,7 +118,7 @@ class FreshMediaCard extends HTMLElement {
 
         .title {
           font-family: var(--font-sans);
-          font-size: 13px;
+          font-size: var(--font-size-md);
           font-weight: 600;
           color: var(--text-primary);
           white-space: nowrap;
@@ -130,7 +130,7 @@ class FreshMediaCard extends HTMLElement {
         .desc {
           display: ${desc ? 'block' : 'none'};
           font-family: var(--font-sans);
-          font-size: 12px;
+          font-size: var(--font-size-sm);
           color: var(--text-secondary);
           margin-top: 2px;
           white-space: nowrap;

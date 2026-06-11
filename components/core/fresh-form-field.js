@@ -56,7 +56,7 @@ class FreshFormField extends HTMLElement {
           align-items: baseline;
           gap: 3px;
           font-family: var(--font-sans);
-          font-size: 12px;
+          font-size: var(--font-size-sm);
           font-weight: 500;
           color: var(--text-primary);
           -webkit-font-smoothing: antialiased;
@@ -64,7 +64,7 @@ class FreshFormField extends HTMLElement {
 
         .required {
           color: var(--color-danger);
-          font-size: 11px;
+          font-size: var(--font-size-xs);
           line-height: 1;
         }
 
@@ -74,7 +74,7 @@ class FreshFormField extends HTMLElement {
 
         .sub {
           font-family: var(--font-sans);
-          font-size: 11px;
+          font-size: var(--font-size-xs);
           line-height: 1.45;
           -webkit-font-smoothing: antialiased;
         }

@@ -73,7 +73,7 @@ class FreshButton extends HTMLElement {
         button.size-sm {
           height: 28px;
           padding: 0 10px;
-          font-size: 12px;
+          font-size: var(--font-size-sm);
           gap: 5px;
           border-radius: calc(var(--radius-md) - 2px);
         }
@@ -81,7 +81,7 @@ class FreshButton extends HTMLElement {
         button.size-md {
           height: 34px;
           padding: 0 14px;
-          font-size: 13px;
+          font-size: var(--font-size-md);
           gap: 6px;
           border-radius: var(--radius-md);
         }
@@ -89,7 +89,7 @@ class FreshButton extends HTMLElement {
         button.size-lg {
           height: 40px;
           padding: 0 18px;
-          font-size: 14px;
+          font-size: var(--font-size-lg);
           gap: 7px;
           border-radius: var(--radius-md);
         }

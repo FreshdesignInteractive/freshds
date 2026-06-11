@@ -69,7 +69,7 @@ body {
 .demo-bar.collapsed .demo-collapse-btn {
   width: 36px;
   height: 36px;
-  font-size: 15px;
+  font-size: var(--font-size-xl);
   color: var(--text-primary);
 }
 
@@ -92,7 +92,7 @@ body {
   justify-content: center;
   color: var(--text-secondary);
   cursor: pointer;
-  font-size: 14px;
+  font-size: var(--font-size-lg);
   flex-shrink: 0;
   transition: background 150ms, color 150ms;
 }
@@ -109,7 +109,7 @@ body {
   justify-content: center;
   color: var(--text-tertiary);
   cursor: pointer;
-  font-size: 13px;
+  font-size: var(--font-size-md);
   flex-shrink: 0;
   transition: background 150ms, color 150ms, width 220ms, height 220ms, font-size 220ms;
 }
@@ -160,7 +160,7 @@ body {
 }
 
 .auth-brand-name {
-  font-size: 15px;
+  font-size: var(--font-size-xl);
   font-weight: 600;
   color: var(--text-primary);
   letter-spacing: -0.02em;
@@ -222,7 +222,7 @@ body {
 }
 
 .auth-left-label {
-  font-size: 12px;
+  font-size: var(--font-size-sm);
   font-weight: 500;
   color: var(--color-interactive-text);
   opacity: 0.7;
@@ -261,7 +261,7 @@ body {
   margin-bottom: var(--space-1);
 }
 .auth-sub {
-  font-size: 14px;
+  font-size: var(--font-size-lg);
   color: var(--text-secondary);
   line-height: 1.55;
   margin-bottom: var(--space-6);
@@ -277,7 +277,7 @@ body {
 .field { display: flex; flex-direction: column; gap: var(--space-2); }
 .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3); }
 .field-label {
-  font-size: 13px;
+  font-size: var(--font-size-md);
   font-weight: 500;
   color: var(--text-primary);
 }
@@ -295,7 +295,7 @@ body {
 
 /* ── Links ── */
 .auth-link {
-  font-size: 13px;
+  font-size: var(--font-size-md);
   font-weight: 500;
   color: var(--color-interactive-text);
   text-decoration: none;
@@ -312,7 +312,7 @@ body {
   display: inline-flex;
   align-items: center;
   gap: var(--space-2);
-  font-size: 13px;
+  font-size: var(--font-size-md);
   font-weight: 500;
   color: var(--color-interactive-text);
   text-decoration: none;
@@ -344,7 +344,7 @@ body {
 .auth-foot {
   padding: var(--space-4) var(--space-8);
   text-align: center;
-  font-size: 13px;
+  font-size: var(--font-size-md);
   color: var(--text-secondary);
   flex-shrink: 0;
   border-top: 1px solid var(--surface-border);
@@ -352,7 +352,7 @@ body {
 
 .auth-hint {
   margin-top: var(--space-5);
-  font-size: 13px;
+  font-size: var(--font-size-md);
   color: var(--text-secondary);
 }
 

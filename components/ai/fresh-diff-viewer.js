@@ -90,7 +90,7 @@ class FreshDiffViewer extends HTMLElement {
           border-radius: var(--radius-lg);
           overflow: hidden;
           font-family: var(--font-mono);
-          font-size: 13px;
+          font-size: var(--font-size-md);
         }
 
         .toolbar {
@@ -108,7 +108,7 @@ class FreshDiffViewer extends HTMLElement {
           align-items: center;
           gap: 8px;
           font-family: var(--font-sans);
-          font-size: 12px;
+          font-size: var(--font-size-sm);
           color: var(--text-tertiary);
         }
 
@@ -122,7 +122,7 @@ class FreshDiffViewer extends HTMLElement {
           border: 1px solid var(--badge-primary-border);
           color: var(--color-interactive-text);
           font-family: var(--font-sans);
-          font-size: 10px;
+          font-size: var(--font-size-2xs);
           font-weight: 600;
           letter-spacing: 0.04em;
         }
@@ -141,7 +141,7 @@ class FreshDiffViewer extends HTMLElement {
           padding: 0 10px;
           border-radius: var(--radius-md);
           font-family: var(--font-sans);
-          font-size: 12px;
+          font-size: var(--font-size-sm);
           font-weight: 500;
           cursor: pointer;
           transition: background 120ms;
@@ -179,7 +179,7 @@ class FreshDiffViewer extends HTMLElement {
 
         .panel-label {
           font-family: var(--font-sans);
-          font-size: 10px;
+          font-size: var(--font-size-2xs);
           font-weight: 600;
           letter-spacing: 0.07em;
           text-transform: uppercase;
@@ -206,12 +206,12 @@ class FreshDiffViewer extends HTMLElement {
       <div class="wrapper" part="wrapper">
         <div class="toolbar">
           <div class="toolbar-left">
-            <span class="ai-chip"><i class="ti ti-sparkles" style="font-size:9px"></i> AI edit</span>
+            <span class="ai-chip"><i class="ti ti-sparkles" style="font-size:var(--font-size-3xs)"></i> AI edit</span>
             <span>${isSide ? 'Side-by-side' : 'Inline'}</span>
           </div>
           <div class="actions">
-            <button class="action-btn reject-btn"><i class="ti ti-x" style="font-size:12px"></i> Reject</button>
-            <button class="action-btn accept-btn"><i class="ti ti-check" style="font-size:12px"></i> Accept</button>
+            <button class="action-btn reject-btn"><i class="ti ti-x" style="font-size:var(--font-size-sm)"></i> Reject</button>
+            <button class="action-btn accept-btn"><i class="ti ti-check" style="font-size:var(--font-size-sm)"></i> Accept</button>
           </div>
         </div>
 

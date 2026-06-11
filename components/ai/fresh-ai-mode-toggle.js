@@ -133,7 +133,7 @@ class FreshAiModeToggle extends HTMLElement {
 
         .status {
           font-family: var(--font-sans);
-          font-size: 10px;
+          font-size: var(--font-size-2xs);
           font-weight: 500;
           color: ${isOn ? 'var(--color-interactive-text)' : 'var(--text-tertiary)'};
           letter-spacing: 0.03em;

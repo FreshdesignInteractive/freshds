@@ -33,16 +33,16 @@ body {
 }
 .demo-bar.collapsed { padding: 0; width: 36px; height: 36px; gap: 0; justify-content: center; }
 .demo-bar.collapsed .demo-inner { max-width: 0; width: 0; padding: 0; margin: 0; opacity: 0; pointer-events: none; }
-.demo-bar.collapsed .demo-collapse-btn { width: 36px; height: 36px; font-size: 15px; color: var(--text-primary); }
+.demo-bar.collapsed .demo-collapse-btn { width: 36px; height: 36px; font-size: var(--font-size-xl); color: var(--text-primary); }
 .demo-sep { width: 1px; height: 16px; background: var(--surface-border); flex-shrink: 0; margin: 0 2px; }
 .demo-mode-btn, .demo-collapse-btn {
   width: 28px; height: 28px; border: none; border-radius: var(--radius-full);
   background: transparent; display: flex; align-items: center; justify-content: center;
-  color: var(--text-secondary); cursor: pointer; font-size: 14px; flex-shrink: 0;
+  color: var(--text-secondary); cursor: pointer; font-size: var(--font-size-lg); flex-shrink: 0;
   transition: background 150ms, color 150ms;
 }
 .demo-mode-btn:hover, .demo-collapse-btn:hover { background: var(--surface-subtle); color: var(--text-primary); }
-.demo-collapse-btn { color: var(--text-tertiary); font-size: 13px; }
+.demo-collapse-btn { color: var(--text-tertiary); font-size: var(--font-size-md); }
 
 /* ── Commerce shell (topbar + main) ── */
 .com-shell { display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
@@ -62,7 +62,7 @@ body {
 
 /* ── Page header ── */
 .com-page-eyebrow {
-  font-size: 12px; font-weight: 600;
+  font-size: var(--font-size-sm); font-weight: 600;
   text-transform: uppercase; letter-spacing: 0.1em;
   color: var(--color-interactive-text);
   margin-bottom: var(--space-3);
@@ -85,11 +85,11 @@ body {
   display: flex; align-items: center; justify-content: center;
   gap: var(--space-3); margin-bottom: var(--space-10);
 }
-.com-billing-label { font-size: 13px; font-weight: 500; color: var(--text-secondary); }
+.com-billing-label { font-size: var(--font-size-md); font-weight: 500; color: var(--text-secondary); }
 .com-billing-label.active { color: var(--text-primary); }
 .com-billing-badge {
   background: var(--color-success-subtle); color: var(--color-success-text);
-  font-size: 11px; font-weight: 600; padding: 2px 7px;
+  font-size: var(--font-size-xs); font-weight: 600; padding: 2px 7px;
   border-radius: var(--radius-full);
 }
 
@@ -117,26 +117,26 @@ body {
   position: absolute; top: -12px; left: 50%;
   transform: translateX(-50%);
   background: var(--color-interactive); color: var(--btn-primary-text);
-  font-size: 11px; font-weight: 700; padding: 3px 12px;
+  font-size: var(--font-size-xs); font-weight: 700; padding: 3px 12px;
   border-radius: var(--radius-full); white-space: nowrap;
 }
-.com-plan-name { font-size: 14px; font-weight: 700; color: var(--text-primary); margin-bottom: var(--space-1); }
-.com-plan-desc { font-size: 13px; color: var(--text-secondary); margin-bottom: var(--space-4); line-height: 1.5; }
+.com-plan-name { font-size: var(--font-size-lg); font-weight: 700; color: var(--text-primary); margin-bottom: var(--space-1); }
+.com-plan-desc { font-size: var(--font-size-md); color: var(--text-secondary); margin-bottom: var(--space-4); line-height: 1.5; }
 .com-plan-price {
   display: flex; align-items: baseline; gap: 2px;
   margin-bottom: var(--space-1);
 }
 .com-price-currency { font-size: 18px; font-weight: 700; color: var(--text-primary); }
 .com-price-amount { font-size: 40px; font-weight: 800; color: var(--text-primary); letter-spacing: -0.04em; line-height: 1; }
-.com-price-period { font-size: 13px; color: var(--text-secondary); }
-.com-price-sub { font-size: 12px; color: var(--text-secondary); margin-bottom: var(--space-5); }
+.com-price-period { font-size: var(--font-size-md); color: var(--text-secondary); }
+.com-price-sub { font-size: var(--font-size-sm); color: var(--text-secondary); margin-bottom: var(--space-5); }
 .com-plan-divider { height: 1px; background: var(--surface-border); margin: var(--space-4) 0; }
 .com-feature-list { list-style: none; display: flex; flex-direction: column; gap: var(--space-2); margin-bottom: var(--space-5); }
 .com-feature-item {
   display: flex; align-items: flex-start; gap: var(--space-2);
-  font-size: 13px; color: var(--text-secondary); line-height: 1.5;
+  font-size: var(--font-size-md); color: var(--text-secondary); line-height: 1.5;
 }
-.com-feature-icon { font-size: 15px; flex-shrink: 0; margin-top: 1px; color: var(--color-success); }
+.com-feature-icon { font-size: var(--font-size-xl); flex-shrink: 0; margin-top: 1px; color: var(--color-success); }
 .com-feature-icon.muted { color: var(--text-tertiary); }
 
 /* ── Comparison table ── */
@@ -145,7 +145,7 @@ body {
   padding: var(--space-3) var(--space-4);
   text-align: center;
   border-bottom: 1px solid var(--surface-border);
-  font-size: 13px;
+  font-size: var(--font-size-md);
 }
 .com-compare-table th:first-child, .com-compare-table td:first-child {
   text-align: left; font-weight: 500; color: var(--text-secondary);
@@ -159,7 +159,7 @@ body {
 .com-compare-table th.featured { color: var(--color-interactive-text); }
 .com-compare-table tr:hover td { background: var(--surface-subtle); }
 .com-compare-section td {
-  font-size: 11px; font-weight: 700; text-transform: uppercase;
+  font-size: var(--font-size-xs); font-weight: 700; text-transform: uppercase;
   letter-spacing: 0.08em; color: var(--text-tertiary);
   background: var(--surface-bg); padding-top: var(--space-4);
 }
@@ -190,7 +190,7 @@ body {
 }
 .com-trust-item {
   display: flex; align-items: center; gap: var(--space-2);
-  font-size: 13px; color: var(--text-secondary);
+  font-size: var(--font-size-md); color: var(--text-secondary);
 }
 .com-trust-icon { color: var(--color-success); font-size: 16px; }
 
@@ -220,7 +220,7 @@ body {
   margin: 0 auto var(--space-3);
 }
 .com-gate-title { font-size: 16px; font-weight: 700; color: var(--text-primary); margin-bottom: var(--space-2); }
-.com-gate-desc  { font-size: 13px; color: var(--text-secondary); line-height: 1.6; margin-bottom: var(--space-4); max-width: 320px; }
+.com-gate-desc  { font-size: var(--font-size-md); color: var(--text-secondary); line-height: 1.6; margin-bottom: var(--space-4); max-width: 320px; }
 
 /* ── Checkout layout ── */
 .com-checkout-grid {
@@ -243,14 +243,14 @@ body {
 }
 .com-checkout-section:last-child { border-bottom: none; }
 .com-checkout-section-title {
-  font-size: 13px; font-weight: 700; color: var(--text-primary);
+  font-size: var(--font-size-md); font-weight: 700; color: var(--text-primary);
   margin-bottom: var(--space-4);
   display: flex; align-items: center; gap: var(--space-2);
 }
 .com-checkout-step {
   width: 20px; height: 20px; border-radius: var(--radius-full);
   background: var(--color-interactive); color: var(--btn-primary-text);
-  font-size: 11px; font-weight: 700;
+  font-size: var(--font-size-xs); font-weight: 700;
   display: flex; align-items: center; justify-content: center; flex-shrink: 0;
 }
 .com-order-summary {
@@ -260,26 +260,26 @@ body {
   padding: var(--space-5);
   position: sticky; top: var(--space-4);
 }
-.com-order-title { font-size: 14px; font-weight: 700; color: var(--text-primary); margin-bottom: var(--space-4); }
+.com-order-title { font-size: var(--font-size-lg); font-weight: 700; color: var(--text-primary); margin-bottom: var(--space-4); }
 .com-order-item {
   display: flex; align-items: flex-start; justify-content: space-between;
   gap: var(--space-3); padding: var(--space-3) 0;
   border-bottom: 1px solid var(--surface-border);
-  font-size: 13px;
+  font-size: var(--font-size-md);
 }
 .com-order-item:last-of-type { border-bottom: none; }
 .com-order-item-name { color: var(--text-primary); font-weight: 500; }
-.com-order-item-desc { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
+.com-order-item-desc { font-size: var(--font-size-sm); color: var(--text-secondary); margin-top: 2px; }
 .com-order-item-price { color: var(--text-primary); font-weight: 600; flex-shrink: 0; }
 .com-order-total {
   display: flex; align-items: center; justify-content: space-between;
   padding-top: var(--space-3); margin-top: var(--space-2);
-  font-size: 15px; font-weight: 700; color: var(--text-primary);
+  font-size: var(--font-size-xl); font-weight: 700; color: var(--text-primary);
   border-top: 2px solid var(--surface-border);
 }
 .com-security-note {
   display: flex; align-items: center; gap: var(--space-2);
-  font-size: 12px; color: var(--text-tertiary);
+  font-size: var(--font-size-sm); color: var(--text-tertiary);
   margin-top: var(--space-3); justify-content: center;
 }
 
@@ -288,7 +288,7 @@ body {
 .com-card-brand {
   height: 24px; padding: 2px 8px;
   background: var(--surface-subtle); border: 1px solid var(--surface-border);
-  border-radius: var(--radius-sm); font-size: 11px; font-weight: 700;
+  border-radius: var(--radius-sm); font-size: var(--font-size-xs); font-weight: 700;
   color: var(--text-secondary);
 }
 
@@ -312,7 +312,7 @@ body {
   display: flex; align-items: center; justify-content: space-between;
   padding: var(--space-3) var(--space-5);
   border-bottom: 1px solid var(--surface-border);
-  font-size: 13px;
+  font-size: var(--font-size-md);
 }
 .com-confirm-row:last-child { border-bottom: none; }
 .com-confirm-label { color: var(--text-secondary); }
@@ -333,49 +333,49 @@ body {
 .com-invoice-title {
   font-size: 28px; font-weight: 800; color: var(--text-primary); letter-spacing: -0.03em;
 }
-.com-invoice-id { font-size: 13px; color: var(--text-tertiary); margin-top: 2px; }
+.com-invoice-id { font-size: var(--font-size-md); color: var(--text-tertiary); margin-top: 2px; }
 .com-invoice-parties {
   display: grid; grid-template-columns: 1fr 1fr;
   gap: var(--space-6); margin-bottom: var(--space-6);
 }
 .com-invoice-party-label {
-  font-size: 11px; font-weight: 600; text-transform: uppercase;
+  font-size: var(--font-size-xs); font-weight: 600; text-transform: uppercase;
   letter-spacing: 0.08em; color: var(--text-tertiary); margin-bottom: var(--space-2);
 }
-.com-invoice-party-name { font-size: 14px; font-weight: 700; color: var(--text-primary); }
-.com-invoice-party-detail { font-size: 13px; color: var(--text-secondary); line-height: 1.6; }
+.com-invoice-party-name { font-size: var(--font-size-lg); font-weight: 700; color: var(--text-primary); }
+.com-invoice-party-detail { font-size: var(--font-size-md); color: var(--text-secondary); line-height: 1.6; }
 .com-invoice-table { width: 100%; border-collapse: collapse; margin-bottom: var(--space-6); }
 .com-invoice-table th {
-  font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em;
+  font-size: var(--font-size-xs); font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em;
   color: var(--text-tertiary); padding: var(--space-2) var(--space-3);
   border-bottom: 2px solid var(--surface-border); text-align: left;
 }
 .com-invoice-table th:last-child { text-align: right; }
 .com-invoice-table td {
   padding: var(--space-3); border-bottom: 1px solid var(--surface-border);
-  font-size: 13px; color: var(--text-primary);
+  font-size: var(--font-size-md); color: var(--text-primary);
 }
 .com-invoice-table td:last-child { text-align: right; font-weight: 600; }
 .com-invoice-totals { margin-left: auto; width: 240px; }
 .com-invoice-total-row {
   display: flex; justify-content: space-between;
-  padding: var(--space-2) 0; font-size: 13px;
+  padding: var(--space-2) 0; font-size: var(--font-size-md);
   border-bottom: 1px solid var(--surface-border);
 }
 .com-invoice-total-row:last-child {
-  border-bottom: none; font-size: 15px; font-weight: 700;
+  border-bottom: none; font-size: var(--font-size-xl); font-weight: 700;
   color: var(--text-primary); padding-top: var(--space-3);
 }
 .com-invoice-total-row .label { color: var(--text-secondary); }
 .com-invoice-footer {
-  text-align: center; font-size: 12px; color: var(--text-tertiary);
+  text-align: center; font-size: var(--font-size-sm); color: var(--text-tertiary);
   margin-top: var(--space-6); padding-top: var(--space-5);
   border-top: 1px solid var(--surface-border);
 }
 .com-invoice-status {
   display: inline-flex; align-items: center; gap: var(--space-1);
   padding: 3px 10px; border-radius: var(--radius-full);
-  font-size: 12px; font-weight: 700;
+  font-size: var(--font-size-sm); font-weight: 700;
 }
 .com-invoice-status.paid { background: var(--color-success-subtle); color: var(--color-success-text); }
 
@@ -394,12 +394,12 @@ body {
 .com-settings-nav-item {
   display: flex; align-items: center; gap: var(--space-2);
   padding: var(--space-2) var(--space-4);
-  font-size: 13px; font-weight: 500; color: var(--text-secondary);
+  font-size: var(--font-size-md); font-weight: 500; color: var(--text-secondary);
   cursor: pointer; transition: background 120ms, color 120ms;
 }
 .com-settings-nav-item:hover { background: var(--surface-subtle); color: var(--text-primary); }
 .com-settings-nav-item.active { background: var(--color-interactive-subtle); color: var(--color-interactive-text); }
-.com-settings-nav-item i { font-size: 15px; }
+.com-settings-nav-item i { font-size: var(--font-size-xl); }
 .com-settings-section {
   background: var(--surface-canvas); border: 1px solid var(--surface-border);
   border-radius: var(--radius-lg); overflow: hidden; margin-bottom: var(--space-4);
@@ -409,7 +409,7 @@ body {
   padding: var(--space-4) var(--space-5);
   border-bottom: 1px solid var(--surface-border);
 }
-.com-settings-section-title { font-size: 14px; font-weight: 700; color: var(--text-primary); }
+.com-settings-section-title { font-size: var(--font-size-lg); font-weight: 700; color: var(--text-primary); }
 .com-settings-section-body { padding: var(--space-4) var(--space-5); }
 .com-payment-card {
   display: flex; align-items: center; gap: var(--space-4);
@@ -420,14 +420,14 @@ body {
   width: 40px; height: 26px; background: var(--surface-subtle);
   border: 1px solid var(--surface-border); border-radius: var(--radius-sm);
   display: flex; align-items: center; justify-content: center;
-  font-size: 10px; font-weight: 800; color: var(--text-secondary);
+  font-size: var(--font-size-2xs); font-weight: 800; color: var(--text-secondary);
   flex-shrink: 0;
 }
 .com-payment-card-info { flex: 1; }
-.com-payment-card-name { font-size: 13px; font-weight: 600; color: var(--text-primary); }
-.com-payment-card-detail { font-size: 12px; color: var(--text-secondary); }
+.com-payment-card-name { font-size: var(--font-size-md); font-weight: 600; color: var(--text-primary); }
+.com-payment-card-detail { font-size: var(--font-size-sm); color: var(--text-secondary); }
 .com-default-badge {
-  font-size: 11px; font-weight: 600; padding: 2px 8px;
+  font-size: var(--font-size-xs); font-weight: 600; padding: 2px 8px;
   background: var(--color-interactive-subtle); color: var(--color-interactive-text);
   border-radius: var(--radius-full);
 }
@@ -456,15 +456,15 @@ body {
   margin: 0 auto var(--space-3);
 }
 .com-upsell-title { font-size: 20px; font-weight: 800; color: var(--text-primary); letter-spacing: -0.02em; }
-.com-upsell-sub { font-size: 13px; color: var(--text-secondary); margin-top: var(--space-1); line-height: 1.5; }
+.com-upsell-sub { font-size: var(--font-size-md); color: var(--text-secondary); margin-top: var(--space-1); line-height: 1.5; }
 .com-upsell-body { padding: var(--space-5) var(--space-6); }
 .com-upsell-feature {
   display: flex; align-items: flex-start; gap: var(--space-3);
-  padding: var(--space-2) 0; font-size: 13px;
+  padding: var(--space-2) 0; font-size: var(--font-size-md);
 }
 .com-upsell-feature-icon { color: var(--color-interactive-text); font-size: 16px; margin-top: 1px; flex-shrink: 0; }
 .com-upsell-feature-title { font-weight: 600; color: var(--text-primary); }
-.com-upsell-feature-desc { color: var(--text-secondary); font-size: 12px; }
+.com-upsell-feature-desc { color: var(--text-secondary); font-size: var(--font-size-sm); }
 .com-upsell-footer {
   padding: var(--space-4) var(--space-6) var(--space-5);
   border-top: 1px solid var(--surface-border);
@@ -509,11 +509,11 @@ body {
 .app-nav-item {
   all: unset; display: flex; align-items: center; gap: var(--space-2);
   padding: var(--space-2) var(--space-3); border-radius: var(--radius-md);
-  font-family: var(--font-sans); font-size: 13px; font-weight: 500;
+  font-family: var(--font-sans); font-size: var(--font-size-md); font-weight: 500;
   color: var(--text-secondary); cursor: pointer; white-space: nowrap;
   transition: background 150ms, color 150ms; user-select: none;
 }
-.app-nav-item i { font-size: 15px; flex-shrink: 0; }
+.app-nav-item i { font-size: var(--font-size-xl); flex-shrink: 0; }
 .app-nav-item:hover { background: var(--surface-subtle); color: var(--text-primary); }
 .app-nav-item.active { background: var(--color-interactive-subtle); color: var(--color-interactive-text); }
 
