@@ -197,8 +197,11 @@
   --color-info-text:        var(--info-5);
 
   /* Buttons */
-  --btn-secondary-border:   var(--primary-4);
-  --btn-secondary-text:     var(--primary-4);
+  --color-interactive:       var(--primary-4);   /* primary-9 is near-black by default — invisible on dark bg */
+  --color-interactive-hover: var(--primary-3);
+  --btn-primary-text:        var(--primary-11);  /* dark bg step used as text on lighter button */
+  --btn-secondary-border:    var(--primary-4);
+  --btn-secondary-text:      var(--primary-4);
 
   /* Inputs */
   --input-focus-border:     var(--primary-5);

@@ -208,7 +208,14 @@ body { background: #f7f7f8; }
    ──────────────────────────────────────────────────────────── */
 .spec-viewport { transition: background 0.2s; }
 
-.spec-viewport[data-mode="dark"] { background: #1c1f24; }
+.spec-viewport[data-mode="dark"] {
+  background: #1c1f24;
+  /* theme.css [data-mode="dark"] never overrides --color-interactive, only its
+     sub-tokens. Without this, --btn-primary-bg stays var(--primary-9) which is
+     near-black by default — invisible on the dark viewport bg. */
+  --color-interactive:       var(--primary-4);
+  --color-interactive-hover: var(--primary-3);
+}
 .spec-viewport[data-mode="dark"] .spec-variant-row       { border-bottom-color: #2a2d33; }
 .spec-viewport[data-mode="dark"] .spec-variant-name      { color: #f0f0f2; }
 .spec-viewport[data-mode="dark"] .spec-attr-chip         { background: #2a2d33; color: #8e939e; border-color: #383c45; }
