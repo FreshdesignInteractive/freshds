@@ -7,6 +7,8 @@
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <!-- Auth guard -->
 <script type="module" src="/js/auth-guard.js"></script>
+<link rel="stylesheet" href="/styles/site-header.css">
+<script type="module" src="/js/site-header.js"></script>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -205,21 +207,7 @@
 <body>
 <div class="fds-app" id="app">
 
-  <!-- TOP BAR -->
-  <header class="fds-topbar">
-    <div class="fds-logo">
-      <img class="fds-logotype fds-logotype-light" src="freshdesign-logo.svg" alt="Freshdesign">
-      <img class="fds-logotype fds-logotype-dark"  src="freshdesign-logo-dark.svg" alt="Freshdesign">
-    </div>
-    <fresh-simple-tabs id="section-tabs"
-      tabs='[{"key":"ds","label":"Design System"},{"key":"patterns","label":"Pattern Library"}]'
-      active="patterns">
-    </fresh-simple-tabs>
-    <div class="fds-topbar-right">
-      <fresh-button variant="secondary" id="mode-btn" onclick="toggleMode()"><i class="ti ti-moon"></i> Dark</fresh-button>
-      <fresh-button variant="primary" onclick="window.location.href='index.html#configurator'"><i class="ti ti-adjustments-horizontal"></i> Configurator</fresh-button>
-    </div>
-  </header>
+  <div id="sh-mount"></div>
 
   <!-- PATTERN LIBRARY BODY -->
   <div class="pl-body">

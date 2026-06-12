@@ -1,0 +1,109 @@
+/* ── Unified site header — same on all auth pages ─── */
+.site-header {
+  height: 56px;
+  background: #fff;
+  border-bottom: 1px solid #e4e4e7;
+  display: flex;
+  align-items: center;
+  padding: 0 28px;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 200;
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+}
+
+.sh-logo {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.sh-logo img { height: 26px; width: auto; display: block; }
+
+.sh-nav {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.sh-tab {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: #777;
+  text-decoration: none;
+  padding: 5px 13px;
+  border-radius: 6px;
+  white-space: nowrap;
+  transition: background 0.12s, color 0.12s;
+}
+
+.sh-tab:hover  { background: #f2f2f4; color: #222; }
+.sh-tab-active { background: #efeff1; color: #111; font-weight: 600; }
+
+.sh-right { margin-left: auto; }
+
+/* Avatar */
+.sh-av-wrap { position: relative; }
+
+.sh-av {
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  background: #3b82f6;
+  color: #fff;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 13px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  border: none;
+  overflow: hidden;
+  transition: opacity 0.15s;
+}
+.sh-av:hover { opacity: 0.88; }
+
+/* Dropdown */
+.sh-av-dd {
+  display: none;
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  background: #fff;
+  border: 1px solid #e4e4e7;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.10);
+  min-width: 180px;
+  overflow: hidden;
+  z-index: 300;
+}
+.sh-av-dd.open { display: block; }
+
+.sh-dd-name {
+  padding: 12px 14px;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 13px; font-weight: 500;
+  color: #111;
+  border-bottom: 1px solid #e4e4e7;
+}
+
+.sh-dd-item {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 10px 14px;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 13px;
+  color: #555;
+  cursor: pointer;
+  transition: background 0.1s, color 0.1s;
+}
+.sh-dd-item:hover { background: #f7f7f8; color: #111; }
+.sh-dd-item i { font-size: 15px; }

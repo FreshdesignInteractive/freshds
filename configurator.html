@@ -7,6 +7,8 @@
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <!-- Auth guard -->
 <script type="module" src="/js/auth-guard.js"></script>
+<link rel="stylesheet" href="/styles/site-header.css">
+<script type="module" src="/js/site-header.js"></script>
 
 <!-- Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -41,6 +43,11 @@
   .cfg-body {
     flex: 1;
     overflow-y: auto;
+  }
+  .cfg-export-bar {
+    display: flex;
+    justify-content: flex-end;
+    padding: 12px 24px 0;
   }
   .cfg-body-inner {
     max-width: 960px;
@@ -338,19 +345,11 @@
 <body id="app">
 <div class="cfg-page">
 
-  <!-- Nav -->
-  <nav class="site-nav">
-    <div class="site-nav-left">
-      <a class="site-nav-logo" href="index.html">
-        <div class="site-logo-icon">
-          <span></span><span></span><span></span><span></span>
-        </div>
-        <span class="site-wordmark">Freshdesign</span>
-      </a>
-      <span class="site-nav-sep">|</span>
-      <span class="site-nav-title">Configurator</span>
-    </div>
-    <div class="site-nav-right">
+  <div id="sh-mount"></div>
+
+  <!-- Body -->
+  <main class="cfg-body">
+    <div class="cfg-export-bar">
       <div class="site-dropdown" id="cfg-export-dd">
         <button class="site-btn-outline" id="cfg-export-trigger">
           Export <i class="ti ti-chevron-down" style="font-size:10px;opacity:0.6"></i>
@@ -367,14 +366,7 @@
           </button>
         </div>
       </div>
-      <button class="site-btn-outline" id="cfg-exit-btn">
-        <i class="ti ti-arrow-left"></i> Exit
-      </button>
     </div>
-  </nav>
-
-  <!-- Body -->
-  <main class="cfg-body">
     <div class="cfg-body-inner">
 
       <div class="cfg-page-title">Configure your theme</div>
@@ -733,7 +725,7 @@
     function openModal() { overlay.classList.add('open'); }
     function closeModal() { overlay.classList.remove('open'); }
 
-    exitBtn.addEventListener('click', function() {
+    if (exitBtn) exitBtn.addEventListener('click', function() {
       if (!_hasStagedChanges()) { window.location.href = 'index.html'; return; }
       modalBody.textContent = 'You have unsaved changes that will be lost if you exit.';
       openModal();

@@ -80,11 +80,13 @@
 <!-- Theme engine: runs before body renders to set color scale vars, eliminating FOUC -->
 <script src="js/freshds.js"></script>
 <script src="js/freshds-site.js"></script>
+<link rel="stylesheet" href="/styles/site-header.css">
+<script type="module" src="/js/site-header.js"></script>
 </head>
 <body>
 <div class="fds-app" id="app">
 
-  <ds-topbar active-section="ds"></ds-topbar>
+  <div id="sh-mount"></div>
 
   <div class="fds-body">
 
