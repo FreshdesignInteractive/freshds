@@ -26,7 +26,7 @@
    configurator) cannot bleed into the page shell. Never use
    var(--text-*), var(--border), or var(--radius-*) here.
    ──────────────────────────────────────────────────────────── */
-body { background: #fff; }
+body { background: #f7f7f8; }
 
 .comp-page {
   max-width: 920px;
@@ -163,12 +163,12 @@ body { background: #fff; }
 }
 
 /* ── Editable spec panels — AI Rules + Accessibility ─────────
-   Both panels share the same neutral warm-grey aesthetic from
-   site.css (--bg: #f7f7f8). No brand colour anywhere.
+   Panels use #ebebec — slightly darker than page bg (#f7f7f8)
+   so they read clearly against it. No brand colour anywhere.
    ──────────────────────────────────────────────────────────── */
 .spec-rules-panel {
-  background: #f7f7f8;
-  border: 1px solid #e4e4e7;
+  background: #ebebec;
+  border: 1px solid #d4d4d7;
   border-radius: 12px;
   overflow: hidden;
 }
@@ -178,7 +178,7 @@ body { background: #fff; }
   align-items: center;
   justify-content: space-between;
   padding: 11px 24px;
-  border-bottom: 1px solid #e4e4e7;
+  border-bottom: 1px solid #d4d4d7;
 }
 
 .spec-rules-title {
@@ -186,14 +186,14 @@ body { background: #fff; }
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: #444;
+  color: #333;
 }
 
-.spec-rules-hint { font-size: 11px; color: #999; }
+.spec-rules-hint { font-size: 11px; color: #777; }
 
 .spec-rules-section {
   padding: 16px 24px;
-  border-bottom: 1px solid #e4e4e7;
+  border-bottom: 1px solid #d4d4d7;
 }
 .spec-rules-section:last-child { border-bottom: none; }
 
@@ -222,9 +222,9 @@ body { background: #fff; }
   border-radius: 4px;
   margin: 0 -8px;
 }
-.spec-rule-li:hover { background: rgba(0,0,0,0.04); }
+.spec-rule-li:hover { background: rgba(0,0,0,0.05); }
 
-.spec-rule-bullet { color: #bbb; flex-shrink: 0; line-height: 1.5; user-select: none; }
+.spec-rule-bullet { color: #999; flex-shrink: 0; line-height: 1.5; user-select: none; }
 
 .spec-rule-text {
   font-size: 13px;
@@ -236,13 +236,13 @@ body { background: #fff; }
 .spec-rule-text code {
   font-family: var(--font-mono);
   font-size: 11.5px;
-  background: rgba(255,255,255,0.85);
+  background: #fff;
   padding: 1px 5px;
   border-radius: 3px;
-  color: #555;
+  color: #444;
 }
 .spec-rule-text:focus {
-  background: rgba(255,255,255,0.75);
+  background: rgba(255,255,255,0.92);
   border-radius: 2px;
   padding: 0 3px;
   margin: 0 -3px;
@@ -259,7 +259,7 @@ body { background: #fff; }
   display: flex; align-items: center; justify-content: center;
   border-radius: 4px;
   cursor: pointer;
-  color: #bbb;
+  color: #999;
   font-size: 12px;
   transition: background 0.1s, color 0.1s;
 }
@@ -273,15 +273,15 @@ body { background: #fff; }
   gap: 5px;
   font-size: 11px;
   font-weight: 500;
-  color: #666;
+  color: #555;
   padding: 3px 10px;
-  border: 1.5px dashed #d0d0d4;
+  border: 1.5px dashed #b8b8bc;
   border-radius: 4px;
   cursor: pointer;
   margin-top: 10px;
   transition: background 0.1s;
 }
-.spec-add-rule:hover { background: rgba(0,0,0,0.04); }
+.spec-add-rule:hover { background: rgba(0,0,0,0.05); }
 
 /* ── Accessibility table (editable, same panel theme) ─────── */
 .spec-a11y-table { width: 100%; border-collapse: collapse; }
@@ -290,25 +290,25 @@ body { background: #fff; }
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: #999;
+  color: #888;
   padding: 10px 24px 12px;
   text-align: left;
-  border-bottom: 1px solid #e4e4e7;
+  border-bottom: 1px solid #d4d4d7;
 }
 .spec-a11y-table th:last-child { width: 36px; padding: 0; }
 
 .spec-a11y-row td {
   padding: 10px 24px;
-  border-bottom: 1px solid #e4e4e7;
+  border-bottom: 1px solid #d4d4d7;
   vertical-align: top;
 }
 .spec-a11y-table tbody tr:last-child td { border-bottom: none; }
-.spec-a11y-row:hover td { background: rgba(0,0,0,0.025); }
+.spec-a11y-row:hover td { background: rgba(0,0,0,0.04); }
 
 .spec-a11y-concern {
   font-family: var(--font-mono);
   font-size: 12px;
-  color: #555;
+  color: #444;
   white-space: nowrap;
   width: 160px;
   outline: none;
@@ -322,13 +322,13 @@ body { background: #fff; }
 .spec-a11y-req code {
   font-family: var(--font-mono);
   font-size: 11px;
-  background: rgba(255,255,255,0.85);
+  background: #fff;
   padding: 1px 5px;
   border-radius: 3px;
-  color: #555;
+  color: #444;
 }
 .spec-a11y-concern:focus,
-.spec-a11y-req:focus { background: rgba(255,255,255,0.75); border-radius: 2px; }
+.spec-a11y-req:focus { background: rgba(255,255,255,0.92); border-radius: 2px; }
 
 .spec-a11y-del-cell {
   width: 36px;
@@ -759,7 +759,7 @@ body { background: #fff; }
           </tr>
         </tbody>
       </table>
-      <div class="spec-rules-section" style="border-top: 1px solid #e4e4e7; border-bottom: none; padding-top: 12px; padding-bottom: 14px;">
+      <div class="spec-rules-section" style="border-top: 1px solid #d4d4d7; border-bottom: none; padding-top: 12px; padding-bottom: 14px;">
         <button class="spec-add-rule" onclick="addA11yRow()"><i class="ti ti-plus"></i> Add row</button>
       </div>
     </div>
