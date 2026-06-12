@@ -68,6 +68,9 @@
   --btn-danger-text:        var(--color-danger);
   --btn-danger-border:      var(--color-danger-border);
   --btn-danger-hover:       var(--danger-3);
+  --btn-ai-bg:              var(--primitive-ai-action);
+  --btn-ai-text:            var(--color-white);
+  --btn-ai-hover:           var(--primitive-ai-action-hover);
 
   /* ── Tier 3: Component — Inputs ── */
   --input-focus-border:     var(--primary-8);

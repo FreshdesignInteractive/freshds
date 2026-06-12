@@ -6,12 +6,13 @@
      <fresh-button variant="secondary">Cancel</fresh-button>
      <fresh-button variant="ghost" size="sm">Learn more</fresh-button>
      <fresh-button variant="danger">Delete</fresh-button>
+     <fresh-button variant="ai"><i class="ti ti-sparkles"></i> Generate</fresh-button>
      <fresh-button loading>Saving…</fresh-button>
      <fresh-button disabled>Unavailable</fresh-button>
      <fresh-button icon-only aria-label="Settings">⚙</fresh-button>
 
    Attributes:
-     variant   primary | secondary | ghost | danger   (default: primary)
+     variant   primary | secondary | ghost | danger | ai   (default: primary)
      size      sm | md | lg                           (default: md)
      disabled  boolean
      loading   boolean
@@ -154,6 +155,21 @@ class FreshButton extends HTMLElement {
         }
         button.variant-danger:active {
           transform: scale(0.985);
+        }
+
+        /* ── AI Action ── */
+        button.variant-ai {
+          background:   var(--btn-ai-bg);
+          color:        var(--btn-ai-text);
+          border-color: transparent;
+        }
+        button.variant-ai:hover {
+          background: var(--btn-ai-hover);
+          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.18), 0 1px 2px rgba(0, 0, 0, 0.12);
+        }
+        button.variant-ai:active {
+          transform: scale(0.985);
+          box-shadow: none;
         }
 
         /* ── Disabled ── */

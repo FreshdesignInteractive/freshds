@@ -27,91 +27,454 @@
     <ds-shell active="button"></ds-shell>
     <main class="fds-main">
       <div class="fds-page active" id="page-button">
+
         <div class="page-header">
           <div class="page-eyebrow">Core UI</div>
           <h1 class="page-title">Button</h1>
-          <p class="page-desc">Triggers actions. Use the variant that matches the weight the action deserves — primary for the definitive action, secondary for alternatives, ghost for low-emphasis or repeated actions, danger for destructive ones.</p>
+          <p class="page-desc">Triggers actions. Choose the variant that matches the weight the action deserves — primary for the definitive action, secondary for alternatives, ghost for low-emphasis controls, danger for destructive operations, and AI for generative actions.</p>
         </div>
 
+        <!-- ALL VARIANTS -->
         <div class="page-section">
-          <div class="page-section-title">Variants</div>
-          <div class="demo-surface">
-            <fresh-button variant="primary"><i class="ti ti-check"></i> Save changes</fresh-button>
-            <fresh-button variant="secondary">Cancel</fresh-button>
-            <fresh-button variant="ghost">Learn more</fresh-button>
-            <fresh-button variant="danger"><i class="ti ti-trash"></i> Delete</fresh-button>
-          </div>
-        </div>
+          <div class="page-section-title">All Variants</div>
+          <div class="spec-card">
 
-        <div class="page-section">
-          <div class="page-section-title">Sizes</div>
-          <div class="demo-surface" style="align-items:center">
-            <fresh-button variant="primary" size="sm">Small</fresh-button>
-            <fresh-button variant="primary">Default</fresh-button>
-            <fresh-button variant="primary" size="lg">Large</fresh-button>
-          </div>
-        </div>
-
-        <div class="page-section">
-          <div class="page-section-title">States</div>
-          <div class="demo-surface" style="align-items:center">
-            <fresh-button variant="primary">Default</fresh-button>
-            <fresh-button variant="primary" disabled>Disabled</fresh-button>
-            <fresh-button variant="primary" loading>Loading…</fresh-button>
-            <fresh-button variant="ghost" icon-only aria-label="Settings"><i class="ti ti-settings"></i></fresh-button>
-            <fresh-button variant="ghost" icon-only aria-label="Search"><i class="ti ti-search"></i></fresh-button>
-          </div>
-        </div>
-
-        <div class="page-section">
-          <div class="page-section-title">All variants × all sizes</div>
-          <div class="demo-surface col" style="gap:var(--space-4)">
-            <div style="display:flex;gap:var(--space-3);align-items:center">
-              <fresh-button variant="primary"   size="sm">Primary</fresh-button>
-              <fresh-button variant="secondary" size="sm">Secondary</fresh-button>
-              <fresh-button variant="ghost"     size="sm">Ghost</fresh-button>
-              <fresh-button variant="danger"    size="sm">Danger</fresh-button>
+            <!-- Primary -->
+            <div class="spec-variant-row">
+              <div class="spec-variant-header">
+                <span class="spec-variant-name">Primary</span>
+                <span class="spec-attr-chip">variant="primary"</span>
+                <span class="spec-variant-sep">—</span>
+                <span class="spec-variant-desc">The single highest-priority action on a surface.</span>
+              </div>
+              <div class="spec-variant-body">
+                <div class="spec-demos">
+                  <fresh-button variant="primary">Save</fresh-button>
+                  <fresh-button variant="primary">Submit</fresh-button>
+                  <fresh-button variant="primary">Confirm</fresh-button>
+                  <fresh-button variant="primary" disabled>Disabled</fresh-button>
+                </div>
+                <div class="spec-sizes">
+                  <div class="spec-size-item">
+                    <fresh-button variant="primary" size="sm">Sm</fresh-button>
+                    <span class="spec-size-px">28px</span>
+                  </div>
+                  <div class="spec-size-item">
+                    <fresh-button variant="primary">Md</fresh-button>
+                    <span class="spec-size-px">34px</span>
+                  </div>
+                  <div class="spec-size-item">
+                    <fresh-button variant="primary" size="lg">Lg</fresh-button>
+                    <span class="spec-size-px">40px</span>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div style="display:flex;gap:var(--space-3);align-items:center">
-              <fresh-button variant="primary">Primary</fresh-button>
-              <fresh-button variant="secondary">Secondary</fresh-button>
-              <fresh-button variant="ghost">Ghost</fresh-button>
-              <fresh-button variant="danger">Danger</fresh-button>
+
+            <!-- Secondary -->
+            <div class="spec-variant-row">
+              <div class="spec-variant-header">
+                <span class="spec-variant-name">Secondary</span>
+                <span class="spec-attr-chip">variant="secondary"</span>
+                <span class="spec-variant-sep">—</span>
+                <span class="spec-variant-desc">The second most important action, typically paired with a primary.</span>
+              </div>
+              <div class="spec-variant-body">
+                <div class="spec-demos">
+                  <fresh-button variant="secondary">Cancel</fresh-button>
+                  <fresh-button variant="secondary">Export</fresh-button>
+                  <fresh-button variant="secondary">View details</fresh-button>
+                  <fresh-button variant="secondary" disabled>Disabled</fresh-button>
+                </div>
+                <div class="spec-sizes">
+                  <div class="spec-size-item">
+                    <fresh-button variant="secondary" size="sm">Sm</fresh-button>
+                    <span class="spec-size-px">28px</span>
+                  </div>
+                  <div class="spec-size-item">
+                    <fresh-button variant="secondary">Md</fresh-button>
+                    <span class="spec-size-px">34px</span>
+                  </div>
+                  <div class="spec-size-item">
+                    <fresh-button variant="secondary" size="lg">Lg</fresh-button>
+                    <span class="spec-size-px">40px</span>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div style="display:flex;gap:var(--space-3);align-items:center">
-              <fresh-button variant="primary"   size="lg">Primary</fresh-button>
-              <fresh-button variant="secondary" size="lg">Secondary</fresh-button>
-              <fresh-button variant="ghost"     size="lg">Ghost</fresh-button>
-              <fresh-button variant="danger"    size="lg">Danger</fresh-button>
+
+            <!-- Tertiary / Ghost -->
+            <div class="spec-variant-row">
+              <div class="spec-variant-header">
+                <span class="spec-variant-name">Tertiary</span>
+                <span class="spec-attr-chip">variant="ghost"</span>
+                <span class="spec-variant-sep">—</span>
+                <span class="spec-variant-desc">Low-emphasis controls for toolbars, filters, and repeated inline actions.</span>
+              </div>
+              <div class="spec-variant-body">
+                <div class="spec-demos">
+                  <fresh-button variant="ghost">Learn more</fresh-button>
+                  <fresh-button variant="ghost">Filter</fresh-button>
+                  <fresh-button variant="ghost" icon-only aria-label="Settings"><i class="ti ti-settings"></i></fresh-button>
+                  <fresh-button variant="ghost" disabled>Disabled</fresh-button>
+                </div>
+                <div class="spec-sizes">
+                  <div class="spec-size-item">
+                    <fresh-button variant="ghost" size="sm">Sm</fresh-button>
+                    <span class="spec-size-px">28px</span>
+                  </div>
+                  <div class="spec-size-item">
+                    <fresh-button variant="ghost">Md</fresh-button>
+                    <span class="spec-size-px">34px</span>
+                  </div>
+                  <div class="spec-size-item">
+                    <fresh-button variant="ghost" size="lg">Lg</fresh-button>
+                    <span class="spec-size-px">40px</span>
+                  </div>
+                </div>
+              </div>
             </div>
+
+            <!-- Destructive / Danger -->
+            <div class="spec-variant-row">
+              <div class="spec-variant-header">
+                <span class="spec-variant-name">Destructive</span>
+                <span class="spec-attr-chip">variant="danger"</span>
+                <span class="spec-variant-sep">—</span>
+                <span class="spec-variant-desc">Irreversible or high-risk operations — delete, remove access, clear data.</span>
+              </div>
+              <div class="spec-variant-body">
+                <div class="spec-demos">
+                  <fresh-button variant="danger"><i class="ti ti-trash"></i> Delete</fresh-button>
+                  <fresh-button variant="danger">Remove access</fresh-button>
+                  <fresh-button variant="danger" disabled>Disabled</fresh-button>
+                </div>
+                <div class="spec-sizes">
+                  <div class="spec-size-item">
+                    <fresh-button variant="danger" size="sm">Sm</fresh-button>
+                    <span class="spec-size-px">28px</span>
+                  </div>
+                  <div class="spec-size-item">
+                    <fresh-button variant="danger">Md</fresh-button>
+                    <span class="spec-size-px">34px</span>
+                  </div>
+                  <div class="spec-size-item">
+                    <fresh-button variant="danger" size="lg">Lg</fresh-button>
+                    <span class="spec-size-px">40px</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- AI Action -->
+            <div class="spec-variant-row">
+              <div class="spec-variant-header">
+                <span class="spec-variant-name">AI Action</span>
+                <span class="spec-attr-chip">variant="ai"</span>
+                <span class="spec-variant-sep">—</span>
+                <span class="spec-variant-desc">AI-generated or AI-assisted actions — generate, summarise, explain.</span>
+              </div>
+              <div class="spec-variant-body">
+                <div class="spec-demos">
+                  <fresh-button variant="ai"><i class="ti ti-sparkles"></i> Generate</fresh-button>
+                  <fresh-button variant="ai"><i class="ti ti-sparkles"></i> Summarise</fresh-button>
+                  <fresh-button variant="ai" disabled><i class="ti ti-sparkles"></i> Disabled</fresh-button>
+                </div>
+                <div class="spec-sizes">
+                  <div class="spec-size-item">
+                    <fresh-button variant="ai" size="sm"><i class="ti ti-sparkles"></i> Sm</fresh-button>
+                    <span class="spec-size-px">28px</span>
+                  </div>
+                  <div class="spec-size-item">
+                    <fresh-button variant="ai"><i class="ti ti-sparkles"></i> Md</fresh-button>
+                    <span class="spec-size-px">34px</span>
+                  </div>
+                  <div class="spec-size-item">
+                    <fresh-button variant="ai" size="lg"><i class="ti ti-sparkles"></i> Lg</fresh-button>
+                    <span class="spec-size-px">40px</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
 
+        <!-- AI RULES -->
         <div class="page-section">
-          <div class="page-section-title">Attributes</div>
-          <table class="usage-table">
-            <thead><tr><th>Attribute</th><th>Values</th><th>Default</th><th>Description</th></tr></thead>
-            <tbody>
-              <tr><td>variant</td><td><code>primary</code> <code>secondary</code> <code>ghost</code> <code>danger</code></td><td><code>primary</code></td><td>Visual intent of the action</td></tr>
-              <tr><td>size</td><td><code>sm</code> <code>md</code> <code>lg</code></td><td><code>md</code></td><td>Height and padding scale (28 / 34 / 40px)</td></tr>
-              <tr><td>disabled</td><td>boolean</td><td>—</td><td>Prevents interaction, reduces opacity to 38%</td></tr>
-              <tr><td>loading</td><td>boolean</td><td>—</td><td>Shows spinner, disables interaction, sets aria-busy</td></tr>
-              <tr><td>icon-only</td><td>boolean</td><td>—</td><td>Square proportions — center a single icon</td></tr>
-            </tbody>
-          </table>
-        </div>
+          <div class="page-section-title">AI Rules</div>
+          <div class="spec-rules-panel">
 
-        <div class="page-section">
-          <div class="page-section-title">Tokens</div>
-          <div style="display:flex;flex-wrap:wrap;gap:var(--space-2)">
-            <span class="token-pill"><span class="token-dot" style="background:var(--btn-primary-bg)"></span>--btn-primary-bg</span>
-            <span class="token-pill"><span class="token-dot" style="background:var(--btn-primary-text);border:1px solid var(--surface-border)"></span>--btn-primary-text</span>
-            <span class="token-pill"><span class="token-dot" style="background:var(--btn-primary-hover)"></span>--btn-primary-hover</span>
-            <span class="token-pill"><span class="token-dot" style="background:var(--btn-secondary-border)"></span>--btn-secondary-border</span>
-            <span class="token-pill"><span class="token-dot" style="background:var(--surface-overlay)"></span>--surface-overlay</span>
-            <span class="token-pill"><span class="token-dot" style="background:var(--color-interactive)"></span>--color-interactive</span>
+            <div class="spec-rules-topbar">
+              <span class="spec-rules-title">+ AI Rules — Button</span>
+              <span class="spec-rules-hint">Click any rule to edit</span>
+            </div>
+
+            <!-- Primary rules -->
+            <div class="spec-rules-section">
+              <div class="spec-rules-section-head">
+                <span class="spec-rules-variant">Primary</span>
+                <span class="spec-attr-chip">variant="primary"</span>
+              </div>
+              <ul class="spec-rule-list" id="rules-primary">
+                <li class="spec-rule-li">
+                  <span class="spec-rule-bullet">•</span>
+                  <span class="spec-rule-text" contenteditable="true">Use <code>variant="primary"</code> for the single highest-priority action within a given UI context.</span>
+                  <span class="spec-rule-actions">
+                    <button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete rule"><i class="ti ti-trash"></i></button>
+                  </span>
+                </li>
+                <li class="spec-rule-li">
+                  <span class="spec-rule-bullet">•</span>
+                  <span class="spec-rule-text" contenteditable="true">Limit to one primary button per view — avoid competing primaries side by side.</span>
+                  <span class="spec-rule-actions">
+                    <button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete rule"><i class="ti ti-trash"></i></button>
+                  </span>
+                </li>
+                <li class="spec-rule-li">
+                  <span class="spec-rule-bullet">•</span>
+                  <span class="spec-rule-text" contenteditable="true">Label with a strong action verb: "Save", "Submit", "Create" — not "OK" or "Yes".</span>
+                  <span class="spec-rule-actions">
+                    <button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete rule"><i class="ti ti-trash"></i></button>
+                  </span>
+                </li>
+                <li class="spec-rule-li">
+                  <span class="spec-rule-bullet">•</span>
+                  <span class="spec-rule-text" contenteditable="true">Primary button should initiate the terminal committing action of the current flow.</span>
+                  <span class="spec-rule-actions">
+                    <button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete rule"><i class="ti ti-trash"></i></button>
+                  </span>
+                </li>
+                <li class="spec-rule-li">
+                  <span class="spec-rule-bullet">•</span>
+                  <span class="spec-rule-text" contenteditable="true">Do not use primary inside notification banners or toasts — use ghost or inline links there instead.</span>
+                  <span class="spec-rule-actions">
+                    <button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete rule"><i class="ti ti-trash"></i></button>
+                  </span>
+                </li>
+              </ul>
+              <button class="spec-add-rule" onclick="addRule('rules-primary')"><i class="ti ti-plus"></i> Add rule</button>
+            </div>
+
+            <!-- Secondary rules -->
+            <div class="spec-rules-section">
+              <div class="spec-rules-section-head">
+                <span class="spec-rules-variant">Secondary</span>
+                <span class="spec-attr-chip">variant="secondary"</span>
+              </div>
+              <ul class="spec-rule-list" id="rules-secondary">
+                <li class="spec-rule-li">
+                  <span class="spec-rule-bullet">•</span>
+                  <span class="spec-rule-text" contenteditable="true">Use <code>variant="secondary"</code> for the second most important action, typically paired with a primary (e.g. Cancel + Save).</span>
+                  <span class="spec-rule-actions">
+                    <button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete rule"><i class="ti ti-trash"></i></button>
+                  </span>
+                </li>
+                <li class="spec-rule-li">
+                  <span class="spec-rule-bullet">•</span>
+                  <span class="spec-rule-text" contenteditable="true">Can appear alone when the action is important but not the page's main CTA.</span>
+                  <span class="spec-rule-actions">
+                    <button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete rule"><i class="ti ti-trash"></i></button>
+                  </span>
+                </li>
+                <li class="spec-rule-li">
+                  <span class="spec-rule-bullet">•</span>
+                  <span class="spec-rule-text" contenteditable="true">Prefer secondary over ghost when the action needs to stand out against surrounding content.</span>
+                  <span class="spec-rule-actions">
+                    <button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete rule"><i class="ti ti-trash"></i></button>
+                  </span>
+                </li>
+                <li class="spec-rule-li">
+                  <span class="spec-rule-bullet">•</span>
+                  <span class="spec-rule-text" contenteditable="true">Do not use secondary for destructive actions — use <code>variant="danger"</code> instead.</span>
+                  <span class="spec-rule-actions">
+                    <button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete rule"><i class="ti ti-trash"></i></button>
+                  </span>
+                </li>
+              </ul>
+              <button class="spec-add-rule" onclick="addRule('rules-secondary')"><i class="ti ti-plus"></i> Add rule</button>
+            </div>
+
+            <!-- Tertiary / Ghost rules -->
+            <div class="spec-rules-section">
+              <div class="spec-rules-section-head">
+                <span class="spec-rules-variant">Tertiary</span>
+                <span class="spec-attr-chip">variant="ghost"</span>
+              </div>
+              <ul class="spec-rule-list" id="rules-ghost">
+                <li class="spec-rule-li">
+                  <span class="spec-rule-bullet">•</span>
+                  <span class="spec-rule-text" contenteditable="true">Use <code>variant="ghost"</code> for low-emphasis, optional, or repeated controls: toolbars, pagination, filters, icon buttons.</span>
+                  <span class="spec-rule-actions">
+                    <button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete rule"><i class="ti ti-trash"></i></button>
+                  </span>
+                </li>
+                <li class="spec-rule-li">
+                  <span class="spec-rule-bullet">•</span>
+                  <span class="spec-rule-text" contenteditable="true">Ideal for secondary actions inside cards and controls embedded inline within text flows.</span>
+                  <span class="spec-rule-actions">
+                    <button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete rule"><i class="ti ti-trash"></i></button>
+                  </span>
+                </li>
+                <li class="spec-rule-li">
+                  <span class="spec-rule-bullet">•</span>
+                  <span class="spec-rule-text" contenteditable="true">Always ensure adequate surrounding spacing so ghost buttons remain recognisable as interactive.</span>
+                  <span class="spec-rule-actions">
+                    <button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete rule"><i class="ti ti-trash"></i></button>
+                  </span>
+                </li>
+                <li class="spec-rule-li">
+                  <span class="spec-rule-bullet">•</span>
+                  <span class="spec-rule-text" contenteditable="true">Do not use ghost as the sole action in a dialog or empty state — the action lacks visual weight in that context.</span>
+                  <span class="spec-rule-actions">
+                    <button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete rule"><i class="ti ti-trash"></i></button>
+                  </span>
+                </li>
+              </ul>
+              <button class="spec-add-rule" onclick="addRule('rules-ghost')"><i class="ti ti-plus"></i> Add rule</button>
+            </div>
+
+            <!-- Destructive rules -->
+            <div class="spec-rules-section">
+              <div class="spec-rules-section-head">
+                <span class="spec-rules-variant">Destructive</span>
+                <span class="spec-attr-chip">variant="danger"</span>
+              </div>
+              <ul class="spec-rule-list" id="rules-danger">
+                <li class="spec-rule-li">
+                  <span class="spec-rule-bullet">•</span>
+                  <span class="spec-rule-text" contenteditable="true">Use <code>variant="danger"</code> for irreversible or high-risk operations: delete, remove access, clear data, revoke permissions.</span>
+                  <span class="spec-rule-actions">
+                    <button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete rule"><i class="ti ti-trash"></i></button>
+                  </span>
+                </li>
+                <li class="spec-rule-li">
+                  <span class="spec-rule-bullet">•</span>
+                  <span class="spec-rule-text" contenteditable="true">Always follow a destructive action with a confirmation dialog before executing — never act immediately on first click.</span>
+                  <span class="spec-rule-actions">
+                    <button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete rule"><i class="ti ti-trash"></i></button>
+                  </span>
+                </li>
+                <li class="spec-rule-li">
+                  <span class="spec-rule-bullet">•</span>
+                  <span class="spec-rule-text" contenteditable="true">Never place a danger button as the primary page-level CTA — reserve it for explicitly destructive confirmation flows.</span>
+                  <span class="spec-rule-actions">
+                    <button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete rule"><i class="ti ti-trash"></i></button>
+                  </span>
+                </li>
+                <li class="spec-rule-li">
+                  <span class="spec-rule-bullet">•</span>
+                  <span class="spec-rule-text" contenteditable="true">Label with the specific action: "Delete account", "Remove user" — not "Confirm" or "Yes" for a danger-variant button.</span>
+                  <span class="spec-rule-actions">
+                    <button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete rule"><i class="ti ti-trash"></i></button>
+                  </span>
+                </li>
+              </ul>
+              <button class="spec-add-rule" onclick="addRule('rules-danger')"><i class="ti ti-plus"></i> Add rule</button>
+            </div>
+
+            <!-- AI Action rules -->
+            <div class="spec-rules-section">
+              <div class="spec-rules-section-head">
+                <span class="spec-rules-variant">AI Action</span>
+                <span class="spec-attr-chip">variant="ai"</span>
+              </div>
+              <ul class="spec-rule-list" id="rules-ai">
+                <li class="spec-rule-li">
+                  <span class="spec-rule-bullet">•</span>
+                  <span class="spec-rule-text" contenteditable="true">Use <code>variant="ai"</code> exclusively for AI-generated or AI-assisted actions: generate content, summarise, explain, suggest.</span>
+                  <span class="spec-rule-actions">
+                    <button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete rule"><i class="ti ti-trash"></i></button>
+                  </span>
+                </li>
+                <li class="spec-rule-li">
+                  <span class="spec-rule-bullet">•</span>
+                  <span class="spec-rule-text" contenteditable="true">Always prefix the label with a sparkle icon (<code>&lt;i class="ti ti-sparkles"&gt;</code>) to visually signal AI involvement.</span>
+                  <span class="spec-rule-actions">
+                    <button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete rule"><i class="ti ti-trash"></i></button>
+                  </span>
+                </li>
+                <li class="spec-rule-li">
+                  <span class="spec-rule-bullet">•</span>
+                  <span class="spec-rule-text" contenteditable="true">Do not use <code>variant="ai"</code> for standard CRUD operations — even if an AI model runs in the background.</span>
+                  <span class="spec-rule-actions">
+                    <button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete rule"><i class="ti ti-trash"></i></button>
+                  </span>
+                </li>
+                <li class="spec-rule-li">
+                  <span class="spec-rule-bullet">•</span>
+                  <span class="spec-rule-text" contenteditable="true">Disable when the model is unavailable or rate-limited; surface a status message near the button explaining why.</span>
+                  <span class="spec-rule-actions">
+                    <button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete rule"><i class="ti ti-trash"></i></button>
+                  </span>
+                </li>
+                <li class="spec-rule-li">
+                  <span class="spec-rule-bullet">•</span>
+                  <span class="spec-rule-text" contenteditable="true">Label with clear action language: "Generate draft", "Summarise", "Explain this" — not just "AI" as the label.</span>
+                  <span class="spec-rule-actions">
+                    <button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete rule"><i class="ti ti-trash"></i></button>
+                  </span>
+                </li>
+              </ul>
+              <button class="spec-add-rule" onclick="addRule('rules-ai')"><i class="ti ti-plus"></i> Add rule</button>
+            </div>
+
           </div>
         </div>
+
+        <!-- ACCESSIBILITY -->
+        <div class="page-section">
+          <div class="page-section-title">Accessibility</div>
+          <div class="spec-card">
+            <table class="spec-a11y-table">
+              <thead>
+                <tr>
+                  <th>Concern</th>
+                  <th>Requirement</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="spec-a11y-concern">role</td>
+                  <td class="spec-a11y-req">Renders as a native <code>&lt;button&gt;</code> — no additional <code>role</code> attribute required.</td>
+                </tr>
+                <tr>
+                  <td class="spec-a11y-concern">accessible name</td>
+                  <td class="spec-a11y-req">Button text becomes the accessible name. For <code>icon-only</code> buttons, always set <code>aria-label</code> describing the specific action — e.g. <code>aria-label="Delete record"</code>.</td>
+                </tr>
+                <tr>
+                  <td class="spec-a11y-concern">icon decoration</td>
+                  <td class="spec-a11y-req">When using icons alongside text, mark the icon element with <code>aria-hidden="true"</code> so screen readers don't announce icon class names.</td>
+                </tr>
+                <tr>
+                  <td class="spec-a11y-concern">disabled state</td>
+                  <td class="spec-a11y-req">Sets both <code>aria-disabled="true"</code> and the native <code>disabled</code> attribute simultaneously. Screen readers announce the button as "dimmed" or "unavailable". Opacity drops to 38%.</td>
+                </tr>
+                <tr>
+                  <td class="spec-a11y-concern">loading state</td>
+                  <td class="spec-a11y-req">Sets <code>aria-busy="true"</code> during loading. Add an <code>aria-label</code> like <code>"Saving…"</code> to provide spoken status context beyond the spinner visual.</td>
+                </tr>
+                <tr>
+                  <td class="spec-a11y-concern">focus ring</td>
+                  <td class="spec-a11y-req">Shows a visible double-ring indicator on <code>:focus-visible</code> — 2px white gap + 4px brand-colour outer ring. Never remove or suppress <code>outline</code> without a custom equivalent.</td>
+                </tr>
+                <tr>
+                  <td class="spec-a11y-concern">keyboard</td>
+                  <td class="spec-a11y-req">Activates on <code>Enter</code> and <code>Space</code> natively via the HTML button element. No custom <code>keydown</code> handlers are needed.</td>
+                </tr>
+                <tr>
+                  <td class="spec-a11y-concern">colour contrast</td>
+                  <td class="spec-a11y-req">Text over button background must meet WCAG AA (4.5:1 minimum ratio). Verify after every theme change — especially primary and danger variants where background shifts with the customer palette.</td>
+                </tr>
+                <tr>
+                  <td class="spec-a11y-concern">touch target</td>
+                  <td class="spec-a11y-req">Minimum touch target is 44 × 44 CSS pixels per WCAG 2.5.5. The <code>size="lg"</code> (40px) comes close — ensure adequate tap area padding on mobile viewports.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
       </div>
     </main>
   </div>
@@ -119,5 +482,29 @@
 <script src="components/core/fresh-button.js"></script>
 <script src="components/core/fresh-input.js"></script>
 <script src="components/navigation/fresh-simple-tabs.js"></script>
+<script>
+  function deleteRule(btn) {
+    btn.closest('.spec-rule-li').remove();
+  }
+
+  function addRule(listId) {
+    var list = document.getElementById(listId);
+    var li = document.createElement('li');
+    li.className = 'spec-rule-li';
+    li.innerHTML =
+      '<span class="spec-rule-bullet">•</span>' +
+      '<span class="spec-rule-text" contenteditable="true" data-new="true"></span>' +
+      '<span class="spec-rule-actions">' +
+        '<button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete rule"><i class="ti ti-trash"></i></button>' +
+      '</span>';
+    list.appendChild(li);
+    var text = li.querySelector('.spec-rule-text');
+    text.focus();
+    text.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') { e.preventDefault(); text.blur(); }
+      if (e.key === 'Escape') { li.remove(); }
+    });
+  }
+</script>
 </body>
 </html>
