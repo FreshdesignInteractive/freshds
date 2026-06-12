@@ -148,7 +148,19 @@
     color: var(--text-primary);
     letter-spacing: -0.01em;
     margin-bottom: var(--space-4);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
   }
+  .cfg-reset-link {
+    font-size: 12px;
+    font-weight: 500;
+    color: #999;
+    text-decoration: none;
+    letter-spacing: 0;
+    transition: color 0.12s;
+  }
+  .cfg-reset-link:hover { color: #e8382e; }
 
   /* ── Color pickers ──────────────────────────────────────────── */
   .cfg-color-block { display: flex; flex-direction: column; gap: var(--space-2); flex: 1; min-width: 0; }
@@ -353,7 +365,10 @@
 
         <!-- Colors -->
         <div class="config-card">
-          <div class="cfg-card-heading">Colors</div>
+          <div class="cfg-card-heading">
+            Colors
+            <a href="#" class="cfg-reset-link" onclick="resetToDefaults();return false;">Restore FreshDS Defaults</a>
+          </div>
           <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:var(--space-3)">
             <div class="cfg-color-block">
               <div class="cfg-color-label">Primary</div>

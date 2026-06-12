@@ -245,6 +245,38 @@ function discardStagedChanges() {
   _pushStagedToRoot();
 }
 
+// ── Reset everything to factory defaults ──────────────────────
+function resetToDefaults() {
+  if (!confirm('Reset all settings to FreshDS defaults? This cannot be undone.')) return;
+  ds.primary      = ds.stagedPrimary      = DEFAULT_THEME.primary;
+  ds.secondary    = ds.stagedSecondary    = DEFAULT_THEME.secondary;
+  ds.scaleDark    = ds.stagedDark         = DEFAULT_THEME.scaleDark;
+  ds.scaleLight   = ds.stagedLight        = DEFAULT_THEME.scaleLight;
+  ds.success      = ds.stagedSuccess      = DEFAULT_THEME.success;
+  ds.warning      = ds.stagedWarning      = DEFAULT_THEME.warning;
+  ds.danger       = ds.stagedDanger       = DEFAULT_THEME.danger;
+  ds.info         = ds.stagedInfo         = DEFAULT_THEME.info;
+  ds.fontSans     = ds.stagedFontSans     = DEFAULT_THEME.fontSans;
+  ds.fontMono     = ds.stagedFontMono     = DEFAULT_THEME.fontMono;
+  ds.pageBg       = ds.stagedPageBg       = DEFAULT_THEME.pageBg;
+  ds.inputSurface = ds.stagedInputSurface = DEFAULT_THEME.inputSurface;
+  ds.density      = ds.stagedDensity      = DEFAULT_THEME.density;
+  ds.elev1        = ds.stagedElev1        = DEFAULT_THEME.elev1;
+  ds.elev2        = ds.stagedElev2        = DEFAULT_THEME.elev2;
+  ds.elev3        = ds.stagedElev3        = DEFAULT_THEME.elev3;
+  ds.radiusSm     = ds.stagedRadiusSm     = DEFAULT_THEME.radiusSm;
+  ds.radiusMd     = ds.stagedRadiusMd     = DEFAULT_THEME.radiusMd;
+  ds.radiusLg     = ds.stagedRadiusLg     = DEFAULT_THEME.radiusLg;
+  ds.radiusXl     = ds.stagedRadiusXl     = DEFAULT_THEME.radiusXl;
+  localStorage.removeItem('freshds-theme');
+  pushToRoot(DEFAULT_THEME.primary, DEFAULT_THEME.secondary, DEFAULT_THEME.scaleDark, DEFAULT_THEME.scaleLight, DEFAULT_THEME.pageBg, DEFAULT_THEME.inputSurface);
+  _syncConfiguratorUI();
+  _updateElevPreviews();
+  _updateRadiusPreviews();
+  _updateFontPreviews();
+  _updateDensityPreview();
+}
+
 // ── Staging functions called from configurator UI ──────────────
 function stageCfgElev(level, val) {
   ds['stagedElev' + level] = String(Math.max(0, parseInt(val) || 0));
