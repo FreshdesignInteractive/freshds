@@ -57,6 +57,7 @@ body { background: #f7f7f8; }
   color: #555;
   line-height: 1.65;
   max-width: 640px;
+  margin-bottom: 36px;
 }
 
 .comp-divider {
@@ -161,6 +162,60 @@ body { background: #f7f7f8; }
   font-family: var(--font-mono);
   color: #999;
 }
+
+/* ── Component card topbar ─────────────────────────────────── */
+.spec-card-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 11px 24px;
+  border-bottom: 1px solid #e4e4e7;
+}
+
+/* ── Dark / Light mode switcher ────────────────────────────── */
+.spec-mode-switcher {
+  display: flex;
+  gap: 2px;
+  background: #eaeaec;
+  border-radius: 5px;
+  padding: 2px;
+}
+
+.spec-mode-btn {
+  all: unset;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  font-weight: 500;
+  color: #888;
+  padding: 3px 9px;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: background 0.12s, color 0.12s;
+}
+.spec-mode-btn.active {
+  background: #fff;
+  color: #333;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.10);
+}
+.spec-mode-btn:not(.active):hover { color: #555; }
+
+/* ── Viewport — DS window inside the component card ─────────
+   Page chrome (topbar, card border) stays site-white.
+   Only this area goes dark when the mode toggle is flipped.
+   ──────────────────────────────────────────────────────────── */
+.spec-viewport { transition: background 0.2s; }
+
+.spec-viewport[data-mode="dark"] { background: #1c1f24; }
+.spec-viewport[data-mode="dark"] .spec-variant-row       { border-bottom-color: #2a2d33; }
+.spec-viewport[data-mode="dark"] .spec-variant-name      { color: #f0f0f2; }
+.spec-viewport[data-mode="dark"] .spec-attr-chip         { background: #2a2d33; color: #8e939e; border-color: #383c45; }
+.spec-viewport[data-mode="dark"] .spec-variant-sep       { color: #4a4f5a; }
+.spec-viewport[data-mode="dark"] .spec-variant-desc      { color: #8e939e; }
+.spec-viewport[data-mode="dark"] .spec-sizes             { border-left-color: #2a2d33; }
+.spec-viewport[data-mode="dark"] .spec-size-px           { color: #4a4f5a; }
 
 /* ── Editable spec panels — AI Rules + Accessibility ─────────
    Panels use #ebebec — slightly darker than page bg (#f7f7f8)
@@ -345,16 +400,20 @@ body { background: #f7f7f8; }
 <div class="comp-page">
 
   <!-- Page header -->
-  <div class="comp-eyebrow">Core UI</div>
   <h1 class="comp-title">Button</h1>
-  <p class="comp-desc">Triggers actions. Choose the variant that matches the weight the action deserves — primary for the definitive action, secondary for alternatives, ghost for low-emphasis controls, danger for destructive operations, and AI for generative actions.</p>
-
-  <hr class="comp-divider">
+  <p class="comp-desc">Triggers actions. Five variants — primary, secondary, ghost, danger, and AI — cover the full range of emphasis.</p>
 
   <!-- ALL VARIANTS -->
   <div class="comp-section">
-    <div class="comp-section-label">All Variants</div>
     <div class="spec-card">
+      <div class="spec-card-topbar">
+        <span class="spec-rules-title">Button — Variants</span>
+        <div class="spec-mode-switcher">
+          <button class="spec-mode-btn active" id="mode-btn-light" onclick="setSpecMode('light')"><i class="ti ti-sun"></i> Light</button>
+          <button class="spec-mode-btn" id="mode-btn-dark" onclick="setSpecMode('dark')"><i class="ti ti-moon"></i> Dark</button>
+        </div>
+      </div>
+      <div id="spec-viewport" class="spec-viewport">
 
       <!-- Primary -->
       <div class="spec-variant-row">
@@ -514,8 +573,9 @@ body { background: #f7f7f8; }
         </div>
       </div>
 
-    </div>
-  </div>
+      </div><!-- /spec-viewport -->
+    </div><!-- /spec-card -->
+  </div><!-- /comp-section -->
 
   <!-- AI RULES -->
   <div class="comp-section">
@@ -769,6 +829,13 @@ body { background: #f7f7f8; }
 
 <script src="components/core/fresh-button.js"></script>
 <script>
+  function setSpecMode(mode) {
+    var vp = document.getElementById('spec-viewport');
+    mode === 'dark' ? vp.setAttribute('data-mode', 'dark') : vp.removeAttribute('data-mode');
+    document.querySelectorAll('.spec-mode-btn').forEach(function(b) { b.classList.remove('active'); });
+    document.getElementById('mode-btn-' + mode).classList.add('active');
+  }
+
   function deleteRule(btn) {
     btn.closest('.spec-rule-li').remove();
   }
