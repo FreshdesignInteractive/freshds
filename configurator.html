@@ -45,11 +45,6 @@
     flex: 1;
     overflow-y: auto;
   }
-  .cfg-export-bar {
-    display: flex;
-    justify-content: flex-end;
-    padding: 12px 24px 0;
-  }
   .cfg-body-inner {
     max-width: 960px;
     margin: 0 auto;
@@ -350,24 +345,6 @@
 
   <!-- Body -->
   <main class="cfg-body">
-    <div class="cfg-export-bar">
-      <div class="site-dropdown" id="cfg-export-dd">
-        <button class="site-btn-outline" id="cfg-export-trigger">
-          Export <i class="ti ti-chevron-down" style="font-size:10px;opacity:0.6"></i>
-        </button>
-        <div class="site-dropdown-menu" id="cfg-export-menu">
-          <button class="site-dropdown-item" id="cfg-export-bundle">
-            <div class="site-dd-label">Dev Kit</div>
-            <div class="site-dd-desc">Theme-matched CSS tokens and components only. No docs — just the files your devs need.</div>
-          </button>
-          <div class="site-dropdown-sep"></div>
-          <button class="site-dropdown-item" id="cfg-export-dssite">
-            <div class="site-dd-label">Full DS</div>
-            <div class="site-dd-desc">Complete documentation site with all components, tokens, and guides. Host it for your team.</div>
-          </button>
-        </div>
-      </div>
-    </div>
     <div class="cfg-body-inner">
 
       <div class="cfg-page-title">Configure your theme</div>
@@ -688,30 +665,6 @@
           || ds.stagedRadiusXl     !== ds.radiusXl;
     } catch(e) { return false; }
   }
-
-  // Export dropdown
-  (function() {
-    var trigger = document.getElementById('cfg-export-trigger');
-    var menu    = document.getElementById('cfg-export-menu');
-
-    trigger.addEventListener('click', function(e) {
-      e.stopPropagation();
-      menu.classList.toggle('open');
-    });
-    document.getElementById('cfg-export-bundle').addEventListener('click', function() {
-      menu.classList.remove('open');
-      exportDeveloperBundle();
-    });
-    document.getElementById('cfg-export-dssite').addEventListener('click', function() {
-      menu.classList.remove('open');
-      exportDSSite();
-    });
-    document.addEventListener('click', function(e) {
-      if (!document.getElementById('cfg-export-dd').contains(e.target)) {
-        menu.classList.remove('open');
-      }
-    });
-  })();
 
   // Exit modal
   (function() {

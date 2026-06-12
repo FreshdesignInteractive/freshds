@@ -18,7 +18,13 @@
   // ── Stripe checkout ────────────────────────────────────────────
   window.__initiateCheckout = async function() {
     const btn = document.getElementById('download-btn')
-    if (btn) { btn.disabled = true; btn.innerHTML = '<i class="ti ti-loader-2 spin"></i> Redirecting…' }
+    if (btn) {
+      btn.disabled = true
+      const lbl = document.getElementById('dl-label')
+      const icn = document.getElementById('dl-icon')
+      if (lbl) lbl.textContent = 'Redirecting…'
+      if (icn) icn.className = 'ti ti-loader-2 spin'
+    }
 
     const { data: { session } } = await supabase.auth.getSession()
     const res = await fetch('/api/create-checkout', {
@@ -35,32 +41,58 @@
     if (data.url) {
       window.location.href = data.url
     } else {
-      if (btn) { btn.disabled = false; btn.innerHTML = '<i class="ti ti-credit-card"></i> Get access — $1' }
+      if (btn) { btn.disabled = false; setDownloadBtn(false) }
       alert('Could not start checkout. Please try again.')
     }
   }
 
-  // ── Download trigger ───────────────────────────────────────────
-  window.__triggerDownload = function() {
-    if (typeof exportDSSite === 'function') {
-      exportDSSite()
+  // ── Download dropdown ──────────────────────────────────────────
+  window.__toggleDlMenu = function(e) {
+    if (e) e.stopPropagation()
+    document.getElementById('dl-menu').classList.toggle('open')
+  }
+  window.__doExport = function(type) {
+    document.getElementById('dl-menu').classList.remove('open')
+    if (type === 'bundle') {
+      if (typeof exportDeveloperBundle === 'function') exportDeveloperBundle()
+      else alert('Download engine not ready. Please refresh and try again.')
     } else {
-      alert('Download engine not ready. Please refresh and try again.')
+      if (typeof exportDSSite === 'function') exportDSSite()
+      else alert('Download engine not ready. Please refresh and try again.')
     }
   }
+  // Auto-download Full DS (used after payment confirmation)
+  window.__triggerDownload = function() {
+    if (typeof exportDSSite === 'function') exportDSSite()
+    else alert('Download engine not ready. Please refresh and try again.')
+  }
+  document.addEventListener('click', function(e) {
+    const wrap = document.querySelector('.btn-dl-wrap')
+    if (wrap && !wrap.contains(e.target)) {
+      const menu = document.getElementById('dl-menu')
+      if (menu) menu.classList.remove('open')
+    }
+  })
 
   // ── Update button state ────────────────────────────────────────
   function setDownloadBtn(hasPaid) {
     const btn = document.getElementById('download-btn')
+    const icon = document.getElementById('dl-icon')
+    const label = document.getElementById('dl-label')
+    const chevron = document.getElementById('dl-chevron')
     if (!btn) return
     if (hasPaid) {
       btn.disabled = false
-      btn.onclick = window.__triggerDownload
-      btn.innerHTML = '<i class="ti ti-download"></i> Download Full DS'
+      btn.onclick = window.__toggleDlMenu
+      if (icon)    { icon.className = 'ti ti-download' }
+      if (label)   { label.textContent = 'Download' }
+      if (chevron) { chevron.style.display = '' }
     } else {
       btn.disabled = false
       btn.onclick = window.__initiateCheckout
-      btn.innerHTML = '<i class="ti ti-credit-card"></i> Get access — $1'
+      if (icon)    { icon.className = 'ti ti-credit-card' }
+      if (label)   { label.textContent = 'Get access — $1' }
+      if (chevron) { chevron.style.display = 'none' }
     }
   }
 
@@ -261,6 +293,34 @@ body {
 }
 .btn-download:hover { background: var(--red-dark); }
 .btn-download:active { transform: scale(0.98); }
+.btn-download:disabled { opacity: 0.6; cursor: default; }
+
+/* Download dropdown */
+.btn-dl-wrap { position: relative; flex-shrink: 0; }
+.dl-menu {
+  display: none;
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  background: #fff;
+  border: 1px solid #e4e4e7;
+  border-radius: 14px;
+  box-shadow: 0 8px 28px rgba(0,0,0,0.12);
+  min-width: 300px;
+  overflow: hidden;
+  z-index: 100;
+}
+.dl-menu.open { display: block; }
+.dl-menu-item {
+  all: unset; box-sizing: border-box;
+  display: block; width: 100%;
+  padding: 14px 18px; cursor: pointer;
+  transition: background 0.1s;
+}
+.dl-menu-item:hover { background: #f7f7f8; }
+.dl-menu-label { font-size: 14px; font-weight: 600; color: #111; margin-bottom: 3px; }
+.dl-menu-desc  { font-size: 13px; color: #777; line-height: 1.5; }
+.dl-menu-sep   { border: none; border-top: 1px solid #e4e4e7; margin: 0; }
 
 /* Demo section header */
 .demo-header {
@@ -366,9 +426,24 @@ body {
         <span class="download-feature"><i class="ti ti-check"></i>Host anywhere</span>
       </div>
     </div>
-    <button class="btn-download" id="download-btn" disabled>
-      <i class="ti ti-loader-2 spin"></i> Loading…
-    </button>
+    <div class="btn-dl-wrap">
+      <button class="btn-download" id="download-btn" disabled onclick="window.__toggleDlMenu(event)">
+        <i class="ti ti-loader-2 spin" id="dl-icon"></i>
+        <span id="dl-label">Loading…</span>
+        <i class="ti ti-chevron-down" id="dl-chevron" style="font-size:11px;display:none"></i>
+      </button>
+      <div class="dl-menu" id="dl-menu">
+        <button class="dl-menu-item" onclick="window.__doExport('bundle')">
+          <div class="dl-menu-label">Dev Kit</div>
+          <div class="dl-menu-desc">Theme-matched CSS tokens + components only. No docs — just the files your devs need.</div>
+        </button>
+        <hr class="dl-menu-sep">
+        <button class="dl-menu-item" onclick="window.__doExport('dssite')">
+          <div class="dl-menu-label">Full DS</div>
+          <div class="dl-menu-desc">Complete docs site with all components, tokens, and guides. Host it for your team.</div>
+        </button>
+      </div>
+    </div>
   </div>
 
 
