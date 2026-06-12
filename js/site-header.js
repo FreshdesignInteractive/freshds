@@ -1,6 +1,5 @@
 import { supabase } from '/js/supabase-client.js';
 
-// Detect active page
 const path = window.location.pathname;
 const isActive = (page) => {
   if (page === 'dashboard') return path.includes('dashboard') || path === '/' || path === '/index.html';
@@ -10,8 +9,15 @@ const isActive = (page) => {
   return false;
 };
 
-function tab(key, label, href) {
-  return `<a class="sh-tab${isActive(key) ? ' sh-tab-active' : ''}" href="${href}">${label}</a>`;
+// Paid-required tabs default to locked until profile confirms has_paid
+function tab(key, label, href, locked) {
+  const active = isActive(key);
+  const lockIcon = locked ? '<i class="ti ti-lock sh-tab-lock"></i>' : '';
+  const cls = ['sh-tab', active ? 'sh-tab-active' : '', locked ? 'sh-tab-locked' : ''].filter(Boolean).join(' ');
+  // Locked tabs go to dashboard on click
+  const dest = locked ? '/dashboard.html' : href;
+  return `<a class="sh-tab-wrap" href="${dest}" data-key="${key}" data-real-href="${href}">`
+       + `<span class="${cls}">${label}${lockIcon}</span></a>`;
 }
 
 const headerHTML = `<header class="site-header" id="site-header">
@@ -19,10 +25,10 @@ const headerHTML = `<header class="site-header" id="site-header">
     <img src="/assets/freshdesign-logo.svg" alt="Freshdesign" height="26">
   </a>
   <nav class="sh-nav">
-    ${tab('dashboard',    'Dashboard',       '/dashboard.html')}
-    ${tab('configurator', 'Configurator',    '/configurator.html')}
-    ${tab('components',   'Components',      '/app.html')}
-    ${tab('patterns',     'Pattern Library', '/patterns.html')}
+    ${tab('dashboard',    'Dashboard',       '/dashboard.html', false)}
+    ${tab('configurator', 'Configurator',    '/configurator.html', true)}
+    ${tab('components',   'Components',      '/app.html', true)}
+    ${tab('patterns',     'Pattern Library', '/patterns.html', true)}
   </nav>
   <div class="sh-right">
     <div class="sh-av-wrap" id="sh-av-wrap">
@@ -37,7 +43,6 @@ const headerHTML = `<header class="site-header" id="site-header">
   </div>
 </header>`;
 
-// Inject: use #sh-mount placeholder if available, else prepend to body
 const mount = document.getElementById('sh-mount');
 if (mount) {
   mount.outerHTML = headerHTML;
@@ -45,7 +50,6 @@ if (mount) {
   document.body.insertAdjacentHTML('afterbegin', headerHTML);
 }
 
-// Auth globals (called from inline onclick)
 window.__shSignOut = async function() {
   await supabase.auth.signOut();
   window.location.replace('/');
@@ -64,16 +68,18 @@ document.addEventListener('click', function(e) {
   }
 });
 
-// Populate avatar from Supabase
+// Single profile fetch — avatar + payment status
 (async function() {
   try {
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) return;
     const { data: p } = await supabase
       .from('profiles')
-      .select('full_name, avatar_url')
+      .select('full_name, avatar_url, has_paid')
       .eq('id', user.id)
       .single();
+
+    // Avatar
     const name = p?.full_name || user.email || '';
     const initial = name.trim().charAt(0).toUpperCase() || '?';
     const avEl = document.getElementById('sh-av');
@@ -86,5 +92,21 @@ document.addEventListener('click', function(e) {
       }
     }
     if (nmEl) nmEl.textContent = name || user.email;
+
+    // Unlock paid tabs
+    if (p?.has_paid) {
+      document.querySelectorAll('.sh-tab-wrap[data-key]').forEach(function(wrap) {
+        const key = wrap.getAttribute('data-key');
+        if (key === 'dashboard') return;
+        const realHref = wrap.getAttribute('data-real-href');
+        wrap.setAttribute('href', realHref);
+        const span = wrap.querySelector('.sh-tab');
+        if (span) {
+          span.classList.remove('sh-tab-locked');
+          const lock = span.querySelector('.sh-tab-lock');
+          if (lock) lock.remove();
+        }
+      });
+    }
   } catch(e) {}
 })();

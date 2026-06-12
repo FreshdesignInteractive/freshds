@@ -47,6 +47,11 @@
 .sh-tab:hover  { background: #f2f2f4; color: #222; }
 .sh-tab-active { background: #efeff1; color: #111; font-weight: 600; }
 
+.sh-tab-wrap { text-decoration: none; }
+.sh-tab-locked { color: #bbb; }
+.sh-tab-locked:hover { background: #f7f7f8; color: #aaa; }
+.sh-tab-lock { font-size: 10px; margin-left: 3px; vertical-align: middle; }
+
 .sh-right { margin-left: auto; }
 
 /* Avatar */
