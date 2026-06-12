@@ -13,35 +13,16 @@ var DEFAULT_THEME = {
   success: '#22c55e', warning: '#f59e0b', danger: '#f43f5e', info: '#3b82f6',
   pageBg: '#ffffff', inputSurface: '#ffffff',
   fontSans: 'Inter', fontMono: 'JetBrains Mono',
-  elevation: 'subtle', density: 'default', radius: 'default'
+  density: 'default',
+  elev1: '3', elev2: '12', elev3: '24',
+  radiusSm: '4', radiusMd: '8', radiusLg: '12', radiusXl: '20'
 };
 
-// ── Configurator presets ───────────────────────────────────────
-var ELEVATION_PRESETS = {
-  none: { 1: 'none', 2: 'none', 3: 'none' },
-  subtle: {
-    1: '0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04)',
-    2: '0 4px 12px rgba(0,0,0,0.08), 0 2px 4px rgba(0,0,0,0.04)',
-    3: '0 8px 24px rgba(0,0,0,0.12), 0 4px 8px rgba(0,0,0,0.06)'
-  },
-  pronounced: {
-    1: '0 2px 6px rgba(0,0,0,0.12), 0 1px 3px rgba(0,0,0,0.08)',
-    2: '0 6px 20px rgba(0,0,0,0.16), 0 3px 8px rgba(0,0,0,0.10)',
-    3: '0 16px 40px rgba(0,0,0,0.22), 0 6px 14px rgba(0,0,0,0.14)'
-  }
-};
-
+// ── Spacing / density presets ──────────────────────────────────
 var DENSITY_PRESETS = {
   compact:     { 1:'3px', 2:'6px',  3:'10px', 4:'12px', 5:'16px', 6:'20px', 8:'28px', 10:'34px', 12:'42px' },
   default:     { 1:'4px', 2:'8px',  3:'12px', 4:'16px', 5:'20px', 6:'24px', 8:'32px', 10:'40px', 12:'48px' },
   comfortable: { 1:'5px', 2:'10px', 3:'15px', 4:'20px', 5:'26px', 6:'30px', 8:'42px', 10:'52px', 12:'62px' }
-};
-
-var RADIUS_PRESETS = {
-  sharp:   { sm:'2px',   md:'4px',   lg:'6px',   xl:'10px'  },
-  default: { sm:'4px',   md:'8px',   lg:'12px',  xl:'20px'  },
-  rounded: { sm:'8px',   md:'14px',  lg:'20px',  xl:'28px'  },
-  pill:    { sm:'999px', md:'999px', lg:'999px', xl:'9999px' }
 };
 
 // ── Site state ─────────────────────────────────────────────────
@@ -59,9 +40,10 @@ var ds = {
   fontMono:    DEFAULT_THEME.fontMono,
   pageBg:      DEFAULT_THEME.pageBg,
   inputSurface: DEFAULT_THEME.inputSurface,
-  elevation:   DEFAULT_THEME.elevation,
   density:     DEFAULT_THEME.density,
-  radius:      DEFAULT_THEME.radius,
+  elev1: DEFAULT_THEME.elev1, elev2: DEFAULT_THEME.elev2, elev3: DEFAULT_THEME.elev3,
+  radiusSm: DEFAULT_THEME.radiusSm, radiusMd: DEFAULT_THEME.radiusMd,
+  radiusLg: DEFAULT_THEME.radiusLg, radiusXl: DEFAULT_THEME.radiusXl,
 
   stagedPrimary:      DEFAULT_THEME.primary,
   stagedSecondary:    DEFAULT_THEME.secondary,
@@ -75,13 +57,11 @@ var ds = {
   stagedFontMono:     DEFAULT_THEME.fontMono,
   stagedPageBg:       DEFAULT_THEME.pageBg,
   stagedInputSurface: DEFAULT_THEME.inputSurface,
-  stagedElevation:    DEFAULT_THEME.elevation,
   stagedDensity:      DEFAULT_THEME.density,
-  stagedRadius:       DEFAULT_THEME.radius
+  stagedElev1: DEFAULT_THEME.elev1, stagedElev2: DEFAULT_THEME.elev2, stagedElev3: DEFAULT_THEME.elev3,
+  stagedRadiusSm: DEFAULT_THEME.radiusSm, stagedRadiusMd: DEFAULT_THEME.radiusMd,
+  stagedRadiusLg: DEFAULT_THEME.radiusLg, stagedRadiusXl: DEFAULT_THEME.radiusXl
 };
-
-// ── Configurator context guard ─────────────────────────────────
-var _isConfigurator = window.location.pathname.indexOf('configurator') !== -1;
 
 // ── Theme persistence — restore before first paint ─────────────
 (function() {
@@ -101,23 +81,22 @@ var _isConfigurator = window.location.pathname.indexOf('configurator') !== -1;
     if (t.fontMono)     { ds.fontMono     = ds.stagedFontMono     = t.fontMono; }
     if (t.pageBg)       { ds.pageBg       = ds.stagedPageBg       = t.pageBg; }
     if (t.inputSurface) { ds.inputSurface = ds.stagedInputSurface = t.inputSurface; }
-    if (t.elevation)    { ds.elevation    = ds.stagedElevation    = t.elevation; }
-    if (t.density)      { ds.density      = ds.stagedDensity      = t.density; }
-    if (t.radius)       { ds.radius       = ds.stagedRadius       = t.radius; }
+    if (t.density)    { ds.density    = ds.stagedDensity    = t.density; }
+    if (t.elev1)      { ds.elev1      = ds.stagedElev1      = t.elev1; }
+    if (t.elev2)      { ds.elev2      = ds.stagedElev2      = t.elev2; }
+    if (t.elev3)      { ds.elev3      = ds.stagedElev3      = t.elev3; }
+    if (t.radiusSm)   { ds.radiusSm   = ds.stagedRadiusSm   = t.radiusSm; }
+    if (t.radiusMd)   { ds.radiusMd   = ds.stagedRadiusMd   = t.radiusMd; }
+    if (t.radiusLg)   { ds.radiusLg   = ds.stagedRadiusLg   = t.radiusLg; }
+    if (t.radiusXl)   { ds.radiusXl   = ds.stagedRadiusXl   = t.radiusXl; }
     if (t.mode)         { ds.mode = t.mode; }
   } catch(e) {}
 })();
 
-// ── Pre-paint: eliminate FOUC ──────────────────────────────────
-// Non-configurator pages always use the DS default theme — customer colors are export-only.
-// The configurator page gets its customer colors applied in DOMContentLoaded instead.
-var _prePaintTheme = _isConfigurator ? ds : DEFAULT_THEME;
-applyScalesToElement(document.documentElement, _prePaintTheme.primary, _prePaintTheme.secondary, _prePaintTheme.scaleDark, _prePaintTheme.scaleLight);
-document.documentElement.style.setProperty('--color-page-bg',      _prePaintTheme.pageBg       || '#ffffff');
-document.documentElement.style.setProperty('--color-input-surface', _prePaintTheme.inputSurface || '#ffffff');
-_applyElevation(_prePaintTheme.elevation);
-_applyDensity(_prePaintTheme.density);
-_applyRadius(_prePaintTheme.radius);
+// ── Pre-paint: always DS defaults — customer theme is export-only ─────────────
+applyScalesToElement(document.documentElement, DEFAULT_THEME.primary, DEFAULT_THEME.secondary, DEFAULT_THEME.scaleDark, DEFAULT_THEME.scaleLight);
+document.documentElement.style.setProperty('--color-page-bg',      DEFAULT_THEME.pageBg);
+document.documentElement.style.setProperty('--color-input-surface', DEFAULT_THEME.inputSurface);
 
 // ── Color swatch resolver (docs site only) ─────────────────────
 function resolveToken(prop) {
@@ -148,41 +127,72 @@ function pushToRoot(p, s, dark, light, pageBg, inputSurface) {
   updateColorSwatches();
 }
 
-// ── Apply presets to root ──────────────────────────────────────
-function _applyElevation(preset) {
-  var p = ELEVATION_PRESETS[preset] || ELEVATION_PRESETS.subtle;
-  var root = document.documentElement;
-  root.style.setProperty('--elev-1', p[1]);
-  root.style.setProperty('--elev-2', p[2]);
-  root.style.setProperty('--elev-3', p[3]);
+// ── Build a box-shadow from a single blur-radius value (px) ───
+function _buildElevShadow(blurStr) {
+  var n = parseInt(blurStr) || 0;
+  if (n <= 0) return 'none';
+  var y1    = Math.max(1, Math.round(n / 3));
+  var y2    = Math.max(1, Math.round(n / 6));
+  var blur2 = Math.max(1, Math.round(n / 3));
+  var a1    = Math.min(0.20, 0.06 + n * 0.002).toFixed(3);
+  return '0 ' + y1 + 'px ' + n + 'px rgba(0,0,0,' + a1 + '), 0 ' + y2 + 'px ' + blur2 + 'px rgba(0,0,0,0.04)';
 }
 
-function _applyDensity(preset) {
-  var p = DENSITY_PRESETS[preset] || DENSITY_PRESETS.default;
-  var root = document.documentElement;
-  Object.keys(p).forEach(function(n) { root.style.setProperty('--space-' + n, p[n]); });
+// ── Isolated configurator preview updates (no root CSS writes) ─
+function _updateFontPreviews() {
+  var p = document.getElementById('font-sans-preview');
+  var m = document.getElementById('font-mono-preview');
+  if (p) p.style.fontFamily = "'" + ds.stagedFontSans + "', system-ui, sans-serif";
+  if (m) m.style.fontFamily = "'" + ds.stagedFontMono + "', monospace";
 }
 
-function _applyRadius(preset) {
-  var p = RADIUS_PRESETS[preset] || RADIUS_PRESETS.default;
-  var root = document.documentElement;
-  root.style.setProperty('--radius-sm', p.sm);
-  root.style.setProperty('--radius-md', p.md);
-  root.style.setProperty('--radius-lg', p.lg);
-  root.style.setProperty('--radius-xl', p.xl);
+function _updateElevPreviews() {
+  [1, 2, 3].forEach(function(n) {
+    var card  = document.getElementById('elev-' + n + '-preview');
+    var input = document.getElementById('elev-' + n + '-blur');
+    var val   = ds['stagedElev' + n];
+    if (card)  card.style.boxShadow = _buildElevShadow(val);
+    if (input && document.activeElement !== input) input.value = val;
+  });
 }
 
-// ── Push all staged values to root (live configurator preview) ─
+function _updateRadiusPreviews() {
+  var lvls = { sm: ds.stagedRadiusSm, md: ds.stagedRadiusMd, lg: ds.stagedRadiusLg, xl: ds.stagedRadiusXl };
+  Object.keys(lvls).forEach(function(lvl) {
+    var preview = document.getElementById('radius-' + lvl + '-preview');
+    var input   = document.getElementById('radius-' + lvl + '-val');
+    var px      = (lvls[lvl] || '0') + 'px';
+    if (preview) preview.style.borderRadius = px;
+    if (input && document.activeElement !== input) input.value = lvls[lvl];
+  });
+}
+
+function _updateDensityPreview() {
+  var table = document.getElementById('density-preview-table');
+  if (!table) return;
+  var p = DENSITY_PRESETS[ds.stagedDensity] || DENSITY_PRESETS.default;
+  var keys = [1, 2, 3, 4, 5, 6, 8, 10, 12];
+  var maxPx = 62;
+  table.innerHTML = keys.map(function(k) {
+    var val  = p[k] || '0px';
+    var barW = Math.round((parseInt(val) / maxPx) * 100);
+    return '<div class="dpt-row">' +
+      '<span class="dpt-name">--space-' + k + '</span>' +
+      '<span class="dpt-val">' + val + '</span>' +
+      '<div class="dpt-bar-wrap"><div class="dpt-bar" style="width:' + barW + '%"></div></div>' +
+      '</div>';
+  }).join('');
+}
+
+// ── Sync configurator preview elements after any staged change ─
 function _pushStagedToRoot() {
-  applyScalesToElement(document.documentElement,
-    ds.stagedPrimary, ds.stagedSecondary, ds.stagedDark, ds.stagedLight,
-    ds.stagedSuccess, ds.stagedWarning, ds.stagedDanger, ds.stagedInfo);
-  document.documentElement.style.setProperty('--color-page-bg',      ds.stagedPageBg || '#ffffff');
-  document.documentElement.style.setProperty('--color-input-surface', ds.stagedInputSurface || '#ffffff');
   updateColorSwatches();
+  _updateFontPreviews();
+  _updateElevPreviews();
+  _updateRadiusPreviews();
 }
 
-// ── Apply staged theme to the whole site ──────────────────────
+// ── Apply staged theme (saves to localStorage; no DOM side-effects) ───────────
 function applyStagedToSite() {
   ds.primary      = ds.stagedPrimary;
   ds.secondary    = ds.stagedSecondary;
@@ -196,15 +206,14 @@ function applyStagedToSite() {
   ds.fontMono     = ds.stagedFontMono;
   ds.pageBg       = ds.stagedPageBg;
   ds.inputSurface = ds.stagedInputSurface;
-  ds.elevation    = ds.stagedElevation;
   ds.density      = ds.stagedDensity;
-  ds.radius       = ds.stagedRadius;
-  _pushStagedToRoot();
-  document.documentElement.style.setProperty('--font-sans', "'" + ds.fontSans + "', system-ui, sans-serif");
-  document.documentElement.style.setProperty('--font-mono', "'" + ds.fontMono + "', monospace");
-  _applyElevation(ds.elevation);
-  _applyDensity(ds.density);
-  _applyRadius(ds.radius);
+  ds.elev1        = ds.stagedElev1;
+  ds.elev2        = ds.stagedElev2;
+  ds.elev3        = ds.stagedElev3;
+  ds.radiusSm     = ds.stagedRadiusSm;
+  ds.radiusMd     = ds.stagedRadiusMd;
+  ds.radiusLg     = ds.stagedRadiusLg;
+  ds.radiusXl     = ds.stagedRadiusXl;
   _saveTheme();
   _syncConfiguratorUI();
   _updateTypoFontNames();
@@ -224,34 +233,34 @@ function discardStagedChanges() {
   ds.stagedFontMono     = ds.fontMono;
   ds.stagedPageBg       = ds.pageBg;
   ds.stagedInputSurface = ds.inputSurface;
-  ds.stagedElevation    = ds.elevation;
   ds.stagedDensity      = ds.density;
-  ds.stagedRadius       = ds.radius;
-  _pushStagedToRoot();
-  document.documentElement.style.setProperty('--font-sans', "'" + ds.fontSans + "', system-ui, sans-serif");
-  document.documentElement.style.setProperty('--font-mono', "'" + ds.fontMono + "', monospace");
-  _applyElevation(ds.elevation);
-  _applyDensity(ds.density);
-  _applyRadius(ds.radius);
+  ds.stagedElev1        = ds.elev1;
+  ds.stagedElev2        = ds.elev2;
+  ds.stagedElev3        = ds.elev3;
+  ds.stagedRadiusSm     = ds.radiusSm;
+  ds.stagedRadiusMd     = ds.radiusMd;
+  ds.stagedRadiusLg     = ds.radiusLg;
+  ds.stagedRadiusXl     = ds.radiusXl;
   _syncConfiguratorUI();
+  _pushStagedToRoot();
 }
 
-// ── Staging functions called from configurator pill buttons ────
-function stageCfgElevation(val) {
-  ds.stagedElevation = val;
-  _applyElevation(val);
+// ── Staging functions called from configurator UI ──────────────
+function stageCfgElev(level, val) {
+  ds['stagedElev' + level] = String(Math.max(0, parseInt(val) || 0));
+  _updateElevPreviews();
   _syncConfiguratorUI();
 }
 
 function stageCfgDensity(val) {
   ds.stagedDensity = val;
-  _applyDensity(val);
   _syncConfiguratorUI();
 }
 
-function stageCfgRadius(val) {
-  ds.stagedRadius = val;
-  _applyRadius(val);
+function stageCfgRadius(level, val) {
+  var cap = level.charAt(0).toUpperCase() + level.slice(1);
+  ds['stagedRadius' + cap] = String(Math.max(0, parseInt(val) || 0));
+  _updateRadiusPreviews();
   _syncConfiguratorUI();
 }
 
@@ -281,18 +290,15 @@ function _syncConfiguratorUI() {
   if (selSans) selSans.value = ds.stagedFontSans;
   if (selMono) selMono.value = ds.stagedFontMono;
 
-  // Preset pill active states
-  [
-    { id: 'cfg-elevation', prop: 'stagedElevation' },
-    { id: 'cfg-density',   prop: 'stagedDensity'   },
-    { id: 'cfg-radius',    prop: 'stagedRadius'     }
-  ].forEach(function(row) {
-    var el = document.getElementById(row.id);
-    if (!el) return;
-    el.querySelectorAll('.cfg-pill').forEach(function(pill) {
-      pill.classList.toggle('active', pill.dataset.value === ds[row.prop]);
-    });
+  // Density pills
+  var densityEl = document.getElementById('cfg-density');
+  if (densityEl) densityEl.querySelectorAll('.cfg-pill').forEach(function(pill) {
+    pill.classList.toggle('active', pill.dataset.value === ds.stagedDensity);
   });
+  _updateDensityPreview();
+  _updateElevPreviews();
+  _updateRadiusPreviews();
+  _updateFontPreviews();
 
   // Neutral scale strip
   var neutral = generateNeutralScale(ds.stagedDark, ds.stagedLight);
@@ -301,7 +307,7 @@ function _syncConfiguratorUI() {
     if (chip) chip.style.background = neutral[i];
   }
 
-  // Footer
+  // Footer diff check
   var isDiff = ds.stagedPrimary      !== ds.primary
     || ds.stagedSecondary    !== ds.secondary
     || ds.stagedDark         !== ds.scaleDark
@@ -314,9 +320,14 @@ function _syncConfiguratorUI() {
     || ds.stagedFontMono     !== ds.fontMono
     || (ds.stagedPageBg       || null) !== (ds.pageBg       || null)
     || (ds.stagedInputSurface || null) !== (ds.inputSurface || null)
-    || ds.stagedElevation    !== ds.elevation
     || ds.stagedDensity      !== ds.density
-    || ds.stagedRadius       !== ds.radius;
+    || ds.stagedElev1        !== ds.elev1
+    || ds.stagedElev2        !== ds.elev2
+    || ds.stagedElev3        !== ds.elev3
+    || ds.stagedRadiusSm     !== ds.radiusSm
+    || ds.stagedRadiusMd     !== ds.radiusMd
+    || ds.stagedRadiusLg     !== ds.radiusLg
+    || ds.stagedRadiusXl     !== ds.radiusXl;
 
   var footer = document.getElementById('cfg-footer');
   if (footer) footer.classList.toggle('visible', isDiff);
@@ -339,9 +350,14 @@ function _saveTheme() {
       mode:         ds.mode,
       pageBg:       ds.pageBg,
       inputSurface: ds.inputSurface,
-      elevation:    ds.elevation,
       density:      ds.density,
-      radius:       ds.radius
+      elev1:        ds.elev1,
+      elev2:        ds.elev2,
+      elev3:        ds.elev3,
+      radiusSm:     ds.radiusSm,
+      radiusMd:     ds.radiusMd,
+      radiusLg:     ds.radiusLg,
+      radiusXl:     ds.radiusXl
     };
     localStorage.setItem('freshds-theme', JSON.stringify(themeData));
     if (typeof window.__saveThemeToCloud === 'function') {
@@ -358,7 +374,6 @@ function toggleMode() {
   if (btn) btn.innerHTML = ds.mode === 'dark'
     ? '<i class="ti ti-sun"></i> Light'
     : '<i class="ti ti-moon"></i> Dark';
-  _pushStagedToRoot();
   _saveTheme();
 }
 
@@ -919,6 +934,23 @@ function _generateThemeVarsCss() {
     '\n  /* Primitive aliases */\n' +
     '  --primitive-primary:   ' + ds.stagedPrimary   + ';\n' +
     '  --primitive-secondary: ' + ds.stagedSecondary + ';\n' +
+    '\n  /* Elevation */\n' +
+    '  --elev-1: ' + _buildElevShadow(ds.stagedElev1) + ';\n' +
+    '  --elev-2: ' + _buildElevShadow(ds.stagedElev2) + ';\n' +
+    '  --elev-3: ' + _buildElevShadow(ds.stagedElev3) + ';\n' +
+    '\n  /* Border radius */\n' +
+    '  --radius-sm: ' + ds.stagedRadiusSm + 'px;\n' +
+    '  --radius-md: ' + ds.stagedRadiusMd + 'px;\n' +
+    '  --radius-lg: ' + ds.stagedRadiusLg + 'px;\n' +
+    '  --radius-xl: ' + ds.stagedRadiusXl + 'px;\n' +
+    '\n  /* Spacing (' + ds.stagedDensity + ') */\n' +
+    (function() {
+      var p = DENSITY_PRESETS[ds.stagedDensity] || DENSITY_PRESETS.default;
+      return Object.keys(p).map(function(k) { return '  --space-' + k + ': ' + p[k] + ';'; }).join('\n') + '\n';
+    })() +
+    '\n  /* Typography */\n' +
+    "  --font-sans: '" + ds.stagedFontSans + "', system-ui, sans-serif;\n" +
+    "  --font-mono: '" + ds.stagedFontMono + "', monospace;\n" +
     '}'
   );
 }
@@ -1071,23 +1103,21 @@ document.addEventListener('DOMContentLoaded', function() {
     if (modeBtn) modeBtn.innerHTML = '<i class="ti ti-sun"></i> Light';
   }
 
-  if (_isConfigurator) {
-    pushToRoot(ds.primary, ds.secondary, ds.scaleDark, ds.scaleLight, ds.pageBg, ds.inputSurface);
-  }
-
   var fontSansEl = document.getElementById('font-sans-select');
   var fontMonoEl = document.getElementById('font-mono-select');
   if (fontSansEl) fontSansEl.addEventListener('change', function(e) {
     var val = e.detail ? e.detail.value : e.target.value;
     ds.stagedFontSans = val;
-    applyFont('sans', val);
-    _pushStagedToRoot(); _syncConfiguratorUI(); updateTokenOutput();
+    if (SANS_FONTS && SANS_FONTS[val]) loadFont(val, SANS_FONTS[val]);
+    _updateFontPreviews();
+    _syncConfiguratorUI();
   });
   if (fontMonoEl) fontMonoEl.addEventListener('change', function(e) {
     var val = e.detail ? e.detail.value : e.target.value;
     ds.stagedFontMono = val;
-    applyFont('mono', val);
-    _pushStagedToRoot(); _syncConfiguratorUI(); updateTokenOutput();
+    if (MONO_FONTS && MONO_FONTS[val]) loadFont(val, MONO_FONTS[val]);
+    _updateFontPreviews();
+    _syncConfiguratorUI();
   });
 
   var cpP = document.getElementById('cfg-primary');
@@ -1170,14 +1200,21 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 
-  if (_isConfigurator) {
-    _pushStagedToRoot();
-    _applyElevation(ds.stagedElevation);
-    _applyDensity(ds.stagedDensity);
-    _applyRadius(ds.stagedRadius);
-    _syncConfiguratorUI();
-    updateTokenOutput();
-  }
+  // Elevation blur inputs
+  [1, 2, 3].forEach(function(n) {
+    var el = document.getElementById('elev-' + n + '-blur');
+    if (el) el.addEventListener('input', function(e) { stageCfgElev(n, e.target.value); });
+  });
+
+  // Radius inputs
+  ['sm', 'md', 'lg', 'xl'].forEach(function(lvl) {
+    var el = document.getElementById('radius-' + lvl + '-val');
+    if (el) el.addEventListener('input', function(e) { stageCfgRadius(lvl, e.target.value); });
+  });
+
+  _pushStagedToRoot();
+  _syncConfiguratorUI();
+  updateTokenOutput();
   initNavSearch();
   _updateTypoFontNames();
 

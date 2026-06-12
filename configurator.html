@@ -19,29 +19,22 @@
 <!-- JSZip -->
 <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
 
-<!-- Tokens -->
-<link rel="stylesheet" href="tokens/primitives.css">
-<link rel="stylesheet" href="tokens/theme.css">
-<link rel="stylesheet" href="tokens/dataviz.css">
-
-<!-- Styles -->
-<link rel="stylesheet" href="styles/reset.css">
-<link rel="stylesheet" href="styles/layout.css">
-<link rel="stylesheet" href="styles/components/core.css">
-<link rel="stylesheet" href="styles/docs.css">
+<!-- Website CSS -->
+<link rel="stylesheet" href="styles/site.css">
 
 <!-- Theme engine -->
 <script src="js/freshds.js"></script>
 <script src="js/freshds-site.js"></script>
 
 <style>
+  /* ── Page shell ─────────────────────────────────────────────── */
   .cfg-page {
     display: flex;
     flex-direction: column;
     height: 100vh;
     width: 100%;
     overflow: hidden;
-    background: var(--surface-bg);
+    background: var(--bg);
     color: var(--text-primary);
     font-family: var(--font-sans);
   }
@@ -55,105 +48,218 @@
     padding: var(--space-8) var(--space-8) var(--space-12);
   }
 
-  /* ── Sticky footer ── */
-  .cfg-footer {
+  /* ── Sticky footer ──────────────────────────────────────────── */
+  .cfg-sticky-footer {
     flex-shrink: 0;
-    overflow: hidden;
-    max-height: 0;
-    transition: max-height 220ms cubic-bezier(0.4, 0, 0.2, 1);
+    background: var(--card);
+    border-top: 1px solid var(--border);
   }
-  .cfg-footer.visible { max-height: 60px; }
-  .cfg-footer-inner {
+  .cfg-sticky-footer-inner {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 14px var(--space-8);
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 var(--space-8);
-    height: 56px;
-    background: var(--surface-bg);
-    border-top: 1px solid var(--surface-border);
-    gap: var(--space-4);
-  }
-  .cfg-footer-label {
-    display: flex;
-    align-items: center;
-    gap: var(--space-2);
-    font-family: var(--font-sans);
-    font-size: 13px;
-    color: var(--text-secondary);
-    -webkit-font-smoothing: antialiased;
-  }
-  .cfg-footer-dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: var(--color-warning);
-    flex-shrink: 0;
-  }
-  .cfg-footer-actions {
-    display: flex;
+    justify-content: flex-end;
     align-items: center;
     gap: var(--space-3);
   }
-  .cfg-footer-discard {
+  .cfg-revert-btn {
     all: unset;
-    padding: 6px 14px;
+    padding: 11px 28px;
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-pill);
     font-family: var(--font-sans);
-    font-size: 13px;
+    font-size: 14px;
     font-weight: 500;
     color: var(--text-secondary);
     cursor: pointer;
-    border-radius: var(--radius-md);
-    transition: background 120ms ease, color 120ms ease;
+    transition: border-color 0.15s, color 0.15s, opacity 0.15s;
     -webkit-font-smoothing: antialiased;
+    box-sizing: border-box;
   }
-  .cfg-footer-discard:hover { background: var(--surface-overlay); color: var(--text-primary); }
-  .cfg-footer-save {
+  .cfg-revert-btn:not(:disabled):hover { border-color: var(--text-secondary); color: var(--text-primary); }
+  .cfg-revert-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+  .cfg-save-btn {
     all: unset;
-    padding: 6px 14px;
+    padding: 11px 28px;
+    border-radius: var(--radius-pill);
+    background: var(--text-primary);
+    font-family: var(--font-sans);
+    font-size: 14px;
+    font-weight: 600;
+    color: #fff;
+    cursor: pointer;
+    transition: opacity 0.15s;
+    -webkit-font-smoothing: antialiased;
+    box-sizing: border-box;
+  }
+  .cfg-save-btn:not(:disabled):hover { opacity: 0.82; }
+  .cfg-save-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+
+  /* ── Toast ──────────────────────────────────────────────────── */
+  .cfg-toast {
+    position: fixed;
+    bottom: 28px;
+    left: 50%;
+    transform: translateX(-50%) translateY(10px);
+    background: var(--text-primary);
+    color: #fff;
     font-family: var(--font-sans);
     font-size: 13px;
     font-weight: 500;
-    color: var(--color-interactive-text);
-    border: 1px solid var(--color-interactive-border);
-    border-radius: var(--radius-md);
-    cursor: pointer;
-    transition: background 120ms ease;
+    padding: 10px 22px;
+    border-radius: var(--radius-pill);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.18);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    z-index: 400;
+    white-space: nowrap;
     -webkit-font-smoothing: antialiased;
   }
-  .cfg-footer-save:hover { background: var(--color-interactive-subtle); }
-  .cfg-footer-apply {
-    all: unset;
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 7px 16px;
-    font-family: var(--font-sans);
-    font-size: 13px;
-    font-weight: 500;
-    background: var(--color-interactive);
-    color: var(--btn-primary-text);
-    border-radius: var(--radius-md);
-    cursor: pointer;
-    transition: filter 120ms ease;
-    -webkit-font-smoothing: antialiased;
+  .cfg-toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
   }
-  .cfg-footer-apply:hover { filter: brightness(1.08); }
-  .cfg-section-label {
-    font-size: 11px; font-weight: 600; letter-spacing: 0.08em;
-    text-transform: uppercase; color: var(--color-interactive-text);
-    font-family: var(--font-mono); margin-bottom: var(--space-6);
-  }
-  .cfg-back-btn {
-    display: inline-flex; align-items: center; gap: 6px;
-    font-size: 12px; font-weight: 500; font-family: var(--font-sans);
-    color: var(--text-secondary); background: none; border: none;
-    cursor: pointer; padding: 0; transition: color 0.15s;
-  }
-  .cfg-back-btn:hover { color: var(--text-primary); }
-  .cfg-header-title {
-    font-size: 14px; font-weight: 600; letter-spacing: -0.01em;
+
+  /* ── Page title ─────────────────────────────────────────────── */
+  .cfg-page-title {
+    font-size: 22px;
+    font-weight: 700;
     color: var(--text-primary);
+    letter-spacing: -0.02em;
+    margin-bottom: var(--space-5);
   }
+
+  /* ── Config cards ───────────────────────────────────────────── */
+  .config-grid { display: grid; grid-template-columns: 1fr; gap: var(--space-4); }
+  .config-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-5);
+  }
+  .cfg-card-heading {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: -0.01em;
+    margin-bottom: var(--space-4);
+  }
+
+  /* ── Color pickers ──────────────────────────────────────────── */
+  .cfg-color-block { display: flex; flex-direction: column; gap: var(--space-2); flex: 1; min-width: 0; }
+  .cfg-color-label { font-size: var(--font-size-xs); font-weight: 500; color: #444; }
+
+  .cfg-color-wrap {
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    position: relative;
+  }
+  .cfg-color-wrap::before {
+    content: '▾';
+    position: absolute;
+    bottom: 6px;
+    right: 6px;
+    font-size: 16px;
+    line-height: 1;
+    background: rgba(0,0,0,0.15);
+    color: rgba(255,255,255,0.9);
+    padding: 0px 6px 2px;
+    border-radius: 4px;
+    pointer-events: none;
+    z-index: 1;
+    transition: background 120ms ease;
+  }
+  .cfg-color-wrap:hover::before { background: rgba(0,0,0,0.28); }
+  .cfg-color-wrap.outlined::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border);
+    pointer-events: none;
+  }
+  input[type="color"].color-picker {
+    display: block; width: 100%; height: 72px;
+    border: none; border-radius: 0;
+    padding: 0; cursor: pointer;
+    background: none;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+  input[type="color"].color-picker::-webkit-color-swatch-wrapper { padding: 0; }
+  input[type="color"].color-picker::-webkit-color-swatch { border: none; border-radius: 0; }
+  input[type="color"].color-picker::-moz-color-swatch { border: none; border-radius: 0; }
+
+  /* ── Typography row ─────────────────────────────────────────── */
+  .cfg-type-row { display: flex; gap: var(--space-5); flex-wrap: wrap; }
+  .cfg-type-field { display: flex; flex-direction: column; gap: 6px; flex: 1; min-width: 160px; }
+
+  /* ── Font preview ───────────────────────────────────────────── */
+  .font-preview {
+    margin-top: var(--space-2);
+    padding: var(--space-2) var(--space-3);
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    font-size: 15px;
+    color: var(--text-secondary);
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  /* ── Elevation editor ───────────────────────────────────────── */
+  .cfg-elev-levels { display: flex; flex-direction: column; }
+  .cfg-elev-row {
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    align-items: center;
+    gap: var(--space-4);
+    padding: var(--space-3) 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .cfg-elev-row:last-child { border-bottom: none; }
+  .cfg-elev-name { font-size: 13px; font-weight: 500; color: var(--text-primary); margin-bottom: 2px; }
+  .cfg-elev-desc { font-size: 11px; color: #555; }
+  .cfg-elev-controls { display: flex; align-items: center; gap: 5px; }
+  .cfg-elev-lbl { font-size: 11px; color: #555; }
+  .cfg-num-input {
+    width: 52px;
+    padding: 4px 6px;
+    border: 1.5px solid var(--border);
+    border-radius: 6px;
+    font-size: 13px;
+    color: var(--text-primary);
+    background: var(--card);
+    text-align: center;
+    -moz-appearance: textfield;
+    outline: none;
+    font-family: var(--font-sans);
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  .cfg-num-input::-webkit-inner-spin-button,
+  .cfg-num-input::-webkit-outer-spin-button { -webkit-appearance: none; }
+  .cfg-num-input:focus { border-color: var(--text-primary); box-shadow: 0 0 0 2px rgba(0,0,0,0.08); }
+  .cfg-unit { font-size: 11px; color: #555; }
+  .cfg-elev-preview-wrap {
+    width: 96px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-3);
+    background: var(--bg);
+    border-radius: 4px;
+  }
+  .cfg-elev-card {
+    width: 68px;
+    height: 42px;
+    background: var(--card);
+    border-radius: 6px;
+  }
+
+  /* ── Density pills ──────────────────────────────────────────── */
   .cfg-pill-row {
     display: flex;
     gap: var(--space-2);
@@ -163,8 +269,8 @@
   .cfg-pill {
     all: unset;
     padding: 5px 16px;
-    border: 1px solid var(--surface-border);
-    border-radius: var(--radius-md);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-pill);
     font-family: var(--font-sans);
     font-size: var(--font-size-md);
     font-weight: 500;
@@ -173,11 +279,58 @@
     transition: background 120ms, border-color 120ms, color 120ms;
     -webkit-font-smoothing: antialiased;
   }
-  .cfg-pill:hover { background: var(--surface-subtle); color: var(--text-primary); }
+  .cfg-pill:hover { background: var(--bg); color: var(--text-primary); }
   .cfg-pill.active {
-    background: var(--color-interactive-subtle);
-    border-color: var(--color-interactive-border);
-    color: var(--color-interactive-text);
+    background: var(--text-primary);
+    border-color: var(--text-primary);
+    color: #fff;
+  }
+
+  /* ── Density preview table ──────────────────────────────────── */
+  .density-preview-table {
+    margin-top: var(--space-3);
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px var(--space-3);
+  }
+  .dpt-row { display: flex; align-items: center; gap: var(--space-2); padding: 3px 0; }
+  .dpt-name { font-size: 10px; font-family: var(--font-mono); color: #555; min-width: 56px; }
+  .dpt-val  { font-size: 11px; color: var(--text-primary); font-weight: 500; min-width: 28px; }
+  .dpt-bar-wrap { flex: 1; height: 3px; background: var(--border); border-radius: 2px; overflow: hidden; }
+  .dpt-bar { height: 100%; background: var(--text-primary); border-radius: 2px; }
+
+  /* ── Radius editor ──────────────────────────────────────────── */
+  .cfg-radius-rows { display: flex; flex-direction: column; }
+  .cfg-radius-row {
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    align-items: center;
+    gap: var(--space-4);
+    padding: var(--space-3) 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .cfg-radius-row:last-child { border-bottom: none; }
+  .cfg-radius-token { font-size: 10px; font-family: var(--font-mono); color: #555; margin-bottom: 2px; }
+  .cfg-radius-usage { font-size: 12px; color: var(--text-primary); }
+  .cfg-radius-controls { display: flex; align-items: center; gap: 5px; }
+  .cfg-radius-sample-wrap { display: flex; align-items: center; justify-content: center; min-width: 84px; }
+  .cfg-rsample-tag {
+    display: inline-flex; align-items: center; padding: 3px 9px;
+    background: var(--bg); border: 1px solid var(--border);
+    font-size: 11px; font-weight: 500; color: var(--text-secondary); white-space: nowrap;
+  }
+  .cfg-rsample-btn {
+    display: inline-flex; align-items: center; padding: 6px 14px;
+    background: var(--text-primary); font-size: 12px; font-weight: 500;
+    color: #fff; white-space: nowrap;
+  }
+  .cfg-rsample-card {
+    width: 68px; height: 40px;
+    background: var(--card); border: 1px solid var(--border);
+  }
+  .cfg-rsample-overlay {
+    width: 68px; height: 40px;
+    background: var(--bg); border: 2px solid var(--border);
   }
 </style>
 </head>
@@ -185,230 +338,424 @@
 <body id="app">
 <div class="cfg-page">
 
-  <!-- Header -->
-  <fresh-navbar>
-    <div slot="brand" style="display:flex;align-items:center;gap:var(--space-4)">
-      <img class="fds-logotype fds-logotype-light" src="freshdesign-logo.svg" alt="Freshdesign">
-      <img class="fds-logotype fds-logotype-dark"  src="freshdesign-logo-dark.svg" alt="Freshdesign">
-      <span style="color:var(--surface-border-strong);font-size:18px;font-weight:300">|</span>
-      <span class="cfg-header-title">Configurator</span>
+  <!-- Nav -->
+  <nav class="site-nav">
+    <div class="site-nav-left">
+      <a class="site-nav-logo" href="index.html">
+        <div class="site-logo-icon">
+          <span></span><span></span><span></span><span></span>
+        </div>
+        <span class="site-wordmark">Freshdesign</span>
+      </a>
+      <span class="site-nav-sep">|</span>
+      <span class="site-nav-title">Configurator</span>
     </div>
-    <div slot="actions">
-      <fresh-button variant="secondary" id="mode-btn" onclick="toggleMode()"><i class="ti ti-moon"></i> Dark</fresh-button>
-      <fresh-dropdown-button id="cfg-export-btn" label="Export" variant="secondary" size="md" items='[{"value":"bundle","label":"Dev Kit","desc":"Theme-matched CSS tokens and components only. No docs — just the files your devs need."},{"separator":true},{"value":"dssite","label":"Full DS","desc":"Complete documentation site with all components, tokens, and guides. Host it for your team."}]'></fresh-dropdown-button>
-      <fresh-button variant="secondary" id="cfg-exit-btn"><i class="ti ti-arrow-left"></i> Exit Configurator</fresh-button>
+    <div class="site-nav-right">
+      <div class="site-dropdown" id="cfg-export-dd">
+        <button class="site-btn-outline" id="cfg-export-trigger">
+          Export <i class="ti ti-chevron-down" style="font-size:10px;opacity:0.6"></i>
+        </button>
+        <div class="site-dropdown-menu" id="cfg-export-menu">
+          <button class="site-dropdown-item" id="cfg-export-bundle">
+            <div class="site-dd-label">Dev Kit</div>
+            <div class="site-dd-desc">Theme-matched CSS tokens and components only. No docs — just the files your devs need.</div>
+          </button>
+          <div class="site-dropdown-sep"></div>
+          <button class="site-dropdown-item" id="cfg-export-dssite">
+            <div class="site-dd-label">Full DS</div>
+            <div class="site-dd-desc">Complete documentation site with all components, tokens, and guides. Host it for your team.</div>
+          </button>
+        </div>
+      </div>
+      <button class="site-btn-outline" id="cfg-exit-btn">
+        <i class="ti ti-arrow-left"></i> Exit
+      </button>
     </div>
-  </fresh-navbar>
+  </nav>
 
   <!-- Body -->
   <main class="cfg-body">
     <div class="cfg-body-inner">
-    <div class="config-grid">
 
-      <!-- Theme settings -->
-      <div class="config-card config-section-full">
-        <div class="cfg-hd">
-          <div class="config-card-title">Your theme</div>
-        </div>
+      <div class="cfg-page-title">Configure your theme</div>
+
+      <div class="config-grid">
 
         <!-- Colors -->
-        <div class="cfg-scale-label">Colors</div>
-        <div class="cfg-colors-row" style="display:grid;grid-template-columns:repeat(6,1fr);gap:var(--space-3)">
-          <div class="cfg-color-block">
-            <div class="cfg-color-label">Primary</div>
-            <div class="cfg-color-wrap"><input type="color" class="color-picker" id="cfg-primary" value="#1f2328"></div>
-            <fresh-input size="sm" id="cfg-hex-primary" maxlength="7"></fresh-input>
-          </div>
-          <div class="cfg-color-block">
-            <div class="cfg-color-label">Secondary</div>
-            <div class="cfg-color-wrap"><input type="color" class="color-picker" id="cfg-secondary" value="#6b7280"></div>
-            <fresh-input size="sm" id="cfg-hex-secondary" maxlength="7"></fresh-input>
-          </div>
-          <div class="cfg-color-block">
-            <div class="cfg-color-label">Dark</div>
-            <div class="cfg-color-wrap"><input type="color" class="color-picker" id="cfg-scale-dark" value="#1f2328"></div>
-            <fresh-input size="sm" id="cfg-hex-dark" maxlength="7"></fresh-input>
-          </div>
-          <div class="cfg-color-block">
-            <div class="cfg-color-label">Light</div>
-            <div class="cfg-color-wrap outlined"><input type="color" class="color-picker" id="cfg-scale-light" value="#ffffff"></div>
-            <fresh-input size="sm" id="cfg-hex-light" maxlength="7"></fresh-input>
-          </div>
-          <div class="cfg-color-block">
-            <div class="cfg-color-label">Page background</div>
-            <div class="cfg-color-wrap outlined"><input type="color" class="color-picker" id="cfg-page-bg" value="#ffffff"></div>
-            <fresh-input size="sm" id="cfg-hex-page-bg" maxlength="7"></fresh-input>
-          </div>
-          <div class="cfg-color-block">
-            <div class="cfg-color-label">Input surface</div>
-            <div class="cfg-color-wrap outlined"><input type="color" class="color-picker" id="cfg-input-surface" value="#ffffff"></div>
-            <fresh-input size="sm" id="cfg-hex-input-surface" maxlength="7"></fresh-input>
-          </div>
-          <div class="cfg-color-block">
-            <div class="cfg-color-label">Success</div>
-            <div class="cfg-color-wrap"><input type="color" class="color-picker" id="cfg-success" value="#22c55e"></div>
-            <fresh-input size="sm" id="cfg-hex-success" maxlength="7"></fresh-input>
-          </div>
-          <div class="cfg-color-block">
-            <div class="cfg-color-label">Warning</div>
-            <div class="cfg-color-wrap"><input type="color" class="color-picker" id="cfg-warning" value="#f59e0b"></div>
-            <fresh-input size="sm" id="cfg-hex-warning" maxlength="7"></fresh-input>
-          </div>
-          <div class="cfg-color-block">
-            <div class="cfg-color-label">Danger</div>
-            <div class="cfg-color-wrap"><input type="color" class="color-picker" id="cfg-danger" value="#f43f5e"></div>
-            <fresh-input size="sm" id="cfg-hex-danger" maxlength="7"></fresh-input>
-          </div>
-          <div class="cfg-color-block">
-            <div class="cfg-color-label">Info</div>
-            <div class="cfg-color-wrap"><input type="color" class="color-picker" id="cfg-info" value="#3b82f6"></div>
-            <fresh-input size="sm" id="cfg-hex-info" maxlength="7"></fresh-input>
+        <div class="config-card">
+          <div class="cfg-card-heading">Colors</div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:var(--space-3)">
+            <div class="cfg-color-block">
+              <div class="cfg-color-label">Primary</div>
+              <div class="cfg-color-wrap"><input type="color" class="color-picker" id="cfg-primary" value="#1f2328"></div>
+              <input type="text" class="site-hex-input" id="cfg-hex-primary" maxlength="7">
+            </div>
+            <div class="cfg-color-block">
+              <div class="cfg-color-label">Secondary</div>
+              <div class="cfg-color-wrap"><input type="color" class="color-picker" id="cfg-secondary" value="#6b7280"></div>
+              <input type="text" class="site-hex-input" id="cfg-hex-secondary" maxlength="7">
+            </div>
+            <div class="cfg-color-block">
+              <div class="cfg-color-label">Dark</div>
+              <div class="cfg-color-wrap"><input type="color" class="color-picker" id="cfg-scale-dark" value="#1f2328"></div>
+              <input type="text" class="site-hex-input" id="cfg-hex-dark" maxlength="7">
+            </div>
+            <div class="cfg-color-block">
+              <div class="cfg-color-label">Light</div>
+              <div class="cfg-color-wrap outlined"><input type="color" class="color-picker" id="cfg-scale-light" value="#ffffff"></div>
+              <input type="text" class="site-hex-input" id="cfg-hex-light" maxlength="7">
+            </div>
+            <div class="cfg-color-block">
+              <div class="cfg-color-label">Page background</div>
+              <div class="cfg-color-wrap outlined"><input type="color" class="color-picker" id="cfg-page-bg" value="#ffffff"></div>
+              <input type="text" class="site-hex-input" id="cfg-hex-page-bg" maxlength="7">
+            </div>
+            <div class="cfg-color-block">
+              <div class="cfg-color-label">Input surface</div>
+              <div class="cfg-color-wrap outlined"><input type="color" class="color-picker" id="cfg-input-surface" value="#ffffff"></div>
+              <input type="text" class="site-hex-input" id="cfg-hex-input-surface" maxlength="7">
+            </div>
+            <div class="cfg-color-block">
+              <div class="cfg-color-label">Success</div>
+              <div class="cfg-color-wrap"><input type="color" class="color-picker" id="cfg-success" value="#22c55e"></div>
+              <input type="text" class="site-hex-input" id="cfg-hex-success" maxlength="7">
+            </div>
+            <div class="cfg-color-block">
+              <div class="cfg-color-label">Warning</div>
+              <div class="cfg-color-wrap"><input type="color" class="color-picker" id="cfg-warning" value="#f59e0b"></div>
+              <input type="text" class="site-hex-input" id="cfg-hex-warning" maxlength="7">
+            </div>
+            <div class="cfg-color-block">
+              <div class="cfg-color-label">Danger</div>
+              <div class="cfg-color-wrap"><input type="color" class="color-picker" id="cfg-danger" value="#f43f5e"></div>
+              <input type="text" class="site-hex-input" id="cfg-hex-danger" maxlength="7">
+            </div>
+            <div class="cfg-color-block">
+              <div class="cfg-color-label">Info</div>
+              <div class="cfg-color-wrap"><input type="color" class="color-picker" id="cfg-info" value="#3b82f6"></div>
+              <input type="text" class="site-hex-input" id="cfg-hex-info" maxlength="7">
+            </div>
           </div>
         </div>
-
-        <div class="cfg-divider"></div>
 
         <!-- Typography -->
-        <div class="cfg-scale-label" style="margin-bottom:var(--space-3)">Typography</div>
-        <div class="cfg-type-row">
-          <div class="cfg-type-field">
-            <div class="cfg-color-label">UI font</div>
-            <fresh-select id="font-sans-select">
-              <option value="Inter">Inter</option>
-              <option value="Geist">Geist</option>
-              <option value="Outfit">Outfit</option>
-              <option value="Sora">Sora</option>
-              <option value="Figtree">Figtree</option>
-              <option value="DM Sans">DM Sans</option>
-              <option value="Plus Jakarta Sans">Plus Jakarta Sans</option>
-              <option value="Be Vietnam Pro">Be Vietnam Pro</option>
-              <option value="Nunito">Nunito</option>
-              <option value="Manrope">Manrope</option>
-            </fresh-select>
-          </div>
-          <div class="cfg-type-field">
-            <div class="cfg-color-label">Mono font</div>
-            <fresh-select id="font-mono-select">
-              <option value="JetBrains Mono">JetBrains Mono</option>
-              <option value="Fira Code">Fira Code</option>
-              <option value="IBM Plex Mono">IBM Plex Mono</option>
-              <option value="Roboto Mono">Roboto Mono</option>
-              <option value="Inconsolata">Inconsolata</option>
-            </fresh-select>
+        <div class="config-card">
+          <div class="cfg-card-heading">Typography</div>
+          <div class="cfg-type-row">
+            <div class="cfg-type-field">
+              <div class="cfg-color-label">UI font</div>
+              <select class="site-select" id="font-sans-select">
+                <option value="Inter">Inter</option>
+                <option value="Geist">Geist</option>
+                <option value="Outfit">Outfit</option>
+                <option value="Sora">Sora</option>
+                <option value="Figtree">Figtree</option>
+                <option value="DM Sans">DM Sans</option>
+                <option value="Plus Jakarta Sans">Plus Jakarta Sans</option>
+                <option value="Be Vietnam Pro">Be Vietnam Pro</option>
+                <option value="Nunito">Nunito</option>
+                <option value="Manrope">Manrope</option>
+              </select>
+              <div id="font-sans-preview" class="font-preview">The quick brown fox jumps over the lazy dog</div>
+            </div>
+            <div class="cfg-type-field">
+              <div class="cfg-color-label">Mono font</div>
+              <select class="site-select" id="font-mono-select">
+                <option value="JetBrains Mono">JetBrains Mono</option>
+                <option value="Fira Code">Fira Code</option>
+                <option value="IBM Plex Mono">IBM Plex Mono</option>
+                <option value="Roboto Mono">Roboto Mono</option>
+                <option value="Inconsolata">Inconsolata</option>
+              </select>
+              <div id="font-mono-preview" class="font-preview">The quick brown fox jumps over the lazy dog</div>
+            </div>
           </div>
         </div>
-
-        <div class="cfg-divider"></div>
 
         <!-- Elevation -->
-        <div class="cfg-scale-label" style="margin-bottom:var(--space-3)">Elevation</div>
-        <div class="cfg-pill-row" id="cfg-elevation">
-          <button class="cfg-pill" data-value="none"       onclick="stageCfgElevation('none')">None</button>
-          <button class="cfg-pill" data-value="subtle"     onclick="stageCfgElevation('subtle')">Subtle</button>
-          <button class="cfg-pill" data-value="pronounced" onclick="stageCfgElevation('pronounced')">Pronounced</button>
+        <div class="config-card">
+          <div class="cfg-card-heading">Elevation</div>
+          <div class="cfg-elev-levels">
+
+            <div class="cfg-elev-row">
+              <div>
+                <div class="cfg-elev-name">Level 1</div>
+                <div class="cfg-elev-desc">Subtle lift · Card hover, button hover, interactive feedback</div>
+              </div>
+              <div class="cfg-elev-controls">
+                <span class="cfg-elev-lbl">Blur</span>
+                <input type="number" id="elev-1-blur" value="3" min="0" max="60" class="cfg-num-input">
+                <span class="cfg-unit">px</span>
+              </div>
+              <div class="cfg-elev-preview-wrap">
+                <div class="cfg-elev-card" id="elev-1-preview"></div>
+              </div>
+            </div>
+
+            <div class="cfg-elev-row">
+              <div>
+                <div class="cfg-elev-name">Level 2</div>
+                <div class="cfg-elev-desc">Resting surface · Default card shadow, stat cards, media cards</div>
+              </div>
+              <div class="cfg-elev-controls">
+                <span class="cfg-elev-lbl">Blur</span>
+                <input type="number" id="elev-2-blur" value="12" min="0" max="60" class="cfg-num-input">
+                <span class="cfg-unit">px</span>
+              </div>
+              <div class="cfg-elev-preview-wrap">
+                <div class="cfg-elev-card" id="elev-2-preview"></div>
+              </div>
+            </div>
+
+            <div class="cfg-elev-row">
+              <div>
+                <div class="cfg-elev-name">Level 3</div>
+                <div class="cfg-elev-desc">Floating overlay · Modal, drawer, popover, toast, dropdown menu</div>
+              </div>
+              <div class="cfg-elev-controls">
+                <span class="cfg-elev-lbl">Blur</span>
+                <input type="number" id="elev-3-blur" value="24" min="0" max="60" class="cfg-num-input">
+                <span class="cfg-unit">px</span>
+              </div>
+              <div class="cfg-elev-preview-wrap">
+                <div class="cfg-elev-card" id="elev-3-preview"></div>
+              </div>
+            </div>
+
+          </div>
         </div>
 
-        <div class="cfg-divider"></div>
-
-        <!-- Density -->
-        <div class="cfg-scale-label" style="margin-bottom:var(--space-3)">Spacing &amp; density</div>
-        <div class="cfg-pill-row" id="cfg-density">
-          <button class="cfg-pill" data-value="compact"     onclick="stageCfgDensity('compact')">Compact</button>
-          <button class="cfg-pill" data-value="default"     onclick="stageCfgDensity('default')">Default</button>
-          <button class="cfg-pill" data-value="comfortable" onclick="stageCfgDensity('comfortable')">Comfortable</button>
+        <!-- Spacing & Density -->
+        <div class="config-card">
+          <div class="cfg-card-heading">Spacing &amp; density</div>
+          <div class="cfg-pill-row" id="cfg-density">
+            <button class="cfg-pill" data-value="compact"     onclick="stageCfgDensity('compact')">Compact</button>
+            <button class="cfg-pill active" data-value="default"     onclick="stageCfgDensity('default')">Default</button>
+            <button class="cfg-pill" data-value="comfortable" onclick="stageCfgDensity('comfortable')">Comfortable</button>
+          </div>
+          <div id="density-preview-table" class="density-preview-table"></div>
         </div>
 
-        <div class="cfg-divider"></div>
+        <!-- Border Radius -->
+        <div class="config-card">
+          <div class="cfg-card-heading">Border radius</div>
+          <div class="cfg-radius-rows">
 
-        <!-- Border radius -->
-        <div class="cfg-scale-label" style="margin-bottom:var(--space-3)">Border radius</div>
-        <div class="cfg-pill-row" id="cfg-radius">
-          <button class="cfg-pill" data-value="sharp"   onclick="stageCfgRadius('sharp')">Sharp</button>
-          <button class="cfg-pill" data-value="default" onclick="stageCfgRadius('default')">Default</button>
-          <button class="cfg-pill" data-value="rounded" onclick="stageCfgRadius('rounded')">Rounded</button>
-          <button class="cfg-pill" data-value="pill"    onclick="stageCfgRadius('pill')">Pill</button>
+            <div class="cfg-radius-row">
+              <div>
+                <div class="cfg-radius-token">--radius-sm</div>
+                <div class="cfg-radius-usage">Tags, chips, alert indicators, breadcrumbs</div>
+              </div>
+              <div class="cfg-radius-controls">
+                <input type="number" id="radius-sm-val" value="4" min="0" max="999" class="cfg-num-input">
+                <span class="cfg-unit">px</span>
+              </div>
+              <div class="cfg-radius-sample-wrap">
+                <span id="radius-sm-preview" class="cfg-rsample-tag">Tag</span>
+              </div>
+            </div>
+
+            <div class="cfg-radius-row">
+              <div>
+                <div class="cfg-radius-token">--radius-md</div>
+                <div class="cfg-radius-usage">Button, Input, Select, Dropdown, Pagination</div>
+              </div>
+              <div class="cfg-radius-controls">
+                <input type="number" id="radius-md-val" value="8" min="0" max="999" class="cfg-num-input">
+                <span class="cfg-unit">px</span>
+              </div>
+              <div class="cfg-radius-sample-wrap">
+                <span id="radius-md-preview" class="cfg-rsample-btn">Button</span>
+              </div>
+            </div>
+
+            <div class="cfg-radius-row">
+              <div>
+                <div class="cfg-radius-token">--radius-lg</div>
+                <div class="cfg-radius-usage">Card, Accordion, Stat card, AI chat bubbles</div>
+              </div>
+              <div class="cfg-radius-controls">
+                <input type="number" id="radius-lg-val" value="12" min="0" max="999" class="cfg-num-input">
+                <span class="cfg-unit">px</span>
+              </div>
+              <div class="cfg-radius-sample-wrap">
+                <div id="radius-lg-preview" class="cfg-rsample-card"></div>
+              </div>
+            </div>
+
+            <div class="cfg-radius-row">
+              <div>
+                <div class="cfg-radius-token">--radius-xl</div>
+                <div class="cfg-radius-usage">Modal, Prompt input container, Empty state</div>
+              </div>
+              <div class="cfg-radius-controls">
+                <input type="number" id="radius-xl-val" value="20" min="0" max="999" class="cfg-num-input">
+                <span class="cfg-unit">px</span>
+              </div>
+              <div class="cfg-radius-sample-wrap">
+                <div id="radius-xl-preview" class="cfg-rsample-overlay"></div>
+              </div>
+            </div>
+
+          </div>
         </div>
 
       </div>
-
-    </div>
     </div>
   </main>
 
-  <!-- Sticky apply footer -->
-  <div class="cfg-footer" id="cfg-footer">
-    <div class="cfg-footer-inner">
-      <span class="cfg-footer-label" id="cfg-footer-label-wrap">
-        <span class="cfg-footer-dot"></span>
-        <span id="cfg-footer-label-text"></span>
-      </span>
-      <div class="cfg-footer-actions">
-        <button class="cfg-footer-discard" onclick="discardStagedChanges()">Discard changes</button>
-        <button class="cfg-footer-apply" onclick="applyStagedToSite()">
-          <i class="ti ti-check"></i> Apply to site
-        </button>
+  <!-- Sticky footer (always visible) -->
+  <div class="cfg-sticky-footer">
+    <div class="cfg-sticky-footer-inner">
+      <button class="cfg-revert-btn" id="cfg-revert-btn" onclick="revertChanges()" disabled>Revert changes</button>
+      <button class="cfg-save-btn"   id="cfg-save-btn"   onclick="saveConfiguration()" disabled>Save configuration</button>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="cfg-toast" id="cfg-toast"></div>
+
+  <!-- Exit configurator warning modal -->
+  <div class="site-modal-overlay" id="exit-modal-overlay">
+    <div class="site-modal">
+      <button class="site-modal-close" id="exit-modal-close">×</button>
+      <div class="site-modal-title">Unsaved changes</div>
+      <p style="font-size:13px;color:var(--text-secondary);line-height:1.6;margin-bottom:8px" id="exit-cfg-modal-body"></p>
+      <p style="font-size:13px;color:var(--text-secondary);line-height:1.6">
+        You can go back and apply or save your changes, or exit now and discard them.
+      </p>
+      <div class="site-modal-footer">
+        <button class="site-btn-ghost" id="exit-back-btn">Back to configurator</button>
+        <button class="site-btn-outline" id="exit-discard-btn">Discard &amp; exit</button>
+        <button class="site-btn-primary" id="exit-apply-btn">Apply &amp; exit</button>
       </div>
     </div>
   </div>
 
-  <!-- Exit configurator warning modal -->
-  <fresh-modal id="exit-cfg-modal" title="Unsaved changes" size="md" dismissible>
-    <p style="font-size:13px;color:var(--text-secondary);line-height:1.6;margin-bottom:var(--space-3)" id="exit-cfg-modal-body"></p>
-    <p style="font-size:13px;color:var(--text-secondary);line-height:1.6">
-      You can go back and apply or save your changes, or exit now and discard them.
-    </p>
-    <div slot="footer" style="display:flex;gap:var(--space-2);justify-content:flex-end;white-space:nowrap;">
-      <fresh-button variant="ghost" id="exit-back-btn">Back to configurator</fresh-button>
-      <fresh-button variant="secondary" id="exit-discard-btn">Discard &amp; exit</fresh-button>
-      <fresh-button variant="primary" id="exit-apply-btn">Apply &amp; exit</fresh-button>
-    </div>
-  </fresh-modal>
-
-
 </div>
 
-<!-- Components -->
-<script src="components/navigation/fresh-navbar.js"></script>
-<script src="components/core/fresh-button.js"></script>
-<script src="components/core/fresh-dropdown-button.js"></script>
-<script src="components/containers/fresh-modal.js"></script>
-<script src="components/core/fresh-input.js"></script>
-<script src="components/core/fresh-select.js"></script>
 <script>
-  document.getElementById('cfg-export-btn').addEventListener('select', function(e) {
-    if (e.detail.value === 'bundle') exportDeveloperBundle();
-    else if (e.detail.value === 'dssite') exportDSSite();
-  });
+  // Toast
+  function showToast(msg) {
+    var t = document.getElementById('cfg-toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(t._tid);
+    t._tid = setTimeout(function() { t.classList.remove('show'); }, 2800);
+  }
 
+  // Sync button enabled/disabled state
+  function _syncButtonStates() {
+    var hasChanges = _hasStagedChanges();
+    document.getElementById('cfg-revert-btn').disabled = !hasChanges;
+    document.getElementById('cfg-save-btn').disabled   = !hasChanges;
+  }
+
+  // Save / revert actions
+  function saveConfiguration() {
+    applyStagedToSite();
+    showToast('Configuration saved');
+  }
+  function revertChanges() {
+    discardStagedChanges();
+    showToast('Changes reverted');
+  }
+
+  // Patch _syncConfiguratorUI so every staged change refreshes button states
+  if (typeof _syncConfiguratorUI === 'function') {
+    var _origSyncCfgUI = _syncConfiguratorUI;
+    _syncConfiguratorUI = function() {
+      _origSyncCfgUI.apply(this, arguments);
+      _syncButtonStates();
+    };
+  }
+
+  // Detect unsaved staged changes
+  function _hasStagedChanges() {
+    try {
+      return ds.stagedPrimary      !== ds.primary
+          || ds.stagedSecondary    !== ds.secondary
+          || ds.stagedDark         !== ds.scaleDark
+          || ds.stagedLight        !== ds.scaleLight
+          || ds.stagedSuccess      !== ds.success
+          || ds.stagedWarning      !== ds.warning
+          || ds.stagedDanger       !== ds.danger
+          || ds.stagedInfo         !== ds.info
+          || ds.stagedFontSans     !== ds.fontSans
+          || ds.stagedFontMono     !== ds.fontMono
+          || (ds.stagedPageBg      || null) !== (ds.pageBg      || null)
+          || (ds.stagedInputSurface|| null) !== (ds.inputSurface|| null)
+          || ds.stagedDensity      !== ds.density
+          || ds.stagedElev1        !== ds.elev1
+          || ds.stagedElev2        !== ds.elev2
+          || ds.stagedElev3        !== ds.elev3
+          || ds.stagedRadiusSm     !== ds.radiusSm
+          || ds.stagedRadiusMd     !== ds.radiusMd
+          || ds.stagedRadiusLg     !== ds.radiusLg
+          || ds.stagedRadiusXl     !== ds.radiusXl;
+    } catch(e) { return false; }
+  }
+
+  // Export dropdown
   (function() {
-    var exitBtn     = document.getElementById('cfg-exit-btn');
-    var exitModal   = document.getElementById('exit-cfg-modal');
-    var exitBack    = document.getElementById('exit-back-btn');
-    var exitDiscard = document.getElementById('exit-discard-btn');
-    var exitApply   = document.getElementById('exit-apply-btn');
-    var modalBody   = document.getElementById('exit-cfg-modal-body');
+    var trigger = document.getElementById('cfg-export-trigger');
+    var menu    = document.getElementById('cfg-export-menu');
+
+    trigger.addEventListener('click', function(e) {
+      e.stopPropagation();
+      menu.classList.toggle('open');
+    });
+    document.getElementById('cfg-export-bundle').addEventListener('click', function() {
+      menu.classList.remove('open');
+      exportDeveloperBundle();
+    });
+    document.getElementById('cfg-export-dssite').addEventListener('click', function() {
+      menu.classList.remove('open');
+      exportDSSite();
+    });
+    document.addEventListener('click', function(e) {
+      if (!document.getElementById('cfg-export-dd').contains(e.target)) {
+        menu.classList.remove('open');
+      }
+    });
+  })();
+
+  // Exit modal
+  (function() {
+    var overlay    = document.getElementById('exit-modal-overlay');
+    var exitBtn    = document.getElementById('cfg-exit-btn');
+    var closeBtn   = document.getElementById('exit-modal-close');
+    var backBtn    = document.getElementById('exit-back-btn');
+    var discardBtn = document.getElementById('exit-discard-btn');
+    var applyBtn   = document.getElementById('exit-apply-btn');
+    var modalBody  = document.getElementById('exit-cfg-modal-body');
+
+    function openModal() { overlay.classList.add('open'); }
+    function closeModal() { overlay.classList.remove('open'); }
 
     exitBtn.addEventListener('click', function() {
-      var footer = document.getElementById('cfg-footer');
-      if (!footer || !footer.classList.contains('visible')) { window.location.href = 'index.html'; return; }
-      modalBody.textContent = 'You have changes that haven\'t been applied to the site yet.';
-      exitModal.show();
+      if (!_hasStagedChanges()) { window.location.href = 'index.html'; return; }
+      modalBody.textContent = 'You have unsaved changes that will be lost if you exit.';
+      openModal();
     });
 
-    exitBack.addEventListener('click', function() {
-      exitModal.close();
-    });
+    closeBtn.addEventListener('click', closeModal);
+    backBtn.addEventListener('click', closeModal);
 
-    exitDiscard.addEventListener('click', function() {
-      exitModal.close();
+    discardBtn.addEventListener('click', function() {
+      closeModal();
       discardStagedChanges();
       window.location.href = 'index.html';
     });
 
-    exitApply.addEventListener('click', function() {
-      exitModal.close();
+    applyBtn.addEventListener('click', function() {
+      closeModal();
       applyStagedToSite();
       window.location.href = 'index.html';
+    });
+
+    overlay.addEventListener('click', function(e) {
+      if (e.target === overlay) closeModal();
     });
   })();
 </script>

@@ -14,8 +14,8 @@
   --color-input-surface: #ffffff;   /* form control fill */
 
   /* Brand anchors — step 9 of their respective generated scales */
-  --primitive-primary:   #7c6af7;
-  --primitive-secondary: #2dd4bf;
+  --primitive-primary:   #1f2328;
+  --primitive-secondary: #6b7280;
 
   /* Status anchors — step 9 of their generated scales */
   --primitive-success: #22c55e;
