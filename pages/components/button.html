@@ -210,9 +210,13 @@ body { background: #f7f7f8; }
 
 .spec-viewport[data-mode="dark"] {
   background: #1c1f24;
-  /* theme.css [data-mode="dark"] never overrides --color-interactive, only its
-     sub-tokens. Without this, --btn-primary-bg stays var(--primary-9) which is
-     near-black by default — invisible on the dark viewport bg. */
+  /* Override button tokens directly on this element so fresh-button shadow DOM
+     inherits them without going through the --color-interactive chain, which
+     loses the override at the shadow boundary for the primary variant. */
+  --btn-primary-bg:    var(--primary-4);
+  --btn-primary-hover: var(--primary-3);
+  --btn-primary-text:  var(--primary-11);
+  /* Keep --color-interactive updated too for any component that uses it directly */
   --color-interactive:       var(--primary-4);
   --color-interactive-hover: var(--primary-3);
 }

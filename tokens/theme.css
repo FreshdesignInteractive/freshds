@@ -196,10 +196,14 @@
   --color-info-border:      var(--info-11);
   --color-info-text:        var(--info-5);
 
-  /* Buttons */
-  --color-interactive:       var(--primary-4);   /* primary-9 is near-black by default — invisible on dark bg */
+  /* Buttons — set component tokens directly so shadow DOM inherits without
+     going through the --color-interactive chain (which can lose overrides
+     at the shadow boundary when intermediate var() references are involved) */
+  --btn-primary-bg:          var(--primary-4);
+  --btn-primary-hover:       var(--primary-3);
+  --btn-primary-text:        var(--primary-11);
+  --color-interactive:       var(--primary-4);
   --color-interactive-hover: var(--primary-3);
-  --btn-primary-text:        var(--primary-11);  /* dark bg step used as text on lighter button */
   --btn-secondary-border:    var(--primary-4);
   --btn-secondary-text:      var(--primary-4);
 
