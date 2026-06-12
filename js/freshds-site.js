@@ -1190,11 +1190,11 @@ function exportDSSite() {
 
   _fetchAll(sitePaths).then(function(files) {
     var zip = new JSZip();
-    var root = 'freshds-site/';
+    var root = 'FreshDS/';
     zip.file(root + 'tokens/theme-vars.css', _generateThemeVarsCss());
     files.forEach(function(f) { zip.file(root + f.path, f.text); });
     zip.file(root + 'README.md', _generateReadme(true));
-    _zipAndDownload(zip, 'freshds-site.zip');
+    _zipAndDownload(zip, 'FreshDS.zip');
   }).catch(function(err) {
     alert('Export failed: ' + err.message);
   });
