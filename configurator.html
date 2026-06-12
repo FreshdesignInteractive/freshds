@@ -154,6 +154,31 @@
     font-size: 14px; font-weight: 600; letter-spacing: -0.01em;
     color: var(--text-primary);
   }
+  .cfg-pill-row {
+    display: flex;
+    gap: var(--space-2);
+    flex-wrap: wrap;
+    margin-bottom: var(--space-4);
+  }
+  .cfg-pill {
+    all: unset;
+    padding: 5px 16px;
+    border: 1px solid var(--surface-border);
+    border-radius: var(--radius-md);
+    font-family: var(--font-sans);
+    font-size: var(--font-size-md);
+    font-weight: 500;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: background 120ms, border-color 120ms, color 120ms;
+    -webkit-font-smoothing: antialiased;
+  }
+  .cfg-pill:hover { background: var(--surface-subtle); color: var(--text-primary); }
+  .cfg-pill.active {
+    background: var(--color-interactive-subtle);
+    border-color: var(--color-interactive-border);
+    color: var(--color-interactive-text);
+  }
 </style>
 </head>
 
@@ -180,96 +205,63 @@
     <div class="cfg-body-inner">
     <div class="config-grid">
 
-      <!-- Themes + Selected theme (single card) -->
+      <!-- Theme settings -->
       <div class="config-card config-section-full">
         <div class="cfg-hd">
-          <div class="config-card-title">Themes</div>
-          <div style="display:flex;align-items:center;gap:var(--space-2)">
-            <button class="cfg-reset-btn" onclick="resetDefaultThemes()">Reset all default themes</button>
-            <button class="cfg-new-btn" onclick="addCustomTheme()"><i class="ti ti-plus"></i> New theme</button>
-          </div>
-        </div>
-        <div class="theme-cards" id="theme-cards"></div>
-
-        <div class="cfg-divider"></div>
-
-        <!-- Selected theme settings -->
-        <div class="cfg-hd">
-          <div class="config-card-title">Selected theme — <span id="cfg-theme-name-label" style="color:var(--color-interactive-text)"></div>
-          <span class="cfg-preview-pill" id="cfg-preview-label">Showing applied theme</span>
+          <div class="config-card-title">Your theme</div>
         </div>
 
-        <!-- Colors: all in one 6-col grid — rows wrap naturally -->
+        <!-- Colors -->
         <div class="cfg-scale-label">Colors</div>
         <div class="cfg-colors-row" style="display:grid;grid-template-columns:repeat(6,1fr);gap:var(--space-3)">
           <div class="cfg-color-block">
             <div class="cfg-color-label">Primary</div>
-            <div class="cfg-color-wrap">
-              <input type="color" class="color-picker" id="cfg-primary" value="#7c6af7">
-            </div>
+            <div class="cfg-color-wrap"><input type="color" class="color-picker" id="cfg-primary" value="#1f2328"></div>
             <fresh-input size="sm" id="cfg-hex-primary" maxlength="7"></fresh-input>
           </div>
           <div class="cfg-color-block">
             <div class="cfg-color-label">Secondary</div>
-            <div class="cfg-color-wrap">
-              <input type="color" class="color-picker" id="cfg-secondary" value="#2dd4bf">
-            </div>
+            <div class="cfg-color-wrap"><input type="color" class="color-picker" id="cfg-secondary" value="#6b7280"></div>
             <fresh-input size="sm" id="cfg-hex-secondary" maxlength="7"></fresh-input>
           </div>
           <div class="cfg-color-block">
             <div class="cfg-color-label">Dark</div>
-            <div class="cfg-color-wrap">
-              <input type="color" class="color-picker" id="cfg-scale-dark" value="#1f2328">
-            </div>
+            <div class="cfg-color-wrap"><input type="color" class="color-picker" id="cfg-scale-dark" value="#1f2328"></div>
             <fresh-input size="sm" id="cfg-hex-dark" maxlength="7"></fresh-input>
           </div>
           <div class="cfg-color-block">
             <div class="cfg-color-label">Light</div>
-            <div class="cfg-color-wrap outlined">
-              <input type="color" class="color-picker" id="cfg-scale-light" value="#ffffff">
-            </div>
+            <div class="cfg-color-wrap outlined"><input type="color" class="color-picker" id="cfg-scale-light" value="#ffffff"></div>
             <fresh-input size="sm" id="cfg-hex-light" maxlength="7"></fresh-input>
           </div>
           <div class="cfg-color-block">
             <div class="cfg-color-label">Page background</div>
-            <div class="cfg-color-wrap outlined">
-              <input type="color" class="color-picker" id="cfg-page-bg" value="#ffffff">
-            </div>
+            <div class="cfg-color-wrap outlined"><input type="color" class="color-picker" id="cfg-page-bg" value="#ffffff"></div>
             <fresh-input size="sm" id="cfg-hex-page-bg" maxlength="7"></fresh-input>
           </div>
           <div class="cfg-color-block">
             <div class="cfg-color-label">Input surface</div>
-            <div class="cfg-color-wrap outlined">
-              <input type="color" class="color-picker" id="cfg-input-surface" value="#ffffff">
-            </div>
+            <div class="cfg-color-wrap outlined"><input type="color" class="color-picker" id="cfg-input-surface" value="#ffffff"></div>
             <fresh-input size="sm" id="cfg-hex-input-surface" maxlength="7"></fresh-input>
           </div>
           <div class="cfg-color-block">
             <div class="cfg-color-label">Success</div>
-            <div class="cfg-color-wrap">
-              <input type="color" class="color-picker" id="cfg-success" value="#22c55e">
-            </div>
+            <div class="cfg-color-wrap"><input type="color" class="color-picker" id="cfg-success" value="#22c55e"></div>
             <fresh-input size="sm" id="cfg-hex-success" maxlength="7"></fresh-input>
           </div>
           <div class="cfg-color-block">
             <div class="cfg-color-label">Warning</div>
-            <div class="cfg-color-wrap">
-              <input type="color" class="color-picker" id="cfg-warning" value="#f59e0b">
-            </div>
+            <div class="cfg-color-wrap"><input type="color" class="color-picker" id="cfg-warning" value="#f59e0b"></div>
             <fresh-input size="sm" id="cfg-hex-warning" maxlength="7"></fresh-input>
           </div>
           <div class="cfg-color-block">
             <div class="cfg-color-label">Danger</div>
-            <div class="cfg-color-wrap">
-              <input type="color" class="color-picker" id="cfg-danger" value="#f43f5e">
-            </div>
+            <div class="cfg-color-wrap"><input type="color" class="color-picker" id="cfg-danger" value="#f43f5e"></div>
             <fresh-input size="sm" id="cfg-hex-danger" maxlength="7"></fresh-input>
           </div>
           <div class="cfg-color-block">
             <div class="cfg-color-label">Info</div>
-            <div class="cfg-color-wrap">
-              <input type="color" class="color-picker" id="cfg-info" value="#3b82f6">
-            </div>
+            <div class="cfg-color-wrap"><input type="color" class="color-picker" id="cfg-info" value="#3b82f6"></div>
             <fresh-input size="sm" id="cfg-hex-info" maxlength="7"></fresh-input>
           </div>
         </div>
@@ -305,143 +297,36 @@
             </fresh-select>
           </div>
         </div>
-      </div>
 
-      <!-- Live preview -->
-      <div class="config-card config-section-full">
-        <div class="cfg-hd">
-          <div class="config-card-title">Live preview</div>
+        <div class="cfg-divider"></div>
+
+        <!-- Elevation -->
+        <div class="cfg-scale-label" style="margin-bottom:var(--space-3)">Elevation</div>
+        <div class="cfg-pill-row" id="cfg-elevation">
+          <button class="cfg-pill" data-value="none"       onclick="stageCfgElevation('none')">None</button>
+          <button class="cfg-pill" data-value="subtle"     onclick="stageCfgElevation('subtle')">Subtle</button>
+          <button class="cfg-pill" data-value="pronounced" onclick="stageCfgElevation('pronounced')">Pronounced</button>
         </div>
 
-        <div class="preview-live" id="preview-live">
-          <div class="preview-comp-grid">
-            <div class="preview-comp-item"><fresh-media-card no-hover title="Button" fill>
-              <div slot="thumb" style="display:flex;align-items:center;justify-content:center;height:100%">
-                <div style="display:flex;flex-direction:column;gap:var(--space-2);width:160px">
-                  <fresh-button variant="primary"   size="sm" style="width:100%">Save changes</fresh-button>
-                  <fresh-button variant="secondary" size="sm" style="width:100%">Cancel</fresh-button>
-                  <fresh-button variant="ghost"     size="sm" style="width:100%">Learn more</fresh-button>
-                  <fresh-button variant="danger"    size="sm" style="width:100%">Delete</fresh-button>
-                </div>
-              </div>
-            </fresh-media-card></div>
-            <div class="preview-comp-item"><fresh-media-card no-hover title="Input" fill>
-              <div slot="thumb" style="display:flex;align-items:center;justify-content:center;height:100%">
-                <div style="display:flex;flex-direction:column;gap:var(--space-2);width:200px">
-                  <fresh-input size="sm" placeholder="Search…" icon="ti-search"></fresh-input>
-                  <fresh-input size="sm" placeholder="Email address" type="email"></fresh-input>
-                  <fresh-input size="sm" placeholder="Password" type="password"></fresh-input>
-                  <fresh-input size="sm" placeholder="Required field" error="This field is required"></fresh-input>
-                </div>
-              </div>
-            </fresh-media-card></div>
-            <div class="preview-comp-item"><fresh-media-card no-hover title="Checkbox" fill>
-              <div slot="thumb" style="display:flex;align-items:center;justify-content:center;height:100%">
-                <div style="display:flex;flex-direction:column;gap:var(--space-3)">
-                  <fresh-checkbox checked>Send email notifications</fresh-checkbox>
-                  <fresh-checkbox checked>Send push notifications</fresh-checkbox>
-                  <fresh-checkbox>Send SMS notifications</fresh-checkbox>
-                  <fresh-checkbox>Send weekly digest</fresh-checkbox>
-                </div>
-              </div>
-            </fresh-media-card></div>
-            <div class="preview-comp-item"><fresh-media-card no-hover title="Toggle" fill>
-              <div slot="thumb" style="display:flex;align-items:center;justify-content:center;height:100%">
-                <div style="display:flex;flex-direction:column;gap:var(--space-3)">
-                  <fresh-toggle size="sm">Off</fresh-toggle>
-                  <fresh-toggle size="sm" checked>On</fresh-toggle>
-                  <fresh-toggle size="sm" disabled>Disabled off</fresh-toggle>
-                  <fresh-toggle size="sm" checked disabled>Disabled on</fresh-toggle>
-                </div>
-              </div>
-            </fresh-media-card></div>
-            <div class="preview-comp-item"><fresh-media-card no-hover title="Badge" fill>
-              <div slot="thumb" style="display:flex;align-items:center;justify-content:center;height:100%;padding:var(--space-4)">
-                <div style="display:flex;flex-wrap:wrap;gap:var(--space-2);justify-content:center">
-                  <fresh-badge variant="primary">Primary</fresh-badge>
-                  <fresh-badge variant="success">Success</fresh-badge>
-                  <fresh-badge variant="warning">Warning</fresh-badge>
-                  <fresh-badge variant="danger">Danger</fresh-badge>
-                  <fresh-badge variant="neutral">Neutral</fresh-badge>
-                  <fresh-badge variant="ai">AI</fresh-badge>
-                </div>
-              </div>
-            </fresh-media-card></div>
-            <div class="preview-comp-item"><fresh-media-card no-hover title="Progress" fill>
-              <div slot="thumb" style="display:flex;align-items:center;justify-content:center;height:100%">
-                <div style="display:flex;flex-direction:column;gap:var(--space-4);width:220px">
-                  <fresh-progress value="82" label="Uploading files" show-percent size="sm"></fresh-progress>
-                  <fresh-progress value="45" label="Processing" show-percent size="sm"></fresh-progress>
-                  <fresh-progress value="100" label="Complete" show-percent size="sm"></fresh-progress>
-                  <fresh-progress value="12" label="Syncing" show-percent size="sm"></fresh-progress>
-                </div>
-              </div>
-            </fresh-media-card></div>
-            <div class="preview-comp-item"><fresh-media-card no-hover title="Table" fill>
-              <div slot="thumb" style="display:flex;flex-direction:column;justify-content:center;height:100%;padding:var(--space-3)">
-                <fresh-data-table
-                  columns='[{"key":"name","label":"Name"},{"key":"role","label":"Role"},{"key":"status","label":"Status"}]'
-                  data='[{"name":"Jane Smith","role":"Admin","status":"Active"},{"name":"Marcus Lee","role":"Editor","status":"Active"},{"name":"Sam K.","role":"Viewer","status":"Away"},{"name":"Priya M.","role":"Admin","status":"Offline"}]'>
-                </fresh-data-table>
-              </div>
-            </fresh-media-card></div>
-            <div class="preview-comp-item"><fresh-media-card no-hover title="Avatar" fill>
-              <div slot="thumb" style="display:flex;align-items:center;justify-content:center;height:100%">
-                <div style="display:flex;flex-direction:column;gap:var(--space-4);align-items:center">
-                  <div style="display:flex;gap:var(--space-3);align-items:center">
-                    <fresh-avatar name="Jane Smith" size="md" status="online"></fresh-avatar>
-                    <fresh-avatar name="Marcus Lee" size="md" status="away"></fresh-avatar>
-                    <fresh-avatar name="Sam K" size="md" status="busy"></fresh-avatar>
-                    <fresh-avatar name="Priya M" size="md" status="offline"></fresh-avatar>
-                  </div>
-                  <div style="display:flex;gap:var(--space-3);align-items:center">
-                    <fresh-avatar name="Claude AI" shape="square" size="md"></fresh-avatar>
-                    <fresh-avatar name="Bot System" shape="square" size="md"></fresh-avatar>
-                    <fresh-avatar name="Fresh DS" shape="square" size="md"></fresh-avatar>
-                  </div>
-                </div>
-              </div>
-            </fresh-media-card></div>
-            <div class="preview-comp-item"><fresh-media-card no-hover title="Confidence badge" fill>
-              <div slot="thumb" style="display:flex;align-items:center;justify-content:center;height:100%">
-                <div style="display:flex;flex-direction:column;gap:var(--space-4)">
-                  <fresh-confidence-badge value="94" show-bar></fresh-confidence-badge>
-                  <fresh-confidence-badge value="67" show-bar></fresh-confidence-badge>
-                  <fresh-confidence-badge value="31" show-bar></fresh-confidence-badge>
-                </div>
-              </div>
-            </fresh-media-card></div>
-            <div class="preview-comp-item"><fresh-media-card no-hover title="Alert" fill>
-              <div slot="thumb" style="display:flex;align-items:center;justify-content:center;height:100%">
-                <div style="display:flex;flex-direction:column;gap:var(--space-2);width:240px">
-                  <fresh-alert variant="info">New version ready to deploy.</fresh-alert>
-                  <fresh-alert variant="success">All edits have been published.</fresh-alert>
-                  <fresh-alert variant="warning">You're at 90% of your quota.</fresh-alert>
-                </div>
-              </div>
-            </fresh-media-card></div>
-            <div class="preview-comp-item"><fresh-media-card no-hover title="Typography" fill>
-              <div slot="thumb" style="display:flex;align-items:center;justify-content:center;height:100%">
-                <div style="display:flex;flex-direction:column;gap:var(--space-3);padding:var(--space-5)">
-                  <div style="font-family:var(--font-sans);font-size:22px;font-weight:700;color:var(--text-primary);letter-spacing:-0.025em;line-height:1.15">Heading</div>
-                  <div style="font-family:var(--font-sans);font-size:15px;font-weight:600;color:var(--text-primary);letter-spacing:-0.01em;line-height:1.3">Subheading</div>
-                  <div style="font-family:var(--font-sans);font-size:13px;font-weight:400;color:var(--text-secondary);line-height:1.55">Body — readable paragraph text</div>
-                  <div style="font-family:var(--font-sans);font-size:11px;font-weight:500;color:var(--text-tertiary);letter-spacing:0.05em;text-transform:uppercase">Label / Caption</div>
-                  <div style="font-family:var(--font-mono);font-size:11px;color:var(--color-interactive-text);background:var(--badge-primary-bg);padding:2px 7px;border-radius:var(--radius-sm);width:fit-content">monospace</div>
-                </div>
-              </div>
-            </fresh-media-card></div>
-            <div class="preview-comp-item"><fresh-media-card no-hover title="AI" fill>
-              <div slot="thumb" style="display:flex;align-items:center;justify-content:center;height:100%">
-                <div style="display:flex;flex-direction:column;gap:var(--space-5);align-items:flex-start">
-                  <fresh-thinking label="Analyzing your data"></fresh-thinking>
-                  <fresh-thinking label="Writing code" size="sm"></fresh-thinking>
-                  <fresh-token-meter used="68000" total="100000"></fresh-token-meter>
-                  <fresh-token-meter used="88000" total="100000"></fresh-token-meter>
-                </div>
-              </div>
-            </fresh-media-card></div>
-          </div>
+        <div class="cfg-divider"></div>
+
+        <!-- Density -->
+        <div class="cfg-scale-label" style="margin-bottom:var(--space-3)">Spacing &amp; density</div>
+        <div class="cfg-pill-row" id="cfg-density">
+          <button class="cfg-pill" data-value="compact"     onclick="stageCfgDensity('compact')">Compact</button>
+          <button class="cfg-pill" data-value="default"     onclick="stageCfgDensity('default')">Default</button>
+          <button class="cfg-pill" data-value="comfortable" onclick="stageCfgDensity('comfortable')">Comfortable</button>
+        </div>
+
+        <div class="cfg-divider"></div>
+
+        <!-- Border radius -->
+        <div class="cfg-scale-label" style="margin-bottom:var(--space-3)">Border radius</div>
+        <div class="cfg-pill-row" id="cfg-radius">
+          <button class="cfg-pill" data-value="sharp"   onclick="stageCfgRadius('sharp')">Sharp</button>
+          <button class="cfg-pill" data-value="default" onclick="stageCfgRadius('default')">Default</button>
+          <button class="cfg-pill" data-value="rounded" onclick="stageCfgRadius('rounded')">Rounded</button>
+          <button class="cfg-pill" data-value="pill"    onclick="stageCfgRadius('pill')">Pill</button>
         </div>
 
       </div>
@@ -459,7 +344,6 @@
       </span>
       <div class="cfg-footer-actions">
         <button class="cfg-footer-discard" onclick="discardStagedChanges()">Discard changes</button>
-        <button class="cfg-footer-save" id="cfg-footer-save-btn" onclick="saveCurrentTheme()" style="display:none">Save theme</button>
         <button class="cfg-footer-apply" onclick="applyStagedToSite()">
           <i class="ti ti-check"></i> Apply to site
         </button>
@@ -480,99 +364,16 @@
     </div>
   </fresh-modal>
 
-  <!-- Delete theme confirmation modal -->
-  <fresh-modal id="delete-theme-modal" title="Delete theme" size="sm" dismissible>
-    <p style="font-size:13px;color:var(--text-secondary);line-height:1.6;margin-bottom:var(--space-4)">
-      You are about to delete <strong id="delete-theme-name" style="color:var(--text-primary)"></strong>.
-      This cannot be undone.
-    </p>
-    <p style="font-size:13px;color:var(--text-secondary);margin-bottom:var(--space-3)">
-      Type <strong style="color:var(--color-danger);font-family:var(--font-mono)">DELETE</strong> to confirm.
-    </p>
-    <fresh-input id="delete-confirm-input" placeholder="Type DELETE here" autocomplete="off"></fresh-input>
-    <div slot="footer" style="display:flex;gap:var(--space-2);justify-content:flex-end">
-      <fresh-button variant="ghost" id="delete-cancel-btn">Cancel</fresh-button>
-      <fresh-button variant="danger" id="delete-confirm-btn" disabled>Delete theme</fresh-button>
-    </div>
-  </fresh-modal>
-
-  <script>
-    (function() {
-      var _pendingDeleteId = null;
-
-      window.openDeleteModal = function(id, name) {
-        _pendingDeleteId = id;
-        document.getElementById('delete-theme-name').textContent = '"' + name + '"';
-        var input = document.getElementById('delete-confirm-input');
-        var confirmBtn = document.getElementById('delete-confirm-btn');
-        // Reset state
-        input.value = '';
-        confirmBtn.setAttribute('disabled', '');
-        document.getElementById('delete-theme-modal').show();
-        setTimeout(function() { input.focus(); }, 100);
-      };
-
-      document.addEventListener('DOMContentLoaded', function() {
-        var input      = document.getElementById('delete-confirm-input');
-        var confirmBtn = document.getElementById('delete-confirm-btn');
-        var cancelBtn  = document.getElementById('delete-cancel-btn');
-        var modal      = document.getElementById('delete-theme-modal');
-
-        input.addEventListener('input', function(e) {
-          var val = (e.detail && e.detail.value !== undefined) ? e.detail.value : input.value;
-          var valid = val === 'DELETE';
-          if (valid) {
-            confirmBtn.removeAttribute('disabled');
-          } else {
-            confirmBtn.setAttribute('disabled', '');
-          }
-        });
-
-        confirmBtn.addEventListener('click', function() {
-          if (!_pendingDeleteId) return;
-          var idToDelete = _pendingDeleteId;
-          _pendingDeleteId = null;
-          modal.close();
-          _doDeleteTheme(idToDelete);
-        });
-
-        cancelBtn.addEventListener('click', function() {
-          modal.close();
-          _pendingDeleteId = null;
-        });
-
-        modal.addEventListener('close', function() {
-          _pendingDeleteId = null;
-        });
-      });
-    })();
-  </script>
 
 </div>
 
-<!-- Components needed for preview and modal -->
+<!-- Components -->
 <script src="components/navigation/fresh-navbar.js"></script>
 <script src="components/core/fresh-button.js"></script>
 <script src="components/core/fresh-dropdown-button.js"></script>
 <script src="components/containers/fresh-modal.js"></script>
 <script src="components/core/fresh-input.js"></script>
 <script src="components/core/fresh-select.js"></script>
-<script src="components/core/fresh-checkbox.js"></script>
-<script src="components/core/fresh-radio.js"></script>
-<script src="components/core/fresh-toggle.js"></script>
-<script src="components/core/fresh-slider.js"></script>
-<script src="components/core/fresh-form-field.js"></script>
-<script src="components/feedback/fresh-badge.js"></script>
-<script src="components/feedback/fresh-alert.js"></script>
-<script src="components/feedback/fresh-progress.js"></script>
-<script src="components/feedback/fresh-spinner.js"></script>
-<script src="components/data/fresh-avatar.js"></script>
-<script src="components/containers/fresh-media-card.js"></script>
-<script src="components/data/fresh-stat-card.js"></script>
-<script src="components/data/fresh-data-table.js"></script>
-<script src="components/ai/fresh-thinking.js"></script>
-<script src="components/ai/fresh-confidence-badge.js"></script>
-<script src="components/ai/fresh-token-meter.js"></script>
 <script>
   document.getElementById('cfg-export-btn').addEventListener('select', function(e) {
     if (e.detail.value === 'bundle') exportDeveloperBundle();
@@ -588,22 +389,9 @@
     var modalBody   = document.getElementById('exit-cfg-modal-body');
 
     exitBtn.addEventListener('click', function() {
-      var footer       = document.getElementById('cfg-footer');
-      var hasChanges   = footer && footer.classList.contains('visible');
-      if (!hasChanges) { window.location.href = 'index.html'; return; }
-
-      var saveBtn      = document.getElementById('cfg-footer-save-btn');
-      var hasUnsaved   = saveBtn && saveBtn.style.display !== 'none';
-      var hasUnapplied = footer.classList.contains('visible') && !hasUnsaved;
-
-      if (hasUnsaved && hasChanges) {
-        modalBody.textContent = 'You have unsaved edits to the current theme and changes that haven\'t been applied to the site yet.';
-      } else if (hasUnsaved) {
-        modalBody.textContent = 'You have unsaved edits to the current theme.';
-      } else {
-        modalBody.textContent = 'You have changes that haven\'t been applied to the site yet.';
-      }
-
+      var footer = document.getElementById('cfg-footer');
+      if (!footer || !footer.classList.contains('visible')) { window.location.href = 'index.html'; return; }
+      modalBody.textContent = 'You have changes that haven\'t been applied to the site yet.';
       exitModal.show();
     });
 

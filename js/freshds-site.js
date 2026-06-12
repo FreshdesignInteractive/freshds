@@ -6,49 +6,78 @@
    Depends on freshds.js (core) being loaded first.
    ============================================================ */
 
-// ── System themes ──────────────────────────────────────────────
-var SYSTEM_THEMES = [
-  { id: 'freshds',  name: 'FreshDS',  primary: '#7c6af7', secondary: '#2dd4bf', system: true },
-  { id: 'fintech',  name: 'Fintech',  primary: '#0f766e', secondary: '#6366f1', system: true },
-  { id: 'health',   name: 'Health',   primary: '#dc2626', secondary: '#f97316', system: true },
-  { id: 'saas',     name: 'SaaS',     primary: '#1d4ed8', secondary: '#06b6d4', system: true },
-  { id: 'creative', name: 'Creative', primary: '#7c3aed', secondary: '#ec4899', system: true },
-  { id: 'retail',   name: 'Retail',   primary: '#92400e', secondary: '#d97706', system: true }
-];
+// ── Default theme (blank / neutral) ───────────────────────────
+var DEFAULT_THEME = {
+  primary: '#1f2328', secondary: '#6b7280',
+  scaleDark: '#1f2328', scaleLight: '#ffffff',
+  success: '#22c55e', warning: '#f59e0b', danger: '#f43f5e', info: '#3b82f6',
+  pageBg: '#ffffff', inputSurface: '#ffffff',
+  fontSans: 'Inter', fontMono: 'JetBrains Mono',
+  elevation: 'subtle', density: 'default', radius: 'default'
+};
 
-var _SYSTEM_DEFAULTS = SYSTEM_THEMES.map(function(t){ return JSON.parse(JSON.stringify(t)); });
+// ── Configurator presets ───────────────────────────────────────
+var ELEVATION_PRESETS = {
+  none: { 1: 'none', 2: 'none', 3: 'none' },
+  subtle: {
+    1: '0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04)',
+    2: '0 4px 12px rgba(0,0,0,0.08), 0 2px 4px rgba(0,0,0,0.04)',
+    3: '0 8px 24px rgba(0,0,0,0.12), 0 4px 8px rgba(0,0,0,0.06)'
+  },
+  pronounced: {
+    1: '0 2px 6px rgba(0,0,0,0.12), 0 1px 3px rgba(0,0,0,0.08)',
+    2: '0 6px 20px rgba(0,0,0,0.16), 0 3px 8px rgba(0,0,0,0.10)',
+    3: '0 16px 40px rgba(0,0,0,0.22), 0 6px 14px rgba(0,0,0,0.14)'
+  }
+};
+
+var DENSITY_PRESETS = {
+  compact:     { 1:'3px', 2:'6px',  3:'10px', 4:'12px', 5:'16px', 6:'20px', 8:'28px', 10:'34px', 12:'42px' },
+  default:     { 1:'4px', 2:'8px',  3:'12px', 4:'16px', 5:'20px', 6:'24px', 8:'32px', 10:'40px', 12:'48px' },
+  comfortable: { 1:'5px', 2:'10px', 3:'15px', 4:'20px', 5:'26px', 6:'30px', 8:'42px', 10:'52px', 12:'62px' }
+};
+
+var RADIUS_PRESETS = {
+  sharp:   { sm:'2px',   md:'4px',   lg:'6px',   xl:'10px'  },
+  default: { sm:'4px',   md:'8px',   lg:'12px',  xl:'20px'  },
+  rounded: { sm:'8px',   md:'14px',  lg:'20px',  xl:'28px'  },
+  pill:    { sm:'999px', md:'999px', lg:'999px', xl:'9999px' }
+};
 
 // ── Site state ─────────────────────────────────────────────────
 var ds = {
-  primary:    '#7c6af7',
-  secondary:  '#2dd4bf',
-  scaleDark:  '#1f2328',
-  scaleLight: '#ffffff',
-  success:    '#22c55e',
-  warning:    '#f59e0b',
-  danger:     '#f43f5e',
-  info:       '#3b82f6',
-  mode:       'light',
-  fontSans:   'Inter',
-  fontMono:   'JetBrains Mono',
-  appliedId:  'freshds',
-  stagedId:   'freshds',
-  stagedPrimary:   '#7c6af7',
-  stagedSecondary: '#2dd4bf',
-  stagedDark:      '#1f2328',
-  stagedLight:     '#ffffff',
-  stagedSuccess:   '#22c55e',
-  stagedWarning:   '#f59e0b',
-  stagedDanger:    '#f43f5e',
-  stagedInfo:      '#3b82f6',
-  stagedFontSans:  'Inter',
-  stagedFontMono:  'JetBrains Mono',
-  pageBg:           null,
-  inputSurface:     null,
-  stagedPageBg:     null,
-  stagedInputSurface: null,
-  customThemes:  [],
-  _customCount:  0
+  primary:     DEFAULT_THEME.primary,
+  secondary:   DEFAULT_THEME.secondary,
+  scaleDark:   DEFAULT_THEME.scaleDark,
+  scaleLight:  DEFAULT_THEME.scaleLight,
+  success:     DEFAULT_THEME.success,
+  warning:     DEFAULT_THEME.warning,
+  danger:      DEFAULT_THEME.danger,
+  info:        DEFAULT_THEME.info,
+  mode:        'light',
+  fontSans:    DEFAULT_THEME.fontSans,
+  fontMono:    DEFAULT_THEME.fontMono,
+  pageBg:      DEFAULT_THEME.pageBg,
+  inputSurface: DEFAULT_THEME.inputSurface,
+  elevation:   DEFAULT_THEME.elevation,
+  density:     DEFAULT_THEME.density,
+  radius:      DEFAULT_THEME.radius,
+
+  stagedPrimary:      DEFAULT_THEME.primary,
+  stagedSecondary:    DEFAULT_THEME.secondary,
+  stagedDark:         DEFAULT_THEME.scaleDark,
+  stagedLight:        DEFAULT_THEME.scaleLight,
+  stagedSuccess:      DEFAULT_THEME.success,
+  stagedWarning:      DEFAULT_THEME.warning,
+  stagedDanger:       DEFAULT_THEME.danger,
+  stagedInfo:         DEFAULT_THEME.info,
+  stagedFontSans:     DEFAULT_THEME.fontSans,
+  stagedFontMono:     DEFAULT_THEME.fontMono,
+  stagedPageBg:       DEFAULT_THEME.pageBg,
+  stagedInputSurface: DEFAULT_THEME.inputSurface,
+  stagedElevation:    DEFAULT_THEME.elevation,
+  stagedDensity:      DEFAULT_THEME.density,
+  stagedRadius:       DEFAULT_THEME.radius
 };
 
 // ── Theme persistence — restore before first paint ─────────────
@@ -57,35 +86,22 @@ var ds = {
     var saved = localStorage.getItem('freshds-theme');
     if (!saved) return;
     var t = JSON.parse(saved);
-    if (t.primary)    { ds.primary    = ds.stagedPrimary    = t.primary; }
-    if (t.secondary)  { ds.secondary  = ds.stagedSecondary  = t.secondary; }
-    if (t.scaleDark)  { ds.scaleDark  = ds.stagedDark       = t.scaleDark; }
-    if (t.scaleLight) { ds.scaleLight = ds.stagedLight      = t.scaleLight; }
-    if (t.success)    { ds.success    = ds.stagedSuccess    = t.success; }
-    if (t.warning)    { ds.warning    = ds.stagedWarning    = t.warning; }
-    if (t.danger)     { ds.danger     = ds.stagedDanger     = t.danger; }
-    if (t.info)       { ds.info       = ds.stagedInfo       = t.info; }
-    if (t.fontSans)   { ds.fontSans   = ds.stagedFontSans   = t.fontSans; }
-    if (t.fontMono)   { ds.fontMono   = ds.stagedFontMono   = t.fontMono; }
-    if (t.appliedId)    { ds.appliedId    = ds.stagedId           = t.appliedId; }
-    if (t.pageBg)       { ds.pageBg       = ds.stagedPageBg     = t.pageBg; }
-    if (t.inputSurface) { ds.inputSurface = ds.stagedInputSurface= t.inputSurface; }
+    if (t.primary)      { ds.primary      = ds.stagedPrimary      = t.primary; }
+    if (t.secondary)    { ds.secondary    = ds.stagedSecondary    = t.secondary; }
+    if (t.scaleDark)    { ds.scaleDark    = ds.stagedDark         = t.scaleDark; }
+    if (t.scaleLight)   { ds.scaleLight   = ds.stagedLight        = t.scaleLight; }
+    if (t.success)      { ds.success      = ds.stagedSuccess      = t.success; }
+    if (t.warning)      { ds.warning      = ds.stagedWarning      = t.warning; }
+    if (t.danger)       { ds.danger       = ds.stagedDanger       = t.danger; }
+    if (t.info)         { ds.info         = ds.stagedInfo         = t.info; }
+    if (t.fontSans)     { ds.fontSans     = ds.stagedFontSans     = t.fontSans; }
+    if (t.fontMono)     { ds.fontMono     = ds.stagedFontMono     = t.fontMono; }
+    if (t.pageBg)       { ds.pageBg       = ds.stagedPageBg       = t.pageBg; }
+    if (t.inputSurface) { ds.inputSurface = ds.stagedInputSurface = t.inputSurface; }
+    if (t.elevation)    { ds.elevation    = ds.stagedElevation    = t.elevation; }
+    if (t.density)      { ds.density      = ds.stagedDensity      = t.density; }
+    if (t.radius)       { ds.radius       = ds.stagedRadius       = t.radius; }
     if (t.mode)         { ds.mode = t.mode; }
-    if (t.customThemes && Array.isArray(t.customThemes)) { ds.customThemes = t.customThemes; }
-    if (t._customCount) { ds._customCount = t._customCount; }
-    if (t.deletedSystemIds && Array.isArray(t.deletedSystemIds)) {
-      ds.deletedSystemIds = t.deletedSystemIds;
-      t.deletedSystemIds.forEach(function(id) {
-        var i = SYSTEM_THEMES.findIndex(function(s){ return s.id === id; });
-        if (i >= 0) SYSTEM_THEMES.splice(i, 1);
-      });
-    }
-    if (t.systemThemeStates && Array.isArray(t.systemThemeStates)) {
-      t.systemThemeStates.forEach(function(saved) {
-        var theme = SYSTEM_THEMES.filter(function(s){ return s.id === saved.id; })[0];
-        if (theme) { theme.name = saved.name; theme.primary = saved.primary; theme.secondary = saved.secondary; theme.dark = saved.dark; theme.light = saved.light; theme.success = saved.success; theme.warning = saved.warning; theme.danger = saved.danger; theme.info = saved.info; theme.pageBg = saved.pageBg; theme.inputSurface = saved.inputSurface; }
-      });
-    }
   } catch(e) {}
 })();
 
@@ -93,6 +109,9 @@ var ds = {
 applyScalesToElement(document.documentElement, ds.primary, ds.secondary, ds.scaleDark, ds.scaleLight);
 document.documentElement.style.setProperty('--color-page-bg',      ds.pageBg       || '#ffffff');
 document.documentElement.style.setProperty('--color-input-surface', ds.inputSurface || '#ffffff');
+_applyElevation(ds.elevation);
+_applyDensity(ds.density);
+_applyRadius(ds.radius);
 
 // ── Color swatch resolver (docs site only) ─────────────────────
 function resolveToken(prop) {
@@ -123,275 +142,161 @@ function pushToRoot(p, s, dark, light, pageBg, inputSurface) {
   updateColorSwatches();
 }
 
-// ── Preview container ──────────────────────────────────────────
-function stagePreview() {
-  var el = document.getElementById('preview-live');
-  if (!el) return;
-
-  var n   = generateNeutralScale(ds.stagedDark, ds.stagedLight);
-  var p   = generateScale(ds.stagedPrimary);
-  var s   = generateScale(ds.stagedSecondary);
-  var suc = generateScale(ds.stagedSuccess || '#22c55e');
-  var warn= generateScale(ds.stagedWarning || '#f59e0b');
-  var dang= generateScale(ds.stagedDanger  || '#f43f5e');
-  var info= generateScale(ds.stagedInfo    || '#3b82f6');
-
-  for (var i = 1; i <= 12; i++) {
-    el.style.setProperty('--scale-'     + i, n[i]);
-    el.style.setProperty('--primary-'   + i, p[i]);
-    el.style.setProperty('--secondary-' + i, s[i]);
-    el.style.setProperty('--success-'   + i, suc[i]);
-    el.style.setProperty('--warning-'   + i, warn[i]);
-    el.style.setProperty('--danger-'    + i, dang[i]);
-    el.style.setProperty('--info-'      + i, info[i]);
-  }
-  el.style.setProperty('--primitive-primary',   ds.stagedPrimary);
-  el.style.setProperty('--primitive-secondary', ds.stagedSecondary);
-  el.style.setProperty('--color-page-bg',       ds.stagedPageBg       || '#ffffff');
-  el.style.setProperty('--color-input-surface', ds.stagedInputSurface  || '#ffffff');
-  el.style.setProperty('--font-sans', "'" + ds.stagedFontSans + "', system-ui, sans-serif");
-  el.style.setProperty('--font-mono', "'" + ds.stagedFontMono + "', monospace");
+// ── Apply presets to root ──────────────────────────────────────
+function _applyElevation(preset) {
+  var p = ELEVATION_PRESETS[preset] || ELEVATION_PRESETS.subtle;
+  var root = document.documentElement;
+  root.style.setProperty('--elev-1', p[1]);
+  root.style.setProperty('--elev-2', p[2]);
+  root.style.setProperty('--elev-3', p[3]);
 }
 
-// ── Theme card rendering ───────────────────────────────────────
-function allThemes() { return SYSTEM_THEMES.concat(ds.customThemes); }
-
-function renderThemeCards() {
-  var container = document.getElementById('theme-cards');
-  if (!container) return;
-  container.innerHTML = allThemes().map(function(t) {
-    var isApplied  = t.id === ds.appliedId;
-    var isSelected = t.id === ds.stagedId;
-    var border     = isSelected
-      ? '2px solid ' + ds.stagedPrimary
-      : '1px solid var(--surface-border)';
-    var checkHtml  = isApplied
-      ? '<div class="theme-applied-check" title="Applied to site"><i class="ti ti-check"></i></div>'
-      : '';
-    return '<div class="theme-card'+(isSelected?' selected':'')+'" style="border:'+border+'" onclick="selectTheme(\''+t.id+'\')" role="button" tabindex="0">'
-      +'<div class="theme-palette"><span class="theme-swatch" style="background:'+t.primary+'"></span><span class="theme-swatch" style="background:'+t.secondary+'"></span></div>'
-      +'<div class="theme-card-footer">'
-        +'<input class="theme-name-input" value="'+t.name+'" onclick="event.stopPropagation()" oninput="renameCustomTheme(\''+t.id+'\',this.value)" placeholder="Theme name">'
-        +'<button class="theme-delete-btn" onclick="event.stopPropagation();deleteCustomTheme(\''+t.id+'\')" aria-label="Delete theme"><i class="ti ti-trash"></i></button>'
-      +'</div>'
-      +checkHtml+'</div>';
-  }).join('');
+function _applyDensity(preset) {
+  var p = DENSITY_PRESETS[preset] || DENSITY_PRESETS.default;
+  var root = document.documentElement;
+  Object.keys(p).forEach(function(n) { root.style.setProperty('--space-' + n, p[n]); });
 }
 
-// ── Select (stage) a theme for preview ────────────────────────
-function selectTheme(id) {
-  var t = allThemes().filter(function(x){ return x.id === id; })[0];
-  if (!t) return;
-  ds.stagedId        = id;
-  ds.stagedPrimary   = t.primary;
-  ds.stagedSecondary = t.secondary;
-  ds.stagedDark      = t.dark  !== undefined ? t.dark  : '#1f2328';
-  ds.stagedLight     = t.light !== undefined ? t.light : '#ffffff';
-  ds.stagedSuccess      = t.success || '#22c55e';
-  ds.stagedWarning      = t.warning || '#f59e0b';
-  ds.stagedDanger       = t.danger  || '#f43f5e';
-  ds.stagedInfo         = t.info    || '#3b82f6';
-  ds.stagedPageBg       = t.pageBg       || null;
-  ds.stagedInputSurface = t.inputSurface || null;
-  _syncConfiguratorUI();
-  stagePreview();
-  updateTokenOutput();
+function _applyRadius(preset) {
+  var p = RADIUS_PRESETS[preset] || RADIUS_PRESETS.default;
+  var root = document.documentElement;
+  root.style.setProperty('--radius-sm', p.sm);
+  root.style.setProperty('--radius-md', p.md);
+  root.style.setProperty('--radius-lg', p.lg);
+  root.style.setProperty('--radius-xl', p.xl);
+}
+
+// ── Push all staged values to root (live configurator preview) ─
+function _pushStagedToRoot() {
+  applyScalesToElement(document.documentElement,
+    ds.stagedPrimary, ds.stagedSecondary, ds.stagedDark, ds.stagedLight,
+    ds.stagedSuccess, ds.stagedWarning, ds.stagedDanger, ds.stagedInfo);
+  document.documentElement.style.setProperty('--color-page-bg',      ds.stagedPageBg || '#ffffff');
+  document.documentElement.style.setProperty('--color-input-surface', ds.stagedInputSurface || '#ffffff');
+  updateColorSwatches();
 }
 
 // ── Apply staged theme to the whole site ──────────────────────
 function applyStagedToSite() {
-  saveCurrentTheme();
-  ds.primary    = ds.stagedPrimary;
-  ds.secondary  = ds.stagedSecondary;
-  ds.scaleDark  = ds.stagedDark;
-  ds.scaleLight = ds.stagedLight;
-  ds.success    = ds.stagedSuccess;
-  ds.warning    = ds.stagedWarning;
-  ds.danger     = ds.stagedDanger;
+  ds.primary      = ds.stagedPrimary;
+  ds.secondary    = ds.stagedSecondary;
+  ds.scaleDark    = ds.stagedDark;
+  ds.scaleLight   = ds.stagedLight;
+  ds.success      = ds.stagedSuccess;
+  ds.warning      = ds.stagedWarning;
+  ds.danger       = ds.stagedDanger;
   ds.info         = ds.stagedInfo;
-  ds.appliedId    = ds.stagedId;
   ds.fontSans     = ds.stagedFontSans;
   ds.fontMono     = ds.stagedFontMono;
   ds.pageBg       = ds.stagedPageBg;
   ds.inputSurface = ds.stagedInputSurface;
-  pushToRoot(ds.primary, ds.secondary, ds.scaleDark, ds.scaleLight, ds.pageBg, ds.inputSurface);
+  ds.elevation    = ds.stagedElevation;
+  ds.density      = ds.stagedDensity;
+  ds.radius       = ds.stagedRadius;
+  _pushStagedToRoot();
   document.documentElement.style.setProperty('--font-sans', "'" + ds.fontSans + "', system-ui, sans-serif");
   document.documentElement.style.setProperty('--font-mono', "'" + ds.fontMono + "', monospace");
+  _applyElevation(ds.elevation);
+  _applyDensity(ds.density);
+  _applyRadius(ds.radius);
   _saveTheme();
-  renderThemeCards();
   _syncConfiguratorUI();
   _updateTypoFontNames();
 }
 
-function resetDefaultThemes() {
-  SYSTEM_THEMES.length = 0;
-  _SYSTEM_DEFAULTS.forEach(function(d){ SYSTEM_THEMES.push(JSON.parse(JSON.stringify(d))); });
-  ds.deletedSystemIds = [];
-  var stillExists = allThemes().some(function(t){ return t.id === ds.stagedId; });
-  selectTheme(stillExists ? ds.stagedId : 'freshds');
-  _saveTheme();
-}
-
-function saveCurrentTheme() {
-  var t = allThemes().filter(function(t){ return t.id === ds.stagedId; })[0];
-  if (!t) return;
-  t.primary      = ds.stagedPrimary;
-  t.secondary    = ds.stagedSecondary;
-  t.dark         = ds.stagedDark;
-  t.light        = ds.stagedLight;
-  t.success      = ds.stagedSuccess;
-  t.warning      = ds.stagedWarning;
-  t.danger       = ds.stagedDanger;
-  t.info         = ds.stagedInfo;
-  t.pageBg       = ds.stagedPageBg;
-  t.inputSurface = ds.stagedInputSurface;
-  _saveTheme();
-  renderThemeCards();
+// ── Discard staged changes ─────────────────────────────────────
+function discardStagedChanges() {
+  ds.stagedPrimary      = ds.primary;
+  ds.stagedSecondary    = ds.secondary;
+  ds.stagedDark         = ds.scaleDark;
+  ds.stagedLight        = ds.scaleLight;
+  ds.stagedSuccess      = ds.success;
+  ds.stagedWarning      = ds.warning;
+  ds.stagedDanger       = ds.danger;
+  ds.stagedInfo         = ds.info;
+  ds.stagedFontSans     = ds.fontSans;
+  ds.stagedFontMono     = ds.fontMono;
+  ds.stagedPageBg       = ds.pageBg;
+  ds.stagedInputSurface = ds.inputSurface;
+  ds.stagedElevation    = ds.elevation;
+  ds.stagedDensity      = ds.density;
+  ds.stagedRadius       = ds.radius;
+  _pushStagedToRoot();
+  document.documentElement.style.setProperty('--font-sans', "'" + ds.fontSans + "', system-ui, sans-serif");
+  document.documentElement.style.setProperty('--font-mono', "'" + ds.fontMono + "', monospace");
+  _applyElevation(ds.elevation);
+  _applyDensity(ds.density);
+  _applyRadius(ds.radius);
   _syncConfiguratorUI();
 }
 
-function discardStagedChanges() {
-  var t = allThemes().filter(function(t){ return t.id === ds.appliedId; })[0];
-  if (t) {
-    t.primary      = ds.primary;
-    t.secondary    = ds.secondary;
-    t.dark         = ds.scaleDark;
-    t.light        = ds.scaleLight;
-    t.success      = ds.success;
-    t.warning      = ds.warning;
-    t.danger       = ds.danger;
-    t.info         = ds.info;
-    t.pageBg       = ds.pageBg;
-    t.inputSurface = ds.inputSurface;
-  }
-  _saveTheme();
-  selectTheme(ds.appliedId);
+// ── Staging functions called from configurator pill buttons ────
+function stageCfgElevation(val) {
+  ds.stagedElevation = val;
+  _applyElevation(val);
+  _syncConfiguratorUI();
 }
 
-// ── Custom theme management ────────────────────────────────────
-function addCustomTheme() {
-  ds._customCount++;
-  var id = 'custom-' + ds._customCount;
-  ds.customThemes.push({ id: id, name: 'Custom ' + ds._customCount, primary: '#1f2328', secondary: '#6b7280', success: '#22c55e', warning: '#f59e0b', danger: '#f43f5e', info: '#3b82f6', system: false });
-  selectTheme(id);
+function stageCfgDensity(val) {
+  ds.stagedDensity = val;
+  _applyDensity(val);
+  _syncConfiguratorUI();
 }
 
-function deleteCustomTheme(id) {
-  var t = ds.customThemes.filter(function(t){ return t.id === id; })[0];
-  if (typeof openDeleteModal === 'function') {
-    openDeleteModal(id, t ? t.name : 'this theme');
-    return;
-  }
-  var input = prompt('Type DELETE to confirm removing "' + (t ? t.name : 'this theme') + '".');
-  if (input === null || input.trim() !== 'DELETE') return;
-  _doDeleteTheme(id);
+function stageCfgRadius(val) {
+  ds.stagedRadius = val;
+  _applyRadius(val);
+  _syncConfiguratorUI();
 }
 
-function _doDeleteTheme(id) {
-  var inSystem = SYSTEM_THEMES.some(function(t){ return t.id === id; });
-  if (inSystem) {
-    SYSTEM_THEMES.splice(SYSTEM_THEMES.findIndex(function(t){ return t.id === id; }), 1);
-    if (!ds.deletedSystemIds) ds.deletedSystemIds = [];
-    ds.deletedSystemIds.push(id);
-  } else {
-    ds.customThemes = ds.customThemes.filter(function(t){ return t.id !== id; });
-  }
-  var remaining  = allThemes();
-  var fallback   = remaining.length ? remaining[0].id : null;
-  var fallbackId = fallback || 'freshds';
-
-  if (ds.appliedId === id) {
-    var fb = allThemes().filter(function(t){ return t.id === fallbackId; })[0];
-    if (fb) {
-      ds.primary    = fb.primary;
-      ds.secondary  = fb.secondary;
-      ds.scaleDark  = fb.dark  || '#1f2328';
-      ds.scaleLight = fb.light || '#ffffff';
-      ds.success    = fb.success || '#22c55e';
-      ds.warning    = fb.warning || '#f59e0b';
-      ds.danger     = fb.danger  || '#f43f5e';
-      ds.info       = fb.info    || '#3b82f6';
-      ds.pageBg     = fb.pageBg  || null;
-      ds.inputSurface = fb.inputSurface || null;
-      pushToRoot(ds.primary, ds.secondary, ds.scaleDark, ds.scaleLight, ds.pageBg, ds.inputSurface);
-    }
-    ds.appliedId = fallbackId;
-  }
-
-  if (ds.stagedId === id) {
-    fallback ? selectTheme(fallbackId) : renderThemeCards();
-  } else {
-    renderThemeCards();
-    stagePreview();
-  }
-  _saveTheme();
-}
-
-function renameCustomTheme(id, name) {
-  var t = allThemes().filter(function(t){ return t.id === id; })[0];
-  if (t) t.name = name;
-  if (ds.stagedId === id) {
-    var nameEl = document.getElementById('cfg-theme-name-label');
-    if (nameEl) nameEl.textContent = name;
-  }
-  _saveTheme();
-}
-
-// ── Sync configurator UI ───────────────────────────────────────
+// ── Sync configurator UI to staged state ──────────────────────
 function _syncConfiguratorUI() {
-  var cpP = document.getElementById('cfg-primary');
-  var cpS = document.getElementById('cfg-secondary');
-  if (cpP) { cpP.value = ds.stagedPrimary; cpP.disabled = false; }
-  if (cpS) { cpS.value = ds.stagedSecondary; cpS.disabled = false; }
-  var hPrimary   = document.getElementById('cfg-hex-primary');
-  var hSecondary = document.getElementById('cfg-hex-secondary');
-  if (hPrimary   && document.activeElement !== hPrimary)   hPrimary.value   = ds.stagedPrimary;
-  if (hSecondary && document.activeElement !== hSecondary) hSecondary.value = ds.stagedSecondary;
-
-  var cpSuc = document.getElementById('cfg-success');
-  var cpWarn = document.getElementById('cfg-warning');
-  var cpDang = document.getElementById('cfg-danger');
-  var cpInfo = document.getElementById('cfg-info');
-  if (cpSuc)  { cpSuc.value  = ds.stagedSuccess; cpSuc.disabled  = false; }
-  if (cpWarn) { cpWarn.value = ds.stagedWarning; cpWarn.disabled = false; }
-  if (cpDang) { cpDang.value = ds.stagedDanger;  cpDang.disabled = false; }
-  if (cpInfo) { cpInfo.value = ds.stagedInfo;    cpInfo.disabled = false; }
-  var hSuc = document.getElementById('cfg-hex-success');
-  var hWarn = document.getElementById('cfg-hex-warning');
-  var hDang = document.getElementById('cfg-hex-danger');
-  var hInfo = document.getElementById('cfg-hex-info');
-  if (hSuc  && document.activeElement !== hSuc)  hSuc.value  = ds.stagedSuccess;
-  if (hWarn && document.activeElement !== hWarn) hWarn.value = ds.stagedWarning;
-  if (hDang && document.activeElement !== hDang) hDang.value = ds.stagedDanger;
-  if (hInfo && document.activeElement !== hInfo) hInfo.value = ds.stagedInfo;
-
-  var cpD = document.getElementById('cfg-scale-dark');
-  var cpL = document.getElementById('cfg-scale-light');
-  if (cpD) { cpD.value = ds.stagedDark;  cpD.disabled = false; }
-  if (cpL) { cpL.value = ds.stagedLight; cpL.disabled = false; }
-  var hD = document.getElementById('cfg-hex-dark');
-  var hL = document.getElementById('cfg-hex-light');
-  if (hD && document.activeElement !== hD) hD.value = ds.stagedDark;
-  if (hL && document.activeElement !== hL) hL.value = ds.stagedLight;
-
-  var cpPgBg  = document.getElementById('cfg-page-bg');
-  var cpInSf  = document.getElementById('cfg-input-surface');
-  var hPgBg   = document.getElementById('cfg-hex-page-bg');
-  var hInSf   = document.getElementById('cfg-hex-input-surface');
-  var dispPgBg  = ds.stagedPageBg       || '#ffffff';
-  var dispInSf  = ds.stagedInputSurface || '#ffffff';
-  if (cpPgBg) { cpPgBg.value = dispPgBg; cpPgBg.disabled = false; }
-  if (cpInSf) { cpInSf.value = dispInSf; cpInSf.disabled = false; }
-  if (hPgBg && document.activeElement !== hPgBg) hPgBg.value = dispPgBg;
-  if (hInSf && document.activeElement !== hInSf) hInSf.value = dispInSf;
+  var fields = [
+    { pickerId: 'cfg-primary',        hexId: 'cfg-hex-primary',        val: ds.stagedPrimary },
+    { pickerId: 'cfg-secondary',      hexId: 'cfg-hex-secondary',      val: ds.stagedSecondary },
+    { pickerId: 'cfg-scale-dark',     hexId: 'cfg-hex-dark',           val: ds.stagedDark },
+    { pickerId: 'cfg-scale-light',    hexId: 'cfg-hex-light',          val: ds.stagedLight },
+    { pickerId: 'cfg-success',        hexId: 'cfg-hex-success',        val: ds.stagedSuccess },
+    { pickerId: 'cfg-warning',        hexId: 'cfg-hex-warning',        val: ds.stagedWarning },
+    { pickerId: 'cfg-danger',         hexId: 'cfg-hex-danger',         val: ds.stagedDanger },
+    { pickerId: 'cfg-info',           hexId: 'cfg-hex-info',           val: ds.stagedInfo },
+    { pickerId: 'cfg-page-bg',        hexId: 'cfg-hex-page-bg',        val: ds.stagedPageBg || '#ffffff' },
+    { pickerId: 'cfg-input-surface',  hexId: 'cfg-hex-input-surface',  val: ds.stagedInputSurface || '#ffffff' }
+  ];
+  fields.forEach(function(f) {
+    var picker = document.getElementById(f.pickerId);
+    var hex    = document.getElementById(f.hexId);
+    if (picker) picker.value = f.val;
+    if (hex && document.activeElement !== hex) hex.value = f.val;
+  });
 
   var selSans = document.getElementById('font-sans-select');
   var selMono = document.getElementById('font-mono-select');
-  if (selSans) { selSans.value = ds.stagedFontSans; selSans.disabled = false; }
-  if (selMono) { selMono.value = ds.stagedFontMono; selMono.disabled = false; }
+  if (selSans) selSans.value = ds.stagedFontSans;
+  if (selMono) selMono.value = ds.stagedFontMono;
 
-  var isDiff = ds.stagedId        !== ds.appliedId
-    || ds.stagedPrimary      !== ds.primary
+  // Preset pill active states
+  [
+    { id: 'cfg-elevation', prop: 'stagedElevation' },
+    { id: 'cfg-density',   prop: 'stagedDensity'   },
+    { id: 'cfg-radius',    prop: 'stagedRadius'     }
+  ].forEach(function(row) {
+    var el = document.getElementById(row.id);
+    if (!el) return;
+    el.querySelectorAll('.cfg-pill').forEach(function(pill) {
+      pill.classList.toggle('active', pill.dataset.value === ds[row.prop]);
+    });
+  });
+
+  // Neutral scale strip
+  var neutral = generateNeutralScale(ds.stagedDark, ds.stagedLight);
+  for (var i = 1; i <= 12; i++) {
+    var chip = document.getElementById('scale-chip-' + i);
+    if (chip) chip.style.background = neutral[i];
+  }
+
+  // Footer
+  var isDiff = ds.stagedPrimary      !== ds.primary
     || ds.stagedSecondary    !== ds.secondary
     || ds.stagedDark         !== ds.scaleDark
     || ds.stagedLight        !== ds.scaleLight
@@ -402,60 +307,13 @@ function _syncConfiguratorUI() {
     || ds.stagedFontSans     !== ds.fontSans
     || ds.stagedFontMono     !== ds.fontMono
     || (ds.stagedPageBg       || null) !== (ds.pageBg       || null)
-    || (ds.stagedInputSurface || null) !== (ds.inputSurface || null);
+    || (ds.stagedInputSurface || null) !== (ds.inputSurface || null)
+    || ds.stagedElevation    !== ds.elevation
+    || ds.stagedDensity      !== ds.density
+    || ds.stagedRadius       !== ds.radius;
 
-  var tObj = allThemes().filter(function(x){ return x.id === ds.stagedId; })[0];
-  var hasUnsavedEdits = tObj && (
-    ds.stagedPrimary      !== (tObj.primary   || ds.stagedPrimary)   ||
-    ds.stagedSecondary    !== (tObj.secondary || ds.stagedSecondary) ||
-    ds.stagedSuccess      !== (tObj.success   || '#22c55e')          ||
-    ds.stagedWarning      !== (tObj.warning   || '#f59e0b')          ||
-    ds.stagedDanger       !== (tObj.danger    || '#f43f5e')          ||
-    ds.stagedInfo         !== (tObj.info      || '#3b82f6')          ||
-    ds.stagedDark         !== (tObj.dark      || ds.scaleDark)       ||
-    ds.stagedLight        !== (tObj.light     || ds.scaleLight)      ||
-    (ds.stagedPageBg       || null) !== (tObj.pageBg       || null)  ||
-    (ds.stagedInputSurface || null) !== (tObj.inputSurface || null)
-  );
-
-  var footer      = document.getElementById('cfg-footer');
-  var footerLabel = document.getElementById('cfg-footer-label-text');
-  var saveBtn     = document.getElementById('cfg-footer-save-btn');
-  var showFooter  = isDiff || hasUnsavedEdits;
-  if (footer) footer.classList.toggle('visible', showFooter);
-  if (saveBtn) saveBtn.style.display = hasUnsavedEdits ? '' : 'none';
-  var footerLabelWrap = document.getElementById('cfg-footer-label-wrap');
-  if (footerLabel) {
-    var safeName = (tObj && tObj.name) ? tObj.name : 'Theme';
-    footerLabel.textContent = hasUnsavedEdits ? safeName + ' — unsaved changes' : '';
-  }
-  if (footerLabelWrap) footerLabelWrap.style.visibility = hasUnsavedEdits ? '' : 'hidden';
-
-  var t = allThemes().filter(function(x){ return x.id === ds.stagedId; })[0];
-  var themeName = t ? t.name : 'Custom';
-  var nameEl = document.getElementById('cfg-theme-name-label');
-  if (nameEl) nameEl.textContent = themeName;
-  var label = document.getElementById('cfg-preview-label');
-  if (label) {
-    var isAppliedTheme = ds.stagedId === ds.appliedId;
-    label.textContent    = isAppliedTheme ? 'Applied' : '';
-    label.style.display  = isAppliedTheme ? '' : 'none';
-    label.style.color    = 'var(--text-tertiary)';
-  }
-
-  // 12-step neutral scale strip
-  var neutral = generateNeutralScale(ds.stagedDark, ds.stagedLight);
-  for (var i = 1; i <= 12; i++) {
-    var chip = document.getElementById('scale-chip-' + i);
-    if (chip) chip.style.background = neutral[i];
-  }
-
-  renderThemeCards();
-}
-
-function switchCfgTab(tab) {
-  document.querySelectorAll('.cfg-tab').forEach(function(t){ t.classList.toggle('active', t.dataset.tab === tab); });
-  document.querySelectorAll('.cfg-tab-panel').forEach(function(p){ p.classList.toggle('active', p.dataset.tab === tab); });
+  var footer = document.getElementById('cfg-footer');
+  if (footer) footer.classList.toggle('visible', isDiff);
 }
 
 // ── Theme persistence ──────────────────────────────────────────
@@ -472,14 +330,12 @@ function _saveTheme() {
       info:         ds.info,
       fontSans:     ds.fontSans,
       fontMono:     ds.fontMono,
-      appliedId:    ds.appliedId,
       mode:         ds.mode,
       pageBg:       ds.pageBg,
       inputSurface: ds.inputSurface,
-      customThemes:      ds.customThemes,
-      _customCount:      ds._customCount,
-      systemThemeStates: SYSTEM_THEMES.map(function(t){ return { id: t.id, name: t.name, primary: t.primary, secondary: t.secondary, dark: t.dark, light: t.light, success: t.success, warning: t.warning, danger: t.danger, info: t.info, pageBg: t.pageBg, inputSurface: t.inputSurface }; }),
-      deletedSystemIds:  ds.deletedSystemIds || []
+      elevation:    ds.elevation,
+      density:      ds.density,
+      radius:       ds.radius
     };
     localStorage.setItem('freshds-theme', JSON.stringify(themeData));
     if (typeof window.__saveThemeToCloud === 'function') {
@@ -496,7 +352,7 @@ function toggleMode() {
   if (btn) btn.innerHTML = ds.mode === 'dark'
     ? '<i class="ti ti-sun"></i> Light'
     : '<i class="ti ti-moon"></i> Dark';
-  stagePreview();
+  _pushStagedToRoot();
   _saveTheme();
 }
 
@@ -1038,7 +894,7 @@ function _generateThemeVarsCss() {
   return (
     '/* © Freshdesign Interactive, Inc. — Do not redistribute.\n' +
     '   FreshDS — Generated theme variables\n' +
-    '   Theme    : ' + (ds.stagedId || 'custom') + '\n' +
+    '   Theme    : custom\n' +
     '   Primary  : ' + ds.stagedPrimary + '\n' +
     '   Secondary: ' + ds.stagedSecondary + '\n' +
     '   Generated: ' + new Date().toISOString() + '\n' +
@@ -1062,7 +918,7 @@ function _generateThemeVarsCss() {
 }
 
 function _generateReadme(isSite) {
-  var themeName = ds.stagedId || 'custom';
+  var themeName = 'FreshDS';
   return (
     '# FreshDS — ' + (isSite ? 'Documentation Site' : 'Developer Bundle') + '\n\n' +
     'Theme: **' + themeName + '**  \n' +
@@ -1217,24 +1073,24 @@ document.addEventListener('DOMContentLoaded', function() {
     var val = e.detail ? e.detail.value : e.target.value;
     ds.stagedFontSans = val;
     applyFont('sans', val);
-    _syncConfiguratorUI(); stagePreview(); updateTokenOutput();
+    _pushStagedToRoot(); _syncConfiguratorUI(); updateTokenOutput();
   });
   if (fontMonoEl) fontMonoEl.addEventListener('change', function(e) {
     var val = e.detail ? e.detail.value : e.target.value;
     ds.stagedFontMono = val;
     applyFont('mono', val);
-    _syncConfiguratorUI(); stagePreview(); updateTokenOutput();
+    _pushStagedToRoot(); _syncConfiguratorUI(); updateTokenOutput();
   });
 
   var cpP = document.getElementById('cfg-primary');
   var cpS = document.getElementById('cfg-secondary');
   if (cpP) cpP.addEventListener('input', function(e) {
     ds.stagedPrimary = e.target.value;
-    _syncConfiguratorUI(); stagePreview(); updateTokenOutput();
+    _pushStagedToRoot(); _syncConfiguratorUI(); updateTokenOutput();
   });
   if (cpS) cpS.addEventListener('input', function(e) {
     ds.stagedSecondary = e.target.value;
-    _syncConfiguratorUI(); stagePreview(); updateTokenOutput();
+    _pushStagedToRoot(); _syncConfiguratorUI(); updateTokenOutput();
   });
 
   var cpSuc2 = document.getElementById('cfg-success');
@@ -1243,41 +1099,41 @@ document.addEventListener('DOMContentLoaded', function() {
   var cpInfo2 = document.getElementById('cfg-info');
   if (cpSuc2) cpSuc2.addEventListener('input', function(e) {
     ds.stagedSuccess = e.target.value;
-    _syncConfiguratorUI(); stagePreview(); updateTokenOutput();
+    _pushStagedToRoot(); _syncConfiguratorUI(); updateTokenOutput();
   });
   if (cpWarn2) cpWarn2.addEventListener('input', function(e) {
     ds.stagedWarning = e.target.value;
-    _syncConfiguratorUI(); stagePreview(); updateTokenOutput();
+    _pushStagedToRoot(); _syncConfiguratorUI(); updateTokenOutput();
   });
   if (cpDang2) cpDang2.addEventListener('input', function(e) {
     ds.stagedDanger = e.target.value;
-    _syncConfiguratorUI(); stagePreview(); updateTokenOutput();
+    _pushStagedToRoot(); _syncConfiguratorUI(); updateTokenOutput();
   });
   if (cpInfo2) cpInfo2.addEventListener('input', function(e) {
     ds.stagedInfo = e.target.value;
-    _syncConfiguratorUI(); stagePreview(); updateTokenOutput();
+    _pushStagedToRoot(); _syncConfiguratorUI(); updateTokenOutput();
   });
 
   var cpD = document.getElementById('cfg-scale-dark');
   var cpL = document.getElementById('cfg-scale-light');
   if (cpD) cpD.addEventListener('input', function(e) {
     ds.stagedDark = e.target.value;
-    _syncConfiguratorUI(); stagePreview(); updateTokenOutput();
+    _pushStagedToRoot(); _syncConfiguratorUI(); updateTokenOutput();
   });
   if (cpL) cpL.addEventListener('input', function(e) {
     ds.stagedLight = e.target.value;
-    _syncConfiguratorUI(); stagePreview(); updateTokenOutput();
+    _pushStagedToRoot(); _syncConfiguratorUI(); updateTokenOutput();
   });
 
   var cpPgBg2 = document.getElementById('cfg-page-bg');
   var cpInSf2 = document.getElementById('cfg-input-surface');
   if (cpPgBg2) cpPgBg2.addEventListener('input', function(e) {
     ds.stagedPageBg = e.target.value;
-    _syncConfiguratorUI(); stagePreview(); updateTokenOutput();
+    _pushStagedToRoot(); _syncConfiguratorUI(); updateTokenOutput();
   });
   if (cpInSf2) cpInSf2.addEventListener('input', function(e) {
     ds.stagedInputSurface = e.target.value;
-    _syncConfiguratorUI(); stagePreview(); updateTokenOutput();
+    _pushStagedToRoot(); _syncConfiguratorUI(); updateTokenOutput();
   });
 
   var hexMap = [
@@ -1302,13 +1158,15 @@ document.addEventListener('DOMContentLoaded', function() {
       if (!/^#[0-9a-fA-F]{6}$/.test(val)) return;
       ds[entry.key] = val;
       if (pickerEl) pickerEl.value = val;
-      _syncConfiguratorUI(); stagePreview(); updateTokenOutput();
+      _pushStagedToRoot(); _syncConfiguratorUI(); updateTokenOutput();
     });
   });
 
-  renderThemeCards();
+  _pushStagedToRoot();
+  _applyElevation(ds.stagedElevation);
+  _applyDensity(ds.stagedDensity);
+  _applyRadius(ds.stagedRadius);
   _syncConfiguratorUI();
-  stagePreview();
   updateTokenOutput();
   initNavSearch();
   _updateTypoFontNames();
