@@ -80,6 +80,9 @@ var ds = {
   stagedRadius:       DEFAULT_THEME.radius
 };
 
+// ── Configurator context guard ─────────────────────────────────
+var _isConfigurator = window.location.pathname.indexOf('configurator') !== -1;
+
 // ── Theme persistence — restore before first paint ─────────────
 (function() {
   try {
@@ -106,12 +109,15 @@ var ds = {
 })();
 
 // ── Pre-paint: eliminate FOUC ──────────────────────────────────
-applyScalesToElement(document.documentElement, ds.primary, ds.secondary, ds.scaleDark, ds.scaleLight);
-document.documentElement.style.setProperty('--color-page-bg',      ds.pageBg       || '#ffffff');
-document.documentElement.style.setProperty('--color-input-surface', ds.inputSurface || '#ffffff');
-_applyElevation(ds.elevation);
-_applyDensity(ds.density);
-_applyRadius(ds.radius);
+// Non-configurator pages always use the DS default theme — customer colors are export-only.
+// The configurator page gets its customer colors applied in DOMContentLoaded instead.
+var _prePaintTheme = _isConfigurator ? ds : DEFAULT_THEME;
+applyScalesToElement(document.documentElement, _prePaintTheme.primary, _prePaintTheme.secondary, _prePaintTheme.scaleDark, _prePaintTheme.scaleLight);
+document.documentElement.style.setProperty('--color-page-bg',      _prePaintTheme.pageBg       || '#ffffff');
+document.documentElement.style.setProperty('--color-input-surface', _prePaintTheme.inputSurface || '#ffffff');
+_applyElevation(_prePaintTheme.elevation);
+_applyDensity(_prePaintTheme.density);
+_applyRadius(_prePaintTheme.radius);
 
 // ── Color swatch resolver (docs site only) ─────────────────────
 function resolveToken(prop) {
@@ -1065,7 +1071,9 @@ document.addEventListener('DOMContentLoaded', function() {
     if (modeBtn) modeBtn.innerHTML = '<i class="ti ti-sun"></i> Light';
   }
 
-  pushToRoot(ds.primary, ds.secondary, ds.scaleDark, ds.scaleLight, ds.pageBg, ds.inputSurface);
+  if (_isConfigurator) {
+    pushToRoot(ds.primary, ds.secondary, ds.scaleDark, ds.scaleLight, ds.pageBg, ds.inputSurface);
+  }
 
   var fontSansEl = document.getElementById('font-sans-select');
   var fontMonoEl = document.getElementById('font-mono-select');
@@ -1162,12 +1170,14 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 
-  _pushStagedToRoot();
-  _applyElevation(ds.stagedElevation);
-  _applyDensity(ds.stagedDensity);
-  _applyRadius(ds.stagedRadius);
-  _syncConfiguratorUI();
-  updateTokenOutput();
+  if (_isConfigurator) {
+    _pushStagedToRoot();
+    _applyElevation(ds.stagedElevation);
+    _applyDensity(ds.stagedDensity);
+    _applyRadius(ds.stagedRadius);
+    _syncConfiguratorUI();
+    updateTokenOutput();
+  }
   initNavSearch();
   _updateTypoFontNames();
 
