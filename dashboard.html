@@ -120,8 +120,10 @@
     }
 
     // Check payment status
-    const { data: profile } = await supabase
+    const { data: profile, error: profileError } = await supabase
       .from('profiles').select('has_paid').eq('id', user.id).single()
+    if (profileError) console.error('[FreshDS] profile query error:', profileError)
+    console.log('[FreshDS] user.id:', user.id, '| profile:', profile)
     const hasPaid = profile?.has_paid || false
 
     // Handle Stripe redirect back after payment
