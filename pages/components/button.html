@@ -56,7 +56,7 @@ body { background: #f7f7f8; }
   font-size: 15px;
   color: #555;
   line-height: 1.65;
-  max-width: 640px;
+  max-width: 100%;
   margin-bottom: 36px;
 }
 
@@ -257,6 +257,24 @@ body { background: #f7f7f8; }
 
 .spec-rules-hint { font-size: 11px; color: #777; }
 
+.spec-rules-reset {
+  all: unset;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  font-weight: 500;
+  color: #888;
+  cursor: pointer;
+  padding: 3px 8px;
+  border-radius: 4px;
+  border: 1px solid #d4d4d7;
+  background: transparent;
+  transition: background 0.12s, color 0.12s, border-color 0.12s;
+}
+.spec-rules-reset:hover { background: #fff; color: #333; border-color: #bbb; }
+
 .spec-rules-section {
   padding: 16px 24px;
   border-bottom: 1px solid #d4d4d7;
@@ -387,6 +405,58 @@ body { background: #f7f7f8; }
   border-radius: 3px;
   color: #444;
 }
+
+/* ── Code blocks ─────────────────────────────────────────── */
+.code-block {
+  background: #1e1e2e;
+  border: 1px solid #313244;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+.code-block:last-child { margin-bottom: 0; }
+.code-block-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 7px 14px;
+  background: #181825;
+  border-bottom: 1px solid #313244;
+}
+.code-lang {
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #6c7086;
+  font-family: var(--font-mono);
+}
+.code-context { font-size: 11px; color: #9399b2; margin-left: 8px; }
+.code-copy {
+  all: unset;
+  font-size: 11px;
+  color: #6c7086;
+  cursor: pointer;
+  padding: 2px 8px;
+  border-radius: 4px;
+  transition: color 0.1s, background 0.1s;
+}
+.code-copy:hover { color: #cdd6f4; background: #313244; }
+.code-body {
+  padding: 14px 18px;
+  overflow-x: auto;
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  line-height: 1.75;
+  white-space: pre;
+  color: #cdd6f4;
+}
+.hl-tag  { color: #89dceb; }
+.hl-attr { color: #89b4fa; }
+.hl-val  { color: #a6e3a1; }
+.hl-txt  { color: #cdd6f4; }
+.hl-pun  { color: #cba6f7; }
+.hl-com  { color: #585b70; font-style: italic; }
 </style>
 </head>
 <body>
@@ -401,7 +471,7 @@ body { background: #f7f7f8; }
   <div class="comp-section">
     <div class="spec-card">
       <div class="spec-card-topbar">
-        <span class="spec-rules-title">Button, Variants</span>
+        <span class="spec-rules-title">Button variants</span>
         <div class="spec-mode-switcher">
           <button class="spec-mode-btn active" id="mode-btn-light" onclick="setSpecMode('light')"><i class="ti ti-sun"></i> Light</button>
           <button class="spec-mode-btn" id="mode-btn-dark" onclick="setSpecMode('dark')"><i class="ti ti-moon"></i> Dark</button>
@@ -577,7 +647,10 @@ body { background: #f7f7f8; }
 
       <div class="spec-rules-topbar">
         <span class="spec-rules-title">AI action rules</span>
-        <span class="spec-rules-hint">Click any rule to edit</span>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <span class="spec-rules-hint">Click any rule to edit</span>
+          <button class="spec-rules-reset" onclick="restoreDefaults()"><i class="ti ti-rotate" style="font-size:10px;"></i> Restore FreshDS defaults</button>
+        </div>
       </div>
 
       <!-- Primary rules -->
@@ -625,48 +698,38 @@ body { background: #f7f7f8; }
         <ul class="spec-rule-list" id="rules-secondary">
           <li class="spec-rule-li">
             <span class="spec-rule-bullet">•</span>
-            <span class="spec-rule-text" contenteditable="true">Use <code>variant="secondary"</code> for the second most important action, typically paired with a primary (e.g. Cancel + Save).</span>
+            <span class="spec-rule-text" contenteditable="true">Use <code>variant="secondary"</code> for supporting actions that accompany a primary: "Cancel", "Export", "Preview".</span>
             <span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span>
           </li>
           <li class="spec-rule-li">
             <span class="spec-rule-bullet">•</span>
-            <span class="spec-rule-text" contenteditable="true">Can appear alone when the action is important but not the page's main CTA.</span>
+            <span class="spec-rule-text" contenteditable="true">Secondary buttons can appear in multiples — they carry equal weight with each other and subordinate weight to primary.</span>
             <span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span>
           </li>
           <li class="spec-rule-li">
             <span class="spec-rule-bullet">•</span>
-            <span class="spec-rule-text" contenteditable="true">Prefer secondary over ghost when the action needs to stand out against surrounding content.</span>
-            <span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span>
-          </li>
-          <li class="spec-rule-li">
-            <span class="spec-rule-bullet">•</span>
-            <span class="spec-rule-text" contenteditable="true">Do not use secondary for destructive actions, use <code>variant="danger"</code> instead.</span>
+            <span class="spec-rule-text" contenteditable="true">Do not use secondary as a decorative button with no action, it must trigger a real function.</span>
             <span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span>
           </li>
         </ul>
         <button class="spec-add-rule" onclick="addRule('rules-secondary')"><i class="ti ti-plus"></i> Add rule</button>
       </div>
 
-      <!-- Tertiary rules -->
+      <!-- Ghost rules -->
       <div class="spec-rules-section">
         <div class="spec-rules-section-head">
-          <span class="spec-rules-variant">Tertiary</span>
+          <span class="spec-rules-variant">Ghost</span>
           <span class="spec-attr-chip">variant="ghost"</span>
         </div>
         <ul class="spec-rule-list" id="rules-ghost">
           <li class="spec-rule-li">
             <span class="spec-rule-bullet">•</span>
-            <span class="spec-rule-text" contenteditable="true">Use <code>variant="ghost"</code> for low-emphasis, optional, or repeated controls: toolbars, pagination, filters, icon buttons.</span>
+            <span class="spec-rule-text" contenteditable="true">Use <code>variant="ghost"</code> for low-emphasis actions that should recede into the layout: inline table row actions, icon toolbars, secondary nav links.</span>
             <span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span>
           </li>
           <li class="spec-rule-li">
             <span class="spec-rule-bullet">•</span>
-            <span class="spec-rule-text" contenteditable="true">Ideal for secondary actions inside cards and controls embedded inline within text flows.</span>
-            <span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span>
-          </li>
-          <li class="spec-rule-li">
-            <span class="spec-rule-bullet">•</span>
-            <span class="spec-rule-text" contenteditable="true">Always ensure adequate surrounding spacing so ghost buttons remain recognisable as interactive.</span>
+            <span class="spec-rule-text" contenteditable="true">Prefer <code>icon-only</code> for ghost buttons in dense contexts (tables, toolbars) to preserve visual rhythm.</span>
             <span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span>
           </li>
           <li class="spec-rule-li">
@@ -748,6 +811,191 @@ body { background: #f7f7f8; }
     </div>
   </div>
 
+  <!-- ATTRIBUTES -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar">
+        <span class="spec-rules-title">Attributes</span>
+      </div>
+      <table class="spec-a11y-table">
+        <thead>
+          <tr>
+            <th style="width:130px">Attribute</th>
+            <th style="width:220px">Values</th>
+            <th style="width:80px">Default</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="spec-a11y-row">
+            <td class="spec-a11y-concern">variant</td>
+            <td class="spec-a11y-req"><code>primary</code> <code>secondary</code> <code>ghost</code> <code>danger</code> <code>ai</code></td>
+            <td class="spec-a11y-req"><code>primary</code></td>
+            <td class="spec-a11y-req">Visual intent. Controls colour, fill, and border style.</td>
+          </tr>
+          <tr class="spec-a11y-row">
+            <td class="spec-a11y-concern">size</td>
+            <td class="spec-a11y-req"><code>sm</code> <code>md</code> <code>lg</code></td>
+            <td class="spec-a11y-req"><code>md</code></td>
+            <td class="spec-a11y-req">Height: sm 28px, md 34px, lg 40px. Font and padding scale proportionally.</td>
+          </tr>
+          <tr class="spec-a11y-row">
+            <td class="spec-a11y-concern">disabled</td>
+            <td class="spec-a11y-req">boolean</td>
+            <td class="spec-a11y-req">—</td>
+            <td class="spec-a11y-req">Sets native <code>disabled</code> and <code>aria-disabled="true"</code>. Drops opacity to 38%. Blocks all interaction.</td>
+          </tr>
+          <tr class="spec-a11y-row">
+            <td class="spec-a11y-concern">loading</td>
+            <td class="spec-a11y-req">boolean</td>
+            <td class="spec-a11y-req">—</td>
+            <td class="spec-a11y-req">Replaces label with a spinner. Sets <code>aria-busy="true"</code> and blocks interaction. Pair with <code>aria-label</code> for spoken context.</td>
+          </tr>
+          <tr class="spec-a11y-row">
+            <td class="spec-a11y-concern">icon-only</td>
+            <td class="spec-a11y-req">boolean</td>
+            <td class="spec-a11y-req">—</td>
+            <td class="spec-a11y-req">Squares proportions for a single icon. Always requires <code>aria-label</code> describing the action.</td>
+          </tr>
+          <tr class="spec-a11y-row">
+            <td class="spec-a11y-concern">aria-label</td>
+            <td class="spec-a11y-req">string</td>
+            <td class="spec-a11y-req">—</td>
+            <td class="spec-a11y-req">Required on <code>icon-only</code> buttons. Also set during <code>loading</code> to give a spoken status (e.g. "Saving…").</td>
+          </tr>
+        </tbody>
+      </table>
+      <div style="padding:10px 24px 12px;border-top:1px solid #d4d4d7;">
+        <p style="font-size:12px;color:#888;margin:0;line-height:1.6;"><strong style="color:#c0392b;">Note for AI:</strong> <code>fresh-button</code> is not form-associated. Setting <code>type="submit"</code> has no effect. For form submission, use a native <code>&lt;button type="submit"&gt;</code> or call <code>form.requestSubmit()</code> from a click handler.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- CODE -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar">
+        <span class="spec-rules-title">Code</span>
+      </div>
+      <div style="padding:16px 20px;display:flex;flex-direction:column;gap:0;">
+
+    <div class="code-block" data-code="&lt;fresh-button variant=&quot;primary&quot;&gt;Save changes&lt;/fresh-button&gt;">
+      <div class="code-block-header">
+        <span><span class="code-lang">HTML</span><span class="code-context">Primary</span></span>
+        <button class="code-copy" onclick="copyCode(this)">Copy</button>
+      </div>
+      <div class="code-body"><span class="hl-pun">&lt;</span><span class="hl-tag">fresh-button</span> <span class="hl-attr">variant</span><span class="hl-pun">=</span><span class="hl-val">"primary"</span><span class="hl-pun">&gt;</span><span class="hl-txt">Save changes</span><span class="hl-pun">&lt;/</span><span class="hl-tag">fresh-button</span><span class="hl-pun">&gt;</span></div>
+    </div>
+
+    <div class="code-block" data-code="&lt;fresh-button variant=&quot;secondary&quot;&gt;
+  &lt;i class=&quot;ti ti-download&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;
+  Export
+&lt;/fresh-button&gt;">
+      <div class="code-block-header">
+        <span><span class="code-lang">HTML</span><span class="code-context">With icon</span></span>
+        <button class="code-copy" onclick="copyCode(this)">Copy</button>
+      </div>
+      <div class="code-body"><span class="hl-pun">&lt;</span><span class="hl-tag">fresh-button</span> <span class="hl-attr">variant</span><span class="hl-pun">=</span><span class="hl-val">"secondary"</span><span class="hl-pun">&gt;</span>
+  <span class="hl-pun">&lt;</span><span class="hl-tag">i</span> <span class="hl-attr">class</span><span class="hl-pun">=</span><span class="hl-val">"ti ti-download"</span> <span class="hl-attr">aria-hidden</span><span class="hl-pun">=</span><span class="hl-val">"true"</span><span class="hl-pun">&gt;&lt;/</span><span class="hl-tag">i</span><span class="hl-pun">&gt;</span>
+  <span class="hl-txt">Export</span>
+<span class="hl-pun">&lt;/</span><span class="hl-tag">fresh-button</span><span class="hl-pun">&gt;</span></div>
+    </div>
+
+    <div class="code-block" data-code="&lt;div style=&quot;display:flex;gap:8px;justify-content:flex-end;&quot;&gt;
+  &lt;fresh-button variant=&quot;secondary&quot;&gt;Cancel&lt;/fresh-button&gt;
+  &lt;fresh-button variant=&quot;primary&quot;&gt;Save changes&lt;/fresh-button&gt;
+&lt;/div&gt;">
+      <div class="code-block-header">
+        <span><span class="code-lang">HTML</span><span class="code-context">Button group</span></span>
+        <button class="code-copy" onclick="copyCode(this)">Copy</button>
+      </div>
+      <div class="code-body"><span class="hl-pun">&lt;</span><span class="hl-tag">div</span> <span class="hl-attr">style</span><span class="hl-pun">=</span><span class="hl-val">"display:flex;gap:8px;justify-content:flex-end;"</span><span class="hl-pun">&gt;</span>
+  <span class="hl-pun">&lt;</span><span class="hl-tag">fresh-button</span> <span class="hl-attr">variant</span><span class="hl-pun">=</span><span class="hl-val">"secondary"</span><span class="hl-pun">&gt;</span><span class="hl-txt">Cancel</span><span class="hl-pun">&lt;/</span><span class="hl-tag">fresh-button</span><span class="hl-pun">&gt;</span>
+  <span class="hl-pun">&lt;</span><span class="hl-tag">fresh-button</span> <span class="hl-attr">variant</span><span class="hl-pun">=</span><span class="hl-val">"primary"</span><span class="hl-pun">&gt;</span><span class="hl-txt">Save changes</span><span class="hl-pun">&lt;/</span><span class="hl-tag">fresh-button</span><span class="hl-pun">&gt;</span>
+<span class="hl-pun">&lt;/</span><span class="hl-tag">div</span><span class="hl-pun">&gt;</span></div>
+    </div>
+
+    <div class="code-block" data-code="&lt;fresh-button variant=&quot;ghost&quot; icon-only aria-label=&quot;Delete record&quot;&gt;
+  &lt;i class=&quot;ti ti-trash&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;
+&lt;/fresh-button&gt;">
+      <div class="code-block-header">
+        <span><span class="code-lang">HTML</span><span class="code-context">Icon only</span></span>
+        <button class="code-copy" onclick="copyCode(this)">Copy</button>
+      </div>
+      <div class="code-body"><span class="hl-pun">&lt;</span><span class="hl-tag">fresh-button</span> <span class="hl-attr">variant</span><span class="hl-pun">=</span><span class="hl-val">"ghost"</span> <span class="hl-attr">icon-only</span> <span class="hl-attr">aria-label</span><span class="hl-pun">=</span><span class="hl-val">"Delete record"</span><span class="hl-pun">&gt;</span>
+  <span class="hl-pun">&lt;</span><span class="hl-tag">i</span> <span class="hl-attr">class</span><span class="hl-pun">=</span><span class="hl-val">"ti ti-trash"</span> <span class="hl-attr">aria-hidden</span><span class="hl-pun">=</span><span class="hl-val">"true"</span><span class="hl-pun">&gt;&lt;/</span><span class="hl-tag">i</span><span class="hl-pun">&gt;</span>
+<span class="hl-pun">&lt;/</span><span class="hl-tag">fresh-button</span><span class="hl-pun">&gt;</span></div>
+    </div>
+
+    <div class="code-block" data-code="&lt;fresh-button variant=&quot;primary&quot; loading aria-label=&quot;Saving…&quot;&gt;Save changes&lt;/fresh-button&gt;">
+      <div class="code-block-header">
+        <span><span class="code-lang">HTML</span><span class="code-context">Loading state</span></span>
+        <button class="code-copy" onclick="copyCode(this)">Copy</button>
+      </div>
+      <div class="code-body"><span class="hl-pun">&lt;</span><span class="hl-tag">fresh-button</span> <span class="hl-attr">variant</span><span class="hl-pun">=</span><span class="hl-val">"primary"</span> <span class="hl-attr">loading</span> <span class="hl-attr">aria-label</span><span class="hl-pun">=</span><span class="hl-val">"Saving…"</span><span class="hl-pun">&gt;</span><span class="hl-txt">Save changes</span><span class="hl-pun">&lt;/</span><span class="hl-tag">fresh-button</span><span class="hl-pun">&gt;</span></div>
+    </div>
+
+    <div class="code-block" data-code="&lt;fresh-button variant=&quot;danger&quot;&gt;Delete account&lt;/fresh-button&gt;">
+      <div class="code-block-header">
+        <span><span class="code-lang">HTML</span><span class="code-context">Danger</span></span>
+        <button class="code-copy" onclick="copyCode(this)">Copy</button>
+      </div>
+      <div class="code-body"><span class="hl-pun">&lt;</span><span class="hl-tag">fresh-button</span> <span class="hl-attr">variant</span><span class="hl-pun">=</span><span class="hl-val">"danger"</span><span class="hl-pun">&gt;</span><span class="hl-txt">Delete account</span><span class="hl-pun">&lt;/</span><span class="hl-tag">fresh-button</span><span class="hl-pun">&gt;</span></div>
+    </div>
+
+    <div class="code-block" data-code="&lt;fresh-button variant=&quot;ai&quot;&gt;
+  &lt;i class=&quot;ti ti-sparkles&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;
+  Generate summary
+&lt;/fresh-button&gt;">
+      <div class="code-block-header">
+        <span><span class="code-lang">HTML</span><span class="code-context">AI action</span></span>
+        <button class="code-copy" onclick="copyCode(this)">Copy</button>
+      </div>
+      <div class="code-body"><span class="hl-pun">&lt;</span><span class="hl-tag">fresh-button</span> <span class="hl-attr">variant</span><span class="hl-pun">=</span><span class="hl-val">"ai"</span><span class="hl-pun">&gt;</span>
+  <span class="hl-pun">&lt;</span><span class="hl-tag">i</span> <span class="hl-attr">class</span><span class="hl-pun">=</span><span class="hl-val">"ti ti-sparkles"</span> <span class="hl-attr">aria-hidden</span><span class="hl-pun">=</span><span class="hl-val">"true"</span><span class="hl-pun">&gt;&lt;/</span><span class="hl-tag">i</span><span class="hl-pun">&gt;</span>
+  <span class="hl-txt">Generate summary</span>
+<span class="hl-pun">&lt;/</span><span class="hl-tag">fresh-button</span><span class="hl-pun">&gt;</span></div>
+    </div>
+
+      </div><!-- /code padding -->
+    </div><!-- /spec-rules-panel -->
+  </div>
+
+  <!-- TOKENS -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar">
+        <span class="spec-rules-title">Tokens</span>
+      </div>
+      <table class="spec-a11y-table">
+        <thead>
+          <tr>
+            <th style="width:220px">Token</th>
+            <th style="width:200px">Role</th>
+            <th>Variant</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--btn-primary-bg</td><td class="spec-a11y-req">Fill colour</td><td class="spec-a11y-req">primary</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--btn-primary-hover</td><td class="spec-a11y-req">Hover fill</td><td class="spec-a11y-req">primary</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--btn-primary-text</td><td class="spec-a11y-req">Label colour</td><td class="spec-a11y-req">primary</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--btn-secondary-text</td><td class="spec-a11y-req">Label colour</td><td class="spec-a11y-req">secondary</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--btn-secondary-border</td><td class="spec-a11y-req">Border colour</td><td class="spec-a11y-req">secondary</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--btn-danger-bg</td><td class="spec-a11y-req">Fill colour</td><td class="spec-a11y-req">danger</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--btn-danger-border</td><td class="spec-a11y-req">Border colour</td><td class="spec-a11y-req">danger</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--btn-danger-hover</td><td class="spec-a11y-req">Hover fill</td><td class="spec-a11y-req">danger</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--btn-ai-bg</td><td class="spec-a11y-req">Fill colour</td><td class="spec-a11y-req">ai</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--btn-ai-text</td><td class="spec-a11y-req">Label colour</td><td class="spec-a11y-req">ai</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--btn-ai-hover</td><td class="spec-a11y-req">Hover fill</td><td class="spec-a11y-req">ai</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--color-interactive</td><td class="spec-a11y-req">Focus ring colour</td><td class="spec-a11y-req">all</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--radius-md</td><td class="spec-a11y-req">Border radius</td><td class="spec-a11y-req">all</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--font-sans</td><td class="spec-a11y-req">Font family</td><td class="spec-a11y-req">all</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+
   <!-- ACCESSIBILITY -->
   <div class="comp-section">
     <div class="spec-rules-panel">
@@ -779,12 +1027,148 @@ body { background: #f7f7f8; }
 </div>
 
 <script src="components/core/fresh-button.js"></script>
+
+<!-- Supabase rules persistence, separate module so it can import from supabase-client.js -->
+<script type="module">
+  import { supabase } from '/js/supabase-client.js'
+
+  var RULE_IDS = ['rules-primary', 'rules-secondary', 'rules-ghost', 'rules-danger', 'rules-ai'];
+  var _saveTimer = null;
+  var _loading = false;
+
+  function getRulesSnapshot() {
+    var result = {};
+    RULE_IDS.forEach(function(id) {
+      var list = document.getElementById(id);
+      if (!list) return;
+      result[id] = Array.from(list.querySelectorAll('.spec-rule-text')).map(function(el) {
+        return el.innerHTML.trim();
+      });
+    });
+    return result;
+  }
+
+  function applySnapshot(saved) {
+    RULE_IDS.forEach(function(id) {
+      var list = document.getElementById(id);
+      if (!list) return;
+      var rules = (saved && saved[id] && saved[id].length) ? saved[id] : window.DEFAULT_RULES[id];
+      list.innerHTML = rules.map(function(text) {
+        return '<li class="spec-rule-li">' +
+          '<span class="spec-rule-bullet">•</span>' +
+          '<span class="spec-rule-text" contenteditable="true">' + text + '</span>' +
+          '<span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span>' +
+          '</li>';
+      }).join('');
+    });
+  }
+
+  async function saveRulesNow() {
+    try {
+      var { data: { user } } = await supabase.auth.getUser();
+      if (!user) return;
+      var { data: profile } = await supabase.from('profiles').select('component_rules').eq('id', user.id).single();
+      var existing = (profile && profile.component_rules) ? profile.component_rules : {};
+      existing.button = getRulesSnapshot();
+      await supabase.from('profiles').update({ component_rules: existing }).eq('id', user.id);
+    } catch(e) {}
+  }
+
+  function schedSave() {
+    if (_loading) return;
+    clearTimeout(_saveTimer);
+    _saveTimer = setTimeout(saveRulesNow, 1000);
+  }
+
+  // Watch the AI rules panel for any DOM change (edit, add, delete, restore)
+  // and debounce a save. Runs after module defers resolve (DOM already parsed).
+  var panel = document.querySelector('.spec-rules-panel');
+  if (panel) {
+    new MutationObserver(schedSave).observe(panel, {
+      childList: true, subtree: true, characterData: true
+    });
+  }
+
+  // On load: fetch saved rules and apply them
+  ;(async function() {
+    try {
+      var { data: { user } } = await supabase.auth.getUser();
+      if (!user) return;
+      var { data: profile } = await supabase.from('profiles').select('component_rules').eq('id', user.id).single();
+      if (profile && profile.component_rules && profile.component_rules.button) {
+        _loading = true;
+        applySnapshot(profile.component_rules.button);
+        _loading = false;
+      }
+    } catch(e) {}
+  })();
+</script>
+
 <script>
   function setSpecMode(mode) {
     var vp = document.getElementById('spec-viewport');
     mode === 'dark' ? vp.setAttribute('data-mode', 'dark') : vp.removeAttribute('data-mode');
     document.querySelectorAll('.spec-mode-btn').forEach(function(b) { b.classList.remove('active'); });
     document.getElementById('mode-btn-' + mode).classList.add('active');
+  }
+
+  function copyCode(btn) {
+    var code = btn.closest('.code-block').dataset.code;
+    navigator.clipboard.writeText(code).then(function() {
+      btn.textContent = 'Copied';
+      setTimeout(function() { btn.textContent = 'Copy'; }, 1500);
+    }).catch(function() {
+      btn.textContent = 'Failed';
+      setTimeout(function() { btn.textContent = 'Copy'; }, 1500);
+    });
+  }
+
+  var DEFAULT_RULES = {
+    'rules-primary': [
+      'Use <code>variant="primary"</code> for the single highest-priority action within a given UI context.',
+      'Limit to one primary button per view, avoid competing primaries side by side.',
+      'Label with a strong action verb: "Save", "Submit", "Create", not "OK" or "Yes".',
+      'Primary button should initiate the terminal committing action of the current flow.',
+      'Do not use primary inside notification banners or toasts, use ghost or inline links there instead.'
+    ],
+    'rules-secondary': [
+      'Use <code>variant="secondary"</code> for supporting actions that accompany a primary: "Cancel", "Export", "Preview".',
+      'Secondary buttons can appear in multiples, they carry equal weight with each other and subordinate weight to primary.',
+      'Do not use secondary as a decorative button with no action, it must trigger a real function.'
+    ],
+    'rules-ghost': [
+      'Use <code>variant="ghost"</code> for low-emphasis actions that should recede into the layout: inline table row actions, icon toolbars, secondary nav links.',
+      'Prefer <code>icon-only</code> for ghost buttons in dense contexts (tables, toolbars) to preserve visual rhythm.',
+      'Do not use ghost as the sole action in a dialog or empty state, the action lacks visual weight in that context.'
+    ],
+    'rules-danger': [
+      'Use <code>variant="danger"</code> for irreversible or high-risk operations: delete, remove access, clear data, revoke permissions.',
+      'Always follow a destructive action with a confirmation dialog, never act immediately on first click.',
+      'Never place a danger button as the primary page-level CTA, reserve it for explicitly destructive confirmation flows.',
+      'Label with the specific action: "Delete account", "Remove user", not "Confirm" or "Yes" for a danger-variant button.'
+    ],
+    'rules-ai': [
+      'Use <code>variant="ai"</code> exclusively for AI-generated or AI-assisted actions: generate content, summarise, explain, suggest.',
+      'Always prefix the label with a sparkle icon (<code>&lt;i class="ti ti-sparkles"&gt;</code>) to visually signal AI involvement.',
+      'Do not use <code>variant="ai"</code> for standard CRUD operations, even if an AI model runs in the background.',
+      'Disable when the model is unavailable or rate-limited; surface a status message near the button explaining why.',
+      'Label with clear action language: "Generate draft", "Summarise", "Explain this", not just "AI" as the label.'
+    ]
+  };
+
+  function restoreDefaults() {
+    if (!confirm('Reset all AI action rules to FreshDS defaults? Any edits you have made will be lost.')) return;
+    Object.keys(DEFAULT_RULES).forEach(function(id) {
+      var list = document.getElementById(id);
+      if (!list) return;
+      list.innerHTML = DEFAULT_RULES[id].map(function(text) {
+        return '<li class="spec-rule-li">' +
+          '<span class="spec-rule-bullet">•</span>' +
+          '<span class="spec-rule-text" contenteditable="true">' + text + '</span>' +
+          '<span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span>' +
+          '</li>';
+      }).join('');
+    });
   }
 
   function deleteRule(btn) {
