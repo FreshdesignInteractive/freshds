@@ -1,11 +1,11 @@
 /* ============================================================
-   FRESHDS — DATA VISUALIZATION COLOR TOKENS
-   Fixed palette — not customer-configurable. Never expose
+   FRESHDS, DATA VISUALIZATION COLOR TOKENS
+   Fixed palette, not customer-configurable. Never expose
    in the Configurator. These tokens are owned by the DS and
    must not vary by customer theme.
 
    Use in data display and chart components only:
-     --dv-{n}         main fill — bars, lines, dots, pie slices
+     --dv-{n}         main fill, bars, lines, dots, pie slices
      --dv-{n}-subtle  area fills, row highlights, backgrounds
      --dv-{n}-label   annotations written on top of subtle fills
 

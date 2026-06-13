@@ -1,5 +1,5 @@
 /* ============================================================
-   FreshDS — <fresh-accordion> + <fresh-accordion-item>
+   FreshDS, <fresh-accordion> + <fresh-accordion-item>
 
    Usage:
      <fresh-accordion>
@@ -15,7 +15,7 @@
      </fresh-accordion>
 
    fresh-accordion attributes:
-     multiple  boolean — allow multiple items open simultaneously
+     multiple  boolean, allow multiple items open simultaneously
 
    fresh-accordion-item attributes:
      label     string

@@ -1,5 +1,5 @@
 /* ============================================================
-   FreshDS — <fresh-tooltip>
+   FreshDS, <fresh-tooltip>
 
    Wraps any trigger element. Shows the tooltip on hover/focus.
 
@@ -13,7 +13,7 @@
      </fresh-tooltip>
 
    Attributes:
-     tip        string           — tooltip text
+     tip        string          , tooltip text
      placement  top | bottom | left | right  (default: top)
      delay      number ms        (default: 200)
    ============================================================ */

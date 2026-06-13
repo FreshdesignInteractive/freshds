@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Diff viewer — FreshDS</title>
+<title>Diff viewer | FreshDS</title>
 <base href="../../">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -56,8 +56,8 @@
           <table class="usage-table">
             <thead><tr><th>Attribute</th><th>Values</th><th>Default</th><th>Description</th></tr></thead>
             <tbody>
-              <tr><td>original</td><td>string</td><td>—</td><td>The original (before) text</td></tr>
-              <tr><td>revised</td><td>string</td><td>—</td><td>The AI-edited (after) text</td></tr>
+              <tr><td>original</td><td>string</td><td></td><td>The original (before) text</td></tr>
+              <tr><td>revised</td><td>string</td><td></td><td>The AI-edited (after) text</td></tr>
               <tr><td>mode</td><td><code>side-by-side</code> <code>inline</code></td><td><code>side-by-side</code></td><td>Diff display layout</td></tr>
             </tbody>
           </table>
@@ -67,8 +67,8 @@
           <table class="usage-table">
             <thead><tr><th>Event</th><th>Description</th></tr></thead>
             <tbody>
-              <tr><td>accept</td><td>Fired when the user clicks "Accept" — apply the revised version</td></tr>
-              <tr><td>reject</td><td>Fired when the user clicks "Reject" — revert to original</td></tr>
+              <tr><td>accept</td><td>Fired when the user clicks "Accept", apply the revised version</td></tr>
+              <tr><td>reject</td><td>Fired when the user clicks "Reject", revert to original</td></tr>
             </tbody>
           </table>
         </div>

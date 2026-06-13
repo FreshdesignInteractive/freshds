@@ -1,5 +1,5 @@
 /* ============================================================
-   FreshDS — <fresh-stat-card>
+   FreshDS, <fresh-stat-card>
 
    Usage:
      <fresh-stat-card
@@ -14,11 +14,11 @@
      <fresh-stat-card value="1,284"  label="Active users" icon="ti-users"></fresh-stat-card>
 
    Attributes:
-     value        string  — the primary metric
-     label        string  — metric name
-     trend        number  — positive = up, negative = down, omit = no trend
-     trend-label  string  — context for the trend e.g. "vs last month"
-     icon         string  — tabler icon class
+     value        string , the primary metric
+     label        string , metric name
+     trend        number , positive = up, negative = down, omit = no trend
+     trend-label  string , context for the trend e.g. "vs last month"
+     icon         string , tabler icon class
    ============================================================ */
 
 class FreshStatCard extends HTMLElement {
@@ -35,7 +35,7 @@ class FreshStatCard extends HTMLElement {
   attributeChangedCallback() { this._render(); }
 
   _render() {
-    const value      = this.getAttribute('value')       || '—';
+    const value      = this.getAttribute('value')       || '';
     const label      = this.getAttribute('label')       || '';
     const trend      = this.getAttribute('trend');
     const trendLabel = this.getAttribute('trend-label') || '';

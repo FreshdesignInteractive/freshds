@@ -1,5 +1,5 @@
 /* ============================================================
-   FreshDS — <fresh-spinner>
+   FreshDS, <fresh-spinner>
 
    Usage:
      <fresh-spinner></fresh-spinner>

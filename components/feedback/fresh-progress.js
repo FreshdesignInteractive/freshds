@@ -1,5 +1,5 @@
 /* ============================================================
-   FreshDS — <fresh-progress>
+   FreshDS, <fresh-progress>
 
    Usage:
      <fresh-progress value="65"></fresh-progress>
@@ -7,10 +7,10 @@
      <fresh-progress></fresh-progress>  ← indeterminate
 
    Attributes:
-     value        number 0–100   — omit for indeterminate
+     value        number 0–100  , omit for indeterminate
      size         sm | md | lg   (default: md)
-     label        string         — shown above the bar
-     show-percent boolean        — shows percentage on the right
+     label        string        , shown above the bar
+     show-percent boolean       , shows percentage on the right
    ============================================================ */
 
 class FreshProgress extends HTMLElement {

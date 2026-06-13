@@ -1,5 +1,5 @@
 /* ============================================================
-   FreshDS — <fresh-diff-viewer>
+   FreshDS, <fresh-diff-viewer>
 
    Side-by-side or inline comparison of original and AI-edited text.
 
@@ -12,8 +12,8 @@
      <fresh-diff-viewer mode="inline" original="..." revised="..."></fresh-diff-viewer>
 
    Attributes:
-     original  string — the before text
-     revised   string — the after text (AI-edited)
+     original  string, the before text
+     revised   string, the after text (AI-edited)
      mode      side-by-side | inline  (default: side-by-side)
 
    Events:

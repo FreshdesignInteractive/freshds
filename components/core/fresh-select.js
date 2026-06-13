@@ -1,5 +1,5 @@
 /* ============================================================
-   FreshDS — <fresh-select>
+   FreshDS, <fresh-select>
 
    Usage:
      <fresh-select placeholder="Choose a role">
@@ -12,10 +12,10 @@
      <fresh-select error="Required" placeholder="Pick one">…</fresh-select>
 
    Attributes:
-     placeholder  string — shown when no value selected
-     value        string — selected option value
+     placeholder  string, shown when no value selected
+     value        string, selected option value
      size         sm | md | lg   (default: md)
-     error        string — error message
+     error        string, error message
      disabled     boolean
    ============================================================ */
 

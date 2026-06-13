@@ -1,5 +1,5 @@
 /* ============================================================
-   FRESHDS — TIER 1: PRIMITIVES
+   FRESHDS, TIER 1: PRIMITIVES
    Raw values. Never used directly in components.
    Scale steps (--scale-*, --primary-*, etc.) are computed
    at runtime by freshds.js and written to :root.

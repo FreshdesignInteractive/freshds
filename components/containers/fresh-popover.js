@@ -1,5 +1,5 @@
 /* ============================================================
-   FreshDS — <fresh-popover>
+   FreshDS, <fresh-popover>
 
    Wraps a trigger element. Clicking the trigger opens a floating
    panel; clicking outside closes it.

@@ -1,5 +1,5 @@
 /* ============================================================
-   FreshDS — <fresh-empty-state>
+   FreshDS, <fresh-empty-state>
 
    Usage:
      <fresh-empty-state
@@ -18,7 +18,7 @@
      description  string
 
    Slots:
-     action  — optional CTA button or link below the description
+     action , optional CTA button or link below the description
    ============================================================ */
 
 class FreshEmptyState extends HTMLElement {

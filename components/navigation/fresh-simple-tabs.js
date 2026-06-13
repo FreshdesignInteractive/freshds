@@ -1,8 +1,8 @@
 /* ============================================================
-   FreshDS — <fresh-simple-tabs>
+   FreshDS, <fresh-simple-tabs>
 
    Text-first tab bar with a pill background on the active tab.
-   No underline — ideal for top-level navigation, marketing
+   No underline, ideal for top-level navigation, marketing
    pages, and any context where the underline style is too heavy.
 
    Usage:
@@ -19,11 +19,11 @@
 
    Attributes:
      tabs    JSON array of { key, label, disabled? }
-     active  string — key of the active tab
+     active  string, key of the active tab
      size    sm | md | lg   (default: md)
 
    Events:
-     change  — CustomEvent({ detail: { key } }) — bubbles, composed
+     change , CustomEvent({ detail: { key } }), bubbles, composed
    ============================================================ */
 
 class FreshSimpleTabs extends HTMLElement {

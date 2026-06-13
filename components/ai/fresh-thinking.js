@@ -1,5 +1,5 @@
 /* ============================================================
-   FreshDS — <fresh-thinking>
+   FreshDS, <fresh-thinking>
 
    Animated state shown while the AI processes a request.
 

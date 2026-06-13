@@ -1,5 +1,5 @@
 /* ============================================================
-   FreshDS — <fresh-prompt-input>
+   FreshDS, <fresh-prompt-input>
 
    Signature AI prompt input with optional attach and voice actions.
 
@@ -11,16 +11,16 @@
      <fresh-prompt-input focused></fresh-prompt-input>
 
    Attributes:
-     placeholder  string  — hint text (default: "Ask anything…")
-     show-attach  boolean — show file attachment button
-     show-voice   boolean — show voice input button
-     focused      boolean — render with focus ring visible
-     disabled     boolean — disables the input and send button
+     placeholder  string , hint text (default: "Ask anything…")
+     show-attach  boolean, show file attachment button
+     show-voice   boolean, show voice input button
+     focused      boolean, render with focus ring visible
+     disabled     boolean, disables the input and send button
 
    Events:
-     fresh-submit  — CustomEvent({ detail: { value: string } }) on send
-     fresh-attach  — fired when the attach button is clicked
-     fresh-voice   — fired when the voice button is clicked
+     fresh-submit , CustomEvent({ detail: { value: string } }) on send
+     fresh-attach , fired when the attach button is clicked
+     fresh-voice  , fired when the voice button is clicked
    ============================================================ */
 
 class FreshPromptInput extends HTMLElement {

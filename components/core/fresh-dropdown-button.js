@@ -1,5 +1,5 @@
 /* ============================================================
-   FreshDS — <fresh-dropdown-button>  (Split / Menu button)
+   FreshDS, <fresh-dropdown-button>  (Split / Menu button)
 
    Industry term: "split button" when the label and arrow are
    independently clickable; "dropdown button" / "menu button"

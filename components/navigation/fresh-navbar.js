@@ -1,5 +1,5 @@
 /* ============================================================
-   FreshDS — <fresh-navbar>
+   FreshDS, <fresh-navbar>
 
    Usage:
      <fresh-navbar hamburger>
@@ -17,15 +17,15 @@
      </fresh-navbar>
 
    Slots:
-     nav      — navigation links  (left, after brand logo)
-     actions  — right-side tools  (right)
+     nav     , navigation links  (left, after brand logo)
+     actions , right-side tools  (right)
 
    Attributes:
-     border     boolean — show bottom border (default: true)
-     hamburger  boolean — show hamburger menu button left of brand (default: false)
+     border     boolean, show bottom border (default: true)
+     hamburger  boolean, show hamburger menu button left of brand (default: false)
 
    Events:
-     hamburger-click — fired when the hamburger button is clicked
+     hamburger-click, fired when the hamburger button is clicked
    ============================================================ */
 
 class FreshNavbar extends HTMLElement {

@@ -1,5 +1,5 @@
 /* ============================================================
-   FreshDS — <fresh-toggle>
+   FreshDS, <fresh-toggle>
 
    Usage:
      <fresh-toggle label="Dark mode"></fresh-toggle>

@@ -1,5 +1,5 @@
 /* ============================================================
-   FreshDS — <fresh-timeline>
+   FreshDS, <fresh-timeline>
 
    Usage:
      <fresh-timeline items='[

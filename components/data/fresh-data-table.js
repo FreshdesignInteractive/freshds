@@ -1,5 +1,5 @@
 /* ============================================================
-   FreshDS — <fresh-data-table>
+   FreshDS, <fresh-data-table>
 
    Enhanced table with search, sort, row selection, and row highlight.
 
@@ -18,9 +18,9 @@
    Attributes:
      columns            JSON array  { key, label, sortable?, align?, width? }
      data               JSON array
-     searchable         boolean — shows search input above table
-     selectable         boolean — shows row checkboxes + bulk action bar
-     highlightable      boolean — click any row to highlight it (single active row)
+     searchable         boolean, shows search input above table
+     selectable         boolean, shows row checkboxes + bulk action bar
+     highlightable      boolean, click any row to highlight it (single active row)
      search-placeholder string
 
    Events:
@@ -110,7 +110,7 @@ class FreshDataTable extends HTMLElement {
           const trClass = ['tr', isSel ? 'selected' : '', isHl ? 'highlighted' : '', highlightable ? 'highlightable' : ''].filter(Boolean).join(' ');
           const cells  = [
             selectable ? `<td class="td td-check"><input type="checkbox" class="row-check" data-idx="${ri}" ${isSel ? 'checked' : ''}></td>` : '',
-            ...columns.map(col => `<td class="td" style="text-align:${col.align || 'left'}">${row[col.key] ?? '—'}</td>`)
+            ...columns.map(col => `<td class="td" style="text-align:${col.align || 'left'}">${row[col.key] ?? ''}</td>`)
           ].join('');
           return `<tr class="${trClass}" data-ri="${ri}" part="tr">${cells}</tr>`;
         }).join('')

@@ -1,5 +1,5 @@
 /* ============================================================
-   FreshDS — Site application layer
+   FreshDS, Site application layer
    Powers index.html, configurator.html, and patterns.html.
    NOT included in the developer bundle export.
 
@@ -851,7 +851,7 @@ function updateTokenOutput() {
   }
 
   el.innerHTML =
-    '<span class="t-cmt">/* FreshDS — generated tokens · '+new Date().toLocaleDateString()+' */</span>\n\n'+
+    '<span class="t-cmt">/* FreshDS, generated tokens · '+new Date().toLocaleDateString()+' */</span>\n\n'+
     '<span class="t-key">:root</span> {\n'+
     '  <span class="t-cmt">/* Neutral scale */</span>\n'+
     scaleBlock('scale', neutral)+
@@ -888,8 +888,8 @@ function exportCSS() {
   }
 
   dl('freshds-tokens.css',
-    '/* FreshDS — generated tokens */\n:root {\n'+
-    '  /* Neutral scale — anchors: '+ds.stagedDark+' → '+ds.stagedLight+' */\n'+
+    '/* FreshDS, generated tokens */\n:root {\n'+
+    '  /* Neutral scale, anchors: '+ds.stagedDark+' → '+ds.stagedLight+' */\n'+
     block('scale', neutral)+
     '\n  /* Primary: '+ds.stagedPrimary+' */\n'+ block('primary', primary)+
     '\n  /* Secondary: '+ds.stagedSecondary+' */\n'+ block('secondary', secondary)+
@@ -1006,13 +1006,13 @@ function _generateThemeVarsCss() {
   }
 
   return (
-    '/* © Freshdesign Interactive, Inc. — Do not redistribute.\n' +
-    '   FreshDS — Generated theme variables\n' +
+    '/* © Freshdesign Interactive, Inc., Do not redistribute.\n' +
+    '   FreshDS, Generated theme variables\n' +
     '   Theme    : custom\n' +
     '   Primary  : ' + ds.stagedPrimary + '\n' +
     '   Secondary: ' + ds.stagedSecondary + '\n' +
     '   Generated: ' + new Date().toISOString() + '\n' +
-    '   Override any value directly — all components inherit via var(). */\n\n' +
+    '   Override any value directly, all components inherit via var(). */\n\n' +
     ':root {\n' +
     '  /* Neutral scale (dark → ' + ds.stagedDark + ' · light → ' + ds.stagedLight + ') */\n' +
     block('scale', neutral) +
@@ -1051,7 +1051,7 @@ function _generateThemeVarsCss() {
 function _generateReadme(isSite) {
   var themeName = 'FreshDS';
   return (
-    '# FreshDS — ' + (isSite ? 'Documentation Site' : 'Developer Bundle') + '\n\n' +
+    '# FreshDS, ' + (isSite ? 'Documentation Site' : 'Developer Bundle') + '\n\n' +
     'Theme: **' + themeName + '**  \n' +
     'Primary: `' + ds.stagedPrimary + '`  \n' +
     'Secondary: `' + ds.stagedSecondary + '`  \n' +
@@ -1136,7 +1136,7 @@ function _zipAndDownload(zip, filename) {
 
 // Dev bundle — core engine + tokens + components only. No site JS.
 function exportDeveloperBundle() {
-  if (typeof JSZip === 'undefined') { alert('JSZip not loaded — check your internet connection.'); return; }
+  if (typeof JSZip === 'undefined') { alert('JSZip not loaded, check your internet connection.'); return; }
 
   var staticPaths = [
     'tokens/primitives.css',
@@ -1160,7 +1160,7 @@ function exportDeveloperBundle() {
 
 // Full site export — includes both JS files.
 function exportDSSite() {
-  if (typeof JSZip === 'undefined') { alert('JSZip not loaded — check your internet connection.'); return; }
+  if (typeof JSZip === 'undefined') { alert('JSZip not loaded, check your internet connection.'); return; }
 
   var sitePaths = [
     'tokens/primitives.css',

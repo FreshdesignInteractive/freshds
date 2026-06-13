@@ -1,5 +1,5 @@
 /* ============================================================
-   FreshDS — <fresh-token-meter>
+   FreshDS, <fresh-token-meter>
 
    Context window usage indicator. Color shifts at warn threshold.
 
@@ -9,10 +9,10 @@
      <fresh-token-meter used="12000" total="200000" compact></fresh-token-meter>
 
    Attributes:
-     used     number — tokens consumed
-     total    number — total context window
-     warn-at  number — percentage threshold for warning (default: 80)
-     compact  boolean — minimal display (bar + count only)
+     used     number, tokens consumed
+     total    number, total context window
+     warn-at  number, percentage threshold for warning (default: 80)
+     compact  boolean, minimal display (bar + count only)
    ============================================================ */
 
 class FreshTokenMeter extends HTMLElement {

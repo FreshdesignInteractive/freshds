@@ -3,14 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FreshDS — Design System</title>
+<title>FreshDS | Design System</title>
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 
-<!-- Auth guard — redirects to / if no session -->
+<!-- Auth guard, redirects to / if no session -->
 <script type="module" src="/js/auth-guard.js"></script>
 <script type="module" src="/js/paid-guard.js"></script>
 
-<!-- Supabase theme sync — load cloud config, expose cloud save hook -->
+<!-- Supabase theme sync, load cloud config, expose cloud save hook -->
 <script type="module">
   import { supabase } from '/js/supabase-client.js'
 
@@ -64,10 +64,10 @@
 <!-- Icons -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
 
-<!-- JSZip — browser-side ZIP for export -->
+<!-- JSZip, browser-side ZIP for export -->
 <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
 
-<!-- Tokens (listed individually — @import doesn't work on file://) -->
+<!-- Tokens (listed individually, @import doesn't work on file://) -->
 <link rel="stylesheet" href="tokens/primitives.css">
 <link rel="stylesheet" href="tokens/theme.css">
 <link rel="stylesheet" href="tokens/dataviz.css">
@@ -306,11 +306,11 @@
                   </div>
                   <div class="preview-row" style="gap:var(--space-5)">
                     <div style="flex:1">
-                      <div style="font-size:11px;color:var(--text-tertiary);margin-bottom:6px">Context window — 68%</div>
+                      <div style="font-size:11px;color:var(--text-tertiary);margin-bottom:6px">Context window, 68%</div>
                       <fresh-progress value="68" label="Context window"></fresh-progress>
                     </div>
                     <div style="flex:1">
-                      <div style="font-size:11px;color:var(--text-tertiary);margin-bottom:6px">Upload — 91%</div>
+                      <div style="font-size:11px;color:var(--text-tertiary);margin-bottom:6px">Upload, 91%</div>
                       <fresh-progress value="91" variant="danger" label="Upload"></fresh-progress>
                     </div>
                   </div>
@@ -339,8 +339,8 @@
                 <button class="config-apply-btn" onclick="exportDSSite()" style="background:var(--surface-overlay);color:var(--text-primary);border:1px solid var(--surface-border)"><i class="ti ti-world"></i> Export DS site</button>
               </div>
               <div style="font-size:11px;color:var(--text-tertiary);margin-top:var(--space-3);line-height:1.6">
-                <strong style="color:var(--text-secondary)">Bundle</strong> — tokens + all components. Drop into any project.<br>
-                <strong style="color:var(--text-secondary)">DS site</strong> — full documentation site. Host internally for your team.
+                <strong style="color:var(--text-secondary)">Bundle</strong>, tokens + all components. Drop into any project.<br>
+                <strong style="color:var(--text-secondary)">DS site</strong>, full documentation site. Host internally for your team.
               </div>
             </div>
 

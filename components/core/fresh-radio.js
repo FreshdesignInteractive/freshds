@@ -1,5 +1,5 @@
 /* ============================================================
-   FreshDS — <fresh-radio>
+   FreshDS, <fresh-radio>
 
    Usage:
      <fresh-radio name="plan" value="starter" label="Starter"></fresh-radio>
@@ -9,7 +9,7 @@
    Attributes:
      label    string
      value    string
-     name     string    — groups radios together
+     name     string   , groups radios together
      checked  boolean
      disabled boolean
 

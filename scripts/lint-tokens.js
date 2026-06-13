@@ -33,7 +33,7 @@ const RULES = [
       // Flag if a CSS property value is a bare hex
       return /:\s*#[0-9a-fA-F]{3,8}\b/.test(line);
     },
-    message: 'Hardcoded hex color — use a semantic token (tokens/theme.css) or primitive (tokens/primitives.css)',
+    message: 'Hardcoded hex color, use a semantic token (tokens/theme.css) or primitive (tokens/primitives.css)',
   },
   {
     id:      'font-size-px',
@@ -41,7 +41,7 @@ const RULES = [
     test(line) {
       return /font-size\s*:\s*\d+px/.test(line) && !/font-size\s*:\s*var\(/.test(line);
     },
-    message: 'Hardcoded font-size — use var(--font-size-*) from tokens/primitives.css',
+    message: 'Hardcoded font-size, use var(--font-size-*) from tokens/primitives.css',
   },
   {
     id:      'rgba-color',
@@ -62,14 +62,14 @@ const RULES = [
       if (/rgba\(\s*0\s*,\s*0\s*,\s*0\s*,\s*0\.[5-9]/.test(line)) return false;
       return true;
     },
-    message: 'Hardcoded rgba() color — use a semantic token. (box-shadow, backdrop scrims, frosted overlays, textures are exempt)',
+    message: 'Hardcoded rgba() color, use a semantic token. (box-shadow, backdrop scrims, frosted overlays, textures are exempt)',
   },
 ];
 
 // ── Files that are permitted to have raw values ─────────────────────────────
 const SKIP_FILES = [
-  /^tokens\//,        // primitives.css, theme.css, dataviz.css — source of truth
-  /^js\/freshds\.js$/, // OKLCH engine — raw math by design
+  /^tokens\//,        // primitives.css, theme.css, dataviz.css, source of truth
+  /^js\/freshds\.js$/, // OKLCH engine, raw math by design
   /^scripts\//,       // this file
 ];
 
@@ -88,7 +88,7 @@ const LINE_EXEMPT = [
   /dv-panel(?:-light|-dark|-label|-swatch|-name|-hex)?/,
   /dv-bar-preview(?:-light|-dark|-label)?/,
   /@import url\(/,                   // CSS import strings
-  /\/\//,                            // comment lines — don't flag comments
+  /\/\//,                            // comment lines, don't flag comments
   /^\s*\*/,                          // block comment lines
 ];
 
@@ -142,7 +142,7 @@ for (const dir of SCAN_DIRS) {
 
 // ── Report ──────────────────────────────────────────────────────────────────
 if (violations.length === 0) {
-  console.log('✓ Token lint passed — no hardcoded values found.');
+  console.log('✓ Token lint passed, no hardcoded values found.');
   process.exit(0);
 }
 

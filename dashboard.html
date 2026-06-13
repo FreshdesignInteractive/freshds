@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FreshDS — Get Started</title>
+<title>FreshDS | Get Started</title>
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 
 <!-- Auth guard -->
@@ -91,7 +91,7 @@
       btn.disabled = false
       btn.onclick = window.__initiateCheckout
       if (icon)    { icon.className = 'ti ti-credit-card' }
-      if (label)   { label.textContent = 'Get access — $1' }
+      if (label)   { label.textContent = 'Get access, $1' }
       if (chevron) { chevron.style.display = 'none' }
     }
   }
@@ -107,13 +107,13 @@
       const { data } = await supabase.from('profiles').select('has_paid').eq('id', userId).single()
       if (data?.has_paid) {
         setDownloadBtn(true)
-        if (banner) banner.querySelector('.banner-text').textContent = 'Payment confirmed — your download is starting…'
+        if (banner) banner.querySelector('.banner-text').textContent = 'Payment confirmed, your download is starting…'
         setTimeout(() => window.__triggerDownload(), 800)
         return
       }
     }
     // Webhook delayed — tell user to refresh
-    if (banner) banner.querySelector('.banner-text').textContent = 'Payment received — please refresh the page to download.'
+    if (banner) banner.querySelector('.banner-text').textContent = 'Payment received, please refresh the page to download.'
   }
 
   // ── Init ───────────────────────────────────────────────────────
@@ -133,7 +133,7 @@
         const banner = document.getElementById('payment-banner')
         if (banner) {
           banner.style.display = 'flex'
-          banner.querySelector('.banner-text').textContent = 'Payment confirmed — your download is starting…'
+          banner.querySelector('.banner-text').textContent = 'Payment confirmed, your download is starting…'
         }
         setDownloadBtn(true)
         setTimeout(() => window.__triggerDownload(), 1200)
@@ -407,7 +407,7 @@ body {
   <!-- Payment confirmation banner (shown after Stripe redirect) -->
   <div class="payment-banner" id="payment-banner">
     <i class="ti ti-circle-check"></i>
-    <span class="banner-text">Payment received — confirming your access…</span>
+    <span class="banner-text">Payment received, confirming your access…</span>
   </div>
 
   <!-- Download -->
@@ -435,7 +435,7 @@ body {
       <div class="dl-menu" id="dl-menu">
         <button class="dl-menu-item" onclick="window.__doExport('bundle')">
           <div class="dl-menu-label">Dev Kit</div>
-          <div class="dl-menu-desc">Theme-matched CSS tokens + components only. No docs — just the files your devs need.</div>
+          <div class="dl-menu-desc">Theme-matched CSS tokens + components only. No docs, just the files your devs need.</div>
         </button>
         <hr class="dl-menu-sep">
         <button class="dl-menu-item" onclick="window.__doExport('dssite')">

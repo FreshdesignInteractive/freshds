@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Accessibility — FreshDS</title>
+<title>Accessibility | FreshDS</title>
 <base href="../../">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -136,7 +136,7 @@
             <div class="conformance-banner-body">
               <div class="conformance-banner-title">WCAG 2.2 Level AA</div>
               <div class="conformance-banner-desc">
-                All FreshDS components are built and tested against WCAG 2.2 AA. AAA criteria are implemented where they don't conflict with usability — notably focus appearance (2.4.11) and target size (2.5.5). Components are tested with VoiceOver (macOS/iOS), NVDA (Windows), and the axe browser extension.
+                All FreshDS components are built and tested against WCAG 2.2 AA. AAA criteria are implemented where they don't conflict with usability, notably focus appearance (2.4.11) and target size (2.5.5). Components are tested with VoiceOver (macOS/iOS), NVDA (Windows), and the axe browser extension.
               </div>
             </div>
           </div>
@@ -158,7 +158,7 @@
               <tr>
                 <td class="a11y-concern-col">role</td>
                 <td class="a11y-wcag-col"><span class="a11y-badge aa">4.1.2 AA</span></td>
-                <td class="a11y-req-col">Use semantic HTML where possible — <code>&lt;button&gt;</code>, <code>&lt;input&gt;</code>, <code>&lt;a&gt;</code> carry implicit roles. Add explicit ARIA roles only when a native element is not available.</td>
+                <td class="a11y-req-col">Use semantic HTML where possible, <code>&lt;button&gt;</code>, <code>&lt;input&gt;</code>, <code>&lt;a&gt;</code> carry implicit roles. Add explicit ARIA roles only when a native element is not available.</td>
               </tr>
               <tr>
                 <td class="a11y-concern-col">accessible name</td>
@@ -178,12 +178,12 @@
               <tr>
                 <td class="a11y-concern-col">colour contrast</td>
                 <td class="a11y-wcag-col"><span class="a11y-badge aa">1.4.3 AA</span></td>
-                <td class="a11y-req-col">Text on component surfaces must meet 4.5:1 minimum. Large text (18px+ or 14px bold) and UI component boundaries require 3:1. Verify after every theme change — especially primary and danger variants where background shifts with the customer palette.</td>
+                <td class="a11y-req-col">Text on component surfaces must meet 4.5:1 minimum. Large text (18px+ or 14px bold) and UI component boundaries require 3:1. Verify after every theme change, especially primary and danger variants where background shifts with the customer palette.</td>
               </tr>
               <tr>
                 <td class="a11y-concern-col">icon decoration</td>
                 <td class="a11y-wcag-col"><span class="a11y-badge aa">1.1.1 AA</span></td>
-                <td class="a11y-req-col">Icons alongside text are decorative — mark them <code>aria-hidden="true"</code> so screen readers don't announce CSS class names. Standalone icons require <code>aria-label</code> or visually-hidden companion text.</td>
+                <td class="a11y-req-col">Icons alongside text are decorative, mark them <code>aria-hidden="true"</code> so screen readers don't announce CSS class names. Standalone icons require <code>aria-label</code> or visually-hidden companion text.</td>
               </tr>
               <tr>
                 <td class="a11y-concern-col">disabled state</td>
@@ -193,7 +193,7 @@
               <tr>
                 <td class="a11y-concern-col">touch target</td>
                 <td class="a11y-wcag-col"><span class="a11y-badge aa">2.5.8 AA</span></td>
-                <td class="a11y-req-col">Minimum touch target is 24×24 CSS pixels (WCAG 2.2 AA). FreshDS targets 44×44px (WCAG 2.1 AAA / 2.5.5) — <code>size="lg"</code> reaches 40px height. Ensure adequate tap padding on mobile viewports for smaller sizes.</td>
+                <td class="a11y-req-col">Minimum touch target is 24×24 CSS pixels (WCAG 2.2 AA). FreshDS targets 44×44px (WCAG 2.1 AAA / 2.5.5), <code>size="lg"</code> reaches 40px height. Ensure adequate tap padding on mobile viewports for smaller sizes.</td>
               </tr>
             </tbody>
           </table>
@@ -213,39 +213,39 @@
             <tbody>
               <tr>
                 <td class="a11y-component-col">Button</td>
-                <td class="a11y-additions-col"><code>loading state</code> — sets <code>aria-busy="true"</code> during async operations. Pair with an updated <code>aria-label</code> like "Saving…" to give spoken context beyond the spinner visual.</td>
+                <td class="a11y-additions-col"><code>loading state</code>, sets <code>aria-busy="true"</code> during async operations. Pair with an updated <code>aria-label</code> like "Saving…" to give spoken context beyond the spinner visual.</td>
               </tr>
               <tr>
                 <td class="a11y-component-col">Input / Form field</td>
-                <td class="a11y-additions-col"><code>required</code> — set <code>aria-required="true"</code> alongside the visible indicator. <code>error state</code> — set <code>aria-invalid="true"</code> and link the error message via <code>aria-describedby</code>. <code>autocomplete</code> — set the appropriate token value for personal data fields.</td>
+                <td class="a11y-additions-col"><code>required</code>, set <code>aria-required="true"</code> alongside the visible indicator. <code>error state</code>, set <code>aria-invalid="true"</code> and link the error message via <code>aria-describedby</code>. <code>autocomplete</code>, set the appropriate token value for personal data fields.</td>
               </tr>
               <tr>
                 <td class="a11y-component-col">Checkbox / Radio</td>
-                <td class="a11y-additions-col"><code>checked state</code> — expose <code>aria-checked</code> in sync with visual state. <code>group labeling</code> — wrap related controls in <code>&lt;fieldset&gt;</code> with a <code>&lt;legend&gt;</code> so screen readers announce the group name before each option.</td>
+                <td class="a11y-additions-col"><code>checked state</code>, expose <code>aria-checked</code> in sync with visual state. <code>group labeling</code>, wrap related controls in <code>&lt;fieldset&gt;</code> with a <code>&lt;legend&gt;</code> so screen readers announce the group name before each option.</td>
               </tr>
               <tr>
                 <td class="a11y-component-col">Modal / Drawer</td>
-                <td class="a11y-additions-col"><code>focus trap</code> — tab focus must cycle within the overlay while open. <code>escape key</code> — pressing Escape always closes. <code>return focus</code> — on close, focus returns to the element that triggered the overlay. <code>role="dialog"</code> + <code>aria-modal="true"</code> + <code>aria-labelledby</code> pointing to the heading.</td>
+                <td class="a11y-additions-col"><code>focus trap</code>, tab focus must cycle within the overlay while open. <code>escape key</code>, pressing Escape always closes. <code>return focus</code>, on close, focus returns to the element that triggered the overlay. <code>role="dialog"</code> + <code>aria-modal="true"</code> + <code>aria-labelledby</code> pointing to the heading.</td>
               </tr>
               <tr>
                 <td class="a11y-component-col">Dropdown / Popover</td>
-                <td class="a11y-additions-col"><code>expanded state</code> — trigger element carries <code>aria-expanded</code>. <code>escape key</code> — closes and returns focus to trigger. <code>arrow key navigation</code> — Up/Down moves between items; Home/End jump to first/last.</td>
+                <td class="a11y-additions-col"><code>expanded state</code>, trigger element carries <code>aria-expanded</code>. <code>escape key</code>, closes and returns focus to trigger. <code>arrow key navigation</code>, Up/Down moves between items; Home/End jump to first/last.</td>
               </tr>
               <tr>
                 <td class="a11y-component-col">Tabs</td>
-                <td class="a11y-additions-col"><code>selected state</code> — active tab has <code>aria-selected="true"</code>; others have <code>aria-selected="false"</code>. <code>arrow key navigation</code> — Left/Right moves between tabs. Tab panels are linked via <code>aria-controls</code> / <code>aria-labelledby</code>.</td>
+                <td class="a11y-additions-col"><code>selected state</code>, active tab has <code>aria-selected="true"</code>; others have <code>aria-selected="false"</code>. <code>arrow key navigation</code>, Left/Right moves between tabs. Tab panels are linked via <code>aria-controls</code> / <code>aria-labelledby</code>.</td>
               </tr>
               <tr>
                 <td class="a11y-component-col">Accordion</td>
-                <td class="a11y-additions-col"><code>expanded state</code> — trigger button carries <code>aria-expanded</code>. Panel is linked to its trigger via <code>aria-controls</code>. Trigger must be a <code>&lt;button&gt;</code>, not a div.</td>
+                <td class="a11y-additions-col"><code>expanded state</code>, trigger button carries <code>aria-expanded</code>. Panel is linked to its trigger via <code>aria-controls</code>. Trigger must be a <code>&lt;button&gt;</code>, not a div.</td>
               </tr>
               <tr>
                 <td class="a11y-component-col">Toast / Alert</td>
-                <td class="a11y-additions-col"><code>live region</code> — informational toasts use <code>aria-live="polite"</code>; critical alerts use <code>role="alert"</code> (implicit live="assertive"). <code>auto-dismiss timing</code> — minimum 5 seconds before auto-removal; never dismiss while the user is focused inside the toast.</td>
+                <td class="a11y-additions-col"><code>live region</code>, informational toasts use <code>aria-live="polite"</code>; critical alerts use <code>role="alert"</code> (implicit live="assertive"). <code>auto-dismiss timing</code>, minimum 5 seconds before auto-removal; never dismiss while the user is focused inside the toast.</td>
               </tr>
               <tr>
                 <td class="a11y-component-col">Data table</td>
-                <td class="a11y-additions-col"><code>column headers</code> — <code>&lt;th scope="col"&gt;</code> required. <code>sort state</code> — sortable headers carry <code>aria-sort</code> (<code>ascending</code> / <code>descending</code> / <code>none</code>). <code>row selection</code> — selected rows carry <code>aria-selected="true"</code>.</td>
+                <td class="a11y-additions-col"><code>column headers</code>, <code>&lt;th scope="col"&gt;</code> required. <code>sort state</code>, sortable headers carry <code>aria-sort</code> (<code>ascending</code> / <code>descending</code> / <code>none</code>). <code>row selection</code>, selected rows carry <code>aria-selected="true"</code>.</td>
               </tr>
             </tbody>
           </table>

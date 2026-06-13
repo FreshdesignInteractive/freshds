@@ -1,5 +1,5 @@
 /* ============================================================
-   FreshDS — <fresh-drawer>
+   FreshDS, <fresh-drawer>
 
    Usage:
      <fresh-drawer id="settings-drawer" title="Settings" placement="right">

@@ -1,5 +1,5 @@
 /* ============================================================
-   FreshDS — <fresh-confidence-badge>
+   FreshDS, <fresh-confidence-badge>
 
    Displays AI model certainty as a percentage with semantic color.
 
@@ -11,7 +11,7 @@
    Attributes:
      value     number 0–100
      label     string (default: "Confidence")
-     show-bar  boolean — renders a mini progress bar
+     show-bar  boolean, renders a mini progress bar
    ============================================================ */
 
 class FreshConfidenceBadge extends HTMLElement {

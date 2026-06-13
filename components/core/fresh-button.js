@@ -1,5 +1,5 @@
 /* ============================================================
-   FreshDS — <fresh-button>
+   FreshDS, <fresh-button>
 
    Usage:
      <fresh-button>Save changes</fresh-button>
@@ -16,7 +16,7 @@
      size      sm | md | lg                           (default: md)
      disabled  boolean
      loading   boolean
-     icon-only boolean — square proportions, centered content
+     icon-only boolean, square proportions, centered content
    ============================================================ */
 
 class FreshButton extends HTMLElement {

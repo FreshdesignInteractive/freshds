@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Toast — FreshDS</title>
+<title>Toast | FreshDS</title>
 <base href="../../">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -37,7 +37,7 @@
           <div class="demo-surface" style="gap:var(--space-3)">
             <fresh-button variant="ghost" size="sm" onclick="FreshToast.show('Changes saved successfully', { variant: 'success' })">Success</fresh-button>
             <fresh-button variant="ghost" size="sm" onclick="FreshToast.show('Build failed on line 42', { variant: 'danger' })">Danger</fresh-button>
-            <fresh-button variant="ghost" size="sm" onclick="FreshToast.show('Rate limit at 90% — consider upgrading', { variant: 'warning' })">Warning</fresh-button>
+            <fresh-button variant="ghost" size="sm" onclick="FreshToast.show('Rate limit at 90%, consider upgrading', { variant: 'warning' })">Warning</fresh-button>
             <fresh-button variant="ghost" size="sm" onclick="FreshToast.show('Your export is ready to download', { variant: 'info' })">Info</fresh-button>
             <fresh-button variant="ghost" size="sm" onclick="FreshToast.show('Processing your request…', { variant: 'info', duration: 0 })">Persistent</fresh-button>
           </div>
@@ -47,7 +47,7 @@
           <table class="usage-table">
             <thead><tr><th>Parameter</th><th>Type</th><th>Default</th><th>Description</th></tr></thead>
             <tbody>
-              <tr><td>message</td><td>string</td><td>—</td><td>Notification text</td></tr>
+              <tr><td>message</td><td>string</td><td></td><td>Notification text</td></tr>
               <tr><td>variant</td><td><code>info</code> <code>success</code> <code>warning</code> <code>danger</code></td><td><code>info</code></td><td>Color and icon</td></tr>
               <tr><td>duration</td><td>number (ms)</td><td><code>4000</code></td><td>Auto-dismiss delay. <code>0</code> = persistent</td></tr>
             </tbody>

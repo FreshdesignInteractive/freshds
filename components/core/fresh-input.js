@@ -1,5 +1,5 @@
 /* ============================================================
-   FreshDS — <fresh-input>
+   FreshDS, <fresh-input>
 
    Usage:
      <fresh-input placeholder="Search…"></fresh-input>
@@ -14,10 +14,10 @@
      value        string
      size         sm | md | lg                               (default: md)
      icon         tabler icon class e.g. "ti-search"
-     error        string — error message, triggers error styling
+     error        string, error message, triggers error styling
      disabled     boolean
      readonly     boolean
-     clearable    boolean — shows an × button when the field has a value
+     clearable    boolean, shows an × button when the field has a value
    ============================================================ */
 
 class FreshInput extends HTMLElement {

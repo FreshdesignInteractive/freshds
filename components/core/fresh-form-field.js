@@ -1,5 +1,5 @@
 /* ============================================================
-   FreshDS — <fresh-form-field>
+   FreshDS, <fresh-form-field>
 
    Wraps any input component with a consistent label, hint,
    and error message layout.
@@ -16,8 +16,8 @@
    Attributes:
      label     string
      hint      string
-     error     string   — shows below the control in red, overrides hint
-     required  boolean  — adds an asterisk to the label
+     error     string  , shows below the control in red, overrides hint
+     required  boolean , adds an asterisk to the label
    ============================================================ */
 
 class FreshFormField extends HTMLElement {

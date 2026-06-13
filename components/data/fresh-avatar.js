@@ -1,5 +1,5 @@
 /* ============================================================
-   FreshDS — <fresh-avatar>
+   FreshDS, <fresh-avatar>
 
    Image avatar with graceful fallback to initials.
    Color is deterministically derived from the name.
@@ -13,7 +13,7 @@
 
    Attributes:
      src      image URL
-     name     string  — used for initials + accessible label + color
+     name     string , used for initials + accessible label + color
      size     xs | sm | md | lg | xl   (default: md)
      shape    circle | square          (default: circle)
      status   online | away | busy | offline

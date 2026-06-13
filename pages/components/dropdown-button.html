@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dropdown Button — FreshDS</title>
+<title>Dropdown Button | FreshDS</title>
 <base href="../../">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -118,8 +118,8 @@
         <div class="page-section">
           <div class="page-section-title">Rich items</div>
           <div class="demo-surface">
-            <fresh-dropdown-button label="Export" variant="primary" items='[{"value":"bundle","label":"Dev Kit","desc":"Theme-matched CSS tokens and components only. No docs — just the files your devs need."},{"separator":true},{"value":"dssite","label":"Full DS","desc":"Complete documentation site with all components, tokens, and guides. Host it for your team."}]'></fresh-dropdown-button>
-            <fresh-dropdown-button label="Deploy" variant="secondary" items='[{"value":"staging","label":"Staging","desc":"Preview environment — no customer traffic."},{"separator":true},{"value":"prod","label":"Production","desc":"Live environment. Requires approval.","danger":true}]'></fresh-dropdown-button>
+            <fresh-dropdown-button label="Export" variant="primary" items='[{"value":"bundle","label":"Dev Kit","desc":"Theme-matched CSS tokens and components only. No docs, just the files your devs need."},{"separator":true},{"value":"dssite","label":"Full DS","desc":"Complete documentation site with all components, tokens, and guides. Host it for your team."}]'></fresh-dropdown-button>
+            <fresh-dropdown-button label="Deploy" variant="secondary" items='[{"value":"staging","label":"Staging","desc":"Preview environment, no customer traffic."},{"separator":true},{"value":"prod","label":"Production","desc":"Live environment. Requires approval.","danger":true}]'></fresh-dropdown-button>
           </div>
         </div>
 
@@ -129,10 +129,10 @@
             <thead><tr><th>Attribute</th><th>Values</th><th>Default</th><th>Description</th></tr></thead>
             <tbody>
               <tr><td>label</td><td>string</td><td><code>Options</code></td><td>Text shown in the button label area</td></tr>
-              <tr><td>variant</td><td><code>primary</code> <code>secondary</code> <code>ghost</code> <code>danger</code></td><td><code>primary</code></td><td>Visual style — mirrors fresh-button variants</td></tr>
+              <tr><td>variant</td><td><code>primary</code> <code>secondary</code> <code>ghost</code> <code>danger</code></td><td><code>primary</code></td><td>Visual style, mirrors fresh-button variants</td></tr>
               <tr><td>size</td><td><code>sm</code> <code>md</code> <code>lg</code></td><td><code>md</code></td><td>Height and padding scale (28 / 34 / 40px)</td></tr>
-              <tr><td>disabled</td><td>boolean</td><td>—</td><td>Disables the entire control</td></tr>
-              <tr><td>items</td><td>JSON array</td><td>—</td><td>Pass items as JSON instead of &lt;option&gt; children. Each item: <code>{ value, label, desc?, separator?, danger?, disabled? }</code></td></tr>
+              <tr><td>disabled</td><td>boolean</td><td></td><td>Disables the entire control</td></tr>
+              <tr><td>items</td><td>JSON array</td><td></td><td>Pass items as JSON instead of &lt;option&gt; children. Each item: <code>{ value, label, desc?, separator?, danger?, disabled? }</code></td></tr>
             </tbody>
           </table>
         </div>
@@ -143,7 +143,7 @@
             <thead><tr><th>Event</th><th>Detail</th><th>Description</th></tr></thead>
             <tbody>
               <tr><td>select</td><td><code>{ value, label }</code></td><td>Fired when a menu item is chosen</td></tr>
-              <tr><td>action</td><td>—</td><td>Fired when the label half is clicked directly</td></tr>
+              <tr><td>action</td><td></td><td>Fired when the label half is clicked directly</td></tr>
             </tbody>
           </table>
         </div>

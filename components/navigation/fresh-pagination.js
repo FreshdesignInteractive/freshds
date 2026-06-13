@@ -1,5 +1,5 @@
 /* ============================================================
-   FreshDS — <fresh-pagination>
+   FreshDS, <fresh-pagination>
 
    Usage:
      <fresh-pagination page="4" total="20"></fresh-pagination>
@@ -7,9 +7,9 @@
      <fresh-pagination page="8" total="50" siblings="2"></fresh-pagination>
 
    Attributes:
-     page      number  — current page, 1-based       (default: 1)
-     total     number  — total number of pages        (default: 1)
-     siblings  number  — pages either side of current (default: 1)
+     page      number , current page, 1-based       (default: 1)
+     total     number , total number of pages        (default: 1)
+     siblings  number , pages either side of current (default: 1)
      size      sm | md                                (default: md)
 
    Events:

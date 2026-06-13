@@ -1,5 +1,5 @@
 /* ============================================================
-   FreshDS — <fresh-alert>
+   FreshDS, <fresh-alert>
 
    Usage:
      <fresh-alert variant="info" title="New version available">
@@ -24,7 +24,7 @@
      dismissible boolean
 
    Events:
-     dismiss — fired when the close button is clicked
+     dismiss, fired when the close button is clicked
    ============================================================ */
 
 class FreshAlert extends HTMLElement {

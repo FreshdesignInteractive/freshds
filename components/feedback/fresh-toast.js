@@ -1,5 +1,5 @@
 /* ============================================================
-   FreshDS — <fresh-toast> + FreshToast.show()
+   FreshDS, <fresh-toast> + FreshToast.show()
 
    Programmatic usage (recommended):
      FreshToast.show('Changes saved')

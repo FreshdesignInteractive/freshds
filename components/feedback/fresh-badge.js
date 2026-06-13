@@ -1,5 +1,5 @@
 /* ============================================================
-   FreshDS — <fresh-badge>
+   FreshDS, <fresh-badge>
 
    Usage:
      <fresh-badge>Active</fresh-badge>
@@ -12,7 +12,7 @@
    Attributes:
      variant  primary | success | warning | danger | neutral | ai  (default: primary)
      size     sm | md                                               (default: md)
-     dot      boolean — prepends a pulsing status dot
+     dot      boolean, prepends a pulsing status dot
    ============================================================ */
 
 class FreshBadge extends HTMLElement {

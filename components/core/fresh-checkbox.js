@@ -1,5 +1,5 @@
 /* ============================================================
-   FreshDS — <fresh-checkbox>
+   FreshDS, <fresh-checkbox>
 
    Usage:
      <fresh-checkbox label="Remember me"></fresh-checkbox>

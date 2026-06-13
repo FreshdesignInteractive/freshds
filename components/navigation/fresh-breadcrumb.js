@@ -1,5 +1,5 @@
 /* ============================================================
-   FreshDS — <fresh-breadcrumb>
+   FreshDS, <fresh-breadcrumb>
 
    Usage:
      <fresh-breadcrumb items='[
@@ -9,7 +9,7 @@
      ]'></fresh-breadcrumb>
 
    Attributes:
-     items  JSON array of { label, href? }  — last item is the current page (no link)
+     items  JSON array of { label, href? } , last item is the current page (no link)
      size   sm | md                          (default: md)
    ============================================================ */
 

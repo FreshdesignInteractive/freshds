@@ -1,5 +1,5 @@
 /* ============================================================
-   FreshDS — <fresh-skeleton>
+   FreshDS, <fresh-skeleton>
 
    Usage:
      <fresh-skeleton width="240px" height="14px"></fresh-skeleton>
@@ -10,9 +10,9 @@
      variant  rect | circle | text   (default: rect)
      width    CSS value              (default: 100%)
      height   CSS value              (default: 14px)
-     size     CSS value              — shorthand for circle diameter
-     lines    number                 — text variant: number of lines
-     radius   CSS value              — override border-radius for rect
+     size     CSS value             , shorthand for circle diameter
+     lines    number                , text variant: number of lines
+     radius   CSS value             , override border-radius for rect
    ============================================================ */
 
 class FreshSkeleton extends HTMLElement {

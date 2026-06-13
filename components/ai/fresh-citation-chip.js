@@ -1,5 +1,5 @@
 /* ============================================================
-   FreshDS — <fresh-citation-chip>
+   FreshDS, <fresh-citation-chip>
 
    Inline reference chip linking AI output to a source.
 
@@ -11,9 +11,9 @@
      <fresh-citation-chip source="annual-report.pdf"></fresh-citation-chip>
 
    Attributes:
-     source  string — document or source name
-     page    string — page number or section
-     href    string — link to the source
+     source  string, document or source name
+     page    string, page number or section
+     href    string, link to the source
    ============================================================ */
 
 class FreshCitationChip extends HTMLElement {

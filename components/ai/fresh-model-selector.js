@@ -1,5 +1,5 @@
 /* ============================================================
-   FreshDS — <fresh-model-selector>
+   FreshDS, <fresh-model-selector>
 
    Dropdown for switching AI models within an application.
 
@@ -15,7 +15,7 @@
 
    Attributes:
      models    JSON array  { key, name, badge?, description?, disabled? }
-     selected  string — key of the currently selected model
+     selected  string, key of the currently selected model
 
    Events:
      change → detail: { key, name }

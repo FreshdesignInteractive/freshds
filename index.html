@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Freshdesign — The design system AI actually understands</title>
+<title>Freshdesign | The design system AI actually understands</title>
 <meta name="description" content="A highly configurable base design system that makes your UX and brand guidelines AI-ready. So every output from every team, using any AI tool, stays true to your brand and design guidelines.">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -655,7 +655,7 @@ body {
 <section class="hero">
   <div class="beta-badge">
     <span class="badge-dot"></span>
-    Private beta — limited seats
+    Private beta, limited seats
   </div>
 
   <h1>The design system<br><span class="accent">AI actually understands</span></h1>
@@ -831,7 +831,7 @@ body {
   async function loadSeatCount() {
     const { data: count, error } = await supabase.rpc('beta_seat_count')
     if (error || count === null) {
-      document.getElementById('seat-text').textContent = '— of 100 beta seats claimed'
+      document.getElementById('seat-text').textContent = ' of 100 beta seats claimed'
       return
     }
     const pct = Math.min(100, Math.round((count / LIMIT) * 100))

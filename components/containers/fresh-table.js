@@ -1,5 +1,5 @@
 /* ============================================================
-   FreshDS — <fresh-table>
+   FreshDS, <fresh-table>
 
    Usage:
      <fresh-table
@@ -107,7 +107,7 @@ class FreshTable extends HTMLElement {
     const bodyRows = rows.length
       ? rows.map((row, ri) => {
           const cells = columns.map(col => {
-            const val   = row[col.key] ?? '—';
+            const val   = row[col.key] ?? '';
             const align = col.align || 'left';
             return `<td class="td" style="text-align:${align}" part="td">${val}</td>`;
           }).join('');

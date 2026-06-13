@@ -1,5 +1,5 @@
 /* ============================================================
-   FreshDS — <fresh-ai-response>
+   FreshDS, <fresh-ai-response>
 
    Chat bubble for user and AI assistant messages.
 
@@ -16,9 +16,9 @@
 
    Attributes:
      role       user | assistant   (default: assistant)
-     model      string — model name shown in header
-     streaming  boolean — shows blinking cursor
-     avatar     string — initials or name for assistant avatar (default: "AI")
+     model      string, model name shown in header
+     streaming  boolean, shows blinking cursor
+     avatar     string, initials or name for assistant avatar (default: "AI")
    ============================================================ */
 
 class FreshAiResponse extends HTMLElement {

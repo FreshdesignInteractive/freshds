@@ -1,5 +1,5 @@
 /* ============================================================
-   FreshDS — <fresh-card>
+   FreshDS, <fresh-card>
 
    Usage:
      <fresh-card>Simple body content</fresh-card>
@@ -20,8 +20,8 @@
 
    Attributes:
      padding      none | sm | md | lg    (default: md)
-     interactive  boolean — hover lift, pointer cursor
-     href         string  — renders as <a>, implies interactive
+     interactive  boolean, hover lift, pointer cursor
+     href         string , renders as <a>, implies interactive
    ============================================================ */
 
 class FreshCard extends HTMLElement {

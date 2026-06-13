@@ -1,9 +1,9 @@
 /* ============================================================
-   FRESHDS — TIER 2 + 3: SEMANTIC & COMPONENT TOKENS
+   FRESHDS, TIER 2 + 3: SEMANTIC & COMPONENT TOKENS
    All values reference generated scale steps (--scale-*,
    --primary-*, --secondary-*, --success-*, --warning-*,
    --danger-*) written to :root by freshds.js at runtime.
-   No hardcoded hex values here — only var() references.
+   No hardcoded hex values here, only var() references.
    ============================================================ */
 :root {
   /* ── Primitive aliases — computed from scales, override primitives.css ── */
@@ -11,9 +11,9 @@
   --primitive-primary-dark:  var(--primary-10);
 
   /* ── Tier 2: Semantic — Surfaces ── */
-  --surface-bg:             var(--color-page-bg);    /* page bg + navbar — user-defined */
-  --surface-canvas:         var(--color-page-bg);    /* cards/panels — matches page in light mode */
-  --surface-input:          var(--color-input-surface); /* form controls — user-defined */
+  --surface-bg:             var(--color-page-bg);    /* page bg + navbar, user-defined */
+  --surface-canvas:         var(--color-page-bg);    /* cards/panels, matches page in light mode */
+  --surface-input:          var(--color-input-surface); /* form controls, user-defined */
   --surface-subtle:         var(--scale-2);
   --surface-overlay:        var(--scale-3);
   --surface-border:         var(--scale-4);
@@ -116,7 +116,7 @@
 /* ── Light mode explicit scope ─────────────────────────────────
    Used by reference panels (e.g. color system page) that must
    always show light-mode status colors even when #app is dark.
-   Only overrides status tokens — the panel text uses hardcoded
+   Only overrides status tokens, the panel text uses hardcoded
    colors in docs.css so no other tokens need scoping here.
    ────────────────────────────────────────────────────────────── */
 [data-mode="light"] {
@@ -150,7 +150,7 @@
 [data-mode="dark"] {
   /* Surfaces — bg/subtle/canvas/input are distinct steps */
   --surface-bg:             var(--scale-12);  /* page + navbar */
-  --surface-canvas:         var(--scale-10);  /* cards / panels — elevated */
+  --surface-canvas:         var(--scale-10);  /* cards / panels, elevated */
   --surface-input:          var(--scale-11);  /* form controls */
   --surface-subtle:         var(--scale-11);  /* hover tints / section bg */
   --surface-overlay:        var(--scale-9);
@@ -171,7 +171,7 @@
   /* Accent */
   --color-accent-subtle:      var(--secondary-11);
   --color-accent-border:      var(--secondary-7);
-  --color-accent-text:        var(--secondary-4);  /* was missing — added */
+  --color-accent-text:        var(--secondary-4);  /* was missing, added */
 
   /* Status main — step 6: lighter than input (L≈0.82), reads vividly on dark bg */
   --color-success:          var(--success-6);
@@ -186,7 +186,7 @@
 
   --color-warning-subtle:   var(--warning-12);
   --color-warning-border:   var(--warning-11);
-  --color-warning-text:     var(--warning-4);  /* step 4 not 5 — yellow at L=0.85 risks washing out */
+  --color-warning-text:     var(--warning-4);  /* step 4 not 5, yellow at L=0.85 risks washing out */
 
   --color-danger-subtle:    var(--danger-12);
   --color-danger-border:    var(--danger-11);

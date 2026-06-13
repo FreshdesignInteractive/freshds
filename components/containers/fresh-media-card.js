@@ -1,5 +1,5 @@
 /* ============================================================
-   FreshDS — <fresh-media-card>
+   FreshDS, <fresh-media-card>
 
    Full-bleed thumbnail card with a title and optional description
    footer. Designed for pattern libraries, galleries, and any
@@ -18,12 +18,12 @@
      </fresh-media-card>
 
    Attributes:
-     title        string  — card label (required)
-     description  string  — optional secondary line
-     src          string  — image URL; if set, renders <img> in thumb
-     href         string  — makes the card a link
-     target       string  — e.g. "_blank"
-     ratio        string  — thumbnail aspect ratio (default: 16/10)
+     title        string , card label (required)
+     description  string , optional secondary line
+     src          string , image URL; if set, renders <img> in thumb
+     href         string , makes the card a link
+     target       string , e.g. "_blank"
+     ratio        string , thumbnail aspect ratio (default: 16/10)
    ============================================================ */
 
 class FreshMediaCard extends HTMLElement {

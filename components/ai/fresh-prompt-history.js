@@ -1,5 +1,5 @@
 /* ============================================================
-   FreshDS — <fresh-prompt-history>
+   FreshDS, <fresh-prompt-history>
 
    Horizontally scrollable row of recent prompts as clickable chips.
 
@@ -14,7 +14,7 @@
 
    Attributes:
      prompts   JSON array of strings
-     max-chars number — truncation length per chip (default: 40)
+     max-chars number, truncation length per chip (default: 40)
 
    Events:
      select → detail: { prompt: string, index: number }

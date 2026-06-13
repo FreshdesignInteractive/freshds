@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Chart wrapper — FreshDS</title>
+<title>Chart wrapper | FreshDS</title>
 <base href="../../">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -30,12 +30,12 @@
         <div class="page-header">
           <div class="page-eyebrow">Data Display</div>
           <h1 class="page-title">Chart wrapper</h1>
-          <p class="page-desc">A consistent container for any chart library — Chart.js, Recharts, D3, or custom SVG. Provides the FreshDS header, border, and responsive padding. You supply the chart via the default slot.</p>
+          <p class="page-desc">A consistent container for any chart library, Chart.js, Recharts, D3, or custom SVG. Provides the FreshDS header, border, and responsive padding. You supply the chart via the default slot.</p>
         </div>
         <div class="page-section">
           <div class="page-section-title">With title and description</div>
           <div class="demo-surface col">
-            <fresh-chart title="Monthly recurring revenue" description="MRR across all plans — last 6 months" height="220px">
+            <fresh-chart title="Monthly recurring revenue" description="MRR across all plans, last 6 months" height="220px">
               <svg viewBox="0 0 480 160" style="width:100%;height:100%" aria-hidden="true">
                 <defs>
                   <linearGradient id="area-grad" x1="0" y1="0" x2="0" y2="1">
@@ -96,11 +96,11 @@
           <table class="usage-table">
             <thead><tr><th>Attribute</th><th>Values</th><th>Default</th><th>Description</th></tr></thead>
             <tbody>
-              <tr><td>title</td><td>string</td><td>—</td><td>Card header title</td></tr>
-              <tr><td>description</td><td>string</td><td>—</td><td>Subtitle below the title</td></tr>
+              <tr><td>title</td><td>string</td><td></td><td>Card header title</td></tr>
+              <tr><td>description</td><td>string</td><td></td><td>Subtitle below the title</td></tr>
               <tr><td>height</td><td>CSS value</td><td><code>280px</code></td><td>Chart area height</td></tr>
-              <tr><td>loading</td><td>boolean</td><td>—</td><td>Shows shimmer skeleton over the chart area</td></tr>
-              <tr><td>empty</td><td>boolean</td><td>—</td><td>Shows "No data available" message</td></tr>
+              <tr><td>loading</td><td>boolean</td><td></td><td>Shows shimmer skeleton over the chart area</td></tr>
+              <tr><td>empty</td><td>boolean</td><td></td><td>Shows "No data available" message</td></tr>
             </tbody>
           </table>
         </div>
@@ -109,7 +109,7 @@
           <table class="usage-table">
             <thead><tr><th>Slot</th><th>Description</th></tr></thead>
             <tbody>
-              <tr><td><em>default</em></td><td>Your chart element — canvas, SVG, or a charting library component</td></tr>
+              <tr><td><em>default</em></td><td>Your chart element, canvas, SVG, or a charting library component</td></tr>
               <tr><td>actions</td><td>Buttons or controls rendered top-right in the card header</td></tr>
             </tbody>
           </table>

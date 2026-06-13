@@ -1,5 +1,5 @@
 /* ============================================================
-   FreshDS — <fresh-stepper>
+   FreshDS, <fresh-stepper>
 
    Usage:
      <fresh-stepper
@@ -13,7 +13,7 @@
      </fresh-stepper>
 
    Attributes:
-     step          number  — current step, 1-based      (default: 1)
+     step          number , current step, 1-based      (default: 1)
      steps         JSON array of { label, description? }
      orientation   horizontal | vertical                 (default: horizontal)
    ============================================================ */

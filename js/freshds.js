@@ -1,5 +1,5 @@
 /* ============================================================
-   FreshDS — Core engine
+   FreshDS, Core engine
    Ships with every DS export. No site-specific code here.
 
    Provides:

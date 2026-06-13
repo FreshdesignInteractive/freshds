@@ -555,7 +555,7 @@ input[type="color"].color-picker:disabled { opacity: 1; cursor: not-allowed; }
    These panels simulate fixed light/dark backgrounds to show what the
    data viz palette looks like in each mode. They cannot use theme tokens
    because they are displaying what those tokens produce, not consuming them.
-   Docs-only — never shipped with the DS export.
+   Docs-only, never shipped with the DS export.
    ─────────────────────────────────────────────────────────────────────────── */
 .dv-panel { border-radius: var(--radius-lg); padding: var(--space-5); }
 .dv-panel-light { background: #f4f5f7; border: 1px solid #dddfe3; }
@@ -688,7 +688,7 @@ input[type="color"].color-picker:disabled { opacity: 1; cursor: not-allowed; }
 
 /* ── AI Rules panel ──────────────────────────────────────────────────────────
    Permitted exception: #f4f2ff / #ddd8ff are docs-only lavender tints for the
-   AI rules panel background — not part of the DS token system, never exported.
+   AI rules panel background, not part of the DS token system, never exported.
    Dark overrides use rgba so they remain semi-transparent over any dark surface.
    ─────────────────────────────────────────────────────────────────────────── */
 .spec-rules-panel {

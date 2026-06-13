@@ -1,5 +1,5 @@
 /* ============================================================
-   FreshDS — <fresh-modal>
+   FreshDS, <fresh-modal>
 
    Usage:
      <fresh-modal id="my-modal" title="Confirm deletion" size="sm">
@@ -13,10 +13,10 @@
      <fresh-button onclick="document.getElementById('my-modal').show()">Open modal</fresh-button>
 
    Attributes:
-     open         boolean — controlled open state
+     open         boolean, controlled open state
      title        string
      size         sm | md | lg   (default: md)
-     dismissible  boolean — close on backdrop click  (default: true)
+     dismissible  boolean, close on backdrop click  (default: true)
 
    Methods:
      show()

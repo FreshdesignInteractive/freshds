@@ -3,25 +3,25 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Button — FreshDS</title>
+<title>Button | FreshDS</title>
 <base href="../../">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
-<!-- site.css first — provides .com page chrome base -->
+<!-- site.css first, provides .com page chrome base -->
 <link rel="stylesheet" href="styles/site.css">
-<!-- DS tokens after site.css — override :root so components in the DS window
+<!-- DS tokens after site.css, override :root so components in the DS window
      use the customer's configured theme (color, radius, type, elevation) -->
 <link rel="stylesheet" href="tokens/primitives.css">
 <link rel="stylesheet" href="tokens/theme.css">
-<!-- DS engine — computes brand + neutral scales, writes them to :root -->
+<!-- DS engine, computes brand + neutral scales, writes them to :root -->
 <script src="js/freshds.js"></script>
 <script src="js/freshds-site.js"></script>
 <style>
 /* ────────────────────────────────────────────────────────────
-   Page chrome — .com site aesthetics.
+   Page chrome, .com site aesthetics.
    All colours are hardcoded so DS theme changes (saved via the
    configurator) cannot bleed into the page shell. Never use
    var(--text-*), var(--border), or var(--radius-*) here.
@@ -229,7 +229,7 @@ body { background: #f7f7f8; }
 .spec-viewport[data-mode="dark"] .spec-size-px           { color: #4a4f5a; }
 
 /* ── Editable spec panels — AI Rules + Accessibility ─────────
-   Panels use #ebebec — slightly darker than page bg (#f7f7f8)
+   Panels use #ebebec, slightly darker than page bg (#f7f7f8)
    so they read clearly against it. No brand colour anywhere.
    ──────────────────────────────────────────────────────────── */
 .spec-rules-panel {
@@ -395,13 +395,13 @@ body { background: #f7f7f8; }
 
   <!-- Page header -->
   <h1 class="comp-title">Button</h1>
-  <p class="comp-desc">Triggers actions. Five variants — primary, secondary, ghost, danger, and AI — cover the full range of emphasis.</p>
+  <p class="comp-desc">Triggers actions. Five variants, primary, secondary, ghost, danger, and AI, cover the full range of emphasis.</p>
 
   <!-- ALL VARIANTS -->
   <div class="comp-section">
     <div class="spec-card">
       <div class="spec-card-topbar">
-        <span class="spec-rules-title">Button — Variants</span>
+        <span class="spec-rules-title">Button, Variants</span>
         <div class="spec-mode-switcher">
           <button class="spec-mode-btn active" id="mode-btn-light" onclick="setSpecMode('light')"><i class="ti ti-sun"></i> Light</button>
           <button class="spec-mode-btn" id="mode-btn-dark" onclick="setSpecMode('dark')"><i class="ti ti-moon"></i> Dark</button>
@@ -414,7 +414,7 @@ body { background: #f7f7f8; }
         <div class="spec-variant-header">
           <span class="spec-variant-name">Primary</span>
           <span class="spec-attr-chip">variant="primary"</span>
-          <span class="spec-variant-sep">—</span>
+          <span class="spec-variant-sep"></span>
           <span class="spec-variant-desc">The single highest-priority action on a surface.</span>
         </div>
         <div class="spec-variant-body">
@@ -446,7 +446,7 @@ body { background: #f7f7f8; }
         <div class="spec-variant-header">
           <span class="spec-variant-name">Secondary</span>
           <span class="spec-attr-chip">variant="secondary"</span>
-          <span class="spec-variant-sep">—</span>
+          <span class="spec-variant-sep"></span>
           <span class="spec-variant-desc">The second most important action, typically paired with a primary.</span>
         </div>
         <div class="spec-variant-body">
@@ -478,7 +478,7 @@ body { background: #f7f7f8; }
         <div class="spec-variant-header">
           <span class="spec-variant-name">Tertiary</span>
           <span class="spec-attr-chip">variant="ghost"</span>
-          <span class="spec-variant-sep">—</span>
+          <span class="spec-variant-sep"></span>
           <span class="spec-variant-desc">Low-emphasis controls for toolbars, filters, and repeated inline actions.</span>
         </div>
         <div class="spec-variant-body">
@@ -510,8 +510,8 @@ body { background: #f7f7f8; }
         <div class="spec-variant-header">
           <span class="spec-variant-name">Destructive</span>
           <span class="spec-attr-chip">variant="danger"</span>
-          <span class="spec-variant-sep">—</span>
-          <span class="spec-variant-desc">Irreversible or high-risk operations — delete, remove access, clear data.</span>
+          <span class="spec-variant-sep"></span>
+          <span class="spec-variant-desc">Irreversible or high-risk operations, delete, remove access, clear data.</span>
         </div>
         <div class="spec-variant-body">
           <div class="spec-demos">
@@ -541,8 +541,8 @@ body { background: #f7f7f8; }
         <div class="spec-variant-header">
           <span class="spec-variant-name">AI Action</span>
           <span class="spec-attr-chip">variant="ai"</span>
-          <span class="spec-variant-sep">—</span>
-          <span class="spec-variant-desc">AI-generated or AI-assisted actions — generate, summarise, explain.</span>
+          <span class="spec-variant-sep"></span>
+          <span class="spec-variant-desc">AI-generated or AI-assisted actions, generate, summarise, explain.</span>
         </div>
         <div class="spec-variant-body">
           <div class="spec-demos">
@@ -594,12 +594,12 @@ body { background: #f7f7f8; }
           </li>
           <li class="spec-rule-li">
             <span class="spec-rule-bullet">•</span>
-            <span class="spec-rule-text" contenteditable="true">Limit to one primary button per view — avoid competing primaries side by side.</span>
+            <span class="spec-rule-text" contenteditable="true">Limit to one primary button per view, avoid competing primaries side by side.</span>
             <span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span>
           </li>
           <li class="spec-rule-li">
             <span class="spec-rule-bullet">•</span>
-            <span class="spec-rule-text" contenteditable="true">Label with a strong action verb: "Save", "Submit", "Create" — not "OK" or "Yes".</span>
+            <span class="spec-rule-text" contenteditable="true">Label with a strong action verb: "Save", "Submit", "Create", not "OK" or "Yes".</span>
             <span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span>
           </li>
           <li class="spec-rule-li">
@@ -609,7 +609,7 @@ body { background: #f7f7f8; }
           </li>
           <li class="spec-rule-li">
             <span class="spec-rule-bullet">•</span>
-            <span class="spec-rule-text" contenteditable="true">Do not use primary inside notification banners or toasts — use ghost or inline links there instead.</span>
+            <span class="spec-rule-text" contenteditable="true">Do not use primary inside notification banners or toasts, use ghost or inline links there instead.</span>
             <span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span>
           </li>
         </ul>
@@ -640,7 +640,7 @@ body { background: #f7f7f8; }
           </li>
           <li class="spec-rule-li">
             <span class="spec-rule-bullet">•</span>
-            <span class="spec-rule-text" contenteditable="true">Do not use secondary for destructive actions — use <code>variant="danger"</code> instead.</span>
+            <span class="spec-rule-text" contenteditable="true">Do not use secondary for destructive actions, use <code>variant="danger"</code> instead.</span>
             <span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span>
           </li>
         </ul>
@@ -671,7 +671,7 @@ body { background: #f7f7f8; }
           </li>
           <li class="spec-rule-li">
             <span class="spec-rule-bullet">•</span>
-            <span class="spec-rule-text" contenteditable="true">Do not use ghost as the sole action in a dialog or empty state — the action lacks visual weight in that context.</span>
+            <span class="spec-rule-text" contenteditable="true">Do not use ghost as the sole action in a dialog or empty state, the action lacks visual weight in that context.</span>
             <span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span>
           </li>
         </ul>
@@ -692,17 +692,17 @@ body { background: #f7f7f8; }
           </li>
           <li class="spec-rule-li">
             <span class="spec-rule-bullet">•</span>
-            <span class="spec-rule-text" contenteditable="true">Always follow a destructive action with a confirmation dialog — never act immediately on first click.</span>
+            <span class="spec-rule-text" contenteditable="true">Always follow a destructive action with a confirmation dialog, never act immediately on first click.</span>
             <span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span>
           </li>
           <li class="spec-rule-li">
             <span class="spec-rule-bullet">•</span>
-            <span class="spec-rule-text" contenteditable="true">Never place a danger button as the primary page-level CTA — reserve it for explicitly destructive confirmation flows.</span>
+            <span class="spec-rule-text" contenteditable="true">Never place a danger button as the primary page-level CTA, reserve it for explicitly destructive confirmation flows.</span>
             <span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span>
           </li>
           <li class="spec-rule-li">
             <span class="spec-rule-bullet">•</span>
-            <span class="spec-rule-text" contenteditable="true">Label with the specific action: "Delete account", "Remove user" — not "Confirm" or "Yes" for a danger-variant button.</span>
+            <span class="spec-rule-text" contenteditable="true">Label with the specific action: "Delete account", "Remove user", not "Confirm" or "Yes" for a danger-variant button.</span>
             <span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span>
           </li>
         </ul>
@@ -728,7 +728,7 @@ body { background: #f7f7f8; }
           </li>
           <li class="spec-rule-li">
             <span class="spec-rule-bullet">•</span>
-            <span class="spec-rule-text" contenteditable="true">Do not use <code>variant="ai"</code> for standard CRUD operations — even if an AI model runs in the background.</span>
+            <span class="spec-rule-text" contenteditable="true">Do not use <code>variant="ai"</code> for standard CRUD operations, even if an AI model runs in the background.</span>
             <span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span>
           </li>
           <li class="spec-rule-li">
@@ -738,7 +738,7 @@ body { background: #f7f7f8; }
           </li>
           <li class="spec-rule-li">
             <span class="spec-rule-bullet">•</span>
-            <span class="spec-rule-text" contenteditable="true">Label with clear action language: "Generate draft", "Summarise", "Explain this" — not just "AI" as the label.</span>
+            <span class="spec-rule-text" contenteditable="true">Label with clear action language: "Generate draft", "Summarise", "Explain this", not just "AI" as the label.</span>
             <span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span>
           </li>
         </ul>
@@ -756,7 +756,7 @@ body { background: #f7f7f8; }
       </div>
       <div style="padding: 12px 24px 14px; border-bottom: 1px solid #d4d4d7;">
         <p style="font-size:13px;color:#555;line-height:1.6;margin:0;">
-          Button satisfies all <a href="app.html#accessibility" target="_parent" style="color:#5b6af7;text-decoration:none;font-weight:500;">universal accessibility concerns</a> — role, accessible name, keyboard, focus ring, colour contrast, icon decoration, disabled state, and touch target. The only concern specific to this component is below.
+          Button satisfies all <a href="app.html#accessibility" target="_parent" style="color:#5b6af7;text-decoration:none;font-weight:500;">universal accessibility concerns</a>, role, accessible name, keyboard, focus ring, colour contrast, icon decoration, disabled state, and touch target. The only concern specific to this component is below.
         </p>
       </div>
       <table class="spec-a11y-table">

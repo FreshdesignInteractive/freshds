@@ -1,9 +1,9 @@
 /* ============================================================
-   FreshDS — <fresh-chart>
+   FreshDS, <fresh-chart>
 
    Styled container for any chart library (Chart.js, Recharts,
    D3, etc.). Provides the FreshDS header, metadata, and
-   consistent padding — you provide the chart via the default slot.
+   consistent padding, you provide the chart via the default slot.
 
    Usage:
      <fresh-chart title="Revenue over time" description="Monthly MRR across all plans">
@@ -18,8 +18,8 @@
      title        string
      description  string
      height       CSS value for the chart area (default: 280px)
-     loading      boolean — shows skeleton shimmer
-     empty        boolean — shows empty state
+     loading      boolean, shows skeleton shimmer
+     empty        boolean, shows empty state
    ============================================================ */
 
 class FreshChart extends HTMLElement {

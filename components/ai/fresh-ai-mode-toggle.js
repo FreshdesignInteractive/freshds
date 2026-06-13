@@ -1,5 +1,5 @@
 /* ============================================================
-   FreshDS — <fresh-ai-mode-toggle>
+   FreshDS, <fresh-ai-mode-toggle>
 
    Global switch for enabling or disabling AI features.
    Pill-shaped toggle with an animated AI indicator.
@@ -10,8 +10,8 @@
      <fresh-ai-mode-toggle on label="AI Copilot"></fresh-ai-mode-toggle>
 
    Attributes:
-     on      boolean — whether AI mode is active
-     label   string  — displayed next to the toggle (default: "AI mode")
+     on      boolean, whether AI mode is active
+     label   string , displayed next to the toggle (default: "AI mode")
      size    sm | md (default: md)
 
    Events:
@@ -158,7 +158,7 @@ class FreshAiModeToggle extends HTMLElement {
         class="toggle-wrap"
         role="switch"
         aria-checked="${isOn}"
-        aria-label="${label} — ${isOn ? 'on' : 'off'}"
+        aria-label="${label}, ${isOn ? 'on' : 'off'}"
       >
         <div class="track">
           <div class="track-glow"></div>

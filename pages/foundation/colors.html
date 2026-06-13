@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Color System — FreshDS</title>
+<title>Color System | FreshDS</title>
 <base href="../../">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -30,12 +30,12 @@
         <div class="page-header">
           <div class="page-eyebrow">Foundation</div>
           <h1 class="page-title">Color system</h1>
-          <p class="page-desc">A perceptual color engine generates every shade from two brand colors. Change primary and secondary in the Configurator — every token and every component updates automatically.</p>
+          <p class="page-desc">A perceptual color engine generates every shade from two brand colors. Change primary and secondary in the Configurator, every token and every component updates automatically.</p>
         </div>
 
         <div class="page-section">
           <div class="page-section-title">Architecture</div>
-          <p style="font-size:13px;color:var(--text-secondary);line-height:1.6;margin-bottom:var(--space-5)">Tokens are organized in three tiers. You set values at Tier 1; Tier 2 and 3 consume them. Never skip tiers — reference the nearest semantic token, not a raw primitive.</p>
+          <p style="font-size:13px;color:var(--text-secondary);line-height:1.6;margin-bottom:var(--space-5)">Tokens are organized in three tiers. You set values at Tier 1; Tier 2 and 3 consume them. Never skip tiers, reference the nearest semantic token, not a raw primitive.</p>
           <div class="arch-tiers">
             <div class="arch-tier">
               <div class="arch-tier-label"><span>Tier 1</span><span style="font-weight:400;opacity:.7">Primitive</span></div>
@@ -57,7 +57,7 @@
 
         <div class="page-section">
           <div class="page-section-title">Neutral scale</div>
-          <p style="font-size:13px;color:var(--text-secondary);line-height:1.6;margin-bottom:var(--space-4)">Generated at runtime from your dark and light anchors using Oklab interpolation. 12 steps from lightest (1) to darkest (12). Semantic tokens reference specific steps — step assignments flip in dark mode to maintain contrast without regenerating the scale.</p>
+          <p style="font-size:13px;color:var(--text-secondary);line-height:1.6;margin-bottom:var(--space-4)">Generated at runtime from your dark and light anchors using Oklab interpolation. 12 steps from lightest (1) to darkest (12). Semantic tokens reference specific steps, step assignments flip in dark mode to maintain contrast without regenerating the scale.</p>
           <div class="cs-scale">
             <div class="cs-chip" style="background:var(--scale-1)"><span class="cs-chip-num">1</span></div>
             <div class="cs-chip" style="background:var(--scale-2)"><span class="cs-chip-num">2</span></div>
@@ -72,7 +72,7 @@
             <div class="cs-chip" style="background:var(--scale-11)"><span class="cs-chip-num">11</span></div>
             <div class="cs-chip" style="background:var(--scale-12)"><span class="cs-chip-num">12</span></div>
           </div>
-          <div class="cs-scale-label"><span>Lightest — page bg (light mode)</span><span>Darkest — page bg (dark mode)</span></div>
+          <div class="cs-scale-label"><span>Lightest, page bg (light mode)</span><span>Darkest, page bg (dark mode)</span></div>
         </div>
 
         <div class="page-section">
@@ -118,7 +118,7 @@
 
         <div class="page-section">
           <div class="page-section-title">Status</div>
-          <p style="font-size:13px;color:var(--text-secondary);line-height:1.6;margin-bottom:var(--space-5)">Each status color generates a full 12-step OKLCH scale from the customer's chosen hex. <strong>Dark mode is derived algorithmically</strong> — the customer picks one hex and the engine outputs all tokens for both modes automatically. Each color ships with four roles: <code style="font-family:var(--font-mono);font-size:11px;background:var(--surface-overlay);padding:1px 5px;border-radius:var(--radius-sm);color:var(--color-interactive-text)">--color-{status}</code> for icons and indicators; <code style="font-family:var(--font-mono);font-size:11px;background:var(--surface-overlay);padding:1px 5px;border-radius:var(--radius-sm);color:var(--color-interactive-text)">--color-{status}-subtle</code> for tinted backgrounds; <code style="font-family:var(--font-mono);font-size:11px;background:var(--surface-overlay);padding:1px 5px;border-radius:var(--radius-sm);color:var(--color-interactive-text)">--color-{status}-border</code> for borders; <code style="font-family:var(--font-mono);font-size:11px;background:var(--surface-overlay);padding:1px 5px;border-radius:var(--radius-sm);color:var(--color-interactive-text)">--color-{status}-text</code> for readable text on subtle fills.</p>
+          <p style="font-size:13px;color:var(--text-secondary);line-height:1.6;margin-bottom:var(--space-5)">Each status color generates a full 12-step OKLCH scale from the customer's chosen hex. <strong>Dark mode is derived algorithmically</strong>, the customer picks one hex and the engine outputs all tokens for both modes automatically. Each color ships with four roles: <code style="font-family:var(--font-mono);font-size:11px;background:var(--surface-overlay);padding:1px 5px;border-radius:var(--radius-sm);color:var(--color-interactive-text)">--color-{status}</code> for icons and indicators; <code style="font-family:var(--font-mono);font-size:11px;background:var(--surface-overlay);padding:1px 5px;border-radius:var(--radius-sm);color:var(--color-interactive-text)">--color-{status}-subtle</code> for tinted backgrounds; <code style="font-family:var(--font-mono);font-size:11px;background:var(--surface-overlay);padding:1px 5px;border-radius:var(--radius-sm);color:var(--color-interactive-text)">--color-{status}-border</code> for borders; <code style="font-family:var(--font-mono);font-size:11px;background:var(--surface-overlay);padding:1px 5px;border-radius:var(--radius-sm);color:var(--color-interactive-text)">--color-{status}-text</code> for readable text on subtle fills.</p>
 
           <div class="dv-panels">
             <div class="dv-panel dv-panel-light" data-mode="light">
@@ -179,12 +179,12 @@
               </tbody>
             </table>
           </div>
-          <p style="font-size:12px;color:var(--text-tertiary);margin-top:var(--space-3)">Customer picks one hex per status color. The OKLCH scale engine derives all four tokens — and their dark mode counterparts — automatically. These tokens are customer-configurable via the Configurator.</p>
+          <p style="font-size:12px;color:var(--text-tertiary);margin-top:var(--space-3)">Customer picks one hex per status color. The OKLCH scale engine derives all four tokens, and their dark mode counterparts, automatically. These tokens are customer-configurable via the Configurator.</p>
         </div>
 
         <div class="page-section">
           <div class="page-section-title">Data visualization</div>
-          <p style="font-size:13px;color:var(--text-secondary);line-height:1.6;margin-bottom:var(--space-5)">A fixed 8-color palette for charts, graphs, and data display components. Unlike brand colors, this palette is <strong>not customer-configurable</strong> — it stays consistent across all themes to ensure legibility. Each series color ships with three roles: <code style="font-family:var(--font-mono);font-size:11px;background:var(--surface-overlay);padding:1px 5px;border-radius:var(--radius-sm);color:var(--color-interactive-text)">--dv-{n}</code> for bars, lines, dots, and pie slices; <code style="font-family:var(--font-mono);font-size:11px;background:var(--surface-overlay);padding:1px 5px;border-radius:var(--radius-sm);color:var(--color-interactive-text)">--dv-{n}-subtle</code> for area fills and row highlights; <code style="font-family:var(--font-mono);font-size:11px;background:var(--surface-overlay);padding:1px 5px;border-radius:var(--radius-sm);color:var(--color-interactive-text)">--dv-{n}-label</code> for annotations written on top of subtle fills.</p>
+          <p style="font-size:13px;color:var(--text-secondary);line-height:1.6;margin-bottom:var(--space-5)">A fixed 8-color palette for charts, graphs, and data display components. Unlike brand colors, this palette is <strong>not customer-configurable</strong>, it stays consistent across all themes to ensure legibility. Each series color ships with three roles: <code style="font-family:var(--font-mono);font-size:11px;background:var(--surface-overlay);padding:1px 5px;border-radius:var(--radius-sm);color:var(--color-interactive-text)">--dv-{n}</code> for bars, lines, dots, and pie slices; <code style="font-family:var(--font-mono);font-size:11px;background:var(--surface-overlay);padding:1px 5px;border-radius:var(--radius-sm);color:var(--color-interactive-text)">--dv-{n}-subtle</code> for area fills and row highlights; <code style="font-family:var(--font-mono);font-size:11px;background:var(--surface-overlay);padding:1px 5px;border-radius:var(--radius-sm);color:var(--color-interactive-text)">--dv-{n}-label</code> for annotations written on top of subtle fills.</p>
 
           <div class="dv-panels">
             <div class="dv-panel dv-panel-light">
@@ -215,11 +215,11 @@
             </div>
           </div>
 
-          <div style="font-size:10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-tertiary);margin-bottom:var(--space-3)">Full token spec — all three roles per color</div>
+          <div style="font-size:10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-tertiary);margin-bottom:var(--space-3)">Full token spec, all three roles per color</div>
           <div style="overflow-x:auto;margin-bottom:var(--space-6)">
             <table class="token-ref-table dv-token-table">
               <thead>
-                <tr><th>Color</th><th>Token</th><th>Light — primary</th><th>Light — subtle fill</th><th>Light — label text</th><th>Dark — primary</th><th>Dark — subtle fill</th><th>Dark — label text</th></tr>
+                <tr><th>Color</th><th>Token</th><th>Light, primary</th><th>Light, subtle fill</th><th>Light, label text</th><th>Dark, primary</th><th>Dark, subtle fill</th><th>Dark, label text</th></tr>
               </thead>
               <tbody>
                 <tr><td>Indigo</td><td><span class="tok-name">--dv-1</span></td><td><div class="tok-cell"><div class="tok-dot" style="background:#4D6EE3"></div><span class="tok-val">#4D6EE3</span></div></td><td><div class="tok-cell"><div class="tok-dot" style="background:#E4E9FC;border:1px solid var(--surface-border)"></div><span class="tok-val">#E4E9FC</span></div></td><td><div class="tok-cell"><div class="tok-dot" style="background:#1E3A9C"></div><span class="tok-val">#1E3A9C</span></div></td><td><div class="tok-cell"><div class="tok-dot" style="background:#7B96EC"></div><span class="tok-val">#7B96EC</span></div></td><td><div class="tok-cell"><div class="tok-dot" style="background:#1A2347"></div><span class="tok-val">#1A2347</span></div></td><td><div class="tok-cell"><div class="tok-dot" style="background:#B8C8F8;border:1px solid var(--surface-border)"></div><span class="tok-val">#B8C8F8</span></div></td></tr>

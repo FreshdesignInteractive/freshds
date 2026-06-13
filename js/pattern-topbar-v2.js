@@ -1,10 +1,10 @@
 /* ============================================================
-   <pattern-topbar> — shared topbar for all FreshDS pattern pages.
+   <pattern-topbar>, shared topbar for all FreshDS pattern pages.
 
    Variants:
-     <pattern-topbar>        — logged-in state (default): hamburger + Acme
+     <pattern-topbar>       , logged-in state (default): hamburger + Acme
                                logo + search + bell + avatar menu
-     <pattern-topbar auth>   — auth state: Acme logo only
+     <pattern-topbar auth>  , auth state: Acme logo only
 
    Avatar menu items: Profile · Settings · Help · Logout
    ============================================================ */

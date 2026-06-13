@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Avatar — FreshDS</title>
+<title>Avatar | FreshDS</title>
 <base href="../../">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -30,10 +30,10 @@
         <div class="page-header">
           <div class="page-eyebrow">Data Display</div>
           <h1 class="page-title">Avatar</h1>
-          <p class="page-desc">User identity display. Shows a photo when available, falling back to initials on error or when no source is provided. Initials color is deterministically derived from the name — consistent across sessions.</p>
+          <p class="page-desc">User identity display. Shows a photo when available, falling back to initials on error or when no source is provided. Initials color is deterministically derived from the name, consistent across sessions.</p>
         </div>
         <div class="page-section">
-          <div class="page-section-title">Initials — color from name</div>
+          <div class="page-section-title">Initials, color from name</div>
           <div class="demo-surface" style="align-items:center;gap:var(--space-3)">
             <fresh-avatar name="Jane Smith"></fresh-avatar>
             <fresh-avatar name="Marcus Lee"></fresh-avatar>
@@ -112,11 +112,11 @@
           <table class="usage-table">
             <thead><tr><th>Attribute</th><th>Values</th><th>Default</th><th>Description</th></tr></thead>
             <tbody>
-              <tr><td>src</td><td>URL</td><td>—</td><td>Image source. Falls back to initials on error.</td></tr>
-              <tr><td>name</td><td>string</td><td>—</td><td>Used for initials, color, and aria-label</td></tr>
+              <tr><td>src</td><td>URL</td><td></td><td>Image source. Falls back to initials on error.</td></tr>
+              <tr><td>name</td><td>string</td><td></td><td>Used for initials, color, and aria-label</td></tr>
               <tr><td>size</td><td><code>xs</code> <code>sm</code> <code>md</code> <code>lg</code> <code>xl</code></td><td><code>md</code></td><td>Diameter in px (20/28/36/44/64)</td></tr>
               <tr><td>shape</td><td><code>circle</code> <code>square</code></td><td><code>circle</code></td><td>Square is recommended for AI agents and bots</td></tr>
-              <tr><td>status</td><td><code>online</code> <code>away</code> <code>busy</code> <code>offline</code></td><td>—</td><td>Colored dot at bottom-right</td></tr>
+              <tr><td>status</td><td><code>online</code> <code>away</code> <code>busy</code> <code>offline</code></td><td></td><td>Colored dot at bottom-right</td></tr>
             </tbody>
           </table>
         </div>

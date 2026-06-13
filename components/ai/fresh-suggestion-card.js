@@ -1,5 +1,5 @@
 /* ============================================================
-   FreshDS — <fresh-suggestion-card>
+   FreshDS, <fresh-suggestion-card>
 
    Proactive AI recommendation with accept and dismiss actions.
 
@@ -15,11 +15,11 @@
      title        string
      description  string
      accept-label string (default: "Show me")
-     dismiss      boolean — if set, the component is hidden
+     dismiss      boolean, if set, the component is hidden
 
    Events:
-     accept  — user clicked the primary action
-     dismiss — user dismissed the card
+     accept , user clicked the primary action
+     dismiss, user dismissed the card
    ============================================================ */
 
 class FreshSuggestionCard extends HTMLElement {

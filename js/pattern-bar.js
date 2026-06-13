@@ -1,5 +1,5 @@
 /* ============================================================
-   FreshDS — Pattern viewer toolbar
+   FreshDS, Pattern viewer toolbar
    ============================================================ */
 
 var _isThumb = location.href.indexOf('?thumb') !== -1;

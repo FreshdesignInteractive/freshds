@@ -1,7 +1,7 @@
 /* ============================================================
-   FreshDS — <fresh-tabs>
+   FreshDS, <fresh-tabs>
 
-   Renders the tab bar. Panels are managed by the developer —
+   Renders the tab bar. Panels are managed by the developer 
    listen to the `change` event to show/hide content.
 
    Usage:
@@ -22,7 +22,7 @@
 
    Attributes:
      tabs    JSON array of { key, label, badge?, disabled? }
-     active  string — key of the active tab
+     active  string, key of the active tab
      size    sm | md | lg   (default: md)
    ============================================================ */
 

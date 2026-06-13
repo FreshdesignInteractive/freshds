@@ -1,5 +1,5 @@
 /* ============================================================
-   FreshDS — <fresh-sidebar> + <fresh-nav-group> + <fresh-nav-item>
+   FreshDS, <fresh-sidebar> + <fresh-nav-group> + <fresh-nav-item>
 
    Usage:
      <fresh-sidebar>
@@ -23,7 +23,7 @@
      </fresh-sidebar>
 
    fresh-sidebar attributes:
-     collapsed  boolean — icon-only narrow mode
+     collapsed  boolean, icon-only narrow mode
 
    fresh-nav-group attributes:
      label  string

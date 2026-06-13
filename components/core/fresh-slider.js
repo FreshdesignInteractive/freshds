@@ -1,5 +1,5 @@
 /* ============================================================
-   FreshDS — <fresh-slider>
+   FreshDS, <fresh-slider>
 
    Usage:
      <fresh-slider></fresh-slider>

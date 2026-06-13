@@ -1,5 +1,5 @@
 /* ============================================================
-   FreshDS — <fresh-feedback>
+   FreshDS, <fresh-feedback>
 
    Thumbs up/down and optional flag controls for rating AI responses.
 
@@ -9,8 +9,8 @@
      <fresh-feedback compact></fresh-feedback>
 
    Attributes:
-     show-flag  boolean — shows a flag/report button
-     compact    boolean — icon-only, no labels
+     show-flag  boolean, shows a flag/report button
+     compact    boolean, icon-only, no labels
 
    Events:
      rate   → detail: { value: 'up' | 'down' }
