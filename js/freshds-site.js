@@ -484,8 +484,29 @@ var COMPONENT_PAGES = {
 
 function navigate(page) {
   if (page === 'configurator') { window.location.href = 'configurator.html'; return; }
-  if (FOUNDATION_PAGES[page]) { window.location.href = FOUNDATION_PAGES[page]; return; }
-  if (COMPONENT_PAGES[page]) { window.location.href = COMPONENT_PAGES[page]; return; }
+
+  var url = FOUNDATION_PAGES[page] || COMPONENT_PAGES[page];
+  if (url) {
+    var frame = document.getElementById('comp-frame');
+    var framePage = document.getElementById('page-frame');
+    if (frame && framePage) {
+      document.querySelectorAll('.fds-page').forEach(function(p){ p.classList.remove('active'); });
+      document.querySelectorAll('.nav-item').forEach(function(el){ el.classList.remove('active'); });
+      frame.src = url;
+      framePage.classList.add('active');
+      document.querySelectorAll('.nav-item').forEach(function(el){
+        if ((el.getAttribute('data-page') || '') === page) el.classList.add('active');
+        else if ((el.getAttribute('onclick') || '').indexOf("'" + page + "'") !== -1) el.classList.add('active');
+      });
+      var main = document.querySelector('.fds-main');
+      if (main) main.scrollTop = 0;
+      if (location.hash.slice(1) !== page) history.pushState(null, '', '#' + page);
+      return;
+    }
+    window.location.href = url;
+    return;
+  }
+
   if (!document.getElementById('page-' + page)) { window.location.href = 'app.html#' + page; return; }
   document.querySelectorAll('.fds-page').forEach(function(p){ p.classList.remove('active'); });
   document.querySelectorAll('.nav-item').forEach(function(el){ el.classList.remove('active'); });
