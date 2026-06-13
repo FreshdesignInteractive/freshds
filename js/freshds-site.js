@@ -98,6 +98,25 @@ applyScalesToElement(document.documentElement, DEFAULT_THEME.primary, DEFAULT_TH
 document.documentElement.style.setProperty('--color-page-bg',      DEFAULT_THEME.pageBg);
 document.documentElement.style.setProperty('--color-input-surface', DEFAULT_THEME.inputSurface);
 
+// ── When loaded in an iframe (app.html #comp-frame), receive theme from parent ─
+if (window !== window.top) {
+  window.addEventListener('message', function(evt) {
+    var d = evt.data;
+    if (!d || d.type !== 'fds-theme') return;
+    applyScalesToElement(document.documentElement, d.primary, d.secondary, d.scaleDark, d.scaleLight, d.success, d.warning, d.danger, d.info);
+    document.documentElement.style.setProperty('--color-page-bg',       d.pageBg       || '#ffffff');
+    document.documentElement.style.setProperty('--color-input-surface', d.inputSurface || '#ffffff');
+    var appEl = document.getElementById('app');
+    if (d.mode === 'dark') {
+      document.documentElement.setAttribute('data-mode', 'dark');
+      if (appEl) appEl.setAttribute('data-mode', 'dark');
+    } else {
+      document.documentElement.removeAttribute('data-mode');
+      if (appEl) appEl.removeAttribute('data-mode');
+    }
+  });
+}
+
 // ── Color swatch resolver (docs site only) ─────────────────────
 function resolveToken(prop) {
   var tmp = document.createElement('div');
@@ -493,6 +512,26 @@ function navigate(page) {
       document.querySelectorAll('.fds-page').forEach(function(p){ p.classList.remove('active'); });
       document.querySelectorAll('.nav-item').forEach(function(el){ el.classList.remove('active'); });
       frame.src = url;
+      frame.onload = function() {
+        var t = {};
+        try { t = JSON.parse(localStorage.getItem('freshds-theme') || '{}'); } catch(e) {}
+        try {
+          frame.contentWindow.postMessage({
+            type:         'fds-theme',
+            primary:      t.primary      || ds.primary,
+            secondary:    t.secondary    || ds.secondary,
+            scaleDark:    t.scaleDark    || ds.scaleDark,
+            scaleLight:   t.scaleLight   || ds.scaleLight,
+            success:      t.success      || ds.success,
+            warning:      t.warning      || ds.warning,
+            danger:       t.danger       || ds.danger,
+            info:         t.info         || ds.info,
+            pageBg:       t.pageBg       || ds.pageBg,
+            inputSurface: t.inputSurface || ds.inputSurface,
+            mode:         t.mode         || ds.mode
+          }, '*');
+        } catch(e) {}
+      };
       framePage.classList.add('active');
       document.querySelectorAll('.nav-item').forEach(function(el){
         if ((el.getAttribute('data-page') || '') === page) el.classList.add('active');
@@ -1297,6 +1336,7 @@ document.addEventListener('DOMContentLoaded', function() {
     connectedCallback() { this._render(); }
     attributeChangedCallback() { this._render(); }
     _render() {
+      if (window !== window.top) return;
       var section = this.getAttribute('active-section') || 'ds';
       this.innerHTML = [
         '<header class="fds-topbar">',
@@ -1409,11 +1449,12 @@ document.addEventListener('DOMContentLoaded', function() {
     connectedCallback() { this._render(); }
     attributeChangedCallback() { this._render(); }
     _render() {
+      if (window !== window.top) return;
       var active = this.getAttribute('active') || '';
       var groups = NAV_GROUPS.map(function(g) {
         var items = g.items.map(function(item) {
           var cls = 'nav-item' + (item.id === active ? ' active' : '');
-          return '<a class="' + cls + '" href="' + item.href + '" data-page="' + item.id + '">' + item.label + '</a>';
+          return '<a class="' + cls + '" href="' + item.href + '" data-page="' + item.id + '" onclick="navigate(\'' + item.id + '\');event.preventDefault();">' + item.label + '</a>';
         }).join('');
         return '<div class="nav-group">'
           + '<div class="nav-group-header open" onclick="toggleGroup(this)">'

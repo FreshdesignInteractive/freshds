@@ -649,11 +649,6 @@
     _renderGrid();
   });
 
-  // ── Section tabs (topbar) ───────────────────────────────────────
-  document.getElementById('section-tabs').addEventListener('change', function(e) {
-    if (e.detail.key === 'ds') window.location.href = 'index.html';
-  });
-
   // ── Dark mode restore ───────────────────────────────────────────
   if (ds.mode === 'dark') {
     var appEl = document.getElementById('app');
