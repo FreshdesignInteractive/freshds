@@ -96,19 +96,21 @@ var ds = {
   } catch(e) {}
 })();
 
-// ── Pre-paint: always DS defaults — customer theme is export-only ─────────────
-applyScalesToElement(document.documentElement, DEFAULT_THEME.primary, DEFAULT_THEME.secondary, DEFAULT_THEME.scaleDark, DEFAULT_THEME.scaleLight, DEFAULT_THEME.success, DEFAULT_THEME.warning, DEFAULT_THEME.danger, DEFAULT_THEME.info, DEFAULT_THEME.aiAction);
-document.documentElement.style.setProperty('--color-page-bg',      DEFAULT_THEME.pageBg);
-document.documentElement.style.setProperty('--color-input-surface', DEFAULT_THEME.inputSurface);
+// ── Pre-paint: apply saved theme (ds was restored from localStorage above) ────
+_applyFullThemeToEl(document.documentElement, {
+  primary: ds.primary, secondary: ds.secondary, scaleDark: ds.scaleDark, scaleLight: ds.scaleLight,
+  success: ds.success, warning: ds.warning, danger: ds.danger, info: ds.info, aiAction: ds.aiAction,
+  pageBg: ds.pageBg, inputSurface: ds.inputSurface,
+  radiusSm: ds.radiusSm, radiusMd: ds.radiusMd, radiusLg: ds.radiusLg, radiusXl: ds.radiusXl,
+  fontSans: ds.fontSans, fontMono: ds.fontMono, density: ds.density
+});
 
 // ── When loaded in an iframe (app.html #comp-frame), receive theme from parent ─
 if (window !== window.top) {
   window.addEventListener('message', function(evt) {
     var d = evt.data;
     if (!d || d.type !== 'fds-theme') return;
-    applyScalesToElement(document.documentElement, d.primary, d.secondary, d.scaleDark, d.scaleLight, d.success, d.warning, d.danger, d.info, d.aiAction);
-    document.documentElement.style.setProperty('--color-page-bg',       d.pageBg       || '#ffffff');
-    document.documentElement.style.setProperty('--color-input-surface', d.inputSurface || '#ffffff');
+    _applyFullThemeToEl(document.documentElement, d);
     var appEl = document.getElementById('app');
     if (d.mode === 'dark') {
       document.documentElement.setAttribute('data-mode', 'dark');
@@ -140,12 +142,37 @@ function updateColorSwatches() {
   });
 }
 
+// ── Apply all configurable theme vars to an element ───────────
+// Used at pre-paint, in postMessage handler, and via pushToRoot.
+function _applyFullThemeToEl(el, t) {
+  applyScalesToElement(el, t.primary, t.secondary, t.scaleDark, t.scaleLight, t.success, t.warning, t.danger, t.info, t.aiAction);
+  el.style.setProperty('--color-page-bg',      t.pageBg       || '#ffffff');
+  el.style.setProperty('--color-input-surface', t.inputSurface || '#ffffff');
+  // Radius
+  if (t.radiusSm !== undefined) el.style.setProperty('--radius-sm', t.radiusSm + 'px');
+  if (t.radiusMd !== undefined) el.style.setProperty('--radius-md', t.radiusMd + 'px');
+  if (t.radiusLg !== undefined) el.style.setProperty('--radius-lg', t.radiusLg + 'px');
+  if (t.radiusXl !== undefined) el.style.setProperty('--radius-xl', t.radiusXl + 'px');
+  // Fonts
+  if (t.fontSans) { if (typeof loadFont === 'function' && SANS_FONTS && SANS_FONTS[t.fontSans]) loadFont(t.fontSans, SANS_FONTS[t.fontSans]); el.style.setProperty('--font-sans', "'" + t.fontSans + "', system-ui, sans-serif"); }
+  if (t.fontMono) { if (typeof loadFont === 'function' && MONO_FONTS && MONO_FONTS[t.fontMono]) loadFont(t.fontMono, MONO_FONTS[t.fontMono]); el.style.setProperty('--font-mono', "'" + t.fontMono + "', monospace"); }
+  // Density spacing
+  var density = t.density || 'default';
+  var spacingPreset = DENSITY_PRESETS[density] || DENSITY_PRESETS.default;
+  Object.keys(spacingPreset).forEach(function(k) {
+    el.style.setProperty('--space-' + k, spacingPreset[k]);
+  });
+}
+
 // ── Site-wide theme application ────────────────────────────────
 function pushToRoot(p, s, dark, light, pageBg, inputSurface) {
-  applyScalesToElement(document.documentElement, p, s, dark, light, ds.success, ds.warning, ds.danger, ds.info, ds.aiAction);
-  var root = document.documentElement;
-  root.style.setProperty('--color-page-bg',      pageBg       || '#ffffff');
-  root.style.setProperty('--color-input-surface', inputSurface || '#ffffff');
+  _applyFullThemeToEl(document.documentElement, {
+    primary: p, secondary: s, scaleDark: dark, scaleLight: light,
+    success: ds.success, warning: ds.warning, danger: ds.danger, info: ds.info, aiAction: ds.aiAction,
+    pageBg: pageBg, inputSurface: inputSurface,
+    radiusSm: ds.radiusSm, radiusMd: ds.radiusMd, radiusLg: ds.radiusLg, radiusXl: ds.radiusXl,
+    fontSans: ds.fontSans, fontMono: ds.fontMono, density: ds.density
+  });
   updateColorSwatches();
 }
 
@@ -539,7 +566,14 @@ function navigate(page) {
             aiAction:     t.aiAction     || ds.aiAction,
             pageBg:       t.pageBg       || ds.pageBg,
             inputSurface: t.inputSurface || ds.inputSurface,
-            mode:         t.mode         || ds.mode
+            mode:         t.mode         || ds.mode,
+            radiusSm:     t.radiusSm     !== undefined ? t.radiusSm     : ds.radiusSm,
+            radiusMd:     t.radiusMd     !== undefined ? t.radiusMd     : ds.radiusMd,
+            radiusLg:     t.radiusLg     !== undefined ? t.radiusLg     : ds.radiusLg,
+            radiusXl:     t.radiusXl     !== undefined ? t.radiusXl     : ds.radiusXl,
+            fontSans:     t.fontSans     || ds.fontSans,
+            fontMono:     t.fontMono     || ds.fontMono,
+            density:      t.density      || ds.density
           }, '*');
         } catch(e) {}
       };
