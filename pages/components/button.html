@@ -680,7 +680,7 @@ body { background: #f7f7f8; }
           </li>
           <li class="spec-rule-li">
             <span class="spec-rule-bullet">•</span>
-            <span class="spec-rule-text" contenteditable="true">Secondary buttons can appear in multiples — they carry equal weight with each other and subordinate weight to primary.</span>
+            <span class="spec-rule-text" contenteditable="true">Secondary buttons can appear in multiples, they carry equal weight with each other and subordinate weight to primary.</span>
             <span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span>
           </li>
           <li class="spec-rule-li">
@@ -819,25 +819,25 @@ body { background: #f7f7f8; }
           <tr class="spec-a11y-row">
             <td class="spec-a11y-concern">disabled</td>
             <td class="spec-a11y-req">boolean</td>
-            <td class="spec-a11y-req">—</td>
+            <td class="spec-a11y-req">-</td>
             <td class="spec-a11y-req">Sets native <code>disabled</code> and <code>aria-disabled="true"</code>. Drops opacity to 38%. Blocks all interaction.</td>
           </tr>
           <tr class="spec-a11y-row">
             <td class="spec-a11y-concern">loading</td>
             <td class="spec-a11y-req">boolean</td>
-            <td class="spec-a11y-req">—</td>
+            <td class="spec-a11y-req">-</td>
             <td class="spec-a11y-req">Replaces label with a spinner. Sets <code>aria-busy="true"</code> and blocks interaction. Pair with <code>aria-label</code> for spoken context.</td>
           </tr>
           <tr class="spec-a11y-row">
             <td class="spec-a11y-concern">icon-only</td>
             <td class="spec-a11y-req">boolean</td>
-            <td class="spec-a11y-req">—</td>
+            <td class="spec-a11y-req">-</td>
             <td class="spec-a11y-req">Squares proportions for a single icon. Always requires <code>aria-label</code> describing the action.</td>
           </tr>
           <tr class="spec-a11y-row">
             <td class="spec-a11y-concern">aria-label</td>
             <td class="spec-a11y-req">string</td>
-            <td class="spec-a11y-req">—</td>
+            <td class="spec-a11y-req">-</td>
             <td class="spec-a11y-req">Required on <code>icon-only</code> buttons. Also set during <code>loading</code> to give a spoken status (e.g. "Saving…").</td>
           </tr>
         </tbody>
@@ -1133,7 +1133,7 @@ body { background: #f7f7f8; }
   };
 
   function restoreDefaults() {
-    if (!confirm('Reset all AI action rules to FreshDS defaults? Any edits you have made will be lost.')) return;
+    if (!confirm('Reset all button rules to FreshDS defaults? Any edits you have made will be lost.')) return;
     Object.keys(DEFAULT_RULES).forEach(function(id) {
       var list = document.getElementById(id);
       if (!list) return;

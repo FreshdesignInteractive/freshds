@@ -389,26 +389,46 @@
   function _buildThumbSrc(href) { return href + '?thumb'; }
 
   /* Read current theme from localStorage and push it into a loaded iframe */
-  function _pushTheme(frame) {
+  function _themePayload() {
     var t = {};
     try { t = JSON.parse(localStorage.getItem('freshds-theme') || '{}'); } catch (e) {}
-    try {
-      frame.contentWindow.postMessage({
-        type:         'fds-theme',
-        primary:      t.primary      || '#7c6af7',
-        secondary:    t.secondary    || '#2dd4bf',
-        scaleDark:    t.scaleDark    || '#1f2328',
-        scaleLight:   t.scaleLight   || '#ffffff',
-        success:      t.success      || '#22c55e',
-        warning:      t.warning      || '#f59e0b',
-        danger:       t.danger       || '#f43f5e',
-        info:         t.info         || '#3b82f6',
-        pageBg:       t.pageBg       || '#ffffff',
-        inputSurface: t.inputSurface || '#ffffff',
-        mode:         t.mode         || 'light'
-      }, '*');
-    } catch (e) {}
+    return {
+      type:         'fds-theme',
+      primary:      t.primary      || ds.primary,
+      secondary:    t.secondary    || ds.secondary,
+      scaleDark:    t.scaleDark    || ds.scaleDark,
+      scaleLight:   t.scaleLight   || ds.scaleLight,
+      success:      t.success      || ds.success,
+      warning:      t.warning      || ds.warning,
+      danger:       t.danger       || ds.danger,
+      info:         t.info         || ds.info,
+      aiAction:     t.aiAction     || ds.aiAction,
+      pageBg:       t.pageBg       || ds.pageBg,
+      inputSurface: t.inputSurface || ds.inputSurface,
+      mode:         t.mode         || ds.mode,
+      radiusSm:     t.radiusSm     !== undefined ? t.radiusSm     : ds.radiusSm,
+      radiusMd:     t.radiusMd     !== undefined ? t.radiusMd     : ds.radiusMd,
+      radiusLg:     t.radiusLg     !== undefined ? t.radiusLg     : ds.radiusLg,
+      radiusXl:     t.radiusXl     !== undefined ? t.radiusXl     : ds.radiusXl,
+      fontSans:     t.fontSans     || ds.fontSans,
+      fontMono:     t.fontMono     || ds.fontMono,
+      density:      t.density      || ds.density
+    };
   }
+
+  function _pushTheme(frame) {
+    try { frame.contentWindow.postMessage(_themePayload(), '*'); } catch (e) {}
+  }
+
+  /* React to theme changes made in the configurator (other tab) */
+  window.addEventListener('storage', function(e) {
+    if (e.key !== 'freshds-theme') return;
+    var payload = _themePayload();
+    _applyFullThemeToEl(document.documentElement, payload);
+    document.querySelectorAll('.pl-thumb-frame').forEach(function(frame) {
+      if (!frame.dataset.src) _pushTheme(frame);
+    });
+  });
 
   /* bfcache guard — rebuild grid so iframes reload with fresh theme */
   window.addEventListener('pageshow', function (e) {

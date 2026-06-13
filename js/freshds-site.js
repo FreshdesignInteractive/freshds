@@ -985,6 +985,77 @@ function exportJSON() {
   }, null, 2), 'application/json');
 }
 
+var _PATTERN_HTML_FILES = [
+  'patterns.html',
+  'patterns/ai-agent-feed.html','patterns/ai-chat.html','patterns/ai-config.html',
+  'patterns/ai-feedback.html','patterns/ai-history.html','patterns/ai-knowledge.html',
+  'patterns/ai-memory.html','patterns/ai-model-sel.html','patterns/ai-playground.html',
+  'patterns/ai-prompt.html','patterns/ai-review.html','patterns/ai-stream.html',
+  'patterns/ai-suggested.html','patterns/ai-thread.html','patterns/ai-tool-log.html',
+  'patterns/auth-2fa.html','patterns/auth-email-sent.html','patterns/auth-expired.html',
+  'patterns/auth-forgot-password.html','patterns/auth-invite.html','patterns/auth-locked.html',
+  'patterns/auth-login.html','patterns/auth-reset.html','patterns/auth-signup.html',
+  'patterns/auth-sso.html','patterns/auth-verify.html',
+  'patterns/collab-activity.html','patterns/collab-comments.html','patterns/collab-embeds.html',
+  'patterns/collab-mentions.html','patterns/collab-permissions.html','patterns/collab-presence.html',
+  'patterns/collab-share.html','patterns/collab-team.html','patterns/collab-workspace.html',
+  'patterns/commerce-checkout.html','patterns/commerce-compare.html','patterns/commerce-confirm.html',
+  'patterns/commerce-gates.html','patterns/commerce-invoice.html','patterns/commerce-payment.html',
+  'patterns/commerce-pricing.html','patterns/commerce-trial.html','patterns/commerce-upsell.html',
+  'patterns/content-audit.html','patterns/content-bulk.html','patterns/content-calendar.html',
+  'patterns/content-detail.html','patterns/content-filter.html','patterns/content-form.html',
+  'patterns/content-import.html','patterns/content-kanban.html','patterns/content-list.html',
+  'patterns/content-table.html','patterns/content-timeline.html','patterns/content-versions.html',
+  'patterns/dash-activity.html','patterns/dash-ai-insights.html','patterns/dash-analytics.html',
+  'patterns/dash-home.html','patterns/dash-metrics.html','patterns/dash-notifications.html',
+  'patterns/dash-realtime.html','patterns/dash-reports.html','patterns/dash-status.html',
+  'patterns/dash-usage.html',
+  'patterns/flow-agent.html','patterns/flow-approval.html','patterns/flow-history.html',
+  'patterns/flow-integration.html','patterns/flow-pipeline.html','patterns/flow-rules.html',
+  'patterns/flow-scheduled.html','patterns/flow-trigger.html','patterns/flow-webhook.html',
+  'patterns/flow-wizard.html',
+  'patterns/onb-ai-setup.html','patterns/onb-checklist.html','patterns/onb-empty-first.html',
+  'patterns/onb-import.html','patterns/onb-integration.html','patterns/onb-profile.html',
+  'patterns/onb-role.html','patterns/onb-team-invite.html','patterns/onb-tour.html',
+  'patterns/onb-usecase.html','patterns/onb-welcome.html','patterns/onb-workspace.html',
+  'patterns/settings-api.html','patterns/settings-billing.html','patterns/settings-danger.html',
+  'patterns/settings-general.html','patterns/settings-notifs.html','patterns/settings-privacy.html',
+  'patterns/settings-profile.html','patterns/settings-security.html','patterns/settings-theme.html',
+  'patterns/settings-upgrade.html','patterns/settings-usage.html',
+  'patterns/support-confirm.html','patterns/support-empty.html','patterns/support-error.html',
+  'patterns/support-feedback.html','patterns/support-help.html','patterns/support-nps.html',
+  'patterns/support-progress.html','patterns/support-skeleton.html','patterns/support-success.html',
+  'patterns/support-toast.html','patterns/support-tooltip.html'
+];
+
+var _PATTERN_CSS_FILES = [
+  'styles/patterns/ai-chat.css','styles/patterns/auth.css','styles/patterns/collab.css',
+  'styles/patterns/commerce.css','styles/patterns/content.css','styles/patterns/dashboard.css',
+  'styles/patterns/feedback.css','styles/patterns/onboarding.css','styles/patterns/settings.css',
+  'styles/patterns/workflow.css'
+];
+
+// Returns an inline <script> that pre-populates localStorage with the current theme.
+// Injected into every HTML file in the site export so the theme survives offline viewing.
+function _generateBakedThemeScript() {
+  var t = {
+    primary: ds.primary, secondary: ds.secondary,
+    scaleDark: ds.scaleDark, scaleLight: ds.scaleLight,
+    success: ds.success, warning: ds.warning, danger: ds.danger, info: ds.info,
+    aiAction: ds.aiAction, pageBg: ds.pageBg, inputSurface: ds.inputSurface,
+    fontSans: ds.fontSans, fontMono: ds.fontMono, mode: ds.mode, density: ds.density,
+    radiusSm: ds.radiusSm, radiusMd: ds.radiusMd, radiusLg: ds.radiusLg, radiusXl: ds.radiusXl
+  };
+  return '<script>/* FreshDS baked theme — generated at export time, do not edit */\n' +
+    'try{localStorage.setItem(\'freshds-theme\',' + JSON.stringify(JSON.stringify(t)) + ');}catch(e){}\n' +
+    '<\/script>';
+}
+
+// Injects the baked theme seed as the first script inside <head>.
+function _injectThemeSeed(html, seed) {
+  return html.replace('<head>', '<head>\n' + seed);
+}
+
 var _COMPONENT_FILES = [
   'components/core/fresh-button.js',
   'components/core/fresh-input.js',
@@ -1202,7 +1273,7 @@ function exportDeveloperBundle() {
   });
 }
 
-// Full site export — includes both JS files.
+// Full site export — includes both JS files, all pattern pages, and baked theme.
 function exportDSSite() {
   if (typeof JSZip === 'undefined') { alert('JSZip not loaded, check your internet connection.'); return; }
 
@@ -1215,15 +1286,23 @@ function exportDSSite() {
     'styles/components/core.css',
     'js/freshds.js',
     'js/freshds-site.js',
+    'js/pattern-bar.js',
+    'js/pattern-topbar-v2.js',
     'favicon.svg',
     'app.html'
-  ].concat(_COMPONENT_FILES);
+  ].concat(_COMPONENT_FILES).concat(_PATTERN_HTML_FILES).concat(_PATTERN_CSS_FILES);
+
+  var seed = _generateBakedThemeScript();
 
   _fetchAll(sitePaths).then(function(files) {
     var zip = new JSZip();
     var root = 'FreshDS/';
     zip.file(root + 'tokens/theme-vars.css', _generateThemeVarsCss());
-    files.forEach(function(f) { zip.file(root + f.path, f.text); });
+    files.forEach(function(f) {
+      var content = f.text;
+      if (f.path.endsWith('.html')) content = _injectThemeSeed(content, seed);
+      zip.file(root + f.path, content);
+    });
     zip.file(root + 'README.md', _generateReadme(true));
     _zipAndDownload(zip, 'FreshDS.zip');
   }).catch(function(err) {

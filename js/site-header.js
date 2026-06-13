@@ -51,6 +51,7 @@ if (mount) {
 }
 
 window.__shSignOut = async function() {
+  try { localStorage.removeItem('freshds-theme'); } catch(e) {}
   await supabase.auth.signOut();
   window.location.replace('/');
 };

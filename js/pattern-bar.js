@@ -18,10 +18,20 @@ if (_isThumb) {
     applyScalesToElement(
       document.documentElement,
       d.primary, d.secondary, d.scaleDark, d.scaleLight,
-      d.success, d.warning,   d.danger,    d.info
+      d.success, d.warning,   d.danger,    d.info, d.aiAction
     );
-    document.documentElement.style.setProperty('--color-page-bg',       d.pageBg);
-    document.documentElement.style.setProperty('--color-input-surface', d.inputSurface);
+    document.documentElement.style.setProperty('--color-page-bg',       d.pageBg       || '#ffffff');
+    document.documentElement.style.setProperty('--color-input-surface', d.inputSurface || '#ffffff');
+    if (d.radiusSm !== undefined) document.documentElement.style.setProperty('--radius-sm', d.radiusSm + 'px');
+    if (d.radiusMd !== undefined) document.documentElement.style.setProperty('--radius-md', d.radiusMd + 'px');
+    if (d.radiusLg !== undefined) document.documentElement.style.setProperty('--radius-lg', d.radiusLg + 'px');
+    if (d.radiusXl !== undefined) document.documentElement.style.setProperty('--radius-xl', d.radiusXl + 'px');
+    if (d.fontSans) document.documentElement.style.setProperty('--font-sans', "'" + d.fontSans + "', system-ui, sans-serif");
+    if (d.fontMono) document.documentElement.style.setProperty('--font-mono', "'" + d.fontMono + "', monospace");
+    if (d.density && typeof DENSITY_PRESETS !== 'undefined') {
+      var sp = DENSITY_PRESETS[d.density] || DENSITY_PRESETS.default;
+      if (sp) Object.keys(sp).forEach(function(k) { document.documentElement.style.setProperty('--space-' + k, sp[k]); });
+    }
     var app = document.getElementById('app');
     if (d.mode === 'dark') {
       document.documentElement.setAttribute('data-mode', 'dark');
@@ -38,24 +48,34 @@ if (_isThumb) {
     var p    = '#7c6af7', s    = '#2dd4bf';
     var dark = '#1f2328', light = '#ffffff';
     var suc  = '#22c55e', warn  = '#f59e0b';
-    var dang = '#f43f5e', info  = '#3b82f6';
+    var dang = '#f43f5e', info  = '#3b82f6', ai = '#0d9488';
     var pageBg = '#ffffff', inputSurface = '#ffffff';
-    try {
-      var t = JSON.parse(localStorage.getItem('freshds-theme') || '{}');
-      if (t.primary)      p            = t.primary;
-      if (t.secondary)    s            = t.secondary;
-      if (t.scaleDark)    dark         = t.scaleDark;
-      if (t.scaleLight)   light        = t.scaleLight;
-      if (t.success)      suc          = t.success;
-      if (t.warning)      warn         = t.warning;
-      if (t.danger)       dang         = t.danger;
-      if (t.info)         info         = t.info;
-      if (t.pageBg)       pageBg       = t.pageBg;
-      if (t.inputSurface) inputSurface = t.inputSurface;
-    } catch (e) {}
-    applyScalesToElement(document.documentElement, p, s, dark, light, suc, warn, dang, info);
+    var t = {};
+    try { t = JSON.parse(localStorage.getItem('freshds-theme') || '{}'); } catch (e) {}
+    if (t.primary)      p            = t.primary;
+    if (t.secondary)    s            = t.secondary;
+    if (t.scaleDark)    dark         = t.scaleDark;
+    if (t.scaleLight)   light        = t.scaleLight;
+    if (t.success)      suc          = t.success;
+    if (t.warning)      warn         = t.warning;
+    if (t.danger)       dang         = t.danger;
+    if (t.info)         info         = t.info;
+    if (t.aiAction)     ai           = t.aiAction;
+    if (t.pageBg)       pageBg       = t.pageBg;
+    if (t.inputSurface) inputSurface = t.inputSurface;
+    applyScalesToElement(document.documentElement, p, s, dark, light, suc, warn, dang, info, ai);
     document.documentElement.style.setProperty('--color-page-bg',       pageBg);
     document.documentElement.style.setProperty('--color-input-surface', inputSurface);
+    if (t.radiusSm !== undefined) document.documentElement.style.setProperty('--radius-sm', t.radiusSm + 'px');
+    if (t.radiusMd !== undefined) document.documentElement.style.setProperty('--radius-md', t.radiusMd + 'px');
+    if (t.radiusLg !== undefined) document.documentElement.style.setProperty('--radius-lg', t.radiusLg + 'px');
+    if (t.radiusXl !== undefined) document.documentElement.style.setProperty('--radius-xl', t.radiusXl + 'px');
+    if (t.fontSans) document.documentElement.style.setProperty('--font-sans', "'" + t.fontSans + "', system-ui, sans-serif");
+    if (t.fontMono) document.documentElement.style.setProperty('--font-mono', "'" + t.fontMono + "', monospace");
+    if (t.density && typeof DENSITY_PRESETS !== 'undefined') {
+      var sp = DENSITY_PRESETS[t.density] || DENSITY_PRESETS.default;
+      if (sp) Object.keys(sp).forEach(function(k) { document.documentElement.style.setProperty('--space-' + k, sp[k]); });
+    }
   })();
 
   /* Dark mode restore — runs before DOMContentLoaded to avoid flash */
