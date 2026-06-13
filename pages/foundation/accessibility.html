@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Accessibility — FreshDS</title>
+<base href="../../">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="tokens/primitives.css">
+<link rel="stylesheet" href="tokens/theme.css">
+<link rel="stylesheet" href="tokens/dataviz.css">
+<link rel="stylesheet" href="styles/reset.css">
+<link rel="stylesheet" href="styles/layout.css">
+<link rel="stylesheet" href="styles/components/core.css">
+<link rel="stylesheet" href="styles/docs.css">
+<script src="js/freshds.js"></script>
+<script src="js/freshds-site.js"></script>
+<style>
+.a11y-badge {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 2px 7px;
+  border-radius: 4px;
+  font-family: var(--font-mono);
+}
+.a11y-badge.aa   { background: #dcfce7; color: #166534; border: 1px solid #bbf7d0; }
+.a11y-badge.aaa  { background: #dbeafe; color: #1e40af; border: 1px solid #bfdbfe; }
+
+.a11y-concern-col { font-family: var(--font-mono); font-size: 12px; color: #444; white-space: nowrap; width: 160px; }
+.a11y-wcag-col    { font-size: 11px; color: #888; white-space: nowrap; width: 120px; }
+.a11y-req-col     { font-size: 13px; color: #111; line-height: 1.6; }
+
+.a11y-component-col { font-size: 13px; font-weight: 500; color: #111; width: 180px; white-space: nowrap; }
+.a11y-additions-col { font-size: 13px; color: #555; line-height: 1.6; }
+.a11y-additions-col code {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  background: var(--surface-overlay);
+  padding: 1px 5px;
+  border-radius: 3px;
+  color: #444;
+}
+
+.tool-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-4);
+}
+.tool-card {
+  background: var(--surface-canvas);
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-4) var(--space-5);
+}
+.tool-card-category {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #888;
+  margin-bottom: var(--space-3);
+}
+.tool-card-item {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  margin-bottom: var(--space-2);
+}
+.tool-card-item:last-child { margin-bottom: 0; }
+.tool-card-name {
+  font-size: 13px;
+  font-weight: 500;
+  color: #111;
+}
+.tool-card-note {
+  font-size: 12px;
+  color: #888;
+}
+
+.conformance-banner {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-4);
+  background: var(--surface-canvas);
+  border: 1px solid var(--surface-border);
+  border-left: 3px solid #166534;
+  border-radius: var(--radius-md);
+  padding: var(--space-5) var(--space-6);
+}
+.conformance-banner-icon {
+  font-size: 24px;
+  color: #166534;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.conformance-banner-body { flex: 1; }
+.conformance-banner-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #111;
+  margin-bottom: var(--space-1);
+}
+.conformance-banner-desc {
+  font-size: 13px;
+  color: #555;
+  line-height: 1.6;
+}
+</style>
+</head>
+<body>
+<div class="fds-app" id="app">
+  <ds-topbar active-section="ds"></ds-topbar>
+  <div class="fds-body">
+    <ds-shell active="accessibility"></ds-shell>
+    <main class="fds-main">
+      <div class="fds-page active" id="page-accessibility">
+
+        <div class="page-header">
+          <div class="page-eyebrow">Foundation</div>
+          <h1 class="page-title">Accessibility</h1>
+          <p class="page-desc">FreshDS targets WCAG 2.2 AA conformance across all components. This page defines the universal concern checklist every interactive component satisfies, plus the additions specific to each component type.</p>
+        </div>
+
+        <!-- Conformance target -->
+        <div class="page-section">
+          <div class="page-section-title">Conformance target</div>
+          <div class="conformance-banner">
+            <div class="conformance-banner-icon"><i class="ti ti-shield-check"></i></div>
+            <div class="conformance-banner-body">
+              <div class="conformance-banner-title">WCAG 2.2 Level AA</div>
+              <div class="conformance-banner-desc">
+                All FreshDS components are built and tested against WCAG 2.2 AA. AAA criteria are implemented where they don't conflict with usability — notably focus appearance (2.4.11) and target size (2.5.5). Components are tested with VoiceOver (macOS/iOS), NVDA (Windows), and the axe browser extension.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Universal concerns -->
+        <div class="page-section">
+          <div class="page-section-title">Universal concerns</div>
+          <p style="font-size:13px;color:#555;margin-bottom:var(--space-5);line-height:1.6;">Every interactive component in FreshDS satisfies all of the following. Component pages only document concerns <em>beyond</em> this base set.</p>
+          <table class="usage-table">
+            <thead>
+              <tr>
+                <th style="width:160px">Concern</th>
+                <th style="width:120px">WCAG</th>
+                <th>Requirement</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="a11y-concern-col">role</td>
+                <td class="a11y-wcag-col"><span class="a11y-badge aa">4.1.2 AA</span></td>
+                <td class="a11y-req-col">Use semantic HTML where possible — <code>&lt;button&gt;</code>, <code>&lt;input&gt;</code>, <code>&lt;a&gt;</code> carry implicit roles. Add explicit ARIA roles only when a native element is not available.</td>
+              </tr>
+              <tr>
+                <td class="a11y-concern-col">accessible name</td>
+                <td class="a11y-wcag-col"><span class="a11y-badge aa">4.1.2 AA</span></td>
+                <td class="a11y-req-col">Every interactive element must have a programmatic name. Derives from visible text content, <code>aria-label</code>, <code>aria-labelledby</code>, or an associated <code>&lt;label&gt;</code>. For icon-only controls, always provide <code>aria-label</code>.</td>
+              </tr>
+              <tr>
+                <td class="a11y-concern-col">keyboard</td>
+                <td class="a11y-wcag-col"><span class="a11y-badge aa">2.1.1 AA</span></td>
+                <td class="a11y-req-col">Every function must be operable via keyboard alone. Native HTML elements handle Enter/Space activation automatically. Custom components must replicate expected key behaviour for their role.</td>
+              </tr>
+              <tr>
+                <td class="a11y-concern-col">focus ring</td>
+                <td class="a11y-wcag-col"><span class="a11y-badge aa">2.4.11 AA</span></td>
+                <td class="a11y-req-col">Visible focus indicator required on <code>:focus-visible</code>. FreshDS uses a double-ring: 2px white gap + 4px outer ring using the primary scale. Never suppress <code>outline</code> without an equivalent custom indicator.</td>
+              </tr>
+              <tr>
+                <td class="a11y-concern-col">colour contrast</td>
+                <td class="a11y-wcag-col"><span class="a11y-badge aa">1.4.3 AA</span></td>
+                <td class="a11y-req-col">Text on component surfaces must meet 4.5:1 minimum. Large text (18px+ or 14px bold) and UI component boundaries require 3:1. Verify after every theme change — especially primary and danger variants where background shifts with the customer palette.</td>
+              </tr>
+              <tr>
+                <td class="a11y-concern-col">icon decoration</td>
+                <td class="a11y-wcag-col"><span class="a11y-badge aa">1.1.1 AA</span></td>
+                <td class="a11y-req-col">Icons alongside text are decorative — mark them <code>aria-hidden="true"</code> so screen readers don't announce CSS class names. Standalone icons require <code>aria-label</code> or visually-hidden companion text.</td>
+              </tr>
+              <tr>
+                <td class="a11y-concern-col">disabled state</td>
+                <td class="a11y-wcag-col"><span class="a11y-badge aa">4.1.2 AA</span></td>
+                <td class="a11y-req-col">Set both the native <code>disabled</code> attribute and <code>aria-disabled="true"</code>. Screen readers announce the element as "dimmed" or "unavailable". Opacity drops to 38% to communicate inactivity visually.</td>
+              </tr>
+              <tr>
+                <td class="a11y-concern-col">touch target</td>
+                <td class="a11y-wcag-col"><span class="a11y-badge aa">2.5.8 AA</span></td>
+                <td class="a11y-req-col">Minimum touch target is 24×24 CSS pixels (WCAG 2.2 AA). FreshDS targets 44×44px (WCAG 2.1 AAA / 2.5.5) — <code>size="lg"</code> reaches 40px height. Ensure adequate tap padding on mobile viewports for smaller sizes.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Component-specific additions -->
+        <div class="page-section">
+          <div class="page-section-title">Component-specific additions</div>
+          <p style="font-size:13px;color:#555;margin-bottom:var(--space-5);line-height:1.6;">These concerns apply to specific component types beyond the universal base set above. Each component page documents its own entries from this list.</p>
+          <table class="usage-table">
+            <thead>
+              <tr>
+                <th style="width:180px">Component type</th>
+                <th>Additional concerns</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="a11y-component-col">Button</td>
+                <td class="a11y-additions-col"><code>loading state</code> — sets <code>aria-busy="true"</code> during async operations. Pair with an updated <code>aria-label</code> like "Saving…" to give spoken context beyond the spinner visual.</td>
+              </tr>
+              <tr>
+                <td class="a11y-component-col">Input / Form field</td>
+                <td class="a11y-additions-col"><code>required</code> — set <code>aria-required="true"</code> alongside the visible indicator. <code>error state</code> — set <code>aria-invalid="true"</code> and link the error message via <code>aria-describedby</code>. <code>autocomplete</code> — set the appropriate token value for personal data fields.</td>
+              </tr>
+              <tr>
+                <td class="a11y-component-col">Checkbox / Radio</td>
+                <td class="a11y-additions-col"><code>checked state</code> — expose <code>aria-checked</code> in sync with visual state. <code>group labeling</code> — wrap related controls in <code>&lt;fieldset&gt;</code> with a <code>&lt;legend&gt;</code> so screen readers announce the group name before each option.</td>
+              </tr>
+              <tr>
+                <td class="a11y-component-col">Modal / Drawer</td>
+                <td class="a11y-additions-col"><code>focus trap</code> — tab focus must cycle within the overlay while open. <code>escape key</code> — pressing Escape always closes. <code>return focus</code> — on close, focus returns to the element that triggered the overlay. <code>role="dialog"</code> + <code>aria-modal="true"</code> + <code>aria-labelledby</code> pointing to the heading.</td>
+              </tr>
+              <tr>
+                <td class="a11y-component-col">Dropdown / Popover</td>
+                <td class="a11y-additions-col"><code>expanded state</code> — trigger element carries <code>aria-expanded</code>. <code>escape key</code> — closes and returns focus to trigger. <code>arrow key navigation</code> — Up/Down moves between items; Home/End jump to first/last.</td>
+              </tr>
+              <tr>
+                <td class="a11y-component-col">Tabs</td>
+                <td class="a11y-additions-col"><code>selected state</code> — active tab has <code>aria-selected="true"</code>; others have <code>aria-selected="false"</code>. <code>arrow key navigation</code> — Left/Right moves between tabs. Tab panels are linked via <code>aria-controls</code> / <code>aria-labelledby</code>.</td>
+              </tr>
+              <tr>
+                <td class="a11y-component-col">Accordion</td>
+                <td class="a11y-additions-col"><code>expanded state</code> — trigger button carries <code>aria-expanded</code>. Panel is linked to its trigger via <code>aria-controls</code>. Trigger must be a <code>&lt;button&gt;</code>, not a div.</td>
+              </tr>
+              <tr>
+                <td class="a11y-component-col">Toast / Alert</td>
+                <td class="a11y-additions-col"><code>live region</code> — informational toasts use <code>aria-live="polite"</code>; critical alerts use <code>role="alert"</code> (implicit live="assertive"). <code>auto-dismiss timing</code> — minimum 5 seconds before auto-removal; never dismiss while the user is focused inside the toast.</td>
+              </tr>
+              <tr>
+                <td class="a11y-component-col">Data table</td>
+                <td class="a11y-additions-col"><code>column headers</code> — <code>&lt;th scope="col"&gt;</code> required. <code>sort state</code> — sortable headers carry <code>aria-sort</code> (<code>ascending</code> / <code>descending</code> / <code>none</code>). <code>row selection</code> — selected rows carry <code>aria-selected="true"</code>.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Testing tools -->
+        <div class="page-section">
+          <div class="page-section-title">Testing tools</div>
+          <div class="tool-grid">
+            <div class="tool-card">
+              <div class="tool-card-category">Screen readers</div>
+              <div class="tool-card-item">
+                <span class="tool-card-name">VoiceOver</span>
+                <span class="tool-card-note">macOS + iOS, built-in</span>
+              </div>
+              <div class="tool-card-item">
+                <span class="tool-card-name">NVDA</span>
+                <span class="tool-card-note">Windows, free</span>
+              </div>
+              <div class="tool-card-item">
+                <span class="tool-card-name">JAWS</span>
+                <span class="tool-card-note">Windows, enterprise standard</span>
+              </div>
+            </div>
+            <div class="tool-card">
+              <div class="tool-card-category">Browser extensions</div>
+              <div class="tool-card-item">
+                <span class="tool-card-name">axe DevTools</span>
+                <span class="tool-card-note">Automated WCAG audit</span>
+              </div>
+              <div class="tool-card-item">
+                <span class="tool-card-name">Chrome Accessibility</span>
+                <span class="tool-card-note">Inspector → Accessibility tree</span>
+              </div>
+              <div class="tool-card-item">
+                <span class="tool-card-name">Colour Contrast Analyser</span>
+                <span class="tool-card-note">Desktop app, eyedropper</span>
+              </div>
+            </div>
+            <div class="tool-card">
+              <div class="tool-card-category">Online checkers</div>
+              <div class="tool-card-item">
+                <span class="tool-card-name">WebAIM Contrast</span>
+                <span class="tool-card-note">contrast.webaim.org</span>
+              </div>
+              <div class="tool-card-item">
+                <span class="tool-card-name">WAVE</span>
+                <span class="tool-card-note">wave.webaim.org</span>
+              </div>
+              <div class="tool-card-item">
+                <span class="tool-card-name">ARIA Authoring Practices</span>
+                <span class="tool-card-note">w3.org/WAI/ARIA/apg</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+</div>
+</body>
+</html>

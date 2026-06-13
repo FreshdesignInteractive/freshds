@@ -349,7 +349,7 @@ body { background: #f7f7f8; }
 }
 .spec-add-rule:hover { background: rgba(0,0,0,0.05); }
 
-/* ── Accessibility table (editable, same panel theme) ─────── */
+/* ── Accessibility table ─────────────────────────────────── */
 .spec-a11y-table { width: 100%; border-collapse: collapse; }
 .spec-a11y-table th {
   font-size: 10px;
@@ -361,29 +361,23 @@ body { background: #f7f7f8; }
   text-align: left;
   border-bottom: 1px solid #d4d4d7;
 }
-.spec-a11y-table th:last-child { width: 36px; padding: 0; }
-
 .spec-a11y-row td {
   padding: 10px 24px;
   border-bottom: 1px solid #d4d4d7;
   vertical-align: top;
 }
 .spec-a11y-table tbody tr:last-child td { border-bottom: none; }
-.spec-a11y-row:hover td { background: rgba(0,0,0,0.04); }
-
 .spec-a11y-concern {
   font-family: var(--font-mono);
   font-size: 12px;
   color: #444;
   white-space: nowrap;
   width: 160px;
-  outline: none;
 }
 .spec-a11y-req {
   font-size: 13px;
   color: #111;
   line-height: 1.6;
-  outline: none;
 }
 .spec-a11y-req code {
   font-family: var(--font-mono);
@@ -393,17 +387,6 @@ body { background: #f7f7f8; }
   border-radius: 3px;
   color: #444;
 }
-.spec-a11y-concern:focus,
-.spec-a11y-req:focus { background: rgba(255,255,255,0.92); border-radius: 2px; }
-
-.spec-a11y-del-cell {
-  width: 36px;
-  padding: 0 8px 0 0 !important;
-  vertical-align: middle;
-}
-.spec-a11y-del { display: none; }
-.spec-a11y-row:hover .spec-a11y-del,
-.spec-a11y-row:focus-within .spec-a11y-del { display: flex; }
 </style>
 </head>
 <body>
@@ -772,67 +755,26 @@ body { background: #f7f7f8; }
     <div class="spec-rules-panel">
       <div class="spec-rules-topbar">
         <span class="spec-rules-title">+ Accessibility — Button</span>
-        <span class="spec-rules-hint">Click any cell to edit</span>
+      </div>
+      <div style="padding: 12px 24px 14px; border-bottom: 1px solid #d4d4d7;">
+        <p style="font-size:13px;color:#555;line-height:1.6;margin:0;">
+          Button satisfies all <a href="app.html#accessibility" style="color:#5b6af7;text-decoration:none;font-weight:500;" onclick="window.parent.navigate && window.parent.navigate('accessibility');return false;">universal accessibility concerns</a> — role, accessible name, keyboard, focus ring, colour contrast, icon decoration, disabled state, and touch target. The only concern specific to this component is below.
+        </p>
       </div>
       <table class="spec-a11y-table">
         <thead>
           <tr>
             <th>Concern</th>
             <th>Requirement</th>
-            <th></th>
           </tr>
         </thead>
-        <tbody id="a11y-tbody">
+        <tbody>
           <tr class="spec-a11y-row">
-            <td class="spec-a11y-concern" contenteditable="true">role</td>
-            <td class="spec-a11y-req" contenteditable="true">Renders as a native &lt;button&gt; — no additional role attribute required.</td>
-            <td class="spec-a11y-del-cell"><button class="spec-rule-btn del spec-a11y-del" onclick="deleteA11yRow(this)" title="Delete"><i class="ti ti-trash"></i></button></td>
-          </tr>
-          <tr class="spec-a11y-row">
-            <td class="spec-a11y-concern" contenteditable="true">accessible name</td>
-            <td class="spec-a11y-req" contenteditable="true">Button text becomes the accessible name. For icon-only buttons, always set aria-label describing the specific action — e.g. aria-label="Delete record".</td>
-            <td class="spec-a11y-del-cell"><button class="spec-rule-btn del spec-a11y-del" onclick="deleteA11yRow(this)" title="Delete"><i class="ti ti-trash"></i></button></td>
-          </tr>
-          <tr class="spec-a11y-row">
-            <td class="spec-a11y-concern" contenteditable="true">icon decoration</td>
-            <td class="spec-a11y-req" contenteditable="true">When using icons alongside text, mark the icon with aria-hidden="true" so screen readers don't announce icon class names.</td>
-            <td class="spec-a11y-del-cell"><button class="spec-rule-btn del spec-a11y-del" onclick="deleteA11yRow(this)" title="Delete"><i class="ti ti-trash"></i></button></td>
-          </tr>
-          <tr class="spec-a11y-row">
-            <td class="spec-a11y-concern" contenteditable="true">disabled state</td>
-            <td class="spec-a11y-req" contenteditable="true">Sets both aria-disabled="true" and the native disabled attribute. Screen readers announce the button as "dimmed" or "unavailable". Opacity drops to 38%.</td>
-            <td class="spec-a11y-del-cell"><button class="spec-rule-btn del spec-a11y-del" onclick="deleteA11yRow(this)" title="Delete"><i class="ti ti-trash"></i></button></td>
-          </tr>
-          <tr class="spec-a11y-row">
-            <td class="spec-a11y-concern" contenteditable="true">loading state</td>
-            <td class="spec-a11y-req" contenteditable="true">Sets aria-busy="true" during loading. Add an aria-label like "Saving…" to provide spoken status context beyond the spinner visual.</td>
-            <td class="spec-a11y-del-cell"><button class="spec-rule-btn del spec-a11y-del" onclick="deleteA11yRow(this)" title="Delete"><i class="ti ti-trash"></i></button></td>
-          </tr>
-          <tr class="spec-a11y-row">
-            <td class="spec-a11y-concern" contenteditable="true">focus ring</td>
-            <td class="spec-a11y-req" contenteditable="true">Shows a visible double-ring indicator on :focus-visible — 2px white gap + 4px outer ring. Never suppress outline without a custom equivalent.</td>
-            <td class="spec-a11y-del-cell"><button class="spec-rule-btn del spec-a11y-del" onclick="deleteA11yRow(this)" title="Delete"><i class="ti ti-trash"></i></button></td>
-          </tr>
-          <tr class="spec-a11y-row">
-            <td class="spec-a11y-concern" contenteditable="true">keyboard</td>
-            <td class="spec-a11y-req" contenteditable="true">Activates on Enter and Space natively via the HTML button element. No custom keydown handlers needed.</td>
-            <td class="spec-a11y-del-cell"><button class="spec-rule-btn del spec-a11y-del" onclick="deleteA11yRow(this)" title="Delete"><i class="ti ti-trash"></i></button></td>
-          </tr>
-          <tr class="spec-a11y-row">
-            <td class="spec-a11y-concern" contenteditable="true">colour contrast</td>
-            <td class="spec-a11y-req" contenteditable="true">Text over button background must meet WCAG AA (4.5:1 minimum). Verify after every theme change — especially primary and danger variants where background shifts with the customer palette.</td>
-            <td class="spec-a11y-del-cell"><button class="spec-rule-btn del spec-a11y-del" onclick="deleteA11yRow(this)" title="Delete"><i class="ti ti-trash"></i></button></td>
-          </tr>
-          <tr class="spec-a11y-row">
-            <td class="spec-a11y-concern" contenteditable="true">touch target</td>
-            <td class="spec-a11y-req" contenteditable="true">Minimum touch target is 44 × 44 CSS pixels (WCAG 2.5.5). The size="lg" (40px height) comes close — ensure adequate tap padding on mobile viewports.</td>
-            <td class="spec-a11y-del-cell"><button class="spec-rule-btn del spec-a11y-del" onclick="deleteA11yRow(this)" title="Delete"><i class="ti ti-trash"></i></button></td>
+            <td class="spec-a11y-concern">loading state</td>
+            <td class="spec-a11y-req">Sets <code>aria-busy="true"</code> during loading. Pair with an updated <code>aria-label</code> like "Saving…" to give spoken status context beyond the spinner visual.</td>
           </tr>
         </tbody>
       </table>
-      <div class="spec-rules-section" style="border-top: 1px solid #d4d4d7; border-bottom: none; padding-top: 12px; padding-bottom: 14px;">
-        <button class="spec-add-rule" onclick="addA11yRow()"><i class="ti ti-plus"></i> Add row</button>
-      </div>
     </div>
   </div>
 
@@ -870,23 +812,6 @@ body { background: #f7f7f8; }
     });
   }
 
-  function deleteA11yRow(btn) {
-    btn.closest('.spec-a11y-row').remove();
-  }
-
-  function addA11yRow() {
-    var tbody = document.getElementById('a11y-tbody');
-    var tr = document.createElement('tr');
-    tr.className = 'spec-a11y-row';
-    tr.innerHTML =
-      '<td class="spec-a11y-concern" contenteditable="true"></td>' +
-      '<td class="spec-a11y-req" contenteditable="true"></td>' +
-      '<td class="spec-a11y-del-cell">' +
-        '<button class="spec-rule-btn del spec-a11y-del" onclick="deleteA11yRow(this)" title="Delete"><i class="ti ti-trash"></i></button>' +
-      '</td>';
-    tbody.appendChild(tr);
-    tr.querySelector('.spec-a11y-concern').focus();
-  }
 </script>
 </body>
 </html>

@@ -447,7 +447,8 @@ var FOUNDATION_PAGES = {
   spacing:     'pages/foundation/spacing.html',
   radius:      'pages/foundation/radius.html',
   gridsystem:  'pages/foundation/gridsystem.html',
-  iconography: 'pages/foundation/iconography.html'
+  iconography:   'pages/foundation/iconography.html',
+  accessibility: 'pages/foundation/accessibility.html'
 };
 
 var COMPONENT_PAGES = {
@@ -1380,7 +1381,8 @@ document.addEventListener('DOMContentLoaded', function() {
       { id: 'spacing',     label: 'Spacing',       href: 'pages/foundation/spacing.html' },
       { id: 'radius',      label: 'Border radius', href: 'pages/foundation/radius.html' },
       { id: 'gridsystem',  label: 'Grid system',   href: 'pages/foundation/gridsystem.html' },
-      { id: 'iconography', label: 'Iconography',   href: 'pages/foundation/iconography.html' }
+      { id: 'iconography',   label: 'Iconography',   href: 'pages/foundation/iconography.html' },
+      { id: 'accessibility', label: 'Accessibility', href: 'pages/foundation/accessibility.html' }
     ]},
     { group: 'Core UI', icon: 'ti-components', items: [
       { id: 'button',          label: 'Button',          href: 'app.html#button' },
