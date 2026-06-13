@@ -5,7 +5,7 @@
    Provides:
      generateScale(hex)                        → 12-step OKLCH scale
      generateNeutralScale(darkHex, lightHex)   → 12-step Oklab scale
-     applyScalesToElement(el, p, s, dark, light, suc, warn, dang, info)
+     applyScalesToElement(el, p, s, dark, light, suc, warn, dang, info, ai)
      loadFont(family, query)
      applyFont(type, family)
      SANS_FONTS / MONO_FONTS                   → font catalog
@@ -132,7 +132,7 @@ function generateNeutralScale(darkHex, lightHex) {
 // ── Apply scales to a DOM element ─────────────────────────────
 // Writes --scale-1..12, --primary-1..12, --secondary-1..12, etc.
 // Works on :root (whole site) or a scoped preview container.
-function applyScalesToElement(el, p, s, dark, light, suc, warn, dang, info) {
+function applyScalesToElement(el, p, s, dark, light, suc, warn, dang, info, ai) {
   var neutral      = generateNeutralScale(dark, light);
   var primary      = generateScale(p);
   var secondary    = generateScale(s);
@@ -140,6 +140,7 @@ function applyScalesToElement(el, p, s, dark, light, suc, warn, dang, info) {
   var warningScale = generateScale(warn || '#f59e0b');
   var dangerScale  = generateScale(dang || '#f43f5e');
   var infoScale    = generateScale(info || '#3b82f6');
+  var aiScale      = generateScale(ai   || '#0d9488');
 
   for (var i = 1; i <= 12; i++) {
     el.style.setProperty('--scale-'     + i, neutral[i]);
@@ -149,6 +150,7 @@ function applyScalesToElement(el, p, s, dark, light, suc, warn, dang, info) {
     el.style.setProperty('--warning-'   + i, warningScale[i]);
     el.style.setProperty('--danger-'    + i, dangerScale[i]);
     el.style.setProperty('--info-'      + i, infoScale[i]);
+    el.style.setProperty('--ai-'        + i, aiScale[i]);
   }
   el.style.setProperty('--primitive-primary',   p);
   el.style.setProperty('--primitive-secondary', s);

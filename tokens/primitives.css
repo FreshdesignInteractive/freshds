@@ -70,7 +70,4 @@
   --bp-xl:  1280px;
   --bp-2xl: 1536px;
 
-  /* AI action button — fixed indigo, not customer-themeable */
-  --primitive-ai-action:       #5550e8;
-  --primitive-ai-action-hover: #4540d0;
 }

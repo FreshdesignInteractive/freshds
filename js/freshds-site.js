@@ -10,7 +10,7 @@
 var DEFAULT_THEME = {
   primary: '#1f2328', secondary: '#6b7280',
   scaleDark: '#1f2328', scaleLight: '#ffffff',
-  success: '#22c55e', warning: '#f59e0b', danger: '#f43f5e', info: '#3b82f6',
+  success: '#22c55e', warning: '#f59e0b', danger: '#f43f5e', info: '#3b82f6', aiAction: '#0d9488',
   pageBg: '#ffffff', inputSurface: '#ffffff',
   fontSans: 'Inter', fontMono: 'JetBrains Mono',
   density: 'default',
@@ -35,6 +35,7 @@ var ds = {
   warning:     DEFAULT_THEME.warning,
   danger:      DEFAULT_THEME.danger,
   info:        DEFAULT_THEME.info,
+  aiAction:    DEFAULT_THEME.aiAction,
   mode:        'light',
   fontSans:    DEFAULT_THEME.fontSans,
   fontMono:    DEFAULT_THEME.fontMono,
@@ -53,6 +54,7 @@ var ds = {
   stagedWarning:      DEFAULT_THEME.warning,
   stagedDanger:       DEFAULT_THEME.danger,
   stagedInfo:         DEFAULT_THEME.info,
+  stagedAiAction:     DEFAULT_THEME.aiAction,
   stagedFontSans:     DEFAULT_THEME.fontSans,
   stagedFontMono:     DEFAULT_THEME.fontMono,
   stagedPageBg:       DEFAULT_THEME.pageBg,
@@ -77,6 +79,7 @@ var ds = {
     if (t.warning)      { ds.warning      = ds.stagedWarning      = t.warning; }
     if (t.danger)       { ds.danger       = ds.stagedDanger       = t.danger; }
     if (t.info)         { ds.info         = ds.stagedInfo         = t.info; }
+    if (t.aiAction)     { ds.aiAction     = ds.stagedAiAction     = t.aiAction; }
     if (t.fontSans)     { ds.fontSans     = ds.stagedFontSans     = t.fontSans; }
     if (t.fontMono)     { ds.fontMono     = ds.stagedFontMono     = t.fontMono; }
     if (t.pageBg)       { ds.pageBg       = ds.stagedPageBg       = t.pageBg; }
@@ -94,7 +97,7 @@ var ds = {
 })();
 
 // ── Pre-paint: always DS defaults — customer theme is export-only ─────────────
-applyScalesToElement(document.documentElement, DEFAULT_THEME.primary, DEFAULT_THEME.secondary, DEFAULT_THEME.scaleDark, DEFAULT_THEME.scaleLight);
+applyScalesToElement(document.documentElement, DEFAULT_THEME.primary, DEFAULT_THEME.secondary, DEFAULT_THEME.scaleDark, DEFAULT_THEME.scaleLight, DEFAULT_THEME.success, DEFAULT_THEME.warning, DEFAULT_THEME.danger, DEFAULT_THEME.info, DEFAULT_THEME.aiAction);
 document.documentElement.style.setProperty('--color-page-bg',      DEFAULT_THEME.pageBg);
 document.documentElement.style.setProperty('--color-input-surface', DEFAULT_THEME.inputSurface);
 
@@ -103,7 +106,7 @@ if (window !== window.top) {
   window.addEventListener('message', function(evt) {
     var d = evt.data;
     if (!d || d.type !== 'fds-theme') return;
-    applyScalesToElement(document.documentElement, d.primary, d.secondary, d.scaleDark, d.scaleLight, d.success, d.warning, d.danger, d.info);
+    applyScalesToElement(document.documentElement, d.primary, d.secondary, d.scaleDark, d.scaleLight, d.success, d.warning, d.danger, d.info, d.aiAction);
     document.documentElement.style.setProperty('--color-page-bg',       d.pageBg       || '#ffffff');
     document.documentElement.style.setProperty('--color-input-surface', d.inputSurface || '#ffffff');
     var appEl = document.getElementById('app');
@@ -139,7 +142,7 @@ function updateColorSwatches() {
 
 // ── Site-wide theme application ────────────────────────────────
 function pushToRoot(p, s, dark, light, pageBg, inputSurface) {
-  applyScalesToElement(document.documentElement, p, s, dark, light, ds.success, ds.warning, ds.danger, ds.info);
+  applyScalesToElement(document.documentElement, p, s, dark, light, ds.success, ds.warning, ds.danger, ds.info, ds.aiAction);
   var root = document.documentElement;
   root.style.setProperty('--color-page-bg',      pageBg       || '#ffffff');
   root.style.setProperty('--color-input-surface', inputSurface || '#ffffff');
@@ -221,6 +224,7 @@ function applyStagedToSite() {
   ds.warning      = ds.stagedWarning;
   ds.danger       = ds.stagedDanger;
   ds.info         = ds.stagedInfo;
+  ds.aiAction     = ds.stagedAiAction;
   ds.fontSans     = ds.stagedFontSans;
   ds.fontMono     = ds.stagedFontMono;
   ds.pageBg       = ds.stagedPageBg;
@@ -248,6 +252,7 @@ function discardStagedChanges() {
   ds.stagedWarning      = ds.warning;
   ds.stagedDanger       = ds.danger;
   ds.stagedInfo         = ds.info;
+  ds.stagedAiAction     = ds.aiAction;
   ds.stagedFontSans     = ds.fontSans;
   ds.stagedFontMono     = ds.fontMono;
   ds.stagedPageBg       = ds.pageBg;
@@ -275,6 +280,7 @@ function resetToDefaults() {
   ds.warning      = ds.stagedWarning      = DEFAULT_THEME.warning;
   ds.danger       = ds.stagedDanger       = DEFAULT_THEME.danger;
   ds.info         = ds.stagedInfo         = DEFAULT_THEME.info;
+  ds.aiAction     = ds.stagedAiAction     = DEFAULT_THEME.aiAction;
   ds.fontSans     = ds.stagedFontSans     = DEFAULT_THEME.fontSans;
   ds.fontMono     = ds.stagedFontMono     = DEFAULT_THEME.fontMono;
   ds.pageBg       = ds.stagedPageBg       = DEFAULT_THEME.pageBg;
@@ -326,6 +332,7 @@ function _syncConfiguratorUI() {
     { pickerId: 'cfg-warning',        hexId: 'cfg-hex-warning',        val: ds.stagedWarning },
     { pickerId: 'cfg-danger',         hexId: 'cfg-hex-danger',         val: ds.stagedDanger },
     { pickerId: 'cfg-info',           hexId: 'cfg-hex-info',           val: ds.stagedInfo },
+    { pickerId: 'cfg-ai-action',      hexId: 'cfg-hex-ai-action',      val: ds.stagedAiAction },
     { pickerId: 'cfg-page-bg',        hexId: 'cfg-hex-page-bg',        val: ds.stagedPageBg || '#ffffff' },
     { pickerId: 'cfg-input-surface',  hexId: 'cfg-hex-input-surface',  val: ds.stagedInputSurface || '#ffffff' }
   ];
@@ -367,6 +374,7 @@ function _syncConfiguratorUI() {
     || ds.stagedWarning      !== ds.warning
     || ds.stagedDanger       !== ds.danger
     || ds.stagedInfo         !== ds.info
+    || ds.stagedAiAction     !== ds.aiAction
     || ds.stagedFontSans     !== ds.fontSans
     || ds.stagedFontMono     !== ds.fontMono
     || (ds.stagedPageBg       || null) !== (ds.pageBg       || null)
@@ -396,6 +404,7 @@ function _saveTheme() {
       warning:      ds.warning,
       danger:       ds.danger,
       info:         ds.info,
+      aiAction:     ds.aiAction,
       fontSans:     ds.fontSans,
       fontMono:     ds.fontMono,
       mode:         ds.mode,
@@ -527,6 +536,7 @@ function navigate(page) {
             warning:      t.warning      || ds.warning,
             danger:       t.danger       || ds.danger,
             info:         t.info         || ds.info,
+            aiAction:     t.aiAction     || ds.aiAction,
             pageBg:       t.pageBg       || ds.pageBg,
             inputSurface: t.inputSurface || ds.inputSurface,
             mode:         t.mode         || ds.mode
@@ -1244,6 +1254,11 @@ document.addEventListener('DOMContentLoaded', function() {
     ds.stagedInfo = e.target.value;
     _pushStagedToRoot(); _syncConfiguratorUI(); updateTokenOutput();
   });
+  var cpAi2 = document.getElementById('cfg-ai-action');
+  if (cpAi2) cpAi2.addEventListener('input', function(e) {
+    ds.stagedAiAction = e.target.value;
+    _pushStagedToRoot(); _syncConfiguratorUI(); updateTokenOutput();
+  });
 
   var cpD = document.getElementById('cfg-scale-dark');
   var cpL = document.getElementById('cfg-scale-light');
@@ -1276,6 +1291,7 @@ document.addEventListener('DOMContentLoaded', function() {
     { hexId: 'cfg-hex-warning',      pickerId: 'cfg-warning',      key: 'stagedWarning'      },
     { hexId: 'cfg-hex-danger',       pickerId: 'cfg-danger',       key: 'stagedDanger'       },
     { hexId: 'cfg-hex-info',         pickerId: 'cfg-info',         key: 'stagedInfo'         },
+    { hexId: 'cfg-hex-ai-action',    pickerId: 'cfg-ai-action',    key: 'stagedAiAction'     },
     { hexId: 'cfg-hex-page-bg',      pickerId: 'cfg-page-bg',      key: 'stagedPageBg'       },
     { hexId: 'cfg-hex-input-surface',pickerId: 'cfg-input-surface',key: 'stagedInputSurface' }
   ];

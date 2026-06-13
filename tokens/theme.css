@@ -58,6 +58,11 @@
   --color-danger-border:    var(--danger-5);
   --color-danger-text:      var(--danger-11);
 
+  --color-ai:               var(--ai-9);
+  --color-ai-subtle:        var(--ai-2);
+  --color-ai-border:        var(--ai-5);
+  --color-ai-text:          var(--ai-11);
+
   /* ── Tier 3: Component — Buttons ── */
   --btn-primary-bg:         var(--color-interactive);
   --btn-primary-text:       var(--scale-1);
@@ -68,9 +73,9 @@
   --btn-danger-text:        var(--color-danger);
   --btn-danger-border:      var(--color-danger-border);
   --btn-danger-hover:       var(--danger-3);
-  --btn-ai-bg:              var(--primitive-ai-action);
-  --btn-ai-text:            var(--color-white);
-  --btn-ai-hover:           var(--primitive-ai-action-hover);
+  --btn-ai-bg:              var(--ai-9);
+  --btn-ai-text:            var(--ai-1);
+  --btn-ai-hover:           var(--ai-10);
 
   /* ── Tier 3: Component — Inputs ── */
   --input-focus-border:     var(--primary-8);
@@ -97,9 +102,9 @@
   --badge-neutral-text:     var(--text-secondary);
   --badge-neutral-border:   var(--surface-border);
 
-  --badge-ai-bg:            var(--secondary-2);
-  --badge-ai-text:          var(--secondary-11);
-  --badge-ai-border:        var(--secondary-5);
+  --badge-ai-bg:            var(--color-ai-subtle);
+  --badge-ai-text:          var(--color-ai-text);
+  --badge-ai-border:        var(--color-ai-border);
 
   /* ── Tier 3: Component — Navigation ── */
   --nav-active-bg:          var(--primary-2);
@@ -196,6 +201,11 @@
   --color-info-border:      var(--info-11);
   --color-info-text:        var(--info-5);
 
+  --color-ai:               var(--ai-6);
+  --color-ai-subtle:        var(--ai-12);
+  --color-ai-border:        var(--ai-11);
+  --color-ai-text:          var(--ai-5);
+
   /* Buttons — set component tokens directly so shadow DOM inherits without
      going through the --color-interactive chain (which can lose overrides
      at the shadow boundary when intermediate var() references are involved) */
@@ -224,9 +234,12 @@
   --badge-danger-bg:        var(--danger-12);
   --badge-danger-text:      var(--danger-5);
   --badge-danger-border:    var(--danger-11);
-  --badge-ai-bg:            var(--secondary-11);
-  --badge-ai-text:          var(--secondary-3);
-  --badge-ai-border:        var(--secondary-8);
+  --badge-ai-bg:            var(--ai-12);
+  --badge-ai-text:          var(--ai-5);
+  --badge-ai-border:        var(--ai-11);
+  --btn-ai-bg:              var(--ai-4);
+  --btn-ai-text:            var(--ai-11);
+  --btn-ai-hover:           var(--ai-3);
 
   /* Navigation */
   --nav-active-bg:          var(--primary-11);
