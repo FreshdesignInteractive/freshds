@@ -16,7 +16,7 @@
    ============================================================ */
 
 class FreshToast extends HTMLElement {
-  static get observedAttributes() { return ['message', 'variant']; }
+  static get observedAttributes() { return ['message', 'variant', 'duration']; }
 
   /* ── Static API ── */
   static show(message, opts = {}) {
@@ -58,6 +58,8 @@ class FreshToast extends HTMLElement {
   }
 
   connectedCallback() {
+    const attr = this.getAttribute('duration');
+    if (attr !== null) this._duration = parseInt(attr, 10);
     this._render();
     if (this._duration > 0) {
       this._timer = setTimeout(() => this._dismiss(), this._duration);
