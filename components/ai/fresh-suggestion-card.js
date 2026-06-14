@@ -54,7 +54,7 @@ class FreshSuggestionCard extends HTMLElement {
           padding: var(--space-4) var(--space-5);
           background: var(--surface-bg);
           border: 1px solid var(--surface-border);
-          border-left: 3px solid var(--color-interactive);
+          border-left: 3px solid var(--color-ai);
           border-radius: var(--radius-lg);
           animation: slide-up 200ms cubic-bezier(0.16,1,0.3,1) forwards;
         }
@@ -72,7 +72,7 @@ class FreshSuggestionCard extends HTMLElement {
           display: flex;
           align-items: center;
           justify-content: center;
-          color: var(--color-interactive-text);
+          color: var(--color-ai-text);
           font-size: var(--font-size-xl);
           flex-shrink: 0;
         }
@@ -111,7 +111,7 @@ class FreshSuggestionCard extends HTMLElement {
           height: 28px;
           padding: 0 12px;
           border-radius: var(--radius-md);
-          background: var(--color-interactive);
+          background: var(--color-ai);
           color: var(--text-inverse);
           font-family: var(--font-sans);
           font-size: var(--font-size-sm);

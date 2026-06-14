@@ -109,7 +109,7 @@ class FreshPromptInput extends HTMLElement {
 
         .sparkle-icon {
           font-size: var(--space-4);
-          color: var(--color-interactive);
+          color: var(--color-ai);
           flex-shrink: 0;
           line-height: 1;
         }
@@ -170,8 +170,8 @@ class FreshPromptInput extends HTMLElement {
           height: 28px;
           border-radius: var(--radius-full);
           border: none;
-          background: var(--color-interactive);
-          color: var(--btn-primary-text);
+          background: var(--color-ai);
+          color: var(--btn-ai-text);
           cursor: pointer;
           flex-shrink: 0;
           transition: background 120ms ease, opacity 120ms ease;
@@ -180,7 +180,7 @@ class FreshPromptInput extends HTMLElement {
         }
 
         .send-btn:hover:not(:disabled) {
-          background: var(--color-interactive-hover);
+          background: var(--btn-ai-hover);
         }
 
         .send-btn:disabled {

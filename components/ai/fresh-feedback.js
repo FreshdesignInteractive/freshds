@@ -73,7 +73,7 @@ class FreshFeedback extends HTMLElement {
           -webkit-font-smoothing: antialiased;
         }
         .btn:hover { color: var(--text-secondary); background: var(--surface-overlay); }
-        .btn:focus-visible { outline: 2px solid var(--color-interactive-text); outline-offset: 2px; }
+        .btn:focus-visible { outline: 2px solid var(--color-ai-text); outline-offset: 2px; }
 
         .btn.up.active   { color: var(--color-success); background: var(--color-success-subtle); border-color: var(--color-success-border); }
         .btn.down.active { color: var(--color-danger); background: var(--color-danger-subtle); border-color: var(--color-danger-border); }

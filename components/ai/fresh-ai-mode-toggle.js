@@ -75,7 +75,7 @@ class FreshAiModeToggle extends HTMLElement {
           height: ${trackH}px;
           border-radius: 9999px;
           background: ${isOn
-            ? 'linear-gradient(135deg, var(--color-interactive), var(--color-interactive-hover))'
+            ? 'linear-gradient(135deg, var(--color-ai), var(--btn-ai-hover))'
             : 'var(--surface-overlay)'};
           border: 1px solid ${isOn ? 'transparent' : 'var(--surface-border-strong)'};
           transition: background 250ms ease, border-color 250ms ease;
@@ -97,7 +97,7 @@ class FreshAiModeToggle extends HTMLElement {
           transform: translateX(${isOn ? travelX : 0}px) translateY(-50%);
           box-shadow: 0 1px 3px rgba(0,0,0,0.15);
           font-size: ${iconSz}px;
-          color: ${isOn ? 'var(--color-interactive-text)' : 'var(--surface-overlay)'};
+          color: ${isOn ? 'var(--color-ai-text)' : 'var(--surface-overlay)'};
         }
 
         @keyframes spin-once {
@@ -109,7 +109,7 @@ class FreshAiModeToggle extends HTMLElement {
           position: absolute;
           inset: -1px;
           border-radius: 9999px;
-          background: linear-gradient(135deg, var(--color-interactive), var(--color-interactive-hover));
+          background: linear-gradient(135deg, var(--color-ai), var(--btn-ai-hover));
           opacity: ${isOn ? '0.25' : '0'};
           transition: opacity 300ms ease;
           filter: blur(6px);
@@ -135,7 +135,7 @@ class FreshAiModeToggle extends HTMLElement {
           font-family: var(--font-sans);
           font-size: var(--font-size-2xs);
           font-weight: 500;
-          color: ${isOn ? 'var(--color-interactive-text)' : 'var(--text-tertiary)'};
+          color: ${isOn ? 'var(--color-ai-text)' : 'var(--text-tertiary)'};
           letter-spacing: 0.03em;
           line-height: 1;
           transition: color 250ms;
@@ -149,7 +149,7 @@ class FreshAiModeToggle extends HTMLElement {
           cursor: pointer;
         }
         button.toggle-wrap:focus-visible .track {
-          outline: 2px solid var(--color-interactive-text);
+          outline: 2px solid var(--color-ai-text);
           outline-offset: 2px;
         }
       </style>

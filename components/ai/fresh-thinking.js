@@ -55,7 +55,7 @@ class FreshThinking extends HTMLElement {
           width: ${dotSz};
           height: ${dotSz};
           border-radius: 50%;
-          background: var(--color-interactive);
+          background: var(--color-ai);
           opacity: 0.3;
           animation: bounce 1.2s ease-in-out infinite;
         }

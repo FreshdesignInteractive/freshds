@@ -133,7 +133,7 @@ class FreshAiResponse extends HTMLElement {
           display: ${streaming ? 'inline-block' : 'none'};
           width: 2px;
           height: 1.1em;
-          background: ${isUser ? 'var(--btn-primary-text)' : 'var(--color-interactive)'};
+          background: ${isUser ? 'var(--btn-primary-text)' : 'var(--color-ai)'};
           margin-left: 2px;
           vertical-align: text-bottom;
           border-radius: 1px;

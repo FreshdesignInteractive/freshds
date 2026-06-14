@@ -77,9 +77,9 @@ class FreshModelSelector extends HTMLElement {
           -webkit-font-smoothing: antialiased;
         }
         .trigger:hover { border-color: var(--text-tertiary); }
-        .trigger:focus-visible { outline: 2px solid var(--color-interactive-text); outline-offset: 2px; }
+        .trigger:focus-visible { outline: 2px solid var(--color-ai-text); outline-offset: 2px; }
 
-        .ai-icon { color: var(--color-interactive-text); font-size: var(--font-size-lg); }
+        .ai-icon { color: var(--color-ai-text); font-size: var(--font-size-lg); }
         .name    { font-weight: 500; }
         .chevron { color: var(--text-tertiary); font-size: var(--font-size-sm); transition: transform 200ms ease; }
         .chevron.open { transform: rotate(180deg); }
@@ -128,7 +128,7 @@ class FreshModelSelector extends HTMLElement {
           flex-shrink: 0;
           transition: background 120ms;
         }
-        .option.active .opt-dot { background: var(--color-interactive); }
+        .option.active .opt-dot { background: var(--color-ai); }
 
         .opt-name {
           font-family: var(--font-mono);

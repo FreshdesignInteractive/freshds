@@ -91,13 +91,13 @@ class FreshPromptHistory extends HTMLElement {
         }
 
         .chip:hover {
-          border-color: var(--color-interactive-text);
-          color: var(--color-interactive-text);
+          border-color: var(--color-ai-text);
+          color: var(--color-ai-text);
           background: var(--badge-primary-bg);
         }
 
         .chip:focus-visible {
-          outline: 2px solid var(--color-interactive-text);
+          outline: 2px solid var(--color-ai-text);
           outline-offset: 2px;
         }
 

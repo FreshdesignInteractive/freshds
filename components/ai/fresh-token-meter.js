@@ -41,7 +41,7 @@ class FreshTokenMeter extends HTMLElement {
     const isWarn  = pct >= warnAt;
     const isCrit  = pct >= 95;
 
-    const color = isCrit ? 'var(--color-danger)' : isWarn ? 'var(--color-warning)' : 'var(--color-interactive)';
+    const color = isCrit ? 'var(--color-danger)' : isWarn ? 'var(--color-warning)' : 'var(--color-ai)';
 
     this.shadowRoot.innerHTML = `
       <style>

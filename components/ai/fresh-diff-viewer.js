@@ -120,7 +120,7 @@ class FreshDiffViewer extends HTMLElement {
           border-radius: 9999px;
           background: var(--badge-primary-bg);
           border: 1px solid var(--badge-primary-border);
-          color: var(--color-interactive-text);
+          color: var(--color-ai-text);
           font-family: var(--font-sans);
           font-size: var(--font-size-2xs);
           font-weight: 600;
