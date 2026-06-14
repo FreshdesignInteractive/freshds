@@ -36,7 +36,6 @@
     align-items: flex-start;
     gap: 16px;
     padding: 20px 24px;
-    border-bottom: 1px solid #d4d4d7;
   }
   .conformance-banner-icon { font-size: 22px; color: #166534; flex-shrink: 0; margin-top: 1px; }
   .conformance-banner-title { font-size: 14px; font-weight: 600; color: #111; margin-bottom: 4px; }
@@ -90,6 +89,36 @@
           <div class="conformance-banner-title">WCAG 2.2 Level AA</div>
           <div class="conformance-banner-desc">All FreshDS components are built and tested against WCAG 2.2 AA. AAA criteria are implemented where they do not conflict with usability, notably focus appearance (2.4.11) and target size (2.5.5). Components are tested with VoiceOver (macOS/iOS), NVDA (Windows), and the axe browser extension.</div>
         </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- AI RULES — always second -->
+  <div class="comp-section">
+    <div class="spec-rules-panel" id="ai-rules-panel">
+      <div class="spec-rules-topbar">
+        <span class="spec-rules-title">AI action rules</span>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <span class="spec-rules-hint">Click any rule to edit</span>
+          <button class="spec-rules-reset" onclick="restoreDefaults()"><i class="ti ti-rotate" style="font-size:10px;"></i> Restore FreshDS defaults</button>
+        </div>
+      </div>
+      <div class="spec-rules-section">
+        <div class="spec-rules-section-head">
+          <span class="spec-rules-variant">Generation rules</span>
+          <span class="spec-attr-chip">WCAG 2.2 AA</span>
+        </div>
+        <ul class="spec-rule-list" id="rules-general">
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Every interactive element must have an accessible name. Icon-only <code>&lt;button&gt;</code> gets <code>aria-label="Action name"</code>. <code>&lt;input&gt;</code> gets an associated <code>&lt;label for="id"&gt;</code> or <code>aria-label</code>. Never emit a bare interactive element without one.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Decorative icons (those with an adjacent text label) always get <code>aria-hidden="true"</code>. If an icon is the sole content of a button or link, the parent element carries <code>aria-label</code> describing the action, not the icon glyph name.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Never use color as the sole signal for state (error, success, warning, disabled, selected). Always combine color with one of: a text label, a Tabler icon, or an ARIA attribute (<code>aria-invalid</code>, <code>aria-selected</code>, <code>aria-disabled</code>).</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Prefer semantic HTML over ARIA roles: use <code>&lt;button&gt;</code> not <code>&lt;div role="button"&gt;</code>, <code>&lt;nav&gt;</code> not <code>&lt;div role="navigation"&gt;</code>, <code>&lt;main&gt;</code> not <code>&lt;div role="main"&gt;</code>. Add explicit ARIA roles only when no native HTML element is semantically appropriate.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Error states on form controls require all three: <code>aria-invalid="true"</code> on the input, an error message element visible in the DOM, and <code>aria-describedby="error-id"</code> on the input pointing to that message. Never show an error only visually.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Dynamic content updates use live regions: <code>aria-live="polite"</code> for non-urgent additions (search results, suggestions), <code>role="alert"</code> (implicit assertive) for errors and critical notices only. Never use assertive for routine updates.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Overlay components (modal, drawer, popover) require the full triad: focus trap cycling Tab/Shift+Tab within the overlay while open; Escape key closes; focus returns to the exact trigger element on close. Implement all three or none.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Never set <code>tabindex</code> to a positive integer. Use <code>tabindex="0"</code> to add a non-interactive element to tab order, <code>tabindex="-1"</code> to enable programmatic focus only. Positive tabindex values break the natural reading order.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+        </ul>
+        <button class="spec-add-rule" onclick="addRule('rules-general')"><i class="ti ti-plus"></i> Add rule</button>
       </div>
     </div>
   </div>
@@ -211,32 +240,6 @@
     </div>
   </div>
 
-  <!-- AI RULES -->
-  <div class="comp-section">
-    <div class="spec-rules-panel">
-      <div class="spec-rules-topbar">
-        <span class="spec-rules-title">AI action rules</span>
-        <div style="display:flex;align-items:center;gap:12px;">
-          <span class="spec-rules-hint">Click any rule to edit</span>
-          <button class="spec-rules-reset" onclick="restoreDefaults()"><i class="ti ti-rotate" style="font-size:10px;"></i> Restore FreshDS defaults</button>
-        </div>
-      </div>
-      <div class="spec-rules-section">
-        <div class="spec-rules-section-head">
-          <span class="spec-rules-variant">Generation rules</span>
-        </div>
-        <ul class="spec-rule-list" id="rules-general">
-          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Every interactive element you generate must have an accessible name. Buttons with only icons get <code>aria-label</code>. Inputs get an associated <code>&lt;label&gt;</code> or <code>aria-label</code>. Never emit a bare <code>&lt;button&gt;</code> or <code>&lt;input&gt;</code> without one.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
-          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Mark all decorative icons <code>aria-hidden="true"</code> in generated markup. If an icon is the sole content of a button or link, that element must carry <code>aria-label</code> describing its action, not the icon name.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
-          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Never communicate state (error, success, warning, disabled) through color alone. Always pair a color change with a text label, icon, or ARIA attribute so the information is available to users who cannot perceive color.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
-          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Use semantic HTML before reaching for ARIA. A <code>&lt;button&gt;</code> is always preferred over <code>&lt;div role="button"&gt;</code>. A <code>&lt;nav&gt;</code> is preferred over <code>&lt;div role="navigation"&gt;</code>. ARIA supplements semantics, it does not replace them.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
-          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">For overlay components (modal, drawer, popover), always generate the full focus-management triad: focus trap while open, Escape key to close, and return focus to the trigger element on close. Never omit any of the three.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
-        </ul>
-        <button class="spec-add-rule" onclick="addRule('rules-general')"><i class="ti ti-plus"></i> Add rule</button>
-      </div>
-    </div>
-  </div>
-
   <!-- TESTING TOOLS -->
   <div class="comp-section">
     <div class="spec-rules-panel">
@@ -284,18 +287,22 @@
     try { var { data: { user } } = await supabase.auth.getUser(); if (!user) return; var { data: p } = await supabase.from('profiles').select('component_rules').eq('id', user.id).single(); var e = (p && p.component_rules) ? p.component_rules : {}; e.accessibility = getRulesSnapshot(); await supabase.from('profiles').update({ component_rules: e }).eq('id', user.id); } catch(e) {}
   }
   function schedSave() { if (_loading) return; clearTimeout(_saveTimer); _saveTimer = setTimeout(saveRulesNow, 1000); }
-  var panel = document.querySelector('.spec-rules-panel'); if (panel) new MutationObserver(schedSave).observe(panel, { childList: true, subtree: true, characterData: true });
+  var aiPanel = document.getElementById('ai-rules-panel');
+  if (aiPanel) new MutationObserver(schedSave).observe(aiPanel, { childList: true, subtree: true, characterData: true });
   ;(async function() { try { var { data: { user } } = await supabase.auth.getUser(); if (!user) return; var { data: p } = await supabase.from('profiles').select('component_rules').eq('id', user.id).single(); if (p && p.component_rules && p.component_rules.accessibility) { _loading = true; applySnapshot(p.component_rules.accessibility); _loading = false; } } catch(e) {} })();
 </script>
 
 <script>
   var DEFAULT_RULES = {
     'rules-general': [
-      'Every interactive element you generate must have an accessible name. Buttons with only icons get <code>aria-label</code>. Inputs get an associated <code>&lt;label&gt;</code> or <code>aria-label</code>. Never emit a bare <code>&lt;button&gt;</code> or <code>&lt;input&gt;</code> without one.',
-      'Mark all decorative icons <code>aria-hidden="true"</code> in generated markup. If an icon is the sole content of a button or link, that element must carry <code>aria-label</code> describing its action, not the icon name.',
-      'Never communicate state (error, success, warning, disabled) through color alone. Always pair a color change with a text label, icon, or ARIA attribute so the information is available to users who cannot perceive color.',
-      'Use semantic HTML before reaching for ARIA. A <code>&lt;button&gt;</code> is always preferred over <code>&lt;div role="button"&gt;</code>. A <code>&lt;nav&gt;</code> is preferred over <code>&lt;div role="navigation"&gt;</code>. ARIA supplements semantics, it does not replace them.',
-      'For overlay components (modal, drawer, popover), always generate the full focus-management triad: focus trap while open, Escape key to close, and return focus to the trigger element on close. Never omit any of the three.'
+      'Every interactive element must have an accessible name. Icon-only <code>&lt;button&gt;</code> gets <code>aria-label="Action name"</code>. <code>&lt;input&gt;</code> gets an associated <code>&lt;label for="id"&gt;</code> or <code>aria-label</code>. Never emit a bare interactive element without one.',
+      'Decorative icons (those with an adjacent text label) always get <code>aria-hidden="true"</code>. If an icon is the sole content of a button or link, the parent element carries <code>aria-label</code> describing the action, not the icon glyph name.',
+      'Never use color as the sole signal for state (error, success, warning, disabled, selected). Always combine color with one of: a text label, a Tabler icon, or an ARIA attribute (<code>aria-invalid</code>, <code>aria-selected</code>, <code>aria-disabled</code>).',
+      'Prefer semantic HTML over ARIA roles: use <code>&lt;button&gt;</code> not <code>&lt;div role="button"&gt;</code>, <code>&lt;nav&gt;</code> not <code>&lt;div role="navigation"&gt;</code>, <code>&lt;main&gt;</code> not <code>&lt;div role="main"&gt;</code>. Add explicit ARIA roles only when no native HTML element is semantically appropriate.',
+      'Error states on form controls require all three: <code>aria-invalid="true"</code> on the input, an error message element visible in the DOM, and <code>aria-describedby="error-id"</code> on the input pointing to that message. Never show an error only visually.',
+      'Dynamic content updates use live regions: <code>aria-live="polite"</code> for non-urgent additions (search results, suggestions), <code>role="alert"</code> (implicit assertive) for errors and critical notices only. Never use assertive for routine updates.',
+      'Overlay components (modal, drawer, popover) require the full triad: focus trap cycling Tab/Shift+Tab within the overlay while open; Escape key closes; focus returns to the exact trigger element on close. Implement all three or none.',
+      'Never set <code>tabindex</code> to a positive integer. Use <code>tabindex="0"</code> to add a non-interactive element to tab order, <code>tabindex="-1"</code> to enable programmatic focus only. Positive tabindex values break the natural reading order.'
     ]
   };
   function restoreDefaults() {
