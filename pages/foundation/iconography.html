@@ -56,6 +56,9 @@
     padding: 14px 24px 2px;
   }
   .spec-viewport[data-mode="dark"] .icon-group-label { color: #444; }
+
+  .spec-demos i.ti { color: #333; }
+  .spec-viewport[data-mode="dark"] .spec-demos i.ti { color: #e0e0e4; }
 </style>
 </head>
 <body>
@@ -200,7 +203,7 @@
               <div class="icon-item"><i class="ti ti-message-bolt"></i><span class="icon-name">message-bolt</span></div>
               <div class="icon-item"><i class="ti ti-cpu"></i><span class="icon-name">cpu</span></div>
               <div class="icon-item"><i class="ti ti-wand"></i><span class="icon-name">wand</span></div>
-              <div class="icon-item"><i class="ti ti-circuit-ai"></i><span class="icon-name">circuit-ai</span></div>
+              <div class="icon-item"><i class="ti ti-circuit-board"></i><span class="icon-name">circuit-board</span></div>
               <div class="icon-item"><i class="ti ti-message-2"></i><span class="icon-name">message-2</span></div>
             </div>
           </div>
@@ -250,7 +253,7 @@
           <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Size icons to match the surrounding text context: 14px alongside small body copy, 16px as the default inline size, 20px for medium-emphasis elements, 24px for primary navigation, 32px for empty states and hero callouts.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
           <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Use icons from the Tabler library only. Never inline custom SVGs or reference other icon libraries. The class pattern is always <code>ti ti-{name}</code>.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
           <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Color icons with DS semantic tokens, never hardcoded hex. Use <code>--text-secondary</code> for decorative icons, <code>--text-primary</code> for active/selected icons, <code>--color-danger</code> for destructive action icons.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
-          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Use AI-specific icons (<code>ti-sparkles</code>, <code>ti-brain</code>, <code>ti-wand</code>, <code>ti-circuit-ai</code>) exclusively for AI-initiated actions and AI UI components. Do not use them for general actions to avoid misleading users about feature origin.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Use AI-specific icons (<code>ti-sparkles</code>, <code>ti-brain</code>, <code>ti-wand</code>, <code>ti-circuit-board</code>) exclusively for AI-initiated actions and AI UI components. Do not use them for general actions to avoid misleading users about feature origin.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
         </ul>
         <button class="spec-add-rule" onclick="addRule('rules-general')"><i class="ti ti-plus"></i> Add rule</button>
       </div>
@@ -357,7 +360,7 @@
       'Size icons to match the surrounding text context: 14px alongside small body copy, 16px as the default inline size, 20px for medium-emphasis elements, 24px for primary navigation, 32px for empty states and hero callouts.',
       'Use icons from the Tabler library only. Never inline custom SVGs or reference other icon libraries. The class pattern is always <code>ti ti-{name}</code>.',
       'Color icons with DS semantic tokens, never hardcoded hex. Use <code>--text-secondary</code> for decorative icons, <code>--text-primary</code> for active/selected icons, <code>--color-danger</code> for destructive action icons.',
-      'Use AI-specific icons (<code>ti-sparkles</code>, <code>ti-brain</code>, <code>ti-wand</code>, <code>ti-circuit-ai</code>) exclusively for AI-initiated actions and AI UI components. Do not use them for general actions to avoid misleading users about feature origin.'
+      'Use AI-specific icons (<code>ti-sparkles</code>, <code>ti-brain</code>, <code>ti-wand</code>, <code>ti-circuit-board</code>) exclusively for AI-initiated actions and AI UI components. Do not use them for general actions to avoid misleading users about feature origin.'
     ]
   };
   function restoreDefaults() {

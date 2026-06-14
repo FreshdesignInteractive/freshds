@@ -39,7 +39,7 @@
     overflow: hidden;
     background: var(--bg);
     color: var(--text-primary);
-    font-family: var(--font-sans);
+    font-family: 'Inter', system-ui, sans-serif;
   }
   .cfg-body {
     flex: 1;
@@ -71,7 +71,7 @@
     padding: 11px 28px;
     border: 1.5px solid var(--border);
     border-radius: var(--radius-pill);
-    font-family: var(--font-sans);
+    font-family: inherit;
     font-size: 14px;
     font-weight: 500;
     color: var(--text-secondary);
@@ -87,7 +87,7 @@
     padding: 11px 28px;
     border-radius: var(--radius-pill);
     background: var(--text-primary);
-    font-family: var(--font-sans);
+    font-family: inherit;
     font-size: 14px;
     font-weight: 600;
     color: #fff;
@@ -107,7 +107,7 @@
     transform: translateX(-50%) translateY(10px);
     background: var(--text-primary);
     color: #fff;
-    font-family: var(--font-sans);
+    font-family: inherit;
     font-size: 13px;
     font-weight: 500;
     padding: 10px 22px;
@@ -170,7 +170,7 @@
 
   /* ── Color pickers ──────────────────────────────────────────── */
   .cfg-color-block { display: flex; flex-direction: column; gap: var(--space-2); flex: 1; min-width: 0; }
-  .cfg-color-label { font-size: var(--font-size-xs); font-weight: 500; color: #444; }
+  .cfg-color-label { font-size: var(--font-size-xs); font-weight: 500; color: #444; white-space: nowrap; }
 
   .cfg-color-wrap {
     border-radius: 8px;
@@ -257,7 +257,7 @@
     text-align: center;
     -moz-appearance: textfield;
     outline: none;
-    font-family: var(--font-sans);
+    font-family: inherit;
     transition: border-color 0.15s, box-shadow 0.15s;
   }
   .cfg-num-input::-webkit-inner-spin-button,
@@ -292,7 +292,7 @@
     padding: 5px 16px;
     border: 1.5px solid var(--border);
     border-radius: var(--radius-pill);
-    font-family: var(--font-sans);
+    font-family: inherit;
     font-size: var(--font-size-md);
     font-weight: 500;
     color: var(--text-secondary);
@@ -315,7 +315,7 @@
     gap: 2px var(--space-3);
   }
   .dpt-row { display: flex; align-items: center; gap: var(--space-2); padding: 3px 0; }
-  .dpt-name { font-size: 10px; font-family: var(--font-mono); color: #555; min-width: 56px; }
+  .dpt-name { font-size: 10px; font-family: 'JetBrains Mono', monospace; color: #555; min-width: 56px; }
   .dpt-val  { font-size: 11px; color: var(--text-primary); font-weight: 500; min-width: 28px; }
   .dpt-bar-wrap { flex: 1; height: 3px; background: var(--border); border-radius: 2px; overflow: hidden; }
   .dpt-bar { height: 100%; background: var(--text-primary); border-radius: 2px; }
@@ -331,7 +331,7 @@
     border-bottom: 1px solid var(--border);
   }
   .cfg-radius-row:last-child { border-bottom: none; }
-  .cfg-radius-token { font-size: 10px; font-family: var(--font-mono); color: #555; margin-bottom: 2px; }
+  .cfg-radius-token { font-size: 10px; font-family: 'JetBrains Mono', monospace; color: #555; margin-bottom: 2px; }
   .cfg-radius-usage { font-size: 12px; color: var(--text-primary); }
   .cfg-radius-controls { display: flex; align-items: center; gap: 5px; }
   .cfg-radius-sample-wrap { display: flex; align-items: center; justify-content: center; min-width: 84px; }
