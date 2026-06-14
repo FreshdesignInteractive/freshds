@@ -223,6 +223,86 @@
     </div>
   </div>
 
+  <!-- CODE -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Code</span></div>
+      <div style="padding:16px 20px;display:flex;flex-direction:column;gap:0;">
+
+        <div class="code-block" data-code='<div class="fds-container">
+  <div class="fds-grid">
+    <div class="fds-col-8">Main content</div>
+    <div class="fds-col-4">Sidebar</div>
+  </div>
+</div>'>
+          <div class="code-block-header"><span><span class="code-lang">HTML</span><span class="code-context">Container + 8/4 split</span></span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+          <div class="code-body"><span class="hl-pun">&lt;</span><span class="hl-tag">div</span> <span class="hl-attr">class</span><span class="hl-pun">=</span><span class="hl-val">"fds-container"</span><span class="hl-pun">&gt;</span>
+  <span class="hl-pun">&lt;</span><span class="hl-tag">div</span> <span class="hl-attr">class</span><span class="hl-pun">=</span><span class="hl-val">"fds-grid"</span><span class="hl-pun">&gt;</span>
+    <span class="hl-pun">&lt;</span><span class="hl-tag">div</span> <span class="hl-attr">class</span><span class="hl-pun">=</span><span class="hl-val">"fds-col-8"</span><span class="hl-pun">&gt;</span><span class="hl-txt">Main content</span><span class="hl-pun">&lt;/</span><span class="hl-tag">div</span><span class="hl-pun">&gt;</span>
+    <span class="hl-pun">&lt;</span><span class="hl-tag">div</span> <span class="hl-attr">class</span><span class="hl-pun">=</span><span class="hl-val">"fds-col-4"</span><span class="hl-pun">&gt;</span><span class="hl-txt">Sidebar</span><span class="hl-pun">&lt;/</span><span class="hl-tag">div</span><span class="hl-pun">&gt;</span>
+  <span class="hl-pun">&lt;/</span><span class="hl-tag">div</span><span class="hl-pun">&gt;</span>
+<span class="hl-pun">&lt;/</span><span class="hl-tag">div</span><span class="hl-pun">&gt;</span></div>
+        </div>
+
+        <div class="code-block" data-code='<!-- Full on mobile → half on tablet → third on desktop -->
+<div class="fds-grid">
+  <div class="fds-col-12 fds-col-md-6 fds-col-lg-4">Card</div>
+  <div class="fds-col-12 fds-col-md-6 fds-col-lg-4">Card</div>
+  <div class="fds-col-12 fds-col-md-6 fds-col-lg-4">Card</div>
+</div>'>
+          <div class="code-block-header"><span><span class="code-lang">HTML</span><span class="code-context">Responsive columns — mobile-first</span></span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+          <div class="code-body"><span class="hl-com">&lt;!-- Full on mobile, half on tablet, third on desktop --&gt;</span>
+<span class="hl-pun">&lt;</span><span class="hl-tag">div</span> <span class="hl-attr">class</span><span class="hl-pun">=</span><span class="hl-val">"fds-grid"</span><span class="hl-pun">&gt;</span>
+  <span class="hl-pun">&lt;</span><span class="hl-tag">div</span> <span class="hl-attr">class</span><span class="hl-pun">=</span><span class="hl-val">"fds-col-12 fds-col-md-6 fds-col-lg-4"</span><span class="hl-pun">&gt;</span><span class="hl-txt">Card</span><span class="hl-pun">&lt;/</span><span class="hl-tag">div</span><span class="hl-pun">&gt;</span>
+  <span class="hl-pun">&lt;</span><span class="hl-tag">div</span> <span class="hl-attr">class</span><span class="hl-pun">=</span><span class="hl-val">"fds-col-12 fds-col-md-6 fds-col-lg-4"</span><span class="hl-pun">&gt;</span><span class="hl-txt">Card</span><span class="hl-pun">&lt;/</span><span class="hl-tag">div</span><span class="hl-pun">&gt;</span>
+  <span class="hl-pun">&lt;</span><span class="hl-tag">div</span> <span class="hl-attr">class</span><span class="hl-pun">=</span><span class="hl-val">"fds-col-12 fds-col-md-6 fds-col-lg-4"</span><span class="hl-pun">&gt;</span><span class="hl-txt">Card</span><span class="hl-pun">&lt;/</span><span class="hl-tag">div</span><span class="hl-pun">&gt;</span>
+<span class="hl-pun">&lt;/</span><span class="hl-tag">div</span><span class="hl-pun">&gt;</span></div>
+        </div>
+
+        <div class="code-block" data-code='<!-- Fixed sidebar + fluid main, collapses at --bp-md -->
+<div class="fds-sidebar-layout">
+  <nav><!-- 200-280px fixed --></nav>
+  <main><!-- 1fr fluid --></main>
+</div>'>
+          <div class="code-block-header"><span><span class="code-lang">HTML</span><span class="code-context">Sidebar layout</span></span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+          <div class="code-body"><span class="hl-com">&lt;!-- Fixed sidebar + fluid main, collapses at --bp-md --&gt;</span>
+<span class="hl-pun">&lt;</span><span class="hl-tag">div</span> <span class="hl-attr">class</span><span class="hl-pun">=</span><span class="hl-val">"fds-sidebar-layout"</span><span class="hl-pun">&gt;</span>
+  <span class="hl-pun">&lt;</span><span class="hl-tag">nav</span><span class="hl-pun">&gt;</span><span class="hl-com">&lt;!-- 200-280px fixed --&gt;</span><span class="hl-pun">&lt;/</span><span class="hl-tag">nav</span><span class="hl-pun">&gt;</span>
+  <span class="hl-pun">&lt;</span><span class="hl-tag">main</span><span class="hl-pun">&gt;</span><span class="hl-com">&lt;!-- 1fr fluid --&gt;</span><span class="hl-pun">&lt;/</span><span class="hl-tag">main</span><span class="hl-pun">&gt;</span>
+<span class="hl-pun">&lt;/</span><span class="hl-tag">div</span><span class="hl-pun">&gt;</span></div>
+        </div>
+
+        <div class="code-block" data-code='<!-- Vertical sequence with automatic gap -->
+<div class="fds-stack">
+  <fresh-stat-card label="Revenue" value="$48,200"></fresh-stat-card>
+  <fresh-data-table ...></fresh-data-table>
+</div>
+
+<!-- Wrapping inline group: tags, filters, action chips -->
+<div class="fds-cluster">
+  <fresh-badge variant="primary">Dashboard</fresh-badge>
+  <fresh-badge variant="success">Active</fresh-badge>
+  <fresh-badge variant="warning">Pending</fresh-badge>
+</div>'>
+          <div class="code-block-header"><span><span class="code-lang">HTML</span><span class="code-context">Stack + cluster composition layouts</span></span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+          <div class="code-body"><span class="hl-com">&lt;!-- Vertical sequence with automatic gap --&gt;</span>
+<span class="hl-pun">&lt;</span><span class="hl-tag">div</span> <span class="hl-attr">class</span><span class="hl-pun">=</span><span class="hl-val">"fds-stack"</span><span class="hl-pun">&gt;</span>
+  <span class="hl-pun">&lt;</span><span class="hl-tag">fresh-stat-card</span> <span class="hl-attr">label</span><span class="hl-pun">=</span><span class="hl-val">"Revenue"</span> <span class="hl-attr">value</span><span class="hl-pun">=</span><span class="hl-val">"$48,200"</span><span class="hl-pun">&gt;&lt;/</span><span class="hl-tag">fresh-stat-card</span><span class="hl-pun">&gt;</span>
+  <span class="hl-pun">&lt;</span><span class="hl-tag">fresh-data-table</span> <span class="hl-pun">...</span><span class="hl-pun">&gt;&lt;/</span><span class="hl-tag">fresh-data-table</span><span class="hl-pun">&gt;</span>
+<span class="hl-pun">&lt;/</span><span class="hl-tag">div</span><span class="hl-pun">&gt;</span>
+
+<span class="hl-com">&lt;!-- Wrapping inline group: tags, filters, action chips --&gt;</span>
+<span class="hl-pun">&lt;</span><span class="hl-tag">div</span> <span class="hl-attr">class</span><span class="hl-pun">=</span><span class="hl-val">"fds-cluster"</span><span class="hl-pun">&gt;</span>
+  <span class="hl-pun">&lt;</span><span class="hl-tag">fresh-badge</span> <span class="hl-attr">variant</span><span class="hl-pun">=</span><span class="hl-val">"primary"</span><span class="hl-pun">&gt;</span><span class="hl-txt">Dashboard</span><span class="hl-pun">&lt;/</span><span class="hl-tag">fresh-badge</span><span class="hl-pun">&gt;</span>
+  <span class="hl-pun">&lt;</span><span class="hl-tag">fresh-badge</span> <span class="hl-attr">variant</span><span class="hl-pun">=</span><span class="hl-val">"success"</span><span class="hl-pun">&gt;</span><span class="hl-txt">Active</span><span class="hl-pun">&lt;/</span><span class="hl-tag">fresh-badge</span><span class="hl-pun">&gt;</span>
+  <span class="hl-pun">&lt;</span><span class="hl-tag">fresh-badge</span> <span class="hl-attr">variant</span><span class="hl-pun">=</span><span class="hl-val">"warning"</span><span class="hl-pun">&gt;</span><span class="hl-txt">Pending</span><span class="hl-pun">&lt;/</span><span class="hl-tag">fresh-badge</span><span class="hl-pun">&gt;</span>
+<span class="hl-pun">&lt;/</span><span class="hl-tag">div</span><span class="hl-pun">&gt;</span></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
   <!-- BREAKPOINTS -->
   <div class="comp-section">
     <div class="spec-rules-panel">
