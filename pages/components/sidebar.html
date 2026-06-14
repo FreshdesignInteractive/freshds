@@ -8,82 +8,345 @@
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="styles/site.css">
 <link rel="stylesheet" href="tokens/primitives.css">
 <link rel="stylesheet" href="tokens/theme.css">
-<link rel="stylesheet" href="tokens/dataviz.css">
-<link rel="stylesheet" href="styles/reset.css">
-<link rel="stylesheet" href="styles/layout.css">
-<link rel="stylesheet" href="styles/components/core.css">
-<link rel="stylesheet" href="styles/docs.css">
 <script src="js/freshds.js"></script>
 <script src="js/freshds-site.js"></script>
+<link rel="stylesheet" href="styles/components/spec-page.css">
 </head>
 <body>
-<div class="fds-app" id="app">
-  <ds-topbar active-section="ds"></ds-topbar>
-  <div class="fds-body">
-    <ds-shell active="sidebar-comp"></ds-shell>
-    <main class="fds-main">
-      <div class="fds-page active" id="page-sidebar-comp">
-        <div class="page-header">
-          <div class="page-eyebrow">Navigation</div>
-          <h1 class="page-title">Sidebar</h1>
-          <p class="page-desc">Vertical navigation panel. Composed from three parts: <code style="font-family:var(--font-mono);font-size:13px;background:var(--surface-overlay);padding:1px 6px;border-radius:4px">fresh-sidebar</code>, <code style="font-family:var(--font-mono);font-size:13px;background:var(--surface-overlay);padding:1px 6px;border-radius:4px">fresh-nav-group</code>, and <code style="font-family:var(--font-mono);font-size:13px;background:var(--surface-overlay);padding:1px 6px;border-radius:4px">fresh-nav-item</code>.</p>
-        </div>
-        <div class="page-section">
-          <div class="page-section-title">Full sidebar</div>
-          <div class="demo-surface" style="padding:0;height:440px;overflow:hidden;align-items:stretch;display:block">
-            <fresh-sidebar style="height:100%">
-              <div slot="brand" style="display:flex;align-items:center;gap:8px">
-                <div style="width:22px;height:22px;border-radius:5px;background:linear-gradient(135deg,var(--color-interactive),var(--color-accent));flex-shrink:0"></div>
-                <span style="font-family:var(--font-sans);font-size:14px;font-weight:600;letter-spacing:-0.02em;color:var(--text-primary)">Workspace</span>
-              </div>
-              <fresh-nav-group label="Getting started" open>
-                <fresh-nav-item icon="ti-home" active>Overview</fresh-nav-item>
-                <fresh-nav-item icon="ti-adjustments-horizontal">Configurator</fresh-nav-item>
-              </fresh-nav-group>
-              <fresh-nav-group label="Foundation" open>
-                <fresh-nav-item icon="ti-typography">Typography</fresh-nav-item>
-                <fresh-nav-item icon="ti-palette">Color &amp; tokens</fresh-nav-item>
-                <fresh-nav-item icon="ti-spacing">Spacing</fresh-nav-item>
-              </fresh-nav-group>
-              <fresh-nav-group label="Components">
-                <fresh-nav-item icon="ti-cursor">Button</fresh-nav-item>
-                <fresh-nav-item icon="ti-forms">Input</fresh-nav-item>
-                <fresh-nav-item icon="ti-sparkles" badge="AI">Prompt input</fresh-nav-item>
-              </fresh-nav-group>
-              <div slot="footer" style="display:flex;align-items:center;gap:10px;width:100%">
-                <fresh-avatar name="Jane Smith" size="sm" status="online"></fresh-avatar>
-                <div style="flex:1;min-width:0">
-                  <div style="font-family:var(--font-sans);font-size:12px;font-weight:500;color:var(--text-primary);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Jane Smith</div>
-                  <div style="font-family:var(--font-sans);font-size:11px;color:var(--text-tertiary)">Admin</div>
-                </div>
-                <fresh-button variant="ghost" icon-only size="sm"><i class="ti ti-dots-vertical"></i></fresh-button>
-              </div>
-            </fresh-sidebar>
-          </div>
-        </div>
-        <div class="page-section">
-          <div class="page-section-title">Components</div>
-          <table class="usage-table">
-            <thead><tr><th>Tag</th><th>Attribute</th><th>Description</th></tr></thead>
-            <tbody>
-              <tr><td>fresh-sidebar</td><td><code>collapsed</code></td><td>Container with brand / content / footer slots</td></tr>
-              <tr><td>fresh-nav-group</td><td><code>label</code> <code>open</code></td><td>Collapsible labeled section</td></tr>
-              <tr><td>fresh-nav-item</td><td><code>active</code> <code>icon</code> <code>href</code> <code>badge</code></td><td>Individual navigation link</td></tr>
-            </tbody>
-          </table>
+
+<div class="comp-page">
+  <h1 class="comp-title">Sidebar</h1>
+  <p class="comp-desc">Vertical navigation panel composed from three parts: <code>fresh-sidebar</code> (shell with brand/footer slots), <code>fresh-nav-group</code> (collapsible labeled sections), and <code>fresh-nav-item</code> (individual links with icons and optional badges).</p>
+
+  <!-- STATES CARD -->
+  <div class="comp-section">
+    <div class="spec-card">
+      <div class="spec-card-topbar">
+        <span class="spec-rules-title">Sidebar states</span>
+        <div class="spec-mode-switcher">
+          <button class="spec-mode-btn active" id="mode-btn-light" onclick="setSpecMode('light')"><i class="ti ti-sun"></i> Light</button>
+          <button class="spec-mode-btn" id="mode-btn-dark" onclick="setSpecMode('dark')"><i class="ti ti-moon"></i> Dark</button>
         </div>
       </div>
-    </main>
+      <div id="spec-viewport" class="spec-viewport">
+
+        <!-- Full sidebar -->
+        <div class="spec-variant-row">
+          <div class="spec-variant-header">
+            <span class="spec-variant-name">Full sidebar</span>
+            <span class="spec-attr-chip">fresh-sidebar</span>
+            <span class="spec-variant-sep">·</span>
+            <span class="spec-variant-desc">Brand header, collapsible nav groups, active item highlight, and footer with user info.</span>
+          </div>
+          <div class="spec-variant-body">
+            <div class="spec-demos" style="display:block;padding:0;width:100%;height:420px;overflow:hidden;">
+              <fresh-sidebar style="height:100%">
+                <div slot="brand" style="display:flex;align-items:center;gap:8px">
+                  <div style="width:22px;height:22px;border-radius:5px;background:linear-gradient(135deg,var(--color-interactive),var(--color-accent));flex-shrink:0"></div>
+                  <span style="font-family:var(--font-sans);font-size:14px;font-weight:600;letter-spacing:-0.02em;color:var(--text-primary)">Workspace</span>
+                </div>
+                <fresh-nav-group label="Getting started" open>
+                  <fresh-nav-item icon="ti-home" active>Overview</fresh-nav-item>
+                  <fresh-nav-item icon="ti-adjustments-horizontal">Configurator</fresh-nav-item>
+                </fresh-nav-group>
+                <fresh-nav-group label="Foundation" open>
+                  <fresh-nav-item icon="ti-typography">Typography</fresh-nav-item>
+                  <fresh-nav-item icon="ti-palette">Color and tokens</fresh-nav-item>
+                  <fresh-nav-item icon="ti-spacing">Spacing</fresh-nav-item>
+                </fresh-nav-group>
+                <fresh-nav-group label="Components">
+                  <fresh-nav-item icon="ti-cursor">Button</fresh-nav-item>
+                  <fresh-nav-item icon="ti-forms">Input</fresh-nav-item>
+                  <fresh-nav-item icon="ti-sparkles" badge="AI">Prompt input</fresh-nav-item>
+                </fresh-nav-group>
+                <div slot="footer" style="display:flex;align-items:center;gap:10px;width:100%">
+                  <fresh-avatar name="Jane Smith" size="sm" status="online"></fresh-avatar>
+                  <div style="flex:1;min-width:0">
+                    <div style="font-family:var(--font-sans);font-size:12px;font-weight:500;color:var(--text-primary);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Jane Smith</div>
+                    <div style="font-family:var(--font-sans);font-size:11px;color:var(--text-tertiary)">Admin</div>
+                  </div>
+                  <fresh-button variant="ghost" icon-only size="sm" aria-label="More options"><i class="ti ti-dots-vertical"></i></fresh-button>
+                </div>
+              </fresh-sidebar>
+            </div>
+          </div>
+        </div>
+
+        <!-- Collapsed sidebar -->
+        <div class="spec-variant-row">
+          <div class="spec-variant-header">
+            <span class="spec-variant-name">Collapsed</span>
+            <span class="spec-attr-chip">collapsed</span>
+            <span class="spec-variant-sep">·</span>
+            <span class="spec-variant-desc">Icon-only narrow mode (56px wide). Nav item labels are hidden; icons remain visible.</span>
+          </div>
+          <div class="spec-variant-body">
+            <div class="spec-demos" style="display:block;padding:0;height:280px;overflow:hidden;">
+              <fresh-sidebar collapsed style="height:100%">
+                <div slot="brand" style="display:flex;align-items:center;justify-content:center">
+                  <div style="width:22px;height:22px;border-radius:5px;background:linear-gradient(135deg,var(--color-interactive),var(--color-accent));flex-shrink:0"></div>
+                </div>
+                <fresh-nav-group label="Nav" open>
+                  <fresh-nav-item icon="ti-home" active></fresh-nav-item>
+                  <fresh-nav-item icon="ti-adjustments-horizontal"></fresh-nav-item>
+                  <fresh-nav-item icon="ti-typography"></fresh-nav-item>
+                  <fresh-nav-item icon="ti-cursor"></fresh-nav-item>
+                </fresh-nav-group>
+                <div slot="footer" style="display:flex;align-items:center;justify-content:center">
+                  <fresh-avatar name="Jane Smith" size="sm"></fresh-avatar>
+                </div>
+              </fresh-sidebar>
+            </div>
+          </div>
+        </div>
+
+        <!-- Nav item with badge -->
+        <div class="spec-variant-row">
+          <div class="spec-variant-header">
+            <span class="spec-variant-name">Nav item variants</span>
+            <span class="spec-attr-chip">active / badge / href</span>
+            <span class="spec-variant-sep">·</span>
+            <span class="spec-variant-desc">Active state, badge chip, and link vs. button mode for nav items.</span>
+          </div>
+          <div class="spec-variant-body">
+            <div class="spec-demos" style="display:block;padding:0;width:260px;">
+              <fresh-nav-item icon="ti-home" active>Active item</fresh-nav-item>
+              <fresh-nav-item icon="ti-sparkles" badge="AI">With AI badge</fresh-nav-item>
+              <fresh-nav-item icon="ti-bell" badge="3">With count badge</fresh-nav-item>
+              <fresh-nav-item icon="ti-link" href="/settings">Link item (href)</fresh-nav-item>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
   </div>
+
+  <!-- AI RULES -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar">
+        <span class="spec-rules-title">AI action rules</span>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <span class="spec-rules-hint">Click any rule to edit</span>
+          <button class="spec-rules-reset" onclick="restoreDefaults()"><i class="ti ti-rotate" style="font-size:10px;"></i> Restore FreshDS defaults</button>
+        </div>
+      </div>
+      <div class="spec-rules-section">
+        <div class="spec-rules-section-head">
+          <span class="spec-rules-variant">General</span>
+          <span class="spec-attr-chip">fresh-sidebar</span>
+        </div>
+        <ul class="spec-rule-list" id="rules-general">
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Organise nav items into <code>fresh-nav-group</code> sections. A flat list of items with no grouping is only acceptable when there are five or fewer total destinations.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Mark exactly one <code>fresh-nav-item</code> as <code>active</code> at any time, matching the user's current route.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Use <code>href</code> on <code>fresh-nav-item</code> for real navigation links. Omit <code>href</code> and listen to the <code>nav-click</code> event for client-side routing or actions that don't change the URL.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Reserve <code>badge</code> on a <code>fresh-nav-item</code> for short labels ("AI", "New", "Beta") or counts (unread notifications). Do not use long strings as badges.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Toggle <code>collapsed</code> on the sidebar element to switch between icon-only and full label mode. Pair with a hamburger button in the navbar for touch/mobile contexts.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+        </ul>
+        <button class="spec-add-rule" onclick="addRule('rules-general')"><i class="ti ti-plus"></i> Add rule</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ATTRIBUTES -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Attributes</span></div>
+      <table class="spec-a11y-table">
+        <thead><tr><th style="width:180px">Tag + Attribute</th><th style="width:220px">Values</th><th style="width:80px">Default</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">fresh-sidebar: collapsed</td><td class="spec-a11y-req">boolean</td><td class="spec-a11y-req">-</td><td class="spec-a11y-req">Icon-only narrow mode. Width collapses to 56px; labels are hidden.</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">fresh-nav-group: label</td><td class="spec-a11y-req">string</td><td class="spec-a11y-req">-</td><td class="spec-a11y-req">Section heading text rendered in uppercase caps above the items.</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">fresh-nav-group: open</td><td class="spec-a11y-req">boolean</td><td class="spec-a11y-req">-</td><td class="spec-a11y-req">Expands the group so items are visible. Clicking the header toggles this.</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">fresh-nav-item: active</td><td class="spec-a11y-req">boolean</td><td class="spec-a11y-req">-</td><td class="spec-a11y-req">Highlights item with the interactive colour and a left border accent.</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">fresh-nav-item: icon</td><td class="spec-a11y-req">Tabler icon class e.g. <code>ti-home</code></td><td class="spec-a11y-req">-</td><td class="spec-a11y-req">Icon rendered before the label. Prefix with <code>ti-</code>, not the full class.</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">fresh-nav-item: href</td><td class="spec-a11y-req">string (URL)</td><td class="spec-a11y-req">-</td><td class="spec-a11y-req">When set, renders the item as an <code>&lt;a&gt;</code> tag. Omit for button-mode items.</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">fresh-nav-item: badge</td><td class="spec-a11y-req">string</td><td class="spec-a11y-req">-</td><td class="spec-a11y-req">Short label or count displayed on the trailing edge of the item row.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- EVENTS -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Events</span></div>
+      <table class="spec-a11y-table">
+        <thead><tr><th style="width:130px">Event</th><th style="width:220px">Detail</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">nav-click</td><td class="spec-a11y-req">none</td><td class="spec-a11y-req">Fired by <code>fresh-nav-item</code> when clicked in button mode (no <code>href</code>). Bubbles and is composed.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- CODE -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Code</span></div>
+      <div style="padding:16px 20px;display:flex;flex-direction:column;gap:0;">
+
+        <div class="code-block" data-code="&lt;fresh-sidebar style=&quot;height:100vh&quot;&gt;
+  &lt;div slot=&quot;brand&quot; style=&quot;display:flex;align-items:center;gap:8px&quot;&gt;
+    &lt;strong&gt;Acme DS&lt;/strong&gt;
+  &lt;/div&gt;
+
+  &lt;fresh-nav-group label=&quot;Getting started&quot; open&gt;
+    &lt;fresh-nav-item icon=&quot;ti-home&quot; active&gt;Overview&lt;/fresh-nav-item&gt;
+    &lt;fresh-nav-item icon=&quot;ti-adjustments-horizontal&quot;&gt;Configurator&lt;/fresh-nav-item&gt;
+  &lt;/fresh-nav-group&gt;
+
+  &lt;fresh-nav-group label=&quot;Components&quot;&gt;
+    &lt;fresh-nav-item icon=&quot;ti-cursor&quot;&gt;Button&lt;/fresh-nav-item&gt;
+    &lt;fresh-nav-item icon=&quot;ti-sparkles&quot; badge=&quot;AI&quot;&gt;Prompt input&lt;/fresh-nav-item&gt;
+  &lt;/fresh-nav-group&gt;
+
+  &lt;div slot=&quot;footer&quot;&gt;
+    &lt;fresh-avatar name=&quot;Jane Smith&quot; size=&quot;sm&quot; status=&quot;online&quot;&gt;&lt;/fresh-avatar&gt;
+  &lt;/div&gt;
+&lt;/fresh-sidebar&gt;">
+          <div class="code-block-header"><span><span class="code-lang">HTML</span><span class="code-context">Full sidebar</span></span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+          <div class="code-body"><span class="hl-pun">&lt;</span><span class="hl-tag">fresh-sidebar</span> <span class="hl-attr">style</span><span class="hl-pun">=</span><span class="hl-val">"height:100vh"</span><span class="hl-pun">&gt;</span>
+  <span class="hl-pun">&lt;</span><span class="hl-tag">div</span> <span class="hl-attr">slot</span><span class="hl-pun">=</span><span class="hl-val">"brand"</span> <span class="hl-attr">style</span><span class="hl-pun">=</span><span class="hl-val">"display:flex;align-items:center;gap:8px"</span><span class="hl-pun">&gt;</span>
+    <span class="hl-pun">&lt;</span><span class="hl-tag">strong</span><span class="hl-pun">&gt;</span><span class="hl-txt">Acme DS</span><span class="hl-pun">&lt;/</span><span class="hl-tag">strong</span><span class="hl-pun">&gt;</span>
+  <span class="hl-pun">&lt;/</span><span class="hl-tag">div</span><span class="hl-pun">&gt;</span>
+
+  <span class="hl-pun">&lt;</span><span class="hl-tag">fresh-nav-group</span> <span class="hl-attr">label</span><span class="hl-pun">=</span><span class="hl-val">"Getting started"</span> <span class="hl-attr">open</span><span class="hl-pun">&gt;</span>
+    <span class="hl-pun">&lt;</span><span class="hl-tag">fresh-nav-item</span> <span class="hl-attr">icon</span><span class="hl-pun">=</span><span class="hl-val">"ti-home"</span> <span class="hl-attr">active</span><span class="hl-pun">&gt;</span><span class="hl-txt">Overview</span><span class="hl-pun">&lt;/</span><span class="hl-tag">fresh-nav-item</span><span class="hl-pun">&gt;</span>
+    <span class="hl-pun">&lt;</span><span class="hl-tag">fresh-nav-item</span> <span class="hl-attr">icon</span><span class="hl-pun">=</span><span class="hl-val">"ti-adjustments-horizontal"</span><span class="hl-pun">&gt;</span><span class="hl-txt">Configurator</span><span class="hl-pun">&lt;/</span><span class="hl-tag">fresh-nav-item</span><span class="hl-pun">&gt;</span>
+  <span class="hl-pun">&lt;/</span><span class="hl-tag">fresh-nav-group</span><span class="hl-pun">&gt;</span>
+
+  <span class="hl-pun">&lt;</span><span class="hl-tag">fresh-nav-group</span> <span class="hl-attr">label</span><span class="hl-pun">=</span><span class="hl-val">"Components"</span><span class="hl-pun">&gt;</span>
+    <span class="hl-pun">&lt;</span><span class="hl-tag">fresh-nav-item</span> <span class="hl-attr">icon</span><span class="hl-pun">=</span><span class="hl-val">"ti-cursor"</span><span class="hl-pun">&gt;</span><span class="hl-txt">Button</span><span class="hl-pun">&lt;/</span><span class="hl-tag">fresh-nav-item</span><span class="hl-pun">&gt;</span>
+    <span class="hl-pun">&lt;</span><span class="hl-tag">fresh-nav-item</span> <span class="hl-attr">icon</span><span class="hl-pun">=</span><span class="hl-val">"ti-sparkles"</span> <span class="hl-attr">badge</span><span class="hl-pun">=</span><span class="hl-val">"AI"</span><span class="hl-pun">&gt;</span><span class="hl-txt">Prompt input</span><span class="hl-pun">&lt;/</span><span class="hl-tag">fresh-nav-item</span><span class="hl-pun">&gt;</span>
+  <span class="hl-pun">&lt;/</span><span class="hl-tag">fresh-nav-group</span><span class="hl-pun">&gt;</span>
+
+  <span class="hl-pun">&lt;</span><span class="hl-tag">div</span> <span class="hl-attr">slot</span><span class="hl-pun">=</span><span class="hl-val">"footer"</span><span class="hl-pun">&gt;</span>
+    <span class="hl-pun">&lt;</span><span class="hl-tag">fresh-avatar</span> <span class="hl-attr">name</span><span class="hl-pun">=</span><span class="hl-val">"Jane Smith"</span> <span class="hl-attr">size</span><span class="hl-pun">=</span><span class="hl-val">"sm"</span> <span class="hl-attr">status</span><span class="hl-pun">=</span><span class="hl-val">"online"</span><span class="hl-pun">&gt;&lt;/</span><span class="hl-tag">fresh-avatar</span><span class="hl-pun">&gt;</span>
+  <span class="hl-pun">&lt;/</span><span class="hl-tag">div</span><span class="hl-pun">&gt;</span>
+<span class="hl-pun">&lt;/</span><span class="hl-tag">fresh-sidebar</span><span class="hl-pun">&gt;</span></div>
+        </div>
+
+        <div class="code-block" data-code="&lt;!-- Collapsed sidebar --&gt;
+&lt;fresh-sidebar collapsed id=&quot;my-sidebar&quot; style=&quot;height:100vh&quot;&gt;
+  &lt;fresh-nav-group label=&quot;Nav&quot; open&gt;
+    &lt;fresh-nav-item icon=&quot;ti-home&quot; active&gt;&lt;/fresh-nav-item&gt;
+    &lt;fresh-nav-item icon=&quot;ti-adjustments-horizontal&quot;&gt;&lt;/fresh-nav-item&gt;
+  &lt;/fresh-nav-group&gt;
+&lt;/fresh-sidebar&gt;
+
+&lt;!-- Toggle from hamburger --&gt;
+&lt;script&gt;
+  document.querySelector('fresh-navbar').addEventListener('hamburger-click', () =&gt; {
+    document.getElementById('my-sidebar').toggleAttribute('collapsed');
+  });
+&lt;/script&gt;">
+          <div class="code-block-header"><span><span class="code-lang">HTML</span><span class="code-context">Collapsed mode</span></span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+          <div class="code-body"><span class="hl-com">&lt;!-- Collapsed sidebar --&gt;</span>
+<span class="hl-pun">&lt;</span><span class="hl-tag">fresh-sidebar</span> <span class="hl-attr">collapsed</span> <span class="hl-attr">id</span><span class="hl-pun">=</span><span class="hl-val">"my-sidebar"</span> <span class="hl-attr">style</span><span class="hl-pun">=</span><span class="hl-val">"height:100vh"</span><span class="hl-pun">&gt;</span>
+  <span class="hl-pun">&lt;</span><span class="hl-tag">fresh-nav-group</span> <span class="hl-attr">label</span><span class="hl-pun">=</span><span class="hl-val">"Nav"</span> <span class="hl-attr">open</span><span class="hl-pun">&gt;</span>
+    <span class="hl-pun">&lt;</span><span class="hl-tag">fresh-nav-item</span> <span class="hl-attr">icon</span><span class="hl-pun">=</span><span class="hl-val">"ti-home"</span> <span class="hl-attr">active</span><span class="hl-pun">&gt;&lt;/</span><span class="hl-tag">fresh-nav-item</span><span class="hl-pun">&gt;</span>
+    <span class="hl-pun">&lt;</span><span class="hl-tag">fresh-nav-item</span> <span class="hl-attr">icon</span><span class="hl-pun">=</span><span class="hl-val">"ti-adjustments-horizontal"</span><span class="hl-pun">&gt;&lt;/</span><span class="hl-tag">fresh-nav-item</span><span class="hl-pun">&gt;</span>
+  <span class="hl-pun">&lt;/</span><span class="hl-tag">fresh-nav-group</span><span class="hl-pun">&gt;</span>
+<span class="hl-pun">&lt;/</span><span class="hl-tag">fresh-sidebar</span><span class="hl-pun">&gt;</span>
+
+<span class="hl-com">&lt;!-- Toggle from hamburger --&gt;</span>
+<span class="hl-pun">&lt;</span><span class="hl-tag">script</span><span class="hl-pun">&gt;</span>
+  <span class="hl-txt">document.querySelector('fresh-navbar').addEventListener('hamburger-click', () =&gt; {</span>
+    <span class="hl-txt">document.getElementById('my-sidebar').toggleAttribute('collapsed');</span>
+  <span class="hl-txt">});</span>
+<span class="hl-pun">&lt;/</span><span class="hl-tag">script</span><span class="hl-pun">&gt;</span></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- TOKENS -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Tokens</span></div>
+      <table class="spec-a11y-table">
+        <thead><tr><th style="width:220px">Token</th><th style="width:200px">Role</th><th>State</th></tr></thead>
+        <tbody>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--surface-bg</td><td class="spec-a11y-req">Sidebar background</td><td class="spec-a11y-req">all</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--surface-border</td><td class="spec-a11y-req">Right border, brand/footer dividers</td><td class="spec-a11y-req">all</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--surface-subtle</td><td class="spec-a11y-req">Nav item hover background</td><td class="spec-a11y-req">hover</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--nav-active-bg</td><td class="spec-a11y-req">Active item background</td><td class="spec-a11y-req">active</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--nav-active-text</td><td class="spec-a11y-req">Active item label colour</td><td class="spec-a11y-req">active</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--color-interactive</td><td class="spec-a11y-req">Active item left border accent</td><td class="spec-a11y-req">active</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--text-secondary</td><td class="spec-a11y-req">Inactive item label</td><td class="spec-a11y-req">default</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--text-tertiary</td><td class="spec-a11y-req">Group header label</td><td class="spec-a11y-req">default</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--sidebar-w</td><td class="spec-a11y-req">Sidebar width (CSS var override)</td><td class="spec-a11y-req">expanded (default 240px)</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--badge-ai-bg</td><td class="spec-a11y-req">Badge chip background</td><td class="spec-a11y-req">badge</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ACCESSIBILITY -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Accessibility</span></div>
+      <div style="padding:12px 24px 14px;border-bottom:1px solid #d4d4d7;">
+        <p style="font-size:13px;color:#555;line-height:1.6;margin:0;">Sidebar satisfies all <a href="app.html#accessibility" target="_parent" style="color:#5b6af7;text-decoration:none;font-weight:500;">universal accessibility concerns</a>. Component-specific concerns are below.</p>
+      </div>
+      <table class="spec-a11y-table">
+        <thead><tr><th>Concern</th><th>Requirement</th></tr></thead>
+        <tbody>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">nav landmark</td><td class="spec-a11y-req">Wrap the <code>fresh-sidebar</code> in a <code>&lt;nav aria-label="Main navigation"&gt;</code> element so screen readers announce it as a navigation landmark.</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">collapsed state</td><td class="spec-a11y-req">When collapsed, nav item text is visually hidden but the icon remains. If items have no text slot content, ensure the icon has a meaningful <code>aria-label</code> or the item has tooltip support.</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">group toggle</td><td class="spec-a11y-req">The group header button uses cursor:pointer and is keyboard-focusable. The expand/collapse state is reflected visually by the chevron but should also be announced via <code>aria-expanded</code> where screen reader support is critical.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
 </div>
+
 <script src="components/core/fresh-button.js"></script>
-<script src="components/core/fresh-input.js"></script>
 <script src="components/data/fresh-avatar.js"></script>
 <script src="components/navigation/fresh-sidebar.js"></script>
-<script src="components/navigation/fresh-simple-tabs.js"></script>
+<script src="js/spec-page.js"></script>
+
+<script type="module">
+  import { supabase } from '/js/supabase-client.js'
+  var RULE_IDS = ['rules-general'];
+  var _saveTimer = null, _loading = false;
+  function getRulesSnapshot() {
+    var r = {};
+    RULE_IDS.forEach(function(id) { var l = document.getElementById(id); if (!l) return; r[id] = Array.from(l.querySelectorAll('.spec-rule-text')).map(function(el) { return el.innerHTML.trim(); }); });
+    return r;
+  }
+  function applySnapshot(saved) {
+    RULE_IDS.forEach(function(id) { var l = document.getElementById(id); if (!l) return; var rules = (saved && saved[id] && saved[id].length) ? saved[id] : window.DEFAULT_RULES[id]; l.innerHTML = rules.map(function(t) { return '<li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">' + t + '</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>'; }).join(''); }); }
+  async function saveRulesNow() {
+    try { var { data: { user } } = await supabase.auth.getUser(); if (!user) return; var { data: p } = await supabase.from('profiles').select('component_rules').eq('id', user.id).single(); var e = (p && p.component_rules) ? p.component_rules : {}; e.sidebar = getRulesSnapshot(); await supabase.from('profiles').update({ component_rules: e }).eq('id', user.id); } catch(e) {}
+  }
+  function schedSave() { if (_loading) return; clearTimeout(_saveTimer); _saveTimer = setTimeout(saveRulesNow, 1000); }
+  var panel = document.querySelector('.spec-rules-panel'); if (panel) new MutationObserver(schedSave).observe(panel, { childList: true, subtree: true, characterData: true });
+  ;(async function() { try { var { data: { user } } = await supabase.auth.getUser(); if (!user) return; var { data: p } = await supabase.from('profiles').select('component_rules').eq('id', user.id).single(); if (p && p.component_rules && p.component_rules.sidebar) { _loading = true; applySnapshot(p.component_rules.sidebar); _loading = false; } } catch(e) {} })();
+</script>
+
+<script>
+  var DEFAULT_RULES = {
+    'rules-general': [
+      'Organise nav items into <code>fresh-nav-group</code> sections. A flat list of items with no grouping is only acceptable when there are five or fewer total destinations.',
+      'Mark exactly one <code>fresh-nav-item</code> as <code>active</code> at any time, matching the user\'s current route.',
+      'Use <code>href</code> on <code>fresh-nav-item</code> for real navigation links. Omit <code>href</code> and listen to the <code>nav-click</code> event for client-side routing or actions that don\'t change the URL.',
+      'Reserve <code>badge</code> on a <code>fresh-nav-item</code> for short labels ("AI", "New", "Beta") or counts (unread notifications). Do not use long strings as badges.',
+      'Toggle <code>collapsed</code> on the sidebar element to switch between icon-only and full label mode. Pair with a hamburger button in the navbar for touch/mobile contexts.'
+    ]
+  };
+  function restoreDefaults() {
+    if (!confirm('Reset all sidebar rules to FreshDS defaults? Any edits you have made will be lost.')) return;
+    Object.keys(DEFAULT_RULES).forEach(function(id) { var l = document.getElementById(id); if (!l) return; l.innerHTML = DEFAULT_RULES[id].map(function(t) { return '<li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">' + t + '</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>'; }).join(''); }); }
+</script>
 </body>
 </html>

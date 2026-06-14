@@ -1,0 +1,414 @@
+/* ============================================================
+   FreshDS, Component spec page chrome
+   Shared by every /pages/components/*.html page.
+   All colours are hardcoded — DS theme vars (configured by the
+   customer in the configurator) must NOT bleed into the page shell.
+   Never use var(--text-*), var(--surface-*), or var(--radius-*) here.
+   ============================================================ */
+
+body { background: #f7f7f8; }
+
+.comp-page {
+  max-width: 920px;
+  margin: 0 auto;
+  padding: 52px 40px 100px;
+}
+
+.comp-title {
+  font-size: 34px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: #111;
+  margin-bottom: 14px;
+  line-height: 1.1;
+}
+
+.comp-desc {
+  font-size: 15px;
+  color: #555;
+  line-height: 1.65;
+  max-width: 100%;
+  margin-bottom: 36px;
+}
+
+.comp-section { margin-bottom: 44px; }
+
+/* ── All Variants card — DS window ───────────────────────────
+   The card chrome (border, bg, row dividers) is site-neutral.
+   Everything inside .spec-demos uses DS theme vars so components
+   render in the customer's configured theme.
+   ──────────────────────────────────────────────────────────── */
+.spec-card {
+  background: #fff;
+  border: 1px solid #e4e4e7;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.spec-variant-row {
+  padding: 20px 24px;
+  border-bottom: 1px solid #e4e4e7;
+}
+.spec-variant-row:last-child { border-bottom: none; }
+
+.spec-variant-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.spec-variant-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: #111;
+}
+
+.spec-attr-chip {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  background: #f1f1f3;
+  color: #555;
+  padding: 2px 8px;
+  border-radius: 4px;
+  border: 1px solid #e4e4e7;
+  -webkit-font-smoothing: antialiased;
+}
+
+.spec-variant-sep { color: #999; }
+
+.spec-variant-desc {
+  font-size: 13px;
+  color: #555;
+  line-height: 1.5;
+}
+
+.spec-variant-body {
+  display: flex;
+  align-items: flex-start;
+  gap: 32px;
+}
+
+.spec-demos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  flex: 1;
+}
+
+.spec-sizes {
+  display: flex;
+  gap: 20px;
+  flex-shrink: 0;
+  padding-left: 24px;
+  border-left: 1px solid #e4e4e7;
+}
+
+.spec-size-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+}
+
+.spec-size-px {
+  font-size: 10px;
+  font-family: var(--font-mono);
+  color: #999;
+}
+
+/* ── Component card topbar ─────────────────────────────────── */
+.spec-card-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 11px 24px;
+  border-bottom: 1px solid #e4e4e7;
+}
+
+/* ── Dark / Light mode switcher ────────────────────────────── */
+.spec-mode-switcher {
+  display: flex;
+  gap: 2px;
+  background: #eaeaec;
+  border-radius: 5px;
+  padding: 2px;
+}
+
+.spec-mode-btn {
+  all: unset;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  font-weight: 500;
+  color: #888;
+  padding: 3px 9px;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: background 0.12s, color 0.12s;
+}
+.spec-mode-btn.active {
+  background: #fff;
+  color: #333;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.10);
+}
+.spec-mode-btn:not(.active):hover { color: #555; }
+
+/* ── Viewport — DS window inside the component card ─────────
+   Page chrome (topbar, card border) stays site-white.
+   Only this area goes dark when the mode toggle is flipped.
+   ──────────────────────────────────────────────────────────── */
+.spec-viewport { transition: background 0.2s; }
+
+.spec-viewport[data-mode="dark"] {
+  background: #1c1f24;
+  /* Override component tokens directly on this element so shadow DOM inherits
+     them without going through the --color-interactive chain, which loses
+     overrides at the shadow boundary for filled variants. */
+  --btn-primary-bg:    var(--primary-4);
+  --btn-primary-hover: var(--primary-3);
+  --btn-primary-text:  var(--primary-11);
+  --color-interactive:       var(--primary-4);
+  --color-interactive-hover: var(--primary-3);
+}
+.spec-viewport[data-mode="dark"] .spec-variant-row       { border-bottom-color: #2a2d33; }
+.spec-viewport[data-mode="dark"] .spec-variant-name      { color: #f0f0f2; }
+.spec-viewport[data-mode="dark"] .spec-attr-chip         { background: #2a2d33; color: #8e939e; border-color: #383c45; }
+.spec-viewport[data-mode="dark"] .spec-variant-sep       { color: #4a4f5a; }
+.spec-viewport[data-mode="dark"] .spec-variant-desc      { color: #8e939e; }
+.spec-viewport[data-mode="dark"] .spec-sizes             { border-left-color: #2a2d33; }
+.spec-viewport[data-mode="dark"] .spec-size-px           { color: #4a4f5a; }
+
+/* ── Spec panels — AI Rules, Attributes, Code, Tokens, Accessibility
+   Panels use #ebebec, slightly darker than page bg (#f7f7f8)
+   so they read clearly against it. No brand colour anywhere.
+   ──────────────────────────────────────────────────────────── */
+.spec-rules-panel {
+  background: #ebebec;
+  border: 1px solid #d4d4d7;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.spec-rules-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 11px 24px;
+  border-bottom: 1px solid #d4d4d7;
+}
+
+.spec-rules-title {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #333;
+}
+
+.spec-rules-hint { font-size: 11px; color: #777; }
+
+.spec-rules-reset {
+  all: unset;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  font-weight: 500;
+  color: #888;
+  cursor: pointer;
+  padding: 3px 8px;
+  border-radius: 4px;
+  border: 1px solid #d4d4d7;
+  background: transparent;
+  transition: background 0.12s, color 0.12s, border-color 0.12s;
+}
+.spec-rules-reset:hover { background: #fff; color: #333; border-color: #bbb; }
+
+.spec-rules-section {
+  padding: 16px 24px;
+  border-bottom: 1px solid #d4d4d7;
+}
+.spec-rules-section:last-child { border-bottom: none; }
+
+.spec-rules-section-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.spec-rules-variant {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: #111;
+}
+
+.spec-rule-list { list-style: none; padding: 0; margin: 0; }
+
+.spec-rule-li {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  margin: 0 -8px;
+}
+.spec-rule-li:hover { background: rgba(0,0,0,0.05); }
+
+.spec-rule-bullet { color: #999; flex-shrink: 0; line-height: 1.5; user-select: none; }
+
+.spec-rule-text {
+  font-size: 13px;
+  color: #111;
+  line-height: 1.5;
+  flex: 1;
+  outline: none;
+}
+.spec-rule-text code {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  background: #fff;
+  padding: 1px 5px;
+  border-radius: 3px;
+  color: #444;
+}
+.spec-rule-text:focus {
+  background: rgba(255,255,255,0.92);
+  border-radius: 2px;
+  padding: 0 3px;
+  margin: 0 -3px;
+}
+
+.spec-rule-actions { display: none; gap: 2px; flex-shrink: 0; margin-top: 2px; }
+.spec-rule-li:hover .spec-rule-actions,
+.spec-rule-li:focus-within .spec-rule-actions { display: flex; }
+
+.spec-rule-btn {
+  all: unset;
+  box-sizing: border-box;
+  width: 22px; height: 22px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 4px;
+  cursor: pointer;
+  color: #999;
+  font-size: 12px;
+  transition: background 0.1s, color 0.1s;
+}
+.spec-rule-btn.del:hover { background: #fff1f2; color: #f43f5e; }
+
+.spec-add-rule {
+  all: unset;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  font-weight: 500;
+  color: #555;
+  padding: 3px 10px;
+  border: 1.5px dashed #b8b8bc;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background 0.1s;
+}
+.spec-add-rule:hover { background: rgba(0,0,0,0.05); }
+
+/* ── Attributes / Tokens / Accessibility table ───────────── */
+.spec-a11y-table { width: 100%; border-collapse: collapse; }
+.spec-a11y-table th {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #888;
+  padding: 10px 24px 12px;
+  text-align: left;
+  border-bottom: 1px solid #d4d4d7;
+}
+.spec-a11y-row td {
+  padding: 10px 24px;
+  border-bottom: 1px solid #d4d4d7;
+  vertical-align: top;
+}
+.spec-a11y-table tbody tr:last-child td { border-bottom: none; }
+.spec-a11y-concern {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: #444;
+  white-space: nowrap;
+  width: 160px;
+}
+.spec-a11y-req {
+  font-size: 13px;
+  color: #111;
+  line-height: 1.6;
+}
+.spec-a11y-req code {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  background: #fff;
+  padding: 1px 5px;
+  border-radius: 3px;
+  color: #444;
+}
+
+/* ── Code blocks ─────────────────────────────────────────── */
+.code-block {
+  background: #1e1e2e;
+  border: 1px solid #313244;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+.code-block:last-child { margin-bottom: 0; }
+.code-block-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 7px 14px;
+  background: #181825;
+  border-bottom: 1px solid #313244;
+}
+.code-lang {
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #6c7086;
+  font-family: var(--font-mono);
+}
+.code-context { font-size: 11px; color: #9399b2; margin-left: 8px; }
+.code-copy {
+  all: unset;
+  font-size: 11px;
+  color: #6c7086;
+  cursor: pointer;
+  padding: 2px 8px;
+  border-radius: 4px;
+  transition: color 0.1s, background 0.1s;
+}
+.code-copy:hover { color: #cdd6f4; background: #313244; }
+.code-body {
+  padding: 14px 18px;
+  overflow-x: auto;
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  line-height: 1.75;
+  white-space: pre;
+  color: #cdd6f4;
+}
+.hl-tag  { color: #89dceb; }
+.hl-attr { color: #89b4fa; }
+.hl-val  { color: #a6e3a1; }
+.hl-txt  { color: #cdd6f4; }
+.hl-pun  { color: #cba6f7; }
+.hl-com  { color: #585b70; font-style: italic; }

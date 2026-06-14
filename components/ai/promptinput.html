@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prompt Input | FreshDS</title>
+<base href="../../">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="styles/site.css">
+<link rel="stylesheet" href="tokens/primitives.css">
+<link rel="stylesheet" href="tokens/theme.css">
+<script src="js/freshds.js"></script>
+<script src="js/freshds-site.js"></script>
+<link rel="stylesheet" href="styles/components/spec-page.css">
+</head>
+<body>
+
+<div class="comp-page">
+  <h1 class="comp-title">Prompt Input</h1>
+  <p class="comp-desc">The signature input for AI interactions. Communicates to users that they are talking to an intelligent system, not filling out a form. Supports optional file attachment and voice input actions.</p>
+
+  <!-- STATES CARD -->
+  <div class="comp-section">
+    <div class="spec-card">
+      <div class="spec-card-topbar">
+        <span class="spec-rules-title">Prompt input states</span>
+        <div class="spec-mode-switcher">
+          <button class="spec-mode-btn active" id="mode-btn-light" onclick="setSpecMode('light')"><i class="ti ti-sun"></i> Light</button>
+          <button class="spec-mode-btn" id="mode-btn-dark" onclick="setSpecMode('dark')"><i class="ti ti-moon"></i> Dark</button>
+        </div>
+      </div>
+      <div id="spec-viewport" class="spec-viewport">
+
+        <div class="spec-variant-row">
+          <div class="spec-variant-header">
+            <span class="spec-variant-name">Default</span>
+            <span class="spec-attr-chip">placeholder="..."</span>
+            <span class="spec-variant-sep">·</span>
+            <span class="spec-variant-desc">Standard prompt input with sparkle icon and send button.</span>
+          </div>
+          <div class="spec-variant-body">
+            <div class="spec-demos">
+              <fresh-prompt-input placeholder="Ask anything about your data..."></fresh-prompt-input>
+            </div>
+          </div>
+        </div>
+
+        <div class="spec-variant-row">
+          <div class="spec-variant-header">
+            <span class="spec-variant-name">Focused</span>
+            <span class="spec-attr-chip">focused</span>
+            <span class="spec-variant-sep">·</span>
+            <span class="spec-variant-desc">Renders with visible focus ring to indicate active state.</span>
+          </div>
+          <div class="spec-variant-body">
+            <div class="spec-demos">
+              <fresh-prompt-input focused placeholder="Ask anything about your data..."></fresh-prompt-input>
+            </div>
+          </div>
+        </div>
+
+        <div class="spec-variant-row">
+          <div class="spec-variant-header">
+            <span class="spec-variant-name">With attach and voice</span>
+            <span class="spec-attr-chip">show-attach</span>
+            <span class="spec-attr-chip">show-voice</span>
+            <span class="spec-variant-sep">·</span>
+            <span class="spec-variant-desc">Adds file attachment and microphone buttons for multimodal input.</span>
+          </div>
+          <div class="spec-variant-body">
+            <div class="spec-demos">
+              <fresh-prompt-input show-attach show-voice placeholder="Ask anything or attach a file..."></fresh-prompt-input>
+            </div>
+          </div>
+        </div>
+
+        <div class="spec-variant-row">
+          <div class="spec-variant-header">
+            <span class="spec-variant-name">Disabled</span>
+            <span class="spec-attr-chip">disabled</span>
+            <span class="spec-variant-sep">·</span>
+            <span class="spec-variant-desc">Disables input and all action buttons. Use when AI is processing.</span>
+          </div>
+          <div class="spec-variant-body">
+            <div class="spec-demos">
+              <fresh-prompt-input disabled placeholder="AI is processing..."></fresh-prompt-input>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- AI RULES -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar">
+        <span class="spec-rules-title">AI action rules</span>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <span class="spec-rules-hint">Click any rule to edit</span>
+          <button class="spec-rules-reset" onclick="restoreDefaults()"><i class="ti ti-rotate" style="font-size:10px;"></i> Restore FreshDS defaults</button>
+        </div>
+      </div>
+      <div class="spec-rules-section">
+        <div class="spec-rules-section-head">
+          <span class="spec-rules-variant">General</span>
+          <span class="spec-attr-chip">fresh-prompt-input</span>
+        </div>
+        <ul class="spec-rule-list" id="rules-general">
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Use prompt input as the primary entry point for all AI interactions. Never replace it with a standard text field or textarea when the AI engine is active.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Set <code>disabled</code> while the AI is generating a response. Re-enable immediately when streaming completes or an error is shown.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Use <code>show-attach</code> only in contexts where file or image upload is actually supported by the backend. Never surface the button speculatively.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Set placeholder text to match the data or task context: "Ask about Q3 revenue..." is better than "Ask anything..."</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Listen for <code>fresh-submit</code> to send the value to the AI. Clear and re-focus the field after each successful submission so the user can continue the conversation.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+        </ul>
+        <button class="spec-add-rule" onclick="addRule('rules-general')"><i class="ti ti-plus"></i> Add rule</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ATTRIBUTES -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Attributes</span></div>
+      <table class="spec-a11y-table">
+        <thead><tr><th style="width:130px">Attribute</th><th style="width:220px">Values</th><th style="width:80px">Default</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">placeholder</td><td class="spec-a11y-req"><code>string</code></td><td class="spec-a11y-req">Ask anything...</td><td class="spec-a11y-req">Contextual hint text shown inside the input.</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">show-attach</td><td class="spec-a11y-req"><code>boolean</code></td><td class="spec-a11y-req">-</td><td class="spec-a11y-req">Shows the file attachment button. Replaces the sparkle icon on the left.</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">show-voice</td><td class="spec-a11y-req"><code>boolean</code></td><td class="spec-a11y-req">-</td><td class="spec-a11y-req">Shows the voice/microphone input button before the send button.</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">focused</td><td class="spec-a11y-req"><code>boolean</code></td><td class="spec-a11y-req">-</td><td class="spec-a11y-req">Renders the input with the focus ring visible. Useful for showcasing active state in demos.</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">disabled</td><td class="spec-a11y-req"><code>boolean</code></td><td class="spec-a11y-req">-</td><td class="spec-a11y-req">Disables the text input and all action buttons. Use while AI is processing.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- EVENTS -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Events</span></div>
+      <table class="spec-a11y-table">
+        <thead><tr><th style="width:130px">Event</th><th style="width:220px">Detail</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">fresh-submit</td><td class="spec-a11y-req"><code>{ value: string }</code></td><td class="spec-a11y-req">Fired when the user clicks Send or presses Enter. Field clears automatically after dispatch.</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">fresh-attach</td><td class="spec-a11y-req"><code>{}</code></td><td class="spec-a11y-req">Fired when the attach button is clicked. Open a file picker in the handler.</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">fresh-voice</td><td class="spec-a11y-req"><code>{}</code></td><td class="spec-a11y-req">Fired when the voice button is clicked. Start speech recognition in the handler.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- CODE -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Code</span></div>
+      <div style="padding:16px 20px;display:flex;flex-direction:column;gap:0;">
+
+        <div class="code-block" data-code='&lt;fresh-prompt-input placeholder="Ask about your data..."&gt;&lt;/fresh-prompt-input&gt;'>
+          <div class="code-block-header"><span><span class="code-lang">HTML</span><span class="code-context">Basic</span></span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+          <div class="code-body"><pre><code><span class="tok-tag">&lt;fresh-prompt-input</span>
+  <span class="tok-attr">placeholder</span>=<span class="tok-str">"Ask about your data..."</span>
+<span class="tok-tag">&gt;&lt;/fresh-prompt-input&gt;</span></code></pre></div>
+        </div>
+
+        <div class="code-block" data-code='&lt;fresh-prompt-input show-attach show-voice placeholder="Ask anything..."&gt;&lt;/fresh-prompt-input&gt;'>
+          <div class="code-block-header"><span><span class="code-lang">HTML</span><span class="code-context">With attach and voice</span></span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+          <div class="code-body"><pre><code><span class="tok-tag">&lt;fresh-prompt-input</span>
+  <span class="tok-attr">show-attach</span>
+  <span class="tok-attr">show-voice</span>
+  <span class="tok-attr">placeholder</span>=<span class="tok-str">"Ask anything..."</span>
+<span class="tok-tag">&gt;&lt;/fresh-prompt-input&gt;</span></code></pre></div>
+        </div>
+
+        <div class="code-block" data-code="document.querySelector('fresh-prompt-input').addEventListener('fresh-submit', e =&gt; { sendToAI(e.detail.value); });">
+          <div class="code-block-header"><span><span class="code-lang">JS</span><span class="code-context">Handling submission</span></span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+          <div class="code-body"><pre><code><span class="tok-kw">const</span> input = document.<span class="tok-fn">querySelector</span>(<span class="tok-str">'fresh-prompt-input'</span>);
+
+input.<span class="tok-fn">addEventListener</span>(<span class="tok-str">'fresh-submit'</span>, <span class="tok-kw">e</span> =&gt; {
+  input.<span class="tok-fn">setAttribute</span>(<span class="tok-str">'disabled'</span>, <span class="tok-str">''</span>);
+  <span class="tok-fn">sendToAI</span>(e.detail.value).<span class="tok-fn">finally</span>(() =&gt; {
+    input.<span class="tok-fn">removeAttribute</span>(<span class="tok-str">'disabled'</span>);
+  });
+});</code></pre></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- TOKENS -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Tokens</span></div>
+      <table class="spec-a11y-table">
+        <thead><tr><th style="width:220px">Token</th><th style="width:200px">Role</th><th>State</th></tr></thead>
+        <tbody>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--color-interactive</td><td class="spec-a11y-req">Send button background, sparkle icon</td><td class="spec-a11y-req">default</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--input-focus-border</td><td class="spec-a11y-req">Wrapper border when focused</td><td class="spec-a11y-req">focused</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--input-focus-ring</td><td class="spec-a11y-req">Outer focus ring shadow</td><td class="spec-a11y-req">focused</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--surface-bg</td><td class="spec-a11y-req">Input wrapper background</td><td class="spec-a11y-req">all</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--surface-border</td><td class="spec-a11y-req">Wrapper border</td><td class="spec-a11y-req">default</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--text-tertiary</td><td class="spec-a11y-req">Placeholder text, icon button color</td><td class="spec-a11y-req">default</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ACCESSIBILITY -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Accessibility</span></div>
+      <div style="padding:12px 24px 14px;border-bottom:1px solid #d4d4d7;">
+        <p style="font-size:13px;color:#555;line-height:1.6;margin:0;">Prompt input satisfies all <a href="app.html#accessibility" target="_parent" style="color:#5b6af7;text-decoration:none;font-weight:500;">universal accessibility concerns</a>. Component-specific concerns are below.</p>
+      </div>
+      <table class="spec-a11y-table">
+        <thead><tr><th>Concern</th><th>Requirement</th></tr></thead>
+        <tbody>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">Keyboard submit</td><td class="spec-a11y-req">Enter submits the prompt. Shift+Enter inserts a newline when multi-line support is needed.</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">Button labels</td><td class="spec-a11y-req">Send, Attach file, and Voice input buttons all have descriptive <code>aria-label</code> attributes.</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">Disabled state</td><td class="spec-a11y-req">When <code>disabled</code>, all controls are non-interactive. Notify screen readers that the AI is processing via a live region outside this component.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<script src="components/ai/fresh-prompt-input.js"></script>
+<script src="js/spec-page.js"></script>
+
+<script type="module">
+  import { supabase } from '/js/supabase-client.js'
+  var RULE_IDS = ['rules-general'];
+  var _saveTimer = null, _loading = false;
+  function getRulesSnapshot() {
+    var r = {};
+    RULE_IDS.forEach(function(id) { var l = document.getElementById(id); if (!l) return; r[id] = Array.from(l.querySelectorAll('.spec-rule-text')).map(function(el) { return el.innerHTML.trim(); }); });
+    return r;
+  }
+  function applySnapshot(saved) {
+    RULE_IDS.forEach(function(id) { var l = document.getElementById(id); if (!l) return; var rules = (saved && saved[id] && saved[id].length) ? saved[id] : window.DEFAULT_RULES[id]; l.innerHTML = rules.map(function(t) { return '<li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">' + t + '</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>'; }).join(''); });
+  }
+  async function saveRulesNow() {
+    try { var { data: { user } } = await supabase.auth.getUser(); if (!user) return; var { data: p } = await supabase.from('profiles').select('component_rules').eq('id', user.id).single(); var e = (p && p.component_rules) ? p.component_rules : {}; e.promptinput = getRulesSnapshot(); await supabase.from('profiles').update({ component_rules: e }).eq('id', user.id); } catch(e) {}
+  }
+  function schedSave() { if (_loading) return; clearTimeout(_saveTimer); _saveTimer = setTimeout(saveRulesNow, 1000); }
+  var panel = document.querySelector('.spec-rules-panel'); if (panel) new MutationObserver(schedSave).observe(panel, { childList: true, subtree: true, characterData: true });
+  ;(async function() { try { var { data: { user } } = await supabase.auth.getUser(); if (!user) return; var { data: p } = await supabase.from('profiles').select('component_rules').eq('id', user.id).single(); if (p && p.component_rules && p.component_rules.promptinput) { _loading = true; applySnapshot(p.component_rules.promptinput); _loading = false; } } catch(e) {} })();
+</script>
+
+<script>
+  var DEFAULT_RULES = {
+    'rules-general': [
+      'Use prompt input as the primary entry point for all AI interactions. Never replace it with a standard text field or textarea when the AI engine is active.',
+      'Set <code>disabled</code> while the AI is generating a response. Re-enable immediately when streaming completes or an error is shown.',
+      'Use <code>show-attach</code> only in contexts where file or image upload is actually supported by the backend. Never surface the button speculatively.',
+      'Set placeholder text to match the data or task context: "Ask about Q3 revenue..." is better than "Ask anything..."',
+      'Listen for <code>fresh-submit</code> to send the value to the AI. Clear and re-focus the field after each successful submission so the user can continue the conversation.'
+    ]
+  };
+  function restoreDefaults() {
+    if (!confirm('Reset all prompt input rules to FreshDS defaults? Any edits you have made will be lost.')) return;
+    Object.keys(DEFAULT_RULES).forEach(function(id) { var l = document.getElementById(id); if (!l) return; l.innerHTML = DEFAULT_RULES[id].map(function(t) { return '<li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">' + t + '</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>'; }).join(''); }); }
+</script>
+</body>
+</html>

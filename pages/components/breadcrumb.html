@@ -8,62 +8,277 @@
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="styles/site.css">
 <link rel="stylesheet" href="tokens/primitives.css">
 <link rel="stylesheet" href="tokens/theme.css">
-<link rel="stylesheet" href="tokens/dataviz.css">
-<link rel="stylesheet" href="styles/reset.css">
-<link rel="stylesheet" href="styles/layout.css">
-<link rel="stylesheet" href="styles/components/core.css">
-<link rel="stylesheet" href="styles/docs.css">
 <script src="js/freshds.js"></script>
 <script src="js/freshds-site.js"></script>
+<link rel="stylesheet" href="styles/components/spec-page.css">
 </head>
 <body>
-<div class="fds-app" id="app">
-  <ds-topbar active-section="ds"></ds-topbar>
-  <div class="fds-body">
-    <ds-shell active="breadcrumb"></ds-shell>
-    <main class="fds-main">
-      <div class="fds-page active" id="page-breadcrumb">
-        <div class="page-header">
-          <div class="page-eyebrow">Navigation</div>
-          <h1 class="page-title">Breadcrumb</h1>
-          <p class="page-desc">Hierarchical path indicator showing the user's location within the application. Previous levels are linked; the current page is non-interactive.</p>
-        </div>
-        <div class="page-section">
-          <div class="page-section-title">Examples</div>
-          <div class="demo-surface col" style="gap:var(--space-5)">
-            <fresh-breadcrumb items='[{"label":"Home","href":"/"},{"label":"Settings"}]'></fresh-breadcrumb>
-            <fresh-breadcrumb items='[{"label":"Home","href":"/"},{"label":"Projects","href":"/projects"},{"label":"FreshDS","href":"/projects/freshds"},{"label":"Components"}]'></fresh-breadcrumb>
-            <fresh-breadcrumb items='[{"label":"Workspace","href":"/"},{"label":"AI Models","href":"/models"},{"label":"Claude Sonnet","href":"/models/sonnet"},{"label":"API Keys"}]'></fresh-breadcrumb>
-          </div>
-        </div>
-        <div class="page-section">
-          <div class="page-section-title">Sizes</div>
-          <div class="demo-surface col" style="gap:var(--space-4)">
-            <fresh-breadcrumb size="sm" items='[{"label":"Home","href":"/"},{"label":"Settings","href":"/settings"},{"label":"Billing"}]'></fresh-breadcrumb>
-            <fresh-breadcrumb items='[{"label":"Home","href":"/"},{"label":"Settings","href":"/settings"},{"label":"Billing"}]'></fresh-breadcrumb>
-          </div>
-        </div>
-        <div class="page-section">
-          <div class="page-section-title">Attributes</div>
-          <table class="usage-table">
-            <thead><tr><th>Attribute</th><th>Values</th><th>Default</th><th>Description</th></tr></thead>
-            <tbody>
-              <tr><td>items</td><td>JSON array</td><td></td><td><code>{ label, href? }</code>, last item is always current page</td></tr>
-              <tr><td>size</td><td><code>sm</code> <code>md</code></td><td><code>md</code></td><td>Font size (11 / 13px)</td></tr>
-            </tbody>
-          </table>
+
+<div class="comp-page">
+  <h1 class="comp-title">Breadcrumb</h1>
+  <p class="comp-desc">Hierarchical path indicator showing the user's location within the application. Previous levels are linked; the current page is non-interactive and bold.</p>
+
+  <!-- STATES CARD -->
+  <div class="comp-section">
+    <div class="spec-card">
+      <div class="spec-card-topbar">
+        <span class="spec-rules-title">Breadcrumb states</span>
+        <div class="spec-mode-switcher">
+          <button class="spec-mode-btn active" id="mode-btn-light" onclick="setSpecMode('light')"><i class="ti ti-sun"></i> Light</button>
+          <button class="spec-mode-btn" id="mode-btn-dark" onclick="setSpecMode('dark')"><i class="ti ti-moon"></i> Dark</button>
         </div>
       </div>
-    </main>
+      <div id="spec-viewport" class="spec-viewport">
+
+        <!-- Short trail -->
+        <div class="spec-variant-row">
+          <div class="spec-variant-header">
+            <span class="spec-variant-name">Short trail</span>
+            <span class="spec-attr-chip">2 items</span>
+            <span class="spec-variant-sep">·</span>
+            <span class="spec-variant-desc">Minimal two-level path. One linked ancestor, one current page crumb.</span>
+          </div>
+          <div class="spec-variant-body">
+            <div class="spec-demos">
+              <fresh-breadcrumb items='[{"label":"Home","href":"/"},{"label":"Settings"}]'></fresh-breadcrumb>
+            </div>
+          </div>
+        </div>
+
+        <!-- Deep trail -->
+        <div class="spec-variant-row">
+          <div class="spec-variant-header">
+            <span class="spec-variant-name">Deep trail</span>
+            <span class="spec-attr-chip">4 items</span>
+            <span class="spec-variant-sep">·</span>
+            <span class="spec-variant-desc">Multi-level hierarchy. All ancestors linked with chevron separators.</span>
+          </div>
+          <div class="spec-variant-body">
+            <div class="spec-demos" style="flex-direction:column;align-items:flex-start;gap:var(--space-4);">
+              <fresh-breadcrumb items='[{"label":"Home","href":"/"},{"label":"Projects","href":"/projects"},{"label":"FreshDS","href":"/projects/freshds"},{"label":"Components"}]'></fresh-breadcrumb>
+              <fresh-breadcrumb items='[{"label":"Workspace","href":"/"},{"label":"AI Models","href":"/models"},{"label":"Claude Sonnet","href":"/models/sonnet"},{"label":"API Keys"}]'></fresh-breadcrumb>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sizes -->
+        <div class="spec-variant-row">
+          <div class="spec-variant-header">
+            <span class="spec-variant-name">Sizes</span>
+            <span class="spec-attr-chip">size="sm" / "md"</span>
+            <span class="spec-variant-sep">·</span>
+            <span class="spec-variant-desc">sm at 11px for compact page headers, md (default) at 13px for standard layouts.</span>
+          </div>
+          <div class="spec-variant-body">
+            <div class="spec-demos" style="flex-direction:column;align-items:flex-start;gap:var(--space-4);">
+              <fresh-breadcrumb size="sm" items='[{"label":"Home","href":"/"},{"label":"Settings","href":"/settings"},{"label":"Billing"}]'></fresh-breadcrumb>
+              <fresh-breadcrumb items='[{"label":"Home","href":"/"},{"label":"Settings","href":"/settings"},{"label":"Billing"}]'></fresh-breadcrumb>
+            </div>
+          </div>
+        </div>
+
+        <!-- Unlinked ancestor -->
+        <div class="spec-variant-row">
+          <div class="spec-variant-header">
+            <span class="spec-variant-name">Unlinked ancestor</span>
+            <span class="spec-attr-chip">no href</span>
+            <span class="spec-variant-sep">·</span>
+            <span class="spec-variant-desc">An item without an href renders as a plain text crumb, not a link. Useful for logical groupings without a dedicated URL.</span>
+          </div>
+          <div class="spec-variant-body">
+            <div class="spec-demos">
+              <fresh-breadcrumb items='[{"label":"Home","href":"/"},{"label":"Reports"},{"label":"Q2 2026"}]'></fresh-breadcrumb>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
   </div>
+
+  <!-- AI RULES -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar">
+        <span class="spec-rules-title">AI action rules</span>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <span class="spec-rules-hint">Click any rule to edit</span>
+          <button class="spec-rules-reset" onclick="restoreDefaults()"><i class="ti ti-rotate" style="font-size:10px;"></i> Restore FreshDS defaults</button>
+        </div>
+      </div>
+      <div class="spec-rules-section">
+        <div class="spec-rules-section-head">
+          <span class="spec-rules-variant">General</span>
+          <span class="spec-attr-chip">fresh-breadcrumb</span>
+        </div>
+        <ul class="spec-rule-list" id="rules-general">
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">The last item in the <code>items</code> array always represents the current page. Omit <code>href</code> from it. The component automatically renders it non-interactive with <code>aria-current="page"</code>.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Provide <code>href</code> on every ancestor item that has a real destination. If a level in the hierarchy has no URL, omit <code>href</code> to render it as plain text.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Use <code>size="sm"</code> when placing the breadcrumb inside a page header alongside a large <code>&lt;h1&gt;</code>. Use the default md size in standalone or toolbar contexts.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Do not include the application root (e.g. "App") as a breadcrumb item unless it is genuinely navigable and users need to return to it. Keep trails to five items or fewer for legibility.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Use the exact page title as the breadcrumb label for the current item. Abbreviations or truncated labels cause confusion between the breadcrumb and the visible page heading.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+        </ul>
+        <button class="spec-add-rule" onclick="addRule('rules-general')"><i class="ti ti-plus"></i> Add rule</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ATTRIBUTES -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Attributes</span></div>
+      <table class="spec-a11y-table">
+        <thead><tr><th style="width:130px">Attribute</th><th style="width:220px">Values</th><th style="width:80px">Default</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">items</td><td class="spec-a11y-req">JSON array: <code>[{ label, href? }]</code></td><td class="spec-a11y-req">-</td><td class="spec-a11y-req">Breadcrumb path. Each item needs a <code>label</code>. Optional <code>href</code> makes it a link. The last item is always the current page and ignores <code>href</code>.</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">size</td><td class="spec-a11y-req"><code>sm</code> <code>md</code></td><td class="spec-a11y-req"><code>md</code></td><td class="spec-a11y-req">Font size: sm 11px, md 13px. Separator SVG scales with the text.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- CODE -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Code</span></div>
+      <div style="padding:16px 20px;display:flex;flex-direction:column;gap:0;">
+
+        <div class="code-block" data-code="&lt;fresh-breadcrumb items='[
+  {&quot;label&quot;:&quot;Home&quot;,&quot;href&quot;:&quot;/&quot;},
+  {&quot;label&quot;:&quot;Settings&quot;,&quot;href&quot;:&quot;/settings&quot;},
+  {&quot;label&quot;:&quot;API Keys&quot;}
+]'&gt;&lt;/fresh-breadcrumb&gt;">
+          <div class="code-block-header"><span><span class="code-lang">HTML</span><span class="code-context">Three-level trail</span></span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+          <div class="code-body"><span class="hl-pun">&lt;</span><span class="hl-tag">fresh-breadcrumb</span> <span class="hl-attr">items</span><span class="hl-pun">=</span><span class="hl-val">'[
+  {"label":"Home","href":"/"},
+  {"label":"Settings","href":"/settings"},
+  {"label":"API Keys"}
+]'</span><span class="hl-pun">&gt;&lt;/</span><span class="hl-tag">fresh-breadcrumb</span><span class="hl-pun">&gt;</span></div>
+        </div>
+
+        <div class="code-block" data-code="&lt;!-- Small breadcrumb in a page header --&gt;
+&lt;fresh-breadcrumb size=&quot;sm&quot; items='[
+  {&quot;label&quot;:&quot;Dashboard&quot;,&quot;href&quot;:&quot;/dashboard&quot;},
+  {&quot;label&quot;:&quot;Projects&quot;,&quot;href&quot;:&quot;/dashboard/projects&quot;},
+  {&quot;label&quot;:&quot;FreshDS&quot;}
+]'&gt;&lt;/fresh-breadcrumb&gt;
+&lt;h1&gt;FreshDS&lt;/h1&gt;">
+          <div class="code-block-header"><span><span class="code-lang">HTML</span><span class="code-context">Small size in a page header</span></span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+          <div class="code-body"><span class="hl-com">&lt;!-- Small breadcrumb in a page header --&gt;</span>
+<span class="hl-pun">&lt;</span><span class="hl-tag">fresh-breadcrumb</span> <span class="hl-attr">size</span><span class="hl-pun">=</span><span class="hl-val">"sm"</span> <span class="hl-attr">items</span><span class="hl-pun">=</span><span class="hl-val">'[
+  {"label":"Dashboard","href":"/dashboard"},
+  {"label":"Projects","href":"/dashboard/projects"},
+  {"label":"FreshDS"}
+]'</span><span class="hl-pun">&gt;&lt;/</span><span class="hl-tag">fresh-breadcrumb</span><span class="hl-pun">&gt;</span>
+<span class="hl-pun">&lt;</span><span class="hl-tag">h1</span><span class="hl-pun">&gt;</span><span class="hl-txt">FreshDS</span><span class="hl-pun">&lt;/</span><span class="hl-tag">h1</span><span class="hl-pun">&gt;</span></div>
+        </div>
+
+        <div class="code-block" data-code="&lt;!-- Dynamic breadcrumb from JS --&gt;
+&lt;fresh-breadcrumb id=&quot;bc&quot;&gt;&lt;/fresh-breadcrumb&gt;
+&lt;script&gt;
+  const crumb = document.getElementById('bc');
+  crumb.setAttribute('items', JSON.stringify([
+    { label: 'Home',     href: '/' },
+    { label: 'Reports',  href: '/reports' },
+    { label: 'Q2 2026' }
+  ]));
+&lt;/script&gt;">
+          <div class="code-block-header"><span><span class="code-lang">HTML</span><span class="code-context">Dynamic items from JavaScript</span></span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+          <div class="code-body"><span class="hl-com">&lt;!-- Dynamic breadcrumb from JS --&gt;</span>
+<span class="hl-pun">&lt;</span><span class="hl-tag">fresh-breadcrumb</span> <span class="hl-attr">id</span><span class="hl-pun">=</span><span class="hl-val">"bc"</span><span class="hl-pun">&gt;&lt;/</span><span class="hl-tag">fresh-breadcrumb</span><span class="hl-pun">&gt;</span>
+<span class="hl-pun">&lt;</span><span class="hl-tag">script</span><span class="hl-pun">&gt;</span>
+  <span class="hl-txt">const crumb = document.getElementById('bc');</span>
+  <span class="hl-txt">crumb.setAttribute('items', JSON.stringify([</span>
+    <span class="hl-txt">{ label: 'Home',     href: '/' },</span>
+    <span class="hl-txt">{ label: 'Reports',  href: '/reports' },</span>
+    <span class="hl-txt">{ label: 'Q2 2026' }</span>
+  <span class="hl-txt">]));</span>
+<span class="hl-pun">&lt;/</span><span class="hl-tag">script</span><span class="hl-pun">&gt;</span></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- TOKENS -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Tokens</span></div>
+      <table class="spec-a11y-table">
+        <thead><tr><th style="width:220px">Token</th><th style="width:200px">Role</th><th>State</th></tr></thead>
+        <tbody>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--text-secondary</td><td class="spec-a11y-req">Ancestor link colour</td><td class="spec-a11y-req">default</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--text-tertiary</td><td class="spec-a11y-req">Separator and plain crumb colour</td><td class="spec-a11y-req">default</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--text-primary</td><td class="spec-a11y-req">Current page label</td><td class="spec-a11y-req">current</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--surface-overlay</td><td class="spec-a11y-req">Link hover background</td><td class="spec-a11y-req">hover</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--color-interactive-text</td><td class="spec-a11y-req">Focus ring on links</td><td class="spec-a11y-req">focus-visible</td></tr>
+          <tr class="spec-a11y-req"><td class="spec-a11y-concern">--radius-sm</td><td class="spec-a11y-req">Link hover pill radius</td><td class="spec-a11y-req">hover</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--font-sans</td><td class="spec-a11y-req">Font family</td><td class="spec-a11y-req">all</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ACCESSIBILITY -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Accessibility</span></div>
+      <div style="padding:12px 24px 14px;border-bottom:1px solid #d4d4d7;">
+        <p style="font-size:13px;color:#555;line-height:1.6;margin:0;">Breadcrumb satisfies all <a href="app.html#accessibility" target="_parent" style="color:#5b6af7;text-decoration:none;font-weight:500;">universal accessibility concerns</a>. Component-specific concerns are below.</p>
+      </div>
+      <table class="spec-a11y-table">
+        <thead><tr><th>Concern</th><th>Requirement</th></tr></thead>
+        <tbody>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">landmark</td><td class="spec-a11y-req">Renders as <code>&lt;nav aria-label="Breadcrumb"&gt;</code> with an ordered list inside. Screen readers announce it as a navigation landmark distinct from the primary nav.</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">current page</td><td class="spec-a11y-req">The last crumb gets <code>aria-current="page"</code> automatically. Do not add this attribute manually on the parent element.</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">separator</td><td class="spec-a11y-req">The SVG chevron separator has <code>aria-hidden="true"</code> so it is not read aloud between crumb labels.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
 </div>
-<script src="components/core/fresh-button.js"></script>
-<script src="components/core/fresh-input.js"></script>
+
 <script src="components/navigation/fresh-breadcrumb.js"></script>
-<script src="components/navigation/fresh-simple-tabs.js"></script>
+<script src="js/spec-page.js"></script>
+
+<script type="module">
+  import { supabase } from '/js/supabase-client.js'
+  var RULE_IDS = ['rules-general'];
+  var _saveTimer = null, _loading = false;
+  function getRulesSnapshot() {
+    var r = {};
+    RULE_IDS.forEach(function(id) { var l = document.getElementById(id); if (!l) return; r[id] = Array.from(l.querySelectorAll('.spec-rule-text')).map(function(el) { return el.innerHTML.trim(); }); });
+    return r;
+  }
+  function applySnapshot(saved) {
+    RULE_IDS.forEach(function(id) { var l = document.getElementById(id); if (!l) return; var rules = (saved && saved[id] && saved[id].length) ? saved[id] : window.DEFAULT_RULES[id]; l.innerHTML = rules.map(function(t) { return '<li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">' + t + '</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>'; }).join(''); }); }
+  async function saveRulesNow() {
+    try { var { data: { user } } = await supabase.auth.getUser(); if (!user) return; var { data: p } = await supabase.from('profiles').select('component_rules').eq('id', user.id).single(); var e = (p && p.component_rules) ? p.component_rules : {}; e.breadcrumb = getRulesSnapshot(); await supabase.from('profiles').update({ component_rules: e }).eq('id', user.id); } catch(e) {}
+  }
+  function schedSave() { if (_loading) return; clearTimeout(_saveTimer); _saveTimer = setTimeout(saveRulesNow, 1000); }
+  var panel = document.querySelector('.spec-rules-panel'); if (panel) new MutationObserver(schedSave).observe(panel, { childList: true, subtree: true, characterData: true });
+  ;(async function() { try { var { data: { user } } = await supabase.auth.getUser(); if (!user) return; var { data: p } = await supabase.from('profiles').select('component_rules').eq('id', user.id).single(); if (p && p.component_rules && p.component_rules.breadcrumb) { _loading = true; applySnapshot(p.component_rules.breadcrumb); _loading = false; } } catch(e) {} })();
+</script>
+
+<script>
+  var DEFAULT_RULES = {
+    'rules-general': [
+      'The last item in the <code>items</code> array always represents the current page. Omit <code>href</code> from it. The component automatically renders it non-interactive with <code>aria-current="page"</code>.',
+      'Provide <code>href</code> on every ancestor item that has a real destination. If a level in the hierarchy has no URL, omit <code>href</code> to render it as plain text.',
+      'Use <code>size="sm"</code> when placing the breadcrumb inside a page header alongside a large <code>&lt;h1&gt;</code>. Use the default md size in standalone or toolbar contexts.',
+      'Do not include the application root (e.g. "App") as a breadcrumb item unless it is genuinely navigable and users need to return to it. Keep trails to five items or fewer for legibility.',
+      'Use the exact page title as the breadcrumb label for the current item. Abbreviations or truncated labels cause confusion between the breadcrumb and the visible page heading.'
+    ]
+  };
+  function restoreDefaults() {
+    if (!confirm('Reset all breadcrumb rules to FreshDS defaults? Any edits you have made will be lost.')) return;
+    Object.keys(DEFAULT_RULES).forEach(function(id) { var l = document.getElementById(id); if (!l) return; l.innerHTML = DEFAULT_RULES[id].map(function(t) { return '<li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">' + t + '</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>'; }).join(''); }); }
+</script>
 </body>
 </html>

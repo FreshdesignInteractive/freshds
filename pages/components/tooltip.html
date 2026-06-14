@@ -8,82 +8,270 @@
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="styles/site.css">
 <link rel="stylesheet" href="tokens/primitives.css">
 <link rel="stylesheet" href="tokens/theme.css">
-<link rel="stylesheet" href="tokens/dataviz.css">
-<link rel="stylesheet" href="styles/reset.css">
-<link rel="stylesheet" href="styles/layout.css">
-<link rel="stylesheet" href="styles/components/core.css">
-<link rel="stylesheet" href="styles/docs.css">
 <script src="js/freshds.js"></script>
 <script src="js/freshds-site.js"></script>
+<link rel="stylesheet" href="styles/components/spec-page.css">
 </head>
 <body>
-<div class="fds-app" id="app">
-  <ds-topbar active-section="ds"></ds-topbar>
-  <div class="fds-body">
-    <ds-shell active="tooltip"></ds-shell>
-    <main class="fds-main">
-      <div class="fds-page active" id="page-tooltip">
-        <div class="page-header">
-          <div class="page-eyebrow">Feedback &amp; Status</div>
-          <h1 class="page-title">Tooltip</h1>
-          <p class="page-desc">Contextual labels that appear on hover or focus to clarify icon-only buttons and dense UI. Wraps any trigger element.</p>
-        </div>
-        <div class="page-section">
-          <div class="page-section-title">Placements</div>
-          <div class="demo-surface" style="justify-content:center;gap:var(--space-8);padding:var(--space-12) var(--space-8)">
-            <fresh-tooltip tip="Appears on top" placement="top">
-              <fresh-button variant="secondary" size="sm">Top</fresh-button>
-            </fresh-tooltip>
-            <fresh-tooltip tip="Appears on right" placement="right">
-              <fresh-button variant="secondary" size="sm">Right</fresh-button>
-            </fresh-tooltip>
-            <fresh-tooltip tip="Appears below" placement="bottom">
-              <fresh-button variant="secondary" size="sm">Bottom</fresh-button>
-            </fresh-tooltip>
-            <fresh-tooltip tip="Appears on left" placement="left">
-              <fresh-button variant="secondary" size="sm">Left</fresh-button>
-            </fresh-tooltip>
-          </div>
-        </div>
-        <div class="page-section">
-          <div class="page-section-title">On icon buttons</div>
-          <div class="demo-surface" style="gap:var(--space-3)">
-            <fresh-tooltip tip="Copy">
-              <fresh-button variant="ghost" icon-only><i class="ti ti-copy"></i></fresh-button>
-            </fresh-tooltip>
-            <fresh-tooltip tip="Download">
-              <fresh-button variant="ghost" icon-only><i class="ti ti-download"></i></fresh-button>
-            </fresh-tooltip>
-            <fresh-tooltip tip="Settings">
-              <fresh-button variant="ghost" icon-only><i class="ti ti-settings"></i></fresh-button>
-            </fresh-tooltip>
-            <fresh-tooltip tip="Delete permanently" placement="bottom">
-              <fresh-button variant="ghost" icon-only><i class="ti ti-trash"></i></fresh-button>
-            </fresh-tooltip>
-          </div>
-        </div>
-        <div class="page-section">
-          <div class="page-section-title">Attributes</div>
-          <table class="usage-table">
-            <thead><tr><th>Attribute</th><th>Values</th><th>Default</th><th>Description</th></tr></thead>
-            <tbody>
-              <tr><td>tip</td><td>string</td><td></td><td>Tooltip text content</td></tr>
-              <tr><td>placement</td><td><code>top</code> <code>bottom</code> <code>left</code> <code>right</code></td><td><code>top</code></td><td>Position relative to the trigger</td></tr>
-              <tr><td>delay</td><td>number (ms)</td><td><code>200</code></td><td>Hover delay before appearing</td></tr>
-            </tbody>
-          </table>
+
+<div class="comp-page">
+  <h1 class="comp-title">Tooltip</h1>
+  <p class="comp-desc">A wrapper component that shows a short text tip near any trigger element on hover or focus. Use to label icon-only controls or reveal supplemental context without cluttering the UI.</p>
+
+  <!-- STATES CARD -->
+  <div class="comp-section">
+    <div class="spec-card">
+      <div class="spec-card-topbar">
+        <span class="spec-rules-title">Tooltip placements</span>
+        <div class="spec-mode-switcher">
+          <button class="spec-mode-btn active" id="mode-btn-light" onclick="setSpecMode('light')"><i class="ti ti-sun"></i> Light</button>
+          <button class="spec-mode-btn" id="mode-btn-dark" onclick="setSpecMode('dark')"><i class="ti ti-moon"></i> Dark</button>
         </div>
       </div>
-    </main>
+      <div id="spec-viewport" class="spec-viewport">
+
+        <!-- Top -->
+        <div class="spec-variant-row">
+          <div class="spec-variant-header">
+            <span class="spec-variant-name">Top</span>
+            <span class="spec-attr-chip">placement="top"</span>
+            <span class="spec-variant-sep">·</span>
+            <span class="spec-variant-desc">Default placement. Tip appears above the trigger. Best when there is space above.</span>
+          </div>
+          <div class="spec-variant-body">
+            <div class="spec-demos" style="padding:40px 0 20px;">
+              <fresh-tooltip tip="Copy to clipboard" placement="top">
+                <fresh-button variant="ghost" icon-only aria-label="Copy"><i class="ti ti-copy"></i></fresh-button>
+              </fresh-tooltip>
+              <fresh-tooltip tip="Download as CSV" placement="top">
+                <fresh-button variant="secondary">Export</fresh-button>
+              </fresh-tooltip>
+              <fresh-tooltip tip="This action cannot be undone" placement="top">
+                <fresh-button variant="danger">Delete</fresh-button>
+              </fresh-tooltip>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bottom -->
+        <div class="spec-variant-row">
+          <div class="spec-variant-header">
+            <span class="spec-variant-name">Bottom</span>
+            <span class="spec-attr-chip">placement="bottom"</span>
+            <span class="spec-variant-sep">·</span>
+            <span class="spec-variant-desc">Tip appears below the trigger. Use in toolbars near the top of the viewport.</span>
+          </div>
+          <div class="spec-variant-body">
+            <div class="spec-demos" style="padding:10px 0 40px;">
+              <fresh-tooltip tip="Toggle sidebar" placement="bottom">
+                <fresh-button variant="ghost" icon-only aria-label="Sidebar"><i class="ti ti-layout-sidebar"></i></fresh-button>
+              </fresh-tooltip>
+              <fresh-tooltip tip="Open settings" placement="bottom">
+                <fresh-button variant="ghost" icon-only aria-label="Settings"><i class="ti ti-settings"></i></fresh-button>
+              </fresh-tooltip>
+            </div>
+          </div>
+        </div>
+
+        <!-- Left -->
+        <div class="spec-variant-row">
+          <div class="spec-variant-header">
+            <span class="spec-variant-name">Left</span>
+            <span class="spec-attr-chip">placement="left"</span>
+            <span class="spec-variant-sep">·</span>
+            <span class="spec-variant-desc">Tip appears to the left of the trigger. Use for controls at the right edge of a panel.</span>
+          </div>
+          <div class="spec-variant-body">
+            <div class="spec-demos" style="padding:10px 80px;">
+              <fresh-tooltip tip="View in full screen" placement="left">
+                <fresh-button variant="ghost" icon-only aria-label="Fullscreen"><i class="ti ti-maximize"></i></fresh-button>
+              </fresh-tooltip>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right -->
+        <div class="spec-variant-row">
+          <div class="spec-variant-header">
+            <span class="spec-variant-name">Right</span>
+            <span class="spec-attr-chip">placement="right"</span>
+            <span class="spec-variant-sep">·</span>
+            <span class="spec-variant-desc">Tip appears to the right of the trigger. Use for controls at the left edge of a panel.</span>
+          </div>
+          <div class="spec-variant-body">
+            <div class="spec-demos" style="padding:10px 80px;">
+              <fresh-tooltip tip="Collapse navigation" placement="right">
+                <fresh-button variant="ghost" icon-only aria-label="Collapse"><i class="ti ti-chevron-left"></i></fresh-button>
+              </fresh-tooltip>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /spec-viewport -->
+    </div><!-- /spec-card -->
   </div>
+
+  <!-- AI RULES -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar">
+        <span class="spec-rules-title">AI action rules</span>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <span class="spec-rules-hint">Click any rule to edit</span>
+          <button class="spec-rules-reset" onclick="restoreDefaults()"><i class="ti ti-rotate" style="font-size:10px;"></i> Restore FreshDS defaults</button>
+        </div>
+      </div>
+      <div class="spec-rules-section">
+        <div class="spec-rules-section-head">
+          <span class="spec-rules-variant">General</span>
+          <span class="spec-attr-chip">fresh-tooltip</span>
+        </div>
+        <ul class="spec-rule-list" id="rules-general">
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Always wrap <code>fresh-tooltip</code> around the trigger element as a parent, not a sibling. The component uses a slot to render the trigger and positions the tip relative to it.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Use tooltips to label icon-only buttons. The tooltip text should match or closely describe the button's <code>aria-label</code>. Never use a tooltip as a substitute for the <code>aria-label</code>.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Keep tooltip text short: one phrase or sentence maximum, under 60 characters. Tooltips are not help text. For longer explanations use a popover or inline description.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Choose <code>placement</code> based on available viewport space, not aesthetics. Prefer <code>top</code> (default) for most cases. Use <code>bottom</code> for triggers near the top of the screen.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Do not wrap interactive elements that already have visible text labels in a tooltip. Tooltips add value only when the label is absent or when supplemental context aids comprehension.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+        </ul>
+        <button class="spec-add-rule" onclick="addRule('rules-general')"><i class="ti ti-plus"></i> Add rule</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ATTRIBUTES -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Attributes</span></div>
+      <table class="spec-a11y-table">
+        <thead><tr><th style="width:130px">Attribute</th><th style="width:220px">Values</th><th style="width:80px">Default</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">tip</td><td class="spec-a11y-req">string</td><td class="spec-a11y-req">-</td><td class="spec-a11y-req">The tooltip text. Rendered inside the tip bubble.</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">placement</td><td class="spec-a11y-req"><code>top</code> <code>bottom</code> <code>left</code> <code>right</code></td><td class="spec-a11y-req"><code>top</code></td><td class="spec-a11y-req">Position of the tooltip relative to the trigger element.</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">delay</td><td class="spec-a11y-req">number (ms)</td><td class="spec-a11y-req"><code>200</code></td><td class="spec-a11y-req">Hover delay before the tooltip becomes visible. Prevents flicker on quick mouse passes.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- CODE -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Code</span></div>
+      <div style="padding:16px 20px;display:flex;flex-direction:column;gap:0;">
+
+        <div class="code-block" data-code="<fresh-tooltip tip=&quot;Copy to clipboard&quot;>
+  <fresh-button variant=&quot;ghost&quot; icon-only aria-label=&quot;Copy&quot;>
+    <i class=&quot;ti ti-copy&quot;></i>
+  </fresh-button>
+</fresh-tooltip>">
+          <div class="code-block-header"><span><span class="code-lang">HTML</span><span class="code-context">Icon button label</span></span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+          <div class="code-body"><span class="hl-pun">&lt;</span><span class="hl-tag">fresh-tooltip</span> <span class="hl-attr">tip</span><span class="hl-pun">=</span><span class="hl-val">"Copy to clipboard"</span><span class="hl-pun">&gt;</span>
+  <span class="hl-pun">&lt;</span><span class="hl-tag">fresh-button</span> <span class="hl-attr">variant</span><span class="hl-pun">=</span><span class="hl-val">"ghost"</span> <span class="hl-attr">icon-only</span> <span class="hl-attr">aria-label</span><span class="hl-pun">=</span><span class="hl-val">"Copy"</span><span class="hl-pun">&gt;</span>
+    <span class="hl-pun">&lt;</span><span class="hl-tag">i</span> <span class="hl-attr">class</span><span class="hl-pun">=</span><span class="hl-val">"ti ti-copy"</span><span class="hl-pun">&gt;&lt;/</span><span class="hl-tag">i</span><span class="hl-pun">&gt;</span>
+  <span class="hl-pun">&lt;/</span><span class="hl-tag">fresh-button</span><span class="hl-pun">&gt;</span>
+<span class="hl-pun">&lt;/</span><span class="hl-tag">fresh-tooltip</span><span class="hl-pun">&gt;</span></div>
+        </div>
+
+        <div class="code-block" data-code="<fresh-tooltip tip=&quot;Saved 2 minutes ago&quot; placement=&quot;bottom&quot; delay=&quot;300&quot;>
+  <span>Last saved</span>
+</fresh-tooltip>">
+          <div class="code-block-header"><span><span class="code-lang">HTML</span><span class="code-context">Bottom placement, custom delay</span></span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+          <div class="code-body"><span class="hl-pun">&lt;</span><span class="hl-tag">fresh-tooltip</span> <span class="hl-attr">tip</span><span class="hl-pun">=</span><span class="hl-val">"Saved 2 minutes ago"</span> <span class="hl-attr">placement</span><span class="hl-pun">=</span><span class="hl-val">"bottom"</span> <span class="hl-attr">delay</span><span class="hl-pun">=</span><span class="hl-val">"300"</span><span class="hl-pun">&gt;</span>
+  <span class="hl-pun">&lt;</span><span class="hl-tag">span</span><span class="hl-pun">&gt;</span><span class="hl-txt">Last saved</span><span class="hl-pun">&lt;/</span><span class="hl-tag">span</span><span class="hl-pun">&gt;</span>
+<span class="hl-pun">&lt;/</span><span class="hl-tag">fresh-tooltip</span><span class="hl-pun">&gt;</span></div>
+        </div>
+
+        <div class="code-block" data-code="<fresh-tooltip tip=&quot;This action cannot be undone&quot; placement=&quot;left&quot;>
+  <fresh-button variant=&quot;danger&quot;>Delete project</fresh-button>
+</fresh-tooltip>">
+          <div class="code-block-header"><span><span class="code-lang">HTML</span><span class="code-context">Left placement, warning context</span></span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+          <div class="code-body"><span class="hl-pun">&lt;</span><span class="hl-tag">fresh-tooltip</span> <span class="hl-attr">tip</span><span class="hl-pun">=</span><span class="hl-val">"This action cannot be undone"</span> <span class="hl-attr">placement</span><span class="hl-pun">=</span><span class="hl-val">"left"</span><span class="hl-pun">&gt;</span>
+  <span class="hl-pun">&lt;</span><span class="hl-tag">fresh-button</span> <span class="hl-attr">variant</span><span class="hl-pun">=</span><span class="hl-val">"danger"</span><span class="hl-pun">&gt;</span><span class="hl-txt">Delete project</span><span class="hl-pun">&lt;/</span><span class="hl-tag">fresh-button</span><span class="hl-pun">&gt;</span>
+<span class="hl-pun">&lt;/</span><span class="hl-tag">fresh-tooltip</span><span class="hl-pun">&gt;</span></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- TOKENS -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Tokens</span></div>
+      <table class="spec-a11y-table">
+        <thead><tr><th style="width:220px">Token</th><th style="width:200px">Role</th><th>State</th></tr></thead>
+        <tbody>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--tooltip-bg</td><td class="spec-a11y-req">Tip bubble background</td><td class="spec-a11y-req">all</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--tooltip-text</td><td class="spec-a11y-req">Tip bubble text color</td><td class="spec-a11y-req">all</td></tr>
+          <tr class="spec-a11y-req"><td class="spec-a11y-concern">--radius-sm</td><td class="spec-a11y-req">Border radius</td><td class="spec-a11y-req">all</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--font-size-sm</td><td class="spec-a11y-req">Font size</td><td class="spec-a11y-req">all</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--font-sans</td><td class="spec-a11y-req">Font family</td><td class="spec-a11y-req">all</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ACCESSIBILITY -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Accessibility</span></div>
+      <div style="padding:12px 24px 14px;border-bottom:1px solid #d4d4d7;">
+        <p style="font-size:13px;color:#555;line-height:1.6;margin:0;">Tooltip satisfies all <a href="app.html#accessibility" target="_parent" style="color:#5b6af7;text-decoration:none;font-weight:500;">universal accessibility concerns</a>. Component-specific concerns are below.</p>
+      </div>
+      <table class="spec-a11y-table">
+        <thead><tr><th>Concern</th><th>Requirement</th></tr></thead>
+        <tbody>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">keyboard trigger</td><td class="spec-a11y-req">The tooltip shows on <code>focusin</code> and hides on <code>focusout</code> in addition to hover events, ensuring keyboard users see the same tip as mouse users.</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">role</td><td class="spec-a11y-req">The tip bubble carries <code>role="tooltip"</code>. The trigger element should reference it via <code>aria-describedby</code> if additional programmatic association is required beyond the shadow DOM boundary.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
 </div>
-<script src="components/core/fresh-button.js"></script>
-<script src="components/core/fresh-input.js"></script>
+
 <script src="components/feedback/fresh-tooltip.js"></script>
-<script src="components/navigation/fresh-simple-tabs.js"></script>
+<script src="components/core/fresh-button.js"></script>
+<script src="js/spec-page.js"></script>
+
+<script type="module">
+  import { supabase } from '/js/supabase-client.js'
+  var RULE_IDS = ['rules-general'];
+  var _saveTimer = null, _loading = false;
+  function getRulesSnapshot() {
+    var r = {};
+    RULE_IDS.forEach(function(id) { var l = document.getElementById(id); if (!l) return; r[id] = Array.from(l.querySelectorAll('.spec-rule-text')).map(function(el) { return el.innerHTML.trim(); }); });
+    return r;
+  }
+  function applySnapshot(saved) {
+    RULE_IDS.forEach(function(id) { var l = document.getElementById(id); if (!l) return; var rules = (saved && saved[id] && saved[id].length) ? saved[id] : window.DEFAULT_RULES[id]; l.innerHTML = rules.map(function(t) { return '<li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">' + t + '</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>'; }).join(''); }); }
+  async function saveRulesNow() {
+    try { var { data: { user } } = await supabase.auth.getUser(); if (!user) return; var { data: p } = await supabase.from('profiles').select('component_rules').eq('id', user.id).single(); var e = (p && p.component_rules) ? p.component_rules : {}; e.tooltip = getRulesSnapshot(); await supabase.from('profiles').update({ component_rules: e }).eq('id', user.id); } catch(e) {}
+  }
+  function schedSave() { if (_loading) return; clearTimeout(_saveTimer); _saveTimer = setTimeout(saveRulesNow, 1000); }
+  var panel = document.querySelector('.spec-rules-panel'); if (panel) new MutationObserver(schedSave).observe(panel, { childList: true, subtree: true, characterData: true });
+  ;(async function() { try { var { data: { user } } = await supabase.auth.getUser(); if (!user) return; var { data: p } = await supabase.from('profiles').select('component_rules').eq('id', user.id).single(); if (p && p.component_rules && p.component_rules.tooltip) { _loading = true; applySnapshot(p.component_rules.tooltip); _loading = false; } } catch(e) {} })();
+</script>
+
+<script>
+  var DEFAULT_RULES = {
+    'rules-general': [
+      'Always wrap <code>fresh-tooltip</code> around the trigger element as a parent, not a sibling. The component uses a slot to render the trigger and positions the tip relative to it.',
+      'Use tooltips to label icon-only buttons. The tooltip text should match or closely describe the button\'s <code>aria-label</code>. Never use a tooltip as a substitute for the <code>aria-label</code>.',
+      'Keep tooltip text short: one phrase or sentence maximum, under 60 characters. Tooltips are not help text. For longer explanations use a popover or inline description.',
+      'Choose <code>placement</code> based on available viewport space, not aesthetics. Prefer <code>top</code> (default) for most cases. Use <code>bottom</code> for triggers near the top of the screen.',
+      'Do not wrap interactive elements that already have visible text labels in a tooltip. Tooltips add value only when the label is absent or when supplemental context aids comprehension.'
+    ]
+  };
+  function restoreDefaults() {
+    if (!confirm('Reset all tooltip rules to FreshDS defaults? Any edits you have made will be lost.')) return;
+    Object.keys(DEFAULT_RULES).forEach(function(id) { var l = document.getElementById(id); if (!l) return; l.innerHTML = DEFAULT_RULES[id].map(function(t) { return '<li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">' + t + '</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>'; }).join(''); });
+  }
+</script>
 </body>
 </html>

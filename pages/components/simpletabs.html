@@ -8,100 +8,313 @@
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="styles/site.css">
 <link rel="stylesheet" href="tokens/primitives.css">
 <link rel="stylesheet" href="tokens/theme.css">
-<link rel="stylesheet" href="tokens/dataviz.css">
-<link rel="stylesheet" href="styles/reset.css">
-<link rel="stylesheet" href="styles/layout.css">
-<link rel="stylesheet" href="styles/components/core.css">
-<link rel="stylesheet" href="styles/docs.css">
 <script src="js/freshds.js"></script>
 <script src="js/freshds-site.js"></script>
+<link rel="stylesheet" href="styles/components/spec-page.css">
 </head>
 <body>
-<div class="fds-app" id="app">
-  <ds-topbar active-section="ds"></ds-topbar>
-  <div class="fds-body">
-    <ds-shell active="simpletabs"></ds-shell>
-    <main class="fds-main">
-      <div class="fds-page active" id="page-simpletabs">
-        <div class="page-header">
-          <div class="page-eyebrow">Navigation</div>
-          <h1 class="page-title">Simple tabs</h1>
-          <p class="page-desc">Text-first tab bar with a pill background on the active item. No underline, suited for top-level navigation, marketing pages, or any context where the underline style reads too heavy.</p>
-        </div>
-        <div class="page-section">
-          <div class="page-section-title">Default</div>
-          <div class="demo-surface">
-            <fresh-simple-tabs
-              tabs='[{"key":"overview","label":"Overview"},{"key":"usage","label":"Usage"},{"key":"tokens","label":"Tokens"},{"key":"guidelines","label":"Guidelines"},{"key":"changelog","label":"Changelog"}]'
-              active="usage">
-            </fresh-simple-tabs>
-          </div>
-        </div>
-        <div class="page-section">
-          <div class="page-section-title">Sizes</div>
-          <div class="demo-surface col" style="gap:var(--space-5)">
-            <fresh-simple-tabs size="sm"
-              tabs='[{"key":"a","label":"Small"},{"key":"b","label":"Tabs"},{"key":"c","label":"Example"}]'
-              active="b">
-            </fresh-simple-tabs>
-            <fresh-simple-tabs
-              tabs='[{"key":"a","label":"Default"},{"key":"b","label":"Tabs"},{"key":"c","label":"Example"}]'
-              active="a">
-            </fresh-simple-tabs>
-            <fresh-simple-tabs size="lg"
-              tabs='[{"key":"a","label":"Large"},{"key":"b","label":"Tabs"},{"key":"c","label":"Example"}]'
-              active="c">
-            </fresh-simple-tabs>
-          </div>
-        </div>
-        <div class="page-section">
-          <div class="page-section-title">With disabled item</div>
-          <div class="demo-surface">
-            <fresh-simple-tabs
-              tabs='[{"key":"a","label":"Overview"},{"key":"b","label":"Analytics"},{"key":"c","label":"Settings","disabled":true},{"key":"d","label":"Billing"}]'
-              active="a">
-            </fresh-simple-tabs>
-          </div>
-        </div>
-        <div class="page-section">
-          <div class="page-section-title">Attributes</div>
-          <table class="usage-table">
-            <thead><tr><th>Attribute</th><th>Values</th><th>Default</th><th>Description</th></tr></thead>
-            <tbody>
-              <tr><td>tabs</td><td>JSON array</td><td></td><td><code>{ key, label, disabled? }</code></td></tr>
-              <tr><td>active</td><td>string</td><td></td><td>Key of the currently active tab</td></tr>
-              <tr><td>size</td><td><code>sm</code> <code>md</code> <code>lg</code></td><td><code>md</code></td><td>Matches btn-sm / btn / btn-lg height</td></tr>
-            </tbody>
-          </table>
-        </div>
-        <div class="page-section">
-          <div class="page-section-title">Events</div>
-          <table class="usage-table">
-            <thead><tr><th>Event</th><th>Detail</th><th>Description</th></tr></thead>
-            <tbody>
-              <tr><td>change</td><td><code>{ key: string }</code></td><td>Fired when the active tab changes</td></tr>
-            </tbody>
-          </table>
-        </div>
-        <div class="page-section">
-          <div class="page-section-title">Tokens used</div>
-          <div style="display:flex;flex-wrap:wrap;gap:8px">
-            <span class="token-pill"><span class="token-dot" style="background:var(--surface-overlay)"></span>--surface-overlay</span>
-            <span class="token-pill"><span class="token-dot" style="background:var(--surface-subtle)"></span>--surface-subtle</span>
-            <span class="token-pill"><span class="token-dot" style="background:var(--text-primary)"></span>--text-primary</span>
-            <span class="token-pill"><span class="token-dot" style="background:var(--text-secondary)"></span>--text-secondary</span>
-          </div>
+
+<div class="comp-page">
+  <h1 class="comp-title">Simple tabs</h1>
+  <p class="comp-desc">Text-first tab bar with a pill background on the active item. No underline, suited for top-level navigation, marketing pages, or any context where the underline style reads too heavy.</p>
+
+  <!-- STATES CARD -->
+  <div class="comp-section">
+    <div class="spec-card">
+      <div class="spec-card-topbar">
+        <span class="spec-rules-title">Simple tabs states</span>
+        <div class="spec-mode-switcher">
+          <button class="spec-mode-btn active" id="mode-btn-light" onclick="setSpecMode('light')"><i class="ti ti-sun"></i> Light</button>
+          <button class="spec-mode-btn" id="mode-btn-dark" onclick="setSpecMode('dark')"><i class="ti ti-moon"></i> Dark</button>
         </div>
       </div>
-    </main>
+      <div id="spec-viewport" class="spec-viewport">
+
+        <!-- Default -->
+        <div class="spec-variant-row">
+          <div class="spec-variant-header">
+            <span class="spec-variant-name">Default (md)</span>
+            <span class="spec-attr-chip">size="md"</span>
+            <span class="spec-variant-sep">·</span>
+            <span class="spec-variant-desc">Pill background on active tab, no underline. Ideal for section or top-level navigation.</span>
+          </div>
+          <div class="spec-variant-body">
+            <div class="spec-demos">
+              <fresh-simple-tabs
+                tabs='[{"key":"overview","label":"Overview"},{"key":"usage","label":"Usage"},{"key":"tokens","label":"Tokens"},{"key":"guidelines","label":"Guidelines"},{"key":"changelog","label":"Changelog"}]'
+                active="usage">
+              </fresh-simple-tabs>
+            </div>
+          </div>
+        </div>
+
+        <!-- With disabled -->
+        <div class="spec-variant-row">
+          <div class="spec-variant-header">
+            <span class="spec-variant-name">With disabled</span>
+            <span class="spec-attr-chip">disabled: true</span>
+            <span class="spec-variant-sep">·</span>
+            <span class="spec-variant-desc">Disabled tabs render at 38% opacity and block interaction.</span>
+          </div>
+          <div class="spec-variant-body">
+            <div class="spec-demos">
+              <fresh-simple-tabs
+                tabs='[{"key":"a","label":"Overview"},{"key":"b","label":"Analytics"},{"key":"c","label":"Settings","disabled":true},{"key":"d","label":"Billing"}]'
+                active="a">
+              </fresh-simple-tabs>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sizes -->
+        <div class="spec-variant-row">
+          <div class="spec-variant-header">
+            <span class="spec-variant-name">Sizes</span>
+            <span class="spec-attr-chip">size="sm" / "md" / "lg"</span>
+            <span class="spec-variant-sep">·</span>
+            <span class="spec-variant-desc">sm, md, and lg match the equivalent button heights. Padding, font, and radius scale together.</span>
+          </div>
+          <div class="spec-variant-body">
+            <div class="spec-demos" style="flex-direction:column;align-items:flex-start;gap:var(--space-4);">
+              <fresh-simple-tabs size="sm"
+                tabs='[{"key":"a","label":"Small"},{"key":"b","label":"Tabs"},{"key":"c","label":"Example"}]'
+                active="b">
+              </fresh-simple-tabs>
+              <fresh-simple-tabs
+                tabs='[{"key":"a","label":"Default"},{"key":"b","label":"Tabs"},{"key":"c","label":"Example"}]'
+                active="a">
+              </fresh-simple-tabs>
+              <fresh-simple-tabs size="lg"
+                tabs='[{"key":"a","label":"Large"},{"key":"b","label":"Tabs"},{"key":"c","label":"Example"}]'
+                active="c">
+              </fresh-simple-tabs>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
   </div>
+
+  <!-- AI RULES -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar">
+        <span class="spec-rules-title">AI action rules</span>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <span class="spec-rules-hint">Click any rule to edit</span>
+          <button class="spec-rules-reset" onclick="restoreDefaults()"><i class="ti ti-rotate" style="font-size:10px;"></i> Restore FreshDS defaults</button>
+        </div>
+      </div>
+      <div class="spec-rules-section">
+        <div class="spec-rules-section-head">
+          <span class="spec-rules-variant">General</span>
+          <span class="spec-attr-chip">fresh-simple-tabs</span>
+        </div>
+        <ul class="spec-rule-list" id="rules-general">
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Prefer <code>fresh-simple-tabs</code> for top-level or marketing navigation. Use <code>fresh-tabs</code> (underline style) for content area panels where the tab bar sits directly above panel content.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Always set an initial <code>active</code> key so the component has a selected state on first render. An empty tab row with no selection appears broken.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Listen to the <code>change</code> event to update the page view or URL. <code>fresh-simple-tabs</code> does not manage panel visibility itself.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true"><code>fresh-simple-tabs</code> does not support <code>badge</code>. If badge counts are needed on the tabs, use <code>fresh-tabs</code> instead.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Size should match the surrounding UI density: sm for compact toolbars, md for standard content pages, lg for marketing or landing page navigation.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+        </ul>
+        <button class="spec-add-rule" onclick="addRule('rules-general')"><i class="ti ti-plus"></i> Add rule</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ATTRIBUTES -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Attributes</span></div>
+      <table class="spec-a11y-table">
+        <thead><tr><th style="width:130px">Attribute</th><th style="width:220px">Values</th><th style="width:80px">Default</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">tabs</td><td class="spec-a11y-req">JSON array: <code>[{ key, label, disabled? }]</code></td><td class="spec-a11y-req">-</td><td class="spec-a11y-req">Tab definitions. Each item requires a unique <code>key</code> string and a <code>label</code> string. Optional <code>disabled</code> boolean.</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">active</td><td class="spec-a11y-req">string (key)</td><td class="spec-a11y-req">-</td><td class="spec-a11y-req">Key of the currently active tab. Updated automatically on user selection. Set programmatically to control the component.</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">size</td><td class="spec-a11y-req"><code>sm</code> <code>md</code> <code>lg</code></td><td class="spec-a11y-req"><code>md</code></td><td class="spec-a11y-req">Controls padding, font size, and border radius. Matches sm/md/lg button heights for easy pairing.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- EVENTS -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Events</span></div>
+      <table class="spec-a11y-table">
+        <thead><tr><th style="width:130px">Event</th><th style="width:220px">Detail</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">change</td><td class="spec-a11y-req"><code>{ key: string }</code></td><td class="spec-a11y-req">Fired when a different tab is selected. <code>detail.key</code> holds the newly active tab key. Bubbles and is composed.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- CODE -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Code</span></div>
+      <div style="padding:16px 20px;display:flex;flex-direction:column;gap:0;">
+
+        <div class="code-block" data-code="&lt;fresh-simple-tabs id=&quot;nav-tabs&quot;
+  tabs='[
+    {&quot;key&quot;:&quot;overview&quot;,&quot;label&quot;:&quot;Overview&quot;},
+    {&quot;key&quot;:&quot;usage&quot;,&quot;label&quot;:&quot;Usage&quot;},
+    {&quot;key&quot;:&quot;tokens&quot;,&quot;label&quot;:&quot;Tokens&quot;}
+  ]'
+  active=&quot;overview&quot;&gt;
+&lt;/fresh-simple-tabs&gt;
+
+&lt;script&gt;
+  document.getElementById('nav-tabs').addEventListener('change', e =&gt; {
+    console.log('Active tab:', e.detail.key);
+  });
+&lt;/script&gt;">
+          <div class="code-block-header"><span><span class="code-lang">HTML</span><span class="code-context">Basic usage with event listener</span></span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+          <div class="code-body"><span class="hl-pun">&lt;</span><span class="hl-tag">fresh-simple-tabs</span> <span class="hl-attr">id</span><span class="hl-pun">=</span><span class="hl-val">"nav-tabs"</span>
+  <span class="hl-attr">tabs</span><span class="hl-pun">=</span><span class="hl-val">'[
+    {"key":"overview","label":"Overview"},
+    {"key":"usage","label":"Usage"},
+    {"key":"tokens","label":"Tokens"}
+  ]'</span>
+  <span class="hl-attr">active</span><span class="hl-pun">=</span><span class="hl-val">"overview"</span><span class="hl-pun">&gt;</span>
+<span class="hl-pun">&lt;/</span><span class="hl-tag">fresh-simple-tabs</span><span class="hl-pun">&gt;</span>
+
+<span class="hl-pun">&lt;</span><span class="hl-tag">script</span><span class="hl-pun">&gt;</span>
+  <span class="hl-txt">document.getElementById('nav-tabs').addEventListener('change', e =&gt; {</span>
+    <span class="hl-txt">console.log('Active tab:', e.detail.key);</span>
+  <span class="hl-txt">});</span>
+<span class="hl-pun">&lt;/</span><span class="hl-tag">script</span><span class="hl-pun">&gt;</span></div>
+        </div>
+
+        <div class="code-block" data-code="&lt;!-- Large simple tabs for marketing page --&gt;
+&lt;fresh-simple-tabs size=&quot;lg&quot;
+  tabs='[
+    {&quot;key&quot;:&quot;features&quot;,&quot;label&quot;:&quot;Features&quot;},
+    {&quot;key&quot;:&quot;pricing&quot;,&quot;label&quot;:&quot;Pricing&quot;},
+    {&quot;key&quot;:&quot;changelog&quot;,&quot;label&quot;:&quot;Changelog&quot;},
+    {&quot;key&quot;:&quot;roadmap&quot;,&quot;label&quot;:&quot;Roadmap&quot;,&quot;disabled&quot;:true}
+  ]'
+  active=&quot;features&quot;&gt;
+&lt;/fresh-simple-tabs&gt;">
+          <div class="code-block-header"><span><span class="code-lang">HTML</span><span class="code-context">Large with disabled</span></span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+          <div class="code-body"><span class="hl-com">&lt;!-- Large simple tabs for marketing page --&gt;</span>
+<span class="hl-pun">&lt;</span><span class="hl-tag">fresh-simple-tabs</span> <span class="hl-attr">size</span><span class="hl-pun">=</span><span class="hl-val">"lg"</span>
+  <span class="hl-attr">tabs</span><span class="hl-pun">=</span><span class="hl-val">'[
+    {"key":"features","label":"Features"},
+    {"key":"pricing","label":"Pricing"},
+    {"key":"changelog","label":"Changelog"},
+    {"key":"roadmap","label":"Roadmap","disabled":true}
+  ]'</span>
+  <span class="hl-attr">active</span><span class="hl-pun">=</span><span class="hl-val">"features"</span><span class="hl-pun">&gt;</span>
+<span class="hl-pun">&lt;/</span><span class="hl-tag">fresh-simple-tabs</span><span class="hl-pun">&gt;</span></div>
+        </div>
+
+        <div class="code-block" data-code="&lt;!-- Programmatic control --&gt;
+&lt;fresh-simple-tabs id=&quot;st&quot;
+  tabs='[{&quot;key&quot;:&quot;a&quot;,&quot;label&quot;:&quot;Tab A&quot;},{&quot;key&quot;:&quot;b&quot;,&quot;label&quot;:&quot;Tab B&quot;}]'
+  active=&quot;a&quot;&gt;
+&lt;/fresh-simple-tabs&gt;
+&lt;script&gt;
+  // Switch to Tab B programmatically
+  document.getElementById('st').setAttribute('active', 'b');
+&lt;/script&gt;">
+          <div class="code-block-header"><span><span class="code-lang">HTML</span><span class="code-context">Programmatic control</span></span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+          <div class="code-body"><span class="hl-com">&lt;!-- Programmatic control --&gt;</span>
+<span class="hl-pun">&lt;</span><span class="hl-tag">fresh-simple-tabs</span> <span class="hl-attr">id</span><span class="hl-pun">=</span><span class="hl-val">"st"</span>
+  <span class="hl-attr">tabs</span><span class="hl-pun">=</span><span class="hl-val">'[{"key":"a","label":"Tab A"},{"key":"b","label":"Tab B"}]'</span>
+  <span class="hl-attr">active</span><span class="hl-pun">=</span><span class="hl-val">"a"</span><span class="hl-pun">&gt;</span>
+<span class="hl-pun">&lt;/</span><span class="hl-tag">fresh-simple-tabs</span><span class="hl-pun">&gt;</span>
+<span class="hl-pun">&lt;</span><span class="hl-tag">script</span><span class="hl-pun">&gt;</span>
+  <span class="hl-com">// Switch to Tab B programmatically</span>
+  <span class="hl-txt">document.getElementById('st').setAttribute('active', 'b');</span>
+<span class="hl-pun">&lt;/</span><span class="hl-tag">script</span><span class="hl-pun">&gt;</span></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- TOKENS -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Tokens</span></div>
+      <table class="spec-a11y-table">
+        <thead><tr><th style="width:220px">Token</th><th style="width:200px">Role</th><th>State</th></tr></thead>
+        <tbody>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--surface-overlay</td><td class="spec-a11y-req">Active tab pill background</td><td class="spec-a11y-req">active</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--surface-subtle</td><td class="spec-a11y-req">Hover background</td><td class="spec-a11y-req">hover</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--text-primary</td><td class="spec-a11y-req">Active tab label</td><td class="spec-a11y-req">active</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--text-secondary</td><td class="spec-a11y-req">Inactive tab label</td><td class="spec-a11y-req">default</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--color-interactive</td><td class="spec-a11y-req">Focus ring</td><td class="spec-a11y-req">focus-visible</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--radius-sm / --radius-md / --radius-lg</td><td class="spec-a11y-req">Tab pill radius</td><td class="spec-a11y-req">scales with size</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--font-sans</td><td class="spec-a11y-req">Tab label font</td><td class="spec-a11y-req">all</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--space-1</td><td class="spec-a11y-req">Gap between tab buttons</td><td class="spec-a11y-req">all</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ACCESSIBILITY -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Accessibility</span></div>
+      <div style="padding:12px 24px 14px;border-bottom:1px solid #d4d4d7;">
+        <p style="font-size:13px;color:#555;line-height:1.6;margin:0;">Simple tabs satisfies all <a href="app.html#accessibility" target="_parent" style="color:#5b6af7;text-decoration:none;font-weight:500;">universal accessibility concerns</a>. Component-specific concerns are below.</p>
+      </div>
+      <table class="spec-a11y-table">
+        <thead><tr><th>Concern</th><th>Requirement</th></tr></thead>
+        <tbody>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">role</td><td class="spec-a11y-req">Tab list has <code>role="tablist"</code>. Each button has <code>role="tab"</code> and <code>aria-selected</code> reflecting its active state.</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">keyboard navigation</td><td class="spec-a11y-req">Arrow Left/Right moves focus between tabs. Enter or Space activates the focused tab. Disabled tabs are skipped in the navigation cycle.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
 </div>
-<script src="components/core/fresh-button.js"></script>
-<script src="components/core/fresh-input.js"></script>
+
 <script src="components/navigation/fresh-simple-tabs.js"></script>
+<script src="js/spec-page.js"></script>
+
+<script type="module">
+  import { supabase } from '/js/supabase-client.js'
+  var RULE_IDS = ['rules-general'];
+  var _saveTimer = null, _loading = false;
+  function getRulesSnapshot() {
+    var r = {};
+    RULE_IDS.forEach(function(id) { var l = document.getElementById(id); if (!l) return; r[id] = Array.from(l.querySelectorAll('.spec-rule-text')).map(function(el) { return el.innerHTML.trim(); }); });
+    return r;
+  }
+  function applySnapshot(saved) {
+    RULE_IDS.forEach(function(id) { var l = document.getElementById(id); if (!l) return; var rules = (saved && saved[id] && saved[id].length) ? saved[id] : window.DEFAULT_RULES[id]; l.innerHTML = rules.map(function(t) { return '<li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">' + t + '</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>'; }).join(''); }); }
+  async function saveRulesNow() {
+    try { var { data: { user } } = await supabase.auth.getUser(); if (!user) return; var { data: p } = await supabase.from('profiles').select('component_rules').eq('id', user.id).single(); var e = (p && p.component_rules) ? p.component_rules : {}; e.simpletabs = getRulesSnapshot(); await supabase.from('profiles').update({ component_rules: e }).eq('id', user.id); } catch(e) {}
+  }
+  function schedSave() { if (_loading) return; clearTimeout(_saveTimer); _saveTimer = setTimeout(saveRulesNow, 1000); }
+  var panel = document.querySelector('.spec-rules-panel'); if (panel) new MutationObserver(schedSave).observe(panel, { childList: true, subtree: true, characterData: true });
+  ;(async function() { try { var { data: { user } } = await supabase.auth.getUser(); if (!user) return; var { data: p } = await supabase.from('profiles').select('component_rules').eq('id', user.id).single(); if (p && p.component_rules && p.component_rules.simpletabs) { _loading = true; applySnapshot(p.component_rules.simpletabs); _loading = false; } } catch(e) {} })();
+</script>
+
+<script>
+  var DEFAULT_RULES = {
+    'rules-general': [
+      'Prefer <code>fresh-simple-tabs</code> for top-level or marketing navigation. Use <code>fresh-tabs</code> (underline style) for content area panels where the tab bar sits directly above panel content.',
+      'Always set an initial <code>active</code> key so the component has a selected state on first render. An empty tab row with no selection appears broken.',
+      'Listen to the <code>change</code> event to update the page view or URL. <code>fresh-simple-tabs</code> does not manage panel visibility itself.',
+      '<code>fresh-simple-tabs</code> does not support <code>badge</code>. If badge counts are needed on the tabs, use <code>fresh-tabs</code> instead.',
+      'Size should match the surrounding UI density: sm for compact toolbars, md for standard content pages, lg for marketing or landing page navigation.'
+    ]
+  };
+  function restoreDefaults() {
+    if (!confirm('Reset all simple tabs rules to FreshDS defaults? Any edits you have made will be lost.')) return;
+    Object.keys(DEFAULT_RULES).forEach(function(id) { var l = document.getElementById(id); if (!l) return; l.innerHTML = DEFAULT_RULES[id].map(function(t) { return '<li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">' + t + '</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>'; }).join(''); }); }
+</script>
 </body>
 </html>

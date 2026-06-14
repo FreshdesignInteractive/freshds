@@ -3,103 +3,311 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Form field | FreshDS</title>
+<title>Form Field | FreshDS</title>
 <base href="../../">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="styles/site.css">
 <link rel="stylesheet" href="tokens/primitives.css">
 <link rel="stylesheet" href="tokens/theme.css">
-<link rel="stylesheet" href="tokens/dataviz.css">
-<link rel="stylesheet" href="styles/reset.css">
-<link rel="stylesheet" href="styles/layout.css">
-<link rel="stylesheet" href="styles/components/core.css">
-<link rel="stylesheet" href="styles/docs.css">
 <script src="js/freshds.js"></script>
 <script src="js/freshds-site.js"></script>
+<link rel="stylesheet" href="styles/components/spec-page.css">
 </head>
 <body>
-<div class="fds-app" id="app">
-  <ds-topbar active-section="ds"></ds-topbar>
-  <div class="fds-body">
-    <ds-shell active="formfield"></ds-shell>
-    <main class="fds-main">
-      <div class="fds-page active" id="page-formfield">
-        <div class="page-header">
-          <div class="page-eyebrow">Core UI</div>
-          <h1 class="page-title">Form field</h1>
-          <p class="page-desc">Layout wrapper that combines a label, any input control, and optional hint or error text into a consistent vertical unit. Composes with every other Core UI component.</p>
+
+<div class="comp-page">
+  <h1 class="comp-title">Form Field</h1>
+  <p class="comp-desc">Layout wrapper that adds a label, hint text, and error message to any input control. Wrap every form input in a form field to ensure consistent spacing and accessible labelling.</p>
+
+  <!-- STATES CARD -->
+  <div class="comp-section">
+    <div class="spec-card">
+      <div class="spec-card-topbar">
+        <span class="spec-rules-title">Form field states</span>
+        <div class="spec-mode-switcher">
+          <button class="spec-mode-btn active" id="mode-btn-light" onclick="setSpecMode('light')"><i class="ti ti-sun"></i> Light</button>
+          <button class="spec-mode-btn" id="mode-btn-dark" onclick="setSpecMode('dark')"><i class="ti ti-moon"></i> Dark</button>
         </div>
-        <div class="page-section">
-          <div class="page-section-title">With input</div>
-          <div class="demo-surface col" style="max-width:400px;gap:var(--space-5)">
-            <fresh-form-field label="Full name" hint="As it appears on your ID">
-              <fresh-input placeholder="Jane Smith"></fresh-input>
-            </fresh-form-field>
-            <fresh-form-field label="Email" required>
-              <fresh-input type="email" placeholder="you@company.com" icon="ti-mail"></fresh-input>
-            </fresh-form-field>
+      </div>
+      <div id="spec-viewport" class="spec-viewport">
+
+        <!-- Basic: label only -->
+        <div class="spec-variant-row">
+          <div class="spec-variant-header">
+            <span class="spec-variant-name">Basic</span>
+            <span class="spec-attr-chip">label="..."</span>
+            <span class="spec-variant-sep">·</span>
+            <span class="spec-variant-desc">Label only. The minimum configuration for an accessible form field.</span>
           </div>
-        </div>
-        <div class="page-section">
-          <div class="page-section-title">Error state</div>
-          <div class="demo-surface col" style="max-width:400px;gap:var(--space-5)">
-            <fresh-form-field label="Email" required error="Please enter a valid email address">
-              <fresh-input type="email" value="not-valid" error="Please enter a valid email address" icon="ti-mail"></fresh-input>
-            </fresh-form-field>
-            <fresh-form-field label="Role" required error="You must select a role">
-              <fresh-select error="You must select a role" placeholder="Select a role">
-                <option value="admin">Admin</option>
-                <option value="editor">Editor</option>
-              </fresh-select>
-            </fresh-form-field>
-          </div>
-        </div>
-        <div class="page-section">
-          <div class="page-section-title">Composed form</div>
-          <div class="demo-surface col" style="max-width:400px;gap:var(--space-5)">
-            <fresh-form-field label="Workspace name" hint="Lowercase letters, numbers, and hyphens only">
-              <fresh-input placeholder="acme-corp"></fresh-input>
-            </fresh-form-field>
-            <fresh-form-field label="Model access">
-              <fresh-select placeholder="Select model tier">
-                <option value="basic">Basic</option>
-                <option value="advanced">Advanced</option>
-                <option value="enterprise">Enterprise</option>
-              </fresh-select>
-            </fresh-form-field>
-            <fresh-form-field label="Context window" hint="Tokens available per request">
-              <fresh-slider value="60"></fresh-slider>
-            </fresh-form-field>
-            <div style="display:flex;gap:var(--space-3)">
-              <fresh-button variant="primary">Save</fresh-button>
-              <fresh-button variant="ghost">Cancel</fresh-button>
+          <div class="spec-variant-body">
+            <div class="spec-demos" style="flex-direction:column;align-items:flex-start;gap:16px;min-width:260px;">
+              <div style="width:280px">
+                <fresh-form-field label="Email address">
+                  <fresh-input type="email" placeholder="you@company.com"></fresh-input>
+                </fresh-form-field>
+              </div>
             </div>
           </div>
         </div>
-        <div class="page-section">
-          <div class="page-section-title">Attributes</div>
-          <table class="usage-table">
-            <thead><tr><th>Attribute</th><th>Values</th><th>Default</th><th>Description</th></tr></thead>
-            <tbody>
-              <tr><td>label</td><td>string</td><td></td><td>Field label above the control</td></tr>
-              <tr><td>hint</td><td>string</td><td></td><td>Helper text below, shown when no error</td></tr>
-              <tr><td>error</td><td>string</td><td></td><td>Error message in red, overrides hint</td></tr>
-              <tr><td>required</td><td>boolean</td><td></td><td>Appends a red asterisk to the label</td></tr>
-            </tbody>
-          </table>
+
+        <!-- With hint -->
+        <div class="spec-variant-row">
+          <div class="spec-variant-header">
+            <span class="spec-variant-name">With hint</span>
+            <span class="spec-attr-chip">hint="..."</span>
+            <span class="spec-variant-sep">·</span>
+            <span class="spec-variant-desc">A secondary line of text below the control provides context or formatting guidance.</span>
+          </div>
+          <div class="spec-variant-body">
+            <div class="spec-demos" style="flex-direction:column;align-items:flex-start;gap:16px;">
+              <div style="width:280px">
+                <fresh-form-field label="Password" hint="Must be at least 8 characters with one number.">
+                  <fresh-input type="password" placeholder="Enter password"></fresh-input>
+                </fresh-form-field>
+              </div>
+              <div style="width:280px">
+                <fresh-form-field label="Username" hint="Only letters, numbers, and underscores.">
+                  <fresh-input placeholder="e.g. jane_doe"></fresh-input>
+                </fresh-form-field>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- With error -->
+        <div class="spec-variant-row">
+          <div class="spec-variant-header">
+            <span class="spec-variant-name">With error</span>
+            <span class="spec-attr-chip">error="..."</span>
+            <span class="spec-variant-sep">·</span>
+            <span class="spec-variant-desc">Validation failed. The error message replaces the hint and is announced to screen readers.</span>
+          </div>
+          <div class="spec-variant-body">
+            <div class="spec-demos" style="flex-direction:column;align-items:flex-start;gap:16px;">
+              <div style="width:280px">
+                <fresh-form-field label="Email address" error="Please enter a valid email address.">
+                  <fresh-input type="email" placeholder="you@company.com" error="invalid"></fresh-input>
+                </fresh-form-field>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Required -->
+        <div class="spec-variant-row">
+          <div class="spec-variant-header">
+            <span class="spec-variant-name">Required</span>
+            <span class="spec-attr-chip">required</span>
+            <span class="spec-variant-sep">·</span>
+            <span class="spec-variant-desc">An asterisk appears next to the label. Can combine with hint or error.</span>
+          </div>
+          <div class="spec-variant-body">
+            <div class="spec-demos" style="flex-direction:column;align-items:flex-start;gap:16px;">
+              <div style="width:280px">
+                <fresh-form-field label="Full name" required hint="As shown on your ID.">
+                  <fresh-input placeholder="Jane Doe"></fresh-input>
+                </fresh-form-field>
+              </div>
+              <div style="width:280px">
+                <fresh-form-field label="Role" required>
+                  <fresh-select placeholder="Select a role">
+                    <option value="admin">Admin</option>
+                    <option value="editor">Editor</option>
+                    <option value="viewer">Viewer</option>
+                  </fresh-select>
+                </fresh-form-field>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /spec-viewport -->
+    </div><!-- /spec-card -->
+  </div>
+
+  <!-- AI RULES -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar">
+        <span class="spec-rules-title">AI action rules</span>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <span class="spec-rules-hint">Click any rule to edit</span>
+          <button class="spec-rules-reset" onclick="restoreDefaults()"><i class="ti ti-rotate" style="font-size:10px;"></i> Restore FreshDS defaults</button>
         </div>
       </div>
-    </main>
+      <div class="spec-rules-section">
+        <div class="spec-rules-section-head">
+          <span class="spec-rules-variant">General</span>
+          <span class="spec-attr-chip">fresh-form-field</span>
+        </div>
+        <ul class="spec-rule-list" id="rules-general">
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Wrap every form input (<code>fresh-input</code>, <code>fresh-select</code>, <code>fresh-slider</code>) in a <code>fresh-form-field</code>. Never render a bare input without a label in a form context.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Set <code>error</code> with a specific, actionable message when validation fails. The error replaces the hint automatically. Do not leave the error message vague ("Invalid input"). Say what is wrong and how to fix it.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Use <code>hint</code> for proactive guidance that helps users fill in the field correctly. Do not use hint for post-submission validation messages; use <code>error</code> for those.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Add <code>required</code> to fields the user must fill before submission. This renders the asterisk and sets the appropriate ARIA context. Pair with runtime validation: do not mark optional fields as required.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Keep labels short and noun-first: "Email address", "First name", "Role". Avoid gerund phrases ("Entering your email") or question formats ("What is your role?") in labels.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+        </ul>
+        <button class="spec-add-rule" onclick="addRule('rules-general')"><i class="ti ti-plus"></i> Add rule</button>
+      </div>
+    </div>
   </div>
+
+  <!-- ATTRIBUTES -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Attributes</span></div>
+      <table class="spec-a11y-table">
+        <thead><tr><th style="width:130px">Attribute</th><th style="width:220px">Values</th><th style="width:80px">Default</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">label</td><td class="spec-a11y-req">string</td><td class="spec-a11y-req">-</td><td class="spec-a11y-req">Visible label above the control. Rendered in medium weight.</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">hint</td><td class="spec-a11y-req">string</td><td class="spec-a11y-req">-</td><td class="spec-a11y-req">Helper text below the control. Shown in muted colour. Replaced by <code>error</code> when both are set.</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">error</td><td class="spec-a11y-req">string</td><td class="spec-a11y-req">-</td><td class="spec-a11y-req">Validation error message. Shown in danger colour with <code>role="alert"</code>. Takes precedence over <code>hint</code>.</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">required</td><td class="spec-a11y-req">boolean</td><td class="spec-a11y-req">-</td><td class="spec-a11y-req">Appends a red asterisk to the label to mark the field as required.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- CODE -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Code</span></div>
+      <div style="padding:16px 20px;display:flex;flex-direction:column;gap:0;">
+
+        <div class="code-block" data-code="<fresh-form-field label=&quot;Email address&quot; hint=&quot;We'll never share your email.&quot;>
+  <fresh-input type=&quot;email&quot; placeholder=&quot;you@company.com&quot;></fresh-input>
+</fresh-form-field>">
+          <div class="code-block-header"><span><span class="code-lang">HTML</span><span class="code-context">With hint</span></span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+          <div class="code-body"><span class="hl-pun">&lt;</span><span class="hl-tag">fresh-form-field</span> <span class="hl-attr">label</span><span class="hl-pun">=</span><span class="hl-val">"Email address"</span> <span class="hl-attr">hint</span><span class="hl-pun">=</span><span class="hl-val">"We'll never share your email."</span><span class="hl-pun">&gt;</span>
+  <span class="hl-pun">&lt;</span><span class="hl-tag">fresh-input</span> <span class="hl-attr">type</span><span class="hl-pun">=</span><span class="hl-val">"email"</span> <span class="hl-attr">placeholder</span><span class="hl-pun">=</span><span class="hl-val">"you@company.com"</span><span class="hl-pun">&gt;&lt;/</span><span class="hl-tag">fresh-input</span><span class="hl-pun">&gt;</span>
+<span class="hl-pun">&lt;/</span><span class="hl-tag">fresh-form-field</span><span class="hl-pun">&gt;</span></div>
+        </div>
+
+        <div class="code-block" data-code="<fresh-form-field label=&quot;Role&quot; required error=&quot;Please select a role to continue.&quot;>
+  <fresh-select placeholder=&quot;Choose role&quot;>
+    <option value=&quot;admin&quot;>Admin</option>
+    <option value=&quot;editor&quot;>Editor</option>
+    <option value=&quot;viewer&quot;>Viewer</option>
+  </fresh-select>
+</fresh-form-field>">
+          <div class="code-block-header"><span><span class="code-lang">HTML</span><span class="code-context">Required with error</span></span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+          <div class="code-body"><span class="hl-pun">&lt;</span><span class="hl-tag">fresh-form-field</span> <span class="hl-attr">label</span><span class="hl-pun">=</span><span class="hl-val">"Role"</span> <span class="hl-attr">required</span> <span class="hl-attr">error</span><span class="hl-pun">=</span><span class="hl-val">"Please select a role to continue."</span><span class="hl-pun">&gt;</span>
+  <span class="hl-pun">&lt;</span><span class="hl-tag">fresh-select</span> <span class="hl-attr">placeholder</span><span class="hl-pun">=</span><span class="hl-val">"Choose role"</span><span class="hl-pun">&gt;</span>
+    <span class="hl-pun">&lt;</span><span class="hl-tag">option</span> <span class="hl-attr">value</span><span class="hl-pun">=</span><span class="hl-val">"admin"</span><span class="hl-pun">&gt;</span><span class="hl-txt">Admin</span><span class="hl-pun">&lt;/</span><span class="hl-tag">option</span><span class="hl-pun">&gt;</span>
+    <span class="hl-pun">&lt;</span><span class="hl-tag">option</span> <span class="hl-attr">value</span><span class="hl-pun">=</span><span class="hl-val">"editor"</span><span class="hl-pun">&gt;</span><span class="hl-txt">Editor</span><span class="hl-pun">&lt;/</span><span class="hl-tag">option</span><span class="hl-pun">&gt;</span>
+    <span class="hl-pun">&lt;</span><span class="hl-tag">option</span> <span class="hl-attr">value</span><span class="hl-pun">=</span><span class="hl-val">"viewer"</span><span class="hl-pun">&gt;</span><span class="hl-txt">Viewer</span><span class="hl-pun">&lt;/</span><span class="hl-tag">option</span><span class="hl-pun">&gt;</span>
+  <span class="hl-pun">&lt;/</span><span class="hl-tag">fresh-select</span><span class="hl-pun">&gt;</span>
+<span class="hl-pun">&lt;/</span><span class="hl-tag">fresh-form-field</span><span class="hl-pun">&gt;</span></div>
+        </div>
+
+        <div class="code-block" data-code="<div style=&quot;display:flex;flex-direction:column;gap:16px;&quot;>
+  <fresh-form-field label=&quot;First name&quot; required>
+    <fresh-input placeholder=&quot;Jane&quot;></fresh-input>
+  </fresh-form-field>
+  <fresh-form-field label=&quot;Last name&quot; required>
+    <fresh-input placeholder=&quot;Doe&quot;></fresh-input>
+  </fresh-form-field>
+  <fresh-form-field label=&quot;Company&quot; hint=&quot;Optional.&quot;>
+    <fresh-input placeholder=&quot;Acme Corp&quot;></fresh-input>
+  </fresh-form-field>
+</div>">
+          <div class="code-block-header"><span><span class="code-lang">HTML</span><span class="code-context">Form layout with mixed required and optional</span></span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+          <div class="code-body"><span class="hl-pun">&lt;</span><span class="hl-tag">div</span> <span class="hl-attr">style</span><span class="hl-pun">=</span><span class="hl-val">"display:flex;flex-direction:column;gap:16px;"</span><span class="hl-pun">&gt;</span>
+  <span class="hl-pun">&lt;</span><span class="hl-tag">fresh-form-field</span> <span class="hl-attr">label</span><span class="hl-pun">=</span><span class="hl-val">"First name"</span> <span class="hl-attr">required</span><span class="hl-pun">&gt;</span>
+    <span class="hl-pun">&lt;</span><span class="hl-tag">fresh-input</span> <span class="hl-attr">placeholder</span><span class="hl-pun">=</span><span class="hl-val">"Jane"</span><span class="hl-pun">&gt;&lt;/</span><span class="hl-tag">fresh-input</span><span class="hl-pun">&gt;</span>
+  <span class="hl-pun">&lt;/</span><span class="hl-tag">fresh-form-field</span><span class="hl-pun">&gt;</span>
+  <span class="hl-pun">&lt;</span><span class="hl-tag">fresh-form-field</span> <span class="hl-attr">label</span><span class="hl-pun">=</span><span class="hl-val">"Last name"</span> <span class="hl-attr">required</span><span class="hl-pun">&gt;</span>
+    <span class="hl-pun">&lt;</span><span class="hl-tag">fresh-input</span> <span class="hl-attr">placeholder</span><span class="hl-pun">=</span><span class="hl-val">"Doe"</span><span class="hl-pun">&gt;&lt;/</span><span class="hl-tag">fresh-input</span><span class="hl-pun">&gt;</span>
+  <span class="hl-pun">&lt;/</span><span class="hl-tag">fresh-form-field</span><span class="hl-pun">&gt;</span>
+  <span class="hl-pun">&lt;</span><span class="hl-tag">fresh-form-field</span> <span class="hl-attr">label</span><span class="hl-pun">=</span><span class="hl-val">"Company"</span> <span class="hl-attr">hint</span><span class="hl-pun">=</span><span class="hl-val">"Optional."</span><span class="hl-pun">&gt;</span>
+    <span class="hl-pun">&lt;</span><span class="hl-tag">fresh-input</span> <span class="hl-attr">placeholder</span><span class="hl-pun">=</span><span class="hl-val">"Acme Corp"</span><span class="hl-pun">&gt;&lt;/</span><span class="hl-tag">fresh-input</span><span class="hl-pun">&gt;</span>
+  <span class="hl-pun">&lt;/</span><span class="hl-tag">fresh-form-field</span><span class="hl-pun">&gt;</span>
+<span class="hl-pun">&lt;/</span><span class="hl-tag">div</span><span class="hl-pun">&gt;</span></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- TOKENS -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Tokens</span></div>
+      <table class="spec-a11y-table">
+        <thead><tr><th style="width:220px">Token</th><th style="width:200px">Role</th><th>State</th></tr></thead>
+        <tbody>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--text-primary</td><td class="spec-a11y-req">Label text colour</td><td class="spec-a11y-req">all</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--text-tertiary</td><td class="spec-a11y-req">Hint text colour</td><td class="spec-a11y-req">hint</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--color-danger</td><td class="spec-a11y-req">Error text and asterisk colour</td><td class="spec-a11y-req">error, required</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--font-sans</td><td class="spec-a11y-req">Font family</td><td class="spec-a11y-req">all</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--font-size-sm</td><td class="spec-a11y-req">Label font size</td><td class="spec-a11y-req">all</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--font-size-xs</td><td class="spec-a11y-req">Hint and error font size</td><td class="spec-a11y-req">hint, error</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ACCESSIBILITY -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Accessibility</span></div>
+      <div style="padding:12px 24px 14px;border-bottom:1px solid #d4d4d7;">
+        <p style="font-size:13px;color:#555;line-height:1.6;margin:0;">Form field satisfies all <a href="app.html#accessibility" target="_parent" style="color:#5b6af7;text-decoration:none;font-weight:500;">universal accessibility concerns</a>. Component-specific concerns are below.</p>
+      </div>
+      <table class="spec-a11y-table">
+        <thead><tr><th>Concern</th><th>Requirement</th></tr></thead>
+        <tbody>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">label association</td><td class="spec-a11y-req">The label text is rendered by the form field, not by the slotted input. Ensure the slotted input exposes its own <code>aria-label</code> or is discoverable by AT via the surrounding DOM structure. Always verify the label reads correctly in a screen reader when combining <code>fresh-form-field</code> with shadow DOM inputs.</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">error announcement</td><td class="spec-a11y-req">The error span renders with <code>role="alert"</code>, causing screen readers to announce the message immediately when the <code>error</code> attribute changes. Only set <code>error</code> after the user has attempted submission or left the field. Premature errors before interaction harm usability.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
 </div>
-<script src="components/core/fresh-button.js"></script>
+
+<script src="components/core/fresh-form-field.js"></script>
 <script src="components/core/fresh-input.js"></script>
 <script src="components/core/fresh-select.js"></script>
-<script src="components/core/fresh-slider.js"></script>
-<script src="components/core/fresh-form-field.js"></script>
-<script src="components/navigation/fresh-simple-tabs.js"></script>
+<script src="js/spec-page.js"></script>
+
+<script type="module">
+  import { supabase } from '/js/supabase-client.js'
+  var RULE_IDS = ['rules-general'];
+  var _saveTimer = null, _loading = false;
+  function getRulesSnapshot() {
+    var r = {};
+    RULE_IDS.forEach(function(id) { var l = document.getElementById(id); if (!l) return; r[id] = Array.from(l.querySelectorAll('.spec-rule-text')).map(function(el) { return el.innerHTML.trim(); }); });
+    return r;
+  }
+  function applySnapshot(saved) {
+    RULE_IDS.forEach(function(id) { var l = document.getElementById(id); if (!l) return; var rules = (saved && saved[id] && saved[id].length) ? saved[id] : window.DEFAULT_RULES[id]; l.innerHTML = rules.map(function(t) { return '<li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">' + t + '</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>'; }).join(''); }); }
+  async function saveRulesNow() {
+    try { var { data: { user } } = await supabase.auth.getUser(); if (!user) return; var { data: p } = await supabase.from('profiles').select('component_rules').eq('id', user.id).single(); var e = (p && p.component_rules) ? p.component_rules : {}; e.formfield = getRulesSnapshot(); await supabase.from('profiles').update({ component_rules: e }).eq('id', user.id); } catch(e) {}
+  }
+  function schedSave() { if (_loading) return; clearTimeout(_saveTimer); _saveTimer = setTimeout(saveRulesNow, 1000); }
+  var panel = document.querySelector('.spec-rules-panel'); if (panel) new MutationObserver(schedSave).observe(panel, { childList: true, subtree: true, characterData: true });
+  ;(async function() { try { var { data: { user } } = await supabase.auth.getUser(); if (!user) return; var { data: p } = await supabase.from('profiles').select('component_rules').eq('id', user.id).single(); if (p && p.component_rules && p.component_rules.formfield) { _loading = true; applySnapshot(p.component_rules.formfield); _loading = false; } } catch(e) {} })();
+</script>
+
+<script>
+  var DEFAULT_RULES = {
+    'rules-general': [
+      'Wrap every form input (<code>fresh-input</code>, <code>fresh-select</code>, <code>fresh-slider</code>) in a <code>fresh-form-field</code>. Never render a bare input without a label in a form context.',
+      'Set <code>error</code> with a specific, actionable message when validation fails. The error replaces the hint automatically. Do not leave the error message vague ("Invalid input"). Say what is wrong and how to fix it.',
+      'Use <code>hint</code> for proactive guidance that helps users fill in the field correctly. Do not use hint for post-submission validation messages; use <code>error</code> for those.',
+      'Add <code>required</code> to fields the user must fill before submission. This renders the asterisk and sets the appropriate ARIA context. Pair with runtime validation: do not mark optional fields as required.',
+      'Keep labels short and noun-first: "Email address", "First name", "Role". Avoid gerund phrases ("Entering your email") or question formats ("What is your role?") in labels.'
+    ]
+  };
+  function restoreDefaults() {
+    if (!confirm('Reset all form field rules to FreshDS defaults? Any edits you have made will be lost.')) return;
+    Object.keys(DEFAULT_RULES).forEach(function(id) { var l = document.getElementById(id); if (!l) return; l.innerHTML = DEFAULT_RULES[id].map(function(t) { return '<li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">' + t + '</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>'; }).join(''); });
+  }
+</script>
 </body>
 </html>

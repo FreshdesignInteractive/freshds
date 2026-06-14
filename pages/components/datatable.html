@@ -8,144 +8,358 @@
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="styles/site.css">
 <link rel="stylesheet" href="tokens/primitives.css">
 <link rel="stylesheet" href="tokens/theme.css">
-<link rel="stylesheet" href="tokens/dataviz.css">
-<link rel="stylesheet" href="styles/reset.css">
-<link rel="stylesheet" href="styles/layout.css">
-<link rel="stylesheet" href="styles/components/core.css">
-<link rel="stylesheet" href="styles/docs.css">
 <script src="js/freshds.js"></script>
 <script src="js/freshds-site.js"></script>
+<link rel="stylesheet" href="styles/components/spec-page.css">
 </head>
 <body>
-<div class="fds-app" id="app">
-  <ds-topbar active-section="ds"></ds-topbar>
-  <div class="fds-body">
-    <ds-shell active="datatable"></ds-shell>
-    <main class="fds-main">
-      <div class="fds-page active" id="page-datatable">
-        <div class="page-header">
-          <div class="page-eyebrow">Data Display</div>
-          <h1 class="page-title">Data table</h1>
-          <p class="page-desc">Enhanced table with full-text search, column sorting, row selection, bulk actions, and row highlight. Pass columns and data as JSON attributes.</p>
-        </div>
-        <div class="page-section">
-          <div class="page-section-title">Searchable + sortable</div>
-          <div class="demo-surface col">
-            <fresh-data-table
-              searchable
-              columns='[
-                {"key":"name","label":"Name","sortable":true},
-                {"key":"role","label":"Role","sortable":true},
-                {"key":"status","label":"Status"},
-                {"key":"joined","label":"Joined","sortable":true,"align":"right"}
-              ]'
-              data='[
-                {"name":"Jane Smith","role":"Admin","status":"Active","joined":"2024-01-12"},
-                {"name":"Marcus Lee","role":"Editor","status":"Active","joined":"2024-03-05"},
-                {"name":"Priya Nair","role":"Viewer","status":"Inactive","joined":"2023-11-20"},
-                {"name":"Tom Wu","role":"Editor","status":"Active","joined":"2024-02-18"},
-                {"name":"Anya Patel","role":"Admin","status":"Active","joined":"2023-09-08"},
-                {"name":"Carlos R","role":"Viewer","status":"Pending","joined":"2024-04-01"}
-              ]'>
-            </fresh-data-table>
-          </div>
-        </div>
-        <div class="page-section">
-          <div class="page-section-title">With row selection &amp; bulk actions</div>
-          <div class="demo-surface col">
-            <fresh-data-table
-              searchable
-              selectable
-              columns='[
-                {"key":"model","label":"Model","sortable":true},
-                {"key":"tokens","label":"Tokens","sortable":true,"align":"right"},
-                {"key":"cost","label":"Cost","align":"right"},
-                {"key":"latency","label":"Latency","align":"right"}
-              ]'
-              data='[
-                {"model":"claude-sonnet-4-6","tokens":"24,500","cost":"$0.18","latency":"1.2s"},
-                {"model":"claude-opus-4-8","tokens":"18,200","cost":"$0.54","latency":"2.1s"},
-                {"model":"claude-haiku-4-5","tokens":"61,000","cost":"$0.07","latency":"0.4s"},
-                {"model":"claude-sonnet-4-6","tokens":"9,800","cost":"$0.07","latency":"0.9s"}
-              ]'>
-              <div slot="bulk-actions">
-                <fresh-button variant="danger" size="sm">Delete</fresh-button>
-              </div>
-            </fresh-data-table>
-          </div>
-        </div>
-        <div class="page-section">
-          <div class="page-section-title">Row highlight</div>
-          <p style="font-size:13px;color:var(--text-secondary);margin-bottom:var(--space-5);line-height:1.6">Add <code>highlightable</code> to enable single-row focus. Click a row to highlight it; click again to clear. Fires a <code>row-highlight</code> event with the row data.</p>
-          <div class="demo-surface col" style="gap:var(--space-4)">
-            <fresh-data-table
-              id="demo-hl-table"
-              highlightable
-              searchable
-              columns='[
-                {"key":"name","label":"Name","sortable":true},
-                {"key":"role","label":"Role","sortable":true},
-                {"key":"department","label":"Department"},
-                {"key":"status","label":"Status","align":"right"}
-              ]'
-              data='[
-                {"name":"Jane Smith","role":"Admin","department":"Engineering","status":"Active"},
-                {"name":"Marcus Lee","role":"Editor","department":"Design","status":"Active"},
-                {"name":"Priya Nair","role":"Viewer","department":"Product","status":"Inactive"},
-                {"name":"Tom Wu","role":"Editor","department":"Engineering","status":"Active"},
-                {"name":"Anya Patel","role":"Admin","department":"Data","status":"Active"},
-                {"name":"Carlos R","role":"Viewer","department":"Marketing","status":"Pending"}
-              ]'>
-            </fresh-data-table>
-            <div id="demo-hl-output" style="font-size:12px;font-family:var(--font-mono);color:var(--text-tertiary);padding:var(--space-3) var(--space-4);background:var(--surface-overlay);border-radius:var(--radius-md);border:1px solid var(--surface-border)">
-              row-highlight → click a row
-            </div>
-          </div>
-          <script>
-            document.getElementById('demo-hl-table')?.addEventListener('row-highlight', function(e) {
-              var out = document.getElementById('demo-hl-output');
-              if (out) out.textContent = e.detail.row
-                ? 'row-highlight → index: ' + e.detail.index + ' · ' + JSON.stringify(e.detail.row)
-                : 'row-highlight → cleared';
-            });
-          </script>
-        </div>
-        <div class="page-section">
-          <div class="page-section-title">Attributes</div>
-          <table class="usage-table">
-            <thead><tr><th>Attribute</th><th>Values</th><th>Description</th></tr></thead>
-            <tbody>
-              <tr><td>columns</td><td>JSON array <code>{ key, label, sortable?, align?, width? }</code></td><td>Column definitions</td></tr>
-              <tr><td>data</td><td>JSON array of objects</td><td>Row data, keys must match column keys</td></tr>
-              <tr><td>searchable</td><td>boolean</td><td>Shows search input, filters all columns</td></tr>
-              <tr><td>selectable</td><td>boolean</td><td>Shows row checkboxes and select-all</td></tr>
-              <tr><td>highlightable</td><td>boolean</td><td>Click a row to mark it active; click again to clear</td></tr>
-              <tr><td>search-placeholder</td><td>string</td><td>Placeholder for the search input</td></tr>
-            </tbody>
-          </table>
-        </div>
-        <div class="page-section">
-          <div class="page-section-title">Events</div>
-          <table class="usage-table">
-            <thead><tr><th>Event</th><th>Detail</th><th>Description</th></tr></thead>
-            <tbody>
-              <tr><td>sort</td><td><code>{ key, direction }</code></td><td>Fired when a sortable column header is clicked</td></tr>
-              <tr><td>selection-change</td><td><code>{ selected: number[] }</code></td><td>Fired when row selection changes</td></tr>
-              <tr><td>row-highlight</td><td><code>{ row: object|null, index: number|null }</code></td><td>Fired when a row is highlighted or cleared</td></tr>
-            </tbody>
-          </table>
+
+<div class="comp-page">
+  <h1 class="comp-title">Data table</h1>
+  <p class="comp-desc">Enhanced data grid with full-text search, column sorting, row selection with bulk actions, and single-row highlight. Columns and data are passed as JSON attributes.</p>
+
+  <!-- STATES CARD -->
+  <div class="comp-section">
+    <div class="spec-card">
+      <div class="spec-card-topbar">
+        <span class="spec-rules-title">Data table states</span>
+        <div class="spec-mode-switcher">
+          <button class="spec-mode-btn active" id="mode-btn-light" onclick="setSpecMode('light')"><i class="ti ti-sun"></i> Light</button>
+          <button class="spec-mode-btn" id="mode-btn-dark" onclick="setSpecMode('dark')"><i class="ti ti-moon"></i> Dark</button>
         </div>
       </div>
-    </main>
+      <div id="spec-viewport" class="spec-viewport">
+
+        <!-- Searchable and sortable -->
+        <div class="spec-variant-row">
+          <div class="spec-variant-header">
+            <span class="spec-variant-name">Searchable + sortable</span>
+            <span class="spec-attr-chip">searchable</span>
+            <span class="spec-variant-sep">·</span>
+            <span class="spec-variant-desc">Search filters all columns in real time. Click sortable column headers to toggle asc/desc. Fires a <code>sort</code> event on each change.</span>
+          </div>
+          <div class="spec-variant-body">
+            <div class="spec-demos" style="display:block;width:100%;">
+              <fresh-data-table
+                searchable
+                columns='[
+                  {"key":"name","label":"Name","sortable":true},
+                  {"key":"role","label":"Role","sortable":true},
+                  {"key":"status","label":"Status"},
+                  {"key":"joined","label":"Joined","sortable":true,"align":"right"}
+                ]'
+                data='[
+                  {"name":"Jane Smith","role":"Admin","status":"Active","joined":"2024-01-12"},
+                  {"name":"Marcus Lee","role":"Editor","status":"Active","joined":"2024-03-05"},
+                  {"name":"Priya Nair","role":"Viewer","status":"Inactive","joined":"2023-11-20"},
+                  {"name":"Tom Wu","role":"Editor","status":"Active","joined":"2024-02-18"},
+                  {"name":"Anya Patel","role":"Admin","status":"Active","joined":"2023-09-08"}
+                ]'>
+              </fresh-data-table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Selectable with bulk actions -->
+        <div class="spec-variant-row">
+          <div class="spec-variant-header">
+            <span class="spec-variant-name">Row selection</span>
+            <span class="spec-attr-chip">selectable</span>
+            <span class="spec-variant-sep">·</span>
+            <span class="spec-variant-desc">Adds row checkboxes and a select-all. When rows are selected, the bulk actions bar appears. Fires <code>selection-change</code> with selected indices.</span>
+          </div>
+          <div class="spec-variant-body">
+            <div class="spec-demos" style="display:block;width:100%;">
+              <fresh-data-table
+                searchable
+                selectable
+                columns='[
+                  {"key":"model","label":"Model","sortable":true},
+                  {"key":"tokens","label":"Tokens","sortable":true,"align":"right"},
+                  {"key":"cost","label":"Cost","align":"right"},
+                  {"key":"latency","label":"Latency","align":"right"}
+                ]'
+                data='[
+                  {"model":"claude-sonnet-4-6","tokens":"24,500","cost":"$0.18","latency":"1.2s"},
+                  {"model":"claude-opus-4","tokens":"18,200","cost":"$0.54","latency":"2.1s"},
+                  {"model":"claude-haiku-4-5","tokens":"61,000","cost":"$0.07","latency":"0.4s"},
+                  {"model":"claude-sonnet-4","tokens":"9,800","cost":"$0.07","latency":"0.9s"}
+                ]'>
+                <div slot="bulk-actions">
+                  <fresh-button variant="danger" size="sm">Delete selected</fresh-button>
+                </div>
+              </fresh-data-table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Row highlight -->
+        <div class="spec-variant-row">
+          <div class="spec-variant-header">
+            <span class="spec-variant-name">Row highlight</span>
+            <span class="spec-attr-chip">highlightable</span>
+            <span class="spec-variant-sep">·</span>
+            <span class="spec-variant-desc">Click a row to highlight it for focus. Click again to clear. Fires <code>row-highlight</code> with the row data and index. Only one row can be active at a time.</span>
+          </div>
+          <div class="spec-variant-body">
+            <div class="spec-demos" style="display:block;width:100%;">
+              <fresh-data-table
+                id="demo-hl-table"
+                highlightable
+                searchable
+                columns='[
+                  {"key":"name","label":"Name","sortable":true},
+                  {"key":"department","label":"Department"},
+                  {"key":"role","label":"Role","sortable":true},
+                  {"key":"status","label":"Status","align":"right"}
+                ]'
+                data='[
+                  {"name":"Jane Smith","department":"Engineering","role":"Admin","status":"Active"},
+                  {"name":"Marcus Lee","department":"Design","role":"Editor","status":"Active"},
+                  {"name":"Priya Nair","department":"Product","role":"Viewer","status":"Inactive"},
+                  {"name":"Tom Wu","department":"Engineering","role":"Editor","status":"Active"},
+                  {"name":"Anya Patel","department":"Data","role":"Admin","status":"Active"}
+                ]'>
+              </fresh-data-table>
+              <div id="demo-hl-output" style="margin-top:8px;font-size:12px;font-family:var(--font-mono);color:var(--text-tertiary);padding:var(--space-3) var(--space-4);background:var(--surface-overlay);border-radius:var(--radius-md);border:1px solid var(--surface-border)">
+                row-highlight - click a row
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /spec-viewport -->
+    </div><!-- /spec-card -->
   </div>
+
+  <!-- AI RULES -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar">
+        <span class="spec-rules-title">AI action rules</span>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <span class="spec-rules-hint">Click any rule to edit</span>
+          <button class="spec-rules-reset" onclick="restoreDefaults()"><i class="ti ti-rotate" style="font-size:10px;"></i> Restore FreshDS defaults</button>
+        </div>
+      </div>
+
+      <div class="spec-rules-section">
+        <div class="spec-rules-section-head">
+          <span class="spec-rules-variant">General</span>
+          <span class="spec-attr-chip">fresh-data-table</span>
+        </div>
+        <ul class="spec-rule-list" id="rules-general">
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Always define column keys that exactly match the data object keys. Mismatched keys render empty cells with no error.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Use <code>selectable</code> only when there is at least one meaningful bulk action. Avoid adding checkboxes without a corresponding slot action.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Do not use both <code>selectable</code> and <code>highlightable</code> simultaneously. They serve different interaction models: multi-select for bulk operations, single-highlight for detail panels.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Set <code>align="right"</code> on numeric columns (tokens, cost, count). Left-align all text columns. Right-aligned numbers are easier to scan and compare visually.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Pre-format all values before passing to <code>data</code>. The table does not apply number, date, or currency formatting. Format strings like "1,284" and "$0.18" before binding.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+        </ul>
+        <button class="spec-add-rule" onclick="addRule('rules-general')"><i class="ti ti-plus"></i> Add rule</button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ATTRIBUTES -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Attributes</span></div>
+      <table class="spec-a11y-table">
+        <thead><tr><th style="width:160px">Attribute</th><th style="width:260px">Values</th><th style="width:80px">Default</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">columns</td><td class="spec-a11y-req">JSON array: <code>{ key, label, sortable?, align?, width? }</code></td><td class="spec-a11y-req">-</td><td class="spec-a11y-req">Column definitions. <code>key</code> must match the data object property name.</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">data</td><td class="spec-a11y-req">JSON array of objects</td><td class="spec-a11y-req">-</td><td class="spec-a11y-req">Row data. Object keys must match column keys.</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">searchable</td><td class="spec-a11y-req">boolean</td><td class="spec-a11y-req">-</td><td class="spec-a11y-req">Shows search input above the table. Filters all columns in real time.</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">selectable</td><td class="spec-a11y-req">boolean</td><td class="spec-a11y-req">-</td><td class="spec-a11y-req">Adds row checkboxes and a select-all header. Shows bulk action bar when rows are selected.</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">highlightable</td><td class="spec-a11y-req">boolean</td><td class="spec-a11y-req">-</td><td class="spec-a11y-req">Makes rows clickable for single-row focus. Click again to clear. Fires <code>row-highlight</code>.</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">search-placeholder</td><td class="spec-a11y-req">string</td><td class="spec-a11y-req"><code>Search...</code></td><td class="spec-a11y-req">Placeholder text for the search input.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- EVENTS -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Events</span></div>
+      <table class="spec-a11y-table">
+        <thead><tr><th style="width:180px">Event</th><th style="width:260px">Detail</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">sort</td><td class="spec-a11y-req"><code>{ key, direction }</code></td><td class="spec-a11y-req">Fired when a sortable column header is clicked. <code>direction</code> is <code>"asc"</code> or <code>"desc"</code>.</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">selection-change</td><td class="spec-a11y-req"><code>{ selected: number[] }</code></td><td class="spec-a11y-req">Fired when row selection changes. <code>selected</code> is an array of selected row indices.</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">row-highlight</td><td class="spec-a11y-req"><code>{ row: object|null, index: number|null }</code></td><td class="spec-a11y-req">Fired when a row is highlighted or cleared. <code>row</code> is <code>null</code> when the highlight is cleared.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- CODE -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Code</span></div>
+      <div style="padding:16px 20px;display:flex;flex-direction:column;gap:0;">
+
+        <div class="code-block" data-code="&lt;fresh-data-table
+  searchable
+  columns='[
+    {&quot;key&quot;:&quot;name&quot;,&quot;label&quot;:&quot;Name&quot;,&quot;sortable&quot;:true},
+    {&quot;key&quot;:&quot;role&quot;,&quot;label&quot;:&quot;Role&quot;,&quot;sortable&quot;:true},
+    {&quot;key&quot;:&quot;status&quot;,&quot;label&quot;:&quot;Status&quot;}
+  ]'
+  data='[
+    {&quot;name&quot;:&quot;Jane Smith&quot;,&quot;role&quot;:&quot;Admin&quot;,&quot;status&quot;:&quot;Active&quot;},
+    {&quot;name&quot;:&quot;Marcus Lee&quot;,&quot;role&quot;:&quot;Editor&quot;,&quot;status&quot;:&quot;Active&quot;}
+  ]'&gt;
+&lt;/fresh-data-table&gt;">
+          <div class="code-block-header"><span><span class="code-lang">HTML</span><span class="code-context">Searchable and sortable</span></span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+          <div class="code-body"><span class="hl-pun">&lt;</span><span class="hl-tag">fresh-data-table</span>
+  <span class="hl-attr">searchable</span>
+  <span class="hl-attr">columns</span><span class="hl-pun">='[</span>
+    <span class="hl-pun">{</span><span class="hl-val">"key"</span><span class="hl-pun">:</span><span class="hl-val">"name"</span><span class="hl-pun">,</span><span class="hl-val">"label"</span><span class="hl-pun">:</span><span class="hl-val">"Name"</span><span class="hl-pun">,</span><span class="hl-val">"sortable"</span><span class="hl-pun">:</span><span class="hl-val">true</span><span class="hl-pun">},</span>
+    <span class="hl-pun">{</span><span class="hl-val">"key"</span><span class="hl-pun">:</span><span class="hl-val">"role"</span><span class="hl-pun">,</span><span class="hl-val">"label"</span><span class="hl-pun">:</span><span class="hl-val">"Role"</span><span class="hl-pun">,</span><span class="hl-val">"sortable"</span><span class="hl-pun">:</span><span class="hl-val">true</span><span class="hl-pun">},</span>
+    <span class="hl-pun">{</span><span class="hl-val">"key"</span><span class="hl-pun">:</span><span class="hl-val">"status"</span><span class="hl-pun">,</span><span class="hl-val">"label"</span><span class="hl-pun">:</span><span class="hl-val">"Status"</span><span class="hl-pun">}</span>
+  <span class="hl-pun">]'</span>
+  <span class="hl-attr">data</span><span class="hl-pun">='[</span>
+    <span class="hl-pun">{</span><span class="hl-val">"name"</span><span class="hl-pun">:</span><span class="hl-val">"Jane Smith"</span><span class="hl-pun">,</span><span class="hl-val">"role"</span><span class="hl-pun">:</span><span class="hl-val">"Admin"</span><span class="hl-pun">,</span><span class="hl-val">"status"</span><span class="hl-pun">:</span><span class="hl-val">"Active"</span><span class="hl-pun">},</span>
+    <span class="hl-pun">{</span><span class="hl-val">"name"</span><span class="hl-pun">:</span><span class="hl-val">"Marcus Lee"</span><span class="hl-pun">,</span><span class="hl-val">"role"</span><span class="hl-pun">:</span><span class="hl-val">"Editor"</span><span class="hl-pun">,</span><span class="hl-val">"status"</span><span class="hl-pun">:</span><span class="hl-val">"Active"</span><span class="hl-pun">}</span>
+  <span class="hl-pun">]'&gt;</span>
+<span class="hl-pun">&lt;/</span><span class="hl-tag">fresh-data-table</span><span class="hl-pun">&gt;</span></div>
+        </div>
+
+        <div class="code-block" data-code="&lt;fresh-data-table searchable selectable columns='...' data='...'&gt;
+  &lt;div slot=&quot;bulk-actions&quot;&gt;
+    &lt;fresh-button variant=&quot;danger&quot; size=&quot;sm&quot;&gt;Delete selected&lt;/fresh-button&gt;
+  &lt;/div&gt;
+&lt;/fresh-data-table&gt;">
+          <div class="code-block-header"><span><span class="code-lang">HTML</span><span class="code-context">With bulk actions slot</span></span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+          <div class="code-body"><span class="hl-pun">&lt;</span><span class="hl-tag">fresh-data-table</span> <span class="hl-attr">searchable</span> <span class="hl-attr">selectable</span> <span class="hl-attr">columns</span><span class="hl-pun">='...'</span> <span class="hl-attr">data</span><span class="hl-pun">='...'&gt;</span>
+  <span class="hl-pun">&lt;</span><span class="hl-tag">div</span> <span class="hl-attr">slot</span><span class="hl-pun">=</span><span class="hl-val">"bulk-actions"</span><span class="hl-pun">&gt;</span>
+    <span class="hl-pun">&lt;</span><span class="hl-tag">fresh-button</span> <span class="hl-attr">variant</span><span class="hl-pun">=</span><span class="hl-val">"danger"</span> <span class="hl-attr">size</span><span class="hl-pun">=</span><span class="hl-val">"sm"</span><span class="hl-pun">&gt;</span><span class="hl-txt">Delete selected</span><span class="hl-pun">&lt;/</span><span class="hl-tag">fresh-button</span><span class="hl-pun">&gt;</span>
+  <span class="hl-pun">&lt;/</span><span class="hl-tag">div</span><span class="hl-pun">&gt;</span>
+<span class="hl-pun">&lt;/</span><span class="hl-tag">fresh-data-table</span><span class="hl-pun">&gt;</span></div>
+        </div>
+
+        <div class="code-block" data-code="&lt;fresh-data-table id=&quot;my-table&quot; highlightable columns='...' data='...'&gt;&lt;/fresh-data-table&gt;
+
+&lt;script&gt;
+  document.getElementById('my-table').addEventListener('row-highlight', function(e) {
+    if (e.detail.row) {
+      console.log('Highlighted row index:', e.detail.index, e.detail.row);
+    }
+  });
+&lt;/script&gt;">
+          <div class="code-block-header"><span><span class="code-lang">HTML</span><span class="code-context">Row highlight with event handler</span></span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+          <div class="code-body"><span class="hl-pun">&lt;</span><span class="hl-tag">fresh-data-table</span> <span class="hl-attr">id</span><span class="hl-pun">=</span><span class="hl-val">"my-table"</span> <span class="hl-attr">highlightable</span> <span class="hl-attr">columns</span><span class="hl-pun">='...'</span> <span class="hl-attr">data</span><span class="hl-pun">='...'&gt;&lt;/</span><span class="hl-tag">fresh-data-table</span><span class="hl-pun">&gt;</span>
+
+<span class="hl-pun">&lt;</span><span class="hl-tag">script</span><span class="hl-pun">&gt;</span>
+  <span class="hl-txt">document.getElementById('my-table').addEventListener('row-highlight', function(e) {</span>
+    <span class="hl-txt">if (e.detail.row) {</span>
+      <span class="hl-txt">console.log('Highlighted row index:', e.detail.index, e.detail.row);</span>
+    <span class="hl-txt">}</span>
+  <span class="hl-txt">});</span>
+<span class="hl-pun">&lt;/</span><span class="hl-tag">script</span><span class="hl-pun">&gt;</span></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- TOKENS -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Tokens</span></div>
+      <table class="spec-a11y-table">
+        <thead><tr><th style="width:220px">Token</th><th style="width:200px">Role</th><th>State</th></tr></thead>
+        <tbody>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--surface-subtle</td><td class="spec-a11y-req">Header row background</td><td class="spec-a11y-req">all</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--surface-border</td><td class="spec-a11y-req">Table border and row dividers</td><td class="spec-a11y-req">all</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--surface-overlay</td><td class="spec-a11y-req">Sortable header hover background</td><td class="spec-a11y-req">hover</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--radius-lg</td><td class="spec-a11y-req">Table scroll container radius</td><td class="spec-a11y-req">all</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--text-primary</td><td class="spec-a11y-req">First column cell text</td><td class="spec-a11y-req">all</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--text-secondary</td><td class="spec-a11y-req">All other cell text</td><td class="spec-a11y-req">all</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--text-tertiary</td><td class="spec-a11y-req">Header label and empty state text</td><td class="spec-a11y-req">all</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--badge-primary-bg</td><td class="spec-a11y-req">Selected row background</td><td class="spec-a11y-req">selected</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--color-interactive-subtle</td><td class="spec-a11y-req">Highlighted row background</td><td class="spec-a11y-req">highlighted</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--color-interactive</td><td class="spec-a11y-req">Highlighted row left accent border, sort color, checkbox accent</td><td class="spec-a11y-req">highlighted, sorted</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--color-interactive-text</td><td class="spec-a11y-req">Sorted column header text</td><td class="spec-a11y-req">sorted</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--input-focus-border</td><td class="spec-a11y-req">Search input focus border</td><td class="spec-a11y-req">search focused</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--input-focus-ring</td><td class="spec-a11y-req">Search input focus ring</td><td class="spec-a11y-req">search focused</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ACCESSIBILITY -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Accessibility</span></div>
+      <div style="padding:12px 24px 14px;border-bottom:1px solid #d4d4d7;">
+        <p style="font-size:13px;color:#555;line-height:1.6;margin:0;">Data table satisfies all <a href="app.html#accessibility" target="_parent" style="color:#5b6af7;text-decoration:none;font-weight:500;">universal accessibility concerns</a>. Component-specific concerns are below.</p>
+      </div>
+      <table class="spec-a11y-table">
+        <thead><tr><th>Concern</th><th>Requirement</th></tr></thead>
+        <tbody>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">keyboard sorting</td><td class="spec-a11y-req">Sortable column headers are clickable via mouse. Consider adding <code>tabindex="0"</code> and a <code>keydown</code> handler for full keyboard access in production integrations.</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">checkbox group</td><td class="spec-a11y-req">Checkboxes use native <code>input[type="checkbox"]</code> elements. The select-all sets <code>indeterminate</code> via JS to communicate partial selection state to screen readers.</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">bulk action bar</td><td class="spec-a11y-req">The bulk count label communicates how many rows are selected. Ensure bulk action buttons carry descriptive labels (e.g. "Delete 3 selected rows", not "Delete").</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
 </div>
+
 <script src="components/core/fresh-button.js"></script>
-<script src="components/core/fresh-input.js"></script>
 <script src="components/data/fresh-data-table.js"></script>
-<script src="components/navigation/fresh-simple-tabs.js"></script>
+<script src="js/spec-page.js"></script>
+
+<script>
+  document.getElementById('demo-hl-table')?.addEventListener('row-highlight', function(e) {
+    var out = document.getElementById('demo-hl-output');
+    if (out) out.textContent = e.detail.row
+      ? 'row-highlight - index: ' + e.detail.index + ' - ' + JSON.stringify(e.detail.row)
+      : 'row-highlight - cleared';
+  });
+</script>
+
+<script type="module">
+  import { supabase } from '/js/supabase-client.js'
+  var RULE_IDS = ['rules-general'];
+  var _saveTimer = null, _loading = false;
+  function getRulesSnapshot() {
+    var r = {};
+    RULE_IDS.forEach(function(id) { var l = document.getElementById(id); if (!l) return; r[id] = Array.from(l.querySelectorAll('.spec-rule-text')).map(function(el) { return el.innerHTML.trim(); }); });
+    return r;
+  }
+  function applySnapshot(saved) {
+    RULE_IDS.forEach(function(id) { var l = document.getElementById(id); if (!l) return; var rules = (saved && saved[id] && saved[id].length) ? saved[id] : window.DEFAULT_RULES[id]; l.innerHTML = rules.map(function(t) { return '<li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">' + t + '</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>'; }).join(''); }); }
+  async function saveRulesNow() {
+    try { var { data: { user } } = await supabase.auth.getUser(); if (!user) return; var { data: p } = await supabase.from('profiles').select('component_rules').eq('id', user.id).single(); var e = (p && p.component_rules) ? p.component_rules : {}; e.datatable = getRulesSnapshot(); await supabase.from('profiles').update({ component_rules: e }).eq('id', user.id); } catch(e) {}
+  }
+  function schedSave() { if (_loading) return; clearTimeout(_saveTimer); _saveTimer = setTimeout(saveRulesNow, 1000); }
+  var panel = document.querySelector('.spec-rules-panel'); if (panel) new MutationObserver(schedSave).observe(panel, { childList: true, subtree: true, characterData: true });
+  ;(async function() { try { var { data: { user } } = await supabase.auth.getUser(); if (!user) return; var { data: p } = await supabase.from('profiles').select('component_rules').eq('id', user.id).single(); if (p && p.component_rules && p.component_rules.datatable) { _loading = true; applySnapshot(p.component_rules.datatable); _loading = false; } } catch(e) {} })();
+</script>
+
+<script>
+  var DEFAULT_RULES = {
+    'rules-general': [
+      'Always define column keys that exactly match the data object keys. Mismatched keys render empty cells with no error.',
+      'Use <code>selectable</code> only when there is at least one meaningful bulk action. Avoid adding checkboxes without a corresponding slot action.',
+      'Do not use both <code>selectable</code> and <code>highlightable</code> simultaneously. They serve different interaction models: multi-select for bulk operations, single-highlight for detail panels.',
+      'Set <code>align="right"</code> on numeric columns (tokens, cost, count). Left-align all text columns. Right-aligned numbers are easier to scan and compare visually.',
+      'Pre-format all values before passing to <code>data</code>. The table does not apply number, date, or currency formatting. Format strings like "1,284" and "$0.18" before binding.'
+    ]
+  };
+  function restoreDefaults() {
+    if (!confirm('Reset all data table rules to FreshDS defaults? Any edits you have made will be lost.')) return;
+    Object.keys(DEFAULT_RULES).forEach(function(id) { var l = document.getElementById(id); if (!l) return; l.innerHTML = DEFAULT_RULES[id].map(function(t) { return '<li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">' + t + '</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>'; }).join(''); }); }
+</script>
 </body>
 </html>

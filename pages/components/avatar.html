@@ -8,125 +8,319 @@
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="styles/site.css">
 <link rel="stylesheet" href="tokens/primitives.css">
 <link rel="stylesheet" href="tokens/theme.css">
 <link rel="stylesheet" href="tokens/dataviz.css">
-<link rel="stylesheet" href="styles/reset.css">
-<link rel="stylesheet" href="styles/layout.css">
-<link rel="stylesheet" href="styles/components/core.css">
-<link rel="stylesheet" href="styles/docs.css">
 <script src="js/freshds.js"></script>
 <script src="js/freshds-site.js"></script>
+<link rel="stylesheet" href="styles/components/spec-page.css">
 </head>
 <body>
-<div class="fds-app" id="app">
-  <ds-topbar active-section="ds"></ds-topbar>
-  <div class="fds-body">
-    <ds-shell active="avatar"></ds-shell>
-    <main class="fds-main">
-      <div class="fds-page active" id="page-avatar">
-        <div class="page-header">
-          <div class="page-eyebrow">Data Display</div>
-          <h1 class="page-title">Avatar</h1>
-          <p class="page-desc">User identity display. Shows a photo when available, falling back to initials on error or when no source is provided. Initials color is deterministically derived from the name, consistent across sessions.</p>
-        </div>
-        <div class="page-section">
-          <div class="page-section-title">Initials, color from name</div>
-          <div class="demo-surface" style="align-items:center;gap:var(--space-3)">
-            <fresh-avatar name="Jane Smith"></fresh-avatar>
-            <fresh-avatar name="Marcus Lee"></fresh-avatar>
-            <fresh-avatar name="Priya Nair"></fresh-avatar>
-            <fresh-avatar name="Tom Wu"></fresh-avatar>
-            <fresh-avatar name="Anya Patel"></fresh-avatar>
-            <fresh-avatar name="Carlos R"></fresh-avatar>
-            <fresh-avatar name="AI Agent"></fresh-avatar>
-          </div>
-        </div>
-        <div class="page-section">
-          <div class="page-section-title">Sizes</div>
-          <div class="demo-surface" style="align-items:center;gap:var(--space-4)">
-            <div style="text-align:center">
-              <fresh-avatar name="Jane Smith" size="xs"></fresh-avatar>
-              <div style="font-size:10px;color:var(--text-tertiary);font-family:var(--font-sans);margin-top:6px">xs · 20</div>
-            </div>
-            <div style="text-align:center">
-              <fresh-avatar name="Jane Smith" size="sm"></fresh-avatar>
-              <div style="font-size:10px;color:var(--text-tertiary);font-family:var(--font-sans);margin-top:6px">sm · 28</div>
-            </div>
-            <div style="text-align:center">
-              <fresh-avatar name="Jane Smith"></fresh-avatar>
-              <div style="font-size:10px;color:var(--text-tertiary);font-family:var(--font-sans);margin-top:6px">md · 36</div>
-            </div>
-            <div style="text-align:center">
-              <fresh-avatar name="Jane Smith" size="lg"></fresh-avatar>
-              <div style="font-size:10px;color:var(--text-tertiary);font-family:var(--font-sans);margin-top:6px">lg · 44</div>
-            </div>
-            <div style="text-align:center">
-              <fresh-avatar name="Jane Smith" size="xl"></fresh-avatar>
-              <div style="font-size:10px;color:var(--text-tertiary);font-family:var(--font-sans);margin-top:6px">xl · 64</div>
-            </div>
-          </div>
-        </div>
-        <div class="page-section">
-          <div class="page-section-title">Square shape (AI agents, bots)</div>
-          <div class="demo-surface" style="align-items:center;gap:var(--space-3)">
-            <fresh-avatar name="GPT-4o"      shape="square" size="sm"></fresh-avatar>
-            <fresh-avatar name="Claude"      shape="square"></fresh-avatar>
-            <fresh-avatar name="Gemini Pro"  shape="square" size="lg"></fresh-avatar>
-            <fresh-avatar name="Llama 3"     shape="square" size="xl"></fresh-avatar>
-          </div>
-        </div>
-        <div class="page-section">
-          <div class="page-section-title">With status indicator</div>
-          <div class="demo-surface" style="align-items:center;gap:var(--space-5)">
-            <div style="text-align:center">
-              <fresh-avatar name="Jane Smith" status="online"  size="lg"></fresh-avatar>
-              <div style="font-size:11px;color:var(--text-tertiary);font-family:var(--font-sans);margin-top:8px">online</div>
-            </div>
-            <div style="text-align:center">
-              <fresh-avatar name="Marcus Lee" status="away"    size="lg"></fresh-avatar>
-              <div style="font-size:11px;color:var(--text-tertiary);font-family:var(--font-sans);margin-top:8px">away</div>
-            </div>
-            <div style="text-align:center">
-              <fresh-avatar name="Priya Nair" status="busy"    size="lg"></fresh-avatar>
-              <div style="font-size:11px;color:var(--text-tertiary);font-family:var(--font-sans);margin-top:8px">busy</div>
-            </div>
-            <div style="text-align:center">
-              <fresh-avatar name="Tom Wu"     status="offline" size="lg"></fresh-avatar>
-              <div style="font-size:11px;color:var(--text-tertiary);font-family:var(--font-sans);margin-top:8px">offline</div>
-            </div>
-          </div>
-        </div>
-        <div class="page-section">
-          <div class="page-section-title">Image with initials fallback</div>
-          <div class="demo-surface" style="align-items:center;gap:var(--space-4)">
-            <fresh-avatar src="https://i.pravatar.cc/80?img=1" name="Jane Smith" size="lg" status="online"></fresh-avatar>
-            <fresh-avatar src="https://i.pravatar.cc/80?img=3" name="Marcus Lee" size="lg"></fresh-avatar>
-            <fresh-avatar src="broken-url.jpg"                 name="Fallback"  size="lg"></fresh-avatar>
-          </div>
-        </div>
-        <div class="page-section">
-          <div class="page-section-title">Attributes</div>
-          <table class="usage-table">
-            <thead><tr><th>Attribute</th><th>Values</th><th>Default</th><th>Description</th></tr></thead>
-            <tbody>
-              <tr><td>src</td><td>URL</td><td></td><td>Image source. Falls back to initials on error.</td></tr>
-              <tr><td>name</td><td>string</td><td></td><td>Used for initials, color, and aria-label</td></tr>
-              <tr><td>size</td><td><code>xs</code> <code>sm</code> <code>md</code> <code>lg</code> <code>xl</code></td><td><code>md</code></td><td>Diameter in px (20/28/36/44/64)</td></tr>
-              <tr><td>shape</td><td><code>circle</code> <code>square</code></td><td><code>circle</code></td><td>Square is recommended for AI agents and bots</td></tr>
-              <tr><td>status</td><td><code>online</code> <code>away</code> <code>busy</code> <code>offline</code></td><td></td><td>Colored dot at bottom-right</td></tr>
-            </tbody>
-          </table>
+
+<div class="comp-page">
+  <h1 class="comp-title">Avatar</h1>
+  <p class="comp-desc">User identity display. Shows a photo when available, falling back to initials on error or when no source is provided. Initials color is deterministically derived from the name and stays consistent across sessions and themes.</p>
+
+  <!-- STATES CARD -->
+  <div class="comp-section">
+    <div class="spec-card">
+      <div class="spec-card-topbar">
+        <span class="spec-rules-title">Avatar states</span>
+        <div class="spec-mode-switcher">
+          <button class="spec-mode-btn active" id="mode-btn-light" onclick="setSpecMode('light')"><i class="ti ti-sun"></i> Light</button>
+          <button class="spec-mode-btn" id="mode-btn-dark" onclick="setSpecMode('dark')"><i class="ti ti-moon"></i> Dark</button>
         </div>
       </div>
-    </main>
+      <div id="spec-viewport" class="spec-viewport">
+
+        <!-- Sizes -->
+        <div class="spec-variant-row">
+          <div class="spec-variant-header">
+            <span class="spec-variant-name">Sizes</span>
+            <span class="spec-attr-chip">size="xs|sm|md|lg|xl"</span>
+            <span class="spec-variant-sep">·</span>
+            <span class="spec-variant-desc">Five sizes: xs 20px, sm 28px, md 36px (default), lg 44px, xl 64px.</span>
+          </div>
+          <div class="spec-variant-body">
+            <div class="spec-demos" style="align-items:center;">
+              <div style="text-align:center;display:flex;flex-direction:column;align-items:center;gap:6px;">
+                <fresh-avatar name="Jane Smith" size="xs"></fresh-avatar>
+                <span style="font-size:10px;color:var(--text-tertiary);font-family:var(--font-sans)">xs · 20</span>
+              </div>
+              <div style="text-align:center;display:flex;flex-direction:column;align-items:center;gap:6px;">
+                <fresh-avatar name="Jane Smith" size="sm"></fresh-avatar>
+                <span style="font-size:10px;color:var(--text-tertiary);font-family:var(--font-sans)">sm · 28</span>
+              </div>
+              <div style="text-align:center;display:flex;flex-direction:column;align-items:center;gap:6px;">
+                <fresh-avatar name="Jane Smith"></fresh-avatar>
+                <span style="font-size:10px;color:var(--text-tertiary);font-family:var(--font-sans)">md · 36</span>
+              </div>
+              <div style="text-align:center;display:flex;flex-direction:column;align-items:center;gap:6px;">
+                <fresh-avatar name="Jane Smith" size="lg"></fresh-avatar>
+                <span style="font-size:10px;color:var(--text-tertiary);font-family:var(--font-sans)">lg · 44</span>
+              </div>
+              <div style="text-align:center;display:flex;flex-direction:column;align-items:center;gap:6px;">
+                <fresh-avatar name="Jane Smith" size="xl"></fresh-avatar>
+                <span style="font-size:10px;color:var(--text-tertiary);font-family:var(--font-sans)">xl · 64</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Initials: deterministic color from name -->
+        <div class="spec-variant-row">
+          <div class="spec-variant-header">
+            <span class="spec-variant-name">Initials</span>
+            <span class="spec-attr-chip">name="..."</span>
+            <span class="spec-variant-sep">·</span>
+            <span class="spec-variant-desc">Color is deterministically derived from the name using the --dv-1 through --dv-8 palette. Same name always maps to the same color.</span>
+          </div>
+          <div class="spec-variant-body">
+            <div class="spec-demos" style="align-items:center;">
+              <fresh-avatar name="Jane Smith"></fresh-avatar>
+              <fresh-avatar name="Marcus Lee"></fresh-avatar>
+              <fresh-avatar name="Priya Nair"></fresh-avatar>
+              <fresh-avatar name="Tom Wu"></fresh-avatar>
+              <fresh-avatar name="Anya Patel"></fresh-avatar>
+              <fresh-avatar name="Carlos R"></fresh-avatar>
+              <fresh-avatar name="AI Agent"></fresh-avatar>
+            </div>
+          </div>
+        </div>
+
+        <!-- Square shape for bots/agents -->
+        <div class="spec-variant-row">
+          <div class="spec-variant-header">
+            <span class="spec-variant-name">Square</span>
+            <span class="spec-attr-chip">shape="square"</span>
+            <span class="spec-variant-sep">·</span>
+            <span class="spec-variant-desc">Rounded-square shape for AI agents and bots to visually distinguish them from human users.</span>
+          </div>
+          <div class="spec-variant-body">
+            <div class="spec-demos" style="align-items:center;">
+              <fresh-avatar name="GPT-4o"     shape="square" size="sm"></fresh-avatar>
+              <fresh-avatar name="Claude"     shape="square"></fresh-avatar>
+              <fresh-avatar name="Gemini Pro" shape="square" size="lg"></fresh-avatar>
+              <fresh-avatar name="Llama 3"    shape="square" size="xl"></fresh-avatar>
+            </div>
+          </div>
+        </div>
+
+        <!-- Status indicator -->
+        <div class="spec-variant-row">
+          <div class="spec-variant-header">
+            <span class="spec-variant-name">Status</span>
+            <span class="spec-attr-chip">status="online|away|busy|offline"</span>
+            <span class="spec-variant-sep">·</span>
+            <span class="spec-variant-desc">Colored dot at bottom-right. Uses semantic color tokens: success, warning, danger, and tertiary.</span>
+          </div>
+          <div class="spec-variant-body">
+            <div class="spec-demos" style="align-items:center;">
+              <div style="text-align:center;display:flex;flex-direction:column;align-items:center;gap:8px;">
+                <fresh-avatar name="Jane Smith" status="online"  size="lg"></fresh-avatar>
+                <span style="font-size:11px;color:var(--text-tertiary);font-family:var(--font-sans)">online</span>
+              </div>
+              <div style="text-align:center;display:flex;flex-direction:column;align-items:center;gap:8px;">
+                <fresh-avatar name="Marcus Lee" status="away"    size="lg"></fresh-avatar>
+                <span style="font-size:11px;color:var(--text-tertiary);font-family:var(--font-sans)">away</span>
+              </div>
+              <div style="text-align:center;display:flex;flex-direction:column;align-items:center;gap:8px;">
+                <fresh-avatar name="Priya Nair" status="busy"    size="lg"></fresh-avatar>
+                <span style="font-size:11px;color:var(--text-tertiary);font-family:var(--font-sans)">busy</span>
+              </div>
+              <div style="text-align:center;display:flex;flex-direction:column;align-items:center;gap:8px;">
+                <fresh-avatar name="Tom Wu"     status="offline" size="lg"></fresh-avatar>
+                <span style="font-size:11px;color:var(--text-tertiary);font-family:var(--font-sans)">offline</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Image with fallback -->
+        <div class="spec-variant-row">
+          <div class="spec-variant-header">
+            <span class="spec-variant-name">Image</span>
+            <span class="spec-attr-chip">src="..."</span>
+            <span class="spec-variant-sep">·</span>
+            <span class="spec-variant-desc">Photo when available. Falls back to initials on load error. Always provide name for accessible fallback.</span>
+          </div>
+          <div class="spec-variant-body">
+            <div class="spec-demos" style="align-items:center;">
+              <fresh-avatar src="https://i.pravatar.cc/80?img=1" name="Jane Smith"  size="lg" status="online"></fresh-avatar>
+              <fresh-avatar src="https://i.pravatar.cc/80?img=3" name="Marcus Lee"  size="lg"></fresh-avatar>
+              <fresh-avatar src="broken-url.jpg"                 name="Fallback"    size="lg"></fresh-avatar>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /spec-viewport -->
+    </div><!-- /spec-card -->
   </div>
+
+  <!-- AI RULES -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar">
+        <span class="spec-rules-title">AI action rules</span>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <span class="spec-rules-hint">Click any rule to edit</span>
+          <button class="spec-rules-reset" onclick="restoreDefaults()"><i class="ti ti-rotate" style="font-size:10px;"></i> Restore FreshDS defaults</button>
+        </div>
+      </div>
+
+      <div class="spec-rules-section">
+        <div class="spec-rules-section-head">
+          <span class="spec-rules-variant">General</span>
+          <span class="spec-attr-chip">fresh-avatar</span>
+        </div>
+        <ul class="spec-rule-list" id="rules-general">
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Always provide a <code>name</code> attribute even when using <code>src</code>. It is used for initials fallback, color derivation, and the accessible <code>aria-label</code>.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Use <code>shape="square"</code> for AI agents, bots, and system identities to visually distinguish them from human user avatars.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Do not override avatar colors with custom CSS. The color palette is deterministic and fixed across all themes, ensuring each user always sees the same color for a given name.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Use <code>size="xl"</code> for profile pages and account settings. Use <code>size="md"</code> or <code>size="sm"</code> for table rows, lists, and comment threads.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Add a <code>status</code> attribute only when real-time presence data is available. Do not use status as a static decorative element.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+        </ul>
+        <button class="spec-add-rule" onclick="addRule('rules-general')"><i class="ti ti-plus"></i> Add rule</button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ATTRIBUTES -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Attributes</span></div>
+      <table class="spec-a11y-table">
+        <thead><tr><th style="width:130px">Attribute</th><th style="width:220px">Values</th><th style="width:80px">Default</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">src</td><td class="spec-a11y-req">URL string</td><td class="spec-a11y-req">-</td><td class="spec-a11y-req">Image source. Falls back to initials on load error.</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">name</td><td class="spec-a11y-req">string</td><td class="spec-a11y-req">-</td><td class="spec-a11y-req">Used for initials extraction, deterministic color, and <code>aria-label</code>. Always provide.</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">size</td><td class="spec-a11y-req"><code>xs</code> <code>sm</code> <code>md</code> <code>lg</code> <code>xl</code></td><td class="spec-a11y-req"><code>md</code></td><td class="spec-a11y-req">Diameter: xs 20px, sm 28px, md 36px, lg 44px, xl 64px.</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">shape</td><td class="spec-a11y-req"><code>circle</code> <code>square</code></td><td class="spec-a11y-req"><code>circle</code></td><td class="spec-a11y-req">Square is recommended for AI agents and bots.</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">status</td><td class="spec-a11y-req"><code>online</code> <code>away</code> <code>busy</code> <code>offline</code></td><td class="spec-a11y-req">-</td><td class="spec-a11y-req">Presence indicator dot at bottom-right. Omit when presence is unknown.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- CODE -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Code</span></div>
+      <div style="padding:16px 20px;display:flex;flex-direction:column;gap:0;">
+
+        <div class="code-block" data-code="&lt;fresh-avatar name=&quot;Jane Smith&quot;&gt;&lt;/fresh-avatar&gt;">
+          <div class="code-block-header"><span><span class="code-lang">HTML</span><span class="code-context">Initials only</span></span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+          <div class="code-body"><span class="hl-pun">&lt;</span><span class="hl-tag">fresh-avatar</span> <span class="hl-attr">name</span><span class="hl-pun">=</span><span class="hl-val">"Jane Smith"</span><span class="hl-pun">&gt;&lt;/</span><span class="hl-tag">fresh-avatar</span><span class="hl-pun">&gt;</span></div>
+        </div>
+
+        <div class="code-block" data-code="&lt;fresh-avatar
+  src=&quot;https://example.com/photo.jpg&quot;
+  name=&quot;Jane Smith&quot;
+  size=&quot;lg&quot;
+  status=&quot;online&quot;&gt;
+&lt;/fresh-avatar&gt;">
+          <div class="code-block-header"><span><span class="code-lang">HTML</span><span class="code-context">With image and status</span></span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+          <div class="code-body"><span class="hl-pun">&lt;</span><span class="hl-tag">fresh-avatar</span>
+  <span class="hl-attr">src</span><span class="hl-pun">=</span><span class="hl-val">"https://example.com/photo.jpg"</span>
+  <span class="hl-attr">name</span><span class="hl-pun">=</span><span class="hl-val">"Jane Smith"</span>
+  <span class="hl-attr">size</span><span class="hl-pun">=</span><span class="hl-val">"lg"</span>
+  <span class="hl-attr">status</span><span class="hl-pun">=</span><span class="hl-val">"online"</span><span class="hl-pun">&gt;</span>
+<span class="hl-pun">&lt;/</span><span class="hl-tag">fresh-avatar</span><span class="hl-pun">&gt;</span></div>
+        </div>
+
+        <div class="code-block" data-code="&lt;!-- AI agent: square shape --&gt;
+&lt;fresh-avatar name=&quot;Claude&quot; shape=&quot;square&quot; size=&quot;md&quot;&gt;&lt;/fresh-avatar&gt;">
+          <div class="code-block-header"><span><span class="code-lang">HTML</span><span class="code-context">AI agent identity</span></span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+          <div class="code-body"><span class="hl-cmt">&lt;!-- AI agent: square shape --&gt;</span>
+<span class="hl-pun">&lt;</span><span class="hl-tag">fresh-avatar</span> <span class="hl-attr">name</span><span class="hl-pun">=</span><span class="hl-val">"Claude"</span> <span class="hl-attr">shape</span><span class="hl-pun">=</span><span class="hl-val">"square"</span> <span class="hl-attr">size</span><span class="hl-pun">=</span><span class="hl-val">"md"</span><span class="hl-pun">&gt;&lt;/</span><span class="hl-tag">fresh-avatar</span><span class="hl-pun">&gt;</span></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- TOKENS -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Tokens</span></div>
+      <table class="spec-a11y-table">
+        <thead><tr><th style="width:220px">Token</th><th style="width:200px">Role</th><th>State</th></tr></thead>
+        <tbody>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--dv-1 through --dv-8</td><td class="spec-a11y-req">Initials background color</td><td class="spec-a11y-req">all</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--text-inverse</td><td class="spec-a11y-req">Initials letter color</td><td class="spec-a11y-req">all</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--surface-subtle</td><td class="spec-a11y-req">Background while image loads</td><td class="spec-a11y-req">image</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--surface-border</td><td class="spec-a11y-req">Outer ring border</td><td class="spec-a11y-req">all</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--color-success</td><td class="spec-a11y-req">Online status dot</td><td class="spec-a11y-req">status="online"</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--color-warning</td><td class="spec-a11y-req">Away status dot</td><td class="spec-a11y-req">status="away"</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--color-danger</td><td class="spec-a11y-req">Busy status dot</td><td class="spec-a11y-req">status="busy"</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--text-tertiary</td><td class="spec-a11y-req">Offline status dot</td><td class="spec-a11y-req">status="offline"</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--surface-bg</td><td class="spec-a11y-req">Status dot border (contrasts with bg)</td><td class="spec-a11y-req">status</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--font-sans</td><td class="spec-a11y-req">Initials font</td><td class="spec-a11y-req">all</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ACCESSIBILITY -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Accessibility</span></div>
+      <div style="padding:12px 24px 14px;border-bottom:1px solid #d4d4d7;">
+        <p style="font-size:13px;color:#555;line-height:1.6;margin:0;">Avatar satisfies all <a href="app.html#accessibility" target="_parent" style="color:#5b6af7;text-decoration:none;font-weight:500;">universal accessibility concerns</a>. Component-specific concerns are below.</p>
+      </div>
+      <table class="spec-a11y-table">
+        <thead><tr><th>Concern</th><th>Requirement</th></tr></thead>
+        <tbody>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">accessible name</td><td class="spec-a11y-req">The inner <code>div</code> carries <code>role="img"</code> and <code>aria-label</code> set to the <code>name</code> attribute. Always provide a meaningful name.</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">initials decoration</td><td class="spec-a11y-req">The initials <code>span</code> has <code>aria-hidden="true"</code>. Screen readers read the wrapping <code>aria-label</code> instead.</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">status dot</td><td class="spec-a11y-req">Status dot carries <code>aria-label</code> and <code>title</code> matching the status string (e.g. "online"). Sighted and AT users both receive the information.</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">color alone</td><td class="spec-a11y-req">Avatar identity color is supplementary. The <code>name</code>-based accessible label always conveys identity independently of color.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
 </div>
-<script src="components/core/fresh-button.js"></script>
-<script src="components/core/fresh-input.js"></script>
+
 <script src="components/data/fresh-avatar.js"></script>
-<script src="components/navigation/fresh-simple-tabs.js"></script>
+<script src="js/spec-page.js"></script>
+
+<script type="module">
+  import { supabase } from '/js/supabase-client.js'
+  var RULE_IDS = ['rules-general'];
+  var _saveTimer = null, _loading = false;
+  function getRulesSnapshot() {
+    var r = {};
+    RULE_IDS.forEach(function(id) { var l = document.getElementById(id); if (!l) return; r[id] = Array.from(l.querySelectorAll('.spec-rule-text')).map(function(el) { return el.innerHTML.trim(); }); });
+    return r;
+  }
+  function applySnapshot(saved) {
+    RULE_IDS.forEach(function(id) { var l = document.getElementById(id); if (!l) return; var rules = (saved && saved[id] && saved[id].length) ? saved[id] : window.DEFAULT_RULES[id]; l.innerHTML = rules.map(function(t) { return '<li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">' + t + '</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>'; }).join(''); }); }
+  async function saveRulesNow() {
+    try { var { data: { user } } = await supabase.auth.getUser(); if (!user) return; var { data: p } = await supabase.from('profiles').select('component_rules').eq('id', user.id).single(); var e = (p && p.component_rules) ? p.component_rules : {}; e.avatar = getRulesSnapshot(); await supabase.from('profiles').update({ component_rules: e }).eq('id', user.id); } catch(e) {}
+  }
+  function schedSave() { if (_loading) return; clearTimeout(_saveTimer); _saveTimer = setTimeout(saveRulesNow, 1000); }
+  var panel = document.querySelector('.spec-rules-panel'); if (panel) new MutationObserver(schedSave).observe(panel, { childList: true, subtree: true, characterData: true });
+  ;(async function() { try { var { data: { user } } = await supabase.auth.getUser(); if (!user) return; var { data: p } = await supabase.from('profiles').select('component_rules').eq('id', user.id).single(); if (p && p.component_rules && p.component_rules.avatar) { _loading = true; applySnapshot(p.component_rules.avatar); _loading = false; } } catch(e) {} })();
+</script>
+
+<script>
+  var DEFAULT_RULES = {
+    'rules-general': [
+      'Always provide a <code>name</code> attribute even when using <code>src</code>. It is used for initials fallback, color derivation, and the accessible <code>aria-label</code>.',
+      'Use <code>shape="square"</code> for AI agents, bots, and system identities to visually distinguish them from human user avatars.',
+      'Do not override avatar colors with custom CSS. The color palette is deterministic and fixed across all themes, ensuring each user always sees the same color for a given name.',
+      'Use <code>size="xl"</code> for profile pages and account settings. Use <code>size="md"</code> or <code>size="sm"</code> for table rows, lists, and comment threads.',
+      'Add a <code>status</code> attribute only when real-time presence data is available. Do not use status as a static decorative element.'
+    ]
+  };
+  function restoreDefaults() {
+    if (!confirm('Reset all avatar rules to FreshDS defaults? Any edits you have made will be lost.')) return;
+    Object.keys(DEFAULT_RULES).forEach(function(id) { var l = document.getElementById(id); if (!l) return; l.innerHTML = DEFAULT_RULES[id].map(function(t) { return '<li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">' + t + '</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>'; }).join(''); }); }
+</script>
 </body>
 </html>

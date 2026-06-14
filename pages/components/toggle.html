@@ -8,83 +8,284 @@
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="styles/site.css">
 <link rel="stylesheet" href="tokens/primitives.css">
 <link rel="stylesheet" href="tokens/theme.css">
-<link rel="stylesheet" href="tokens/dataviz.css">
-<link rel="stylesheet" href="styles/reset.css">
-<link rel="stylesheet" href="styles/layout.css">
-<link rel="stylesheet" href="styles/components/core.css">
-<link rel="stylesheet" href="styles/docs.css">
 <script src="js/freshds.js"></script>
 <script src="js/freshds-site.js"></script>
+<link rel="stylesheet" href="styles/components/spec-page.css">
 </head>
 <body>
-<div class="fds-app" id="app">
-  <ds-topbar active-section="ds"></ds-topbar>
-  <div class="fds-body">
-    <ds-shell active="toggle"></ds-shell>
-    <main class="fds-main">
-      <div class="fds-page active" id="page-toggle">
-        <div class="page-header">
-          <div class="page-eyebrow">Core UI</div>
-          <h1 class="page-title">Toggle</h1>
-          <p class="page-desc">Binary on/off switch. Use for settings that take immediate effect, no Save button needed. The thumb slides smoothly using the brand color to signal active state.</p>
-        </div>
-        <div class="page-section">
-          <div class="page-section-title">Sizes</div>
-          <div class="demo-surface col" style="gap:var(--space-4)">
-            <fresh-toggle size="sm" checked label="Small"></fresh-toggle>
-            <fresh-toggle checked label="Default"></fresh-toggle>
-            <fresh-toggle size="lg" checked label="Large"></fresh-toggle>
-          </div>
-        </div>
-        <div class="page-section">
-          <div class="page-section-title">States</div>
-          <div class="demo-surface col" style="gap:var(--space-4)">
-            <fresh-toggle label="Off"></fresh-toggle>
-            <fresh-toggle checked label="On"></fresh-toggle>
-            <fresh-toggle disabled label="Disabled off"></fresh-toggle>
-            <fresh-toggle checked disabled label="Disabled on"></fresh-toggle>
-          </div>
-        </div>
-        <div class="page-section">
-          <div class="page-section-title">In a settings group</div>
-          <div class="demo-surface col" style="gap:var(--space-5)">
-            <div style="display:flex;justify-content:space-between;align-items:center;width:100%;max-width:460px">
-              <div><div style="font-size:13px;color:var(--text-primary);font-family:var(--font-sans)">AI suggestions</div><div style="font-size:12px;color:var(--text-tertiary);font-family:var(--font-sans);margin-top:2px">Show inline completions while typing</div></div>
-              <fresh-toggle checked></fresh-toggle>
-            </div>
-            <div style="display:flex;justify-content:space-between;align-items:center;width:100%;max-width:460px">
-              <div><div style="font-size:13px;color:var(--text-primary);font-family:var(--font-sans)">Auto-save</div><div style="font-size:12px;color:var(--text-tertiary);font-family:var(--font-sans);margin-top:2px">Save changes automatically every 30 seconds</div></div>
-              <fresh-toggle checked></fresh-toggle>
-            </div>
-            <div style="display:flex;justify-content:space-between;align-items:center;width:100%;max-width:460px">
-              <div><div style="font-size:13px;color:var(--text-primary);font-family:var(--font-sans)">Usage analytics</div><div style="font-size:12px;color:var(--text-tertiary);font-family:var(--font-sans);margin-top:2px">Help improve the product</div></div>
-              <fresh-toggle></fresh-toggle>
-            </div>
-          </div>
-        </div>
-        <div class="page-section">
-          <div class="page-section-title">Attributes</div>
-          <table class="usage-table">
-            <thead><tr><th>Attribute</th><th>Values</th><th>Default</th><th>Description</th></tr></thead>
-            <tbody>
-              <tr><td>checked</td><td>boolean</td><td></td><td>On state</td></tr>
-              <tr><td>size</td><td><code>sm</code> <code>md</code> <code>lg</code></td><td><code>md</code></td><td>Track dimensions</td></tr>
-              <tr><td>label</td><td>string</td><td></td><td>Text label to the right</td></tr>
-              <tr><td>disabled</td><td>boolean</td><td></td><td>Prevents interaction</td></tr>
-            </tbody>
-          </table>
+
+<div class="comp-page">
+  <h1 class="comp-title">Toggle</h1>
+  <p class="comp-desc">Instant on/off switch for settings that take effect immediately without a save action. Use instead of a checkbox when the change applies in real time.</p>
+
+  <!-- STATES CARD -->
+  <div class="comp-section">
+    <div class="spec-card">
+      <div class="spec-card-topbar">
+        <span class="spec-rules-title">Toggle states</span>
+        <div class="spec-mode-switcher">
+          <button class="spec-mode-btn active" id="mode-btn-light" onclick="setSpecMode('light')"><i class="ti ti-sun"></i> Light</button>
+          <button class="spec-mode-btn" id="mode-btn-dark" onclick="setSpecMode('dark')"><i class="ti ti-moon"></i> Dark</button>
         </div>
       </div>
-    </main>
+      <div id="spec-viewport" class="spec-viewport">
+
+        <!-- Off -->
+        <div class="spec-variant-row">
+          <div class="spec-variant-header">
+            <span class="spec-variant-name">Off</span>
+            <span class="spec-variant-sep">·</span>
+            <span class="spec-variant-desc">Default state. The track is neutral and the thumb sits at the left.</span>
+          </div>
+          <div class="spec-variant-body">
+            <div class="spec-demos">
+              <fresh-toggle label="Dark mode"></fresh-toggle>
+              <fresh-toggle label="Auto-save"></fresh-toggle>
+            </div>
+            <div class="spec-sizes">
+              <div class="spec-size-item">
+                <fresh-toggle size="sm"></fresh-toggle>
+                <span class="spec-size-px">28x16px</span>
+              </div>
+              <div class="spec-size-item">
+                <fresh-toggle></fresh-toggle>
+                <span class="spec-size-px">36x20px</span>
+              </div>
+              <div class="spec-size-item">
+                <fresh-toggle size="lg"></fresh-toggle>
+                <span class="spec-size-px">44x24px</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- On -->
+        <div class="spec-variant-row">
+          <div class="spec-variant-header">
+            <span class="spec-variant-name">On</span>
+            <span class="spec-attr-chip">checked</span>
+            <span class="spec-variant-sep">·</span>
+            <span class="spec-variant-desc">Active state. The track fills with the interactive colour and the thumb moves to the right.</span>
+          </div>
+          <div class="spec-variant-body">
+            <div class="spec-demos">
+              <fresh-toggle checked label="Notifications enabled"></fresh-toggle>
+              <fresh-toggle checked label="Two-factor auth"></fresh-toggle>
+            </div>
+            <div class="spec-sizes">
+              <div class="spec-size-item">
+                <fresh-toggle size="sm" checked></fresh-toggle>
+                <span class="spec-size-px">28x16px</span>
+              </div>
+              <div class="spec-size-item">
+                <fresh-toggle checked></fresh-toggle>
+                <span class="spec-size-px">36x20px</span>
+              </div>
+              <div class="spec-size-item">
+                <fresh-toggle size="lg" checked></fresh-toggle>
+                <span class="spec-size-px">44x24px</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Disabled -->
+        <div class="spec-variant-row">
+          <div class="spec-variant-header">
+            <span class="spec-variant-name">Disabled</span>
+            <span class="spec-attr-chip">disabled</span>
+            <span class="spec-variant-sep">·</span>
+            <span class="spec-variant-desc">Interaction blocked. Opacity drops to 40%. Can be combined with checked.</span>
+          </div>
+          <div class="spec-variant-body">
+            <div class="spec-demos">
+              <fresh-toggle disabled label="Managed by admin"></fresh-toggle>
+              <fresh-toggle disabled checked label="Enforced by policy"></fresh-toggle>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /spec-viewport -->
+    </div><!-- /spec-card -->
   </div>
+
+  <!-- AI RULES -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar">
+        <span class="spec-rules-title">AI action rules</span>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <span class="spec-rules-hint">Click any rule to edit</span>
+          <button class="spec-rules-reset" onclick="restoreDefaults()"><i class="ti ti-rotate" style="font-size:10px;"></i> Restore FreshDS defaults</button>
+        </div>
+      </div>
+      <div class="spec-rules-section">
+        <div class="spec-rules-section-head">
+          <span class="spec-rules-variant">General</span>
+          <span class="spec-attr-chip">fresh-toggle</span>
+        </div>
+        <ul class="spec-rule-list" id="rules-general">
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Use <code>fresh-toggle</code> for settings that take effect immediately without a separate save action. If the user must confirm before the change applies, use a <code>fresh-checkbox</code> inside a form instead.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Always set a <code>label</code> that describes what is being toggled, not the toggle's current state. "Dark mode" is correct. "On" or "Off" is not.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Match the <code>size</code> to the density of the surrounding context: <code>sm</code> for table rows and compact panels, <code>md</code> (default) for settings screens, <code>lg</code> for onboarding flows.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">When a toggle controls a potentially destructive setting (e.g. "Delete data on logout"), add a confirmation step before committing the change in the <code>change</code> event handler.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Do not use a toggle to represent a multi-step process. Each toggle must represent exactly one binary setting that can be independently switched.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+        </ul>
+        <button class="spec-add-rule" onclick="addRule('rules-general')"><i class="ti ti-plus"></i> Add rule</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ATTRIBUTES -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Attributes</span></div>
+      <table class="spec-a11y-table">
+        <thead><tr><th style="width:130px">Attribute</th><th style="width:220px">Values</th><th style="width:80px">Default</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">label</td><td class="spec-a11y-req">string</td><td class="spec-a11y-req">-</td><td class="spec-a11y-req">Visible label rendered to the right of the track.</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">checked</td><td class="spec-a11y-req">boolean</td><td class="spec-a11y-req">-</td><td class="spec-a11y-req">Initial on state. Sets <code>aria-checked="true"</code> on the inner switch input.</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">disabled</td><td class="spec-a11y-req">boolean</td><td class="spec-a11y-req">-</td><td class="spec-a11y-req">Prevents interaction and dims to 40% opacity. Can be combined with <code>checked</code>.</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">size</td><td class="spec-a11y-req"><code>sm</code> <code>md</code> <code>lg</code></td><td class="spec-a11y-req"><code>md</code></td><td class="spec-a11y-req">Track dimensions: sm 28x16px, md 36x20px, lg 44x24px. Thumb and font scale proportionally.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- EVENTS -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Events</span></div>
+      <table class="spec-a11y-table">
+        <thead><tr><th style="width:130px">Event</th><th style="width:220px">Detail</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">change</td><td class="spec-a11y-req"><code>{ checked: boolean }</code></td><td class="spec-a11y-req">Fired after the user toggles the switch. <code>checked</code> reflects the new state. Bubbles and is composed.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- CODE -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Code</span></div>
+      <div style="padding:16px 20px;display:flex;flex-direction:column;gap:0;">
+
+        <div class="code-block" data-code="<fresh-toggle label=&quot;Dark mode&quot;></fresh-toggle>">
+          <div class="code-block-header"><span><span class="code-lang">HTML</span><span class="code-context">Basic</span></span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+          <div class="code-body"><span class="hl-pun">&lt;</span><span class="hl-tag">fresh-toggle</span> <span class="hl-attr">label</span><span class="hl-pun">=</span><span class="hl-val">"Dark mode"</span><span class="hl-pun">&gt;&lt;/</span><span class="hl-tag">fresh-toggle</span><span class="hl-pun">&gt;</span></div>
+        </div>
+
+        <div class="code-block" data-code="<fresh-toggle checked label=&quot;Email notifications&quot; id=&quot;notif-toggle&quot;></fresh-toggle>
+
+<script>
+  document.getElementById('notif-toggle').addEventListener('change', function(e) {
+    savePreference('email_notifications', e.detail.checked);
+  });
+<\/script>">
+          <div class="code-block-header"><span><span class="code-lang">HTML</span><span class="code-context">With change handler</span></span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+          <div class="code-body"><span class="hl-pun">&lt;</span><span class="hl-tag">fresh-toggle</span> <span class="hl-attr">checked</span> <span class="hl-attr">label</span><span class="hl-pun">=</span><span class="hl-val">"Email notifications"</span> <span class="hl-attr">id</span><span class="hl-pun">=</span><span class="hl-val">"notif-toggle"</span><span class="hl-pun">&gt;&lt;/</span><span class="hl-tag">fresh-toggle</span><span class="hl-pun">&gt;</span>
+
+<span class="hl-pun">&lt;</span><span class="hl-tag">script</span><span class="hl-pun">&gt;</span>
+  <span class="hl-txt">document.getElementById(</span><span class="hl-val">'notif-toggle'</span><span class="hl-txt">).addEventListener(</span><span class="hl-val">'change'</span><span class="hl-txt">, function(e) {</span>
+    <span class="hl-txt">savePreference(</span><span class="hl-val">'email_notifications'</span><span class="hl-txt">, e.detail.checked);</span>
+  <span class="hl-txt">});</span>
+<span class="hl-pun">&lt;/</span><span class="hl-tag">script</span><span class="hl-pun">&gt;</span></div>
+        </div>
+
+        <div class="code-block" data-code="<fresh-toggle size=&quot;sm&quot; checked label=&quot;Active&quot;></fresh-toggle>
+<fresh-toggle size=&quot;sm&quot; label=&quot;Archived&quot;></fresh-toggle>
+<fresh-toggle size=&quot;sm&quot; disabled label=&quot;Managed by admin&quot;></fresh-toggle>">
+          <div class="code-block-header"><span><span class="code-lang">HTML</span><span class="code-context">Small toggles in a settings list</span></span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+          <div class="code-body"><span class="hl-pun">&lt;</span><span class="hl-tag">fresh-toggle</span> <span class="hl-attr">size</span><span class="hl-pun">=</span><span class="hl-val">"sm"</span> <span class="hl-attr">checked</span> <span class="hl-attr">label</span><span class="hl-pun">=</span><span class="hl-val">"Active"</span><span class="hl-pun">&gt;&lt;/</span><span class="hl-tag">fresh-toggle</span><span class="hl-pun">&gt;</span>
+<span class="hl-pun">&lt;</span><span class="hl-tag">fresh-toggle</span> <span class="hl-attr">size</span><span class="hl-pun">=</span><span class="hl-val">"sm"</span> <span class="hl-attr">label</span><span class="hl-pun">=</span><span class="hl-val">"Archived"</span><span class="hl-pun">&gt;&lt;/</span><span class="hl-tag">fresh-toggle</span><span class="hl-pun">&gt;</span>
+<span class="hl-pun">&lt;</span><span class="hl-tag">fresh-toggle</span> <span class="hl-attr">size</span><span class="hl-pun">=</span><span class="hl-val">"sm"</span> <span class="hl-attr">disabled</span> <span class="hl-attr">label</span><span class="hl-pun">=</span><span class="hl-val">"Managed by admin"</span><span class="hl-pun">&gt;&lt;/</span><span class="hl-tag">fresh-toggle</span><span class="hl-pun">&gt;</span></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- TOKENS -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Tokens</span></div>
+      <table class="spec-a11y-table">
+        <thead><tr><th style="width:220px">Token</th><th style="width:200px">Role</th><th>State</th></tr></thead>
+        <tbody>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--color-interactive</td><td class="spec-a11y-req">Track fill colour</td><td class="spec-a11y-req">on (checked)</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--surface-overlay</td><td class="spec-a11y-req">Track fill colour</td><td class="spec-a11y-req">off (unchecked)</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--surface-border-strong</td><td class="spec-a11y-req">Track border colour</td><td class="spec-a11y-req">off (unchecked)</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--text-inverse</td><td class="spec-a11y-req">Thumb colour</td><td class="spec-a11y-req">on (checked)</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--text-tertiary</td><td class="spec-a11y-req">Thumb colour</td><td class="spec-a11y-req">off (unchecked)</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--surface-bg</td><td class="spec-a11y-req">Focus ring offset colour</td><td class="spec-a11y-req">focus-visible</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--text-secondary</td><td class="spec-a11y-req">Label text colour</td><td class="spec-a11y-req">all</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--font-sans</td><td class="spec-a11y-req">Font family</td><td class="spec-a11y-req">all</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ACCESSIBILITY -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Accessibility</span></div>
+      <div style="padding:12px 24px 14px;border-bottom:1px solid #d4d4d7;">
+        <p style="font-size:13px;color:#555;line-height:1.6;margin:0;">Toggle satisfies all <a href="app.html#accessibility" target="_parent" style="color:#5b6af7;text-decoration:none;font-weight:500;">universal accessibility concerns</a>. Component-specific concerns are below.</p>
+      </div>
+      <table class="spec-a11y-table">
+        <thead><tr><th>Concern</th><th>Requirement</th></tr></thead>
+        <tbody>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">role=switch</td><td class="spec-a11y-req">The inner input renders <code>role="switch"</code> with <code>aria-checked</code> reflecting the current state. Screen readers announce the toggle as a switch, which is semantically distinct from a checkbox and sets the correct user expectation of immediate effect.</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">immediate effect</td><td class="spec-a11y-req">Because toggles take effect immediately, provide visible feedback near the toggle (a status badge, toast, or inline text) confirming the new state. Do not rely solely on the visual track colour to communicate the change to all users.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
 </div>
-<script src="components/core/fresh-button.js"></script>
-<script src="components/core/fresh-input.js"></script>
+
 <script src="components/core/fresh-toggle.js"></script>
-<script src="components/navigation/fresh-simple-tabs.js"></script>
+<script src="js/spec-page.js"></script>
+
+<script type="module">
+  import { supabase } from '/js/supabase-client.js'
+  var RULE_IDS = ['rules-general'];
+  var _saveTimer = null, _loading = false;
+  function getRulesSnapshot() {
+    var r = {};
+    RULE_IDS.forEach(function(id) { var l = document.getElementById(id); if (!l) return; r[id] = Array.from(l.querySelectorAll('.spec-rule-text')).map(function(el) { return el.innerHTML.trim(); }); });
+    return r;
+  }
+  function applySnapshot(saved) {
+    RULE_IDS.forEach(function(id) { var l = document.getElementById(id); if (!l) return; var rules = (saved && saved[id] && saved[id].length) ? saved[id] : window.DEFAULT_RULES[id]; l.innerHTML = rules.map(function(t) { return '<li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">' + t + '</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>'; }).join(''); }); }
+  async function saveRulesNow() {
+    try { var { data: { user } } = await supabase.auth.getUser(); if (!user) return; var { data: p } = await supabase.from('profiles').select('component_rules').eq('id', user.id).single(); var e = (p && p.component_rules) ? p.component_rules : {}; e.toggle = getRulesSnapshot(); await supabase.from('profiles').update({ component_rules: e }).eq('id', user.id); } catch(e) {}
+  }
+  function schedSave() { if (_loading) return; clearTimeout(_saveTimer); _saveTimer = setTimeout(saveRulesNow, 1000); }
+  var panel = document.querySelector('.spec-rules-panel'); if (panel) new MutationObserver(schedSave).observe(panel, { childList: true, subtree: true, characterData: true });
+  ;(async function() { try { var { data: { user } } = await supabase.auth.getUser(); if (!user) return; var { data: p } = await supabase.from('profiles').select('component_rules').eq('id', user.id).single(); if (p && p.component_rules && p.component_rules.toggle) { _loading = true; applySnapshot(p.component_rules.toggle); _loading = false; } } catch(e) {} })();
+</script>
+
+<script>
+  var DEFAULT_RULES = {
+    'rules-general': [
+      'Use <code>fresh-toggle</code> for settings that take effect immediately without a separate save action. If the user must confirm before the change applies, use a <code>fresh-checkbox</code> inside a form instead.',
+      'Always set a <code>label</code> that describes what is being toggled, not the toggle\'s current state. "Dark mode" is correct. "On" or "Off" is not.',
+      'Match the <code>size</code> to the density of the surrounding context: <code>sm</code> for table rows and compact panels, <code>md</code> (default) for settings screens, <code>lg</code> for onboarding flows.',
+      'When a toggle controls a potentially destructive setting (e.g. "Delete data on logout"), add a confirmation step before committing the change in the <code>change</code> event handler.',
+      'Do not use a toggle to represent a multi-step process. Each toggle must represent exactly one binary setting that can be independently switched.'
+    ]
+  };
+  function restoreDefaults() {
+    if (!confirm('Reset all toggle rules to FreshDS defaults? Any edits you have made will be lost.')) return;
+    Object.keys(DEFAULT_RULES).forEach(function(id) { var l = document.getElementById(id); if (!l) return; l.innerHTML = DEFAULT_RULES[id].map(function(t) { return '<li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">' + t + '</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>'; }).join(''); });
+  }
+</script>
 </body>
 </html>

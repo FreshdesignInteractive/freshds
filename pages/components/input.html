@@ -8,86 +8,525 @@
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="styles/site.css">
 <link rel="stylesheet" href="tokens/primitives.css">
 <link rel="stylesheet" href="tokens/theme.css">
-<link rel="stylesheet" href="tokens/dataviz.css">
-<link rel="stylesheet" href="styles/reset.css">
-<link rel="stylesheet" href="styles/layout.css">
-<link rel="stylesheet" href="styles/components/core.css">
-<link rel="stylesheet" href="styles/docs.css">
 <script src="js/freshds.js"></script>
 <script src="js/freshds-site.js"></script>
+<link rel="stylesheet" href="styles/components/spec-page.css">
 </head>
 <body>
-<div class="fds-app" id="app">
-  <ds-topbar active-section="ds"></ds-topbar>
-  <div class="fds-body">
-    <ds-shell active="input"></ds-shell>
-    <main class="fds-main">
-      <div class="fds-page active" id="page-input">
-        <div class="page-header">
-          <div class="page-eyebrow">Core UI</div>
-          <h1 class="page-title">Input</h1>
-          <p class="page-desc">Text fields for user input. Consistent height scale with Button for seamless inline composition. Supports icons, error states, and all standard input types.</p>
-        </div>
-        <div class="page-section">
-          <div class="page-section-title">Default</div>
-          <div class="demo-surface col" style="max-width:400px">
-            <fresh-input placeholder="Search components…"></fresh-input>
-            <fresh-input placeholder="Enter your email" type="email"></fresh-input>
-            <fresh-input placeholder="Password" type="password"></fresh-input>
-          </div>
-        </div>
-        <div class="page-section">
-          <div class="page-section-title">With icon</div>
-          <div class="demo-surface col" style="max-width:400px">
-            <fresh-input icon="ti-search" placeholder="Search…"></fresh-input>
-            <fresh-input icon="ti-mail" placeholder="Email address" type="email"></fresh-input>
-            <fresh-input icon="ti-user" placeholder="Username"></fresh-input>
-          </div>
-        </div>
-        <div class="page-section">
-          <div class="page-section-title">Sizes</div>
-          <div class="demo-surface col" style="max-width:400px">
-            <fresh-input size="sm" placeholder="Small, 28px"></fresh-input>
-            <fresh-input placeholder="Default, 34px"></fresh-input>
-            <fresh-input size="lg" placeholder="Large, 40px"></fresh-input>
-          </div>
-        </div>
-        <div class="page-section">
-          <div class="page-section-title">States</div>
-          <div class="demo-surface col" style="max-width:400px">
-            <fresh-input placeholder="Default"></fresh-input>
-            <fresh-input disabled placeholder="Disabled"></fresh-input>
-            <fresh-input readonly value="Read-only value"></fresh-input>
-            <fresh-input error="This field is required" placeholder="Error state"></fresh-input>
-            <fresh-input icon="ti-mail" error="Invalid email address" value="not-an-email"></fresh-input>
-          </div>
-        </div>
-        <div class="page-section">
-          <div class="page-section-title">Attributes</div>
-          <table class="usage-table">
-            <thead><tr><th>Attribute</th><th>Values</th><th>Default</th><th>Description</th></tr></thead>
-            <tbody>
-              <tr><td>type</td><td><code>text</code> <code>email</code> <code>password</code> <code>number</code> <code>search</code></td><td><code>text</code></td><td>Native input type</td></tr>
-              <tr><td>placeholder</td><td>string</td><td></td><td>Hint text when empty</td></tr>
-              <tr><td>value</td><td>string</td><td></td><td>Current value</td></tr>
-              <tr><td>size</td><td><code>sm</code> <code>md</code> <code>lg</code></td><td><code>md</code></td><td>Height (28 / 34 / 40px)</td></tr>
-              <tr><td>icon</td><td>Tabler class e.g. <code>ti-search</code></td><td></td><td>Leading icon</td></tr>
-              <tr><td>error</td><td>string</td><td></td><td>Error message, activates red border</td></tr>
-              <tr><td>disabled</td><td>boolean</td><td></td><td>Prevents interaction</td></tr>
-              <tr><td>readonly</td><td>boolean</td><td></td><td>Displays value, prevents editing</td></tr>
-            </tbody>
-          </table>
+
+<div class="comp-page">
+
+  <h1 class="comp-title">Input</h1>
+  <p class="comp-desc">Single-line text field for user input. Height scale matches Button so the two compose seamlessly inline. Supports a leading icon, inline error message, clearable value, and all standard HTML input types.</p>
+
+  <!-- STATES -->
+  <div class="comp-section">
+    <div class="spec-card">
+      <div class="spec-card-topbar">
+        <span class="spec-rules-title">Input states</span>
+        <div class="spec-mode-switcher">
+          <button class="spec-mode-btn active" id="mode-btn-light" onclick="setSpecMode('light')"><i class="ti ti-sun"></i> Light</button>
+          <button class="spec-mode-btn" id="mode-btn-dark" onclick="setSpecMode('dark')"><i class="ti ti-moon"></i> Dark</button>
         </div>
       </div>
-    </main>
+      <div id="spec-viewport" class="spec-viewport">
+
+      <!-- Default -->
+      <div class="spec-variant-row">
+        <div class="spec-variant-header">
+          <span class="spec-variant-name">Default</span>
+          <span class="spec-variant-sep">·</span>
+          <span class="spec-variant-desc">Plain text field, no extra attributes.</span>
+        </div>
+        <div class="spec-variant-body">
+          <div class="spec-demos" style="max-width:320px">
+            <fresh-input placeholder="Placeholder text" style="width:100%"></fresh-input>
+            <fresh-input value="Filled value" style="width:100%"></fresh-input>
+          </div>
+          <div class="spec-sizes">
+            <div class="spec-size-item">
+              <fresh-input size="sm" placeholder="Sm" style="width:64px"></fresh-input>
+              <span class="spec-size-px">28px</span>
+            </div>
+            <div class="spec-size-item">
+              <fresh-input placeholder="Md" style="width:64px"></fresh-input>
+              <span class="spec-size-px">34px</span>
+            </div>
+            <div class="spec-size-item">
+              <fresh-input size="lg" placeholder="Lg" style="width:64px"></fresh-input>
+              <span class="spec-size-px">40px</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- With icon -->
+      <div class="spec-variant-row">
+        <div class="spec-variant-header">
+          <span class="spec-variant-name">With icon</span>
+          <span class="spec-attr-chip">icon="ti-{name}"</span>
+          <span class="spec-variant-sep">·</span>
+          <span class="spec-variant-desc">Leading Tabler icon provides visual context without adding a separate element.</span>
+        </div>
+        <div class="spec-variant-body">
+          <div class="spec-demos" style="max-width:320px">
+            <fresh-input icon="ti-search" placeholder="Search…" style="width:100%"></fresh-input>
+            <fresh-input icon="ti-mail" placeholder="you@company.com" type="email" style="width:100%"></fresh-input>
+            <fresh-input icon="ti-lock" placeholder="Password" type="password" style="width:100%"></fresh-input>
+          </div>
+          <div class="spec-sizes">
+            <div class="spec-size-item">
+              <fresh-input size="sm" icon="ti-search" placeholder="Sm" style="width:80px"></fresh-input>
+              <span class="spec-size-px">28px</span>
+            </div>
+            <div class="spec-size-item">
+              <fresh-input icon="ti-search" placeholder="Md" style="width:80px"></fresh-input>
+              <span class="spec-size-px">34px</span>
+            </div>
+            <div class="spec-size-item">
+              <fresh-input size="lg" icon="ti-search" placeholder="Lg" style="width:80px"></fresh-input>
+              <span class="spec-size-px">40px</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Clearable -->
+      <div class="spec-variant-row">
+        <div class="spec-variant-header">
+          <span class="spec-variant-name">Clearable</span>
+          <span class="spec-attr-chip">clearable</span>
+          <span class="spec-variant-sep">·</span>
+          <span class="spec-variant-desc">Shows an x button when the field has a value. Type something to see it.</span>
+        </div>
+        <div class="spec-variant-body">
+          <div class="spec-demos" style="max-width:320px">
+            <fresh-input clearable placeholder="Type to see clear button" style="width:100%"></fresh-input>
+            <fresh-input icon="ti-search" clearable placeholder="Search with clear" style="width:100%"></fresh-input>
+          </div>
+          <div class="spec-sizes">
+            <div class="spec-size-item">
+              <fresh-input size="sm" clearable value="abc" style="width:80px"></fresh-input>
+              <span class="spec-size-px">28px</span>
+            </div>
+            <div class="spec-size-item">
+              <fresh-input clearable value="abc" style="width:80px"></fresh-input>
+              <span class="spec-size-px">34px</span>
+            </div>
+            <div class="spec-size-item">
+              <fresh-input size="lg" clearable value="abc" style="width:80px"></fresh-input>
+              <span class="spec-size-px">40px</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Error -->
+      <div class="spec-variant-row">
+        <div class="spec-variant-header">
+          <span class="spec-variant-name">Error</span>
+          <span class="spec-attr-chip">error="…"</span>
+          <span class="spec-variant-sep">·</span>
+          <span class="spec-variant-desc">Sets aria-invalid, red border, and renders the error string below the field.</span>
+        </div>
+        <div class="spec-variant-body">
+          <div class="spec-demos" style="max-width:320px">
+            <fresh-input error="This field is required" placeholder="Name" style="width:100%"></fresh-input>
+            <fresh-input icon="ti-mail" error="Enter a valid email address" value="not-an-email" style="width:100%"></fresh-input>
+          </div>
+          <div class="spec-sizes">
+            <div class="spec-size-item">
+              <fresh-input size="sm" error="Err" placeholder="Sm" style="width:80px"></fresh-input>
+              <span class="spec-size-px">28px</span>
+            </div>
+            <div class="spec-size-item">
+              <fresh-input error="Err" placeholder="Md" style="width:80px"></fresh-input>
+              <span class="spec-size-px">34px</span>
+            </div>
+            <div class="spec-size-item">
+              <fresh-input size="lg" error="Err" placeholder="Lg" style="width:80px"></fresh-input>
+              <span class="spec-size-px">40px</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Disabled / Readonly -->
+      <div class="spec-variant-row">
+        <div class="spec-variant-header">
+          <span class="spec-variant-name">Disabled / Readonly</span>
+          <span class="spec-attr-chip">disabled</span>
+          <span class="spec-attr-chip">readonly</span>
+          <span class="spec-variant-sep">·</span>
+          <span class="spec-variant-desc">Disabled blocks all interaction; readonly shows the value but prevents editing.</span>
+        </div>
+        <div class="spec-variant-body">
+          <div class="spec-demos" style="max-width:320px">
+            <fresh-input disabled placeholder="Disabled field" style="width:100%"></fresh-input>
+            <fresh-input readonly value="Read-only value" style="width:100%"></fresh-input>
+          </div>
+          <div class="spec-sizes">
+            <div class="spec-size-item">
+              <fresh-input size="sm" disabled placeholder="Sm" style="width:80px"></fresh-input>
+              <span class="spec-size-px">28px</span>
+            </div>
+            <div class="spec-size-item">
+              <fresh-input disabled placeholder="Md" style="width:80px"></fresh-input>
+              <span class="spec-size-px">34px</span>
+            </div>
+            <div class="spec-size-item">
+              <fresh-input size="lg" disabled placeholder="Lg" style="width:80px"></fresh-input>
+              <span class="spec-size-px">40px</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      </div><!-- /spec-viewport -->
+    </div><!-- /spec-card -->
+  </div><!-- /comp-section -->
+
+  <!-- AI RULES -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+
+      <div class="spec-rules-topbar">
+        <span class="spec-rules-title">AI action rules</span>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <span class="spec-rules-hint">Click any rule to edit</span>
+          <button class="spec-rules-reset" onclick="restoreDefaults()"><i class="ti ti-rotate" style="font-size:10px;"></i> Restore FreshDS defaults</button>
+        </div>
+      </div>
+
+      <!-- General rules -->
+      <div class="spec-rules-section">
+        <div class="spec-rules-section-head">
+          <span class="spec-rules-variant">General</span>
+          <span class="spec-attr-chip">fresh-input</span>
+        </div>
+        <ul class="spec-rule-list" id="rules-general">
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Use <code>&lt;fresh-input&gt;</code> for all single-line text collection: search fields, form fields, filters, inline edits.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Always pair with a visible <code>&lt;label&gt;</code> or pass <code>aria-label</code> directly on the element. Never leave an input without an accessible name.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Use the <code>error</code> prop for inline validation feedback. Do not render separate error paragraphs outside the component; they will not be associated with the input for screen readers.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Use <code>size="sm"</code> inside table rows, filter bars, and toolbars to match the density of surrounding elements. Default <code>md</code> for standalone forms.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Set <code>type</code> correctly: <code>email</code>, <code>password</code>, <code>number</code>, <code>search</code> unlock native browser behaviours (autocomplete, input mode, validation). Never use <code>type="text"</code> for fields where a more specific type exists.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+        </ul>
+        <button class="spec-add-rule" onclick="addRule('rules-general')"><i class="ti ti-plus"></i> Add rule</button>
+      </div>
+
+    </div>
   </div>
+
+  <!-- ATTRIBUTES -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar">
+        <span class="spec-rules-title">Attributes</span>
+      </div>
+      <table class="spec-a11y-table">
+        <thead>
+          <tr>
+            <th style="width:130px">Attribute</th>
+            <th style="width:260px">Values</th>
+            <th style="width:80px">Default</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="spec-a11y-row">
+            <td class="spec-a11y-concern">type</td>
+            <td class="spec-a11y-req"><code>text</code> <code>email</code> <code>password</code> <code>number</code> <code>search</code></td>
+            <td class="spec-a11y-req"><code>text</code></td>
+            <td class="spec-a11y-req">Native input type. Affects keyboard, autocomplete, and browser validation behaviour.</td>
+          </tr>
+          <tr class="spec-a11y-row">
+            <td class="spec-a11y-concern">size</td>
+            <td class="spec-a11y-req"><code>sm</code> <code>md</code> <code>lg</code></td>
+            <td class="spec-a11y-req"><code>md</code></td>
+            <td class="spec-a11y-req">Height: sm 28px, md 34px, lg 40px. Matches Button size scale for inline composition.</td>
+          </tr>
+          <tr class="spec-a11y-row">
+            <td class="spec-a11y-concern">placeholder</td>
+            <td class="spec-a11y-req">string</td>
+            <td class="spec-a11y-req">-</td>
+            <td class="spec-a11y-req">Hint text shown when the field is empty. Not a substitute for a label.</td>
+          </tr>
+          <tr class="spec-a11y-row">
+            <td class="spec-a11y-concern">value</td>
+            <td class="spec-a11y-req">string</td>
+            <td class="spec-a11y-req">-</td>
+            <td class="spec-a11y-req">Initial value. Also readable and writable via the <code>.value</code> property.</td>
+          </tr>
+          <tr class="spec-a11y-row">
+            <td class="spec-a11y-concern">icon</td>
+            <td class="spec-a11y-req">Tabler class e.g. <code>ti-search</code></td>
+            <td class="spec-a11y-req">-</td>
+            <td class="spec-a11y-req">Renders a leading icon inside the field. Purely decorative — do not use as the sole label.</td>
+          </tr>
+          <tr class="spec-a11y-row">
+            <td class="spec-a11y-concern">error</td>
+            <td class="spec-a11y-req">string</td>
+            <td class="spec-a11y-req">-</td>
+            <td class="spec-a11y-req">Error message rendered below the field. Sets <code>aria-invalid="true"</code> and <code>aria-describedby</code> on the native input.</td>
+          </tr>
+          <tr class="spec-a11y-row">
+            <td class="spec-a11y-concern">clearable</td>
+            <td class="spec-a11y-req">boolean</td>
+            <td class="spec-a11y-req">-</td>
+            <td class="spec-a11y-req">Shows an x clear button when the field has a value. Fires a <code>change</code> event on clear.</td>
+          </tr>
+          <tr class="spec-a11y-row">
+            <td class="spec-a11y-concern">disabled</td>
+            <td class="spec-a11y-req">boolean</td>
+            <td class="spec-a11y-req">-</td>
+            <td class="spec-a11y-req">Blocks all interaction. Renders at reduced opacity. Sets <code>disabled</code> on the native input.</td>
+          </tr>
+          <tr class="spec-a11y-row">
+            <td class="spec-a11y-concern">readonly</td>
+            <td class="spec-a11y-req">boolean</td>
+            <td class="spec-a11y-req">-</td>
+            <td class="spec-a11y-req">Displays the value but prevents editing. The field remains focusable and copyable.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- CODE -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar">
+        <span class="spec-rules-title">Code</span>
+      </div>
+      <div style="padding:16px 20px;display:flex;flex-direction:column;gap:0;">
+
+    <div class="code-block" data-code="&lt;fresh-input placeholder=&quot;Search components…&quot;&gt;&lt;/fresh-input&gt;">
+      <div class="code-block-header">
+        <span><span class="code-lang">HTML</span><span class="code-context">Default</span></span>
+        <button class="code-copy" onclick="copyCode(this)">Copy</button>
+      </div>
+      <div class="code-body"><span class="hl-pun">&lt;</span><span class="hl-tag">fresh-input</span> <span class="hl-attr">placeholder</span><span class="hl-pun">=</span><span class="hl-val">"Search components…"</span><span class="hl-pun">&gt;&lt;/</span><span class="hl-tag">fresh-input</span><span class="hl-pun">&gt;</span></div>
+    </div>
+
+    <div class="code-block" data-code="&lt;fresh-input icon=&quot;ti-search&quot; placeholder=&quot;Search…&quot;&gt;&lt;/fresh-input&gt;">
+      <div class="code-block-header">
+        <span><span class="code-lang">HTML</span><span class="code-context">With icon</span></span>
+        <button class="code-copy" onclick="copyCode(this)">Copy</button>
+      </div>
+      <div class="code-body"><span class="hl-pun">&lt;</span><span class="hl-tag">fresh-input</span> <span class="hl-attr">icon</span><span class="hl-pun">=</span><span class="hl-val">"ti-search"</span> <span class="hl-attr">placeholder</span><span class="hl-pun">=</span><span class="hl-val">"Search…"</span><span class="hl-pun">&gt;&lt;/</span><span class="hl-tag">fresh-input</span><span class="hl-pun">&gt;</span></div>
+    </div>
+
+    <div class="code-block" data-code="&lt;fresh-input icon=&quot;ti-search&quot; clearable placeholder=&quot;Search…&quot;&gt;&lt;/fresh-input&gt;">
+      <div class="code-block-header">
+        <span><span class="code-lang">HTML</span><span class="code-context">Clearable</span></span>
+        <button class="code-copy" onclick="copyCode(this)">Copy</button>
+      </div>
+      <div class="code-body"><span class="hl-pun">&lt;</span><span class="hl-tag">fresh-input</span> <span class="hl-attr">icon</span><span class="hl-pun">=</span><span class="hl-val">"ti-search"</span> <span class="hl-attr">clearable</span> <span class="hl-attr">placeholder</span><span class="hl-pun">=</span><span class="hl-val">"Search…"</span><span class="hl-pun">&gt;&lt;/</span><span class="hl-tag">fresh-input</span><span class="hl-pun">&gt;</span></div>
+    </div>
+
+    <div class="code-block" data-code="&lt;fresh-input
+  type=&quot;email&quot;
+  size=&quot;lg&quot;
+  placeholder=&quot;you@company.com&quot;
+  aria-label=&quot;Work email&quot;
+&gt;&lt;/fresh-input&gt;">
+      <div class="code-block-header">
+        <span><span class="code-lang">HTML</span><span class="code-context">Type + size</span></span>
+        <button class="code-copy" onclick="copyCode(this)">Copy</button>
+      </div>
+      <div class="code-body"><span class="hl-pun">&lt;</span><span class="hl-tag">fresh-input</span>
+  <span class="hl-attr">type</span><span class="hl-pun">=</span><span class="hl-val">"email"</span>
+  <span class="hl-attr">size</span><span class="hl-pun">=</span><span class="hl-val">"lg"</span>
+  <span class="hl-attr">placeholder</span><span class="hl-pun">=</span><span class="hl-val">"you@company.com"</span>
+  <span class="hl-attr">aria-label</span><span class="hl-pun">=</span><span class="hl-val">"Work email"</span>
+<span class="hl-pun">&gt;&lt;/</span><span class="hl-tag">fresh-input</span><span class="hl-pun">&gt;</span></div>
+    </div>
+
+    <div class="code-block" data-code="&lt;fresh-input error=&quot;This field is required&quot; placeholder=&quot;Name&quot;&gt;&lt;/fresh-input&gt;">
+      <div class="code-block-header">
+        <span><span class="code-lang">HTML</span><span class="code-context">Error state</span></span>
+        <button class="code-copy" onclick="copyCode(this)">Copy</button>
+      </div>
+      <div class="code-body"><span class="hl-pun">&lt;</span><span class="hl-tag">fresh-input</span> <span class="hl-attr">error</span><span class="hl-pun">=</span><span class="hl-val">"This field is required"</span> <span class="hl-attr">placeholder</span><span class="hl-pun">=</span><span class="hl-val">"Name"</span><span class="hl-pun">&gt;&lt;/</span><span class="hl-tag">fresh-input</span><span class="hl-pun">&gt;</span></div>
+    </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- TOKENS -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar">
+        <span class="spec-rules-title">Tokens</span>
+      </div>
+      <table class="spec-a11y-table">
+        <thead>
+          <tr>
+            <th style="width:220px">Token</th>
+            <th style="width:200px">Role</th>
+            <th>State</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--surface-input</td><td class="spec-a11y-req">Fill colour</td><td class="spec-a11y-req">all</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--surface-border</td><td class="spec-a11y-req">Default border</td><td class="spec-a11y-req">default</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--input-focus-border</td><td class="spec-a11y-req">Focus border</td><td class="spec-a11y-req">focus</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--input-focus-ring</td><td class="spec-a11y-req">Focus glow ring</td><td class="spec-a11y-req">focus</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--color-danger</td><td class="spec-a11y-req">Error border</td><td class="spec-a11y-req">error</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--color-danger-subtle</td><td class="spec-a11y-req">Error glow ring</td><td class="spec-a11y-req">error</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--text-primary</td><td class="spec-a11y-req">Input text</td><td class="spec-a11y-req">all</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--text-tertiary</td><td class="spec-a11y-req">Placeholder text</td><td class="spec-a11y-req">empty</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--radius-md</td><td class="spec-a11y-req">Border radius</td><td class="spec-a11y-req">all</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--font-sans</td><td class="spec-a11y-req">Font family</td><td class="spec-a11y-req">all</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ACCESSIBILITY -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar">
+        <span class="spec-rules-title">Accessibility</span>
+      </div>
+      <div style="padding: 12px 24px 14px; border-bottom: 1px solid #d4d4d7;">
+        <p style="font-size:13px;color:#555;line-height:1.6;margin:0;">
+          Input satisfies all <a href="app.html#accessibility" target="_parent" style="color:#5b6af7;text-decoration:none;font-weight:500;">universal accessibility concerns</a>. Component-specific concerns are below.
+        </p>
+      </div>
+      <table class="spec-a11y-table">
+        <thead>
+          <tr>
+            <th>Concern</th>
+            <th>Requirement</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="spec-a11y-row">
+            <td class="spec-a11y-concern">label association</td>
+            <td class="spec-a11y-req">The component renders a native <code>&lt;input&gt;</code> inside shadow DOM. Use a visible <code>&lt;label for&gt;</code> paired via the host element's <code>id</code>, or pass <code>aria-label</code> directly on <code>&lt;fresh-input&gt;</code>. Placeholder text alone is not sufficient.</td>
+          </tr>
+          <tr class="spec-a11y-row">
+            <td class="spec-a11y-concern">error announcement</td>
+            <td class="spec-a11y-req">The <code>error</code> prop sets <code>aria-invalid="true"</code> and connects the error message via <code>aria-describedby</code>. Screen readers will announce the error after the field label when the user reaches the field.</td>
+          </tr>
+          <tr class="spec-a11y-row">
+            <td class="spec-a11y-concern">clearable button</td>
+            <td class="spec-a11y-req">The clear button is rendered with <code>aria-label="Clear"</code> and is keyboard-reachable. It is hidden via <code>aria-hidden</code> when the field is empty so it does not pollute the tab order.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
 </div>
-<script src="components/core/fresh-button.js"></script>
+
 <script src="components/core/fresh-input.js"></script>
-<script src="components/navigation/fresh-simple-tabs.js"></script>
+<script src="js/spec-page.js"></script>
+
+<script type="module">
+  import { supabase } from '/js/supabase-client.js'
+
+  var RULE_IDS = ['rules-general'];
+  var _saveTimer = null;
+  var _loading = false;
+
+  function getRulesSnapshot() {
+    var result = {};
+    RULE_IDS.forEach(function(id) {
+      var list = document.getElementById(id);
+      if (!list) return;
+      result[id] = Array.from(list.querySelectorAll('.spec-rule-text')).map(function(el) {
+        return el.innerHTML.trim();
+      });
+    });
+    return result;
+  }
+
+  function applySnapshot(saved) {
+    RULE_IDS.forEach(function(id) {
+      var list = document.getElementById(id);
+      if (!list) return;
+      var rules = (saved && saved[id] && saved[id].length) ? saved[id] : window.DEFAULT_RULES[id];
+      list.innerHTML = rules.map(function(text) {
+        return '<li class="spec-rule-li">' +
+          '<span class="spec-rule-bullet">•</span>' +
+          '<span class="spec-rule-text" contenteditable="true">' + text + '</span>' +
+          '<span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span>' +
+          '</li>';
+      }).join('');
+    });
+  }
+
+  async function saveRulesNow() {
+    try {
+      var { data: { user } } = await supabase.auth.getUser();
+      if (!user) return;
+      var { data: profile } = await supabase.from('profiles').select('component_rules').eq('id', user.id).single();
+      var existing = (profile && profile.component_rules) ? profile.component_rules : {};
+      existing.input = getRulesSnapshot();
+      await supabase.from('profiles').update({ component_rules: existing }).eq('id', user.id);
+    } catch(e) {}
+  }
+
+  function schedSave() {
+    if (_loading) return;
+    clearTimeout(_saveTimer);
+    _saveTimer = setTimeout(saveRulesNow, 1000);
+  }
+
+  var panel = document.querySelector('.spec-rules-panel');
+  if (panel) {
+    new MutationObserver(schedSave).observe(panel, {
+      childList: true, subtree: true, characterData: true
+    });
+  }
+
+  ;(async function() {
+    try {
+      var { data: { user } } = await supabase.auth.getUser();
+      if (!user) return;
+      var { data: profile } = await supabase.from('profiles').select('component_rules').eq('id', user.id).single();
+      if (profile && profile.component_rules && profile.component_rules.input) {
+        _loading = true;
+        applySnapshot(profile.component_rules.input);
+        _loading = false;
+      }
+    } catch(e) {}
+  })();
+</script>
+
+<script>
+  var DEFAULT_RULES = {
+    'rules-general': [
+      'Use <code>&lt;fresh-input&gt;</code> for all single-line text collection: search fields, form fields, filters, inline edits.',
+      'Always pair with a visible <code>&lt;label&gt;</code> or pass <code>aria-label</code> directly on the element. Never leave an input without an accessible name.',
+      'Use the <code>error</code> prop for inline validation feedback. Do not render separate error paragraphs outside the component; they will not be associated with the input for screen readers.',
+      'Use <code>size="sm"</code> inside table rows, filter bars, and toolbars to match the density of surrounding elements. Default <code>md</code> for standalone forms.',
+      'Set <code>type</code> correctly: <code>email</code>, <code>password</code>, <code>number</code>, <code>search</code> unlock native browser behaviours (autocomplete, input mode, validation). Never use <code>type="text"</code> for fields where a more specific type exists.'
+    ]
+  };
+
+  function restoreDefaults() {
+    if (!confirm('Reset all input rules to FreshDS defaults? Any edits you have made will be lost.')) return;
+    Object.keys(DEFAULT_RULES).forEach(function(id) {
+      var list = document.getElementById(id);
+      if (!list) return;
+      list.innerHTML = DEFAULT_RULES[id].map(function(text) {
+        return '<li class="spec-rule-li">' +
+          '<span class="spec-rule-bullet">•</span>' +
+          '<span class="spec-rule-text" contenteditable="true">' + text + '</span>' +
+          '<span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span>' +
+          '</li>';
+      }).join('');
+    });
+  }
+</script>
 </body>
 </html>

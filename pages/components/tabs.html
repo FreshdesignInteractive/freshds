@@ -8,86 +8,328 @@
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="styles/site.css">
 <link rel="stylesheet" href="tokens/primitives.css">
 <link rel="stylesheet" href="tokens/theme.css">
-<link rel="stylesheet" href="tokens/dataviz.css">
-<link rel="stylesheet" href="styles/reset.css">
-<link rel="stylesheet" href="styles/layout.css">
-<link rel="stylesheet" href="styles/components/core.css">
-<link rel="stylesheet" href="styles/docs.css">
 <script src="js/freshds.js"></script>
 <script src="js/freshds-site.js"></script>
+<link rel="stylesheet" href="styles/components/spec-page.css">
 </head>
 <body>
-<div class="fds-app" id="app">
-  <ds-topbar active-section="ds"></ds-topbar>
-  <div class="fds-body">
-    <ds-shell active="tabs"></ds-shell>
-    <main class="fds-main">
-      <div class="fds-page active" id="page-tabs">
-        <div class="page-header">
-          <div class="page-eyebrow">Navigation</div>
-          <h1 class="page-title">Tabs</h1>
-          <p class="page-desc">Horizontal tab bar for switching between related views. Emits a <code style="font-family:var(--font-mono);font-size:13px;background:var(--surface-overlay);padding:1px 6px;border-radius:4px">change</code> event, connect it to your panel visibility logic. Fully keyboard navigable.</p>
-        </div>
-        <div class="page-section">
-          <div class="page-section-title">Default</div>
-          <div class="demo-surface col" style="padding:0;gap:0;overflow:hidden">
-            <fresh-tabs id="demo-tabs-1"
-              tabs='[{"key":"overview","label":"Overview"},{"key":"activity","label":"Activity"},{"key":"settings","label":"Settings"},{"key":"billing","label":"Billing"}]'
-              active="overview">
-            </fresh-tabs>
-            <div id="demo-tabs-1-panel" style="padding:var(--space-6);font-family:var(--font-sans);font-size:13px;color:var(--text-secondary)">Overview panel content</div>
-          </div>
-        </div>
-        <div class="page-section">
-          <div class="page-section-title">With badges</div>
-          <div class="demo-surface" style="padding:0;overflow:hidden;display:block">
-            <fresh-tabs
-              tabs='[{"key":"inbox","label":"Inbox","badge":"12"},{"key":"sent","label":"Sent"},{"key":"drafts","label":"Drafts","badge":"3"},{"key":"archive","label":"Archive","disabled":true}]'
-              active="inbox">
-            </fresh-tabs>
-          </div>
-        </div>
-        <div class="page-section">
-          <div class="page-section-title">Sizes</div>
-          <div class="demo-surface col" style="padding:0;gap:0;overflow:hidden">
-            <fresh-tabs size="sm"
-              tabs='[{"key":"a","label":"Small"},{"key":"b","label":"Tabs"},{"key":"c","label":"Example"}]'
-              active="a">
-            </fresh-tabs>
-            <div style="height:1px;background:var(--surface-border)"></div>
-            <fresh-tabs
-              tabs='[{"key":"a","label":"Default"},{"key":"b","label":"Tabs"},{"key":"c","label":"Example"}]'
-              active="b">
-            </fresh-tabs>
-            <div style="height:1px;background:var(--surface-border)"></div>
-            <fresh-tabs size="lg"
-              tabs='[{"key":"a","label":"Large"},{"key":"b","label":"Tabs"},{"key":"c","label":"Example"}]'
-              active="c">
-            </fresh-tabs>
-          </div>
-        </div>
-        <div class="page-section">
-          <div class="page-section-title">Attributes</div>
-          <table class="usage-table">
-            <thead><tr><th>Attribute</th><th>Values</th><th>Default</th><th>Description</th></tr></thead>
-            <tbody>
-              <tr><td>tabs</td><td>JSON array</td><td></td><td><code>{ key, label, badge?, disabled? }</code></td></tr>
-              <tr><td>active</td><td>string</td><td></td><td>Key of the currently active tab</td></tr>
-              <tr><td>size</td><td><code>sm</code> <code>md</code> <code>lg</code></td><td><code>md</code></td><td>Tab height (32 / 38 / 44px)</td></tr>
-            </tbody>
-          </table>
+
+<div class="comp-page">
+  <h1 class="comp-title">Tabs</h1>
+  <p class="comp-desc">Horizontal tab bar for switching between related views. Emits a <code>change</code> event with the newly active key. Connect it to your panel visibility logic. Fully keyboard navigable.</p>
+
+  <!-- STATES CARD -->
+  <div class="comp-section">
+    <div class="spec-card">
+      <div class="spec-card-topbar">
+        <span class="spec-rules-title">Tabs states</span>
+        <div class="spec-mode-switcher">
+          <button class="spec-mode-btn active" id="mode-btn-light" onclick="setSpecMode('light')"><i class="ti ti-sun"></i> Light</button>
+          <button class="spec-mode-btn" id="mode-btn-dark" onclick="setSpecMode('dark')"><i class="ti ti-moon"></i> Dark</button>
         </div>
       </div>
-    </main>
+      <div id="spec-viewport" class="spec-viewport">
+
+        <!-- Default with panel -->
+        <div class="spec-variant-row">
+          <div class="spec-variant-header">
+            <span class="spec-variant-name">Default (md)</span>
+            <span class="spec-attr-chip">size="md"</span>
+            <span class="spec-variant-sep">·</span>
+            <span class="spec-variant-desc">Underline indicator on active tab. 38px tab height. Connect the change event to show/hide panels.</span>
+          </div>
+          <div class="spec-variant-body">
+            <div class="spec-demos" style="display:block;padding:0;width:100%;gap:0;">
+              <fresh-tabs id="demo-tabs-1"
+                tabs='[{"key":"overview","label":"Overview"},{"key":"activity","label":"Activity"},{"key":"settings","label":"Settings"},{"key":"billing","label":"Billing"}]'
+                active="overview">
+              </fresh-tabs>
+              <div id="panel-1" style="padding:16px 20px;font-family:var(--font-sans);font-size:13px;color:var(--text-secondary)">Overview panel content</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- With badges and disabled -->
+        <div class="spec-variant-row">
+          <div class="spec-variant-header">
+            <span class="spec-variant-name">With badges and disabled</span>
+            <span class="spec-attr-chip">badge / disabled</span>
+            <span class="spec-variant-sep">·</span>
+            <span class="spec-variant-desc">Badge shows a count chip on the tab. Disabled tab is non-interactive at 38% opacity.</span>
+          </div>
+          <div class="spec-variant-body">
+            <div class="spec-demos" style="display:block;padding:0;width:100%;">
+              <fresh-tabs
+                tabs='[{"key":"inbox","label":"Inbox","badge":"12"},{"key":"sent","label":"Sent"},{"key":"drafts","label":"Drafts","badge":"3"},{"key":"archive","label":"Archive","disabled":true}]'
+                active="inbox">
+              </fresh-tabs>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sizes -->
+        <div class="spec-variant-row">
+          <div class="spec-variant-header">
+            <span class="spec-variant-name">Sizes</span>
+            <span class="spec-attr-chip">size="sm" / "md" / "lg"</span>
+            <span class="spec-variant-sep">·</span>
+            <span class="spec-variant-desc">sm 32px, md 38px (default), lg 44px. Font and padding scale proportionally.</span>
+          </div>
+          <div class="spec-variant-body">
+            <div class="spec-demos" style="display:block;padding:0;width:100%;gap:0;">
+              <fresh-tabs size="sm"
+                tabs='[{"key":"a","label":"Small"},{"key":"b","label":"Tabs"},{"key":"c","label":"Example"}]'
+                active="a">
+              </fresh-tabs>
+              <div style="height:1px;background:var(--surface-border)"></div>
+              <fresh-tabs
+                tabs='[{"key":"a","label":"Default"},{"key":"b","label":"Tabs"},{"key":"c","label":"Example"}]'
+                active="b">
+              </fresh-tabs>
+              <div style="height:1px;background:var(--surface-border)"></div>
+              <fresh-tabs size="lg"
+                tabs='[{"key":"a","label":"Large"},{"key":"b","label":"Tabs"},{"key":"c","label":"Example"}]'
+                active="c">
+              </fresh-tabs>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
   </div>
+
+  <!-- AI RULES -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar">
+        <span class="spec-rules-title">AI action rules</span>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <span class="spec-rules-hint">Click any rule to edit</span>
+          <button class="spec-rules-reset" onclick="restoreDefaults()"><i class="ti ti-rotate" style="font-size:10px;"></i> Restore FreshDS defaults</button>
+        </div>
+      </div>
+      <div class="spec-rules-section">
+        <div class="spec-rules-section-head">
+          <span class="spec-rules-variant">General</span>
+          <span class="spec-attr-chip">fresh-tabs</span>
+        </div>
+        <ul class="spec-rule-list" id="rules-general">
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Always listen to the <code>change</code> event and update panel visibility in the handler. Never rely on CSS-only display toggling for panel switching.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Use <code>badge</code> within a tab item only for unread counts or status indicators, not for decorative labels. Use <code>fresh-simple-tabs</code> for top-level navigation where badge support is not needed.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Set <code>active</code> to the key of the initially selected tab on page load. Do not leave it blank or the tab bar will render with no active state.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Keep tab labels short (one or two words). If a label requires more than three words, consider restructuring the IA rather than wrapping the tab text.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Do not mix <code>fresh-tabs</code> and <code>fresh-simple-tabs</code> on the same page. Choose one tab style per product context for visual consistency.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+        </ul>
+        <button class="spec-add-rule" onclick="addRule('rules-general')"><i class="ti ti-plus"></i> Add rule</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ATTRIBUTES -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Attributes</span></div>
+      <table class="spec-a11y-table">
+        <thead><tr><th style="width:130px">Attribute</th><th style="width:220px">Values</th><th style="width:80px">Default</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">tabs</td><td class="spec-a11y-req">JSON array: <code>[{ key, label, badge?, disabled? }]</code></td><td class="spec-a11y-req">-</td><td class="spec-a11y-req">Tab definitions. Each item needs a unique <code>key</code> and a <code>label</code>. Optional <code>badge</code> (string) and <code>disabled</code> (boolean).</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">active</td><td class="spec-a11y-req">string (key)</td><td class="spec-a11y-req">-</td><td class="spec-a11y-req">Key of the currently active tab. Updated automatically on selection. Also set programmatically to control the component.</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">size</td><td class="spec-a11y-req"><code>sm</code> <code>md</code> <code>lg</code></td><td class="spec-a11y-req"><code>md</code></td><td class="spec-a11y-req">Tab height: sm 32px, md 38px, lg 44px. Font size and horizontal padding scale accordingly.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- EVENTS -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Events</span></div>
+      <table class="spec-a11y-table">
+        <thead><tr><th style="width:130px">Event</th><th style="width:220px">Detail</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">change</td><td class="spec-a11y-req"><code>{ key: string }</code></td><td class="spec-a11y-req">Fired when a different tab is selected. <code>detail.key</code> is the key of the newly active tab. Bubbles and is composed.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- CODE -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Code</span></div>
+      <div style="padding:16px 20px;display:flex;flex-direction:column;gap:0;">
+
+        <div class="code-block" data-code="&lt;fresh-tabs id=&quot;my-tabs&quot;
+  tabs='[
+    {&quot;key&quot;:&quot;overview&quot;,&quot;label&quot;:&quot;Overview&quot;},
+    {&quot;key&quot;:&quot;analytics&quot;,&quot;label&quot;:&quot;Analytics&quot;},
+    {&quot;key&quot;:&quot;settings&quot;,&quot;label&quot;:&quot;Settings&quot;,&quot;disabled&quot;:true}
+  ]'
+  active=&quot;overview&quot;&gt;
+&lt;/fresh-tabs&gt;
+
+&lt;div id=&quot;panel-overview&quot;&gt;Overview content&lt;/div&gt;
+&lt;div id=&quot;panel-analytics&quot; hidden&gt;Analytics content&lt;/div&gt;
+
+&lt;script&gt;
+  document.getElementById('my-tabs').addEventListener('change', e =&gt; {
+    document.querySelectorAll('[id^=&quot;panel-&quot;]').forEach(p =&gt; p.hidden = true);
+    document.getElementById('panel-' + e.detail.key).hidden = false;
+  });
+&lt;/script&gt;">
+          <div class="code-block-header"><span><span class="code-lang">HTML</span><span class="code-context">With panel switching</span></span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+          <div class="code-body"><span class="hl-pun">&lt;</span><span class="hl-tag">fresh-tabs</span> <span class="hl-attr">id</span><span class="hl-pun">=</span><span class="hl-val">"my-tabs"</span>
+  <span class="hl-attr">tabs</span><span class="hl-pun">=</span><span class="hl-val">'[
+    {"key":"overview","label":"Overview"},
+    {"key":"analytics","label":"Analytics"},
+    {"key":"settings","label":"Settings","disabled":true}
+  ]'</span>
+  <span class="hl-attr">active</span><span class="hl-pun">=</span><span class="hl-val">"overview"</span><span class="hl-pun">&gt;</span>
+<span class="hl-pun">&lt;/</span><span class="hl-tag">fresh-tabs</span><span class="hl-pun">&gt;</span>
+
+<span class="hl-pun">&lt;</span><span class="hl-tag">div</span> <span class="hl-attr">id</span><span class="hl-pun">=</span><span class="hl-val">"panel-overview"</span><span class="hl-pun">&gt;</span><span class="hl-txt">Overview content</span><span class="hl-pun">&lt;/</span><span class="hl-tag">div</span><span class="hl-pun">&gt;</span>
+<span class="hl-pun">&lt;</span><span class="hl-tag">div</span> <span class="hl-attr">id</span><span class="hl-pun">=</span><span class="hl-val">"panel-analytics"</span> <span class="hl-attr">hidden</span><span class="hl-pun">&gt;</span><span class="hl-txt">Analytics content</span><span class="hl-pun">&lt;/</span><span class="hl-tag">div</span><span class="hl-pun">&gt;</span>
+
+<span class="hl-pun">&lt;</span><span class="hl-tag">script</span><span class="hl-pun">&gt;</span>
+  <span class="hl-txt">document.getElementById('my-tabs').addEventListener('change', e =&gt; {</span>
+    <span class="hl-txt">document.querySelectorAll('[id^="panel-"]').forEach(p =&gt; p.hidden = true);</span>
+    <span class="hl-txt">document.getElementById('panel-' + e.detail.key).hidden = false;</span>
+  <span class="hl-txt">});</span>
+<span class="hl-pun">&lt;/</span><span class="hl-tag">script</span><span class="hl-pun">&gt;</span></div>
+        </div>
+
+        <div class="code-block" data-code="&lt;!-- Tabs with badge counts --&gt;
+&lt;fresh-tabs
+  tabs='[
+    {&quot;key&quot;:&quot;inbox&quot;,&quot;label&quot;:&quot;Inbox&quot;,&quot;badge&quot;:&quot;12&quot;},
+    {&quot;key&quot;:&quot;sent&quot;,&quot;label&quot;:&quot;Sent&quot;},
+    {&quot;key&quot;:&quot;drafts&quot;,&quot;label&quot;:&quot;Drafts&quot;,&quot;badge&quot;:&quot;3&quot;},
+    {&quot;key&quot;:&quot;archive&quot;,&quot;label&quot;:&quot;Archive&quot;,&quot;disabled&quot;:true}
+  ]'
+  active=&quot;inbox&quot;&gt;
+&lt;/fresh-tabs&gt;">
+          <div class="code-block-header"><span><span class="code-lang">HTML</span><span class="code-context">With badges and disabled</span></span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+          <div class="code-body"><span class="hl-com">&lt;!-- Tabs with badge counts --&gt;</span>
+<span class="hl-pun">&lt;</span><span class="hl-tag">fresh-tabs</span>
+  <span class="hl-attr">tabs</span><span class="hl-pun">=</span><span class="hl-val">'[
+    {"key":"inbox","label":"Inbox","badge":"12"},
+    {"key":"sent","label":"Sent"},
+    {"key":"drafts","label":"Drafts","badge":"3"},
+    {"key":"archive","label":"Archive","disabled":true}
+  ]'</span>
+  <span class="hl-attr">active</span><span class="hl-pun">=</span><span class="hl-val">"inbox"</span><span class="hl-pun">&gt;</span>
+<span class="hl-pun">&lt;/</span><span class="hl-tag">fresh-tabs</span><span class="hl-pun">&gt;</span></div>
+        </div>
+
+        <div class="code-block" data-code="&lt;!-- Small tabs --&gt;
+&lt;fresh-tabs size=&quot;sm&quot;
+  tabs='[{&quot;key&quot;:&quot;a&quot;,&quot;label&quot;:&quot;Code&quot;},{&quot;key&quot;:&quot;b&quot;,&quot;label&quot;:&quot;Preview&quot;}]'
+  active=&quot;a&quot;&gt;
+&lt;/fresh-tabs&gt;">
+          <div class="code-block-header"><span><span class="code-lang">HTML</span><span class="code-context">Small size</span></span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+          <div class="code-body"><span class="hl-com">&lt;!-- Small tabs --&gt;</span>
+<span class="hl-pun">&lt;</span><span class="hl-tag">fresh-tabs</span> <span class="hl-attr">size</span><span class="hl-pun">=</span><span class="hl-val">"sm"</span>
+  <span class="hl-attr">tabs</span><span class="hl-pun">=</span><span class="hl-val">'[{"key":"a","label":"Code"},{"key":"b","label":"Preview"}]'</span>
+  <span class="hl-attr">active</span><span class="hl-pun">=</span><span class="hl-val">"a"</span><span class="hl-pun">&gt;</span>
+<span class="hl-pun">&lt;/</span><span class="hl-tag">fresh-tabs</span><span class="hl-pun">&gt;</span></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- TOKENS -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Tokens</span></div>
+      <table class="spec-a11y-table">
+        <thead><tr><th style="width:220px">Token</th><th style="width:200px">Role</th><th>State</th></tr></thead>
+        <tbody>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--surface-border</td><td class="spec-a11y-req">Tab list bottom border</td><td class="spec-a11y-req">all</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--surface-subtle</td><td class="spec-a11y-req">Tab hover background</td><td class="spec-a11y-req">hover</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--surface-overlay</td><td class="spec-a11y-req">Focus background, badge background</td><td class="spec-a11y-req">focus / badge</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--color-interactive-text</td><td class="spec-a11y-req">Active tab bottom border indicator</td><td class="spec-a11y-req">active</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--text-primary</td><td class="spec-a11y-req">Active tab label</td><td class="spec-a11y-req">active</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--text-tertiary</td><td class="spec-a11y-req">Inactive tab label</td><td class="spec-a11y-req">default</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--badge-primary-bg</td><td class="spec-a11y-req">Badge chip background on active tab</td><td class="spec-a11y-req">active + badge</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--font-sans</td><td class="spec-a11y-req">Tab label font</td><td class="spec-a11y-req">all</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--radius-sm</td><td class="spec-a11y-req">Tab border radius (top corners only)</td><td class="spec-a11y-req">all</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ACCESSIBILITY -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Accessibility</span></div>
+      <div style="padding:12px 24px 14px;border-bottom:1px solid #d4d4d7;">
+        <p style="font-size:13px;color:#555;line-height:1.6;margin:0;">Tabs satisfies all <a href="app.html#accessibility" target="_parent" style="color:#5b6af7;text-decoration:none;font-weight:500;">universal accessibility concerns</a>. Component-specific concerns are below.</p>
+      </div>
+      <table class="spec-a11y-table">
+        <thead><tr><th>Concern</th><th>Requirement</th></tr></thead>
+        <tbody>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">role</td><td class="spec-a11y-req">The tab list has <code>role="tablist"</code>. Each button has <code>role="tab"</code> and <code>aria-selected</code> reflecting its active state.</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">keyboard navigation</td><td class="spec-a11y-req">Arrow Left/Right moves focus between tabs. Enter or Space activates the focused tab. Disabled tabs are skipped in the Arrow navigation cycle.</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">panel linkage</td><td class="spec-a11y-req">Add <code>role="tabpanel"</code> and <code>aria-labelledby</code> pointing to the active tab's ID on each content panel for correct screen reader announcement.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
 </div>
-<script src="components/core/fresh-button.js"></script>
-<script src="components/core/fresh-input.js"></script>
+
 <script src="components/navigation/fresh-tabs.js"></script>
-<script src="components/navigation/fresh-simple-tabs.js"></script>
+<script src="js/spec-page.js"></script>
+
+<script>
+  var t1 = document.getElementById('demo-tabs-1');
+  var p1 = document.getElementById('panel-1');
+  if (t1 && p1) {
+    t1.addEventListener('change', function(e) {
+      p1.textContent = e.detail.key.charAt(0).toUpperCase() + e.detail.key.slice(1) + ' panel content';
+    });
+  }
+</script>
+
+<script type="module">
+  import { supabase } from '/js/supabase-client.js'
+  var RULE_IDS = ['rules-general'];
+  var _saveTimer = null, _loading = false;
+  function getRulesSnapshot() {
+    var r = {};
+    RULE_IDS.forEach(function(id) { var l = document.getElementById(id); if (!l) return; r[id] = Array.from(l.querySelectorAll('.spec-rule-text')).map(function(el) { return el.innerHTML.trim(); }); });
+    return r;
+  }
+  function applySnapshot(saved) {
+    RULE_IDS.forEach(function(id) { var l = document.getElementById(id); if (!l) return; var rules = (saved && saved[id] && saved[id].length) ? saved[id] : window.DEFAULT_RULES[id]; l.innerHTML = rules.map(function(t) { return '<li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">' + t + '</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>'; }).join(''); }); }
+  async function saveRulesNow() {
+    try { var { data: { user } } = await supabase.auth.getUser(); if (!user) return; var { data: p } = await supabase.from('profiles').select('component_rules').eq('id', user.id).single(); var e = (p && p.component_rules) ? p.component_rules : {}; e.tabs = getRulesSnapshot(); await supabase.from('profiles').update({ component_rules: e }).eq('id', user.id); } catch(e) {}
+  }
+  function schedSave() { if (_loading) return; clearTimeout(_saveTimer); _saveTimer = setTimeout(saveRulesNow, 1000); }
+  var panel = document.querySelector('.spec-rules-panel'); if (panel) new MutationObserver(schedSave).observe(panel, { childList: true, subtree: true, characterData: true });
+  ;(async function() { try { var { data: { user } } = await supabase.auth.getUser(); if (!user) return; var { data: p } = await supabase.from('profiles').select('component_rules').eq('id', user.id).single(); if (p && p.component_rules && p.component_rules.tabs) { _loading = true; applySnapshot(p.component_rules.tabs); _loading = false; } } catch(e) {} })();
+</script>
+
+<script>
+  var DEFAULT_RULES = {
+    'rules-general': [
+      'Always listen to the <code>change</code> event and update panel visibility in the handler. Never rely on CSS-only display toggling for panel switching.',
+      'Use <code>badge</code> within a tab item only for unread counts or status indicators, not for decorative labels. Use <code>fresh-simple-tabs</code> for top-level navigation where badge support is not needed.',
+      'Set <code>active</code> to the key of the initially selected tab on page load. Do not leave it blank or the tab bar will render with no active state.',
+      'Keep tab labels short (one or two words). If a label requires more than three words, consider restructuring the IA rather than wrapping the tab text.',
+      'Do not mix <code>fresh-tabs</code> and <code>fresh-simple-tabs</code> on the same page. Choose one tab style per product context for visual consistency.'
+    ]
+  };
+  function restoreDefaults() {
+    if (!confirm('Reset all tabs rules to FreshDS defaults? Any edits you have made will be lost.')) return;
+    Object.keys(DEFAULT_RULES).forEach(function(id) { var l = document.getElementById(id); if (!l) return; l.innerHTML = DEFAULT_RULES[id].map(function(t) { return '<li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">' + t + '</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>'; }).join(''); }); }
+</script>
 </body>
 </html>

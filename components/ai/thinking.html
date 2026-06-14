@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thinking | FreshDS</title>
+<base href="../../">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="styles/site.css">
+<link rel="stylesheet" href="tokens/primitives.css">
+<link rel="stylesheet" href="tokens/theme.css">
+<script src="js/freshds.js"></script>
+<script src="js/freshds-site.js"></script>
+<link rel="stylesheet" href="styles/components/spec-page.css">
+</head>
+<body>
+
+<div class="comp-page">
+  <h1 class="comp-title">Thinking</h1>
+  <p class="comp-desc">Animated indicator shown while the AI processes a request. Three bouncing dots with a contextual label reassure users that a response is on the way.</p>
+
+  <!-- STATES CARD -->
+  <div class="comp-section">
+    <div class="spec-card">
+      <div class="spec-card-topbar">
+        <span class="spec-rules-title">Thinking states</span>
+        <div class="spec-mode-switcher">
+          <button class="spec-mode-btn active" id="mode-btn-light" onclick="setSpecMode('light')"><i class="ti ti-sun"></i> Light</button>
+          <button class="spec-mode-btn" id="mode-btn-dark" onclick="setSpecMode('dark')"><i class="ti ti-moon"></i> Dark</button>
+        </div>
+      </div>
+      <div id="spec-viewport" class="spec-viewport">
+
+        <div class="spec-variant-row">
+          <div class="spec-variant-header">
+            <span class="spec-variant-name">Default</span>
+            <span class="spec-attr-chip">size="md"</span>
+            <span class="spec-variant-sep">·</span>
+            <span class="spec-variant-desc">Standard size with default "Thinking" label.</span>
+          </div>
+          <div class="spec-variant-body">
+            <div class="spec-demos">
+              <fresh-thinking></fresh-thinking>
+            </div>
+          </div>
+        </div>
+
+        <div class="spec-variant-row">
+          <div class="spec-variant-header">
+            <span class="spec-variant-name">Custom label</span>
+            <span class="spec-attr-chip">label="Analyzing your data"</span>
+            <span class="spec-variant-sep">·</span>
+            <span class="spec-variant-desc">Contextual label communicates what the AI is doing.</span>
+          </div>
+          <div class="spec-variant-body">
+            <div class="spec-demos">
+              <fresh-thinking label="Analyzing your data"></fresh-thinking>
+            </div>
+          </div>
+        </div>
+
+        <div class="spec-variant-row">
+          <div class="spec-variant-header">
+            <span class="spec-variant-name">Small</span>
+            <span class="spec-attr-chip">size="sm"</span>
+            <span class="spec-variant-sep">·</span>
+            <span class="spec-variant-desc">Compact size for use inside tight layouts such as inline chat or sidebars.</span>
+          </div>
+          <div class="spec-variant-body">
+            <div class="spec-demos">
+              <fresh-thinking size="sm" label="Writing code"></fresh-thinking>
+            </div>
+          </div>
+        </div>
+
+        <div class="spec-variant-row">
+          <div class="spec-variant-header">
+            <span class="spec-variant-name">Both sizes compared</span>
+            <span class="spec-variant-sep">·</span>
+            <span class="spec-variant-desc">Side-by-side size comparison.</span>
+          </div>
+          <div class="spec-variant-body">
+            <div class="spec-demos" style="gap:16px;">
+              <fresh-thinking label="Thinking" size="md"></fresh-thinking>
+              <fresh-thinking label="Thinking" size="sm"></fresh-thinking>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- AI RULES -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar">
+        <span class="spec-rules-title">AI action rules</span>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <span class="spec-rules-hint">Click any rule to edit</span>
+          <button class="spec-rules-reset" onclick="restoreDefaults()"><i class="ti ti-rotate" style="font-size:10px;"></i> Restore FreshDS defaults</button>
+        </div>
+      </div>
+      <div class="spec-rules-section">
+        <div class="spec-rules-section-head">
+          <span class="spec-rules-variant">General</span>
+          <span class="spec-attr-chip">fresh-thinking</span>
+        </div>
+        <ul class="spec-rule-list" id="rules-general">
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Show <code>fresh-thinking</code> immediately after a prompt is submitted. Do not leave a blank space while waiting for the first token.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Replace the thinking indicator with <code>fresh-ai-response</code> as soon as the first token arrives. Never show both simultaneously.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Set <code>label</code> to describe what the AI is doing: "Searching documents", "Running analysis", "Writing code". Context-specific labels reduce perceived wait time.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Use <code>size="sm"</code> inside compact containers like sidepanels, inline chat, or card footers. Use <code>md</code> in main conversation areas.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">If an error occurs during processing, remove the thinking indicator and surface a clear error message. Never leave the thinking state visible after a failure.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+        </ul>
+        <button class="spec-add-rule" onclick="addRule('rules-general')"><i class="ti ti-plus"></i> Add rule</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ATTRIBUTES -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Attributes</span></div>
+      <table class="spec-a11y-table">
+        <thead><tr><th style="width:130px">Attribute</th><th style="width:220px">Values</th><th style="width:80px">Default</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">label</td><td class="spec-a11y-req"><code>string</code></td><td class="spec-a11y-req">Thinking</td><td class="spec-a11y-req">Text label shown to the right of the animated dots. Describe the specific AI operation in progress.</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">size</td><td class="spec-a11y-req"><code>sm</code> <code>md</code></td><td class="spec-a11y-req">md</td><td class="spec-a11y-req">Controls dot size, padding, and font size. Use <code>sm</code> for compact layouts.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- CODE -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Code</span></div>
+      <div style="padding:16px 20px;display:flex;flex-direction:column;gap:0;">
+
+        <div class="code-block" data-code='&lt;fresh-thinking&gt;&lt;/fresh-thinking&gt;'>
+          <div class="code-block-header"><span><span class="code-lang">HTML</span><span class="code-context">Default</span></span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+          <div class="code-body"><pre><code><span class="tok-tag">&lt;fresh-thinking&gt;&lt;/fresh-thinking&gt;</span></code></pre></div>
+        </div>
+
+        <div class="code-block" data-code='&lt;fresh-thinking label="Analyzing your data" size="sm"&gt;&lt;/fresh-thinking&gt;'>
+          <div class="code-block-header"><span><span class="code-lang">HTML</span><span class="code-context">Small with custom label</span></span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+          <div class="code-body"><pre><code><span class="tok-tag">&lt;fresh-thinking</span>
+  <span class="tok-attr">label</span>=<span class="tok-str">"Analyzing your data"</span>
+  <span class="tok-attr">size</span>=<span class="tok-str">"sm"</span>
+<span class="tok-tag">&gt;&lt;/fresh-thinking&gt;</span></code></pre></div>
+        </div>
+
+        <div class="code-block" data-code="// Show thinking, then replace with response\nconst area = document.getElementById('chat');\nconst t = document.createElement('fresh-thinking');\nt.setAttribute('label', 'Writing summary');\narea.appendChild(t);\nconst text = await callAI(prompt);\nt.remove();\nconst msg = document.createElement('fresh-ai-response');\nmsg.setAttribute('role', 'assistant');\nmsg.textContent = text;\narea.appendChild(msg);">
+          <div class="code-block-header"><span><span class="code-lang">JS</span><span class="code-context">Show then replace</span></span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+          <div class="code-body"><pre><code><span class="tok-kw">const</span> area = document.<span class="tok-fn">getElementById</span>(<span class="tok-str">'chat'</span>);
+<span class="tok-kw">const</span> t = document.<span class="tok-fn">createElement</span>(<span class="tok-str">'fresh-thinking'</span>);
+t.<span class="tok-fn">setAttribute</span>(<span class="tok-str">'label'</span>, <span class="tok-str">'Writing summary'</span>);
+area.<span class="tok-fn">appendChild</span>(t);
+
+<span class="tok-kw">const</span> text = <span class="tok-kw">await</span> <span class="tok-fn">callAI</span>(prompt);
+t.<span class="tok-fn">remove</span>();
+
+<span class="tok-kw">const</span> msg = document.<span class="tok-fn">createElement</span>(<span class="tok-str">'fresh-ai-response'</span>);
+msg.<span class="tok-fn">setAttribute</span>(<span class="tok-str">'role'</span>, <span class="tok-str">'assistant'</span>);
+msg.textContent = text;
+area.<span class="tok-fn">appendChild</span>(msg);</code></pre></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- TOKENS -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Tokens</span></div>
+      <table class="spec-a11y-table">
+        <thead><tr><th style="width:220px">Token</th><th style="width:200px">Role</th><th>State</th></tr></thead>
+        <tbody>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--color-interactive</td><td class="spec-a11y-req">Dot color</td><td class="spec-a11y-req">all</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--surface-subtle</td><td class="spec-a11y-req">Pill background</td><td class="spec-a11y-req">all</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--surface-border</td><td class="spec-a11y-req">Pill border</td><td class="spec-a11y-req">all</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--text-secondary</td><td class="spec-a11y-req">Label text</td><td class="spec-a11y-req">all</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ACCESSIBILITY -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Accessibility</span></div>
+      <div style="padding:12px 24px 14px;border-bottom:1px solid #d4d4d7;">
+        <p style="font-size:13px;color:#555;line-height:1.6;margin:0;">Thinking satisfies all <a href="app.html#accessibility" target="_parent" style="color:#5b6af7;text-decoration:none;font-weight:500;">universal accessibility concerns</a>. Component-specific concerns are below.</p>
+      </div>
+      <table class="spec-a11y-table">
+        <thead><tr><th>Concern</th><th>Requirement</th></tr></thead>
+        <tbody>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">Status role</td><td class="spec-a11y-req">The wrapper element has <code>role="status"</code> and <code>aria-label</code> set to the current label value. Screen readers announce the state when the element appears.</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">Animation</td><td class="spec-a11y-req">The bouncing dots are marked <code>aria-hidden="true"</code>. The text label carries the accessible meaning independently.</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">Reduced motion</td><td class="spec-a11y-req">Wrap in a <code>prefers-reduced-motion</code> query at the app level if users have set that system preference. The label remains visible without animation.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<script src="components/ai/fresh-thinking.js"></script>
+<script src="js/spec-page.js"></script>
+
+<script type="module">
+  import { supabase } from '/js/supabase-client.js'
+  var RULE_IDS = ['rules-general'];
+  var _saveTimer = null, _loading = false;
+  function getRulesSnapshot() {
+    var r = {};
+    RULE_IDS.forEach(function(id) { var l = document.getElementById(id); if (!l) return; r[id] = Array.from(l.querySelectorAll('.spec-rule-text')).map(function(el) { return el.innerHTML.trim(); }); });
+    return r;
+  }
+  function applySnapshot(saved) {
+    RULE_IDS.forEach(function(id) { var l = document.getElementById(id); if (!l) return; var rules = (saved && saved[id] && saved[id].length) ? saved[id] : window.DEFAULT_RULES[id]; l.innerHTML = rules.map(function(t) { return '<li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">' + t + '</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>'; }).join(''); });
+  }
+  async function saveRulesNow() {
+    try { var { data: { user } } = await supabase.auth.getUser(); if (!user) return; var { data: p } = await supabase.from('profiles').select('component_rules').eq('id', user.id).single(); var e = (p && p.component_rules) ? p.component_rules : {}; e.thinking = getRulesSnapshot(); await supabase.from('profiles').update({ component_rules: e }).eq('id', user.id); } catch(e) {}
+  }
+  function schedSave() { if (_loading) return; clearTimeout(_saveTimer); _saveTimer = setTimeout(saveRulesNow, 1000); }
+  var panel = document.querySelector('.spec-rules-panel'); if (panel) new MutationObserver(schedSave).observe(panel, { childList: true, subtree: true, characterData: true });
+  ;(async function() { try { var { data: { user } } = await supabase.auth.getUser(); if (!user) return; var { data: p } = await supabase.from('profiles').select('component_rules').eq('id', user.id).single(); if (p && p.component_rules && p.component_rules.thinking) { _loading = true; applySnapshot(p.component_rules.thinking); _loading = false; } } catch(e) {} })();
+</script>
+
+<script>
+  var DEFAULT_RULES = {
+    'rules-general': [
+      'Show <code>fresh-thinking</code> immediately after a prompt is submitted. Do not leave a blank space while waiting for the first token.',
+      'Replace the thinking indicator with <code>fresh-ai-response</code> as soon as the first token arrives. Never show both simultaneously.',
+      'Set <code>label</code> to describe what the AI is doing: "Searching documents", "Running analysis", "Writing code". Context-specific labels reduce perceived wait time.',
+      'Use <code>size="sm"</code> inside compact containers like sidepanels, inline chat, or card footers. Use <code>md</code> in main conversation areas.',
+      'If an error occurs during processing, remove the thinking indicator and surface a clear error message. Never leave the thinking state visible after a failure.'
+    ]
+  };
+  function restoreDefaults() {
+    if (!confirm('Reset all thinking rules to FreshDS defaults? Any edits you have made will be lost.')) return;
+    Object.keys(DEFAULT_RULES).forEach(function(id) { var l = document.getElementById(id); if (!l) return; l.innerHTML = DEFAULT_RULES[id].map(function(t) { return '<li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">' + t + '</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>'; }).join(''); }); }
+</script>
+</body>
+</html>

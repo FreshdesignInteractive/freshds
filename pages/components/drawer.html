@@ -8,114 +8,360 @@
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="styles/site.css">
 <link rel="stylesheet" href="tokens/primitives.css">
 <link rel="stylesheet" href="tokens/theme.css">
-<link rel="stylesheet" href="tokens/dataviz.css">
-<link rel="stylesheet" href="styles/reset.css">
-<link rel="stylesheet" href="styles/layout.css">
-<link rel="stylesheet" href="styles/components/core.css">
-<link rel="stylesheet" href="styles/docs.css">
 <script src="js/freshds.js"></script>
 <script src="js/freshds-site.js"></script>
+<link rel="stylesheet" href="styles/components/spec-page.css">
 </head>
 <body>
-<div class="fds-app" id="app">
-  <ds-topbar active-section="ds"></ds-topbar>
-  <div class="fds-body">
-    <ds-shell active="drawer"></ds-shell>
-    <main class="fds-main">
-      <div class="fds-page active" id="page-drawer">
-        <div class="page-header">
-          <div class="page-eyebrow">Containers</div>
-          <h1 class="page-title">Drawer</h1>
-          <p class="page-desc">Side panel that slides in from the left or right edge. Use for contextual actions, detail views, and settings that don't interrupt the current workflow.</p>
-        </div>
-        <div class="page-section">
-          <div class="page-section-title">Trigger</div>
-          <div class="demo-surface" style="gap:var(--space-3)">
-            <fresh-button variant="primary"   onclick="document.getElementById('drawer-right').show()">Right drawer</fresh-button>
-            <fresh-button variant="secondary" onclick="document.getElementById('drawer-left').show()">Left drawer</fresh-button>
-            <fresh-button variant="ghost"     onclick="document.getElementById('drawer-wide').show()">Wide (lg)</fresh-button>
-          </div>
-        </div>
-        <div class="page-section">
-          <div class="page-section-title">Attributes &amp; methods</div>
-          <table class="usage-table">
-            <thead><tr><th>Attribute / Method</th><th>Values</th><th>Description</th></tr></thead>
-            <tbody>
-              <tr><td>title</td><td>string</td><td>Drawer header title</td></tr>
-              <tr><td>placement</td><td><code>right</code> <code>left</code></td><td>Which edge to slide from (default: right)</td></tr>
-              <tr><td>size</td><td><code>sm</code> <code>md</code> <code>lg</code></td><td>Width (320 / 420 / 560px)</td></tr>
-              <tr><td>show()</td><td>method</td><td>Opens the drawer</td></tr>
-              <tr><td>close()</td><td>method</td><td>Closes with slide-out animation</td></tr>
-              <tr><td>slot="footer"</td><td>element</td><td>Action buttons pinned to the bottom</td></tr>
-            </tbody>
-          </table>
-        </div>
 
-        <fresh-drawer id="drawer-right" title="Edit profile" placement="right">
-          <div style="display:flex;flex-direction:column;gap:var(--space-5)">
-            <fresh-form-field label="Display name">
-              <fresh-input value="Jane Smith" placeholder="Your name"></fresh-input>
-            </fresh-form-field>
-            <fresh-form-field label="Email" hint="Used for notifications">
-              <fresh-input type="email" value="jane@company.com" icon="ti-mail"></fresh-input>
-            </fresh-form-field>
-            <fresh-form-field label="Role">
-              <fresh-select placeholder="Select role">
-                <option value="admin" selected>Admin</option>
-                <option value="editor">Editor</option>
-              </fresh-select>
-            </fresh-form-field>
-            <fresh-form-field label="Notifications">
-              <fresh-toggle checked label="Email notifications"></fresh-toggle>
-            </fresh-form-field>
-          </div>
-          <div slot="footer">
-            <fresh-button variant="primary" onclick="document.getElementById('drawer-right').close()">Save changes</fresh-button>
-            <fresh-button variant="ghost"   onclick="document.getElementById('drawer-right').close()">Cancel</fresh-button>
-          </div>
-        </fresh-drawer>
+<div class="comp-page">
+  <h1 class="comp-title">Drawer</h1>
+  <p class="comp-desc">Slide-in panel anchored to the left or right edge of the viewport. Use for settings, detail panels, and contextual tasks that should appear alongside the main content without fully blocking it.</p>
 
-        <fresh-drawer id="drawer-left" title="Navigation" placement="left" size="sm">
-          <p style="font-family:var(--font-sans);font-size:13px;color:var(--text-secondary)">Left drawers work well for mobile navigation patterns.</p>
-          <div slot="footer">
-            <fresh-button variant="ghost" onclick="document.getElementById('drawer-left').close()">Close</fresh-button>
-          </div>
-        </fresh-drawer>
-
-        <fresh-drawer id="drawer-wide" title="AI model details" size="lg">
-          <div style="display:flex;flex-direction:column;gap:var(--space-5)">
-            <fresh-alert variant="info">This model is currently in beta. Performance may vary.</fresh-alert>
-            <fresh-form-field label="System prompt" hint="Defines the model's behavior">
-              <fresh-input placeholder="You are a helpful assistant…"></fresh-input>
-            </fresh-form-field>
-            <fresh-form-field label="Temperature">
-              <fresh-slider value="70"></fresh-slider>
-            </fresh-form-field>
-            <fresh-form-field label="Max tokens">
-              <fresh-slider value="50" min="100" max="8000" step="100"></fresh-slider>
-            </fresh-form-field>
-          </div>
-          <div slot="footer">
-            <fresh-button variant="primary" onclick="document.getElementById('drawer-wide').close()">Apply</fresh-button>
-            <fresh-button variant="ghost"   onclick="document.getElementById('drawer-wide').close()">Cancel</fresh-button>
-          </div>
-        </fresh-drawer>
+  <!-- STATES CARD -->
+  <div class="comp-section">
+    <div class="spec-card">
+      <div class="spec-card-topbar">
+        <span class="spec-rules-title">Drawer placement and sizes</span>
+        <div class="spec-mode-switcher">
+          <button class="spec-mode-btn active" id="mode-btn-light" onclick="setSpecMode('light')"><i class="ti ti-sun"></i> Light</button>
+          <button class="spec-mode-btn" id="mode-btn-dark" onclick="setSpecMode('dark')"><i class="ti ti-moon"></i> Dark</button>
+        </div>
       </div>
-    </main>
+      <div id="spec-viewport" class="spec-viewport">
+
+        <!-- Right placement -->
+        <div class="spec-variant-row">
+          <div class="spec-variant-header">
+            <span class="spec-variant-name">Right (default)</span>
+            <span class="spec-attr-chip">placement="right"</span>
+            <span class="spec-variant-sep">·</span>
+            <span class="spec-variant-desc">Slides in from the right. Default placement for detail panels and settings.</span>
+          </div>
+          <div class="spec-variant-body">
+            <div class="spec-demos">
+              <!-- Static bounded preview: simulated backdrop + drawer panel -->
+              <div style="position:relative;width:520px;height:260px;background:rgba(0,0,0,0.28);border-radius:var(--radius-lg);overflow:hidden;display:flex;align-items:stretch;">
+                <div style="flex:1;display:flex;align-items:center;justify-content:center;padding:var(--space-4);">
+                  <span style="font-family:var(--font-sans);font-size:13px;color:rgba(255,255,255,0.6);">Page content</span>
+                </div>
+                <div style="width:260px;background:var(--surface-bg);border-left:1px solid var(--surface-border);box-shadow:var(--elev-3);display:flex;flex-direction:column;flex-shrink:0;">
+                  <div style="display:flex;align-items:center;justify-content:space-between;padding:var(--space-5) var(--space-6);border-bottom:1px solid var(--surface-border);">
+                    <span style="font-family:var(--font-sans);font-size:var(--font-size-lg);font-weight:600;color:var(--text-primary);">Settings</span>
+                    <div style="width:28px;height:28px;display:flex;align-items:center;justify-content:center;border-radius:var(--radius-md);color:var(--text-tertiary);"><i class="ti ti-x" style="font-size:14px;"></i></div>
+                  </div>
+                  <div style="flex:1;padding:var(--space-6);font-family:var(--font-sans);font-size:var(--font-size-md);color:var(--text-secondary);line-height:1.65;">Configure your workspace preferences here.</div>
+                  <div style="display:flex;gap:var(--space-2);padding:var(--space-4) var(--space-6);border-top:1px solid var(--surface-border);">
+                    <fresh-button variant="ghost" size="sm">Cancel</fresh-button>
+                    <fresh-button variant="primary" size="sm">Save</fresh-button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Left placement -->
+        <div class="spec-variant-row">
+          <div class="spec-variant-header">
+            <span class="spec-variant-name">Left</span>
+            <span class="spec-attr-chip">placement="left"</span>
+            <span class="spec-variant-sep">·</span>
+            <span class="spec-variant-desc">Slides in from the left. Use for navigation trees or secondary toolbars.</span>
+          </div>
+          <div class="spec-variant-body">
+            <div class="spec-demos">
+              <div style="position:relative;width:520px;height:260px;background:rgba(0,0,0,0.28);border-radius:var(--radius-lg);overflow:hidden;display:flex;align-items:stretch;">
+                <div style="width:260px;background:var(--surface-bg);border-right:1px solid var(--surface-border);box-shadow:var(--elev-3);display:flex;flex-direction:column;flex-shrink:0;">
+                  <div style="display:flex;align-items:center;justify-content:space-between;padding:var(--space-5) var(--space-6);border-bottom:1px solid var(--surface-border);">
+                    <span style="font-family:var(--font-sans);font-size:var(--font-size-lg);font-weight:600;color:var(--text-primary);">Navigation</span>
+                    <div style="width:28px;height:28px;display:flex;align-items:center;justify-content:center;border-radius:var(--radius-md);color:var(--text-tertiary);"><i class="ti ti-x" style="font-size:14px;"></i></div>
+                  </div>
+                  <div style="flex:1;padding:var(--space-6);font-family:var(--font-sans);font-size:var(--font-size-md);color:var(--text-secondary);line-height:1.65;">Left placement: slides in from the left edge.</div>
+                </div>
+                <div style="flex:1;display:flex;align-items:center;justify-content:center;padding:var(--space-4);">
+                  <span style="font-family:var(--font-sans);font-size:13px;color:rgba(255,255,255,0.6);">Page content</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sizes -->
+        <div class="spec-variant-row">
+          <div class="spec-variant-header">
+            <span class="spec-variant-name">Sizes</span>
+            <span class="spec-attr-chip">size="sm" / "md" / "lg"</span>
+            <span class="spec-variant-sep">·</span>
+            <span class="spec-variant-desc">sm 320px, md 420px (default), lg 560px. Choose based on the density of content.</span>
+          </div>
+          <div class="spec-variant-body">
+            <div class="spec-demos" style="gap:var(--space-3)">
+              <div style="background:var(--surface-bg);border:1px solid var(--surface-border);border-radius:var(--radius-lg);overflow:hidden;width:90px;">
+                <div style="padding:var(--space-3) var(--space-4);border-bottom:1px solid var(--surface-border);font-family:var(--font-sans);font-size:11px;font-weight:600;color:var(--text-primary);">sm</div>
+                <div style="padding:var(--space-3) var(--space-4);font-family:var(--font-sans);font-size:11px;color:var(--text-tertiary);">320px</div>
+              </div>
+              <div style="background:var(--surface-bg);border:1px solid var(--surface-border);border-radius:var(--radius-lg);overflow:hidden;width:90px;">
+                <div style="padding:var(--space-3) var(--space-4);border-bottom:1px solid var(--surface-border);font-family:var(--font-sans);font-size:11px;font-weight:600;color:var(--text-primary);">md</div>
+                <div style="padding:var(--space-3) var(--space-4);font-family:var(--font-sans);font-size:11px;color:var(--text-tertiary);">420px</div>
+              </div>
+              <div style="background:var(--surface-bg);border:1px solid var(--surface-border);border-radius:var(--radius-lg);overflow:hidden;width:90px;">
+                <div style="padding:var(--space-3) var(--space-4);border-bottom:1px solid var(--surface-border);font-family:var(--font-sans);font-size:11px;font-weight:600;color:var(--text-primary);">lg</div>
+                <div style="padding:var(--space-3) var(--space-4);font-family:var(--font-sans);font-size:11px;color:var(--text-tertiary);">560px</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /spec-viewport -->
+    </div><!-- /spec-card -->
   </div>
+
+  <!-- LIVE TRIGGER -->
+  <div class="comp-section">
+    <div class="spec-rules-panel" style="padding:20px 24px;">
+      <div class="spec-rules-topbar" style="margin-bottom:12px;"><span class="spec-rules-title">Live demo</span></div>
+      <p style="font-size:13px;color:var(--text-secondary);margin:0 0 16px;">Click the buttons below to open live drawers. Pressing Escape or clicking the backdrop closes each one.</p>
+      <div style="display:flex;gap:var(--space-3);flex-wrap:wrap;">
+        <fresh-button variant="secondary" onclick="document.getElementById('demo-drawer-right').show()"><i class="ti ti-layout-sidebar-right"></i> Open right drawer</fresh-button>
+        <fresh-button variant="secondary" onclick="document.getElementById('demo-drawer-left').show()"><i class="ti ti-layout-sidebar"></i> Open left drawer</fresh-button>
+        <fresh-button variant="secondary" onclick="document.getElementById('demo-drawer-lg').show()"><i class="ti ti-layout-sidebar-right"></i> Open lg drawer</fresh-button>
+      </div>
+    </div>
+  </div>
+
+  <fresh-drawer id="demo-drawer-right" placement="right" size="md">
+    Configure your workspace preferences. Changes apply immediately after saving.
+    <div slot="footer">
+      <fresh-button variant="ghost" size="sm" onclick="document.getElementById('demo-drawer-right').close()">Cancel</fresh-button>
+      <fresh-button variant="primary" size="sm" onclick="document.getElementById('demo-drawer-right').close()">Save settings</fresh-button>
+    </div>
+  </fresh-drawer>
+
+  <fresh-drawer id="demo-drawer-left" placement="left" size="md">
+    Left-placement drawer. Useful for navigation trees or filter panels on the left side of a layout.
+    <div slot="footer">
+      <fresh-button variant="ghost" size="sm" onclick="document.getElementById('demo-drawer-left').close()">Close</fresh-button>
+    </div>
+  </fresh-drawer>
+
+  <fresh-drawer id="demo-drawer-lg" placement="right" size="lg">
+    Large drawer example. Use when you need more horizontal space for complex forms or tables.
+    <div slot="footer">
+      <fresh-button variant="ghost" size="sm" onclick="document.getElementById('demo-drawer-lg').close()">Cancel</fresh-button>
+      <fresh-button variant="primary" size="sm" onclick="document.getElementById('demo-drawer-lg').close()">Apply</fresh-button>
+    </div>
+  </fresh-drawer>
+
+  <!-- AI RULES -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar">
+        <span class="spec-rules-title">AI action rules</span>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <span class="spec-rules-hint">Click any rule to edit</span>
+          <button class="spec-rules-reset" onclick="restoreDefaults()"><i class="ti ti-rotate" style="font-size:10px;"></i> Restore FreshDS defaults</button>
+        </div>
+      </div>
+      <div class="spec-rules-section">
+        <div class="spec-rules-section-head">
+          <span class="spec-rules-variant">General</span>
+          <span class="spec-attr-chip">fresh-drawer</span>
+        </div>
+        <ul class="spec-rule-list" id="rules-general">
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Use <code>fresh-drawer</code> for contextual tasks that benefit from appearing alongside the main content: settings panels, filter drawers, detail views, and side-by-side editing.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Default to <code>placement="right"</code> for most use cases. Use <code>placement="left"</code> only when the drawer supplements left-side navigation or filter panels that pair with left-rail layouts.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Open the drawer with <code>element.show()</code> and close it with <code>element.close()</code>. Clicking the backdrop or pressing Escape will also close it automatically.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Always include a title and a footer with at least a cancel action. Never leave the user without a clear way to dismiss the drawer.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Prefer a modal over a drawer when the user must make a decision before doing anything else. Use a drawer when the task is supplementary and the user may want to reference the page behind it.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+        </ul>
+        <button class="spec-add-rule" onclick="addRule('rules-general')"><i class="ti ti-plus"></i> Add rule</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ATTRIBUTES -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Attributes</span></div>
+      <table class="spec-a11y-table">
+        <thead><tr><th style="width:130px">Attribute</th><th style="width:220px">Values</th><th style="width:80px">Default</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">open</td><td class="spec-a11y-req">boolean</td><td class="spec-a11y-req">-</td><td class="spec-a11y-req">Controlled open state. Prefer the <code>show()</code> and <code>close()</code> methods for animation support.</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">title</td><td class="spec-a11y-req">string</td><td class="spec-a11y-req">-</td><td class="spec-a11y-req">Panel heading shown in the header section.</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">placement</td><td class="spec-a11y-req"><code>left</code> <code>right</code></td><td class="spec-a11y-req"><code>right</code></td><td class="spec-a11y-req">Which edge the drawer slides in from.</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">size</td><td class="spec-a11y-req"><code>sm</code> <code>md</code> <code>lg</code></td><td class="spec-a11y-req"><code>md</code></td><td class="spec-a11y-req">Panel width: sm 320px, md 420px, lg 560px. Capped at <code>calc(100vw - 32px)</code> on narrow viewports.</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">slot="footer"</td><td class="spec-a11y-req">element</td><td class="spec-a11y-req">-</td><td class="spec-a11y-req">Action buttons anchored to the bottom of the panel, separated by a top border.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- EVENTS -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Events</span></div>
+      <table class="spec-a11y-table">
+        <thead><tr><th style="width:130px">Event</th><th style="width:220px">Detail</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">close</td><td class="spec-a11y-req">none</td><td class="spec-a11y-req">Fires after the slide-out animation completes and the <code>open</code> attribute has been removed. Bubbles and composes.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- CODE -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Code</span></div>
+      <div style="padding:16px 20px;display:flex;flex-direction:column;gap:0;">
+
+        <div class="code-block" data-code="&lt;fresh-drawer id=&quot;settings-drawer&quot; title=&quot;Settings&quot; placement=&quot;right&quot;&gt;
+  Settings content here.
+  &lt;div slot=&quot;footer&quot;&gt;
+    &lt;fresh-button variant=&quot;ghost&quot; onclick=&quot;document.getElementById('settings-drawer').close()&quot;&gt;Cancel&lt;/fresh-button&gt;
+    &lt;fresh-button variant=&quot;primary&quot; onclick=&quot;document.getElementById('settings-drawer').close()&quot;&gt;Save&lt;/fresh-button&gt;
+  &lt;/div&gt;
+&lt;/fresh-drawer&gt;
+
+&lt;fresh-button variant=&quot;secondary&quot; onclick=&quot;document.getElementById('settings-drawer').show()&quot;&gt;Open settings&lt;/fresh-button&gt;">
+          <div class="code-block-header"><span><span class="code-lang">HTML</span><span class="code-context">Settings drawer</span></span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+          <div class="code-body"><span class="hl-pun">&lt;</span><span class="hl-tag">fresh-drawer</span> <span class="hl-attr">id</span><span class="hl-pun">=</span><span class="hl-val">"settings-drawer"</span> <span class="hl-attr">title</span><span class="hl-pun">=</span><span class="hl-val">"Settings"</span> <span class="hl-attr">placement</span><span class="hl-pun">=</span><span class="hl-val">"right"</span><span class="hl-pun">&gt;</span>
+  <span class="hl-txt">Settings content here.</span>
+  <span class="hl-pun">&lt;</span><span class="hl-tag">div</span> <span class="hl-attr">slot</span><span class="hl-pun">=</span><span class="hl-val">"footer"</span><span class="hl-pun">&gt;</span>
+    <span class="hl-pun">&lt;</span><span class="hl-tag">fresh-button</span> <span class="hl-attr">variant</span><span class="hl-pun">=</span><span class="hl-val">"ghost"</span> <span class="hl-attr">onclick</span><span class="hl-pun">=</span><span class="hl-val">"document.getElementById('settings-drawer').close()"</span><span class="hl-pun">&gt;</span><span class="hl-txt">Cancel</span><span class="hl-pun">&lt;/</span><span class="hl-tag">fresh-button</span><span class="hl-pun">&gt;</span>
+    <span class="hl-pun">&lt;</span><span class="hl-tag">fresh-button</span> <span class="hl-attr">variant</span><span class="hl-pun">=</span><span class="hl-val">"primary"</span> <span class="hl-attr">onclick</span><span class="hl-pun">=</span><span class="hl-val">"document.getElementById('settings-drawer').close()"</span><span class="hl-pun">&gt;</span><span class="hl-txt">Save</span><span class="hl-pun">&lt;/</span><span class="hl-tag">fresh-button</span><span class="hl-pun">&gt;</span>
+  <span class="hl-pun">&lt;/</span><span class="hl-tag">div</span><span class="hl-pun">&gt;</span>
+<span class="hl-pun">&lt;/</span><span class="hl-tag">fresh-drawer</span><span class="hl-pun">&gt;</span>
+
+<span class="hl-pun">&lt;</span><span class="hl-tag">fresh-button</span> <span class="hl-attr">variant</span><span class="hl-pun">=</span><span class="hl-val">"secondary"</span> <span class="hl-attr">onclick</span><span class="hl-pun">=</span><span class="hl-val">"document.getElementById('settings-drawer').show()"</span><span class="hl-pun">&gt;</span><span class="hl-txt">Open settings</span><span class="hl-pun">&lt;/</span><span class="hl-tag">fresh-button</span><span class="hl-pun">&gt;</span></div>
+        </div>
+
+        <div class="code-block" data-code="&lt;fresh-drawer id=&quot;filter-drawer&quot; title=&quot;Filters&quot; placement=&quot;left&quot; size=&quot;sm&quot;&gt;
+  Filter content here.
+  &lt;div slot=&quot;footer&quot;&gt;
+    &lt;fresh-button variant=&quot;ghost&quot; onclick=&quot;document.getElementById('filter-drawer').close()&quot;&gt;Clear all&lt;/fresh-button&gt;
+    &lt;fresh-button variant=&quot;primary&quot; onclick=&quot;document.getElementById('filter-drawer').close()&quot;&gt;Apply&lt;/fresh-button&gt;
+  &lt;/div&gt;
+&lt;/fresh-drawer&gt;">
+          <div class="code-block-header"><span><span class="code-lang">HTML</span><span class="code-context">Left filter drawer</span></span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+          <div class="code-body"><span class="hl-pun">&lt;</span><span class="hl-tag">fresh-drawer</span> <span class="hl-attr">id</span><span class="hl-pun">=</span><span class="hl-val">"filter-drawer"</span> <span class="hl-attr">title</span><span class="hl-pun">=</span><span class="hl-val">"Filters"</span> <span class="hl-attr">placement</span><span class="hl-pun">=</span><span class="hl-val">"left"</span> <span class="hl-attr">size</span><span class="hl-pun">=</span><span class="hl-val">"sm"</span><span class="hl-pun">&gt;</span>
+  <span class="hl-txt">Filter content here.</span>
+  <span class="hl-pun">&lt;</span><span class="hl-tag">div</span> <span class="hl-attr">slot</span><span class="hl-pun">=</span><span class="hl-val">"footer"</span><span class="hl-pun">&gt;</span>
+    <span class="hl-pun">&lt;</span><span class="hl-tag">fresh-button</span> <span class="hl-attr">variant</span><span class="hl-pun">=</span><span class="hl-val">"ghost"</span> <span class="hl-attr">onclick</span><span class="hl-pun">=</span><span class="hl-val">"document.getElementById('filter-drawer').close()"</span><span class="hl-pun">&gt;</span><span class="hl-txt">Clear all</span><span class="hl-pun">&lt;/</span><span class="hl-tag">fresh-button</span><span class="hl-pun">&gt;</span>
+    <span class="hl-pun">&lt;</span><span class="hl-tag">fresh-button</span> <span class="hl-attr">variant</span><span class="hl-pun">=</span><span class="hl-val">"primary"</span> <span class="hl-attr">onclick</span><span class="hl-pun">=</span><span class="hl-val">"document.getElementById('filter-drawer').close()"</span><span class="hl-pun">&gt;</span><span class="hl-txt">Apply</span><span class="hl-pun">&lt;/</span><span class="hl-tag">fresh-button</span><span class="hl-pun">&gt;</span>
+  <span class="hl-pun">&lt;/</span><span class="hl-tag">div</span><span class="hl-pun">&gt;</span>
+<span class="hl-pun">&lt;/</span><span class="hl-tag">fresh-drawer</span><span class="hl-pun">&gt;</span></div>
+        </div>
+
+        <div class="code-block" data-code="// Listen for the close event
+document.getElementById('settings-drawer').addEventListener('close', function() {
+  console.log('drawer closed');
+});
+">
+          <div class="code-block-header"><span><span class="code-lang">JS</span><span class="code-context">Close event listener</span></span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+          <div class="code-body"><span class="hl-txt">document.getElementById('settings-drawer').addEventListener('close', function() {</span>
+  <span class="hl-txt">  console.log('drawer closed');</span>
+<span class="hl-txt">});</span></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- TOKENS -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Tokens</span></div>
+      <table class="spec-a11y-table">
+        <thead><tr><th style="width:220px">Token</th><th style="width:200px">Role</th><th>State</th></tr></thead>
+        <tbody>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--surface-bg</td><td class="spec-a11y-req">Panel fill</td><td class="spec-a11y-req">all</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--surface-border</td><td class="spec-a11y-req">Edge border, header and footer dividers</td><td class="spec-a11y-req">all</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--elev-3</td><td class="spec-a11y-req">Panel drop shadow</td><td class="spec-a11y-req">open</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--text-primary</td><td class="spec-a11y-req">Title text</td><td class="spec-a11y-req">all</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--text-secondary</td><td class="spec-a11y-req">Body text</td><td class="spec-a11y-req">all</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--text-tertiary</td><td class="spec-a11y-req">Close button icon</td><td class="spec-a11y-req">default</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--surface-overlay</td><td class="spec-a11y-req">Close button hover fill</td><td class="spec-a11y-req">hover</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--color-interactive-text</td><td class="spec-a11y-req">Focus ring colour</td><td class="spec-a11y-req">focus-visible</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ACCESSIBILITY -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Accessibility</span></div>
+      <div style="padding:12px 24px 14px;border-bottom:1px solid #d4d4d7;">
+        <p style="font-size:13px;color:#555;line-height:1.6;margin:0;">Drawer satisfies all <a href="app.html#accessibility" target="_parent" style="color:#5b6af7;text-decoration:none;font-weight:500;">universal accessibility concerns</a>. Component-specific concerns are below.</p>
+      </div>
+      <table class="spec-a11y-table">
+        <thead><tr><th>Concern</th><th>Requirement</th></tr></thead>
+        <tbody>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">Role and labelling</td><td class="spec-a11y-req">The panel has <code>role="dialog"</code> and <code>aria-modal="true"</code>. When a title is set, <code>aria-labelledby</code> connects it to the heading element.</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">Escape to close</td><td class="spec-a11y-req">Pressing Escape closes the drawer. Clicking the backdrop also closes it. Both are required keyboard and pointer interactions.</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">Scroll lock</td><td class="spec-a11y-req">Sets <code>document.body.style.overflow = 'hidden'</code> when open. Restored on close. Ensure content within the drawer body scrolls independently for long forms.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
 </div>
+
 <script src="components/core/fresh-button.js"></script>
-<script src="components/core/fresh-input.js"></script>
-<script src="components/core/fresh-select.js"></script>
-<script src="components/core/fresh-slider.js"></script>
-<script src="components/core/fresh-toggle.js"></script>
-<script src="components/core/fresh-form-field.js"></script>
-<script src="components/feedback/fresh-alert.js"></script>
 <script src="components/containers/fresh-drawer.js"></script>
-<script src="components/navigation/fresh-simple-tabs.js"></script>
+<script src="js/spec-page.js"></script>
+
+<script>
+  // Set drawer titles after component definition is loaded
+  document.addEventListener('DOMContentLoaded', function() {
+    var right = document.getElementById('demo-drawer-right');
+    var left = document.getElementById('demo-drawer-left');
+    var lg = document.getElementById('demo-drawer-lg');
+    if (right) right.setAttribute('title', 'Settings');
+    if (left) left.setAttribute('title', 'Navigation');
+    if (lg) lg.setAttribute('title', 'Detail view');
+  });
+</script>
+
+<script type="module">
+  import { supabase } from '/js/supabase-client.js'
+  var RULE_IDS = ['rules-general'];
+  var _saveTimer = null, _loading = false;
+  function getRulesSnapshot() {
+    var r = {};
+    RULE_IDS.forEach(function(id) { var l = document.getElementById(id); if (!l) return; r[id] = Array.from(l.querySelectorAll('.spec-rule-text')).map(function(el) { return el.innerHTML.trim(); }); });
+    return r;
+  }
+  function applySnapshot(saved) {
+    RULE_IDS.forEach(function(id) { var l = document.getElementById(id); if (!l) return; var rules = (saved && saved[id] && saved[id].length) ? saved[id] : window.DEFAULT_RULES[id]; l.innerHTML = rules.map(function(t) { return '<li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">' + t + '</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>'; }).join(''); }); }
+  async function saveRulesNow() {
+    try { var { data: { user } } = await supabase.auth.getUser(); if (!user) return; var { data: p } = await supabase.from('profiles').select('component_rules').eq('id', user.id).single(); var e = (p && p.component_rules) ? p.component_rules : {}; e.drawer = getRulesSnapshot(); await supabase.from('profiles').update({ component_rules: e }).eq('id', user.id); } catch(e) {}
+  }
+  function schedSave() { if (_loading) return; clearTimeout(_saveTimer); _saveTimer = setTimeout(saveRulesNow, 1000); }
+  var panel = document.querySelector('.spec-rules-panel'); if (panel) new MutationObserver(schedSave).observe(panel, { childList: true, subtree: true, characterData: true });
+  ;(async function() { try { var { data: { user } } = await supabase.auth.getUser(); if (!user) return; var { data: p } = await supabase.from('profiles').select('component_rules').eq('id', user.id).single(); if (p && p.component_rules && p.component_rules.drawer) { _loading = true; applySnapshot(p.component_rules.drawer); _loading = false; } } catch(e) {} })();
+</script>
+
+<script>
+  var DEFAULT_RULES = {
+    'rules-general': [
+      'Use <code>fresh-drawer</code> for contextual tasks that benefit from appearing alongside the main content: settings panels, filter drawers, detail views, and side-by-side editing.',
+      'Default to <code>placement="right"</code> for most use cases. Use <code>placement="left"</code> only when the drawer supplements left-side navigation or filter panels that pair with left-rail layouts.',
+      'Open the drawer with <code>element.show()</code> and close it with <code>element.close()</code>. Clicking the backdrop or pressing Escape will also close it automatically.',
+      'Always include a title and a footer with at least a cancel action. Never leave the user without a clear way to dismiss the drawer.',
+      'Prefer a modal over a drawer when the user must make a decision before doing anything else. Use a drawer when the task is supplementary and the user may want to reference the page behind it.'
+    ]
+  };
+  function restoreDefaults() {
+    if (!confirm('Reset all drawer rules to FreshDS defaults? Any edits you have made will be lost.')) return;
+    Object.keys(DEFAULT_RULES).forEach(function(id) { var l = document.getElementById(id); if (!l) return; l.innerHTML = DEFAULT_RULES[id].map(function(t) { return '<li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">' + t + '</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>'; }).join(''); }); }
+</script>
 </body>
 </html>

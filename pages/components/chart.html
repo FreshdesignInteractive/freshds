@@ -3,124 +3,381 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Chart wrapper | FreshDS</title>
+<title>Chart | FreshDS</title>
 <base href="../../">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="styles/site.css">
 <link rel="stylesheet" href="tokens/primitives.css">
 <link rel="stylesheet" href="tokens/theme.css">
 <link rel="stylesheet" href="tokens/dataviz.css">
-<link rel="stylesheet" href="styles/reset.css">
-<link rel="stylesheet" href="styles/layout.css">
-<link rel="stylesheet" href="styles/components/core.css">
-<link rel="stylesheet" href="styles/docs.css">
 <script src="js/freshds.js"></script>
 <script src="js/freshds-site.js"></script>
+<link rel="stylesheet" href="styles/components/spec-page.css">
 </head>
 <body>
-<div class="fds-app" id="app">
-  <ds-topbar active-section="ds"></ds-topbar>
-  <div class="fds-body">
-    <ds-shell active="chart"></ds-shell>
-    <main class="fds-main">
-      <div class="fds-page active" id="page-chart">
-        <div class="page-header">
-          <div class="page-eyebrow">Data Display</div>
-          <h1 class="page-title">Chart wrapper</h1>
-          <p class="page-desc">A consistent container for any chart library, Chart.js, Recharts, D3, or custom SVG. Provides the FreshDS header, border, and responsive padding. You supply the chart via the default slot.</p>
-        </div>
-        <div class="page-section">
-          <div class="page-section-title">With title and description</div>
-          <div class="demo-surface col">
-            <fresh-chart title="Monthly recurring revenue" description="MRR across all plans, last 6 months" height="220px">
-              <svg viewBox="0 0 480 160" style="width:100%;height:100%" aria-hidden="true">
-                <defs>
-                  <linearGradient id="area-grad" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stop-color="var(--dv-1)" stop-opacity="0.2"/>
-                    <stop offset="100%" stop-color="var(--dv-1)" stop-opacity="0"/>
-                  </linearGradient>
-                </defs>
-                <path d="M0 140 L80 115 L160 95 L240 70 L320 50 L400 35 L480 20 L480 160 L0 160 Z" fill="url(#area-grad)"/>
-                <path d="M0 140 L80 115 L160 95 L240 70 L320 50 L400 35 L480 20" fill="none" stroke="var(--dv-1)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                <circle cx="0"   cy="140" r="4" fill="var(--dv-1)"/>
-                <circle cx="80"  cy="115" r="4" fill="var(--dv-1)"/>
-                <circle cx="160" cy="95"  r="4" fill="var(--dv-1)"/>
-                <circle cx="240" cy="70"  r="4" fill="var(--dv-1)"/>
-                <circle cx="320" cy="50"  r="4" fill="var(--dv-1)"/>
-                <circle cx="400" cy="35"  r="4" fill="var(--dv-1)"/>
-                <circle cx="480" cy="20"  r="4" fill="var(--dv-1)"/>
-                <text x="0"   y="158" font-size="10" fill="var(--text-tertiary)" font-family="var(--font-sans)" text-anchor="middle">Nov</text>
-                <text x="80"  y="158" font-size="10" fill="var(--text-tertiary)" font-family="var(--font-sans)" text-anchor="middle">Dec</text>
-                <text x="160" y="158" font-size="10" fill="var(--text-tertiary)" font-family="var(--font-sans)" text-anchor="middle">Jan</text>
-                <text x="240" y="158" font-size="10" fill="var(--text-tertiary)" font-family="var(--font-sans)" text-anchor="middle">Feb</text>
-                <text x="320" y="158" font-size="10" fill="var(--text-tertiary)" font-family="var(--font-sans)" text-anchor="middle">Mar</text>
-                <text x="400" y="158" font-size="10" fill="var(--text-tertiary)" font-family="var(--font-sans)" text-anchor="middle">Apr</text>
-                <text x="480" y="158" font-size="10" fill="var(--text-tertiary)" font-family="var(--font-sans)" text-anchor="middle">May</text>
-              </svg>
-            </fresh-chart>
-          </div>
-        </div>
-        <div class="page-section">
-          <div class="page-section-title">Bar chart variant</div>
-          <div class="demo-surface col">
-            <fresh-chart title="Token usage by model" description="Daily average across all API calls" height="200px">
-              <svg viewBox="0 0 420 140" style="width:100%;height:100%" aria-hidden="true">
-                <rect x="10"  y="40"  width="40" height="90" rx="4" fill="var(--dv-1)" opacity="0.7"/>
-                <rect x="80"  y="20"  width="40" height="110" rx="4" fill="var(--dv-1)"/>
-                <rect x="150" y="60"  width="40" height="70" rx="4" fill="var(--dv-1)" opacity="0.5"/>
-                <rect x="220" y="30"  width="40" height="100" rx="4" fill="var(--dv-2)" opacity="0.8"/>
-                <rect x="290" y="10"  width="40" height="120" rx="4" fill="var(--dv-2)"/>
-                <rect x="360" y="50"  width="40" height="80" rx="4" fill="var(--dv-2)" opacity="0.6"/>
-                <text x="30"  y="138" font-size="9" fill="var(--text-tertiary)" font-family="var(--font-sans)" text-anchor="middle">Opus</text>
-                <text x="100" y="138" font-size="9" fill="var(--text-tertiary)" font-family="var(--font-sans)" text-anchor="middle">Sonnet</text>
-                <text x="170" y="138" font-size="9" fill="var(--text-tertiary)" font-family="var(--font-sans)" text-anchor="middle">Haiku</text>
-                <text x="240" y="138" font-size="9" fill="var(--text-tertiary)" font-family="var(--font-sans)" text-anchor="middle">GPT-4o</text>
-                <text x="310" y="138" font-size="9" fill="var(--text-tertiary)" font-family="var(--font-sans)" text-anchor="middle">Gemini</text>
-                <text x="380" y="138" font-size="9" fill="var(--text-tertiary)" font-family="var(--font-sans)" text-anchor="middle">Llama</text>
-              </svg>
-            </fresh-chart>
-          </div>
-        </div>
-        <div class="page-section">
-          <div class="page-section-title">States: loading and empty</div>
-          <div class="demo-surface" style="gap:var(--space-4);align-items:stretch;flex-wrap:wrap">
-            <fresh-chart title="Loading state" loading height="140px" style="flex:1;min-width:200px"></fresh-chart>
-            <fresh-chart title="Empty state"   empty  height="140px" style="flex:1;min-width:200px"></fresh-chart>
-          </div>
-        </div>
-        <div class="page-section">
-          <div class="page-section-title">Attributes</div>
-          <table class="usage-table">
-            <thead><tr><th>Attribute</th><th>Values</th><th>Default</th><th>Description</th></tr></thead>
-            <tbody>
-              <tr><td>title</td><td>string</td><td></td><td>Card header title</td></tr>
-              <tr><td>description</td><td>string</td><td></td><td>Subtitle below the title</td></tr>
-              <tr><td>height</td><td>CSS value</td><td><code>280px</code></td><td>Chart area height</td></tr>
-              <tr><td>loading</td><td>boolean</td><td></td><td>Shows shimmer skeleton over the chart area</td></tr>
-              <tr><td>empty</td><td>boolean</td><td></td><td>Shows "No data available" message</td></tr>
-            </tbody>
-          </table>
-        </div>
-        <div class="page-section">
-          <div class="page-section-title">Slots</div>
-          <table class="usage-table">
-            <thead><tr><th>Slot</th><th>Description</th></tr></thead>
-            <tbody>
-              <tr><td><em>default</em></td><td>Your chart element, canvas, SVG, or a charting library component</td></tr>
-              <tr><td>actions</td><td>Buttons or controls rendered top-right in the card header</td></tr>
-            </tbody>
-          </table>
+
+<div class="comp-page">
+  <h1 class="comp-title">Chart</h1>
+  <p class="comp-desc">A consistent container for any chart library, Chart.js, Recharts, D3, or custom SVG. Provides the FreshDS card header, border, and responsive padding. You supply the chart via the default slot.</p>
+
+  <!-- STATES CARD -->
+  <div class="comp-section">
+    <div class="spec-card">
+      <div class="spec-card-topbar">
+        <span class="spec-rules-title">Chart states</span>
+        <div class="spec-mode-switcher">
+          <button class="spec-mode-btn active" id="mode-btn-light" onclick="setSpecMode('light')"><i class="ti ti-sun"></i> Light</button>
+          <button class="spec-mode-btn" id="mode-btn-dark" onclick="setSpecMode('dark')"><i class="ti ti-moon"></i> Dark</button>
         </div>
       </div>
-    </main>
+      <div id="spec-viewport" class="spec-viewport">
+
+        <!-- Area chart -->
+        <div class="spec-variant-row">
+          <div class="spec-variant-header">
+            <span class="spec-variant-name">Area chart</span>
+            <span class="spec-attr-chip">title + description</span>
+            <span class="spec-variant-sep">·</span>
+            <span class="spec-variant-desc">Card header is shown when either title or description is provided. Chart content goes in the default slot.</span>
+          </div>
+          <div class="spec-variant-body">
+            <div class="spec-demos" style="display:block;width:100%;">
+              <fresh-chart title="Monthly recurring revenue" description="MRR across all plans, last 6 months" height="220px">
+                <svg viewBox="0 0 480 160" style="width:100%;height:100%" aria-hidden="true">
+                  <defs>
+                    <linearGradient id="area-grad" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stop-color="var(--dv-1)" stop-opacity="0.25"/>
+                      <stop offset="100%" stop-color="var(--dv-1)" stop-opacity="0"/>
+                    </linearGradient>
+                  </defs>
+                  <path d="M0 140 L80 115 L160 95 L240 70 L320 50 L400 35 L480 20 L480 160 L0 160 Z" fill="url(#area-grad)"/>
+                  <path d="M0 140 L80 115 L160 95 L240 70 L320 50 L400 35 L480 20" fill="none" stroke="var(--dv-1)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  <circle cx="0"   cy="140" r="4" fill="var(--dv-1)"/>
+                  <circle cx="80"  cy="115" r="4" fill="var(--dv-1)"/>
+                  <circle cx="160" cy="95"  r="4" fill="var(--dv-1)"/>
+                  <circle cx="240" cy="70"  r="4" fill="var(--dv-1)"/>
+                  <circle cx="320" cy="50"  r="4" fill="var(--dv-1)"/>
+                  <circle cx="400" cy="35"  r="4" fill="var(--dv-1)"/>
+                  <circle cx="480" cy="20"  r="4" fill="var(--dv-1)"/>
+                  <text x="0"   y="158" font-size="10" fill="var(--text-tertiary)" font-family="var(--font-sans)" text-anchor="middle">Nov</text>
+                  <text x="80"  y="158" font-size="10" fill="var(--text-tertiary)" font-family="var(--font-sans)" text-anchor="middle">Dec</text>
+                  <text x="160" y="158" font-size="10" fill="var(--text-tertiary)" font-family="var(--font-sans)" text-anchor="middle">Jan</text>
+                  <text x="240" y="158" font-size="10" fill="var(--text-tertiary)" font-family="var(--font-sans)" text-anchor="middle">Feb</text>
+                  <text x="320" y="158" font-size="10" fill="var(--text-tertiary)" font-family="var(--font-sans)" text-anchor="middle">Mar</text>
+                  <text x="400" y="158" font-size="10" fill="var(--text-tertiary)" font-family="var(--font-sans)" text-anchor="middle">Apr</text>
+                  <text x="480" y="158" font-size="10" fill="var(--text-tertiary)" font-family="var(--font-sans)" text-anchor="middle">May</text>
+                </svg>
+              </fresh-chart>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bar chart -->
+        <div class="spec-variant-row">
+          <div class="spec-variant-header">
+            <span class="spec-variant-name">Bar chart</span>
+            <span class="spec-attr-chip">default slot</span>
+            <span class="spec-variant-sep">·</span>
+            <span class="spec-variant-desc">Any SVG, canvas, or chart library output can go in the slot. Use --dv-1 through --dv-8 for series colors.</span>
+          </div>
+          <div class="spec-variant-body">
+            <div class="spec-demos" style="display:block;width:100%;">
+              <fresh-chart title="Token usage by model" description="Daily average across all API calls" height="200px">
+                <svg viewBox="0 0 420 140" style="width:100%;height:100%" aria-hidden="true">
+                  <rect x="10"  y="40"  width="40" height="90"  rx="4" fill="var(--dv-1)" opacity="0.7"/>
+                  <rect x="80"  y="20"  width="40" height="110" rx="4" fill="var(--dv-1)"/>
+                  <rect x="150" y="60"  width="40" height="70"  rx="4" fill="var(--dv-1)" opacity="0.5"/>
+                  <rect x="220" y="30"  width="40" height="100" rx="4" fill="var(--dv-2)" opacity="0.8"/>
+                  <rect x="290" y="10"  width="40" height="120" rx="4" fill="var(--dv-2)"/>
+                  <rect x="360" y="50"  width="40" height="80"  rx="4" fill="var(--dv-2)" opacity="0.6"/>
+                  <text x="30"  y="138" font-size="9" fill="var(--text-tertiary)" font-family="var(--font-sans)" text-anchor="middle">Opus</text>
+                  <text x="100" y="138" font-size="9" fill="var(--text-tertiary)" font-family="var(--font-sans)" text-anchor="middle">Sonnet</text>
+                  <text x="170" y="138" font-size="9" fill="var(--text-tertiary)" font-family="var(--font-sans)" text-anchor="middle">Haiku</text>
+                  <text x="240" y="138" font-size="9" fill="var(--text-tertiary)" font-family="var(--font-sans)" text-anchor="middle">GPT-4o</text>
+                  <text x="310" y="138" font-size="9" fill="var(--text-tertiary)" font-family="var(--font-sans)" text-anchor="middle">Gemini</text>
+                  <text x="380" y="138" font-size="9" fill="var(--text-tertiary)" font-family="var(--font-sans)" text-anchor="middle">Llama</text>
+                </svg>
+              </fresh-chart>
+            </div>
+          </div>
+        </div>
+
+        <!-- Multi-series line chart -->
+        <div class="spec-variant-row">
+          <div class="spec-variant-header">
+            <span class="spec-variant-name">Multi-series</span>
+            <span class="spec-attr-chip">--dv-1 through --dv-8</span>
+            <span class="spec-variant-sep">·</span>
+            <span class="spec-variant-desc">Use dataviz tokens in series order starting at --dv-1. Do not use brand scale tokens for chart series.</span>
+          </div>
+          <div class="spec-variant-body">
+            <div class="spec-demos" style="display:block;width:100%;">
+              <fresh-chart title="Plan distribution" description="Starter, Pro, and Enterprise over 5 months" height="200px">
+                <svg viewBox="0 0 480 150" style="width:100%;height:100%" aria-hidden="true">
+                  <path d="M0 120 L120 100 L240 80 L360 60 L480 40" fill="none" stroke="var(--dv-1)" stroke-width="2" stroke-linecap="round"/>
+                  <path d="M0 130 L120 115 L240 105 L360 90 L480 80" fill="none" stroke="var(--dv-2)" stroke-width="2" stroke-linecap="round"/>
+                  <path d="M0 140 L120 135 L240 128 L360 118 L480 110" fill="none" stroke="var(--dv-3)" stroke-width="2" stroke-linecap="round"/>
+                  <text x="0"   y="148" font-size="10" fill="var(--text-tertiary)" font-family="var(--font-sans)" text-anchor="middle">Jan</text>
+                  <text x="120" y="148" font-size="10" fill="var(--text-tertiary)" font-family="var(--font-sans)" text-anchor="middle">Feb</text>
+                  <text x="240" y="148" font-size="10" fill="var(--text-tertiary)" font-family="var(--font-sans)" text-anchor="middle">Mar</text>
+                  <text x="360" y="148" font-size="10" fill="var(--text-tertiary)" font-family="var(--font-sans)" text-anchor="middle">Apr</text>
+                  <text x="480" y="148" font-size="10" fill="var(--text-tertiary)" font-family="var(--font-sans)" text-anchor="middle">May</text>
+                  <!-- Legend -->
+                  <rect x="160" y="4" width="8" height="8" rx="2" fill="var(--dv-1)"/>
+                  <text x="172" y="12" font-size="10" fill="var(--text-secondary)" font-family="var(--font-sans)">Starter</text>
+                  <rect x="220" y="4" width="8" height="8" rx="2" fill="var(--dv-2)"/>
+                  <text x="232" y="12" font-size="10" fill="var(--text-secondary)" font-family="var(--font-sans)">Pro</text>
+                  <rect x="270" y="4" width="8" height="8" rx="2" fill="var(--dv-3)"/>
+                  <text x="282" y="12" font-size="10" fill="var(--text-secondary)" font-family="var(--font-sans)">Enterprise</text>
+                </svg>
+              </fresh-chart>
+            </div>
+          </div>
+        </div>
+
+        <!-- Loading and empty states -->
+        <div class="spec-variant-row">
+          <div class="spec-variant-header">
+            <span class="spec-variant-name">Loading + empty</span>
+            <span class="spec-attr-chip">loading · empty</span>
+            <span class="spec-variant-sep">·</span>
+            <span class="spec-variant-desc">Boolean attributes for loading shimmer and empty state. Use loading when data is fetching, empty when a query returns no results.</span>
+          </div>
+          <div class="spec-variant-body">
+            <div class="spec-demos" style="align-items:stretch;flex-wrap:wrap;">
+              <fresh-chart title="Loading state" loading height="140px" style="flex:1;min-width:200px"></fresh-chart>
+              <fresh-chart title="Empty state"   empty  height="140px" style="flex:1;min-width:200px"></fresh-chart>
+            </div>
+          </div>
+        </div>
+
+        <!-- Header slot: actions -->
+        <div class="spec-variant-row">
+          <div class="spec-variant-header">
+            <span class="spec-variant-name">Header actions slot</span>
+            <span class="spec-attr-chip">slot="actions"</span>
+            <span class="spec-variant-sep">·</span>
+            <span class="spec-variant-desc">Place buttons or controls in the <code>actions</code> slot. They render top-right in the card header alongside the title and description.</span>
+          </div>
+          <div class="spec-variant-body">
+            <div class="spec-demos" style="display:block;width:100%;">
+              <fresh-chart title="Active sessions" description="Live connections over 24 hours" height="160px">
+                <div slot="actions">
+                  <fresh-button variant="ghost" size="sm"><i class="ti ti-download"></i> Export</fresh-button>
+                </div>
+                <svg viewBox="0 0 480 100" style="width:100%;height:100%" aria-hidden="true">
+                  <path d="M0 80 L60 65 L120 72 L180 45 L240 50 L300 30 L360 40 L420 20 L480 25" fill="none" stroke="var(--dv-3)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </fresh-chart>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /spec-viewport -->
+    </div><!-- /spec-card -->
   </div>
+
+  <!-- AI RULES -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar">
+        <span class="spec-rules-title">AI action rules</span>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <span class="spec-rules-hint">Click any rule to edit</span>
+          <button class="spec-rules-reset" onclick="restoreDefaults()"><i class="ti ti-rotate" style="font-size:10px;"></i> Restore FreshDS defaults</button>
+        </div>
+      </div>
+
+      <div class="spec-rules-section">
+        <div class="spec-rules-section-head">
+          <span class="spec-rules-variant">General</span>
+          <span class="spec-attr-chip">fresh-chart</span>
+        </div>
+        <ul class="spec-rule-list" id="rules-general">
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Always use <code>--dv-1</code> through <code>--dv-8</code> tokens for chart series colors. Never use brand scale tokens (<code>--primary-*</code>, <code>--secondary-*</code>) inside charts.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Assign series colors in order starting at <code>--dv-1</code>. Do not skip tokens or pick arbitrary ones. Consistent ordering makes multi-chart dashboards scannable.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Show the <code>loading</code> state immediately when data is being fetched. Do not render a chart with empty or placeholder data, use <code>loading</code> then replace the attribute when data arrives.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Always provide <code>aria-hidden="true"</code> on the chart SVG or canvas and describe the key insight in <code>description</code> so screen readers get context without parsing chart graphics.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Load <code>tokens/dataviz.css</code> on any page that uses <code>fresh-chart</code>. The <code>--dv-*</code> tokens are defined in that file and are not included in theme.css.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+        </ul>
+        <button class="spec-add-rule" onclick="addRule('rules-general')"><i class="ti ti-plus"></i> Add rule</button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ATTRIBUTES -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Attributes</span></div>
+      <table class="spec-a11y-table">
+        <thead><tr><th style="width:130px">Attribute</th><th style="width:220px">Values</th><th style="width:80px">Default</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">title</td><td class="spec-a11y-req">string</td><td class="spec-a11y-req">-</td><td class="spec-a11y-req">Card header title. When provided, the header section renders.</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">description</td><td class="spec-a11y-req">string</td><td class="spec-a11y-req">-</td><td class="spec-a11y-req">Subtitle below the title. Useful for labeling the time range or metric scope.</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">height</td><td class="spec-a11y-req">CSS length value</td><td class="spec-a11y-req"><code>280px</code></td><td class="spec-a11y-req">Height of the chart area. Set to match the chart library output height.</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">loading</td><td class="spec-a11y-req">boolean</td><td class="spec-a11y-req">-</td><td class="spec-a11y-req">Overlays an animated shimmer skeleton while data is fetching.</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">empty</td><td class="spec-a11y-req">boolean</td><td class="spec-a11y-req">-</td><td class="spec-a11y-req">Shows "No data available" when the query returns no results. Ignored while <code>loading</code> is set.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- SLOTS -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Slots</span></div>
+      <table class="spec-a11y-table">
+        <thead><tr><th style="width:130px">Slot</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">default</td><td class="spec-a11y-req">Your chart element: an SVG, canvas, or a chart library component. Sized to fill the chart area via <code>::slotted(*) { width:100%; height:100%; }</code>.</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">actions</td><td class="spec-a11y-req">Buttons or controls rendered top-right in the card header. Requires <code>title</code> or <code>description</code> to be set for the header to appear.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- CODE -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Code</span></div>
+      <div style="padding:16px 20px;display:flex;flex-direction:column;gap:0;">
+
+        <div class="code-block" data-code="&lt;fresh-chart title=&quot;Monthly revenue&quot; description=&quot;MRR across all plans, last 6 months&quot; height=&quot;220px&quot;&gt;
+  &lt;svg viewBox=&quot;0 0 480 160&quot; style=&quot;width:100%;height:100%&quot; aria-hidden=&quot;true&quot;&gt;
+    &lt;!-- your chart path/rect elements here --&gt;
+    &lt;!-- Use var(--dv-1) through var(--dv-8) for series colors --&gt;
+  &lt;/svg&gt;
+&lt;/fresh-chart&gt;">
+          <div class="code-block-header"><span><span class="code-lang">HTML</span><span class="code-context">Area chart</span></span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+          <div class="code-body"><span class="hl-pun">&lt;</span><span class="hl-tag">fresh-chart</span> <span class="hl-attr">title</span><span class="hl-pun">=</span><span class="hl-val">"Monthly revenue"</span> <span class="hl-attr">description</span><span class="hl-pun">=</span><span class="hl-val">"MRR across all plans, last 6 months"</span> <span class="hl-attr">height</span><span class="hl-pun">=</span><span class="hl-val">"220px"</span><span class="hl-pun">&gt;</span>
+  <span class="hl-pun">&lt;</span><span class="hl-tag">svg</span> <span class="hl-attr">viewBox</span><span class="hl-pun">=</span><span class="hl-val">"0 0 480 160"</span> <span class="hl-attr">style</span><span class="hl-pun">=</span><span class="hl-val">"width:100%;height:100%"</span> <span class="hl-attr">aria-hidden</span><span class="hl-pun">=</span><span class="hl-val">"true"</span><span class="hl-pun">&gt;</span>
+    <span class="hl-cmt">&lt;!-- your chart path/rect elements here --&gt;</span>
+    <span class="hl-cmt">&lt;!-- Use var(--dv-1) through var(--dv-8) for series colors --&gt;</span>
+  <span class="hl-pun">&lt;/</span><span class="hl-tag">svg</span><span class="hl-pun">&gt;</span>
+<span class="hl-pun">&lt;/</span><span class="hl-tag">fresh-chart</span><span class="hl-pun">&gt;</span></div>
+        </div>
+
+        <div class="code-block" data-code="&lt;!-- Loading skeleton while data fetches --&gt;
+&lt;fresh-chart title=&quot;Revenue&quot; loading height=&quot;220px&quot;&gt;&lt;/fresh-chart&gt;
+
+&lt;!-- Once data loads, replace loading with chart content --&gt;
+&lt;fresh-chart title=&quot;Revenue&quot; height=&quot;220px&quot;&gt;
+  &lt;canvas id=&quot;revenue-chart&quot;&gt;&lt;/canvas&gt;
+&lt;/fresh-chart&gt;">
+          <div class="code-block-header"><span><span class="code-lang">HTML</span><span class="code-context">Loading then content</span></span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+          <div class="code-body"><span class="hl-cmt">&lt;!-- Loading skeleton while data fetches --&gt;</span>
+<span class="hl-pun">&lt;</span><span class="hl-tag">fresh-chart</span> <span class="hl-attr">title</span><span class="hl-pun">=</span><span class="hl-val">"Revenue"</span> <span class="hl-attr">loading</span> <span class="hl-attr">height</span><span class="hl-pun">=</span><span class="hl-val">"220px"</span><span class="hl-pun">&gt;&lt;/</span><span class="hl-tag">fresh-chart</span><span class="hl-pun">&gt;</span>
+
+<span class="hl-cmt">&lt;!-- Once data loads, replace loading with chart content --&gt;</span>
+<span class="hl-pun">&lt;</span><span class="hl-tag">fresh-chart</span> <span class="hl-attr">title</span><span class="hl-pun">=</span><span class="hl-val">"Revenue"</span> <span class="hl-attr">height</span><span class="hl-pun">=</span><span class="hl-val">"220px"</span><span class="hl-pun">&gt;</span>
+  <span class="hl-pun">&lt;</span><span class="hl-tag">canvas</span> <span class="hl-attr">id</span><span class="hl-pun">=</span><span class="hl-val">"revenue-chart"</span><span class="hl-pun">&gt;&lt;/</span><span class="hl-tag">canvas</span><span class="hl-pun">&gt;</span>
+<span class="hl-pun">&lt;/</span><span class="hl-tag">fresh-chart</span><span class="hl-pun">&gt;</span></div>
+        </div>
+
+        <div class="code-block" data-code="&lt;fresh-chart title=&quot;Sessions&quot; description=&quot;Last 24 hours&quot; height=&quot;200px&quot;&gt;
+  &lt;div slot=&quot;actions&quot;&gt;
+    &lt;fresh-button variant=&quot;ghost&quot; size=&quot;sm&quot;&gt;
+      &lt;i class=&quot;ti ti-download&quot;&gt;&lt;/i&gt; Export
+    &lt;/fresh-button&gt;
+  &lt;/div&gt;
+  &lt;canvas id=&quot;sessions-chart&quot;&gt;&lt;/canvas&gt;
+&lt;/fresh-chart&gt;">
+          <div class="code-block-header"><span><span class="code-lang">HTML</span><span class="code-context">With actions slot</span></span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+          <div class="code-body"><span class="hl-pun">&lt;</span><span class="hl-tag">fresh-chart</span> <span class="hl-attr">title</span><span class="hl-pun">=</span><span class="hl-val">"Sessions"</span> <span class="hl-attr">description</span><span class="hl-pun">=</span><span class="hl-val">"Last 24 hours"</span> <span class="hl-attr">height</span><span class="hl-pun">=</span><span class="hl-val">"200px"</span><span class="hl-pun">&gt;</span>
+  <span class="hl-pun">&lt;</span><span class="hl-tag">div</span> <span class="hl-attr">slot</span><span class="hl-pun">=</span><span class="hl-val">"actions"</span><span class="hl-pun">&gt;</span>
+    <span class="hl-pun">&lt;</span><span class="hl-tag">fresh-button</span> <span class="hl-attr">variant</span><span class="hl-pun">=</span><span class="hl-val">"ghost"</span> <span class="hl-attr">size</span><span class="hl-pun">=</span><span class="hl-val">"sm"</span><span class="hl-pun">&gt;</span>
+      <span class="hl-pun">&lt;</span><span class="hl-tag">i</span> <span class="hl-attr">class</span><span class="hl-pun">=</span><span class="hl-val">"ti ti-download"</span><span class="hl-pun">&gt;&lt;/</span><span class="hl-tag">i</span><span class="hl-pun">&gt;</span> <span class="hl-txt">Export</span>
+    <span class="hl-pun">&lt;/</span><span class="hl-tag">fresh-button</span><span class="hl-pun">&gt;</span>
+  <span class="hl-pun">&lt;/</span><span class="hl-tag">div</span><span class="hl-pun">&gt;</span>
+  <span class="hl-pun">&lt;</span><span class="hl-tag">canvas</span> <span class="hl-attr">id</span><span class="hl-pun">=</span><span class="hl-val">"sessions-chart"</span><span class="hl-pun">&gt;&lt;/</span><span class="hl-tag">canvas</span><span class="hl-pun">&gt;</span>
+<span class="hl-pun">&lt;/</span><span class="hl-tag">fresh-chart</span><span class="hl-pun">&gt;</span></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- TOKENS -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Tokens</span></div>
+      <table class="spec-a11y-table">
+        <thead><tr><th style="width:220px">Token</th><th style="width:200px">Role</th><th>State</th></tr></thead>
+        <tbody>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--surface-bg</td><td class="spec-a11y-req">Card background</td><td class="spec-a11y-req">all</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--surface-border</td><td class="spec-a11y-req">Card border and divider</td><td class="spec-a11y-req">all</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--radius-lg</td><td class="spec-a11y-req">Card corner radius</td><td class="spec-a11y-req">all</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--text-primary</td><td class="spec-a11y-req">Title text</td><td class="spec-a11y-req">all</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--text-tertiary</td><td class="spec-a11y-req">Description text, empty state text</td><td class="spec-a11y-req">all</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--surface-overlay</td><td class="spec-a11y-req">Loading shimmer base color</td><td class="spec-a11y-req">loading</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--surface-subtle</td><td class="spec-a11y-req">Loading shimmer highlight color</td><td class="spec-a11y-req">loading</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--dv-1 through --dv-8</td><td class="spec-a11y-req">Chart series colors (dataviz.css)</td><td class="spec-a11y-req">chart content</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ACCESSIBILITY -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Accessibility</span></div>
+      <div style="padding:12px 24px 14px;border-bottom:1px solid #d4d4d7;">
+        <p style="font-size:13px;color:#555;line-height:1.6;margin:0;">Chart wrapper satisfies all <a href="app.html#accessibility" target="_parent" style="color:#5b6af7;text-decoration:none;font-weight:500;">universal accessibility concerns</a>. Component-specific concerns are below.</p>
+      </div>
+      <table class="spec-a11y-table">
+        <thead><tr><th>Concern</th><th>Requirement</th></tr></thead>
+        <tbody>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">chart content</td><td class="spec-a11y-req">The slotted chart SVG or canvas must carry <code>aria-hidden="true"</code>. Use the <code>description</code> attribute or a visually-hidden text summary to communicate the key data insight to screen readers.</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">color-only series</td><td class="spec-a11y-req">When rendering multi-series charts, do not rely on color alone to distinguish series. Add patterns, shapes, or labels directly in the chart so users with color vision deficiency can differentiate them.</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">loading state</td><td class="spec-a11y-req">The shimmer overlay is <code>aria-hidden="true"</code>. Announce loading status with a surrounding <code>aria-live="polite"</code> region if the chart is a primary content area.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
 </div>
+
 <script src="components/core/fresh-button.js"></script>
-<script src="components/core/fresh-input.js"></script>
 <script src="components/data/fresh-chart.js"></script>
-<script src="components/navigation/fresh-simple-tabs.js"></script>
+<script src="js/spec-page.js"></script>
+
+<script type="module">
+  import { supabase } from '/js/supabase-client.js'
+  var RULE_IDS = ['rules-general'];
+  var _saveTimer = null, _loading = false;
+  function getRulesSnapshot() {
+    var r = {};
+    RULE_IDS.forEach(function(id) { var l = document.getElementById(id); if (!l) return; r[id] = Array.from(l.querySelectorAll('.spec-rule-text')).map(function(el) { return el.innerHTML.trim(); }); });
+    return r;
+  }
+  function applySnapshot(saved) {
+    RULE_IDS.forEach(function(id) { var l = document.getElementById(id); if (!l) return; var rules = (saved && saved[id] && saved[id].length) ? saved[id] : window.DEFAULT_RULES[id]; l.innerHTML = rules.map(function(t) { return '<li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">' + t + '</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>'; }).join(''); }); }
+  async function saveRulesNow() {
+    try { var { data: { user } } = await supabase.auth.getUser(); if (!user) return; var { data: p } = await supabase.from('profiles').select('component_rules').eq('id', user.id).single(); var e = (p && p.component_rules) ? p.component_rules : {}; e.chart = getRulesSnapshot(); await supabase.from('profiles').update({ component_rules: e }).eq('id', user.id); } catch(e) {}
+  }
+  function schedSave() { if (_loading) return; clearTimeout(_saveTimer); _saveTimer = setTimeout(saveRulesNow, 1000); }
+  var panel = document.querySelector('.spec-rules-panel'); if (panel) new MutationObserver(schedSave).observe(panel, { childList: true, subtree: true, characterData: true });
+  ;(async function() { try { var { data: { user } } = await supabase.auth.getUser(); if (!user) return; var { data: p } = await supabase.from('profiles').select('component_rules').eq('id', user.id).single(); if (p && p.component_rules && p.component_rules.chart) { _loading = true; applySnapshot(p.component_rules.chart); _loading = false; } } catch(e) {} })();
+</script>
+
+<script>
+  var DEFAULT_RULES = {
+    'rules-general': [
+      'Always use <code>--dv-1</code> through <code>--dv-8</code> tokens for chart series colors. Never use brand scale tokens (<code>--primary-*</code>, <code>--secondary-*</code>) inside charts.',
+      'Assign series colors in order starting at <code>--dv-1</code>. Do not skip tokens or pick arbitrary ones. Consistent ordering makes multi-chart dashboards scannable.',
+      'Show the <code>loading</code> state immediately when data is being fetched. Do not render a chart with empty or placeholder data, use <code>loading</code> then replace the attribute when data arrives.',
+      'Always provide <code>aria-hidden="true"</code> on the chart SVG or canvas and describe the key insight in <code>description</code> so screen readers get context without parsing chart graphics.',
+      'Load <code>tokens/dataviz.css</code> on any page that uses <code>fresh-chart</code>. The <code>--dv-*</code> tokens are defined in that file and are not included in theme.css.'
+    ]
+  };
+  function restoreDefaults() {
+    if (!confirm('Reset all chart rules to FreshDS defaults? Any edits you have made will be lost.')) return;
+    Object.keys(DEFAULT_RULES).forEach(function(id) { var l = document.getElementById(id); if (!l) return; l.innerHTML = DEFAULT_RULES[id].map(function(t) { return '<li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">' + t + '</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>'; }).join(''); }); }
+</script>
 </body>
 </html>

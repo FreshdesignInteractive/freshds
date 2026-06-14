@@ -8,64 +8,270 @@
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="styles/site.css">
 <link rel="stylesheet" href="tokens/primitives.css">
 <link rel="stylesheet" href="tokens/theme.css">
-<link rel="stylesheet" href="tokens/dataviz.css">
-<link rel="stylesheet" href="styles/reset.css">
-<link rel="stylesheet" href="styles/layout.css">
-<link rel="stylesheet" href="styles/components/core.css">
-<link rel="stylesheet" href="styles/docs.css">
 <script src="js/freshds.js"></script>
 <script src="js/freshds-site.js"></script>
+<link rel="stylesheet" href="styles/components/spec-page.css">
 </head>
 <body>
-<div class="fds-app" id="app">
-  <ds-topbar active-section="ds"></ds-topbar>
-  <div class="fds-body">
-    <ds-shell active="alert"></ds-shell>
-    <main class="fds-main">
-      <div class="fds-page active" id="page-alert">
-        <div class="page-header">
-          <div class="page-eyebrow">Feedback &amp; Status</div>
-          <h1 class="page-title">Alert</h1>
-          <p class="page-desc">Inline notification banners for important messages that don't require an immediate response. Use for system status, warnings, or confirmations within a page context.</p>
-        </div>
-        <div class="page-section">
-          <div class="page-section-title">Variants</div>
-          <div class="demo-surface col" style="gap:var(--space-3)">
-            <fresh-alert variant="info"    title="Update available">A new version of FreshDS is ready. Refresh to apply.</fresh-alert>
-            <fresh-alert variant="success" title="Deployment complete">Your changes are live at production.freshdesign.com.</fresh-alert>
-            <fresh-alert variant="warning" title="Rate limit approaching">You've used 87% of your monthly API quota.</fresh-alert>
-            <fresh-alert variant="danger"  title="Build failed">Compilation error on line 42. Check the error log.</fresh-alert>
-          </div>
-        </div>
-        <div class="page-section">
-          <div class="page-section-title">Dismissible</div>
-          <div class="demo-surface col" style="gap:var(--space-3)">
-            <fresh-alert variant="info" dismissible>You have unsaved changes. They will be lost if you navigate away.</fresh-alert>
-            <fresh-alert variant="success" title="Profile updated" dismissible>Your display name and avatar have been saved.</fresh-alert>
-          </div>
-        </div>
-        <div class="page-section">
-          <div class="page-section-title">Attributes</div>
-          <table class="usage-table">
-            <thead><tr><th>Attribute</th><th>Values</th><th>Default</th><th>Description</th></tr></thead>
-            <tbody>
-              <tr><td>variant</td><td><code>info</code> <code>success</code> <code>warning</code> <code>danger</code></td><td><code>info</code></td><td>Color and icon set</td></tr>
-              <tr><td>title</td><td>string</td><td></td><td>Bold headline above the message</td></tr>
-              <tr><td>dismissible</td><td>boolean</td><td></td><td>Shows close button, removes element on click</td></tr>
-            </tbody>
-          </table>
+
+<div class="comp-page">
+  <h1 class="comp-title">Alert</h1>
+  <p class="comp-desc">Inline notification banners for important messages that do not require an immediate response. Use for system status, warnings, or confirmations within a page context.</p>
+
+  <!-- STATES CARD -->
+  <div class="comp-section">
+    <div class="spec-card">
+      <div class="spec-card-topbar">
+        <span class="spec-rules-title">Alert variants</span>
+        <div class="spec-mode-switcher">
+          <button class="spec-mode-btn active" id="mode-btn-light" onclick="setSpecMode('light')"><i class="ti ti-sun"></i> Light</button>
+          <button class="spec-mode-btn" id="mode-btn-dark" onclick="setSpecMode('dark')"><i class="ti ti-moon"></i> Dark</button>
         </div>
       </div>
-    </main>
+      <div id="spec-viewport" class="spec-viewport">
+
+        <!-- Info -->
+        <div class="spec-variant-row">
+          <div class="spec-variant-header">
+            <span class="spec-variant-name">Info</span>
+            <span class="spec-attr-chip">variant="info"</span>
+            <span class="spec-variant-sep">·</span>
+            <span class="spec-variant-desc">Neutral informational messages: updates, hints, feature announcements.</span>
+          </div>
+          <div class="spec-variant-body">
+            <div class="spec-demos" style="flex-direction:column;align-items:stretch;width:100%;">
+              <fresh-alert variant="info" title="Update available">A new version of FreshDS is ready. Refresh to apply.</fresh-alert>
+              <fresh-alert variant="info">You have unsaved changes. They will be lost if you navigate away.</fresh-alert>
+            </div>
+          </div>
+        </div>
+
+        <!-- Success -->
+        <div class="spec-variant-row">
+          <div class="spec-variant-header">
+            <span class="spec-variant-name">Success</span>
+            <span class="spec-attr-chip">variant="success"</span>
+            <span class="spec-variant-sep">·</span>
+            <span class="spec-variant-desc">Positive confirmations: saved changes, completed actions, successful deployments.</span>
+          </div>
+          <div class="spec-variant-body">
+            <div class="spec-demos" style="flex-direction:column;align-items:stretch;width:100%;">
+              <fresh-alert variant="success" title="Deployment complete">Your changes are live at production.freshdesign.com.</fresh-alert>
+              <fresh-alert variant="success" title="Profile updated" dismissible>Your display name and avatar have been saved.</fresh-alert>
+            </div>
+          </div>
+        </div>
+
+        <!-- Warning -->
+        <div class="spec-variant-row">
+          <div class="spec-variant-header">
+            <span class="spec-variant-name">Warning</span>
+            <span class="spec-attr-chip">variant="warning"</span>
+            <span class="spec-variant-sep">·</span>
+            <span class="spec-variant-desc">Caution messages: rate limits, deprecation notices, approaching thresholds.</span>
+          </div>
+          <div class="spec-variant-body">
+            <div class="spec-demos" style="flex-direction:column;align-items:stretch;width:100%;">
+              <fresh-alert variant="warning" title="Rate limit approaching">You have used 87% of your monthly API quota.</fresh-alert>
+              <fresh-alert variant="warning" dismissible>This integration will be deprecated on July 1. Migrate before then.</fresh-alert>
+            </div>
+          </div>
+        </div>
+
+        <!-- Danger -->
+        <div class="spec-variant-row">
+          <div class="spec-variant-header">
+            <span class="spec-variant-name">Danger</span>
+            <span class="spec-attr-chip">variant="danger"</span>
+            <span class="spec-variant-sep">·</span>
+            <span class="spec-variant-desc">Error conditions and critical failures requiring attention.</span>
+          </div>
+          <div class="spec-variant-body">
+            <div class="spec-demos" style="flex-direction:column;align-items:stretch;width:100%;">
+              <fresh-alert variant="danger" title="Build failed">Compilation error on line 42. Check the error log.</fresh-alert>
+              <fresh-alert variant="danger" dismissible>Unable to connect to the database. Retrying in 30 seconds.</fresh-alert>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /spec-viewport -->
+    </div><!-- /spec-card -->
   </div>
+
+  <!-- AI RULES -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar">
+        <span class="spec-rules-title">AI action rules</span>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <span class="spec-rules-hint">Click any rule to edit</span>
+          <button class="spec-rules-reset" onclick="restoreDefaults()"><i class="ti ti-rotate" style="font-size:10px;"></i> Restore FreshDS defaults</button>
+        </div>
+      </div>
+      <div class="spec-rules-section">
+        <div class="spec-rules-section-head">
+          <span class="spec-rules-variant">General</span>
+          <span class="spec-attr-chip">fresh-alert</span>
+        </div>
+        <ul class="spec-rule-list" id="rules-general">
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Use alerts for passive information that does not block the user. If the user must take immediate action before proceeding, use a modal instead.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Match <code>variant</code> to the true severity: reserve <code>danger</code> for actual errors, not for notices that are merely inconvenient. Overusing danger desensitizes users.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Add a <code>title</code> when the alert has more than one sentence. The title gives screen reader users an immediate summary before the body is read.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Use <code>dismissible</code> only when dismissal is safe: the user will not lose information and the state will not return unexpectedly. For persistent system errors, omit <code>dismissible</code>.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Place alerts at the top of the relevant content area, not floating in a corner. For transient confirmations triggered by user actions, use <code>fresh-toast</code> instead.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+        </ul>
+        <button class="spec-add-rule" onclick="addRule('rules-general')"><i class="ti ti-plus"></i> Add rule</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ATTRIBUTES -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Attributes</span></div>
+      <table class="spec-a11y-table">
+        <thead><tr><th style="width:130px">Attribute</th><th style="width:220px">Values</th><th style="width:80px">Default</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">variant</td><td class="spec-a11y-req"><code>info</code> <code>success</code> <code>warning</code> <code>danger</code></td><td class="spec-a11y-req"><code>info</code></td><td class="spec-a11y-req">Color scheme and icon. Controls the left accent bar, background, border, and icon.</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">title</td><td class="spec-a11y-req">string</td><td class="spec-a11y-req">-</td><td class="spec-a11y-req">Bold headline rendered above the message body. Omit for single-sentence alerts.</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">dismissible</td><td class="spec-a11y-req">boolean</td><td class="spec-a11y-req">-</td><td class="spec-a11y-req">Shows a close button. Clicking it fires the <code>dismiss</code> event and removes the element from the DOM.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- EVENTS -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Events</span></div>
+      <table class="spec-a11y-table">
+        <thead><tr><th style="width:130px">Event</th><th style="width:220px">Detail</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">dismiss</td><td class="spec-a11y-req"><code>{}</code></td><td class="spec-a11y-req">Fires when the user clicks the close button. Bubbles and is composed. The element is removed from the DOM immediately after dispatch.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- CODE -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Code</span></div>
+      <div style="padding:16px 20px;display:flex;flex-direction:column;gap:0;">
+
+        <div class="code-block" data-code="<fresh-alert variant=&quot;info&quot; title=&quot;Update available&quot;>
+  A new version is ready. Refresh the page to apply it.
+</fresh-alert>">
+          <div class="code-block-header"><span><span class="code-lang">HTML</span><span class="code-context">With title</span></span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+          <div class="code-body"><span class="hl-pun">&lt;</span><span class="hl-tag">fresh-alert</span> <span class="hl-attr">variant</span><span class="hl-pun">=</span><span class="hl-val">"info"</span> <span class="hl-attr">title</span><span class="hl-pun">=</span><span class="hl-val">"Update available"</span><span class="hl-pun">&gt;</span>
+  <span class="hl-txt">A new version is ready. Refresh the page to apply it.</span>
+<span class="hl-pun">&lt;/</span><span class="hl-tag">fresh-alert</span><span class="hl-pun">&gt;</span></div>
+        </div>
+
+        <div class="code-block" data-code="<fresh-alert variant=&quot;success&quot; title=&quot;Changes saved&quot; dismissible>
+  Your settings have been updated.
+</fresh-alert>">
+          <div class="code-block-header"><span><span class="code-lang">HTML</span><span class="code-context">Dismissible</span></span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+          <div class="code-body"><span class="hl-pun">&lt;</span><span class="hl-tag">fresh-alert</span> <span class="hl-attr">variant</span><span class="hl-pun">=</span><span class="hl-val">"success"</span> <span class="hl-attr">title</span><span class="hl-pun">=</span><span class="hl-val">"Changes saved"</span> <span class="hl-attr">dismissible</span><span class="hl-pun">&gt;</span>
+  <span class="hl-txt">Your settings have been updated.</span>
+<span class="hl-pun">&lt;/</span><span class="hl-tag">fresh-alert</span><span class="hl-pun">&gt;</span></div>
+        </div>
+
+        <div class="code-block" data-code="<fresh-alert variant=&quot;danger&quot; title=&quot;Deployment failed&quot;>
+  Build error on line 42. Check the logs for details.
+</fresh-alert>">
+          <div class="code-block-header"><span><span class="code-lang">HTML</span><span class="code-context">Danger</span></span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+          <div class="code-body"><span class="hl-pun">&lt;</span><span class="hl-tag">fresh-alert</span> <span class="hl-attr">variant</span><span class="hl-pun">=</span><span class="hl-val">"danger"</span> <span class="hl-attr">title</span><span class="hl-pun">=</span><span class="hl-val">"Deployment failed"</span><span class="hl-pun">&gt;</span>
+  <span class="hl-txt">Build error on line 42. Check the logs for details.</span>
+<span class="hl-pun">&lt;/</span><span class="hl-tag">fresh-alert</span><span class="hl-pun">&gt;</span></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- TOKENS -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Tokens</span></div>
+      <table class="spec-a11y-table">
+        <thead><tr><th style="width:220px">Token</th><th style="width:200px">Role</th><th>State</th></tr></thead>
+        <tbody>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--color-info</td><td class="spec-a11y-req">Accent bar + icon</td><td class="spec-a11y-req">info variant</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--color-info-subtle</td><td class="spec-a11y-req">Background fill</td><td class="spec-a11y-req">info variant</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--color-info-border</td><td class="spec-a11y-req">Border color</td><td class="spec-a11y-req">info variant</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--color-success</td><td class="spec-a11y-req">Accent bar + icon</td><td class="spec-a11y-req">success variant</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--color-warning</td><td class="spec-a11y-req">Accent bar + icon</td><td class="spec-a11y-req">warning variant</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--color-danger</td><td class="spec-a11y-req">Accent bar + icon</td><td class="spec-a11y-req">danger variant</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--text-primary</td><td class="spec-a11y-req">Title text color</td><td class="spec-a11y-req">all</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--text-secondary</td><td class="spec-a11y-req">Message text color</td><td class="spec-a11y-req">all</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--radius-lg</td><td class="spec-a11y-req">Border radius</td><td class="spec-a11y-req">all</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--surface-overlay</td><td class="spec-a11y-req">Dismiss button hover</td><td class="spec-a11y-req">dismissible hover</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ACCESSIBILITY -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Accessibility</span></div>
+      <div style="padding:12px 24px 14px;border-bottom:1px solid #d4d4d7;">
+        <p style="font-size:13px;color:#555;line-height:1.6;margin:0;">Alert satisfies all <a href="app.html#accessibility" target="_parent" style="color:#5b6af7;text-decoration:none;font-weight:500;">universal accessibility concerns</a>. Component-specific concerns are below.</p>
+      </div>
+      <table class="spec-a11y-table">
+        <thead><tr><th>Concern</th><th>Requirement</th></tr></thead>
+        <tbody>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">live region</td><td class="spec-a11y-req">The alert wrapper carries <code>role="alert"</code> and an <code>aria-label</code> matching the variant (e.g. "Success"). Screen readers announce it immediately when injected into the DOM.</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">dismiss button</td><td class="spec-a11y-req">The close button has <code>aria-label="Dismiss"</code>. Focus must not be lost when the alert is removed; return focus to the triggering element or the nearest logical container.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
 </div>
-<script src="components/core/fresh-button.js"></script>
-<script src="components/core/fresh-input.js"></script>
+
 <script src="components/feedback/fresh-alert.js"></script>
-<script src="components/navigation/fresh-simple-tabs.js"></script>
+<script src="js/spec-page.js"></script>
+
+<script type="module">
+  import { supabase } from '/js/supabase-client.js'
+  var RULE_IDS = ['rules-general'];
+  var _saveTimer = null, _loading = false;
+  function getRulesSnapshot() {
+    var r = {};
+    RULE_IDS.forEach(function(id) { var l = document.getElementById(id); if (!l) return; r[id] = Array.from(l.querySelectorAll('.spec-rule-text')).map(function(el) { return el.innerHTML.trim(); }); });
+    return r;
+  }
+  function applySnapshot(saved) {
+    RULE_IDS.forEach(function(id) { var l = document.getElementById(id); if (!l) return; var rules = (saved && saved[id] && saved[id].length) ? saved[id] : window.DEFAULT_RULES[id]; l.innerHTML = rules.map(function(t) { return '<li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">' + t + '</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>'; }).join(''); }); }
+  async function saveRulesNow() {
+    try { var { data: { user } } = await supabase.auth.getUser(); if (!user) return; var { data: p } = await supabase.from('profiles').select('component_rules').eq('id', user.id).single(); var e = (p && p.component_rules) ? p.component_rules : {}; e.alert = getRulesSnapshot(); await supabase.from('profiles').update({ component_rules: e }).eq('id', user.id); } catch(e) {}
+  }
+  function schedSave() { if (_loading) return; clearTimeout(_saveTimer); _saveTimer = setTimeout(saveRulesNow, 1000); }
+  var panel = document.querySelector('.spec-rules-panel'); if (panel) new MutationObserver(schedSave).observe(panel, { childList: true, subtree: true, characterData: true });
+  ;(async function() { try { var { data: { user } } = await supabase.auth.getUser(); if (!user) return; var { data: p } = await supabase.from('profiles').select('component_rules').eq('id', user.id).single(); if (p && p.component_rules && p.component_rules.alert) { _loading = true; applySnapshot(p.component_rules.alert); _loading = false; } } catch(e) {} })();
+</script>
+
+<script>
+  var DEFAULT_RULES = {
+    'rules-general': [
+      'Use alerts for passive information that does not block the user. If the user must take immediate action before proceeding, use a modal instead.',
+      'Match <code>variant</code> to the true severity: reserve <code>danger</code> for actual errors, not for notices that are merely inconvenient. Overusing danger desensitizes users.',
+      'Add a <code>title</code> when the alert has more than one sentence. The title gives screen reader users an immediate summary before the body is read.',
+      'Use <code>dismissible</code> only when dismissal is safe: the user will not lose information and the state will not return unexpectedly. For persistent system errors, omit <code>dismissible</code>.',
+      'Place alerts at the top of the relevant content area, not floating in a corner. For transient confirmations triggered by user actions, use <code>fresh-toast</code> instead.'
+    ]
+  };
+  function restoreDefaults() {
+    if (!confirm('Reset all alert rules to FreshDS defaults? Any edits you have made will be lost.')) return;
+    Object.keys(DEFAULT_RULES).forEach(function(id) { var l = document.getElementById(id); if (!l) return; l.innerHTML = DEFAULT_RULES[id].map(function(t) { return '<li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">' + t + '</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>'; }).join(''); });
+  }
+</script>
 </body>
 </html>
