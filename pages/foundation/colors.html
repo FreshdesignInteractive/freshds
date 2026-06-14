@@ -8,77 +8,286 @@
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="styles/site.css">
 <link rel="stylesheet" href="tokens/primitives.css">
 <link rel="stylesheet" href="tokens/theme.css">
 <link rel="stylesheet" href="tokens/dataviz.css">
-<link rel="stylesheet" href="styles/reset.css">
-<link rel="stylesheet" href="styles/layout.css">
-<link rel="stylesheet" href="styles/components/core.css">
-<link rel="stylesheet" href="styles/docs.css">
 <script src="js/freshds.js"></script>
 <script src="js/freshds-site.js"></script>
+<link rel="stylesheet" href="styles/components/spec-page.css">
+<style>
+  /* All border-radius values are hardcoded — never var(--radius-*) */
+
+  /* Scale chips */
+  .cs-scale {
+    display: flex;
+    gap: 3px;
+    flex-wrap: nowrap;
+  }
+  .cs-chip {
+    flex: 1;
+    min-width: 0;
+    height: 52px;
+    border-radius: 6px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding-bottom: 5px;
+  }
+  .cs-chip-num {
+    font-size: 9px;
+    font-weight: 700;
+    font-family: var(--font-mono);
+    color: rgba(255,255,255,0.7);
+    mix-blend-mode: overlay;
+    line-height: 1;
+  }
+  .cs-scale-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 10px;
+    color: #aaa;
+    margin-top: 6px;
+    font-family: var(--font-mono);
+  }
+
+  /* Status / DV swatches */
+  .swatch-row {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 4px;
+  }
+  .swatch-item {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    min-width: 80px;
+  }
+  .swatch-block {
+    width: 100%;
+    height: 44px;
+    border-radius: 6px; /* hardcoded */
+  }
+  .swatch-name {
+    font-size: 11px;
+    font-weight: 600;
+    color: #333;
+    font-family: var(--font-sans);
+  }
+  .swatch-hex {
+    font-size: 10px;
+    color: #aaa;
+    font-family: var(--font-mono);
+  }
+
+  /* Four-role status triplet table */
+  .status-role-grid {
+    display: grid;
+    grid-template-columns: auto repeat(4, 1fr);
+    gap: 0;
+    border: 1px solid #d4d4d7;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .srg-head {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #888;
+    padding: 8px 14px;
+    background: #f7f7f8;
+    border-bottom: 1px solid #d4d4d7;
+    border-right: 1px solid #d4d4d7;
+  }
+  .srg-head:last-child { border-right: none; }
+  .srg-cell {
+    padding: 9px 14px;
+    border-bottom: 1px solid #ebebec;
+    border-right: 1px solid #ebebec;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 11px;
+    font-family: var(--font-mono);
+    color: #555;
+  }
+  .srg-cell:last-child { border-right: none; }
+  .srg-row-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: #222;
+    font-family: var(--font-sans);
+    padding: 9px 14px;
+    border-bottom: 1px solid #ebebec;
+    border-right: 1px solid #d4d4d7;
+    display: flex;
+    align-items: center;
+  }
+  .srg-last .srg-cell, .srg-last .srg-row-label { border-bottom: none; }
+  .s-dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 3px; /* hardcoded */
+    flex-shrink: 0;
+    box-shadow: inset 0 0 0 1px rgba(0,0,0,0.08);
+  }
+
+  /* DV palette */
+  .dv-panels {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: #d4d4d7;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 16px;
+  }
+  .dv-panel {
+    padding: 16px 20px 20px;
+  }
+  .dv-panel-light { background: #f7f7f8; }
+  .dv-panel-dark  { background: #18191c; }
+  .dv-panel-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: #aaa;
+    margin-bottom: 14px;
+  }
+  .dv-swatch-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+  }
+  .dv-swatch-color {
+    height: 36px;
+    border-radius: 5px; /* hardcoded */
+    margin-bottom: 5px;
+  }
+  .dv-swatch-name { font-size: 11px; font-weight: 600; color: #888; }
+  .dv-panel-dark .dv-swatch-name { color: #555; }
+  .dv-swatch-hex  { font-size: 10px; color: #aaa; font-family: var(--font-mono); }
+  .dv-panel-dark .dv-swatch-hex  { color: #444; }
+
+  /* DV full token table */
+  .dv-tok-table { width: 100%; border-collapse: collapse; font-size: 11px; }
+  .dv-tok-table th {
+    font-size: 10px; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase;
+    color: #888; padding: 7px 10px; text-align: left;
+    border-bottom: 1px solid #d4d4d7; white-space: nowrap; background: #f7f7f8;
+  }
+  .dv-tok-table td {
+    padding: 7px 10px; border-bottom: 1px solid #ebebec;
+    color: #444; vertical-align: middle;
+  }
+  .dv-tok-table tr:last-child td { border-bottom: none; }
+  .dv-dot {
+    display: inline-block; width: 12px; height: 12px;
+    border-radius: 3px; /* hardcoded */
+    vertical-align: middle; margin-right: 5px;
+    box-shadow: inset 0 0 0 1px rgba(0,0,0,0.08);
+    flex-shrink: 0;
+  }
+  .dv-cell { display: flex; align-items: center; gap: 5px; }
+  .dv-hex  { font-family: var(--font-mono); font-size: 10px; color: #777; }
+
+  /* Architecture tier diagram */
+  .arch-tiers {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: #d4d4d7;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .arch-tier { background: #f7f7f8; padding: 16px 18px 20px; }
+  .arch-tier-label {
+    display: flex; justify-content: space-between; align-items: baseline;
+    font-size: 11px; font-weight: 700; color: #333;
+    letter-spacing: 0.04em; margin-bottom: 10px;
+  }
+  .arch-tier-label span:last-child { font-size: 10px; font-weight: 400; color: #aaa; }
+  .arch-tier-token {
+    font-family: var(--font-mono); font-size: 11px; color: #555;
+    line-height: 1.9; margin-bottom: 10px;
+  }
+  .arch-tier-desc { font-size: 12px; color: #888; line-height: 1.55; }
+
+  /* inline code pill */
+  .tok-pill {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    background: #ebebec;
+    color: #555;
+    padding: 1px 5px;
+    border-radius: 3px; /* hardcoded */
+    border: 1px solid #d4d4d7;
+  }
+
+  /* section subheading */
+  .sub-label {
+    font-size: 10px; font-weight: 700; letter-spacing: 0.09em;
+    text-transform: uppercase; color: #aaa; margin-bottom: 10px; margin-top: 20px;
+  }
+  .sub-label:first-child { margin-top: 0; }
+</style>
 </head>
 <body>
-<div class="fds-app" id="app">
-  <ds-topbar active-section="ds"></ds-topbar>
-  <div class="fds-body">
-    <ds-shell active="colors"></ds-shell>
-    <main class="fds-main">
-      <div class="fds-page active" id="page-colors">
-        <div class="page-header">
-          <div class="page-eyebrow">Foundation</div>
-          <h1 class="page-title">Color system</h1>
-          <p class="page-desc">A perceptual color engine generates every shade from two brand colors. Change primary and secondary in the Configurator, every token and every component updates automatically.</p>
-        </div>
 
-        <div class="page-section">
-          <div class="page-section-title">Architecture</div>
-          <p style="font-size:13px;color:var(--text-secondary);line-height:1.6;margin-bottom:var(--space-5)">Tokens are organized in three tiers. You set values at Tier 1; Tier 2 and 3 consume them. Never skip tiers, reference the nearest semantic token, not a raw primitive.</p>
-          <div class="arch-tiers">
-            <div class="arch-tier">
-              <div class="arch-tier-label"><span>Tier 1</span><span style="font-weight:400;opacity:.7">Primitive</span></div>
-              <div class="arch-tier-token">--color-page-bg<br>--primitive-primary<br>--scale-1..12</div>
-              <div class="arch-tier-desc">Raw values. Set by the Configurator or generated by the color engine. Never referenced directly in components.</div>
+<div class="comp-page">
+
+  <h1 class="comp-title">Color System</h1>
+  <p class="comp-desc">A perceptual color engine generates every shade from two brand colors. Change primary and secondary in the Configurator and every token and every component updates automatically.</p>
+
+  <!-- COLOR SCALES — LIVE DEMO -->
+  <div class="comp-section">
+    <div class="spec-card">
+      <div class="spec-card-topbar">
+        <span class="spec-rules-title">Color scales</span>
+        <div class="spec-mode-switcher">
+          <button class="spec-mode-btn active" id="mode-btn-light" onclick="setSpecMode('light')"><i class="ti ti-sun"></i> Light</button>
+          <button class="spec-mode-btn" id="mode-btn-dark" onclick="setSpecMode('dark')"><i class="ti ti-moon"></i> Dark</button>
+        </div>
+      </div>
+      <div id="spec-viewport" class="spec-viewport">
+
+        <div class="spec-variant-row">
+          <div class="spec-variant-header">
+            <span class="spec-variant-name">Neutral</span>
+            <span class="spec-variant-sep">·</span>
+            <span class="spec-variant-desc">Generated from your dark and light anchors via Oklab interpolation. Step assignments flip in dark mode to maintain contrast automatically.</span>
+          </div>
+          <div class="spec-variant-body" style="flex-direction:column;align-items:stretch;padding:16px 24px 20px">
+            <div class="cs-scale">
+              <div class="cs-chip" style="background:var(--scale-1)"><span class="cs-chip-num">1</span></div>
+              <div class="cs-chip" style="background:var(--scale-2)"><span class="cs-chip-num">2</span></div>
+              <div class="cs-chip" style="background:var(--scale-3)"><span class="cs-chip-num">3</span></div>
+              <div class="cs-chip" style="background:var(--scale-4)"><span class="cs-chip-num">4</span></div>
+              <div class="cs-chip" style="background:var(--scale-5)"><span class="cs-chip-num">5</span></div>
+              <div class="cs-chip" style="background:var(--scale-6)"><span class="cs-chip-num">6</span></div>
+              <div class="cs-chip" style="background:var(--scale-7)"><span class="cs-chip-num">7</span></div>
+              <div class="cs-chip" style="background:var(--scale-8)"><span class="cs-chip-num">8</span></div>
+              <div class="cs-chip" style="background:var(--scale-9)"><span class="cs-chip-num">9</span></div>
+              <div class="cs-chip" style="background:var(--scale-10)"><span class="cs-chip-num">10</span></div>
+              <div class="cs-chip" style="background:var(--scale-11)"><span class="cs-chip-num">11</span></div>
+              <div class="cs-chip" style="background:var(--scale-12)"><span class="cs-chip-num">12</span></div>
             </div>
-            <div class="arch-tier">
-              <div class="arch-tier-label"><span>Tier 2</span><span style="font-weight:400;opacity:.7">Semantic</span></div>
-              <div class="arch-tier-token">--surface-bg<br>--color-interactive<br>--text-primary</div>
-              <div class="arch-tier-desc">Purpose-mapped tokens. Use these in components. They handle light/dark mode automatically via CSS cascade.</div>
-            </div>
-            <div class="arch-tier">
-              <div class="arch-tier-label"><span>Tier 3</span><span style="font-weight:400;opacity:.7">Component</span></div>
-              <div class="arch-tier-token">--btn-primary-bg<br>--input-focus-ring<br>--badge-primary-text</div>
-              <div class="arch-tier-desc">Component-scoped overrides. Use inside a specific component when a Tier 2 token isn't specific enough.</div>
-            </div>
+            <div class="cs-scale-label"><span>--scale-1 · lightest</span><span>--scale-12 · darkest</span></div>
           </div>
         </div>
 
-        <div class="page-section">
-          <div class="page-section-title">Neutral scale</div>
-          <p style="font-size:13px;color:var(--text-secondary);line-height:1.6;margin-bottom:var(--space-4)">Generated at runtime from your dark and light anchors using Oklab interpolation. 12 steps from lightest (1) to darkest (12). Semantic tokens reference specific steps, step assignments flip in dark mode to maintain contrast without regenerating the scale.</p>
-          <div class="cs-scale">
-            <div class="cs-chip" style="background:var(--scale-1)"><span class="cs-chip-num">1</span></div>
-            <div class="cs-chip" style="background:var(--scale-2)"><span class="cs-chip-num">2</span></div>
-            <div class="cs-chip" style="background:var(--scale-3)"><span class="cs-chip-num">3</span></div>
-            <div class="cs-chip" style="background:var(--scale-4)"><span class="cs-chip-num">4</span></div>
-            <div class="cs-chip" style="background:var(--scale-5)"><span class="cs-chip-num">5</span></div>
-            <div class="cs-chip" style="background:var(--scale-6)"><span class="cs-chip-num">6</span></div>
-            <div class="cs-chip" style="background:var(--scale-7)"><span class="cs-chip-num">7</span></div>
-            <div class="cs-chip" style="background:var(--scale-8)"><span class="cs-chip-num">8</span></div>
-            <div class="cs-chip" style="background:var(--scale-9)"><span class="cs-chip-num">9</span></div>
-            <div class="cs-chip" style="background:var(--scale-10)"><span class="cs-chip-num">10</span></div>
-            <div class="cs-chip" style="background:var(--scale-11)"><span class="cs-chip-num">11</span></div>
-            <div class="cs-chip" style="background:var(--scale-12)"><span class="cs-chip-num">12</span></div>
+        <div class="spec-variant-row">
+          <div class="spec-variant-header">
+            <span class="spec-variant-name">Primary</span>
+            <span class="spec-variant-sep">·</span>
+            <span class="spec-variant-desc">OKLCH scale. Step 9 is your exact input hex. Steps 1-8 lighten; steps 10-12 darken.</span>
           </div>
-          <div class="cs-scale-label"><span>Lightest, page bg (light mode)</span><span>Darkest, page bg (dark mode)</span></div>
-        </div>
-
-        <div class="page-section">
-          <div class="page-section-title">Brand</div>
-          <div class="swatch-group">
-            <div class="swatch-group-title">Primary</div>
+          <div class="spec-variant-body" style="flex-direction:column;align-items:stretch;padding:16px 24px 20px">
             <div class="cs-scale">
               <div class="cs-chip" style="background:var(--primary-1)"><span class="cs-chip-num">1</span></div>
               <div class="cs-chip" style="background:var(--primary-2)"><span class="cs-chip-num">2</span></div>
@@ -95,8 +304,15 @@
             </div>
             <div class="cs-scale-label"><span>--primary-1 (tint)</span><span>--primary-12 (shade)</span></div>
           </div>
-          <div class="swatch-group">
-            <div class="swatch-group-title">Secondary</div>
+        </div>
+
+        <div class="spec-variant-row">
+          <div class="spec-variant-header">
+            <span class="spec-variant-name">Secondary</span>
+            <span class="spec-variant-sep">·</span>
+            <span class="spec-variant-desc">Same OKLCH engine as primary. Used for accents, AI badges, and data highlights.</span>
+          </div>
+          <div class="spec-variant-body" style="flex-direction:column;align-items:stretch;padding:16px 24px 20px">
             <div class="cs-scale">
               <div class="cs-chip" style="background:var(--secondary-1)"><span class="cs-chip-num">1</span></div>
               <div class="cs-chip" style="background:var(--secondary-2)"><span class="cs-chip-num">2</span></div>
@@ -113,164 +329,286 @@
             </div>
             <div class="cs-scale-label"><span>--secondary-1 (tint)</span><span>--secondary-12 (shade)</span></div>
           </div>
-          <p style="font-size:12px;color:var(--text-tertiary);margin-top:var(--space-3)">Step 9 is the input color exactly. Steps 1–8 lighten toward white; steps 10–12 darken. Generated in OKLCH for perceptually uniform brightness across hues.</p>
         </div>
 
-        <div class="page-section">
-          <div class="page-section-title">Status</div>
-          <p style="font-size:13px;color:var(--text-secondary);line-height:1.6;margin-bottom:var(--space-5)">Each status color generates a full 12-step OKLCH scale from the customer's chosen hex. <strong>Dark mode is derived algorithmically</strong>, the customer picks one hex and the engine outputs all tokens for both modes automatically. Each color ships with four roles: <code style="font-family:var(--font-mono);font-size:11px;background:var(--surface-overlay);padding:1px 5px;border-radius:var(--radius-sm);color:var(--color-interactive-text)">--color-{status}</code> for icons and indicators; <code style="font-family:var(--font-mono);font-size:11px;background:var(--surface-overlay);padding:1px 5px;border-radius:var(--radius-sm);color:var(--color-interactive-text)">--color-{status}-subtle</code> for tinted backgrounds; <code style="font-family:var(--font-mono);font-size:11px;background:var(--surface-overlay);padding:1px 5px;border-radius:var(--radius-sm);color:var(--color-interactive-text)">--color-{status}-border</code> for borders; <code style="font-family:var(--font-mono);font-size:11px;background:var(--surface-overlay);padding:1px 5px;border-radius:var(--radius-sm);color:var(--color-interactive-text)">--color-{status}-text</code> for readable text on subtle fills.</p>
-
-          <div class="dv-panels">
-            <div class="dv-panel dv-panel-light" data-mode="light">
-              <div class="dv-panel-label">Light Mode</div>
-              <div class="dv-swatch-grid" style="grid-template-columns:repeat(2,1fr)">
-                <div><div class="dv-swatch-color" style="background:var(--color-success)"></div><div class="dv-swatch-name">Success</div><div class="dv-swatch-hex">--color-success</div></div>
-                <div><div class="dv-swatch-color" style="background:var(--color-warning)"></div><div class="dv-swatch-name">Warning</div><div class="dv-swatch-hex">--color-warning</div></div>
-                <div><div class="dv-swatch-color" style="background:var(--color-danger)"></div><div class="dv-swatch-name">Danger</div><div class="dv-swatch-hex">--color-danger</div></div>
-                <div><div class="dv-swatch-color" style="background:var(--color-info)"></div><div class="dv-swatch-name">Info</div><div class="dv-swatch-hex">--color-info</div></div>
+        <div class="spec-variant-row">
+          <div class="spec-variant-header">
+            <span class="spec-variant-name">Status</span>
+            <span class="spec-variant-sep">·</span>
+            <span class="spec-variant-desc">Customer picks one hex per status color; the engine derives all 12 steps and the four token roles for both modes.</span>
+          </div>
+          <div class="spec-variant-body" style="flex-direction:column;align-items:stretch;padding:16px 24px 20px;gap:16px">
+            <div>
+              <div class="cs-scale">
+                <div class="cs-chip" style="background:var(--success-1)"><span class="cs-chip-num">1</span></div>
+                <div class="cs-chip" style="background:var(--success-2)"><span class="cs-chip-num">2</span></div>
+                <div class="cs-chip" style="background:var(--success-3)"><span class="cs-chip-num">3</span></div>
+                <div class="cs-chip" style="background:var(--success-4)"><span class="cs-chip-num">4</span></div>
+                <div class="cs-chip" style="background:var(--success-5)"><span class="cs-chip-num">5</span></div>
+                <div class="cs-chip" style="background:var(--success-6)"><span class="cs-chip-num">6</span></div>
+                <div class="cs-chip" style="background:var(--success-7)"><span class="cs-chip-num">7</span></div>
+                <div class="cs-chip" style="background:var(--success-8)"><span class="cs-chip-num">8</span></div>
+                <div class="cs-chip" style="background:var(--success-9)"><span class="cs-chip-num">9</span></div>
+                <div class="cs-chip" style="background:var(--success-10)"><span class="cs-chip-num">10</span></div>
+                <div class="cs-chip" style="background:var(--success-11)"><span class="cs-chip-num">11</span></div>
+                <div class="cs-chip" style="background:var(--success-12)"><span class="cs-chip-num">12</span></div>
               </div>
+              <div class="cs-scale-label"><span>--success-1</span><span>--success-12</span></div>
             </div>
-            <div class="dv-panel dv-panel-dark" data-mode="dark">
-              <div class="dv-panel-label">Dark Mode</div>
-              <div class="dv-swatch-grid" style="grid-template-columns:repeat(2,1fr)">
-                <div><div class="dv-swatch-color" style="background:var(--color-success)"></div><div class="dv-swatch-name">Success</div><div class="dv-swatch-hex">--color-success</div></div>
-                <div><div class="dv-swatch-color" style="background:var(--color-warning)"></div><div class="dv-swatch-name">Warning</div><div class="dv-swatch-hex">--color-warning</div></div>
-                <div><div class="dv-swatch-color" style="background:var(--color-danger)"></div><div class="dv-swatch-name">Danger</div><div class="dv-swatch-hex">--color-danger</div></div>
-                <div><div class="dv-swatch-color" style="background:var(--color-info)"></div><div class="dv-swatch-name">Info</div><div class="dv-swatch-hex">--color-info</div></div>
+            <div>
+              <div class="cs-scale">
+                <div class="cs-chip" style="background:var(--warning-1)"><span class="cs-chip-num">1</span></div>
+                <div class="cs-chip" style="background:var(--warning-2)"><span class="cs-chip-num">2</span></div>
+                <div class="cs-chip" style="background:var(--warning-3)"><span class="cs-chip-num">3</span></div>
+                <div class="cs-chip" style="background:var(--warning-4)"><span class="cs-chip-num">4</span></div>
+                <div class="cs-chip" style="background:var(--warning-5)"><span class="cs-chip-num">5</span></div>
+                <div class="cs-chip" style="background:var(--warning-6)"><span class="cs-chip-num">6</span></div>
+                <div class="cs-chip" style="background:var(--warning-7)"><span class="cs-chip-num">7</span></div>
+                <div class="cs-chip" style="background:var(--warning-8)"><span class="cs-chip-num">8</span></div>
+                <div class="cs-chip" style="background:var(--warning-9)"><span class="cs-chip-num">9</span></div>
+                <div class="cs-chip" style="background:var(--warning-10)"><span class="cs-chip-num">10</span></div>
+                <div class="cs-chip" style="background:var(--warning-11)"><span class="cs-chip-num">11</span></div>
+                <div class="cs-chip" style="background:var(--warning-12)"><span class="cs-chip-num">12</span></div>
               </div>
+              <div class="cs-scale-label"><span>--warning-1</span><span>--warning-12</span></div>
+            </div>
+            <div>
+              <div class="cs-scale">
+                <div class="cs-chip" style="background:var(--danger-1)"><span class="cs-chip-num">1</span></div>
+                <div class="cs-chip" style="background:var(--danger-2)"><span class="cs-chip-num">2</span></div>
+                <div class="cs-chip" style="background:var(--danger-3)"><span class="cs-chip-num">3</span></div>
+                <div class="cs-chip" style="background:var(--danger-4)"><span class="cs-chip-num">4</span></div>
+                <div class="cs-chip" style="background:var(--danger-5)"><span class="cs-chip-num">5</span></div>
+                <div class="cs-chip" style="background:var(--danger-6)"><span class="cs-chip-num">6</span></div>
+                <div class="cs-chip" style="background:var(--danger-7)"><span class="cs-chip-num">7</span></div>
+                <div class="cs-chip" style="background:var(--danger-8)"><span class="cs-chip-num">8</span></div>
+                <div class="cs-chip" style="background:var(--danger-9)"><span class="cs-chip-num">9</span></div>
+                <div class="cs-chip" style="background:var(--danger-10)"><span class="cs-chip-num">10</span></div>
+                <div class="cs-chip" style="background:var(--danger-11)"><span class="cs-chip-num">11</span></div>
+                <div class="cs-chip" style="background:var(--danger-12)"><span class="cs-chip-num">12</span></div>
+              </div>
+              <div class="cs-scale-label"><span>--danger-1</span><span>--danger-12</span></div>
+            </div>
+            <div>
+              <div class="cs-scale">
+                <div class="cs-chip" style="background:var(--info-1)"><span class="cs-chip-num">1</span></div>
+                <div class="cs-chip" style="background:var(--info-2)"><span class="cs-chip-num">2</span></div>
+                <div class="cs-chip" style="background:var(--info-3)"><span class="cs-chip-num">3</span></div>
+                <div class="cs-chip" style="background:var(--info-4)"><span class="cs-chip-num">4</span></div>
+                <div class="cs-chip" style="background:var(--info-5)"><span class="cs-chip-num">5</span></div>
+                <div class="cs-chip" style="background:var(--info-6)"><span class="cs-chip-num">6</span></div>
+                <div class="cs-chip" style="background:var(--info-7)"><span class="cs-chip-num">7</span></div>
+                <div class="cs-chip" style="background:var(--info-8)"><span class="cs-chip-num">8</span></div>
+                <div class="cs-chip" style="background:var(--info-9)"><span class="cs-chip-num">9</span></div>
+                <div class="cs-chip" style="background:var(--info-10)"><span class="cs-chip-num">10</span></div>
+                <div class="cs-chip" style="background:var(--info-11)"><span class="cs-chip-num">11</span></div>
+                <div class="cs-chip" style="background:var(--info-12)"><span class="cs-chip-num">12</span></div>
+              </div>
+              <div class="cs-scale-label"><span>--info-1</span><span>--info-12</span></div>
             </div>
           </div>
-
-          <div style="font-size:10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-tertiary);margin-bottom:var(--space-3)">Four token roles per color</div>
-          <div style="overflow-x:auto;margin-bottom:var(--space-2)">
-            <table class="token-ref-table">
-              <thead>
-                <tr><th style="width:80px">Color</th><th>Main</th><th>Subtle</th><th>Border</th><th>Text</th></tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td style="font-weight:600;color:var(--text-primary)">Success</td>
-                  <td><div class="tok-cell"><div class="tok-dot" style="background:var(--color-success)"></div><span class="tok-name">--color-success</span></div></td>
-                  <td><div class="tok-cell"><div class="tok-dot" style="background:var(--color-success-subtle)"></div><span class="tok-name">--color-success-subtle</span></div></td>
-                  <td><div class="tok-cell"><div class="tok-dot" style="background:var(--color-success-border)"></div><span class="tok-name">--color-success-border</span></div></td>
-                  <td><div class="tok-cell"><div class="tok-dot" style="background:var(--color-success-text)"></div><span class="tok-name">--color-success-text</span></div></td>
-                </tr>
-                <tr>
-                  <td style="font-weight:600;color:var(--text-primary)">Warning</td>
-                  <td><div class="tok-cell"><div class="tok-dot" style="background:var(--color-warning)"></div><span class="tok-name">--color-warning</span></div></td>
-                  <td><div class="tok-cell"><div class="tok-dot" style="background:var(--color-warning-subtle)"></div><span class="tok-name">--color-warning-subtle</span></div></td>
-                  <td><div class="tok-cell"><div class="tok-dot" style="background:var(--color-warning-border)"></div><span class="tok-name">--color-warning-border</span></div></td>
-                  <td><div class="tok-cell"><div class="tok-dot" style="background:var(--color-warning-text)"></div><span class="tok-name">--color-warning-text</span></div></td>
-                </tr>
-                <tr>
-                  <td style="font-weight:600;color:var(--text-primary)">Danger</td>
-                  <td><div class="tok-cell"><div class="tok-dot" style="background:var(--color-danger)"></div><span class="tok-name">--color-danger</span></div></td>
-                  <td><div class="tok-cell"><div class="tok-dot" style="background:var(--color-danger-subtle)"></div><span class="tok-name">--color-danger-subtle</span></div></td>
-                  <td><div class="tok-cell"><div class="tok-dot" style="background:var(--color-danger-border)"></div><span class="tok-name">--color-danger-border</span></div></td>
-                  <td><div class="tok-cell"><div class="tok-dot" style="background:var(--color-danger-text)"></div><span class="tok-name">--color-danger-text</span></div></td>
-                </tr>
-                <tr>
-                  <td style="font-weight:600;color:var(--text-primary)">Info</td>
-                  <td><div class="tok-cell"><div class="tok-dot" style="background:var(--color-info)"></div><span class="tok-name">--color-info</span></div></td>
-                  <td><div class="tok-cell"><div class="tok-dot" style="background:var(--color-info-subtle)"></div><span class="tok-name">--color-info-subtle</span></div></td>
-                  <td><div class="tok-cell"><div class="tok-dot" style="background:var(--color-info-border)"></div><span class="tok-name">--color-info-border</span></div></td>
-                  <td><div class="tok-cell"><div class="tok-dot" style="background:var(--color-info-text)"></div><span class="tok-name">--color-info-text</span></div></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <p style="font-size:12px;color:var(--text-tertiary);margin-top:var(--space-3)">Customer picks one hex per status color. The OKLCH scale engine derives all four tokens, and their dark mode counterparts, automatically. These tokens are customer-configurable via the Configurator.</p>
         </div>
 
-        <div class="page-section">
-          <div class="page-section-title">Data visualization</div>
-          <p style="font-size:13px;color:var(--text-secondary);line-height:1.6;margin-bottom:var(--space-5)">A fixed 8-color palette for charts, graphs, and data display components. Unlike brand colors, this palette is <strong>not customer-configurable</strong>, it stays consistent across all themes to ensure legibility. Each series color ships with three roles: <code style="font-family:var(--font-mono);font-size:11px;background:var(--surface-overlay);padding:1px 5px;border-radius:var(--radius-sm);color:var(--color-interactive-text)">--dv-{n}</code> for bars, lines, dots, and pie slices; <code style="font-family:var(--font-mono);font-size:11px;background:var(--surface-overlay);padding:1px 5px;border-radius:var(--radius-sm);color:var(--color-interactive-text)">--dv-{n}-subtle</code> for area fills and row highlights; <code style="font-family:var(--font-mono);font-size:11px;background:var(--surface-overlay);padding:1px 5px;border-radius:var(--radius-sm);color:var(--color-interactive-text)">--dv-{n}-label</code> for annotations written on top of subtle fills.</p>
+      </div>
+    </div>
+  </div>
 
-          <div class="dv-panels">
-            <div class="dv-panel dv-panel-light">
-              <div class="dv-panel-label">Light Mode</div>
-              <div class="dv-swatch-grid">
-                <div><div class="dv-swatch-color" style="background:#4D6EE3"></div><div class="dv-swatch-name">Indigo</div><div class="dv-swatch-hex">#4D6EE3</div></div>
-                <div><div class="dv-swatch-color" style="background:#E8652A"></div><div class="dv-swatch-name">Tangerine</div><div class="dv-swatch-hex">#E8652A</div></div>
-                <div><div class="dv-swatch-color" style="background:#3AAFA9"></div><div class="dv-swatch-name">Teal</div><div class="dv-swatch-hex">#3AAFA9</div></div>
-                <div><div class="dv-swatch-color" style="background:#C94E8E"></div><div class="dv-swatch-name">Plum</div><div class="dv-swatch-hex">#C94E8E</div></div>
-                <div><div class="dv-swatch-color" style="background:#D4981A"></div><div class="dv-swatch-name">Marigold</div><div class="dv-swatch-hex">#D4981A</div></div>
-                <div><div class="dv-swatch-color" style="background:#6B4FBB"></div><div class="dv-swatch-name">Violet</div><div class="dv-swatch-hex">#6B4FBB</div></div>
-                <div><div class="dv-swatch-color" style="background:#3DAA62"></div><div class="dv-swatch-name">Fern</div><div class="dv-swatch-hex">#3DAA62</div></div>
-                <div><div class="dv-swatch-color" style="background:#8A7560"></div><div class="dv-swatch-name">Driftwood</div><div class="dv-swatch-hex">#8A7560</div></div>
-              </div>
-            </div>
-            <div class="dv-panel dv-panel-dark">
-              <div class="dv-panel-label">Dark Mode</div>
-              <div class="dv-swatch-grid">
-                <div><div class="dv-swatch-color" style="background:#7B96EC"></div><div class="dv-swatch-name">Indigo</div><div class="dv-swatch-hex">#7B96EC</div></div>
-                <div><div class="dv-swatch-color" style="background:#F0885A"></div><div class="dv-swatch-name">Tangerine</div><div class="dv-swatch-hex">#F0885A</div></div>
-                <div><div class="dv-swatch-color" style="background:#4EC9C3"></div><div class="dv-swatch-name">Teal</div><div class="dv-swatch-hex">#4EC9C3</div></div>
-                <div><div class="dv-swatch-color" style="background:#DC7DB5"></div><div class="dv-swatch-name">Plum</div><div class="dv-swatch-hex">#DC7DB5</div></div>
-                <div><div class="dv-swatch-color" style="background:#F0C050"></div><div class="dv-swatch-name">Marigold</div><div class="dv-swatch-hex">#F0C050</div></div>
-                <div><div class="dv-swatch-color" style="background:#9B80D6"></div><div class="dv-swatch-name">Violet</div><div class="dv-swatch-hex">#9B80D6</div></div>
-                <div><div class="dv-swatch-color" style="background:#5DC87A"></div><div class="dv-swatch-name">Fern</div><div class="dv-swatch-hex">#5DC87A</div></div>
-                <div><div class="dv-swatch-color" style="background:#B09E8C"></div><div class="dv-swatch-name">Driftwood</div><div class="dv-swatch-hex">#B09E8C</div></div>
-              </div>
-            </div>
-          </div>
-
-          <div style="font-size:10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-tertiary);margin-bottom:var(--space-3)">Full token spec, all three roles per color</div>
-          <div style="overflow-x:auto;margin-bottom:var(--space-6)">
-            <table class="token-ref-table dv-token-table">
-              <thead>
-                <tr><th>Color</th><th>Token</th><th>Light, primary</th><th>Light, subtle fill</th><th>Light, label text</th><th>Dark, primary</th><th>Dark, subtle fill</th><th>Dark, label text</th></tr>
-              </thead>
-              <tbody>
-                <tr><td>Indigo</td><td><span class="tok-name">--dv-1</span></td><td><div class="tok-cell"><div class="tok-dot" style="background:#4D6EE3"></div><span class="tok-val">#4D6EE3</span></div></td><td><div class="tok-cell"><div class="tok-dot" style="background:#E4E9FC;border:1px solid var(--surface-border)"></div><span class="tok-val">#E4E9FC</span></div></td><td><div class="tok-cell"><div class="tok-dot" style="background:#1E3A9C"></div><span class="tok-val">#1E3A9C</span></div></td><td><div class="tok-cell"><div class="tok-dot" style="background:#7B96EC"></div><span class="tok-val">#7B96EC</span></div></td><td><div class="tok-cell"><div class="tok-dot" style="background:#1A2347"></div><span class="tok-val">#1A2347</span></div></td><td><div class="tok-cell"><div class="tok-dot" style="background:#B8C8F8;border:1px solid var(--surface-border)"></div><span class="tok-val">#B8C8F8</span></div></td></tr>
-                <tr><td>Tangerine</td><td><span class="tok-name">--dv-2</span></td><td><div class="tok-cell"><div class="tok-dot" style="background:#E8652A"></div><span class="tok-val">#E8652A</span></div></td><td><div class="tok-cell"><div class="tok-dot" style="background:#FCEADE;border:1px solid var(--surface-border)"></div><span class="tok-val">#FCEADE</span></div></td><td><div class="tok-cell"><div class="tok-dot" style="background:#7A2E09"></div><span class="tok-val">#7A2E09</span></div></td><td><div class="tok-cell"><div class="tok-dot" style="background:#F0885A"></div><span class="tok-val">#F0885A</span></div></td><td><div class="tok-cell"><div class="tok-dot" style="background:#2E1508"></div><span class="tok-val">#2E1508</span></div></td><td><div class="tok-cell"><div class="tok-dot" style="background:#FAC4A8;border:1px solid var(--surface-border)"></div><span class="tok-val">#FAC4A8</span></div></td></tr>
-                <tr><td>Teal</td><td><span class="tok-name">--dv-3</span></td><td><div class="tok-cell"><div class="tok-dot" style="background:#3AAFA9"></div><span class="tok-val">#3AAFA9</span></div></td><td><div class="tok-cell"><div class="tok-dot" style="background:#D9F1F0;border:1px solid var(--surface-border)"></div><span class="tok-val">#D9F1F0</span></div></td><td><div class="tok-cell"><div class="tok-dot" style="background:#145855"></div><span class="tok-val">#145855</span></div></td><td><div class="tok-cell"><div class="tok-dot" style="background:#4EC9C3"></div><span class="tok-val">#4EC9C3</span></div></td><td><div class="tok-cell"><div class="tok-dot" style="background:#0E2E2D"></div><span class="tok-val">#0E2E2D</span></div></td><td><div class="tok-cell"><div class="tok-dot" style="background:#A0E8E5;border:1px solid var(--surface-border)"></div><span class="tok-val">#A0E8E5</span></div></td></tr>
-                <tr><td>Plum</td><td><span class="tok-name">--dv-4</span></td><td><div class="tok-cell"><div class="tok-dot" style="background:#C94E8E"></div><span class="tok-val">#C94E8E</span></div></td><td><div class="tok-cell"><div class="tok-dot" style="background:#F7DDF0;border:1px solid var(--surface-border)"></div><span class="tok-val">#F7DDF0</span></div></td><td><div class="tok-cell"><div class="tok-dot" style="background:#6A1847"></div><span class="tok-val">#6A1847</span></div></td><td><div class="tok-cell"><div class="tok-dot" style="background:#DC7DB5"></div><span class="tok-val">#DC7DB5</span></div></td><td><div class="tok-cell"><div class="tok-dot" style="background:#2D1124"></div><span class="tok-val">#2D1124</span></div></td><td><div class="tok-cell"><div class="tok-dot" style="background:#F2B8D8;border:1px solid var(--surface-border)"></div><span class="tok-val">#F2B8D8</span></div></td></tr>
-                <tr><td>Marigold</td><td><span class="tok-name">--dv-5</span></td><td><div class="tok-cell"><div class="tok-dot" style="background:#D4981A"></div><span class="tok-val">#D4981A</span></div></td><td><div class="tok-cell"><div class="tok-dot" style="background:#FEF3D6;border:1px solid var(--surface-border)"></div><span class="tok-val">#FEF3D6</span></div></td><td><div class="tok-cell"><div class="tok-dot" style="background:#7B5403"></div><span class="tok-val">#7B5403</span></div></td><td><div class="tok-cell"><div class="tok-dot" style="background:#F0C050"></div><span class="tok-val">#F0C050</span></div></td><td><div class="tok-cell"><div class="tok-dot" style="background:#2B2008"></div><span class="tok-val">#2B2008</span></div></td><td><div class="tok-cell"><div class="tok-dot" style="background:#FAE0A0;border:1px solid var(--surface-border)"></div><span class="tok-val">#FAE0A0</span></div></td></tr>
-                <tr><td>Violet</td><td><span class="tok-name">--dv-6</span></td><td><div class="tok-cell"><div class="tok-dot" style="background:#6B4FBB"></div><span class="tok-val">#6B4FBB</span></div></td><td><div class="tok-cell"><div class="tok-dot" style="background:#EAE5F7;border:1px solid var(--surface-border)"></div><span class="tok-val">#EAE5F7</span></div></td><td><div class="tok-cell"><div class="tok-dot" style="background:#3A2070"></div><span class="tok-val">#3A2070</span></div></td><td><div class="tok-cell"><div class="tok-dot" style="background:#9B80D6"></div><span class="tok-val">#9B80D6</span></div></td><td><div class="tok-cell"><div class="tok-dot" style="background:#1E1530"></div><span class="tok-val">#1E1530</span></div></td><td><div class="tok-cell"><div class="tok-dot" style="background:#CFC0F0;border:1px solid var(--surface-border)"></div><span class="tok-val">#CFC0F0</span></div></td></tr>
-                <tr><td>Fern</td><td><span class="tok-name">--dv-7</span></td><td><div class="tok-cell"><div class="tok-dot" style="background:#3DAA62"></div><span class="tok-val">#3DAA62</span></div></td><td><div class="tok-cell"><div class="tok-dot" style="background:#D6F0E2;border:1px solid var(--surface-border)"></div><span class="tok-val">#D6F0E2</span></div></td><td><div class="tok-cell"><div class="tok-dot" style="background:#1A5732"></div><span class="tok-val">#1A5732</span></div></td><td><div class="tok-cell"><div class="tok-dot" style="background:#5DC87A"></div><span class="tok-val">#5DC87A</span></div></td><td><div class="tok-cell"><div class="tok-dot" style="background:#0F2B18"></div><span class="tok-val">#0F2B18</span></div></td><td><div class="tok-cell"><div class="tok-dot" style="background:#A8E8BC;border:1px solid var(--surface-border)"></div><span class="tok-val">#A8E8BC</span></div></td></tr>
-                <tr><td>Driftwood</td><td><span class="tok-name">--dv-8</span></td><td><div class="tok-cell"><div class="tok-dot" style="background:#8A7560"></div><span class="tok-val">#8A7560</span></div></td><td><div class="tok-cell"><div class="tok-dot" style="background:#EDE9E4;border:1px solid var(--surface-border)"></div><span class="tok-val">#EDE9E4</span></div></td><td><div class="tok-cell"><div class="tok-dot" style="background:#433829"></div><span class="tok-val">#433829</span></div></td><td><div class="tok-cell"><div class="tok-dot" style="background:#B09E8C"></div><span class="tok-val">#B09E8C</span></div></td><td><div class="tok-cell"><div class="tok-dot" style="background:#221C15"></div><span class="tok-val">#221C15</span></div></td><td><div class="tok-cell"><div class="tok-dot" style="background:#D8CCBF;border:1px solid var(--surface-border)"></div><span class="tok-val">#D8CCBF</span></div></td></tr>
-              </tbody>
-            </table>
-          </div>
-
-          <div style="font-size:10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-tertiary);margin-bottom:var(--space-3)">Bar chart preview</div>
-          <div class="dv-bar-previews">
-            <div class="dv-bar-preview dv-bar-preview-light">
-              <div class="dv-bar-preview-label">Light</div>
-              <svg viewBox="0 0 320 92" width="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                <rect x="18"  y="4"  width="28" height="88" rx="3" fill="#4D6EE3"/>
-                <rect x="54"  y="20" width="28" height="72" rx="3" fill="#E8652A"/>
-                <rect x="90"  y="12" width="28" height="80" rx="3" fill="#3AAFA9"/>
-                <rect x="126" y="32" width="28" height="60" rx="3" fill="#C94E8E"/>
-                <rect x="162" y="22" width="28" height="70" rx="3" fill="#D4981A"/>
-                <rect x="198" y="38" width="28" height="54" rx="3" fill="#6B4FBB"/>
-                <rect x="234" y="48" width="28" height="44" rx="3" fill="#3DAA62"/>
-                <rect x="270" y="58" width="28" height="34" rx="3" fill="#8A7560"/>
-              </svg>
-            </div>
-            <div class="dv-bar-preview dv-bar-preview-dark">
-              <div class="dv-bar-preview-label">Dark</div>
-              <svg viewBox="0 0 320 92" width="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                <rect x="18"  y="4"  width="28" height="88" rx="3" fill="#7B96EC"/>
-                <rect x="54"  y="20" width="28" height="72" rx="3" fill="#F0885A"/>
-                <rect x="90"  y="12" width="28" height="80" rx="3" fill="#4EC9C3"/>
-                <rect x="126" y="32" width="28" height="60" rx="3" fill="#DC7DB5"/>
-                <rect x="162" y="22" width="28" height="70" rx="3" fill="#F0C050"/>
-                <rect x="198" y="38" width="28" height="54" rx="3" fill="#9B80D6"/>
-                <rect x="234" y="48" width="28" height="44" rx="3" fill="#5DC87A"/>
-                <rect x="270" y="58" width="28" height="34" rx="3" fill="#B09E8C"/>
-              </svg>
-            </div>
-          </div>
-          <p style="font-size:12px;color:var(--text-tertiary);margin-top:var(--space-3)">Series colors are designed to be perceptually distinct. Assign series by order: first series always uses <code style="font-family:var(--font-mono);font-size:11px">--dv-1</code>, second uses <code style="font-family:var(--font-mono);font-size:11px">--dv-2</code>, and so on. These tokens are excluded from the Configurator's customer theming system.</p>
+  <!-- AI RULES -->
+  <div class="comp-section">
+    <div class="spec-rules-panel" id="ai-rules-panel">
+      <div class="spec-rules-topbar">
+        <span class="spec-rules-title">AI action rules</span>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <span class="spec-rules-hint">Click any rule to edit</span>
+          <button class="spec-rules-reset" onclick="restoreDefaults()"><i class="ti ti-rotate" style="font-size:10px;"></i> Restore FreshDS defaults</button>
         </div>
       </div>
-    </main>
+      <div class="spec-rules-section">
+        <div class="spec-rules-section-head">
+          <span class="spec-rules-variant">Generation rules</span>
+          <span class="spec-attr-chip">OKLCH · 12-step scale</span>
+        </div>
+        <ul class="spec-rule-list" id="rules-general">
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Never reference a raw scale step (<code>--primary-9</code>, <code>--scale-3</code>) directly in a component. Always use Tier 2 semantic tokens (<code>--color-interactive</code>, <code>--surface-subtle</code>) or Tier 3 component tokens. Raw steps are internal to the token system and will break if the scale architecture changes.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Never hardcode a hex, rgb, oklch, or hsl color value in any component or spec page. All colors must come from CSS custom properties. The only permitted exceptions are box-shadow elevation values (<code>rgba(0,0,0,x)</code>) and modal backdrop scrims (<code>rgba(0,0,0,0.4)</code>).</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">For status patterns, always use the four-token triplet together: <code>--color-{status}-subtle</code> for background, <code>--color-{status}-border</code> for border, <code>--color-{status}-text</code> for text. Use <code>--color-{status}</code> (main) only for icons and standalone indicators, never as a background for text.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Data visualization series must use <code>--dv-1</code> through <code>--dv-8</code> in order, starting at 1 for the first series. Never pick a dv color by hue preference. Use <code>--dv-{n}-subtle</code> for area fills and row highlights, <code>--dv-{n}-label</code> for annotations on top of subtle fills. These tokens are fixed and not customer-configurable.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Dark mode is automatic when you use semantic tokens. Never write <code>@media (prefers-color-scheme: dark)</code> or <code>[data-mode="dark"]</code> selectors in a component. Semantic token values already flip between light and dark via the cascade in theme.css.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+        </ul>
+        <button class="spec-add-rule" onclick="addRule('rules-general')"><i class="ti ti-plus"></i> Add rule</button>
+      </div>
+    </div>
   </div>
+
+  <!-- ARCHITECTURE -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Token architecture</span></div>
+      <div style="padding:16px 20px 20px">
+        <div class="arch-tiers">
+          <div class="arch-tier">
+            <div class="arch-tier-label"><span>Tier 1</span><span>Primitive</span></div>
+            <div class="arch-tier-token">--color-page-bg<br>--primitive-primary<br>--scale-1..12<br>--primary-1..12</div>
+            <div class="arch-tier-desc">Raw values. Set by the Configurator or generated by the color engine. Never referenced directly in components.</div>
+          </div>
+          <div class="arch-tier">
+            <div class="arch-tier-label"><span>Tier 2</span><span>Semantic</span></div>
+            <div class="arch-tier-token">--surface-bg<br>--color-interactive<br>--text-primary<br>--color-success</div>
+            <div class="arch-tier-desc">Purpose-mapped tokens. Always use these in components. They handle light/dark mode automatically via the CSS cascade.</div>
+          </div>
+          <div class="arch-tier">
+            <div class="arch-tier-label"><span>Tier 3</span><span>Component</span></div>
+            <div class="arch-tier-token">--btn-primary-bg<br>--input-focus-ring<br>--badge-primary-text<br>--btn-ai-hover</div>
+            <div class="arch-tier-desc">Component-scoped overrides. Use inside a specific component when a Tier 2 token is not specific enough.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STATUS COLORS -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Status colors</span></div>
+      <div style="padding:10px 20px 8px;border-bottom:1px solid #d4d4d7">
+        <p style="font-size:12px;color:#666;line-height:1.6;margin:0">Customer picks one hex per status color. The OKLCH engine derives all four token roles for both light and dark modes automatically. Use the complete triplet (subtle + border + text) together for alert and badge patterns.</p>
+      </div>
+      <div style="padding:16px 20px 20px">
+        <div class="status-role-grid">
+          <div class="srg-head">Color</div>
+          <div class="srg-head">Main (icon)</div>
+          <div class="srg-head">Subtle (bg)</div>
+          <div class="srg-head">Border</div>
+          <div class="srg-head">Text</div>
+
+          <div class="srg-row-label">Success</div>
+          <div class="srg-cell"><span class="s-dot" style="background:var(--color-success)"></span>--color-success</div>
+          <div class="srg-cell"><span class="s-dot" style="background:var(--color-success-subtle)"></span>--color-success-subtle</div>
+          <div class="srg-cell"><span class="s-dot" style="background:var(--color-success-border)"></span>--color-success-border</div>
+          <div class="srg-cell"><span class="s-dot" style="background:var(--color-success-text)"></span>--color-success-text</div>
+
+          <div class="srg-row-label">Warning</div>
+          <div class="srg-cell"><span class="s-dot" style="background:var(--color-warning)"></span>--color-warning</div>
+          <div class="srg-cell"><span class="s-dot" style="background:var(--color-warning-subtle)"></span>--color-warning-subtle</div>
+          <div class="srg-cell"><span class="s-dot" style="background:var(--color-warning-border)"></span>--color-warning-border</div>
+          <div class="srg-cell"><span class="s-dot" style="background:var(--color-warning-text)"></span>--color-warning-text</div>
+
+          <div class="srg-row-label">Danger</div>
+          <div class="srg-cell"><span class="s-dot" style="background:var(--color-danger)"></span>--color-danger</div>
+          <div class="srg-cell"><span class="s-dot" style="background:var(--color-danger-subtle)"></span>--color-danger-subtle</div>
+          <div class="srg-cell"><span class="s-dot" style="background:var(--color-danger-border)"></span>--color-danger-border</div>
+          <div class="srg-cell"><span class="s-dot" style="background:var(--color-danger-text)"></span>--color-danger-text</div>
+
+          <div class="srg-row-label srg-last">Info</div>
+          <div class="srg-cell srg-last"><span class="s-dot" style="background:var(--color-info)"></span>--color-info</div>
+          <div class="srg-cell srg-last"><span class="s-dot" style="background:var(--color-info-subtle)"></span>--color-info-subtle</div>
+          <div class="srg-cell srg-last"><span class="s-dot" style="background:var(--color-info-border)"></span>--color-info-border</div>
+          <div class="srg-cell srg-last"><span class="s-dot" style="background:var(--color-info-text)"></span>--color-info-text</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DATA VIZ -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Data visualization palette</span></div>
+      <div style="padding:10px 20px 8px;border-bottom:1px solid #d4d4d7">
+        <p style="font-size:12px;color:#666;line-height:1.6;margin:0">Fixed 8-color palette for charts, graphs, and data display. Not customer-configurable. Assign by series order starting at <span class="tok-pill">--dv-1</span>. Each color ships with three roles: <span class="tok-pill">--dv-{n}</span> for marks, <span class="tok-pill">--dv-{n}-subtle</span> for area fills, <span class="tok-pill">--dv-{n}-label</span> for annotations on subtle fills.</p>
+      </div>
+      <div style="padding:16px 20px 20px;display:flex;flex-direction:column;gap:20px">
+        <div class="dv-panels">
+          <div class="dv-panel dv-panel-light">
+            <div class="dv-panel-label">Light Mode</div>
+            <div class="dv-swatch-grid">
+              <div><div class="dv-swatch-color" style="background:#4D6EE3"></div><div class="dv-swatch-name">Indigo</div><div class="dv-swatch-hex">--dv-1</div></div>
+              <div><div class="dv-swatch-color" style="background:#E8652A"></div><div class="dv-swatch-name">Tangerine</div><div class="dv-swatch-hex">--dv-2</div></div>
+              <div><div class="dv-swatch-color" style="background:#3AAFA9"></div><div class="dv-swatch-name">Teal</div><div class="dv-swatch-hex">--dv-3</div></div>
+              <div><div class="dv-swatch-color" style="background:#C94E8E"></div><div class="dv-swatch-name">Plum</div><div class="dv-swatch-hex">--dv-4</div></div>
+              <div><div class="dv-swatch-color" style="background:#D4981A"></div><div class="dv-swatch-name">Marigold</div><div class="dv-swatch-hex">--dv-5</div></div>
+              <div><div class="dv-swatch-color" style="background:#6B4FBB"></div><div class="dv-swatch-name">Violet</div><div class="dv-swatch-hex">--dv-6</div></div>
+              <div><div class="dv-swatch-color" style="background:#3DAA62"></div><div class="dv-swatch-name">Fern</div><div class="dv-swatch-hex">--dv-7</div></div>
+              <div><div class="dv-swatch-color" style="background:#8A7560"></div><div class="dv-swatch-name">Driftwood</div><div class="dv-swatch-hex">--dv-8</div></div>
+            </div>
+          </div>
+          <div class="dv-panel dv-panel-dark">
+            <div class="dv-panel-label">Dark Mode</div>
+            <div class="dv-swatch-grid">
+              <div><div class="dv-swatch-color" style="background:#7B96EC"></div><div class="dv-swatch-name">Indigo</div><div class="dv-swatch-hex">--dv-1</div></div>
+              <div><div class="dv-swatch-color" style="background:#F0885A"></div><div class="dv-swatch-name">Tangerine</div><div class="dv-swatch-hex">--dv-2</div></div>
+              <div><div class="dv-swatch-color" style="background:#4EC9C3"></div><div class="dv-swatch-name">Teal</div><div class="dv-swatch-hex">--dv-3</div></div>
+              <div><div class="dv-swatch-color" style="background:#DC7DB5"></div><div class="dv-swatch-name">Plum</div><div class="dv-swatch-hex">--dv-4</div></div>
+              <div><div class="dv-swatch-color" style="background:#F0C050"></div><div class="dv-swatch-name">Marigold</div><div class="dv-swatch-hex">--dv-5</div></div>
+              <div><div class="dv-swatch-color" style="background:#9B80D6"></div><div class="dv-swatch-name">Violet</div><div class="dv-swatch-hex">--dv-6</div></div>
+              <div><div class="dv-swatch-color" style="background:#5DC87A"></div><div class="dv-swatch-name">Fern</div><div class="dv-swatch-hex">--dv-7</div></div>
+              <div><div class="dv-swatch-color" style="background:#B09E8C"></div><div class="dv-swatch-name">Driftwood</div><div class="dv-swatch-hex">--dv-8</div></div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="sub-label">All three roles per color</div>
+          <div style="overflow-x:auto">
+            <table class="dv-tok-table">
+              <thead>
+                <tr><th>Series</th><th>Token</th><th>Light mark</th><th>Light subtle</th><th>Light label</th><th>Dark mark</th><th>Dark subtle</th><th>Dark label</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Indigo</td><td style="font-family:var(--font-mono);font-size:10px">--dv-1</td><td><div class="dv-cell"><span class="dv-dot" style="background:#4D6EE3"></span><span class="dv-hex">#4D6EE3</span></div></td><td><div class="dv-cell"><span class="dv-dot" style="background:#E4E9FC;box-shadow:inset 0 0 0 1px rgba(0,0,0,0.08)"></span><span class="dv-hex">#E4E9FC</span></div></td><td><div class="dv-cell"><span class="dv-dot" style="background:#1E3A9C"></span><span class="dv-hex">#1E3A9C</span></div></td><td><div class="dv-cell"><span class="dv-dot" style="background:#7B96EC"></span><span class="dv-hex">#7B96EC</span></div></td><td><div class="dv-cell"><span class="dv-dot" style="background:#1A2347"></span><span class="dv-hex">#1A2347</span></div></td><td><div class="dv-cell"><span class="dv-dot" style="background:#B8C8F8;box-shadow:inset 0 0 0 1px rgba(0,0,0,0.08)"></span><span class="dv-hex">#B8C8F8</span></div></td></tr>
+                <tr><td>Tangerine</td><td style="font-family:var(--font-mono);font-size:10px">--dv-2</td><td><div class="dv-cell"><span class="dv-dot" style="background:#E8652A"></span><span class="dv-hex">#E8652A</span></div></td><td><div class="dv-cell"><span class="dv-dot" style="background:#FCEADE;box-shadow:inset 0 0 0 1px rgba(0,0,0,0.08)"></span><span class="dv-hex">#FCEADE</span></div></td><td><div class="dv-cell"><span class="dv-dot" style="background:#7A2E09"></span><span class="dv-hex">#7A2E09</span></div></td><td><div class="dv-cell"><span class="dv-dot" style="background:#F0885A"></span><span class="dv-hex">#F0885A</span></div></td><td><div class="dv-cell"><span class="dv-dot" style="background:#2E1508"></span><span class="dv-hex">#2E1508</span></div></td><td><div class="dv-cell"><span class="dv-dot" style="background:#FAC4A8;box-shadow:inset 0 0 0 1px rgba(0,0,0,0.08)"></span><span class="dv-hex">#FAC4A8</span></div></td></tr>
+                <tr><td>Teal</td><td style="font-family:var(--font-mono);font-size:10px">--dv-3</td><td><div class="dv-cell"><span class="dv-dot" style="background:#3AAFA9"></span><span class="dv-hex">#3AAFA9</span></div></td><td><div class="dv-cell"><span class="dv-dot" style="background:#D9F1F0;box-shadow:inset 0 0 0 1px rgba(0,0,0,0.08)"></span><span class="dv-hex">#D9F1F0</span></div></td><td><div class="dv-cell"><span class="dv-dot" style="background:#145855"></span><span class="dv-hex">#145855</span></div></td><td><div class="dv-cell"><span class="dv-dot" style="background:#4EC9C3"></span><span class="dv-hex">#4EC9C3</span></div></td><td><div class="dv-cell"><span class="dv-dot" style="background:#0E2E2D"></span><span class="dv-hex">#0E2E2D</span></div></td><td><div class="dv-cell"><span class="dv-dot" style="background:#A0E8E5;box-shadow:inset 0 0 0 1px rgba(0,0,0,0.08)"></span><span class="dv-hex">#A0E8E5</span></div></td></tr>
+                <tr><td>Plum</td><td style="font-family:var(--font-mono);font-size:10px">--dv-4</td><td><div class="dv-cell"><span class="dv-dot" style="background:#C94E8E"></span><span class="dv-hex">#C94E8E</span></div></td><td><div class="dv-cell"><span class="dv-dot" style="background:#F7DDF0;box-shadow:inset 0 0 0 1px rgba(0,0,0,0.08)"></span><span class="dv-hex">#F7DDF0</span></div></td><td><div class="dv-cell"><span class="dv-dot" style="background:#6A1847"></span><span class="dv-hex">#6A1847</span></div></td><td><div class="dv-cell"><span class="dv-dot" style="background:#DC7DB5"></span><span class="dv-hex">#DC7DB5</span></div></td><td><div class="dv-cell"><span class="dv-dot" style="background:#2D1124"></span><span class="dv-hex">#2D1124</span></div></td><td><div class="dv-cell"><span class="dv-dot" style="background:#F2B8D8;box-shadow:inset 0 0 0 1px rgba(0,0,0,0.08)"></span><span class="dv-hex">#F2B8D8</span></div></td></tr>
+                <tr><td>Marigold</td><td style="font-family:var(--font-mono);font-size:10px">--dv-5</td><td><div class="dv-cell"><span class="dv-dot" style="background:#D4981A"></span><span class="dv-hex">#D4981A</span></div></td><td><div class="dv-cell"><span class="dv-dot" style="background:#FEF3D6;box-shadow:inset 0 0 0 1px rgba(0,0,0,0.08)"></span><span class="dv-hex">#FEF3D6</span></div></td><td><div class="dv-cell"><span class="dv-dot" style="background:#7B5403"></span><span class="dv-hex">#7B5403</span></div></td><td><div class="dv-cell"><span class="dv-dot" style="background:#F0C050"></span><span class="dv-hex">#F0C050</span></div></td><td><div class="dv-cell"><span class="dv-dot" style="background:#2B2008"></span><span class="dv-hex">#2B2008</span></div></td><td><div class="dv-cell"><span class="dv-dot" style="background:#FAE0A0;box-shadow:inset 0 0 0 1px rgba(0,0,0,0.08)"></span><span class="dv-hex">#FAE0A0</span></div></td></tr>
+                <tr><td>Violet</td><td style="font-family:var(--font-mono);font-size:10px">--dv-6</td><td><div class="dv-cell"><span class="dv-dot" style="background:#6B4FBB"></span><span class="dv-hex">#6B4FBB</span></div></td><td><div class="dv-cell"><span class="dv-dot" style="background:#EAE5F7;box-shadow:inset 0 0 0 1px rgba(0,0,0,0.08)"></span><span class="dv-hex">#EAE5F7</span></div></td><td><div class="dv-cell"><span class="dv-dot" style="background:#3A2070"></span><span class="dv-hex">#3A2070</span></div></td><td><div class="dv-cell"><span class="dv-dot" style="background:#9B80D6"></span><span class="dv-hex">#9B80D6</span></div></td><td><div class="dv-cell"><span class="dv-dot" style="background:#1E1530"></span><span class="dv-hex">#1E1530</span></div></td><td><div class="dv-cell"><span class="dv-dot" style="background:#CFC0F0;box-shadow:inset 0 0 0 1px rgba(0,0,0,0.08)"></span><span class="dv-hex">#CFC0F0</span></div></td></tr>
+                <tr><td>Fern</td><td style="font-family:var(--font-mono);font-size:10px">--dv-7</td><td><div class="dv-cell"><span class="dv-dot" style="background:#3DAA62"></span><span class="dv-hex">#3DAA62</span></div></td><td><div class="dv-cell"><span class="dv-dot" style="background:#D6F0E2;box-shadow:inset 0 0 0 1px rgba(0,0,0,0.08)"></span><span class="dv-hex">#D6F0E2</span></div></td><td><div class="dv-cell"><span class="dv-dot" style="background:#1A5732"></span><span class="dv-hex">#1A5732</span></div></td><td><div class="dv-cell"><span class="dv-dot" style="background:#5DC87A"></span><span class="dv-hex">#5DC87A</span></div></td><td><div class="dv-cell"><span class="dv-dot" style="background:#0F2B18"></span><span class="dv-hex">#0F2B18</span></div></td><td><div class="dv-cell"><span class="dv-dot" style="background:#A8E8BC;box-shadow:inset 0 0 0 1px rgba(0,0,0,0.08)"></span><span class="dv-hex">#A8E8BC</span></div></td></tr>
+                <tr><td>Driftwood</td><td style="font-family:var(--font-mono);font-size:10px">--dv-8</td><td><div class="dv-cell"><span class="dv-dot" style="background:#8A7560"></span><span class="dv-hex">#8A7560</span></div></td><td><div class="dv-cell"><span class="dv-dot" style="background:#EDE9E4;box-shadow:inset 0 0 0 1px rgba(0,0,0,0.08)"></span><span class="dv-hex">#EDE9E4</span></div></td><td><div class="dv-cell"><span class="dv-dot" style="background:#433829"></span><span class="dv-hex">#433829</span></div></td><td><div class="dv-cell"><span class="dv-dot" style="background:#B09E8C"></span><span class="dv-hex">#B09E8C</span></div></td><td><div class="dv-cell"><span class="dv-dot" style="background:#221C15"></span><span class="dv-hex">#221C15</span></div></td><td><div class="dv-cell"><span class="dv-dot" style="background:#D8CCBF;box-shadow:inset 0 0 0 1px rgba(0,0,0,0.08)"></span><span class="dv-hex">#D8CCBF</span></div></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </div>
-<script src="components/core/fresh-button.js"></script>
-<script src="components/core/fresh-input.js"></script>
-<script src="components/navigation/fresh-simple-tabs.js"></script>
+
+<script src="js/spec-page.js"></script>
+
+<script type="module">
+  import { supabase } from '/js/supabase-client.js'
+  var RULE_IDS = ['rules-general'];
+  var _saveTimer = null, _loading = false;
+  function getRulesSnapshot() {
+    var r = {};
+    RULE_IDS.forEach(function(id) { var l = document.getElementById(id); if (!l) return; r[id] = Array.from(l.querySelectorAll('.spec-rule-text')).map(function(el) { return el.innerHTML.trim(); }); });
+    return r;
+  }
+  function applySnapshot(saved) {
+    RULE_IDS.forEach(function(id) { var l = document.getElementById(id); if (!l) return; var rules = (saved && saved[id] && saved[id].length) ? saved[id] : window.DEFAULT_RULES[id]; l.innerHTML = rules.map(function(t) { return '<li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">' + t + '</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>'; }).join(''); });
+  }
+  async function saveRulesNow() {
+    try { var { data: { user } } = await supabase.auth.getUser(); if (!user) return; var { data: p } = await supabase.from('profiles').select('component_rules').eq('id', user.id).single(); var e = (p && p.component_rules) ? p.component_rules : {}; e.colors = getRulesSnapshot(); await supabase.from('profiles').update({ component_rules: e }).eq('id', user.id); } catch(e) {}
+  }
+  function schedSave() { if (_loading) return; clearTimeout(_saveTimer); _saveTimer = setTimeout(saveRulesNow, 1000); }
+  var aiPanel = document.getElementById('ai-rules-panel');
+  if (aiPanel) new MutationObserver(schedSave).observe(aiPanel, { childList: true, subtree: true, characterData: true });
+  ;(async function() { try { var { data: { user } } = await supabase.auth.getUser(); if (!user) return; var { data: p } = await supabase.from('profiles').select('component_rules').eq('id', user.id).single(); if (p && p.component_rules && p.component_rules.colors) { _loading = true; applySnapshot(p.component_rules.colors); _loading = false; } } catch(e) {} })();
+</script>
+
+<script>
+  var DEFAULT_RULES = {
+    'rules-general': [
+      'Never reference a raw scale step (<code>--primary-9</code>, <code>--scale-3</code>) directly in a component. Always use Tier 2 semantic tokens (<code>--color-interactive</code>, <code>--surface-subtle</code>) or Tier 3 component tokens. Raw steps are internal to the token system and will break if the scale architecture changes.',
+      'Never hardcode a hex, rgb, oklch, or hsl color value in any component or spec page. All colors must come from CSS custom properties. The only permitted exceptions are box-shadow elevation values (<code>rgba(0,0,0,x)</code>) and modal backdrop scrims (<code>rgba(0,0,0,0.4)</code>).',
+      'For status patterns, always use the four-token triplet together: <code>--color-{status}-subtle</code> for background, <code>--color-{status}-border</code> for border, <code>--color-{status}-text</code> for text. Use <code>--color-{status}</code> (main) only for icons and standalone indicators, never as a background for text.',
+      'Data visualization series must use <code>--dv-1</code> through <code>--dv-8</code> in order, starting at 1 for the first series. Never pick a dv color by hue preference. Use <code>--dv-{n}-subtle</code> for area fills and row highlights, <code>--dv-{n}-label</code> for annotations on top of subtle fills. These tokens are fixed and not customer-configurable.',
+      'Dark mode is automatic when you use semantic tokens. Never write <code>@media (prefers-color-scheme: dark)</code> or <code>[data-mode="dark"]</code> selectors in a component. Semantic token values already flip between light and dark via the cascade in theme.css.'
+    ]
+  };
+  function restoreDefaults() {
+    if (!confirm('Reset all color system rules to FreshDS defaults? Any edits you have made will be lost.')) return;
+    Object.keys(DEFAULT_RULES).forEach(function(id) { var l = document.getElementById(id); if (!l) return; l.innerHTML = DEFAULT_RULES[id].map(function(t) { return '<li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">' + t + '</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>'; }).join(''); });
+  }
+</script>
 </body>
 </html>
