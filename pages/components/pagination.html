@@ -8,65 +8,308 @@
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="styles/site.css">
 <link rel="stylesheet" href="tokens/primitives.css">
 <link rel="stylesheet" href="tokens/theme.css">
-<link rel="stylesheet" href="tokens/dataviz.css">
-<link rel="stylesheet" href="styles/reset.css">
-<link rel="stylesheet" href="styles/layout.css">
-<link rel="stylesheet" href="styles/components/core.css">
-<link rel="stylesheet" href="styles/docs.css">
 <script src="js/freshds.js"></script>
 <script src="js/freshds-site.js"></script>
+<link rel="stylesheet" href="styles/components/spec-page.css">
 </head>
 <body>
-<div class="fds-app" id="app">
-  <ds-topbar active-section="ds"></ds-topbar>
-  <div class="fds-body">
-    <ds-shell active="pagination"></ds-shell>
-    <main class="fds-main">
-      <div class="fds-page active" id="page-pagination">
-        <div class="page-header">
-          <div class="page-eyebrow">Navigation</div>
-          <h1 class="page-title">Pagination</h1>
-          <p class="page-desc">Page navigation for long lists and data tables. Handles ellipsis logic automatically for large page counts. Emits <code style="font-family:var(--font-mono);font-size:13px;background:var(--surface-overlay);padding:1px 6px;border-radius:4px">change</code> with the new page number.</p>
-        </div>
-        <div class="page-section">
-          <div class="page-section-title">Default</div>
-          <div class="demo-surface col" style="align-items:flex-start;gap:var(--space-5)">
-            <fresh-pagination page="1"  total="5"></fresh-pagination>
-            <fresh-pagination page="3"  total="10"></fresh-pagination>
-            <fresh-pagination page="6"  total="20"></fresh-pagination>
-            <fresh-pagination page="8"  total="50" siblings="2"></fresh-pagination>
-          </div>
-        </div>
-        <div class="page-section">
-          <div class="page-section-title">Sizes</div>
-          <div class="demo-surface col" style="align-items:flex-start;gap:var(--space-4)">
-            <fresh-pagination page="4" total="10" size="sm"></fresh-pagination>
-            <fresh-pagination page="4" total="10"></fresh-pagination>
-          </div>
-        </div>
-        <div class="page-section">
-          <div class="page-section-title">Attributes</div>
-          <table class="usage-table">
-            <thead><tr><th>Attribute</th><th>Values</th><th>Default</th><th>Description</th></tr></thead>
-            <tbody>
-              <tr><td>page</td><td>number</td><td><code>1</code></td><td>Current page (1-based)</td></tr>
-              <tr><td>total</td><td>number</td><td><code>1</code></td><td>Total number of pages</td></tr>
-              <tr><td>siblings</td><td>number</td><td><code>1</code></td><td>Pages shown either side of current before ellipsis</td></tr>
-              <tr><td>size</td><td><code>sm</code> <code>md</code></td><td><code>md</code></td><td>Button size (28 / 32px)</td></tr>
-            </tbody>
-          </table>
+
+<div class="comp-page">
+  <h1 class="comp-title">Pagination</h1>
+  <p class="comp-desc">Page-number navigation for tables and lists. Renders previous/next arrow buttons with numbered page buttons and ellipsis truncation for large page ranges.</p>
+
+  <!-- STATES CARD -->
+  <div class="comp-section">
+    <div class="spec-card">
+      <div class="spec-card-topbar">
+        <span class="spec-rules-title">Pagination states</span>
+        <div class="spec-mode-switcher">
+          <button class="spec-mode-btn active" id="mode-btn-light" onclick="setSpecMode('light')"><i class="ti ti-sun"></i> Light</button>
+          <button class="spec-mode-btn" id="mode-btn-dark" onclick="setSpecMode('dark')"><i class="ti ti-moon"></i> Dark</button>
         </div>
       </div>
-    </main>
+      <div id="spec-viewport" class="spec-viewport">
+
+        <!-- First page -->
+        <div class="spec-variant-row">
+          <div class="spec-variant-header">
+            <span class="spec-variant-name">First page</span>
+            <span class="spec-attr-chip">page="1"</span>
+            <span class="spec-attr-chip">total="10"</span>
+            <span class="spec-variant-sep">·</span>
+            <span class="spec-variant-desc">Previous arrow is disabled. Page 1 is highlighted as the active page.</span>
+          </div>
+          <div class="spec-variant-body">
+            <div class="spec-demos">
+              <fresh-pagination page="1" total="10"></fresh-pagination>
+            </div>
+          </div>
+        </div>
+
+        <!-- Middle page -->
+        <div class="spec-variant-row">
+          <div class="spec-variant-header">
+            <span class="spec-variant-name">Middle page</span>
+            <span class="spec-attr-chip">page="5"</span>
+            <span class="spec-attr-chip">total="10"</span>
+            <span class="spec-variant-sep">·</span>
+            <span class="spec-variant-desc">Both arrows are active. The current page is highlighted with the interactive fill color.</span>
+          </div>
+          <div class="spec-variant-body">
+            <div class="spec-demos">
+              <fresh-pagination page="5" total="10"></fresh-pagination>
+            </div>
+          </div>
+        </div>
+
+        <!-- Last page -->
+        <div class="spec-variant-row">
+          <div class="spec-variant-header">
+            <span class="spec-variant-name">Last page</span>
+            <span class="spec-attr-chip">page="10"</span>
+            <span class="spec-attr-chip">total="10"</span>
+            <span class="spec-variant-sep">·</span>
+            <span class="spec-variant-desc">Next arrow is disabled. Page 10 is highlighted as the active page.</span>
+          </div>
+          <div class="spec-variant-body">
+            <div class="spec-demos">
+              <fresh-pagination page="10" total="10"></fresh-pagination>
+            </div>
+          </div>
+        </div>
+
+        <!-- Many pages with ellipsis -->
+        <div class="spec-variant-row">
+          <div class="spec-variant-header">
+            <span class="spec-variant-name">With ellipsis</span>
+            <span class="spec-attr-chip">page="8"</span>
+            <span class="spec-attr-chip">total="50"</span>
+            <span class="spec-variant-sep">·</span>
+            <span class="spec-variant-desc">For large page counts the component automatically inserts ellipsis. Siblings either side of the current page are shown.</span>
+          </div>
+          <div class="spec-variant-body">
+            <div class="spec-demos">
+              <fresh-pagination page="8" total="50"></fresh-pagination>
+            </div>
+          </div>
+        </div>
+
+        <!-- Small size -->
+        <div class="spec-variant-row">
+          <div class="spec-variant-header">
+            <span class="spec-variant-name">Small</span>
+            <span class="spec-attr-chip">size="sm"</span>
+            <span class="spec-variant-sep">·</span>
+            <span class="spec-variant-desc">28px button height for compact layouts like below-table toolbars or card footers.</span>
+          </div>
+          <div class="spec-variant-body">
+            <div class="spec-demos">
+              <fresh-pagination page="4" total="20" size="sm"></fresh-pagination>
+            </div>
+          </div>
+        </div>
+
+        <!-- Wider siblings -->
+        <div class="spec-variant-row">
+          <div class="spec-variant-header">
+            <span class="spec-variant-name">Extended siblings</span>
+            <span class="spec-attr-chip">siblings="2"</span>
+            <span class="spec-variant-sep">·</span>
+            <span class="spec-variant-desc">Increase the <code>siblings</code> attribute to show more page numbers on either side of the active page before ellipsis appears.</span>
+          </div>
+          <div class="spec-variant-body">
+            <div class="spec-demos">
+              <fresh-pagination page="10" total="50" siblings="2"></fresh-pagination>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /spec-viewport -->
+    </div><!-- /spec-card -->
   </div>
+
+  <!-- AI RULES -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar">
+        <span class="spec-rules-title">AI action rules</span>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <span class="spec-rules-hint">Click any rule to edit</span>
+          <button class="spec-rules-reset" onclick="restoreDefaults()"><i class="ti ti-rotate" style="font-size:10px;"></i> Restore FreshDS defaults</button>
+        </div>
+      </div>
+      <div class="spec-rules-section">
+        <div class="spec-rules-section-head">
+          <span class="spec-rules-variant">General</span>
+          <span class="spec-attr-chip">fresh-pagination</span>
+        </div>
+        <ul class="spec-rule-list" id="rules-general">
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Always set <code>total</code> to the actual total page count, not the total item count. Calculate pages server-side as <code>Math.ceil(totalItems / pageSize)</code> before passing to the component.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Listen to the <code>change</code> event and fetch the new page of data immediately. Update the <code>page</code> attribute on the component after the data loads to keep the display in sync with the actual content shown.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Use <code>size="sm"</code> when the pagination sits inside a card footer, toolbar, or any container shorter than 48px. Use the default <code>md</code> size for standalone below-table placement.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Do not show pagination for datasets under 25 items that fit on a single page. Pagination on a one-page result set adds navigation overhead with no benefit.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Persist the current page to the URL query string (e.g. <code>?page=3</code>), not localStorage. This allows users to share or bookmark a specific result page and for the browser back button to restore position.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+        </ul>
+        <button class="spec-add-rule" onclick="addRule('rules-general')"><i class="ti ti-plus"></i> Add rule</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ATTRIBUTES -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Attributes</span></div>
+      <table class="spec-a11y-table">
+        <thead><tr><th style="width:120px">Attribute</th><th style="width:160px">Values</th><th style="width:80px">Default</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">page</td><td class="spec-a11y-req">number (1-based)</td><td class="spec-a11y-req"><code>1</code></td><td class="spec-a11y-req">Current active page. Must be between 1 and <code>total</code>. Clamped to valid range automatically.</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">total</td><td class="spec-a11y-req">number</td><td class="spec-a11y-req"><code>1</code></td><td class="spec-a11y-req">Total number of pages. Pass <code>Math.ceil(itemCount / pageSize)</code>.</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">siblings</td><td class="spec-a11y-req">number</td><td class="spec-a11y-req"><code>1</code></td><td class="spec-a11y-req">Number of page buttons shown on either side of the current page before ellipsis appears.</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">size</td><td class="spec-a11y-req"><code>sm</code> <code>md</code></td><td class="spec-a11y-req"><code>md</code></td><td class="spec-a11y-req">Button height: 28px for <code>sm</code>, 32px for <code>md</code>. Also adjusts font size and gap.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- EVENTS -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Events</span></div>
+      <table class="spec-a11y-table">
+        <thead><tr><th style="width:130px">Event</th><th style="width:200px">Detail</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">change</td><td class="spec-a11y-req"><code>{ page: number }</code></td><td class="spec-a11y-req">Fires when a page button or arrow is clicked. <code>page</code> is the 1-based target page number. Does not fire if the current page is clicked again. Bubbles and is composed.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- CODE -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Code</span></div>
+      <div style="padding:16px 20px;display:flex;flex-direction:column;gap:0;">
+
+        <div class="code-block" data-code="<fresh-pagination page=&quot;1&quot; total=&quot;20&quot;></fresh-pagination>">
+          <div class="code-block-header"><span><span class="code-lang">HTML</span><span class="code-context">Basic</span></span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+          <div class="code-body"><span class="hl-pun">&lt;</span><span class="hl-tag">fresh-pagination</span> <span class="hl-attr">page</span><span class="hl-pun">=</span><span class="hl-val">"1"</span> <span class="hl-attr">total</span><span class="hl-pun">=</span><span class="hl-val">"20"</span><span class="hl-pun">&gt;&lt;/</span><span class="hl-tag">fresh-pagination</span><span class="hl-pun">&gt;</span></div>
+        </div>
+
+        <div class="code-block" data-code="<fresh-pagination page=&quot;8&quot; total=&quot;50&quot; siblings=&quot;2&quot; size=&quot;sm&quot;></fresh-pagination>">
+          <div class="code-block-header"><span><span class="code-lang">HTML</span><span class="code-context">Small with extended siblings</span></span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+          <div class="code-body"><span class="hl-pun">&lt;</span><span class="hl-tag">fresh-pagination</span>
+  <span class="hl-attr">page</span><span class="hl-pun">=</span><span class="hl-val">"8"</span>
+  <span class="hl-attr">total</span><span class="hl-pun">=</span><span class="hl-val">"50"</span>
+  <span class="hl-attr">siblings</span><span class="hl-pun">=</span><span class="hl-val">"2"</span>
+  <span class="hl-attr">size</span><span class="hl-pun">=</span><span class="hl-val">"sm"</span>
+<span class="hl-pun">&gt;&lt;/</span><span class="hl-tag">fresh-pagination</span><span class="hl-pun">&gt;</span></div>
+        </div>
+
+        <div class="code-block" data-code="const pag = document.querySelector('fresh-pagination');
+
+pag.addEventListener('change', async (e) => {
+  const { page } = e.detail;
+  const results = await fetchPage(page, PAGE_SIZE);
+  renderTable(results);
+  pag.setAttribute('page', page);
+  // update URL
+  const url = new URL(window.location);
+  url.searchParams.set('page', page);
+  history.pushState({}, '', url);
+});">
+          <div class="code-block-header"><span><span class="code-lang">JS</span><span class="code-context">Fetching page data</span></span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+          <div class="code-body"><span class="hl-txt">const</span> <span class="hl-txt">pag</span> <span class="hl-pun">=</span> <span class="hl-txt">document</span><span class="hl-pun">.</span><span class="hl-txt">querySelector</span><span class="hl-pun">(</span><span class="hl-val">'fresh-pagination'</span><span class="hl-pun">);</span>
+
+<span class="hl-txt">pag</span><span class="hl-pun">.</span><span class="hl-txt">addEventListener</span><span class="hl-pun">(</span><span class="hl-val">'change'</span><span class="hl-pun">, async (</span><span class="hl-txt">e</span><span class="hl-pun">) =&gt; {</span>
+  <span class="hl-txt">const</span> <span class="hl-pun">{ </span><span class="hl-txt">page</span><span class="hl-pun"> } =</span> <span class="hl-txt">e</span><span class="hl-pun">.</span><span class="hl-txt">detail</span><span class="hl-pun">;</span>
+  <span class="hl-txt">const</span> <span class="hl-txt">results</span> <span class="hl-pun">=</span> <span class="hl-txt">await</span> <span class="hl-txt">fetchPage</span><span class="hl-pun">(</span><span class="hl-txt">page</span><span class="hl-pun">,</span> <span class="hl-txt">PAGE_SIZE</span><span class="hl-pun">);</span>
+  <span class="hl-txt">renderTable</span><span class="hl-pun">(</span><span class="hl-txt">results</span><span class="hl-pun">);</span>
+  <span class="hl-txt">pag</span><span class="hl-pun">.</span><span class="hl-txt">setAttribute</span><span class="hl-pun">(</span><span class="hl-val">'page'</span><span class="hl-pun">,</span> <span class="hl-txt">page</span><span class="hl-pun">);</span>
+<span class="hl-pun">});</span></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- TOKENS -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Tokens</span></div>
+      <table class="spec-a11y-table">
+        <thead><tr><th style="width:240px">Token</th><th style="width:200px">Role</th><th>State</th></tr></thead>
+        <tbody>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--text-secondary</td><td class="spec-a11y-req">Page number text color</td><td class="spec-a11y-req">default</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--surface-overlay</td><td class="spec-a11y-req">Page button hover background</td><td class="spec-a11y-req">hover</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--color-interactive</td><td class="spec-a11y-req">Active page button background</td><td class="spec-a11y-req">active page</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--btn-primary-text</td><td class="spec-a11y-req">Active page button text</td><td class="spec-a11y-req">active page</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--text-tertiary</td><td class="spec-a11y-req">Arrow button icon color</td><td class="spec-a11y-req">default</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--surface-border-strong</td><td class="spec-a11y-req">Arrow button border</td><td class="spec-a11y-req">default</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--color-interactive-text</td><td class="spec-a11y-req">Focus outline color</td><td class="spec-a11y-req">focus-visible</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--radius-md</td><td class="spec-a11y-req">Button border radius</td><td class="spec-a11y-req">all</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ACCESSIBILITY -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Accessibility</span></div>
+      <table class="spec-a11y-table">
+        <thead><tr><th>Concern</th><th>Requirement</th></tr></thead>
+        <tbody>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">nav landmark</td><td class="spec-a11y-req">The root element is a <code>&lt;nav&gt;</code> with <code>aria-label="Pagination"</code>. Screen readers announce it as a navigation landmark so users can jump directly to it via landmark navigation.</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">current page</td><td class="spec-a11y-req">The active page button has <code>aria-current="page"</code>. Screen readers announce this so users know which page is selected without needing to identify it visually.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
 </div>
-<script src="components/core/fresh-button.js"></script>
-<script src="components/core/fresh-input.js"></script>
+
 <script src="components/navigation/fresh-pagination.js"></script>
-<script src="components/navigation/fresh-simple-tabs.js"></script>
+<script src="js/spec-page.js"></script>
+
+<script type="module">
+  import { supabase } from '/js/supabase-client.js'
+  var RULE_IDS = ['rules-general'];
+  var _saveTimer = null, _loading = false;
+  function getRulesSnapshot() {
+    var r = {};
+    RULE_IDS.forEach(function(id) { var l = document.getElementById(id); if (!l) return; r[id] = Array.from(l.querySelectorAll('.spec-rule-text')).map(function(el) { return el.innerHTML.trim(); }); });
+    return r;
+  }
+  function applySnapshot(saved) {
+    RULE_IDS.forEach(function(id) { var l = document.getElementById(id); if (!l) return; var rules = (saved && saved[id] && saved[id].length) ? saved[id] : window.DEFAULT_RULES[id]; l.innerHTML = rules.map(function(t) { return '<li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">' + t + '</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>'; }).join(''); });
+  }
+  async function saveRulesNow() {
+    try { var { data: { user } } = await supabase.auth.getUser(); if (!user) return; var { data: p } = await supabase.from('profiles').select('component_rules').eq('id', user.id).single(); var e = (p && p.component_rules) ? p.component_rules : {}; e.pagination = getRulesSnapshot(); await supabase.from('profiles').update({ component_rules: e }).eq('id', user.id); } catch(e) {}
+  }
+  function schedSave() { if (_loading) return; clearTimeout(_saveTimer); _saveTimer = setTimeout(saveRulesNow, 1000); }
+  var panel = document.querySelector('.spec-rules-panel'); if (panel) new MutationObserver(schedSave).observe(panel, { childList: true, subtree: true, characterData: true });
+  ;(async function() { try { var { data: { user } } = await supabase.auth.getUser(); if (!user) return; var { data: p } = await supabase.from('profiles').select('component_rules').eq('id', user.id).single(); if (p && p.component_rules && p.component_rules.pagination) { _loading = true; applySnapshot(p.component_rules.pagination); _loading = false; } } catch(e) {} })();
+</script>
+
+<script>
+  var DEFAULT_RULES = {
+    'rules-general': [
+      'Always set <code>total</code> to the actual total page count, not the total item count. Calculate pages server-side as <code>Math.ceil(totalItems / pageSize)</code> before passing to the component.',
+      'Listen to the <code>change</code> event and fetch the new page of data immediately. Update the <code>page</code> attribute on the component after the data loads to keep the display in sync with the actual content shown.',
+      'Use <code>size="sm"</code> when the pagination sits inside a card footer, toolbar, or any container shorter than 48px. Use the default <code>md</code> size for standalone below-table placement.',
+      'Do not show pagination for datasets under 25 items that fit on a single page. Pagination on a one-page result set adds navigation overhead with no benefit.',
+      'Persist the current page to the URL query string (e.g. <code>?page=3</code>), not localStorage. This allows users to share or bookmark a specific result page and for the browser back button to restore position.'
+    ]
+  };
+  function restoreDefaults() {
+    if (!confirm('Reset all pagination rules to FreshDS defaults? Any edits you have made will be lost.')) return;
+    Object.keys(DEFAULT_RULES).forEach(function(id) { var l = document.getElementById(id); if (!l) return; l.innerHTML = DEFAULT_RULES[id].map(function(t) { return '<li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">' + t + '</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>'; }).join(''); });
+  }
+</script>
 </body>
 </html>

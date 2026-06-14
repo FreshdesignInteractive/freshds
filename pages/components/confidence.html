@@ -3,89 +3,259 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Confidence badge | FreshDS</title>
+<title>Confidence Badge | FreshDS</title>
 <base href="../../">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="styles/site.css">
 <link rel="stylesheet" href="tokens/primitives.css">
 <link rel="stylesheet" href="tokens/theme.css">
-<link rel="stylesheet" href="tokens/dataviz.css">
-<link rel="stylesheet" href="styles/reset.css">
-<link rel="stylesheet" href="styles/layout.css">
-<link rel="stylesheet" href="styles/components/core.css">
-<link rel="stylesheet" href="styles/docs.css">
 <script src="js/freshds.js"></script>
 <script src="js/freshds-site.js"></script>
+<link rel="stylesheet" href="styles/components/spec-page.css">
 </head>
 <body>
-<div class="fds-app" id="app">
-  <ds-topbar active-section="ds"></ds-topbar>
-  <div class="fds-body">
-    <ds-shell active="confidence"></ds-shell>
-    <main class="fds-main">
-      <div class="fds-page active" id="page-confidence">
-        <div class="page-header">
-          <div class="page-eyebrow">AI Components</div>
-          <h1 class="page-title">Confidence badge</h1>
-          <p class="page-desc">Displays the AI model's certainty level as a percentage with semantic color coding. Green ≥ 80%, amber ≥ 50%, red below 50%.</p>
-        </div>
-        <div class="page-section">
-          <div class="page-section-title">Pill style (default)</div>
-          <div class="demo-surface" style="gap:var(--space-3);align-items:center;flex-wrap:wrap">
-            <fresh-confidence-badge value="94"></fresh-confidence-badge>
-            <fresh-confidence-badge value="82"></fresh-confidence-badge>
-            <fresh-confidence-badge value="67"></fresh-confidence-badge>
-            <fresh-confidence-badge value="51"></fresh-confidence-badge>
-            <fresh-confidence-badge value="31"></fresh-confidence-badge>
-            <fresh-confidence-badge value="12"></fresh-confidence-badge>
-          </div>
-        </div>
-        <div class="page-section">
-          <div class="page-section-title">With progress bar</div>
-          <div class="demo-surface" style="gap:var(--space-4);align-items:center;flex-wrap:wrap">
-            <fresh-confidence-badge value="94" show-bar></fresh-confidence-badge>
-            <fresh-confidence-badge value="67" show-bar></fresh-confidence-badge>
-            <fresh-confidence-badge value="31" show-bar></fresh-confidence-badge>
-          </div>
-        </div>
-        <div class="page-section">
-          <div class="page-section-title">Inline with AI response</div>
-          <div class="demo-surface col" style="gap:var(--space-3);max-width:560px">
-            <div style="display:flex;align-items:center;gap:var(--space-3)">
-              <span style="font-size:13px;color:var(--text-secondary)">Revenue will grow 12–15% next quarter</span>
-              <fresh-confidence-badge value="87"></fresh-confidence-badge>
-            </div>
-            <div style="display:flex;align-items:center;gap:var(--space-3)">
-              <span style="font-size:13px;color:var(--text-secondary)">Churn rate will remain below 3%</span>
-              <fresh-confidence-badge value="61"></fresh-confidence-badge>
-            </div>
-            <div style="display:flex;align-items:center;gap:var(--space-3)">
-              <span style="font-size:13px;color:var(--text-secondary)">Enterprise tier will exceed 100 accounts</span>
-              <fresh-confidence-badge value="28"></fresh-confidence-badge>
-            </div>
-          </div>
-        </div>
-        <div class="page-section">
-          <div class="page-section-title">Attributes</div>
-          <table class="usage-table">
-            <thead><tr><th>Attribute</th><th>Values</th><th>Default</th><th>Description</th></tr></thead>
-            <tbody>
-              <tr><td>value</td><td>0–100</td><td><code>0</code></td><td>Confidence percentage. Drives color: ≥80 green, ≥50 amber, &lt;50 red.</td></tr>
-              <tr><td>label</td><td>string</td><td><code>"Confidence"</code></td><td>Aria label and label text in show-bar mode</td></tr>
-              <tr><td>show-bar</td><td>boolean</td><td></td><td>Renders a mini progress bar below the percentage</td></tr>
-            </tbody>
-          </table>
+
+<div class="comp-page">
+  <h1 class="comp-title">Confidence Badge</h1>
+  <p class="comp-desc">Displays AI model certainty as a percentage with semantic color. Green for high confidence (80+), amber for medium (50-79), red for low (below 50). Optional progress bar adds a visual fill layer.</p>
+
+  <!-- STATES CARD -->
+  <div class="comp-section">
+    <div class="spec-card">
+      <div class="spec-card-topbar">
+        <span class="spec-rules-title">Confidence badge states</span>
+        <div class="spec-mode-switcher">
+          <button class="spec-mode-btn active" id="mode-btn-light" onclick="setSpecMode('light')"><i class="ti ti-sun"></i> Light</button>
+          <button class="spec-mode-btn" id="mode-btn-dark" onclick="setSpecMode('dark')"><i class="ti ti-moon"></i> Dark</button>
         </div>
       </div>
-    </main>
+      <div id="spec-viewport" class="spec-viewport">
+
+        <div class="spec-variant-row">
+          <div class="spec-variant-header">
+            <span class="spec-variant-name">High confidence</span>
+            <span class="spec-attr-chip">value="94"</span>
+            <span class="spec-variant-sep">·</span>
+            <span class="spec-variant-desc">80 and above. Green pill signals reliable output.</span>
+          </div>
+          <div class="spec-variant-body">
+            <div class="spec-demos">
+              <fresh-confidence-badge value="94"></fresh-confidence-badge>
+            </div>
+          </div>
+        </div>
+
+        <div class="spec-variant-row">
+          <div class="spec-variant-header">
+            <span class="spec-variant-name">Medium confidence</span>
+            <span class="spec-attr-chip">value="67"</span>
+            <span class="spec-variant-sep">·</span>
+            <span class="spec-variant-desc">50 to 79. Amber signals caution, user should verify.</span>
+          </div>
+          <div class="spec-variant-body">
+            <div class="spec-demos">
+              <fresh-confidence-badge value="67"></fresh-confidence-badge>
+            </div>
+          </div>
+        </div>
+
+        <div class="spec-variant-row">
+          <div class="spec-variant-header">
+            <span class="spec-variant-name">Low confidence</span>
+            <span class="spec-attr-chip">value="31"</span>
+            <span class="spec-variant-sep">·</span>
+            <span class="spec-variant-desc">Below 50. Red signals the model is uncertain. Prompt user review.</span>
+          </div>
+          <div class="spec-variant-body">
+            <div class="spec-demos">
+              <fresh-confidence-badge value="31"></fresh-confidence-badge>
+            </div>
+          </div>
+        </div>
+
+        <div class="spec-variant-row">
+          <div class="spec-variant-header">
+            <span class="spec-variant-name">With progress bar</span>
+            <span class="spec-attr-chip">show-bar</span>
+            <span class="spec-variant-sep">·</span>
+            <span class="spec-variant-desc">Expanded format with a mini bar and visible label. Good for comparison panels.</span>
+          </div>
+          <div class="spec-variant-body">
+            <div class="spec-demos" style="gap:12px;flex-wrap:wrap;">
+              <fresh-confidence-badge value="94" show-bar label="Confidence"></fresh-confidence-badge>
+              <fresh-confidence-badge value="67" show-bar label="Confidence"></fresh-confidence-badge>
+              <fresh-confidence-badge value="31" show-bar label="Confidence"></fresh-confidence-badge>
+            </div>
+          </div>
+        </div>
+
+        <div class="spec-variant-row">
+          <div class="spec-variant-header">
+            <span class="spec-variant-name">Custom label</span>
+            <span class="spec-attr-chip">label="Match score"</span>
+            <span class="spec-variant-sep">·</span>
+            <span class="spec-variant-desc">Label adapts to domain context: Match score, Accuracy, Certainty.</span>
+          </div>
+          <div class="spec-variant-body">
+            <div class="spec-demos">
+              <fresh-confidence-badge value="82" show-bar label="Match score"></fresh-confidence-badge>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
   </div>
+
+  <!-- AI RULES -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar">
+        <span class="spec-rules-title">AI action rules</span>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <span class="spec-rules-hint">Click any rule to edit</span>
+          <button class="spec-rules-reset" onclick="restoreDefaults()"><i class="ti ti-rotate" style="font-size:10px;"></i> Restore FreshDS defaults</button>
+        </div>
+      </div>
+      <div class="spec-rules-section">
+        <div class="spec-rules-section-head">
+          <span class="spec-rules-variant">General</span>
+          <span class="spec-attr-chip">fresh-confidence-badge</span>
+        </div>
+        <ul class="spec-rule-list" id="rules-general">
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Only show confidence badges when the model returns a meaningful probability score. Do not fabricate or estimate scores client-side.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">When confidence is below 50, pair the badge with a tooltip or inline note explaining what the low score means and what the user should do next.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Use <code>show-bar</code> when displaying multiple scores side-by-side in a comparison panel. The bar makes relative differences easier to scan.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Adapt the <code>label</code> attribute to your domain context: "Match score" for search, "Certainty" for classification, "Confidence" for general QA.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Never block user actions based solely on a low confidence score. Show the badge as informational context, then let the user decide.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+        </ul>
+        <button class="spec-add-rule" onclick="addRule('rules-general')"><i class="ti ti-plus"></i> Add rule</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ATTRIBUTES -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Attributes</span></div>
+      <table class="spec-a11y-table">
+        <thead><tr><th style="width:130px">Attribute</th><th style="width:220px">Values</th><th style="width:80px">Default</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">value</td><td class="spec-a11y-req"><code>0-100</code></td><td class="spec-a11y-req"><code>0</code></td><td class="spec-a11y-req">Confidence percentage. Clamped to 0-100. Determines semantic color: green (80+), amber (50-79), red (below 50).</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">label</td><td class="spec-a11y-req"><code>string</code></td><td class="spec-a11y-req"><code>Confidence</code></td><td class="spec-a11y-req">Descriptive label shown only when <code>show-bar</code> is set.</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">show-bar</td><td class="spec-a11y-req"><code>boolean</code></td><td class="spec-a11y-req">-</td><td class="spec-a11y-req">Switches from pill to expanded card format with a mini progress bar and label visible.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- CODE -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Code</span></div>
+      <div style="padding:16px 20px;display:flex;flex-direction:column;gap:0;">
+
+        <div class="code-block" data-code='<fresh-confidence-badge value="94"></fresh-confidence-badge>'>
+          <div class="code-block-header"><span><span class="code-lang">HTML</span><span class="code-context">Pill badge</span></span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+          <div class="code-body"><pre><code><span class="hl-pun">&lt;</span><span class="hl-tag">fresh-confidence-badge</span> <span class="hl-attr">value</span><span class="hl-pun">="</span><span class="hl-val">94</span><span class="hl-pun">"&gt;&lt;/</span><span class="hl-tag">fresh-confidence-badge</span><span class="hl-pun">&gt;</span></code></pre></div>
+        </div>
+
+        <div class="code-block" data-code='<fresh-confidence-badge value="67" show-bar label="Match score"></fresh-confidence-badge>'>
+          <div class="code-block-header"><span><span class="code-lang">HTML</span><span class="code-context">With bar and custom label</span></span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+          <div class="code-body"><pre><code><span class="hl-pun">&lt;</span><span class="hl-tag">fresh-confidence-badge</span>
+  <span class="hl-attr">value</span><span class="hl-pun">="</span><span class="hl-val">67</span><span class="hl-pun">"</span>
+  <span class="hl-attr">show-bar</span>
+  <span class="hl-attr">label</span><span class="hl-pun">="</span><span class="hl-val">Match score</span><span class="hl-pun">"</span>
+<span class="hl-pun">&gt;&lt;/</span><span class="hl-tag">fresh-confidence-badge</span><span class="hl-pun">&gt;</span></code></pre></div>
+        </div>
+
+        <div class="code-block" data-code="const badge = document.querySelector('fresh-confidence-badge');
+badge.setAttribute('value', String(Math.round(result.confidence * 100)));">
+          <div class="code-block-header"><span><span class="code-lang">JS</span><span class="code-context">Set from API response</span></span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+          <div class="code-body"><pre><code><span class="hl-attr">const</span> badge = document.<span class="hl-tag">querySelector</span>(<span class="hl-val">'fresh-confidence-badge'</span>);
+badge.<span class="hl-tag">setAttribute</span>(<span class="hl-val">'value'</span>, <span class="hl-tag">String</span>(Math.<span class="hl-tag">round</span>(result.confidence * <span class="hl-val">100</span>)));</code></pre></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- TOKENS -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Tokens</span></div>
+      <table class="spec-a11y-table">
+        <thead><tr><th style="width:220px">Token</th><th style="width:200px">Role</th><th>State</th></tr></thead>
+        <tbody>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--color-success</td><td class="spec-a11y-req">Dot and text color</td><td class="spec-a11y-req">value 80+</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--color-success-subtle</td><td class="spec-a11y-req">Badge background</td><td class="spec-a11y-req">value 80+</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--color-warning</td><td class="spec-a11y-req">Dot and text color</td><td class="spec-a11y-req">value 50-79</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--color-warning-subtle</td><td class="spec-a11y-req">Badge background</td><td class="spec-a11y-req">value 50-79</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--color-danger</td><td class="spec-a11y-req">Dot and text color</td><td class="spec-a11y-req">value below 50</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--color-danger-subtle</td><td class="spec-a11y-req">Badge background</td><td class="spec-a11y-req">value below 50</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--surface-border-strong</td><td class="spec-a11y-req">Bar track background</td><td class="spec-a11y-req">show-bar</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ACCESSIBILITY -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Accessibility</span></div>
+      <table class="spec-a11y-table">
+        <thead><tr><th>Concern</th><th>Requirement</th></tr></thead>
+        <tbody>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">Meter role</td><td class="spec-a11y-req">The badge element has <code>role="meter"</code> with <code>aria-valuenow</code>, <code>aria-valuemin="0"</code>, and <code>aria-valuemax="100"</code> set correctly.</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">Color alone</td><td class="spec-a11y-req">Color is never the only signal. The percentage number is always present so colorblind users can read the value directly.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
 </div>
-<script src="components/core/fresh-button.js"></script>
-<script src="components/core/fresh-input.js"></script>
+
 <script src="components/ai/fresh-confidence-badge.js"></script>
-<script src="components/navigation/fresh-simple-tabs.js"></script>
+<script src="js/spec-page.js"></script>
+
+<script type="module">
+  import { supabase } from '/js/supabase-client.js'
+  var RULE_IDS = ['rules-general'];
+  var _saveTimer = null, _loading = false;
+  function getRulesSnapshot() {
+    var r = {};
+    RULE_IDS.forEach(function(id) { var l = document.getElementById(id); if (!l) return; r[id] = Array.from(l.querySelectorAll('.spec-rule-text')).map(function(el) { return el.innerHTML.trim(); }); });
+    return r;
+  }
+  function applySnapshot(saved) {
+    RULE_IDS.forEach(function(id) { var l = document.getElementById(id); if (!l) return; var rules = (saved && saved[id] && saved[id].length) ? saved[id] : window.DEFAULT_RULES[id]; l.innerHTML = rules.map(function(t) { return '<li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">' + t + '</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>'; }).join(''); });
+  }
+  async function saveRulesNow() {
+    try { var { data: { user } } = await supabase.auth.getUser(); if (!user) return; var { data: p } = await supabase.from('profiles').select('component_rules').eq('id', user.id).single(); var e = (p && p.component_rules) ? p.component_rules : {}; e.confidence = getRulesSnapshot(); await supabase.from('profiles').update({ component_rules: e }).eq('id', user.id); } catch(e) {}
+  }
+  function schedSave() { if (_loading) return; clearTimeout(_saveTimer); _saveTimer = setTimeout(saveRulesNow, 1000); }
+  var panel = document.querySelector('.spec-rules-panel'); if (panel) new MutationObserver(schedSave).observe(panel, { childList: true, subtree: true, characterData: true });
+  ;(async function() { try { var { data: { user } } = await supabase.auth.getUser(); if (!user) return; var { data: p } = await supabase.from('profiles').select('component_rules').eq('id', user.id).single(); if (p && p.component_rules && p.component_rules.confidence) { _loading = true; applySnapshot(p.component_rules.confidence); _loading = false; } } catch(e) {} })();
+</script>
+
+<script>
+  var DEFAULT_RULES = {
+    'rules-general': [
+      'Only show confidence badges when the model returns a meaningful probability score. Do not fabricate or estimate scores client-side.',
+      'When confidence is below 50, pair the badge with a tooltip or inline note explaining what the low score means and what the user should do next.',
+      'Use <code>show-bar</code> when displaying multiple scores side-by-side in a comparison panel. The bar makes relative differences easier to scan.',
+      'Adapt the <code>label</code> attribute to your domain context: "Match score" for search, "Certainty" for classification, "Confidence" for general QA.',
+      'Never block user actions based solely on a low confidence score. Show the badge as informational context, then let the user decide.'
+    ]
+  };
+  function restoreDefaults() {
+    if (!confirm('Reset all confidence badge rules to FreshDS defaults? Any edits you have made will be lost.')) return;
+    Object.keys(DEFAULT_RULES).forEach(function(id) { var l = document.getElementById(id); if (!l) return; l.innerHTML = DEFAULT_RULES[id].map(function(t) { return '<li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">' + t + '</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>'; }).join(''); });
+  }
+</script>
 </body>
 </html>

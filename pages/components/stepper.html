@@ -8,66 +8,267 @@
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="styles/site.css">
 <link rel="stylesheet" href="tokens/primitives.css">
 <link rel="stylesheet" href="tokens/theme.css">
-<link rel="stylesheet" href="tokens/dataviz.css">
-<link rel="stylesheet" href="styles/reset.css">
-<link rel="stylesheet" href="styles/layout.css">
-<link rel="stylesheet" href="styles/components/core.css">
-<link rel="stylesheet" href="styles/docs.css">
 <script src="js/freshds.js"></script>
 <script src="js/freshds-site.js"></script>
+<link rel="stylesheet" href="styles/components/spec-page.css">
 </head>
 <body>
-<div class="fds-app" id="app">
-  <ds-topbar active-section="ds"></ds-topbar>
-  <div class="fds-body">
-    <ds-shell active="stepper"></ds-shell>
-    <main class="fds-main">
-      <div class="fds-page active" id="page-stepper">
-        <div class="page-header">
-          <div class="page-eyebrow">Navigation</div>
-          <h1 class="page-title">Stepper</h1>
-          <p class="page-desc">Linear progress indicator for multi-step flows. Completed steps show a checkmark; the active step is highlighted; upcoming steps are muted. Supports horizontal and vertical orientations.</p>
-        </div>
-        <div class="page-section">
-          <div class="page-section-title">Step 1 of 4</div>
-          <div class="demo-surface">
-            <fresh-stepper step="1" style="width:100%" steps='[{"label":"Account","description":"Basic info"},{"label":"Profile","description":"Your details"},{"label":"Billing","description":"Payment method"},{"label":"Review","description":"Confirm"}]'></fresh-stepper>
-          </div>
-        </div>
-        <div class="page-section">
-          <div class="page-section-title">Step 3 of 4</div>
-          <div class="demo-surface">
-            <fresh-stepper step="3" style="width:100%" steps='[{"label":"Account","description":"Basic info"},{"label":"Profile","description":"Your details"},{"label":"Billing","description":"Payment method"},{"label":"Review","description":"Confirm"}]'></fresh-stepper>
-          </div>
-        </div>
-        <div class="page-section">
-          <div class="page-section-title">Vertical orientation</div>
-          <div class="demo-surface">
-            <fresh-stepper step="2" orientation="vertical" steps='[{"label":"Create account","description":"Set up your login credentials"},{"label":"Verify email","description":"Check your inbox for a confirmation link"},{"label":"Set up workspace","description":"Name your team and invite members"},{"label":"Start building"}]'></fresh-stepper>
-          </div>
-        </div>
-        <div class="page-section">
-          <div class="page-section-title">Attributes</div>
-          <table class="usage-table">
-            <thead><tr><th>Attribute</th><th>Values</th><th>Default</th><th>Description</th></tr></thead>
-            <tbody>
-              <tr><td>step</td><td>number</td><td><code>1</code></td><td>Current step (1-based). Steps before this are complete.</td></tr>
-              <tr><td>steps</td><td>JSON array</td><td></td><td><code>{ label, description? }</code></td></tr>
-              <tr><td>orientation</td><td><code>horizontal</code> <code>vertical</code></td><td><code>horizontal</code></td><td>Layout direction</td></tr>
-            </tbody>
-          </table>
+
+<div class="comp-page">
+  <h1 class="comp-title">Stepper</h1>
+  <p class="comp-desc">Linear progress indicator for multi-step flows. Completed steps show a checkmark, the active step is highlighted with a focus ring, and upcoming steps are muted. Supports horizontal and vertical orientations.</p>
+
+  <!-- STATES CARD -->
+  <div class="comp-section">
+    <div class="spec-card">
+      <div class="spec-card-topbar">
+        <span class="spec-rules-title">Stepper states</span>
+        <div class="spec-mode-switcher">
+          <button class="spec-mode-btn active" id="mode-btn-light" onclick="setSpecMode('light')"><i class="ti ti-sun"></i> Light</button>
+          <button class="spec-mode-btn" id="mode-btn-dark" onclick="setSpecMode('dark')"><i class="ti ti-moon"></i> Dark</button>
         </div>
       </div>
-    </main>
+      <div id="spec-viewport" class="spec-viewport">
+
+        <!-- Step 1 active -->
+        <div class="spec-variant-row">
+          <div class="spec-variant-header">
+            <span class="spec-variant-name">Step 1 active</span>
+            <span class="spec-attr-chip">step="1"</span>
+            <span class="spec-variant-sep">·</span>
+            <span class="spec-variant-desc">All steps upcoming except step 1, which is active. No completed steps yet.</span>
+          </div>
+          <div class="spec-variant-body">
+            <div class="spec-demos" style="width:100%">
+              <fresh-stepper step="1" style="width:100%" steps='[{"label":"Account","description":"Basic info"},{"label":"Profile","description":"Your details"},{"label":"Billing","description":"Payment method"},{"label":"Review","description":"Confirm"}]'></fresh-stepper>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 2 active -->
+        <div class="spec-variant-row">
+          <div class="spec-variant-header">
+            <span class="spec-variant-name">Step 2 active</span>
+            <span class="spec-attr-chip">step="2"</span>
+            <span class="spec-variant-sep">·</span>
+            <span class="spec-variant-desc">Step 1 is complete (checkmark), step 2 is active, steps 3-4 are upcoming.</span>
+          </div>
+          <div class="spec-variant-body">
+            <div class="spec-demos" style="width:100%">
+              <fresh-stepper step="2" style="width:100%" steps='[{"label":"Account","description":"Basic info"},{"label":"Profile","description":"Your details"},{"label":"Billing","description":"Payment method"},{"label":"Review","description":"Confirm"}]'></fresh-stepper>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 3 active -->
+        <div class="spec-variant-row">
+          <div class="spec-variant-header">
+            <span class="spec-variant-name">Step 3 active</span>
+            <span class="spec-attr-chip">step="3"</span>
+            <span class="spec-variant-sep">·</span>
+            <span class="spec-variant-desc">Steps 1 and 2 complete, step 3 active. The connector line fills as steps are completed.</span>
+          </div>
+          <div class="spec-variant-body">
+            <div class="spec-demos" style="width:100%">
+              <fresh-stepper step="3" style="width:100%" steps='[{"label":"Account","description":"Basic info"},{"label":"Profile","description":"Your details"},{"label":"Billing","description":"Payment method"},{"label":"Review","description":"Confirm"}]'></fresh-stepper>
+            </div>
+          </div>
+        </div>
+
+        <!-- Vertical orientation -->
+        <div class="spec-variant-row">
+          <div class="spec-variant-header">
+            <span class="spec-variant-name">Vertical</span>
+            <span class="spec-attr-chip">orientation="vertical"</span>
+            <span class="spec-variant-sep">·</span>
+            <span class="spec-variant-desc">Stacks steps top-to-bottom with a connecting vertical line. Better for longer step labels or narrow sidebars.</span>
+          </div>
+          <div class="spec-variant-body">
+            <div class="spec-demos">
+              <fresh-stepper step="2" orientation="vertical" steps='[{"label":"Create account","description":"Set up your login credentials"},{"label":"Verify email","description":"Check your inbox for a confirmation link"},{"label":"Set up workspace","description":"Name your team and invite members"},{"label":"Start building","description":"Explore the design system"}]'></fresh-stepper>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /spec-viewport -->
+    </div><!-- /spec-card -->
+  </div><!-- /comp-section -->
+
+  <!-- AI RULES -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar">
+        <span class="spec-rules-title">AI action rules</span>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <span class="spec-rules-hint">Click any rule to edit</span>
+          <button class="spec-rules-reset" onclick="restoreDefaults()"><i class="ti ti-rotate" style="font-size:10px;"></i> Restore FreshDS defaults</button>
+        </div>
+      </div>
+      <div class="spec-rules-section">
+        <div class="spec-rules-section-head">
+          <span class="spec-rules-variant">General</span>
+          <span class="spec-attr-chip">fresh-stepper</span>
+        </div>
+        <ul class="spec-rule-list" id="rules-general">
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Always include a <code>description</code> for each step when the label alone does not clearly explain what the user will do in that step.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Use horizontal orientation (default) for flows with 3-5 steps where labels are short. Switch to vertical when step labels exceed 2-3 words or when placed in a sidebar.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">The <code>step</code> attribute is 1-based. Set it to the currently active step number, not the completed count. Steps below this value render as complete.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Keep step counts to 4-6 maximum. More than 6 steps should be reorganized into sections or a different navigation pattern like a sidebar with progress.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Pass the entire steps array on initial render. Do not update steps mid-flow as it disorients users who are already in progress.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+        </ul>
+        <button class="spec-add-rule" onclick="addRule('rules-general')"><i class="ti ti-plus"></i> Add rule</button>
+      </div>
+    </div>
   </div>
+
+  <!-- ATTRIBUTES -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Attributes</span></div>
+      <table class="spec-a11y-table">
+        <thead><tr><th style="width:140px">Attribute</th><th style="width:220px">Values</th><th style="width:80px">Default</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">step</td><td class="spec-a11y-req">number</td><td class="spec-a11y-req"><code>1</code></td><td class="spec-a11y-req">Current active step, 1-based. Steps before this value render as complete with a checkmark.</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">steps</td><td class="spec-a11y-req">JSON array</td><td class="spec-a11y-req">-</td><td class="spec-a11y-req">Array of <code>{ label, description? }</code> objects defining each step.</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">orientation</td><td class="spec-a11y-req"><code>horizontal</code> <code>vertical</code></td><td class="spec-a11y-req"><code>horizontal</code></td><td class="spec-a11y-req">Layout direction. Horizontal uses a connector line; vertical uses a connecting sidebar line.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- CODE -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Code</span></div>
+      <div style="padding:16px 20px;display:flex;flex-direction:column;gap:0;">
+
+        <div class="code-block" data-code="<fresh-stepper
+  step=&quot;2&quot;
+  steps='[
+    {&quot;label&quot;:&quot;Account&quot;, &quot;description&quot;:&quot;Basic info&quot;},
+    {&quot;label&quot;:&quot;Profile&quot;, &quot;description&quot;:&quot;Your details&quot;},
+    {&quot;label&quot;:&quot;Billing&quot;, &quot;description&quot;:&quot;Payment method&quot;},
+    {&quot;label&quot;:&quot;Review&quot;,  &quot;description&quot;:&quot;Confirm&quot;}
+  ]'>
+</fresh-stepper>">
+          <div class="code-block-header"><span><span class="code-lang">HTML</span><span class="code-context">Horizontal, step 2 active</span></span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+          <div class="code-body"><span class="hl-pun">&lt;</span><span class="hl-tag">fresh-stepper</span>
+  <span class="hl-attr">step</span><span class="hl-pun">=</span><span class="hl-val">"2"</span>
+  <span class="hl-attr">steps</span><span class="hl-pun">=</span><span class="hl-val">'[
+    {"label":"Account", "description":"Basic info"},
+    {"label":"Profile", "description":"Your details"},
+    {"label":"Billing", "description":"Payment method"},
+    {"label":"Review",  "description":"Confirm"}
+  ]'</span><span class="hl-pun">&gt;</span>
+<span class="hl-pun">&lt;/</span><span class="hl-tag">fresh-stepper</span><span class="hl-pun">&gt;</span></div>
+        </div>
+
+        <div class="code-block" data-code="<fresh-stepper
+  step=&quot;2&quot;
+  orientation=&quot;vertical&quot;
+  steps='[
+    {&quot;label&quot;:&quot;Create account&quot;, &quot;description&quot;:&quot;Set up your login credentials&quot;},
+    {&quot;label&quot;:&quot;Verify email&quot;,   &quot;description&quot;:&quot;Check your inbox&quot;},
+    {&quot;label&quot;:&quot;Set up workspace&quot;, &quot;description&quot;:&quot;Name your team&quot;},
+    {&quot;label&quot;:&quot;Start building&quot;}
+  ]'>
+</fresh-stepper>">
+          <div class="code-block-header"><span><span class="code-lang">HTML</span><span class="code-context">Vertical orientation</span></span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+          <div class="code-body"><span class="hl-pun">&lt;</span><span class="hl-tag">fresh-stepper</span>
+  <span class="hl-attr">step</span><span class="hl-pun">=</span><span class="hl-val">"2"</span>
+  <span class="hl-attr">orientation</span><span class="hl-pun">=</span><span class="hl-val">"vertical"</span>
+  <span class="hl-attr">steps</span><span class="hl-pun">=</span><span class="hl-val">'[
+    {"label":"Create account",   "description":"Set up your login credentials"},
+    {"label":"Verify email",     "description":"Check your inbox"},
+    {"label":"Set up workspace", "description":"Name your team"},
+    {"label":"Start building"}
+  ]'</span><span class="hl-pun">&gt;</span>
+<span class="hl-pun">&lt;/</span><span class="hl-tag">fresh-stepper</span><span class="hl-pun">&gt;</span></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- TOKENS -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Tokens</span></div>
+      <table class="spec-a11y-table">
+        <thead><tr><th style="width:240px">Token</th><th style="width:200px">Role</th><th>State</th></tr></thead>
+        <tbody>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--color-interactive</td><td class="spec-a11y-req">Complete step circle background, connector fill</td><td class="spec-a11y-req">Completed step</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--color-interactive-text</td><td class="spec-a11y-req">Active step number color, active label</td><td class="spec-a11y-req">Active step</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--input-focus-ring</td><td class="spec-a11y-req">Shadow ring on active step circle</td><td class="spec-a11y-req">Active step</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--surface-border-strong</td><td class="spec-a11y-req">Upcoming step circle border and connector track</td><td class="spec-a11y-req">Upcoming step</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--text-primary</td><td class="spec-a11y-req">Active and complete step label text</td><td class="spec-a11y-req">Active / complete</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--text-tertiary</td><td class="spec-a11y-req">Upcoming step label and description text</td><td class="spec-a11y-req">Upcoming step</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ACCESSIBILITY -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Accessibility</span></div>
+      <div style="padding:12px 24px 14px;border-bottom:1px solid #d4d4d7;">
+        <p style="font-size:13px;color:#555;line-height:1.6;margin:0;">Stepper satisfies all <a href="app.html#accessibility" target="_parent" style="color:#5b6af7;text-decoration:none;font-weight:500;">universal accessibility concerns</a>. Component-specific concerns are below.</p>
+      </div>
+      <table class="spec-a11y-table">
+        <thead><tr><th>Concern</th><th>Requirement</th></tr></thead>
+        <tbody>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">list semantics</td><td class="spec-a11y-req">The stepper container uses <code>role="list"</code> so screen readers announce the number of steps and current position in the list.</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">step state</td><td class="spec-a11y-req">Step state (complete, active, upcoming) is currently conveyed only visually. For full accessibility, the page should announce the current step via a live region or page heading when navigation occurs.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
 </div>
-<script src="components/core/fresh-button.js"></script>
-<script src="components/core/fresh-input.js"></script>
+
 <script src="components/navigation/fresh-stepper.js"></script>
-<script src="components/navigation/fresh-simple-tabs.js"></script>
+<script src="js/spec-page.js"></script>
+
+<script type="module">
+  import { supabase } from '/js/supabase-client.js'
+  var RULE_IDS = ['rules-general'];
+  var _saveTimer = null, _loading = false;
+  function getRulesSnapshot() {
+    var r = {};
+    RULE_IDS.forEach(function(id) { var l = document.getElementById(id); if (!l) return; r[id] = Array.from(l.querySelectorAll('.spec-rule-text')).map(function(el) { return el.innerHTML.trim(); }); });
+    return r;
+  }
+  function applySnapshot(saved) {
+    RULE_IDS.forEach(function(id) { var l = document.getElementById(id); if (!l) return; var rules = (saved && saved[id] && saved[id].length) ? saved[id] : window.DEFAULT_RULES[id]; l.innerHTML = rules.map(function(t) { return '<li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">' + t + '</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>'; }).join(''); });
+  }
+  async function saveRulesNow() {
+    try { var { data: { user } } = await supabase.auth.getUser(); if (!user) return; var { data: p } = await supabase.from('profiles').select('component_rules').eq('id', user.id).single(); var e = (p && p.component_rules) ? p.component_rules : {}; e.stepper = getRulesSnapshot(); await supabase.from('profiles').update({ component_rules: e }).eq('id', user.id); } catch(e) {}
+  }
+  function schedSave() { if (_loading) return; clearTimeout(_saveTimer); _saveTimer = setTimeout(saveRulesNow, 1000); }
+  var panel = document.querySelector('.spec-rules-panel'); if (panel) new MutationObserver(schedSave).observe(panel, { childList: true, subtree: true, characterData: true });
+  ;(async function() { try { var { data: { user } } = await supabase.auth.getUser(); if (!user) return; var { data: p } = await supabase.from('profiles').select('component_rules').eq('id', user.id).single(); if (p && p.component_rules && p.component_rules.stepper) { _loading = true; applySnapshot(p.component_rules.stepper); _loading = false; } } catch(e) {} })();
+</script>
+
+<script>
+  var DEFAULT_RULES = {
+    'rules-general': [
+      'Always include a <code>description</code> for each step when the label alone does not clearly explain what the user will do in that step.',
+      'Use horizontal orientation (default) for flows with 3-5 steps where labels are short. Switch to vertical when step labels exceed 2-3 words or when placed in a sidebar.',
+      'The <code>step</code> attribute is 1-based. Set it to the currently active step number, not the completed count. Steps below this value render as complete.',
+      'Keep step counts to 4-6 maximum. More than 6 steps should be reorganized into sections or a different navigation pattern like a sidebar with progress.',
+      'Pass the entire steps array on initial render. Do not update steps mid-flow as it disorients users who are already in progress.'
+    ]
+  };
+  function restoreDefaults() {
+    if (!confirm('Reset all stepper rules to FreshDS defaults? Any edits you have made will be lost.')) return;
+    Object.keys(DEFAULT_RULES).forEach(function(id) { var l = document.getElementById(id); if (!l) return; l.innerHTML = DEFAULT_RULES[id].map(function(t) { return '<li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">' + t + '</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>'; }).join(''); });
+  }
+</script>
 </body>
 </html>

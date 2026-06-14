@@ -8,76 +8,252 @@
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="styles/site.css">
 <link rel="stylesheet" href="tokens/primitives.css">
 <link rel="stylesheet" href="tokens/theme.css">
-<link rel="stylesheet" href="tokens/dataviz.css">
-<link rel="stylesheet" href="styles/reset.css">
-<link rel="stylesheet" href="styles/layout.css">
-<link rel="stylesheet" href="styles/components/core.css">
-<link rel="stylesheet" href="styles/docs.css">
 <script src="js/freshds.js"></script>
 <script src="js/freshds-site.js"></script>
+<link rel="stylesheet" href="styles/components/spec-page.css">
 </head>
 <body>
-<div class="fds-app" id="app">
-  <ds-topbar active-section="ds"></ds-topbar>
-  <div class="fds-body">
-    <ds-shell active="spinner"></ds-shell>
-    <main class="fds-main">
-      <div class="fds-page active" id="page-spinner">
-        <div class="page-header">
-          <div class="page-eyebrow">Feedback &amp; Status</div>
-          <h1 class="page-title">Spinner</h1>
-          <p class="page-desc">Minimal rotating indicator for indeterminate loading states. Use inline alongside text or centered within a loading region.</p>
-        </div>
-        <div class="page-section">
-          <div class="page-section-title">Sizes</div>
-          <div class="demo-surface" style="align-items:center;gap:var(--space-6)">
-            <div style="text-align:center">
-              <fresh-spinner size="sm"></fresh-spinner>
-              <div style="font-size:11px;color:var(--text-tertiary);font-family:var(--font-sans);margin-top:8px">sm</div>
-            </div>
-            <div style="text-align:center">
-              <fresh-spinner></fresh-spinner>
-              <div style="font-size:11px;color:var(--text-tertiary);font-family:var(--font-sans);margin-top:8px">md</div>
-            </div>
-            <div style="text-align:center">
-              <fresh-spinner size="lg"></fresh-spinner>
-              <div style="font-size:11px;color:var(--text-tertiary);font-family:var(--font-sans);margin-top:8px">lg</div>
-            </div>
-          </div>
-        </div>
-        <div class="page-section">
-          <div class="page-section-title">Inline with text</div>
-          <div class="demo-surface col" style="gap:var(--space-4)">
-            <div style="display:flex;align-items:center;gap:var(--space-2);font-family:var(--font-sans);font-size:13px;color:var(--text-secondary)">
-              <fresh-spinner size="sm"></fresh-spinner>
-              Saving changes…
-            </div>
-            <div style="display:flex;align-items:center;gap:var(--space-3);font-family:var(--font-sans);font-size:13px;color:var(--text-secondary)">
-              <fresh-spinner></fresh-spinner>
-              Processing your request
-            </div>
-          </div>
-        </div>
-        <div class="page-section">
-          <div class="page-section-title">Attributes</div>
-          <table class="usage-table">
-            <thead><tr><th>Attribute</th><th>Values</th><th>Default</th><th>Description</th></tr></thead>
-            <tbody>
-              <tr><td>size</td><td><code>sm</code> <code>md</code> <code>lg</code></td><td><code>md</code></td><td>Diameter (14 / 20 / 28px)</td></tr>
-            </tbody>
-          </table>
+
+<div class="comp-page">
+  <h1 class="comp-title">Spinner</h1>
+  <p class="comp-desc">Minimal rotating ring for indeterminate loading states. Use inline alongside text or centered within a loading region. Three sizes fit every context from inline text to full-panel loaders.</p>
+
+  <!-- STATES CARD -->
+  <div class="comp-section">
+    <div class="spec-card">
+      <div class="spec-card-topbar">
+        <span class="spec-rules-title">Spinner sizes</span>
+        <div class="spec-mode-switcher">
+          <button class="spec-mode-btn active" id="mode-btn-light" onclick="setSpecMode('light')"><i class="ti ti-sun"></i> Light</button>
+          <button class="spec-mode-btn" id="mode-btn-dark" onclick="setSpecMode('dark')"><i class="ti ti-moon"></i> Dark</button>
         </div>
       </div>
-    </main>
+      <div id="spec-viewport" class="spec-viewport">
+
+        <!-- Small -->
+        <div class="spec-variant-row">
+          <div class="spec-variant-header">
+            <span class="spec-variant-name">Small</span>
+            <span class="spec-attr-chip">size="sm"</span>
+            <span class="spec-variant-sep">·</span>
+            <span class="spec-variant-desc">14px diameter. Use inline with compact text or inside button loading states.</span>
+          </div>
+          <div class="spec-variant-body">
+            <div class="spec-demos" style="align-items:center;gap:var(--space-6)">
+              <fresh-spinner size="sm"></fresh-spinner>
+              <div style="display:flex;align-items:center;gap:var(--space-2);font-family:var(--font-sans);font-size:13px;color:var(--text-secondary)">
+                <fresh-spinner size="sm"></fresh-spinner>
+                Saving changes...
+              </div>
+            </div>
+            <div class="spec-sizes">
+              <div class="spec-size-item">
+                <fresh-spinner size="sm"></fresh-spinner>
+                <span class="spec-size-px">14px</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Medium -->
+        <div class="spec-variant-row">
+          <div class="spec-variant-header">
+            <span class="spec-variant-name">Medium</span>
+            <span class="spec-attr-chip">size="md"</span>
+            <span class="spec-variant-sep">·</span>
+            <span class="spec-variant-desc">20px diameter. Default size, suitable for most inline and inline-block contexts.</span>
+          </div>
+          <div class="spec-variant-body">
+            <div class="spec-demos" style="align-items:center;gap:var(--space-6)">
+              <fresh-spinner></fresh-spinner>
+              <div style="display:flex;align-items:center;gap:var(--space-3);font-family:var(--font-sans);font-size:13px;color:var(--text-secondary)">
+                <fresh-spinner></fresh-spinner>
+                Processing your request
+              </div>
+            </div>
+            <div class="spec-sizes">
+              <div class="spec-size-item">
+                <fresh-spinner></fresh-spinner>
+                <span class="spec-size-px">20px</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Large -->
+        <div class="spec-variant-row">
+          <div class="spec-variant-header">
+            <span class="spec-variant-name">Large</span>
+            <span class="spec-attr-chip">size="lg"</span>
+            <span class="spec-variant-sep">·</span>
+            <span class="spec-variant-desc">28px diameter. Use centered in panels, cards, or full-page loading regions.</span>
+          </div>
+          <div class="spec-variant-body">
+            <div class="spec-demos" style="align-items:center;gap:var(--space-6)">
+              <fresh-spinner size="lg"></fresh-spinner>
+              <div style="display:flex;align-items:center;gap:var(--space-3);font-family:var(--font-sans);font-size:14px;color:var(--text-secondary)">
+                <fresh-spinner size="lg"></fresh-spinner>
+                Loading dashboard...
+              </div>
+            </div>
+            <div class="spec-sizes">
+              <div class="spec-size-item">
+                <fresh-spinner size="lg"></fresh-spinner>
+                <span class="spec-size-px">28px</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /spec-viewport -->
+    </div><!-- /spec-card -->
+  </div><!-- /comp-section -->
+
+  <!-- AI RULES -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar">
+        <span class="spec-rules-title">AI action rules</span>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <span class="spec-rules-hint">Click any rule to edit</span>
+          <button class="spec-rules-reset" onclick="restoreDefaults()"><i class="ti ti-rotate" style="font-size:10px;"></i> Restore FreshDS defaults</button>
+        </div>
+      </div>
+      <div class="spec-rules-section">
+        <div class="spec-rules-section-head">
+          <span class="spec-rules-variant">General</span>
+          <span class="spec-attr-chip">fresh-spinner</span>
+        </div>
+        <ul class="spec-rule-list" id="rules-general">
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Always pair the spinner with a nearby text label in the UI. The component has a built-in <code>aria-label="Loading"</code> but visible text provides better context for all users.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Use <code>size="sm"</code> inline with body text (13-14px), <code>md</code> for standard UI regions, and <code>lg</code> only for prominent full-panel or full-page loading states.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Use <code>fresh-skeleton</code> instead of spinner for page-level or content-area loads where the layout is known in advance. Spinner is for indeterminate durations only.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Do not show a spinner for operations expected to complete in under 300ms. Flickering feedback is more disruptive than no feedback at all.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">For AI generation in progress, prefer <code>fresh-thinking</code> which includes an animated label. Reserve this spinner for generic async operations.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+        </ul>
+        <button class="spec-add-rule" onclick="addRule('rules-general')"><i class="ti ti-plus"></i> Add rule</button>
+      </div>
+    </div>
   </div>
+
+  <!-- ATTRIBUTES -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Attributes</span></div>
+      <table class="spec-a11y-table">
+        <thead><tr><th style="width:130px">Attribute</th><th style="width:200px">Values</th><th style="width:80px">Default</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">size</td><td class="spec-a11y-req"><code>sm</code> <code>md</code> <code>lg</code></td><td class="spec-a11y-req"><code>md</code></td><td class="spec-a11y-req">Ring diameter: sm 14px, md 20px, lg 28px. Stroke weight scales proportionally.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- CODE -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Code</span></div>
+      <div style="padding:16px 20px;display:flex;flex-direction:column;gap:0;">
+
+        <div class="code-block" data-code="<fresh-spinner></fresh-spinner>
+<fresh-spinner size=&quot;sm&quot;></fresh-spinner>
+<fresh-spinner size=&quot;lg&quot;></fresh-spinner>">
+          <div class="code-block-header"><span><span class="code-lang">HTML</span><span class="code-context">All three sizes</span></span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+          <div class="code-body"><span class="hl-pun">&lt;</span><span class="hl-tag">fresh-spinner</span><span class="hl-pun">&gt;&lt;/</span><span class="hl-tag">fresh-spinner</span><span class="hl-pun">&gt;</span>
+<span class="hl-pun">&lt;</span><span class="hl-tag">fresh-spinner</span> <span class="hl-attr">size</span><span class="hl-pun">=</span><span class="hl-val">"sm"</span><span class="hl-pun">&gt;&lt;/</span><span class="hl-tag">fresh-spinner</span><span class="hl-pun">&gt;</span>
+<span class="hl-pun">&lt;</span><span class="hl-tag">fresh-spinner</span> <span class="hl-attr">size</span><span class="hl-pun">=</span><span class="hl-val">"lg"</span><span class="hl-pun">&gt;&lt;/</span><span class="hl-tag">fresh-spinner</span><span class="hl-pun">&gt;</span></div>
+        </div>
+
+        <div class="code-block" data-code="<div style=&quot;display:flex;align-items:center;gap:8px&quot;>
+  <fresh-spinner size=&quot;sm&quot;></fresh-spinner>
+  <span>Saving changes...</span>
+</div>">
+          <div class="code-block-header"><span><span class="code-lang">HTML</span><span class="code-context">Inline with text</span></span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+          <div class="code-body"><span class="hl-pun">&lt;</span><span class="hl-tag">div</span> <span class="hl-attr">style</span><span class="hl-pun">=</span><span class="hl-val">"display:flex;align-items:center;gap:8px"</span><span class="hl-pun">&gt;</span>
+  <span class="hl-pun">&lt;</span><span class="hl-tag">fresh-spinner</span> <span class="hl-attr">size</span><span class="hl-pun">=</span><span class="hl-val">"sm"</span><span class="hl-pun">&gt;&lt;/</span><span class="hl-tag">fresh-spinner</span><span class="hl-pun">&gt;</span>
+  <span class="hl-pun">&lt;</span><span class="hl-tag">span</span><span class="hl-pun">&gt;</span><span class="hl-txt">Saving changes...</span><span class="hl-pun">&lt;/</span><span class="hl-tag">span</span><span class="hl-pun">&gt;</span>
+<span class="hl-pun">&lt;/</span><span class="hl-tag">div</span><span class="hl-pun">&gt;</span></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- TOKENS -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Tokens</span></div>
+      <table class="spec-a11y-table">
+        <thead><tr><th style="width:240px">Token</th><th style="width:200px">Role</th><th>State</th></tr></thead>
+        <tbody>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--color-interactive</td><td class="spec-a11y-req">Top arc color (active segment)</td><td class="spec-a11y-req">All sizes</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--surface-border-strong</td><td class="spec-a11y-req">Ring track color</td><td class="spec-a11y-req">All sizes</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ACCESSIBILITY -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Accessibility</span></div>
+      <div style="padding:12px 24px 14px;border-bottom:1px solid #d4d4d7;">
+        <p style="font-size:13px;color:#555;line-height:1.6;margin:0;">Spinner satisfies all <a href="app.html#accessibility" target="_parent" style="color:#5b6af7;text-decoration:none;font-weight:500;">universal accessibility concerns</a>. Component-specific concerns are below.</p>
+      </div>
+      <table class="spec-a11y-table">
+        <thead><tr><th>Concern</th><th>Requirement</th></tr></thead>
+        <tbody>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">status role</td><td class="spec-a11y-req">The ring div carries <code>role="status"</code> and <code>aria-label="Loading"</code>. Screen readers announce the loading state without requiring focus.</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">reduced motion</td><td class="spec-a11y-req">Consider wrapping the spinner with a <code>prefers-reduced-motion</code> media query at the page level to pause animation for users with vestibular disorders.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
 </div>
-<script src="components/core/fresh-button.js"></script>
-<script src="components/core/fresh-input.js"></script>
+
 <script src="components/feedback/fresh-spinner.js"></script>
-<script src="components/navigation/fresh-simple-tabs.js"></script>
+<script src="js/spec-page.js"></script>
+
+<script type="module">
+  import { supabase } from '/js/supabase-client.js'
+  var RULE_IDS = ['rules-general'];
+  var _saveTimer = null, _loading = false;
+  function getRulesSnapshot() {
+    var r = {};
+    RULE_IDS.forEach(function(id) { var l = document.getElementById(id); if (!l) return; r[id] = Array.from(l.querySelectorAll('.spec-rule-text')).map(function(el) { return el.innerHTML.trim(); }); });
+    return r;
+  }
+  function applySnapshot(saved) {
+    RULE_IDS.forEach(function(id) { var l = document.getElementById(id); if (!l) return; var rules = (saved && saved[id] && saved[id].length) ? saved[id] : window.DEFAULT_RULES[id]; l.innerHTML = rules.map(function(t) { return '<li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">' + t + '</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>'; }).join(''); });
+  }
+  async function saveRulesNow() {
+    try { var { data: { user } } = await supabase.auth.getUser(); if (!user) return; var { data: p } = await supabase.from('profiles').select('component_rules').eq('id', user.id).single(); var e = (p && p.component_rules) ? p.component_rules : {}; e.spinner = getRulesSnapshot(); await supabase.from('profiles').update({ component_rules: e }).eq('id', user.id); } catch(e) {}
+  }
+  function schedSave() { if (_loading) return; clearTimeout(_saveTimer); _saveTimer = setTimeout(saveRulesNow, 1000); }
+  var panel = document.querySelector('.spec-rules-panel'); if (panel) new MutationObserver(schedSave).observe(panel, { childList: true, subtree: true, characterData: true });
+  ;(async function() { try { var { data: { user } } = await supabase.auth.getUser(); if (!user) return; var { data: p } = await supabase.from('profiles').select('component_rules').eq('id', user.id).single(); if (p && p.component_rules && p.component_rules.spinner) { _loading = true; applySnapshot(p.component_rules.spinner); _loading = false; } } catch(e) {} })();
+</script>
+
+<script>
+  var DEFAULT_RULES = {
+    'rules-general': [
+      'Always pair the spinner with a nearby text label in the UI. The component has a built-in <code>aria-label="Loading"</code> but visible text provides better context for all users.',
+      'Use <code>size="sm"</code> inline with body text (13-14px), <code>md</code> for standard UI regions, and <code>lg</code> only for prominent full-panel or full-page loading states.',
+      'Use <code>fresh-skeleton</code> instead of spinner for page-level or content-area loads where the layout is known in advance. Spinner is for indeterminate durations only.',
+      'Do not show a spinner for operations expected to complete in under 300ms. Flickering feedback is more disruptive than no feedback at all.',
+      'For AI generation in progress, prefer <code>fresh-thinking</code> which includes an animated label. Reserve this spinner for generic async operations.'
+    ]
+  };
+  function restoreDefaults() {
+    if (!confirm('Reset all spinner rules to FreshDS defaults? Any edits you have made will be lost.')) return;
+    Object.keys(DEFAULT_RULES).forEach(function(id) { var l = document.getElementById(id); if (!l) return; l.innerHTML = DEFAULT_RULES[id].map(function(t) { return '<li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">' + t + '</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>'; }).join(''); });
+  }
+</script>
 </body>
 </html>
