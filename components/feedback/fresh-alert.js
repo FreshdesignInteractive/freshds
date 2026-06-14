@@ -65,7 +65,6 @@ class FreshAlert extends HTMLElement {
           border-radius: var(--radius-lg);
           border: 1px solid ${c.border};
           background: ${c.bg};
-          border-left: 3px solid ${c.accent};
           -webkit-font-smoothing: antialiased;
         }
 
