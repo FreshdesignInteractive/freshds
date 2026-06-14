@@ -39,22 +39,22 @@
             <div style="text-align:center">
               <div style="width:72px;height:72px;background:var(--color-interactive);border-radius:var(--radius-sm);margin:0 auto"></div>
               <div style="font-size:11px;font-family:var(--font-mono);color:var(--color-interactive-text);margin-top:var(--space-3)">--radius-sm</div>
-              <div style="font-size:11px;color:var(--text-tertiary);margin-top:2px">4px</div>
+              <div id="rv-sm" style="font-size:11px;color:var(--text-tertiary);margin-top:2px">4px</div>
             </div>
             <div style="text-align:center">
               <div style="width:72px;height:72px;background:var(--color-interactive);border-radius:var(--radius-md);margin:0 auto"></div>
               <div style="font-size:11px;font-family:var(--font-mono);color:var(--color-interactive-text);margin-top:var(--space-3)">--radius-md</div>
-              <div style="font-size:11px;color:var(--text-tertiary);margin-top:2px">8px</div>
+              <div id="rv-md" style="font-size:11px;color:var(--text-tertiary);margin-top:2px">8px</div>
             </div>
             <div style="text-align:center">
               <div style="width:72px;height:72px;background:var(--color-interactive);border-radius:var(--radius-lg);margin:0 auto"></div>
               <div style="font-size:11px;font-family:var(--font-mono);color:var(--color-interactive-text);margin-top:var(--space-3)">--radius-lg</div>
-              <div style="font-size:11px;color:var(--text-tertiary);margin-top:2px">12px</div>
+              <div id="rv-lg" style="font-size:11px;color:var(--text-tertiary);margin-top:2px">12px</div>
             </div>
             <div style="text-align:center">
               <div style="width:72px;height:72px;background:var(--color-interactive);border-radius:var(--radius-xl);margin:0 auto"></div>
               <div style="font-size:11px;font-family:var(--font-mono);color:var(--color-interactive-text);margin-top:var(--space-3)">--radius-xl</div>
-              <div style="font-size:11px;color:var(--text-tertiary);margin-top:2px">20px</div>
+              <div id="rv-xl" style="font-size:11px;color:var(--text-tertiary);margin-top:2px">20px</div>
             </div>
             <div style="text-align:center">
               <div style="width:72px;height:72px;background:var(--color-interactive);border-radius:var(--radius-full);margin:0 auto"></div>
@@ -69,10 +69,10 @@
           <table class="usage-table">
             <thead><tr><th>Token</th><th>Value</th><th>Used in</th></tr></thead>
             <tbody>
-              <tr><td><code>--radius-sm</code></td><td>4px</td><td>Badges, code chips, small tags, checkboxes</td></tr>
-              <tr><td><code>--radius-md</code></td><td>8px</td><td>Buttons, inputs, selects, dropdowns (default)</td></tr>
-              <tr><td><code>--radius-lg</code></td><td>12px</td><td>Cards, modals, drawers, panels</td></tr>
-              <tr><td><code>--radius-xl</code></td><td>20px</td><td>Floating surfaces, large feature cards</td></tr>
+              <tr><td><code>--radius-sm</code></td><td id="rtv-sm">4px</td><td>Badges, code chips, small tags, checkboxes</td></tr>
+              <tr><td><code>--radius-md</code></td><td id="rtv-md">8px</td><td>Buttons, inputs, selects, dropdowns (default)</td></tr>
+              <tr><td><code>--radius-lg</code></td><td id="rtv-lg">12px</td><td>Cards, modals, drawers, panels</td></tr>
+              <tr><td><code>--radius-xl</code></td><td id="rtv-xl">20px</td><td>Floating surfaces, large feature cards</td></tr>
               <tr><td><code>--radius-full</code></td><td>9999px</td><td>Pills, avatar circles, toggle tracks, status dots</td></tr>
             </tbody>
           </table>
@@ -98,5 +98,20 @@
 <script src="components/feedback/fresh-badge.js"></script>
 <script src="components/data/fresh-avatar.js"></script>
 <script src="components/core/fresh-toggle.js"></script>
+<script>
+  function syncRadiusLabels() {
+    var root = document.documentElement;
+    ['sm', 'md', 'lg', 'xl'].forEach(function(t) {
+      var val = getComputedStyle(root).getPropertyValue('--radius-' + t).trim();
+      if (!val) return;
+      var demo = document.getElementById('rv-' + t);
+      var table = document.getElementById('rtv-' + t);
+      if (demo) demo.textContent = val;
+      if (table) table.textContent = val;
+    });
+  }
+  syncRadiusLabels();
+  new MutationObserver(syncRadiusLabels).observe(document.documentElement, { attributes: true, attributeFilter: ['style'] });
+</script>
 </body>
 </html>

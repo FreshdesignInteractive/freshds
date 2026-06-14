@@ -375,61 +375,67 @@
             Colors
             <a href="#" class="cfg-reset-link" onclick="resetToDefaults();return false;"><i class="ti ti-rotate" style="font-size:10px;"></i> Restore FreshDS defaults</a>
           </div>
-          <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:var(--space-3)">
-            <div class="cfg-color-block">
-              <div class="cfg-color-label">Primary</div>
-              <div class="cfg-color-wrap"><input type="color" class="color-picker" id="cfg-primary" value="#1f2328"></div>
-              <input type="text" class="site-hex-input" id="cfg-hex-primary" maxlength="7">
+          <div style="display:flex;flex-direction:column;gap:var(--space-5)">
+            <!-- Row 1: Brand + neutral surface -->
+            <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:var(--space-3)">
+              <div class="cfg-color-block">
+                <div class="cfg-color-label">Primary</div>
+                <div class="cfg-color-wrap"><input type="color" class="color-picker" id="cfg-primary" value="#1f2328"></div>
+                <input type="text" class="site-hex-input" id="cfg-hex-primary" maxlength="7">
+              </div>
+              <div class="cfg-color-block">
+                <div class="cfg-color-label">Secondary</div>
+                <div class="cfg-color-wrap"><input type="color" class="color-picker" id="cfg-secondary" value="#6b7280"></div>
+                <input type="text" class="site-hex-input" id="cfg-hex-secondary" maxlength="7">
+              </div>
+              <div class="cfg-color-block">
+                <div class="cfg-color-label">Dark</div>
+                <div class="cfg-color-wrap"><input type="color" class="color-picker" id="cfg-scale-dark" value="#1f2328"></div>
+                <input type="text" class="site-hex-input" id="cfg-hex-dark" maxlength="7">
+              </div>
+              <div class="cfg-color-block">
+                <div class="cfg-color-label">Light</div>
+                <div class="cfg-color-wrap outlined"><input type="color" class="color-picker" id="cfg-scale-light" value="#ffffff"></div>
+                <input type="text" class="site-hex-input" id="cfg-hex-light" maxlength="7">
+              </div>
+              <div class="cfg-color-block">
+                <div class="cfg-color-label">Page background</div>
+                <div class="cfg-color-wrap outlined"><input type="color" class="color-picker" id="cfg-page-bg" value="#ffffff"></div>
+                <input type="text" class="site-hex-input" id="cfg-hex-page-bg" maxlength="7">
+              </div>
+              <div class="cfg-color-block">
+                <div class="cfg-color-label">Input surface</div>
+                <div class="cfg-color-wrap outlined"><input type="color" class="color-picker" id="cfg-input-surface" value="#ffffff"></div>
+                <input type="text" class="site-hex-input" id="cfg-hex-input-surface" maxlength="7">
+              </div>
             </div>
-            <div class="cfg-color-block">
-              <div class="cfg-color-label">Secondary</div>
-              <div class="cfg-color-wrap"><input type="color" class="color-picker" id="cfg-secondary" value="#6b7280"></div>
-              <input type="text" class="site-hex-input" id="cfg-hex-secondary" maxlength="7">
-            </div>
-            <div class="cfg-color-block">
-              <div class="cfg-color-label">Dark</div>
-              <div class="cfg-color-wrap"><input type="color" class="color-picker" id="cfg-scale-dark" value="#1f2328"></div>
-              <input type="text" class="site-hex-input" id="cfg-hex-dark" maxlength="7">
-            </div>
-            <div class="cfg-color-block">
-              <div class="cfg-color-label">Light</div>
-              <div class="cfg-color-wrap outlined"><input type="color" class="color-picker" id="cfg-scale-light" value="#ffffff"></div>
-              <input type="text" class="site-hex-input" id="cfg-hex-light" maxlength="7">
-            </div>
-            <div class="cfg-color-block">
-              <div class="cfg-color-label">Page background</div>
-              <div class="cfg-color-wrap outlined"><input type="color" class="color-picker" id="cfg-page-bg" value="#ffffff"></div>
-              <input type="text" class="site-hex-input" id="cfg-hex-page-bg" maxlength="7">
-            </div>
-            <div class="cfg-color-block">
-              <div class="cfg-color-label">Input surface</div>
-              <div class="cfg-color-wrap outlined"><input type="color" class="color-picker" id="cfg-input-surface" value="#ffffff"></div>
-              <input type="text" class="site-hex-input" id="cfg-hex-input-surface" maxlength="7">
-            </div>
-            <div class="cfg-color-block">
-              <div class="cfg-color-label">Success</div>
-              <div class="cfg-color-wrap"><input type="color" class="color-picker" id="cfg-success" value="#22c55e"></div>
-              <input type="text" class="site-hex-input" id="cfg-hex-success" maxlength="7">
-            </div>
-            <div class="cfg-color-block">
-              <div class="cfg-color-label">Warning</div>
-              <div class="cfg-color-wrap"><input type="color" class="color-picker" id="cfg-warning" value="#f59e0b"></div>
-              <input type="text" class="site-hex-input" id="cfg-hex-warning" maxlength="7">
-            </div>
-            <div class="cfg-color-block">
-              <div class="cfg-color-label">Danger</div>
-              <div class="cfg-color-wrap"><input type="color" class="color-picker" id="cfg-danger" value="#f43f5e"></div>
-              <input type="text" class="site-hex-input" id="cfg-hex-danger" maxlength="7">
-            </div>
-            <div class="cfg-color-block">
-              <div class="cfg-color-label">Info</div>
-              <div class="cfg-color-wrap"><input type="color" class="color-picker" id="cfg-info" value="#3b82f6"></div>
-              <input type="text" class="site-hex-input" id="cfg-hex-info" maxlength="7">
-            </div>
-            <div class="cfg-color-block">
-              <div class="cfg-color-label">AI action</div>
-              <div class="cfg-color-wrap"><input type="color" class="color-picker" id="cfg-ai-action" value="#0d9488"></div>
-              <input type="text" class="site-hex-input" id="cfg-hex-ai-action" maxlength="7">
+            <!-- Row 2: Status + AI -->
+            <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:var(--space-3)">
+              <div class="cfg-color-block">
+                <div class="cfg-color-label">Success</div>
+                <div class="cfg-color-wrap"><input type="color" class="color-picker" id="cfg-success" value="#22c55e"></div>
+                <input type="text" class="site-hex-input" id="cfg-hex-success" maxlength="7">
+              </div>
+              <div class="cfg-color-block">
+                <div class="cfg-color-label">Warning</div>
+                <div class="cfg-color-wrap"><input type="color" class="color-picker" id="cfg-warning" value="#f59e0b"></div>
+                <input type="text" class="site-hex-input" id="cfg-hex-warning" maxlength="7">
+              </div>
+              <div class="cfg-color-block">
+                <div class="cfg-color-label">Danger</div>
+                <div class="cfg-color-wrap"><input type="color" class="color-picker" id="cfg-danger" value="#f43f5e"></div>
+                <input type="text" class="site-hex-input" id="cfg-hex-danger" maxlength="7">
+              </div>
+              <div class="cfg-color-block">
+                <div class="cfg-color-label">Info</div>
+                <div class="cfg-color-wrap"><input type="color" class="color-picker" id="cfg-info" value="#3b82f6"></div>
+                <input type="text" class="site-hex-input" id="cfg-hex-info" maxlength="7">
+              </div>
+              <div class="cfg-color-block">
+                <div class="cfg-color-label">AI action</div>
+                <div class="cfg-color-wrap"><input type="color" class="color-picker" id="cfg-ai-action" value="#0d9488"></div>
+                <input type="text" class="site-hex-input" id="cfg-hex-ai-action" maxlength="7">
+              </div>
             </div>
           </div>
         </div>
