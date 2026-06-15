@@ -45,11 +45,7 @@
           <div class="spec-variant-body">
             <div class="spec-demos" style="display:block;padding:0;width:100%;">
               <fresh-navbar>
-                <nav slot="nav" style="display:flex;align-items:center;gap:2px">
-                  <a href="#" onclick="return false" style="font-family:var(--font-sans);font-size:13px;color:var(--text-secondary);text-decoration:none;padding:5px 10px;border-radius:var(--radius-md)">Dashboard</a>
-                  <a href="#" onclick="return false" style="font-family:var(--font-sans);font-size:13px;color:var(--text-primary);text-decoration:none;padding:5px 10px;border-radius:var(--radius-md);background:var(--surface-overlay)">Projects</a>
-                  <a href="#" onclick="return false" style="font-family:var(--font-sans);font-size:13px;color:var(--text-secondary);text-decoration:none;padding:5px 10px;border-radius:var(--radius-md)">Settings</a>
-                </nav>
+                <fresh-simple-tabs slot="nav" size="sm" tabs='[{"key":"dashboard","label":"Dashboard"},{"key":"projects","label":"Projects"},{"key":"settings","label":"Settings"}]' active="projects"></fresh-simple-tabs>
                 <div slot="actions" style="display:flex;align-items:center;gap:8px">
                   <fresh-button variant="ghost" icon-only size="sm" aria-label="Search"><i class="ti ti-search"></i></fresh-button>
                   <fresh-button variant="ghost" icon-only size="sm" aria-label="Notifications"><i class="ti ti-bell"></i></fresh-button>
@@ -71,11 +67,7 @@
           <div class="spec-variant-body">
             <div class="spec-demos" style="display:block;padding:0;width:100%;">
               <fresh-navbar hamburger>
-                <nav slot="nav" style="display:flex;align-items:center;gap:2px">
-                  <a href="#" onclick="return false" style="font-family:var(--font-sans);font-size:13px;color:var(--text-secondary);text-decoration:none;padding:5px 10px;border-radius:var(--radius-md)">Dashboard</a>
-                  <a href="#" onclick="return false" style="font-family:var(--font-sans);font-size:13px;color:var(--text-primary);text-decoration:none;padding:5px 10px;border-radius:var(--radius-md);background:var(--surface-overlay)">Projects</a>
-                  <a href="#" onclick="return false" style="font-family:var(--font-sans);font-size:13px;color:var(--text-secondary);text-decoration:none;padding:5px 10px;border-radius:var(--radius-md)">Settings</a>
-                </nav>
+                <fresh-simple-tabs slot="nav" size="sm" tabs='[{"key":"dashboard","label":"Dashboard"},{"key":"projects","label":"Projects"},{"key":"settings","label":"Settings"}]' active="projects"></fresh-simple-tabs>
                 <div slot="actions" style="display:flex;align-items:center;gap:8px">
                   <fresh-button variant="ghost" icon-only size="sm" aria-label="Search"><i class="ti ti-search"></i></fresh-button>
                   <fresh-avatar name="Jane Smith" size="sm"></fresh-avatar>
@@ -184,11 +176,10 @@
       <div style="padding:16px 20px;display:flex;flex-direction:column;gap:0;">
 
         <div class="code-block" data-code="&lt;fresh-navbar&gt;
-  &lt;nav slot=&quot;nav&quot; style=&quot;display:flex;align-items:center;gap:2px&quot;&gt;
-    &lt;a href=&quot;#&quot;&gt;Dashboard&lt;/a&gt;
-    &lt;a href=&quot;#&quot; class=&quot;active&quot;&gt;Projects&lt;/a&gt;
-    &lt;a href=&quot;#&quot;&gt;Settings&lt;/a&gt;
-  &lt;/nav&gt;
+  &lt;fresh-simple-tabs slot=&quot;nav&quot; size=&quot;sm&quot;
+    tabs='[{&quot;key&quot;:&quot;dashboard&quot;,&quot;label&quot;:&quot;Dashboard&quot;},{&quot;key&quot;:&quot;projects&quot;,&quot;label&quot;:&quot;Projects&quot;},{&quot;key&quot;:&quot;settings&quot;,&quot;label&quot;:&quot;Settings&quot;}]'
+    active=&quot;projects&quot;&gt;
+  &lt;/fresh-simple-tabs&gt;
   &lt;div slot=&quot;actions&quot; style=&quot;display:flex;align-items:center;gap:8px&quot;&gt;
     &lt;fresh-button variant=&quot;ghost&quot; icon-only size=&quot;sm&quot; aria-label=&quot;Search&quot;&gt;&lt;i class=&quot;ti ti-search&quot;&gt;&lt;/i&gt;&lt;/fresh-button&gt;
     &lt;fresh-avatar name=&quot;Jane Smith&quot; size=&quot;sm&quot;&gt;&lt;/fresh-avatar&gt;
@@ -196,11 +187,10 @@
 &lt;/fresh-navbar&gt;">
           <div class="code-block-header"><span><span class="code-lang">HTML</span><span class="code-context">Default with nav and actions</span></span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
           <div class="code-body"><span class="hl-pun">&lt;</span><span class="hl-tag">fresh-navbar</span><span class="hl-pun">&gt;</span>
-  <span class="hl-pun">&lt;</span><span class="hl-tag">nav</span> <span class="hl-attr">slot</span><span class="hl-pun">=</span><span class="hl-val">"nav"</span> <span class="hl-attr">style</span><span class="hl-pun">=</span><span class="hl-val">"display:flex;align-items:center;gap:2px"</span><span class="hl-pun">&gt;</span>
-    <span class="hl-pun">&lt;</span><span class="hl-tag">a</span> <span class="hl-attr">href</span><span class="hl-pun">=</span><span class="hl-val">"#"</span><span class="hl-pun">&gt;</span><span class="hl-txt">Dashboard</span><span class="hl-pun">&lt;/</span><span class="hl-tag">a</span><span class="hl-pun">&gt;</span>
-    <span class="hl-pun">&lt;</span><span class="hl-tag">a</span> <span class="hl-attr">href</span><span class="hl-pun">=</span><span class="hl-val">"#"</span> <span class="hl-attr">class</span><span class="hl-pun">=</span><span class="hl-val">"active"</span><span class="hl-pun">&gt;</span><span class="hl-txt">Projects</span><span class="hl-pun">&lt;/</span><span class="hl-tag">a</span><span class="hl-pun">&gt;</span>
-    <span class="hl-pun">&lt;</span><span class="hl-tag">a</span> <span class="hl-attr">href</span><span class="hl-pun">=</span><span class="hl-val">"#"</span><span class="hl-pun">&gt;</span><span class="hl-txt">Settings</span><span class="hl-pun">&lt;/</span><span class="hl-tag">a</span><span class="hl-pun">&gt;</span>
-  <span class="hl-pun">&lt;/</span><span class="hl-tag">nav</span><span class="hl-pun">&gt;</span>
+  <span class="hl-pun">&lt;</span><span class="hl-tag">fresh-simple-tabs</span> <span class="hl-attr">slot</span><span class="hl-pun">=</span><span class="hl-val">"nav"</span> <span class="hl-attr">size</span><span class="hl-pun">=</span><span class="hl-val">"sm"</span>
+    <span class="hl-attr">tabs</span><span class="hl-pun">=</span><span class="hl-val">'[{"key":"dashboard","label":"Dashboard"},{"key":"projects","label":"Projects"},{"key":"settings","label":"Settings"}]'</span>
+    <span class="hl-attr">active</span><span class="hl-pun">=</span><span class="hl-val">"projects"</span><span class="hl-pun">&gt;</span>
+  <span class="hl-pun">&lt;/</span><span class="hl-tag">fresh-simple-tabs</span><span class="hl-pun">&gt;</span>
   <span class="hl-pun">&lt;</span><span class="hl-tag">div</span> <span class="hl-attr">slot</span><span class="hl-pun">=</span><span class="hl-val">"actions"</span> <span class="hl-attr">style</span><span class="hl-pun">=</span><span class="hl-val">"display:flex;align-items:center;gap:8px"</span><span class="hl-pun">&gt;</span>
     <span class="hl-pun">&lt;</span><span class="hl-tag">fresh-button</span> <span class="hl-attr">variant</span><span class="hl-pun">=</span><span class="hl-val">"ghost"</span> <span class="hl-attr">icon-only</span> <span class="hl-attr">size</span><span class="hl-pun">=</span><span class="hl-val">"sm"</span> <span class="hl-attr">aria-label</span><span class="hl-pun">=</span><span class="hl-val">"Search"</span><span class="hl-pun">&gt;&lt;</span><span class="hl-tag">i</span> <span class="hl-attr">class</span><span class="hl-pun">=</span><span class="hl-val">"ti ti-search"</span><span class="hl-pun">&gt;&lt;/</span><span class="hl-tag">i</span><span class="hl-pun">&gt;&lt;/</span><span class="hl-tag">fresh-button</span><span class="hl-pun">&gt;</span>
     <span class="hl-pun">&lt;</span><span class="hl-tag">fresh-avatar</span> <span class="hl-attr">name</span><span class="hl-pun">=</span><span class="hl-val">"Jane Smith"</span> <span class="hl-attr">size</span><span class="hl-pun">=</span><span class="hl-val">"sm"</span><span class="hl-pun">&gt;&lt;/</span><span class="hl-tag">fresh-avatar</span><span class="hl-pun">&gt;</span>
@@ -209,9 +199,10 @@
         </div>
 
         <div class="code-block" data-code="&lt;fresh-navbar hamburger id=&quot;app-navbar&quot;&gt;
-  &lt;nav slot=&quot;nav&quot; style=&quot;display:flex;align-items:center;gap:2px&quot;&gt;
-    &lt;a href=&quot;#&quot;&gt;Dashboard&lt;/a&gt;
-  &lt;/nav&gt;
+  &lt;fresh-simple-tabs slot=&quot;nav&quot; size=&quot;sm&quot;
+    tabs='[{&quot;key&quot;:&quot;dashboard&quot;,&quot;label&quot;:&quot;Dashboard&quot;}]'
+    active=&quot;dashboard&quot; id=&quot;nav-tabs&quot;&gt;
+  &lt;/fresh-simple-tabs&gt;
   &lt;div slot=&quot;actions&quot;&gt;
     &lt;fresh-avatar name=&quot;Jane Smith&quot; size=&quot;sm&quot;&gt;&lt;/fresh-avatar&gt;
   &lt;/div&gt;
@@ -220,12 +211,16 @@
   document.getElementById('app-navbar').addEventListener('hamburger-click', () =&gt; {
     document.getElementById('sidebar').toggleAttribute('collapsed');
   });
+  document.getElementById('nav-tabs').addEventListener('change', e =&gt; {
+    // navigate to e.detail.key
+  });
 &lt;/script&gt;">
           <div class="code-block-header"><span><span class="code-lang">HTML</span><span class="code-context">Hamburger with sidebar toggle</span></span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
           <div class="code-body"><span class="hl-pun">&lt;</span><span class="hl-tag">fresh-navbar</span> <span class="hl-attr">hamburger</span> <span class="hl-attr">id</span><span class="hl-pun">=</span><span class="hl-val">"app-navbar"</span><span class="hl-pun">&gt;</span>
-  <span class="hl-pun">&lt;</span><span class="hl-tag">nav</span> <span class="hl-attr">slot</span><span class="hl-pun">=</span><span class="hl-val">"nav"</span> <span class="hl-attr">style</span><span class="hl-pun">=</span><span class="hl-val">"display:flex;align-items:center;gap:2px"</span><span class="hl-pun">&gt;</span>
-    <span class="hl-pun">&lt;</span><span class="hl-tag">a</span> <span class="hl-attr">href</span><span class="hl-pun">=</span><span class="hl-val">"#"</span><span class="hl-pun">&gt;</span><span class="hl-txt">Dashboard</span><span class="hl-pun">&lt;/</span><span class="hl-tag">a</span><span class="hl-pun">&gt;</span>
-  <span class="hl-pun">&lt;/</span><span class="hl-tag">nav</span><span class="hl-pun">&gt;</span>
+  <span class="hl-pun">&lt;</span><span class="hl-tag">fresh-simple-tabs</span> <span class="hl-attr">slot</span><span class="hl-pun">=</span><span class="hl-val">"nav"</span> <span class="hl-attr">size</span><span class="hl-pun">=</span><span class="hl-val">"sm"</span>
+    <span class="hl-attr">tabs</span><span class="hl-pun">=</span><span class="hl-val">'[{"key":"dashboard","label":"Dashboard"}]'</span>
+    <span class="hl-attr">active</span><span class="hl-pun">=</span><span class="hl-val">"dashboard"</span> <span class="hl-attr">id</span><span class="hl-pun">=</span><span class="hl-val">"nav-tabs"</span><span class="hl-pun">&gt;</span>
+  <span class="hl-pun">&lt;/</span><span class="hl-tag">fresh-simple-tabs</span><span class="hl-pun">&gt;</span>
   <span class="hl-pun">&lt;</span><span class="hl-tag">div</span> <span class="hl-attr">slot</span><span class="hl-pun">=</span><span class="hl-val">"actions"</span><span class="hl-pun">&gt;</span>
     <span class="hl-pun">&lt;</span><span class="hl-tag">fresh-avatar</span> <span class="hl-attr">name</span><span class="hl-pun">=</span><span class="hl-val">"Jane Smith"</span> <span class="hl-attr">size</span><span class="hl-pun">=</span><span class="hl-val">"sm"</span><span class="hl-pun">&gt;&lt;/</span><span class="hl-tag">fresh-avatar</span><span class="hl-pun">&gt;</span>
   <span class="hl-pun">&lt;/</span><span class="hl-tag">div</span><span class="hl-pun">&gt;</span>
@@ -233,6 +228,9 @@
 <span class="hl-pun">&lt;</span><span class="hl-tag">script</span><span class="hl-pun">&gt;</span>
   <span class="hl-txt">document.getElementById('app-navbar').addEventListener('hamburger-click', () =&gt; {</span>
     <span class="hl-txt">document.getElementById('sidebar').toggleAttribute('collapsed');</span>
+  <span class="hl-txt">});</span>
+  <span class="hl-txt">document.getElementById('nav-tabs').addEventListener('change', e =&gt; {</span>
+    <span class="hl-cmt">// navigate to e.detail.key</span>
   <span class="hl-txt">});</span>
 <span class="hl-pun">&lt;/</span><span class="hl-tag">script</span><span class="hl-pun">&gt;</span></div>
         </div>
@@ -304,6 +302,7 @@
 
 <script src="components/core/fresh-button.js"></script>
 <script src="components/data/fresh-avatar.js"></script>
+<script src="components/navigation/fresh-simple-tabs.js"></script>
 <script src="components/navigation/fresh-navbar.js"></script>
 <script src="js/spec-page.js"></script>
 
