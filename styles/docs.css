@@ -552,13 +552,57 @@ input[type="color"].color-picker:disabled { opacity: 1; cursor: not-allowed; }
   flex-direction: column;
   align-items: center;
   gap: var(--space-5);
-  max-width: 540px;
 }
 
-.home-hero-star {
-  width: 76px;
-  height: 76px;
-  filter: drop-shadow(0 0 20px rgba(255,255,255,0.8)) drop-shadow(0 0 56px rgba(255,255,255,0.35));
+/* Two overlapping circles visual */
+.home-hero-visual {
+  position: relative;
+  width: 242px;
+  height: 150px;
+  flex-shrink: 0;
+  margin-bottom: var(--space-2);
+}
+
+.home-hero-circle-back {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.18);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.home-hero-circle-back svg {
+  width: 100px;
+  height: 100px;
+  filter: drop-shadow(0 0 8px rgba(255,255,255,0.75)) drop-shadow(0 0 22px rgba(255,255,255,0.3));
+}
+
+.home-hero-circle-front {
+  position: absolute;
+  left: 107px;
+  top: 7px;
+  width: 135px;
+  height: 135px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.13);
+  border: 1.5px solid rgba(255,255,255,0.32);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.home-hero-emblem {
+  width: 58px;
+  height: 58px;
+  object-fit: contain;
+  filter: brightness(0) invert(1);
+  opacity: 0.90;
 }
 
 .home-hero-heading {
