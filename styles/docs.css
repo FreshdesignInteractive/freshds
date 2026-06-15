@@ -489,6 +489,23 @@ input[type="color"].color-picker:disabled { opacity: 1; cursor: not-allowed; }
 .t-str { color: var(--color-warning-text); }
 .t-cmt { color: var(--text-tertiary); }
 
+/* ── Home page title / desc (matches spec-page.css comp-title / comp-desc) ── */
+.home-title {
+  font-size: 34px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: #111;
+  line-height: 1.1;
+  margin: 0 0 14px;
+}
+
+.home-desc {
+  font-size: 15px;
+  color: #555;
+  line-height: 1.65;
+  margin: 0 0 var(--space-8);
+}
+
 /* ── Home hero ── */
 .home-hero {
   margin-top: var(--space-8);
