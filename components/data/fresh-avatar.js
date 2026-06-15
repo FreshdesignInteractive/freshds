@@ -51,8 +51,8 @@ class FreshAvatar extends HTMLElement {
     /* Fixed data-viz palette — not customer-configurable, so each user
        always gets the same color regardless of the active theme. */
     const palette = [
-      'var(--dv-1)', 'var(--dv-2)', 'var(--dv-3)', 'var(--dv-4)',
-      'var(--dv-5)', 'var(--dv-6)', 'var(--dv-7)', 'var(--dv-8)',
+      'var(--dv-1, #4D6EE3)', 'var(--dv-2, #E8652A)', 'var(--dv-3, #3AAFA9)', 'var(--dv-4, #C94E8E)',
+      'var(--dv-5, #D4981A)', 'var(--dv-6, #6B4FBB)', 'var(--dv-7, #3DAA62)', 'var(--dv-8, #8A7560)',
     ];
     let h = 0;
     for (let i = 0; i < (name || '').length; i++) {
