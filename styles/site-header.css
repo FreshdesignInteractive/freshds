@@ -20,7 +20,9 @@
   flex-shrink: 0;
 }
 
-.sh-logo img { height: 26px; width: auto; display: block; }
+.sh-logo img { display: block; }
+.sh-logo-full   { height: 26px; width: auto; }
+.sh-logo-emblem { height: 30px; width: auto; display: none; }
 
 .sh-nav {
   position: absolute;
@@ -112,3 +114,35 @@
 }
 .sh-dd-item:hover { background: #f7f7f8; color: #111; }
 .sh-dd-item i { font-size: 15px; }
+
+/* ── Responsive: compact header on small screens ── */
+@media (max-width: 680px) {
+  .site-header {
+    padding: 0 12px;
+    gap: 0;
+  }
+
+  .sh-logo-full   { display: none; }
+  .sh-logo-emblem { display: block; }
+
+  /* Switch from absolute centering to a flex child that scrolls */
+  .sh-nav {
+    position: static;
+    transform: none;
+    flex: 1;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding: 0 4px;
+    justify-content: flex-start;
+    /* Prevent tabs from touching logo or avatar */
+    margin: 0 6px;
+  }
+  .sh-nav::-webkit-scrollbar { display: none; }
+
+  /* Slightly smaller tab padding so more fit before scrolling kicks in */
+  .sh-tab {
+    padding: 5px 10px;
+    font-size: 12.5px;
+  }
+}

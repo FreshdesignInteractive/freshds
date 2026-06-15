@@ -22,7 +22,8 @@ function tab(key, label, href, locked) {
 
 const headerHTML = `<header class="site-header" id="site-header">
   <a class="sh-logo" href="/dashboard.html">
-    <img src="/assets/freshdesign-logo.svg" alt="Freshdesign" height="26">
+    <img class="sh-logo-full" src="/assets/freshdesign-logo.svg" alt="Freshdesign" height="26">
+    <img class="sh-logo-emblem" src="/assets/freshdesign-emblem.svg" alt="Freshdesign" height="30">
   </a>
   <nav class="sh-nav">
     ${tab('dashboard',    'Dashboard',       '/dashboard.html', false)}
