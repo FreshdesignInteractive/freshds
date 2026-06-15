@@ -1575,9 +1575,52 @@ document.addEventListener('DOMContentLoaded', function() {
     ]}
   ];
 
+  function _mobOpen() {
+    var s = document.querySelector('.fds-sidebar');
+    var bd = document.getElementById('nav-mob-backdrop');
+    if (s) s.classList.add('mob-open');
+    if (bd) bd.classList.add('open');
+  }
+
+  function _mobClose() {
+    var s = document.querySelector('.fds-sidebar');
+    var bd = document.getElementById('nav-mob-backdrop');
+    if (s) s.classList.remove('mob-open');
+    if (bd) bd.classList.remove('open');
+  }
+
+  function _initMobNav() {
+    if (document.getElementById('nav-floatie')) return;
+
+    var btn = document.createElement('button');
+    btn.id = 'nav-floatie';
+    btn.className = 'nav-floatie';
+    btn.setAttribute('aria-label', 'Open navigation');
+    btn.innerHTML = '<i class="ti ti-menu-2"></i>';
+    btn.addEventListener('click', _mobOpen);
+
+    var bd = document.createElement('div');
+    bd.id = 'nav-mob-backdrop';
+    bd.className = 'nav-mob-backdrop';
+    bd.addEventListener('click', _mobClose);
+
+    var app = document.getElementById('app') || document.body;
+    app.appendChild(btn);
+    app.appendChild(bd);
+
+    if (!window.__mobNavPatched) {
+      var _orig = window.navigate;
+      window.navigate = function(page) {
+        _mobClose();
+        return _orig ? _orig(page) : undefined;
+      };
+      window.__mobNavPatched = true;
+    }
+  }
+
   class DsShell extends HTMLElement {
     static get observedAttributes() { return ['active']; }
-    connectedCallback() { this._render(); }
+    connectedCallback() { this._render(); setTimeout(_initMobNav, 0); }
     attributeChangedCallback() { this._render(); }
     _render() {
       if (window !== window.top) return;
