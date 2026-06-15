@@ -122,6 +122,7 @@
           <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Add <code>hamburger</code> only when a collapsible sidebar or mobile drawer is present on the same page. Wire the <code>hamburger-click</code> event to toggle that panel.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
           <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Place the user avatar or account menu in the <code>actions</code> slot on the far right, always the last element in that slot.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
           <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Limit the <code>nav</code> slot to top-level destination links only. Section or sub-page links belong in a sidebar or secondary nav, not in the navbar.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Cap the <code>nav</code> slot at 5 destination items. Beyond 5, links overflow the bar at typical viewport widths. Move lower-priority destinations to a secondary menu or sidebar. Use <code>fresh-simple-tabs</code> with <code>size="sm"</code> as the nav slot content to get built-in hover and active states without custom styling.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
         </ul>
         <button class="spec-add-rule" onclick="addRule('rules-general')"><i class="ti ti-plus"></i> Add rule</button>
       </div>
@@ -331,7 +332,8 @@
       'Use exactly one <code>fresh-navbar</code> per page at the very top of the content area. Never nest navbars.',
       'Add <code>hamburger</code> only when a collapsible sidebar or mobile drawer is present on the same page. Wire the <code>hamburger-click</code> event to toggle that panel.',
       'Place the user avatar or account menu in the <code>actions</code> slot on the far right, always the last element in that slot.',
-      'Limit the <code>nav</code> slot to top-level destination links only. Section or sub-page links belong in a sidebar or secondary nav, not in the navbar.'
+      'Limit the <code>nav</code> slot to top-level destination links only. Section or sub-page links belong in a sidebar or secondary nav, not in the navbar.',
+      'Cap the <code>nav</code> slot at 5 destination items. Beyond 5, links overflow the bar at typical viewport widths. Move lower-priority destinations to a secondary menu or sidebar. Use <code>fresh-simple-tabs</code> with <code>size="sm"</code> as the nav slot content to get built-in hover and active states without custom styling.'
     ]
   };
   function restoreDefaults() {

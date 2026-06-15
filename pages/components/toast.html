@@ -120,6 +120,7 @@
           <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Keep the message under 80 characters. Toasts are glanceable, not prose. Link to a log or detail page rather than embedding long error messages.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
           <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Set <code>duration: 0</code> for persistent toasts only when the message requires manual acknowledgment. Default 4000ms is appropriate for most confirmations.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
           <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">For critical errors that require user action, use <code>fresh-alert</code> inline or a <code>fresh-modal</code> instead of a toast. Auto-dismissing danger toasts may be missed.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Suppress duplicate toasts: if the same message is already visible, do not show it again. Cap concurrent toasts at 3; queue or drop additional ones rather than stacking an unbounded column. Call <code>FreshToast.show()</code> only once per user-triggered event, never inside a loop or polling handler.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
         </ul>
         <button class="spec-add-rule" onclick="addRule('rules-general')"><i class="ti ti-plus"></i> Add rule</button>
       </div>
@@ -242,7 +243,8 @@ FreshToast.show('Processing large export, this may take a few minutes.', { varia
       'Use toasts for non-blocking feedback on completed async actions: save, delete, share, copy. Never show a toast before an operation completes.',
       'Keep the message under 80 characters. Toasts are glanceable, not prose. Link to a log or detail page rather than embedding long error messages.',
       'Set <code>duration: 0</code> for persistent toasts only when the message requires manual acknowledgment. Default 4000ms is appropriate for most confirmations.',
-      'For critical errors that require user action, use <code>fresh-alert</code> inline or a <code>fresh-modal</code> instead of a toast. Auto-dismissing danger toasts may be missed.'
+      'For critical errors that require user action, use <code>fresh-alert</code> inline or a <code>fresh-modal</code> instead of a toast. Auto-dismissing danger toasts may be missed.',
+      'Suppress duplicate toasts: if the same message is already visible, do not show it again. Cap concurrent toasts at 3; queue or drop additional ones rather than stacking an unbounded column. Call <code>FreshToast.show()</code> only once per user-triggered event, never inside a loop or polling handler.'
     ]
   };
   function restoreDefaults() {

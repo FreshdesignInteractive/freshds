@@ -124,6 +124,7 @@
           <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Add a <code>title</code> when the alert has more than one sentence. The title gives screen reader users an immediate summary before the body is read.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
           <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Use <code>dismissible</code> only when dismissal is safe: the user will not lose information and the state will not return unexpectedly. For persistent system errors, omit <code>dismissible</code>.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
           <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Place alerts at the top of the relevant content area, not floating in a corner. For transient confirmations triggered by user actions, use <code>fresh-toast</code> instead.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Choose <code>fresh-alert</code> when the message is persistent and contextual to a specific page region (e.g. a form validation banner, a subscription notice). Choose <code>fresh-toast</code> when the message is transient, triggered by a completed action, and not tied to a specific region. Never use both to communicate the same event.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
         </ul>
         <button class="spec-add-rule" onclick="addRule('rules-general')"><i class="ti ti-plus"></i> Add rule</button>
       </div>
@@ -265,7 +266,8 @@
       'Match <code>variant</code> to the true severity: reserve <code>danger</code> for actual errors, not for notices that are merely inconvenient. Overusing danger desensitizes users.',
       'Add a <code>title</code> when the alert has more than one sentence. The title gives screen reader users an immediate summary before the body is read.',
       'Use <code>dismissible</code> only when dismissal is safe: the user will not lose information and the state will not return unexpectedly. For persistent system errors, omit <code>dismissible</code>.',
-      'Place alerts at the top of the relevant content area, not floating in a corner. For transient confirmations triggered by user actions, use <code>fresh-toast</code> instead.'
+      'Place alerts at the top of the relevant content area, not floating in a corner. For transient confirmations triggered by user actions, use <code>fresh-toast</code> instead.',
+      'Choose <code>fresh-alert</code> when the message is persistent and contextual to a specific page region (e.g. a form validation banner, a subscription notice). Choose <code>fresh-toast</code> when the message is transient, triggered by a completed action, and not tied to a specific region. Never use both to communicate the same event.'
     ]
   };
   function restoreDefaults() {
