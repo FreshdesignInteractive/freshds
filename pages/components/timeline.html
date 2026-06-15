@@ -79,7 +79,7 @@
           <div class="spec-variant-header">
             <span class="spec-variant-name">All status variants</span>
             <span class="spec-variant-sep">·</span>
-            <span class="spec-variant-desc">Each variant maps to a data viz color. Neutral uses a muted surface color.</span>
+            <span class="spec-variant-desc">Each variant maps to a semantic status color. Neutral uses a muted surface.</span>
           </div>
           <div class="spec-variant-body">
             <div class="spec-demos" style="max-width:400px;width:100%">
@@ -224,15 +224,15 @@ document.querySelector('fresh-timeline')
       <table class="spec-a11y-table">
         <thead><tr><th style="width:240px">Token</th><th style="width:200px">Role</th><th>State</th></tr></thead>
         <tbody>
-          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--dv-1 (Indigo)</td><td class="spec-a11y-req">Dot background</td><td class="spec-a11y-req">primary variant</td></tr>
-          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--dv-7 (Fern)</td><td class="spec-a11y-req">Dot background</td><td class="spec-a11y-req">success variant</td></tr>
-          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--dv-5 (Marigold)</td><td class="spec-a11y-req">Dot background</td><td class="spec-a11y-req">warning variant</td></tr>
-          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--dv-4 (Plum)</td><td class="spec-a11y-req">Dot background</td><td class="spec-a11y-req">danger variant</td></tr>
-          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--surface-overlay</td><td class="spec-a11y-req">Dot background</td><td class="spec-a11y-req">neutral variant</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--color-interactive</td><td class="spec-a11y-req">Dot background</td><td class="spec-a11y-req">primary variant</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--color-success</td><td class="spec-a11y-req">Dot background</td><td class="spec-a11y-req">success variant</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--color-warning</td><td class="spec-a11y-req">Dot background</td><td class="spec-a11y-req">warning variant</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--color-danger</td><td class="spec-a11y-req">Dot background</td><td class="spec-a11y-req">danger variant</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--surface-border-strong</td><td class="spec-a11y-req">Dot background</td><td class="spec-a11y-req">neutral variant</td></tr>
           <tr class="spec-a11y-row"><td class="spec-a11y-concern">--surface-border</td><td class="spec-a11y-req">Dot ring border, connector line</td><td class="spec-a11y-req">All items</td></tr>
           <tr class="spec-a11y-row"><td class="spec-a11y-concern">--text-inverse</td><td class="spec-a11y-req">Icon color on colored dots</td><td class="spec-a11y-req">primary/success/warning/danger</td></tr>
           <tr class="spec-a11y-row"><td class="spec-a11y-concern">--text-primary</td><td class="spec-a11y-req">Item title text</td><td class="spec-a11y-req">All items</td></tr>
-          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--text-secondary</td><td class="spec-a11y-req">Description text</td><td class="spec-a11y-req">Items with description</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--text-secondary</td><td class="spec-a11y-req">Description text, neutral icon</td><td class="spec-a11y-req">Items with description, neutral dots</td></tr>
           <tr class="spec-a11y-row"><td class="spec-a11y-concern">--text-tertiary</td><td class="spec-a11y-req">Timestamp text</td><td class="spec-a11y-req">All items</td></tr>
         </tbody>
       </table>

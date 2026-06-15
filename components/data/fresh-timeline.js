@@ -47,11 +47,11 @@ class FreshTimeline extends HTMLElement {
     catch {}
 
     const variantColors = {
-      primary: { bg: 'var(--dv-1)', icon: 'var(--text-inverse)' },
-      success: { bg: 'var(--dv-7)', icon: 'var(--text-inverse)' },
-      warning: { bg: 'var(--dv-5)', icon: 'var(--text-inverse)' },
-      danger:  { bg: 'var(--dv-4)', icon: 'var(--text-inverse)' },
-      neutral: { bg: 'var(--surface-overlay)', icon: 'var(--text-tertiary)' },
+      primary: { bg: 'var(--color-interactive)',  icon: 'var(--text-inverse)' },
+      success: { bg: 'var(--color-success)',       icon: 'var(--text-inverse)' },
+      warning: { bg: 'var(--color-warning)',       icon: 'var(--text-inverse)' },
+      danger:  { bg: 'var(--color-danger)',        icon: 'var(--text-inverse)' },
+      neutral: { bg: 'var(--surface-border-strong)', icon: 'var(--text-secondary)' },
     };
 
     const entries = items.map((item, i) => {
