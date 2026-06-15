@@ -54,7 +54,6 @@ class FreshSuggestionCard extends HTMLElement {
           padding: var(--space-4) var(--space-5);
           background: var(--surface-bg);
           border: 1px solid var(--surface-border);
-          border-left: 3px solid var(--color-ai);
           border-radius: var(--radius-lg);
           animation: slide-up 200ms cubic-bezier(0.16,1,0.3,1) forwards;
         }
