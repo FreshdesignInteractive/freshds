@@ -20,8 +20,7 @@
   flex-shrink: 0;
 }
 
-.sh-logo img { display: block; }
-.sh-logo-full   { height: 26px; width: auto; }
+.sh-logo-full   { height: 26px; width: auto; display: block; }
 .sh-logo-emblem { height: 30px; width: auto; display: none; }
 
 .sh-nav {
