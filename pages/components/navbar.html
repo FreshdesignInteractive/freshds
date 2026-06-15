@@ -39,7 +39,6 @@
         <div class="spec-variant-row">
           <div class="spec-variant-header">
             <span class="spec-variant-name">Default</span>
-            <span class="spec-attr-chip">border (default on)</span>
             <span class="spec-variant-sep">·</span>
             <span class="spec-variant-desc">Brand slot, nav links, and action area with avatar and icon buttons.</span>
           </div>
@@ -47,9 +46,9 @@
             <div class="spec-demos" style="display:block;padding:0;width:100%;">
               <fresh-navbar>
                 <nav slot="nav" style="display:flex;align-items:center;gap:2px">
-                  <a href="#" style="font-family:var(--font-sans);font-size:13px;color:var(--text-secondary);text-decoration:none;padding:5px 10px;border-radius:var(--radius-md)">Dashboard</a>
-                  <a href="#" style="font-family:var(--font-sans);font-size:13px;color:var(--text-primary);text-decoration:none;padding:5px 10px;border-radius:var(--radius-md);background:var(--surface-overlay)">Projects</a>
-                  <a href="#" style="font-family:var(--font-sans);font-size:13px;color:var(--text-secondary);text-decoration:none;padding:5px 10px;border-radius:var(--radius-md)">Settings</a>
+                  <a href="#" onclick="return false" style="font-family:var(--font-sans);font-size:13px;color:var(--text-secondary);text-decoration:none;padding:5px 10px;border-radius:var(--radius-md)">Dashboard</a>
+                  <a href="#" onclick="return false" style="font-family:var(--font-sans);font-size:13px;color:var(--text-primary);text-decoration:none;padding:5px 10px;border-radius:var(--radius-md);background:var(--surface-overlay)">Projects</a>
+                  <a href="#" onclick="return false" style="font-family:var(--font-sans);font-size:13px;color:var(--text-secondary);text-decoration:none;padding:5px 10px;border-radius:var(--radius-md)">Settings</a>
                 </nav>
                 <div slot="actions" style="display:flex;align-items:center;gap:8px">
                   <fresh-button variant="ghost" icon-only size="sm" aria-label="Search"><i class="ti ti-search"></i></fresh-button>
@@ -73,9 +72,9 @@
             <div class="spec-demos" style="display:block;padding:0;width:100%;">
               <fresh-navbar hamburger>
                 <nav slot="nav" style="display:flex;align-items:center;gap:2px">
-                  <a href="#" style="font-family:var(--font-sans);font-size:13px;color:var(--text-secondary);text-decoration:none;padding:5px 10px;border-radius:var(--radius-md)">Dashboard</a>
-                  <a href="#" style="font-family:var(--font-sans);font-size:13px;color:var(--text-primary);text-decoration:none;padding:5px 10px;border-radius:var(--radius-md);background:var(--surface-overlay)">Projects</a>
-                  <a href="#" style="font-family:var(--font-sans);font-size:13px;color:var(--text-secondary);text-decoration:none;padding:5px 10px;border-radius:var(--radius-md)">Settings</a>
+                  <a href="#" onclick="return false" style="font-family:var(--font-sans);font-size:13px;color:var(--text-secondary);text-decoration:none;padding:5px 10px;border-radius:var(--radius-md)">Dashboard</a>
+                  <a href="#" onclick="return false" style="font-family:var(--font-sans);font-size:13px;color:var(--text-primary);text-decoration:none;padding:5px 10px;border-radius:var(--radius-md);background:var(--surface-overlay)">Projects</a>
+                  <a href="#" onclick="return false" style="font-family:var(--font-sans);font-size:13px;color:var(--text-secondary);text-decoration:none;padding:5px 10px;border-radius:var(--radius-md)">Settings</a>
                 </nav>
                 <div slot="actions" style="display:flex;align-items:center;gap:8px">
                   <fresh-button variant="ghost" icon-only size="sm" aria-label="Search"><i class="ti ti-search"></i></fresh-button>
@@ -107,29 +106,6 @@
           </div>
         </div>
 
-        <!-- No border -->
-        <div class="spec-variant-row">
-          <div class="spec-variant-header">
-            <span class="spec-variant-name">No border</span>
-            <span class="spec-attr-chip">border="false"</span>
-            <span class="spec-variant-sep">·</span>
-            <span class="spec-variant-desc">Removes the bottom separator. Useful when the page background below the navbar handles visual separation.</span>
-          </div>
-          <div class="spec-variant-body">
-            <div class="spec-demos" style="display:block;padding:0;width:100%;">
-              <fresh-navbar border="false">
-                <nav slot="nav" style="display:flex;align-items:center;gap:2px">
-                  <a href="#" style="font-family:var(--font-sans);font-size:13px;color:var(--text-secondary);text-decoration:none;padding:5px 10px;border-radius:var(--radius-md)">Home</a>
-                  <a href="#" style="font-family:var(--font-sans);font-size:13px;color:var(--text-primary);text-decoration:none;padding:5px 10px;border-radius:var(--radius-md);background:var(--surface-overlay)">Pricing</a>
-                </nav>
-                <div slot="actions" style="display:flex;align-items:center;gap:8px">
-                  <fresh-button variant="primary" size="sm">Sign up</fresh-button>
-                </div>
-              </fresh-navbar>
-            </div>
-          </div>
-        </div>
-
       </div>
     </div>
   </div>
@@ -154,7 +130,6 @@
           <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Add <code>hamburger</code> only when a collapsible sidebar or mobile drawer is present on the same page. Wire the <code>hamburger-click</code> event to toggle that panel.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
           <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Place the user avatar or account menu in the <code>actions</code> slot on the far right, always the last element in that slot.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
           <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Limit the <code>nav</code> slot to top-level destination links only. Section or sub-page links belong in a sidebar or secondary nav, not in the navbar.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
-          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Set <code>border="false"</code> only when a full-bleed hero image or a distinctly coloured section immediately below the navbar provides the visual separation.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
         </ul>
         <button class="spec-add-rule" onclick="addRule('rules-general')"><i class="ti ti-plus"></i> Add rule</button>
       </div>
@@ -183,7 +158,6 @@
       <table class="spec-a11y-table">
         <thead><tr><th style="width:130px">Attribute</th><th style="width:220px">Values</th><th style="width:80px">Default</th><th>Description</th></tr></thead>
         <tbody>
-          <tr class="spec-a11y-row"><td class="spec-a11y-concern">border</td><td class="spec-a11y-req">boolean</td><td class="spec-a11y-req"><code>true</code></td><td class="spec-a11y-req">Show a bottom border separating the navbar from page content. Set to <code>"false"</code> to remove.</td></tr>
           <tr class="spec-a11y-row"><td class="spec-a11y-concern">hamburger</td><td class="spec-a11y-req">boolean</td><td class="spec-a11y-req">-</td><td class="spec-a11y-req">Adds a menu toggle icon button to the left of the brand slot. Fires <code>hamburger-click</code> on press.</td></tr>
         </tbody>
       </table>
@@ -211,9 +185,9 @@
 
         <div class="code-block" data-code="&lt;fresh-navbar&gt;
   &lt;nav slot=&quot;nav&quot; style=&quot;display:flex;align-items:center;gap:2px&quot;&gt;
-    &lt;a href=&quot;/dashboard&quot;&gt;Dashboard&lt;/a&gt;
-    &lt;a href=&quot;/projects&quot; class=&quot;active&quot;&gt;Projects&lt;/a&gt;
-    &lt;a href=&quot;/settings&quot;&gt;Settings&lt;/a&gt;
+    &lt;a href=&quot;#&quot;&gt;Dashboard&lt;/a&gt;
+    &lt;a href=&quot;#&quot; class=&quot;active&quot;&gt;Projects&lt;/a&gt;
+    &lt;a href=&quot;#&quot;&gt;Settings&lt;/a&gt;
   &lt;/nav&gt;
   &lt;div slot=&quot;actions&quot; style=&quot;display:flex;align-items:center;gap:8px&quot;&gt;
     &lt;fresh-button variant=&quot;ghost&quot; icon-only size=&quot;sm&quot; aria-label=&quot;Search&quot;&gt;&lt;i class=&quot;ti ti-search&quot;&gt;&lt;/i&gt;&lt;/fresh-button&gt;
@@ -223,9 +197,9 @@
           <div class="code-block-header"><span><span class="code-lang">HTML</span><span class="code-context">Default with nav and actions</span></span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
           <div class="code-body"><span class="hl-pun">&lt;</span><span class="hl-tag">fresh-navbar</span><span class="hl-pun">&gt;</span>
   <span class="hl-pun">&lt;</span><span class="hl-tag">nav</span> <span class="hl-attr">slot</span><span class="hl-pun">=</span><span class="hl-val">"nav"</span> <span class="hl-attr">style</span><span class="hl-pun">=</span><span class="hl-val">"display:flex;align-items:center;gap:2px"</span><span class="hl-pun">&gt;</span>
-    <span class="hl-pun">&lt;</span><span class="hl-tag">a</span> <span class="hl-attr">href</span><span class="hl-pun">=</span><span class="hl-val">"/dashboard"</span><span class="hl-pun">&gt;</span><span class="hl-txt">Dashboard</span><span class="hl-pun">&lt;/</span><span class="hl-tag">a</span><span class="hl-pun">&gt;</span>
-    <span class="hl-pun">&lt;</span><span class="hl-tag">a</span> <span class="hl-attr">href</span><span class="hl-pun">=</span><span class="hl-val">"/projects"</span> <span class="hl-attr">class</span><span class="hl-pun">=</span><span class="hl-val">"active"</span><span class="hl-pun">&gt;</span><span class="hl-txt">Projects</span><span class="hl-pun">&lt;/</span><span class="hl-tag">a</span><span class="hl-pun">&gt;</span>
-    <span class="hl-pun">&lt;</span><span class="hl-tag">a</span> <span class="hl-attr">href</span><span class="hl-pun">=</span><span class="hl-val">"/settings"</span><span class="hl-pun">&gt;</span><span class="hl-txt">Settings</span><span class="hl-pun">&lt;/</span><span class="hl-tag">a</span><span class="hl-pun">&gt;</span>
+    <span class="hl-pun">&lt;</span><span class="hl-tag">a</span> <span class="hl-attr">href</span><span class="hl-pun">=</span><span class="hl-val">"#"</span><span class="hl-pun">&gt;</span><span class="hl-txt">Dashboard</span><span class="hl-pun">&lt;/</span><span class="hl-tag">a</span><span class="hl-pun">&gt;</span>
+    <span class="hl-pun">&lt;</span><span class="hl-tag">a</span> <span class="hl-attr">href</span><span class="hl-pun">=</span><span class="hl-val">"#"</span> <span class="hl-attr">class</span><span class="hl-pun">=</span><span class="hl-val">"active"</span><span class="hl-pun">&gt;</span><span class="hl-txt">Projects</span><span class="hl-pun">&lt;/</span><span class="hl-tag">a</span><span class="hl-pun">&gt;</span>
+    <span class="hl-pun">&lt;</span><span class="hl-tag">a</span> <span class="hl-attr">href</span><span class="hl-pun">=</span><span class="hl-val">"#"</span><span class="hl-pun">&gt;</span><span class="hl-txt">Settings</span><span class="hl-pun">&lt;/</span><span class="hl-tag">a</span><span class="hl-pun">&gt;</span>
   <span class="hl-pun">&lt;/</span><span class="hl-tag">nav</span><span class="hl-pun">&gt;</span>
   <span class="hl-pun">&lt;</span><span class="hl-tag">div</span> <span class="hl-attr">slot</span><span class="hl-pun">=</span><span class="hl-val">"actions"</span> <span class="hl-attr">style</span><span class="hl-pun">=</span><span class="hl-val">"display:flex;align-items:center;gap:8px"</span><span class="hl-pun">&gt;</span>
     <span class="hl-pun">&lt;</span><span class="hl-tag">fresh-button</span> <span class="hl-attr">variant</span><span class="hl-pun">=</span><span class="hl-val">"ghost"</span> <span class="hl-attr">icon-only</span> <span class="hl-attr">size</span><span class="hl-pun">=</span><span class="hl-val">"sm"</span> <span class="hl-attr">aria-label</span><span class="hl-pun">=</span><span class="hl-val">"Search"</span><span class="hl-pun">&gt;&lt;</span><span class="hl-tag">i</span> <span class="hl-attr">class</span><span class="hl-pun">=</span><span class="hl-val">"ti ti-search"</span><span class="hl-pun">&gt;&lt;/</span><span class="hl-tag">i</span><span class="hl-pun">&gt;&lt;/</span><span class="hl-tag">fresh-button</span><span class="hl-pun">&gt;</span>
@@ -236,7 +210,7 @@
 
         <div class="code-block" data-code="&lt;fresh-navbar hamburger id=&quot;app-navbar&quot;&gt;
   &lt;nav slot=&quot;nav&quot; style=&quot;display:flex;align-items:center;gap:2px&quot;&gt;
-    &lt;a href=&quot;/dashboard&quot;&gt;Dashboard&lt;/a&gt;
+    &lt;a href=&quot;#&quot;&gt;Dashboard&lt;/a&gt;
   &lt;/nav&gt;
   &lt;div slot=&quot;actions&quot;&gt;
     &lt;fresh-avatar name=&quot;Jane Smith&quot; size=&quot;sm&quot;&gt;&lt;/fresh-avatar&gt;
@@ -250,7 +224,7 @@
           <div class="code-block-header"><span><span class="code-lang">HTML</span><span class="code-context">Hamburger with sidebar toggle</span></span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
           <div class="code-body"><span class="hl-pun">&lt;</span><span class="hl-tag">fresh-navbar</span> <span class="hl-attr">hamburger</span> <span class="hl-attr">id</span><span class="hl-pun">=</span><span class="hl-val">"app-navbar"</span><span class="hl-pun">&gt;</span>
   <span class="hl-pun">&lt;</span><span class="hl-tag">nav</span> <span class="hl-attr">slot</span><span class="hl-pun">=</span><span class="hl-val">"nav"</span> <span class="hl-attr">style</span><span class="hl-pun">=</span><span class="hl-val">"display:flex;align-items:center;gap:2px"</span><span class="hl-pun">&gt;</span>
-    <span class="hl-pun">&lt;</span><span class="hl-tag">a</span> <span class="hl-attr">href</span><span class="hl-pun">=</span><span class="hl-val">"/dashboard"</span><span class="hl-pun">&gt;</span><span class="hl-txt">Dashboard</span><span class="hl-pun">&lt;/</span><span class="hl-tag">a</span><span class="hl-pun">&gt;</span>
+    <span class="hl-pun">&lt;</span><span class="hl-tag">a</span> <span class="hl-attr">href</span><span class="hl-pun">=</span><span class="hl-val">"#"</span><span class="hl-pun">&gt;</span><span class="hl-txt">Dashboard</span><span class="hl-pun">&lt;/</span><span class="hl-tag">a</span><span class="hl-pun">&gt;</span>
   <span class="hl-pun">&lt;/</span><span class="hl-tag">nav</span><span class="hl-pun">&gt;</span>
   <span class="hl-pun">&lt;</span><span class="hl-tag">div</span> <span class="hl-attr">slot</span><span class="hl-pun">=</span><span class="hl-val">"actions"</span><span class="hl-pun">&gt;</span>
     <span class="hl-pun">&lt;</span><span class="hl-tag">fresh-avatar</span> <span class="hl-attr">name</span><span class="hl-pun">=</span><span class="hl-val">"Jane Smith"</span> <span class="hl-attr">size</span><span class="hl-pun">=</span><span class="hl-val">"sm"</span><span class="hl-pun">&gt;&lt;/</span><span class="hl-tag">fresh-avatar</span><span class="hl-pun">&gt;</span>
@@ -358,8 +332,7 @@
       'Use exactly one <code>fresh-navbar</code> per page at the very top of the content area. Never nest navbars.',
       'Add <code>hamburger</code> only when a collapsible sidebar or mobile drawer is present on the same page. Wire the <code>hamburger-click</code> event to toggle that panel.',
       'Place the user avatar or account menu in the <code>actions</code> slot on the far right, always the last element in that slot.',
-      'Limit the <code>nav</code> slot to top-level destination links only. Section or sub-page links belong in a sidebar or secondary nav, not in the navbar.',
-      'Set <code>border="false"</code> only when a full-bleed hero image or a distinctly coloured section immediately below the navbar provides the visual separation.'
+      'Limit the <code>nav</code> slot to top-level destination links only. Section or sub-page links belong in a sidebar or secondary nav, not in the navbar.'
     ]
   };
   function restoreDefaults() {

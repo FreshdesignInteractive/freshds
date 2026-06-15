@@ -7,9 +7,9 @@
          <strong>Acme</strong>
        </div>
        <nav slot="nav">
-         <a href="/dashboard">Dashboard</a>
-         <a href="/projects" class="active">Projects</a>
-         <a href="/settings">Settings</a>
+         <a href="#" onclick="return false">Dashboard</a>
+         <a href="#" onclick="return false" class="active">Projects</a>
+         <a href="#" onclick="return false">Settings</a>
        </nav>
        <div slot="actions">
          <fresh-avatar name="Jane Smith" size="sm"></fresh-avatar>
@@ -21,7 +21,6 @@
      actions , right-side tools  (right)
 
    Attributes:
-     border     boolean, show bottom border (default: true)
      hamburger  boolean, show hamburger menu button left of brand (default: false)
 
    Events:
@@ -29,7 +28,7 @@
    ============================================================ */
 
 class FreshNavbar extends HTMLElement {
-  static get observedAttributes() { return ['border', 'hamburger']; }
+  static get observedAttributes() { return ['hamburger']; }
 
   constructor() {
     super();
@@ -40,7 +39,6 @@ class FreshNavbar extends HTMLElement {
   attributeChangedCallback() { this._render(); }
 
   _render() {
-    const border    = this.getAttribute('border') !== 'false';
     const hamburger = this.hasAttribute('hamburger');
 
     this.shadowRoot.innerHTML = `
@@ -58,7 +56,7 @@ class FreshNavbar extends HTMLElement {
           gap: var(--space-4);
           padding: 0 var(--space-6);
           background: var(--surface-bg);
-          ${border ? 'border-bottom: 1px solid var(--surface-border);' : ''}
+          border-bottom: 1px solid var(--surface-border);
         }
 
         .left {
