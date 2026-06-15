@@ -506,10 +506,34 @@ input[type="color"].color-picker:disabled { opacity: 1; cursor: not-allowed; }
   margin: 0 0 var(--space-8);
 }
 
+/* ── Home spec card wrapper (matches component spec card form factor) ── */
+.home-spec-card {
+  margin-top: var(--space-6);
+  background: #fff;
+  border: 1px solid #e4e4e7;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.home-spec-topbar {
+  display: flex;
+  align-items: center;
+  padding: 11px 20px;
+  border-bottom: 1px solid #e4e4e7;
+}
+
+.home-spec-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: #888;
+}
+
 /* ── Home hero ── */
 .home-hero {
-  margin-top: var(--space-8);
-  border-radius: var(--radius-lg);
+  margin-top: 0;
+  border-radius: 0;
   background: var(--primary-11);
   position: relative;
   overflow: hidden;
@@ -557,18 +581,34 @@ input[type="color"].color-picker:disabled { opacity: 1; cursor: not-allowed; }
 /* Two overlapping circles visual */
 .home-hero-visual {
   position: relative;
-  width: 242px;
-  height: 150px;
+  width: 244px;
+  height: 144px;
   flex-shrink: 0;
   margin-bottom: var(--space-2);
 }
 
-.home-hero-circle-back {
+/* Left circle: Freshdesign emblem */
+.home-hero-circle-left {
   position: absolute;
   left: 0;
   top: 0;
-  width: 150px;
-  height: 150px;
+  width: 144px;
+  height: 144px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.11);
+  border: 1.5px solid rgba(255,255,255,0.30);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Right circle: sparkles */
+.home-hero-circle-right {
+  position: absolute;
+  left: 100px;
+  top: 0;
+  width: 144px;
+  height: 144px;
   border-radius: 50%;
   background: rgba(255,255,255,0.07);
   border: 1px solid rgba(255,255,255,0.18);
@@ -577,29 +617,15 @@ input[type="color"].color-picker:disabled { opacity: 1; cursor: not-allowed; }
   justify-content: center;
 }
 
-.home-hero-circle-back svg {
+.home-hero-circle-right svg {
   width: 100px;
   height: 100px;
-  filter: drop-shadow(0 0 8px rgba(255,255,255,0.75)) drop-shadow(0 0 22px rgba(255,255,255,0.3));
-}
-
-.home-hero-circle-front {
-  position: absolute;
-  left: 107px;
-  top: 7px;
-  width: 135px;
-  height: 135px;
-  border-radius: 50%;
-  background: rgba(255,255,255,0.13);
-  border: 1.5px solid rgba(255,255,255,0.32);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  filter: drop-shadow(0 0 8px rgba(255,255,255,0.80)) drop-shadow(0 0 24px rgba(255,255,255,0.32));
 }
 
 .home-hero-emblem {
-  width: 58px;
-  height: 58px;
+  width: 60px;
+  height: 60px;
   object-fit: contain;
   filter: brightness(0) invert(1);
   opacity: 0.90;
@@ -632,17 +658,17 @@ input[type="color"].color-picker:disabled { opacity: 1; cursor: not-allowed; }
 .home-badge {
   display: inline-flex;
   align-items: center;
-  gap: 5px;
-  padding: 5px 14px;
+  gap: 7px;
+  padding: 9px 20px;
   background: rgba(255,255,255,0.11);
-  border: 1px solid rgba(255,255,255,0.20);
+  border: 1px solid rgba(255,255,255,0.22);
   border-radius: var(--radius-pill);
-  font-size: 12.5px;
+  font-size: 14px;
   font-weight: 500;
-  color: rgba(255,255,255,0.88);
+  color: rgba(255,255,255,0.90);
 }
 
-.home-badge i { font-size: 14px; }
+.home-badge i { font-size: 16px; }
 
 @media (max-width: 680px) {
   .home-hero { padding: 56px var(--space-5) 48px; }

@@ -96,33 +96,33 @@
       <div class="fds-page active" id="page-home">
         <h1 class="home-title">Design system for modern enterprise</h1>
         <p class="home-desc">A token-driven, framework-agnostic design system built for AI-native enterprise applications. Two colors. Infinite client themes.</p>
-        <div class="home-hero">
+        <div class="home-spec-card">
+          <div class="home-spec-topbar">
+            <span class="home-spec-label">FreshDS · v1.0.0</span>
+          </div>
+          <div class="home-hero">
           <div class="home-hero-inner">
             <div class="home-hero-visual" aria-hidden="true">
-              <div class="home-hero-circle-back">
+              <!-- Left circle: Freshdesign emblem -->
+              <div class="home-hero-circle-left">
+                <img src="/assets/freshdesign-emblem.svg" alt="Freshdesign" class="home-hero-emblem">
+              </div>
+              <!-- Right circle: 3 four-pointed sparkles at different sizes -->
+              <div class="home-hero-circle-right">
                 <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <!-- Large 6-pointed asterisk at center -->
-                  <g transform="translate(50 50)">
-                    <line x1="0" y1="-22" x2="0" y2="22" stroke="white" stroke-width="2" stroke-linecap="round"/>
-                    <line x1="19" y1="-11" x2="-19" y2="11" stroke="white" stroke-width="2" stroke-linecap="round"/>
-                    <line x1="19" y1="11" x2="-19" y2="-11" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                  <!-- Large central sparkle -->
+                  <g transform="translate(50 50) scale(0.36)">
+                    <path d="M0 -45 Q0 -10 45 0 Q10 0 0 45 Q0 10 -45 0 Q-10 0 0 -45Z" fill="white"/>
                   </g>
-                  <!-- Small asterisk top-right -->
-                  <g transform="translate(79 25)" opacity="0.6">
-                    <line x1="0" y1="-8" x2="0" y2="8" stroke="white" stroke-width="1.3" stroke-linecap="round"/>
-                    <line x1="6.9" y1="-4" x2="-6.9" y2="4" stroke="white" stroke-width="1.3" stroke-linecap="round"/>
-                    <line x1="6.9" y1="4" x2="-6.9" y2="-4" stroke="white" stroke-width="1.3" stroke-linecap="round"/>
+                  <!-- Medium sparkle top-right -->
+                  <g transform="translate(76 27) scale(0.20)" opacity="0.75">
+                    <path d="M0 -45 Q0 -10 45 0 Q10 0 0 45 Q0 10 -45 0 Q-10 0 0 -45Z" fill="white"/>
                   </g>
-                  <!-- Tiny asterisk bottom-left -->
-                  <g transform="translate(22 76)" opacity="0.35">
-                    <line x1="0" y1="-5.5" x2="0" y2="5.5" stroke="white" stroke-width="1" stroke-linecap="round"/>
-                    <line x1="4.8" y1="-2.75" x2="-4.8" y2="2.75" stroke="white" stroke-width="1" stroke-linecap="round"/>
-                    <line x1="4.8" y1="2.75" x2="-4.8" y2="-2.75" stroke="white" stroke-width="1" stroke-linecap="round"/>
+                  <!-- Small sparkle bottom-left -->
+                  <g transform="translate(26 74) scale(0.13)" opacity="0.50">
+                    <path d="M0 -45 Q0 -10 45 0 Q10 0 0 45 Q0 10 -45 0 Q-10 0 0 -45Z" fill="white"/>
                   </g>
                 </svg>
-              </div>
-              <div class="home-hero-circle-front">
-                <img src="/assets/freshdesign-emblem.svg" alt="Freshdesign" class="home-hero-emblem">
               </div>
             </div>
             <h2 class="home-hero-heading">The design system AI actually understands.</h2>
@@ -134,6 +134,7 @@
               <span class="home-badge"><i class="ti ti-brand-angular"></i>Angular</span>
               <span class="home-badge"><i class="ti ti-code"></i>No framework</span>
             </div>
+          </div>
           </div>
         </div>
       </div>
