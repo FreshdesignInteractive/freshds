@@ -334,8 +334,14 @@
     } catch(e) {}
 
     var brand = document.getElementById('nb-brand');
-    if (brand && cfg.logoType === 'custom' && cfg.logoUrl) {
-      brand.innerHTML = '<img src="' + cfg.logoUrl.replace(/"/g, '&quot;') + '" alt="Logo" style="height:28px;max-width:140px;object-fit:contain;display:block">';
+    if (brand) {
+      if (cfg.logoType === 'custom' && cfg.logoUrl) {
+        brand.setAttribute('slot', 'brand');
+        brand.innerHTML = '<img src="' + cfg.logoUrl.replace(/"/g, '&quot;') + '" alt="Logo" style="height:28px;max-width:140px;object-fit:contain;display:block">';
+      } else {
+        brand.removeAttribute('slot');
+        brand.innerHTML = '';
+      }
     }
 
     var actions = document.getElementById('nb-actions');

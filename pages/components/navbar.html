@@ -305,17 +305,18 @@
       }
     } catch(e) {}
 
-    // Apply custom logo to both navbar instances
-    if (cfg.logoType === 'custom' && cfg.logoUrl) {
-      ['nb-spec-loggedin', 'nb-spec-loggedout'].forEach(function(id) {
-        var navbar = document.getElementById(id);
-        if (!navbar) return;
+    // Apply logo to both navbar instances (remove any previous brand slot first)
+    ['nb-spec-loggedin', 'nb-spec-loggedout'].forEach(function(id) {
+      var navbar = document.getElementById(id);
+      if (!navbar) return;
+      navbar.querySelectorAll('[slot="brand"]').forEach(function(el) { el.remove(); });
+      if (cfg.logoType === 'custom' && cfg.logoUrl) {
         var brandDiv = document.createElement('div');
         brandDiv.setAttribute('slot', 'brand');
         brandDiv.innerHTML = '<img src="' + cfg.logoUrl.replace(/"/g, '&quot;') + '" alt="Logo" style="height:24px;max-width:140px;object-fit:contain;display:block">';
         navbar.insertBefore(brandDiv, navbar.firstChild);
-      });
-    }
+      }
+    });
 
     // Apply configured action icons + avatar to logged-in navbar
     var actionsIn = document.getElementById('nb-spec-actions-in');
