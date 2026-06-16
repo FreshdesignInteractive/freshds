@@ -1537,8 +1537,8 @@ document.addEventListener('DOMContentLoaded', function() {
     { group: 'Navigation', icon: 'ti-compass', items: [
       { id: 'navbar',       label: 'Navbar',      href: 'app.html#navbar' },
       { id: 'sidebar-menu', label: 'Sidebar Menu', href: 'app.html#sidebar-menu' },
-      { id: 'tabs',         label: 'Tabs',        href: 'app.html#tabs' },
       { id: 'topbarmenu',   label: 'Topbar Menu', href: 'app.html#topbarmenu' },
+      { id: 'tabs',         label: 'Tabs',        href: 'app.html#tabs' },
       { id: 'breadcrumb',   label: 'Breadcrumb',  href: 'app.html#breadcrumb' },
       { id: 'pagination',   label: 'Pagination',  href: 'app.html#pagination' },
       { id: 'stepper',      label: 'Stepper',     href: 'app.html#stepper' }

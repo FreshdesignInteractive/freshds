@@ -110,10 +110,31 @@
   .brand-slot { display: flex; align-items: center; gap: var(--space-2); }
   .brand-mark { width: 28px; height: 28px; border-radius: var(--radius-sm); background: var(--color-interactive); display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700; color: #fff; flex-shrink: 0; letter-spacing: -0.02em; }
   .brand-name { font-size: var(--font-size-md); font-weight: 600; color: var(--text-primary); letter-spacing: -0.01em; white-space: nowrap; }
+
+  /* ── Demo bar (dark/light toggle) ── */
+  .demo-bar { position: fixed; bottom: var(--space-4); left: 50%; transform: translateX(-50%); z-index: 300; display: flex; align-items: center; gap: var(--space-1); background: var(--surface-canvas); border: 1px solid var(--surface-border); border-radius: var(--radius-full); padding: var(--space-1); box-shadow: var(--elev-3); white-space: nowrap; transition: padding 220ms ease, width 220ms ease, height 220ms ease; overflow: hidden; }
+  .demo-inner { display: flex; align-items: center; gap: var(--space-1); opacity: 1; padding-left: 6px; transition: max-width 220ms ease, opacity 150ms ease; overflow: hidden; }
+  .demo-bar.collapsed { padding: 0; width: 36px; height: 36px; gap: 0; justify-content: center; }
+  .demo-bar.collapsed .demo-inner { max-width: 0; width: 0; padding: 0; margin: 0; opacity: 0; pointer-events: none; }
+  .demo-bar.collapsed .demo-collapse-btn { width: 36px; height: 36px; font-size: var(--font-size-xl); color: var(--text-primary); }
+  .demo-sep { width: 1px; height: 16px; background: var(--surface-border); flex-shrink: 0; margin: 0 2px; }
+  .demo-mode-btn, .demo-collapse-btn { width: 28px; height: 28px; border: none; border-radius: var(--radius-full); background: transparent; display: flex; align-items: center; justify-content: center; color: var(--text-secondary); cursor: pointer; font-size: var(--font-size-lg); flex-shrink: 0; transition: background 150ms, color 150ms; }
+  .demo-mode-btn:hover, .demo-collapse-btn:hover { background: var(--surface-subtle); color: var(--text-primary); }
+  .demo-collapse-btn { color: var(--text-tertiary); font-size: var(--font-size-md); }
 </style>
+<script>if(location.href.indexOf('?thumb')!==-1)document.write('<style>#demo-bar{display:none!important}</style>');</script>
+<script src="/js/pattern-bar.js"></script>
 </head>
 
 <body>
+
+<div class="demo-bar" id="demo-bar">
+  <div class="demo-inner" id="demo-inner">
+    <button class="demo-mode-btn" id="mode-toggle-btn" onclick="toggleDemoMode()" aria-label="Toggle dark mode"><i class="ti ti-moon"></i></button>
+  </div>
+  <div class="demo-sep"></div>
+  <button class="demo-collapse-btn" id="demo-collapse-btn" onclick="toggleDemoBar()" aria-label="Collapse toolbar"><i class="ti ti-minus"></i></button>
+</div>
 <div class="shell-outer">
 
   <!-- search attribute: navbar renders built-in search icon that fires search-open event -->
