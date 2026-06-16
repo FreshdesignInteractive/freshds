@@ -113,7 +113,7 @@ class FreshAvatar extends HTMLElement {
           align-items: center;
           justify-content: center;
           background: ${showImg ? 'var(--surface-subtle)' : color};
-          border: 1px solid var(--surface-border);
+          border: none;
           user-select: none;
           flex-shrink: 0;
         }
