@@ -1,6 +1,6 @@
 /* ============================================================
    FreshDS, Site application layer
-   Powers index.html, configurator.html, and patterns.html.
+   Powers index.html, theme.html, and patterns.html.
    NOT included in the developer bundle export.
 
    Depends on freshds.js (core) being loaded first.
@@ -539,7 +539,7 @@ var COMPONENT_PAGES = {
 };
 
 function navigate(page) {
-  if (page === 'configurator') { window.location.href = 'configurator.html'; return; }
+  if (page === 'theme') { window.location.href = 'theme.html'; return; }
 
   var url = FOUNDATION_PAGES[page] || COMPONENT_PAGES[page];
   if (url) {
@@ -1480,7 +1480,7 @@ document.addEventListener('DOMContentLoaded', function() {
         '  </fresh-simple-tabs>',
         '  <div class="fds-topbar-right">',
         '    <fresh-button variant="secondary" id="mode-btn" onclick="toggleMode()"><i class="ti ti-moon"></i> Dark</fresh-button>',
-        '    <fresh-button variant="primary" onclick="window.location.href=\'configurator.html\'"><i class="ti ti-adjustments-horizontal"></i> Configurator</fresh-button>',
+        '    <fresh-button variant="primary" onclick="window.location.href=\'theme.html\'"><i class="ti ti-adjustments-horizontal"></i> Theme</fresh-button>',
         '  </div>',
         '</header>'
       ].join('\n');

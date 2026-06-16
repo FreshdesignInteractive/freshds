@@ -9,7 +9,7 @@
 
        <fresh-nav-group label="Getting started" open>
          <fresh-nav-item active icon="ti-home">Overview</fresh-nav-item>
-         <fresh-nav-item icon="ti-adjustments-horizontal">Configurator</fresh-nav-item>
+         <fresh-nav-item icon="ti-adjustments-horizontal">Theme</fresh-nav-item>
        </fresh-nav-group>
 
        <fresh-nav-group label="Components">

@@ -3,7 +3,7 @@ import { supabase } from '/js/supabase-client.js';
 const path = window.location.pathname;
 const isActive = (page) => {
   if (page === 'dashboard') return path.includes('dashboard') || path === '/' || path === '/index.html';
-  if (page === 'configurator') return path.includes('configurator');
+  if (page === 'theme') return path.includes('theme');
   if (page === 'components') return path.includes('app');
   if (page === 'patterns') return path.includes('patterns');
   return false;
@@ -27,7 +27,7 @@ const headerHTML = `<header class="site-header" id="site-header">
   </a>
   <nav class="sh-nav">
     ${tab('dashboard',    'Dashboard',       '/dashboard.html', false)}
-    ${tab('configurator', 'Configurator',    '/configurator.html', true)}
+    ${tab('theme',        'Theme',            '/theme.html', true)}
     ${tab('components',   'Components',      '/app.html', true)}
     ${tab('patterns',     'Pattern Library', '/patterns.html', true)}
   </nav>
