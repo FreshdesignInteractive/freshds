@@ -3,12 +3,12 @@
   font-family: var(--font-sans); font-size: var(--font-size-md);
   padding: 7px 10px; border-radius: var(--radius-md);
   border: 1px solid var(--surface-border-strong);
-  background: var(--surface-input); color: var(--text-primary);
+  background: var(--scale-0); color: var(--text-primary);
   cursor: pointer; outline: none; width: 100%;
   transition: border-color 0.15s, box-shadow 0.15s;
   appearance: auto;
 }
-.cfg-select:focus { border-color: var(--color-interactive-text); box-shadow: 0 0 0 3px var(--input-focus-ring); }
+.cfg-select:focus { border-color: var(--border); box-shadow: 0 0 0 3px rgba(0,0,0,0.08); }
 
 /* ── Color scale strip (12-step) ── */
 .cs-scale {
@@ -257,10 +257,10 @@
   display: inline-flex; align-items: center; gap: 5px;
   font-size: var(--font-size-sm); font-weight: 500; padding: 5px 12px;
   border-radius: var(--radius-md); border: 1px solid var(--surface-border-strong);
-  background: var(--surface-bg); color: var(--text-secondary);
+  background: var(--card); color: var(--text-secondary);
   cursor: pointer; transition: all 0.15s;
 }
-.cfg-new-btn:hover { border-color: var(--color-interactive-text); color: var(--color-interactive-text); }
+.cfg-new-btn:hover { border-color: var(--scale-11); color: var(--scale-11); }
 
 .cfg-reset-btn {
   all: unset;
@@ -274,7 +274,7 @@
   transition: color 120ms ease, background 120ms ease;
   -webkit-font-smoothing: antialiased;
 }
-.cfg-reset-btn:hover { color: var(--text-secondary); background: var(--surface-overlay); }
+.cfg-reset-btn:hover { color: var(--text-secondary); background: var(--bg); }
 
 /* theme cards row */
 .theme-cards {
@@ -316,7 +316,7 @@
   font-family: var(--font-sans); -webkit-font-smoothing: antialiased;
   border-bottom: 1px dashed var(--surface-border-strong);
 }
-.theme-name-input:focus { border-bottom-color: var(--color-interactive-text); outline: none; }
+.theme-name-input:focus { border-bottom-color: var(--scale-11); outline: none; }
 
 .theme-applied-check {
   position: absolute; top: 6px; right: 6px;
@@ -686,7 +686,7 @@ input[type="color"].color-picker:disabled { opacity: 1; cursor: not-allowed; }
   transition: color 0.15s, border-color 0.15s;
 }
 .cfg-tab:hover { color: var(--text-secondary); }
-.cfg-tab.active { color: var(--color-interactive-text); border-bottom-color: var(--color-interactive-text); }
+.cfg-tab.active { color: var(--scale-11); border-bottom-color: var(--scale-11); }
 
 .cfg-tab-panel { display: none; }
 .cfg-tab-panel.active { display: block; }

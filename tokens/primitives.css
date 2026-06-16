@@ -8,6 +8,7 @@
   /* Dark / Light — define the neutral scale endpoints */
   --scale-dark:  #1f2328;
   --scale-light: #ffffff;
+  --scale-0:     var(--scale-light); /* alias: permanent white, for surfaces that must not shift with page-bg */
 
   /* User-defined absolute surface colors — set by JS engine, never derived from scale */
   --color-page-bg:       #ffffff;   /* page background + navbar */

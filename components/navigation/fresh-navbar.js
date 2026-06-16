@@ -55,7 +55,7 @@ class FreshNavbar extends HTMLElement {
           justify-content: space-between;
           gap: var(--space-4);
           padding: 0 var(--space-6);
-          background: var(--surface-bg);
+          background: var(--surface-nav);
           border-bottom: 1px solid var(--surface-border);
         }
 

@@ -63,7 +63,7 @@ class FreshSidebar extends HTMLElement {
           flex-direction: column;
           width: ${collapsed ? '56px' : 'var(--sidebar-w, 240px)'};
           height: 100%;
-          background: var(--surface-bg);
+          background: var(--surface-nav);
           border-right: 1px solid var(--surface-border);
           transition: width 200ms ease;
           overflow: hidden;

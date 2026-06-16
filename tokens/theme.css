@@ -11,8 +11,9 @@
   --primitive-primary-dark:  var(--primary-10);
 
   /* ── Tier 2: Semantic — Surfaces ── */
-  --surface-bg:             var(--color-page-bg);    /* page bg + navbar, user-defined */
-  --surface-canvas:         var(--scale-1);           /* cards/panels, fixed light surface */
+  --surface-bg:             var(--color-page-bg);    /* page bg only, user-defined */
+  --surface-nav:            var(--scale-0);           /* navbar + sidebar, fixed light */
+  --surface-canvas:         var(--scale-0);           /* cards/panels, fixed light surface */
   --surface-input:          var(--color-input-surface); /* form controls, user-defined */
   --surface-subtle:         var(--scale-2);
   --surface-overlay:        var(--scale-3);
@@ -154,7 +155,8 @@
    ────────────────────────────────────────────────────────────── */
 [data-mode="dark"] {
   /* Surfaces — bg/subtle/canvas/input are distinct steps */
-  --surface-bg:             var(--scale-12);  /* page + navbar */
+  --surface-bg:             var(--scale-12);  /* page bg */
+  --surface-nav:            var(--scale-12);  /* navbar + sidebar */
   --surface-canvas:         var(--scale-10);  /* cards / panels, elevated */
   --surface-input:          var(--scale-11);  /* form controls */
   --surface-subtle:         var(--scale-11);  /* hover tints / section bg */
