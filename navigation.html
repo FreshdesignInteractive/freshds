@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FreshDS | Navigation</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<!-- Auth guard -->
+<script type="module" src="/js/auth-guard.js"></script>
+<script type="module" src="/js/paid-guard.js"></script>
+<link rel="stylesheet" href="/styles/site-header.css">
+<script type="module" src="/js/site-header.js"></script>
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<!-- Icons -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+
+<!-- Website CSS -->
+<link rel="stylesheet" href="styles/site.css">
+
+<!-- Theme engine -->
+<script src="js/freshds.js"></script>
+<script src="js/freshds-site.js"></script>
+
+<style>
+  /* ── Page shell (identical to theme.html) ───────────────────── */
+  .cfg-page {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 100%;
+    overflow: hidden;
+    background: var(--bg);
+    color: var(--text-primary);
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+  .cfg-body { flex: 1; overflow-y: auto; }
+  .cfg-body-inner {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: var(--space-8) var(--space-8) var(--space-12);
+  }
+
+  /* ── Sticky footer ──────────────────────────────────────────── */
+  .cfg-sticky-footer {
+    flex-shrink: 0;
+    background: var(--card);
+    border-top: 1px solid var(--border);
+  }
+  .cfg-sticky-footer-inner {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 14px var(--space-8);
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: var(--space-3);
+  }
+  .cfg-revert-btn {
+    all: unset;
+    padding: 11px 28px;
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-pill);
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: border-color 0.15s, color 0.15s, opacity 0.15s;
+    -webkit-font-smoothing: antialiased;
+    box-sizing: border-box;
+  }
+  .cfg-revert-btn:not(:disabled):hover { border-color: var(--text-secondary); color: var(--text-primary); }
+  .cfg-revert-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+  .cfg-save-btn {
+    all: unset;
+    padding: 11px 28px;
+    border-radius: var(--radius-pill);
+    background: var(--text-primary);
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    color: #fff;
+    cursor: pointer;
+    transition: opacity 0.15s;
+    -webkit-font-smoothing: antialiased;
+    box-sizing: border-box;
+  }
+  .cfg-save-btn:not(:disabled):hover { opacity: 0.82; }
+  .cfg-save-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+
+  /* ── Toast ──────────────────────────────────────────────────── */
+  .cfg-toast {
+    position: fixed;
+    bottom: 28px;
+    left: 50%;
+    transform: translateX(-50%) translateY(10px);
+    background: var(--text-primary);
+    color: #fff;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 10px 22px;
+    border-radius: var(--radius-pill);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.18);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    z-index: 400;
+    white-space: nowrap;
+    -webkit-font-smoothing: antialiased;
+  }
+  .cfg-toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  /* ── Page title ─────────────────────────────────────────────── */
+  .cfg-page-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: -0.02em;
+    margin-bottom: var(--space-5);
+  }
+
+  /* ── Config cards ───────────────────────────────────────────── */
+  .config-grid { display: grid; grid-template-columns: 1fr; gap: var(--space-4); }
+  .config-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: var(--space-5);
+  }
+  .cfg-card-heading {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: -0.01em;
+    margin-bottom: var(--space-4);
+  }
+
+  /* ── Navigation option tiles ────────────────────────────────── */
+  .nav-options-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-4);
+  }
+  @media (max-width: 560px) {
+    .nav-options-grid { grid-template-columns: 1fr; }
+    .cfg-body-inner { padding: var(--space-5) var(--space-4) var(--space-12); }
+  }
+
+  .nav-tile {
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: border-color 0.15s, box-shadow 0.15s;
+    background: var(--card);
+    position: relative;
+    user-select: none;
+  }
+  .nav-tile:hover { border-color: #a1a1aa; }
+  .nav-tile.selected {
+    border-color: var(--text-primary);
+    box-shadow: 0 0 0 1px var(--text-primary);
+  }
+
+  .nav-tile-thumb {
+    background: #f4f4f5;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-4);
+  }
+  .nav-tile-thumb svg {
+    width: 100%;
+    max-width: 240px;
+    height: auto;
+    display: block;
+    border-radius: 6px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.10);
+  }
+
+  .nav-tile-info {
+    padding: 14px 16px 16px;
+    position: relative;
+  }
+  .nav-tile-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+    padding-right: 28px;
+  }
+  .nav-tile-desc {
+    font-size: 12px;
+    color: var(--text-secondary);
+    line-height: 1.55;
+  }
+  .nav-tile-check {
+    position: absolute;
+    top: 12px;
+    right: 14px;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--text-primary);
+    color: #fff;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+  }
+  .nav-tile.selected .nav-tile-check { display: flex; }
+</style>
+</head>
+
+<body id="app">
+<div class="cfg-page">
+
+  <div id="sh-mount"></div>
+
+  <!-- Body -->
+  <main class="cfg-body">
+    <div class="cfg-body-inner">
+
+      <div class="cfg-page-title">Choose your navigation</div>
+
+      <div class="config-grid">
+
+        <!-- Navigation pattern -->
+        <div class="config-card">
+          <div class="cfg-card-heading">Navigation pattern</div>
+          <div class="nav-options-grid">
+
+            <!-- 1. Persistent sidebar -->
+            <div class="nav-tile selected" data-nav="persistent-sidebar" onclick="selectNav(this)">
+              <div class="nav-tile-thumb">
+                <svg viewBox="0 0 240 150" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <!-- App frame -->
+                  <rect width="240" height="150" rx="6" fill="#f9f9fa"/>
+                  <!-- Header -->
+                  <rect width="240" height="26" rx="0" fill="#f0f0f2"/>
+                  <rect width="240" height="26" rx="5" fill="#f0f0f2"/>
+                  <rect x="0" y="6" width="240" height="20" fill="#f0f0f2"/>
+                  <!-- Logo in header -->
+                  <circle cx="16" cy="13" r="5" fill="#a1a1aa"/>
+                  <rect x="26" y="10" width="34" height="5" rx="2.5" fill="#c4c4c8"/>
+                  <!-- Sidebar -->
+                  <rect x="0" y="26" width="64" height="124" fill="#ebebed"/>
+                  <line x1="64" y1="26" x2="64" y2="150" stroke="#e0e0e3" stroke-width="1"/>
+                  <!-- Nav group label -->
+                  <rect x="10" y="36" width="28" height="3.5" rx="1.75" fill="#c4c4c8"/>
+                  <!-- Active nav item -->
+                  <rect x="0" y="46" width="64" height="15" fill="#e2e2e5"/>
+                  <rect x="0" y="46" width="2.5" height="15" fill="#18181b"/>
+                  <rect x="10" y="51" width="38" height="4" rx="2" fill="#18181b"/>
+                  <!-- Other nav items -->
+                  <rect x="10" y="68" width="34" height="4" rx="2" fill="#c4c4c8"/>
+                  <rect x="10" y="80" width="30" height="4" rx="2" fill="#c4c4c8"/>
+                  <rect x="10" y="92" width="36" height="4" rx="2" fill="#c4c4c8"/>
+                  <rect x="10" y="112" width="24" height="3.5" rx="1.75" fill="#c4c4c8"/>
+                  <rect x="10" y="122" width="32" height="4" rx="2" fill="#c4c4c8"/>
+                  <rect x="10" y="134" width="28" height="4" rx="2" fill="#c4c4c8"/>
+                  <!-- Content area -->
+                  <rect x="64" y="26" width="176" height="124" fill="#f9f9fa"/>
+                  <!-- Content placeholder -->
+                  <rect x="76" y="40" width="90" height="7" rx="3.5" fill="#e4e4e7"/>
+                  <rect x="76" y="54" width="60" height="4" rx="2" fill="#ebebed"/>
+                  <rect x="76" y="68" width="152" height="56" rx="6" fill="#eeeeef"/>
+                  <rect x="76" y="132" width="70" height="8" rx="4" fill="#e4e4e7"/>
+                </svg>
+              </div>
+              <div class="nav-tile-info">
+                <div class="nav-tile-check"><i class="ti ti-check"></i></div>
+                <div class="nav-tile-name">Persistent sidebar</div>
+                <div class="nav-tile-desc">Full-width sidebar always visible with labels. Standard for most enterprise apps.</div>
+              </div>
+            </div>
+
+            <!-- 2. Collapsible sidebar / icon rail -->
+            <div class="nav-tile" data-nav="collapsible-sidebar" onclick="selectNav(this)">
+              <div class="nav-tile-thumb">
+                <svg viewBox="0 0 240 150" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <!-- App frame -->
+                  <rect width="240" height="150" rx="6" fill="#f9f9fa"/>
+                  <!-- Header -->
+                  <rect width="240" height="26" rx="5" fill="#f0f0f2"/>
+                  <rect x="0" y="6" width="240" height="20" fill="#f0f0f2"/>
+                  <!-- Logo in header -->
+                  <circle cx="16" cy="13" r="5" fill="#a1a1aa"/>
+                  <rect x="26" y="10" width="34" height="5" rx="2.5" fill="#c4c4c8"/>
+                  <!-- Collapsed icon rail -->
+                  <rect x="0" y="26" width="28" height="124" fill="#ebebed"/>
+                  <line x1="28" y1="26" x2="28" y2="150" stroke="#e0e0e3" stroke-width="1"/>
+                  <!-- Icon placeholders in rail -->
+                  <rect x="8" y="40" width="12" height="12" rx="3" fill="#18181b"/>
+                  <rect x="8" y="60" width="12" height="12" rx="3" fill="#d4d4d7"/>
+                  <rect x="8" y="80" width="12" height="12" rx="3" fill="#d4d4d7"/>
+                  <rect x="8" y="100" width="12" height="12" rx="3" fill="#d4d4d7"/>
+                  <rect x="8" y="120" width="12" height="12" rx="3" fill="#d4d4d7"/>
+                  <!-- Expand handle hint -->
+                  <rect x="22" y="70" width="3" height="10" rx="1.5" fill="#c4c4c8"/>
+                  <!-- Expanded panel ghost (hover state) -->
+                  <rect x="28" y="26" width="72" height="124" fill="#f4f4f6" opacity="0.85"/>
+                  <line x1="100" y1="26" x2="100" y2="150" stroke="#e0e0e3" stroke-width="1"/>
+                  <rect x="36" y="44" width="46" height="4" rx="2" fill="#18181b"/>
+                  <rect x="36" y="64" width="38" height="4" rx="2" fill="#d4d4d7"/>
+                  <rect x="36" y="84" width="42" height="4" rx="2" fill="#d4d4d7"/>
+                  <rect x="36" y="104" width="36" height="4" rx="2" fill="#d4d4d7"/>
+                  <!-- Content area -->
+                  <rect x="100" y="26" width="140" height="124" fill="#f9f9fa"/>
+                  <rect x="110" y="40" width="70" height="7" rx="3.5" fill="#e4e4e7"/>
+                  <rect x="110" y="54" width="110" height="72" rx="6" fill="#eeeeef"/>
+                </svg>
+              </div>
+              <div class="nav-tile-info">
+                <div class="nav-tile-check"><i class="ti ti-check"></i></div>
+                <div class="nav-tile-name">Collapsible sidebar</div>
+                <div class="nav-tile-desc">Collapses to icon-only rail to save space. Expands on hover or click.</div>
+              </div>
+            </div>
+
+            <!-- 3. Top nav tabs -->
+            <div class="nav-tile" data-nav="top-nav-tabs" onclick="selectNav(this)">
+              <div class="nav-tile-thumb">
+                <svg viewBox="0 0 240 150" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <!-- App frame -->
+                  <rect width="240" height="150" rx="6" fill="#f9f9fa"/>
+                  <!-- Header -->
+                  <rect width="240" height="26" rx="5" fill="#f0f0f2"/>
+                  <rect x="0" y="6" width="240" height="20" fill="#f0f0f2"/>
+                  <!-- Logo in header -->
+                  <circle cx="16" cy="13" r="5" fill="#a1a1aa"/>
+                  <rect x="26" y="10" width="34" height="5" rx="2.5" fill="#c4c4c8"/>
+                  <!-- Tab row -->
+                  <rect x="0" y="26" width="240" height="22" fill="#f7f7f8"/>
+                  <line x1="0" y1="48" x2="240" y2="48" stroke="#e4e4e7" stroke-width="1"/>
+                  <!-- Tab items -->
+                  <rect x="12" y="33" width="34" height="6" rx="3" fill="#18181b"/>
+                  <rect x="0" y="43" width="58" height="3" rx="0" fill="#18181b"/>
+                  <rect x="12" y="47" width="46" height="1" rx="0" fill="#18181b"/>
+                  <rect x="70" y="33" width="32" height="6" rx="3" fill="#c4c4c8"/>
+                  <rect x="116" y="33" width="36" height="6" rx="3" fill="#c4c4c8"/>
+                  <rect x="166" y="33" width="30" height="6" rx="3" fill="#c4c4c8"/>
+                  <!-- Active tab underline -->
+                  <rect x="10" y="45" width="44" height="2.5" rx="1.25" fill="#18181b"/>
+                  <!-- Content area -->
+                  <rect x="0" y="48" width="240" height="102" fill="#f9f9fa"/>
+                  <rect x="16" y="62" width="110" height="8" rx="4" fill="#e4e4e7"/>
+                  <rect x="16" y="78" width="80" height="4" rx="2" fill="#ebebed"/>
+                  <rect x="16" y="92" width="208" height="46" rx="6" fill="#eeeeef"/>
+                </svg>
+              </div>
+              <div class="nav-tile-info">
+                <div class="nav-tile-check"><i class="ti ti-check"></i></div>
+                <div class="nav-tile-name">Top nav tabs</div>
+                <div class="nav-tile-desc">Horizontal tabs directly below the header. Clean for apps with 3 to 6 top-level sections.</div>
+              </div>
+            </div>
+
+            <!-- 4. Dual-level nav -->
+            <div class="nav-tile" data-nav="dual-level" onclick="selectNav(this)">
+              <div class="nav-tile-thumb">
+                <svg viewBox="0 0 240 150" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <!-- App frame -->
+                  <rect width="240" height="150" rx="6" fill="#f9f9fa"/>
+                  <!-- Top bar with section tabs -->
+                  <rect width="240" height="26" rx="5" fill="#18181b"/>
+                  <rect x="0" y="6" width="240" height="20" fill="#18181b"/>
+                  <!-- Logo in header -->
+                  <circle cx="16" cy="13" r="5" fill="#6b6b6f"/>
+                  <!-- Section tabs in dark header -->
+                  <rect x="30" y="9" width="28" height="9" rx="4.5" fill="#fff" opacity="0.95"/>
+                  <rect x="66" y="9" width="28" height="9" rx="4.5" fill="#fff" opacity="0.18"/>
+                  <rect x="102" y="9" width="32" height="9" rx="4.5" fill="#fff" opacity="0.18"/>
+                  <rect x="142" y="9" width="26" height="9" rx="4.5" fill="#fff" opacity="0.18"/>
+                  <!-- Sidebar -->
+                  <rect x="0" y="26" width="60" height="124" fill="#ebebed"/>
+                  <line x1="60" y1="26" x2="60" y2="150" stroke="#e0e0e3" stroke-width="1"/>
+                  <!-- Nav group label -->
+                  <rect x="10" y="36" width="24" height="3.5" rx="1.75" fill="#c4c4c8"/>
+                  <!-- Active nav item -->
+                  <rect x="0" y="46" width="60" height="14" fill="#e2e2e5"/>
+                  <rect x="0" y="46" width="2.5" height="14" fill="#18181b"/>
+                  <rect x="10" y="50" width="36" height="4" rx="2" fill="#18181b"/>
+                  <!-- Other nav items -->
+                  <rect x="10" y="67" width="30" height="4" rx="2" fill="#c4c4c8"/>
+                  <rect x="10" y="79" width="34" height="4" rx="2" fill="#c4c4c8"/>
+                  <rect x="10" y="91" width="26" height="4" rx="2" fill="#c4c4c8"/>
+                  <!-- Content area -->
+                  <rect x="60" y="26" width="180" height="124" fill="#f9f9fa"/>
+                  <rect x="72" y="40" width="80" height="7" rx="3.5" fill="#e4e4e7"/>
+                  <rect x="72" y="54" width="55" height="4" rx="2" fill="#ebebed"/>
+                  <rect x="72" y="68" width="156" height="66" rx="6" fill="#eeeeef"/>
+                </svg>
+              </div>
+              <div class="nav-tile-info">
+                <div class="nav-tile-check"><i class="ti ti-check"></i></div>
+                <div class="nav-tile-name">Dual-level nav</div>
+                <div class="nav-tile-desc">Top bar owns global section switching. Sidebar owns in-section pages. Scales to complex apps.</div>
+              </div>
+            </div>
+
+            <!-- 5. Hamburger + drawer -->
+            <div class="nav-tile" data-nav="hamburger-drawer" onclick="selectNav(this)">
+              <div class="nav-tile-thumb">
+                <svg viewBox="0 0 240 150" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <!-- App frame -->
+                  <rect width="240" height="150" rx="6" fill="#f9f9fa"/>
+                  <!-- Header -->
+                  <rect width="240" height="26" rx="5" fill="#f0f0f2"/>
+                  <rect x="0" y="6" width="240" height="20" fill="#f0f0f2"/>
+                  <!-- Hamburger icon in header -->
+                  <rect x="10" y="9" width="14" height="2" rx="1" fill="#555"/>
+                  <rect x="10" y="13" width="14" height="2" rx="1" fill="#555"/>
+                  <rect x="10" y="17" width="14" height="2" rx="1" fill="#555"/>
+                  <!-- Logo to right of hamburger -->
+                  <rect x="32" y="10" width="40" height="5" rx="2.5" fill="#c4c4c8"/>
+                  <!-- Full-width content -->
+                  <rect x="0" y="26" width="240" height="124" fill="#f9f9fa"/>
+                  <rect x="16" y="40" width="100" height="7" rx="3.5" fill="#e4e4e7"/>
+                  <rect x="16" y="54" width="70" height="4" rx="2" fill="#ebebed"/>
+                  <rect x="16" y="68" width="208" height="66" rx="6" fill="#eeeeef"/>
+                  <!-- Drawer overlay (semi-transparent) -->
+                  <rect x="0" y="26" width="240" height="124" fill="#000" opacity="0.15"/>
+                  <!-- Drawer panel -->
+                  <rect x="0" y="26" width="80" height="124" fill="#fff"/>
+                  <line x1="80" y1="26" x2="80" y2="150" stroke="#e4e4e7" stroke-width="1"/>
+                  <!-- Nav items in drawer -->
+                  <rect x="10" y="38" width="32" height="3.5" rx="1.75" fill="#c4c4c8"/>
+                  <rect x="0" y="48" width="80" height="14" fill="#f0f0f2"/>
+                  <rect x="0" y="48" width="2.5" height="14" fill="#18181b"/>
+                  <rect x="10" y="53" width="44" height="4" rx="2" fill="#18181b"/>
+                  <rect x="10" y="69" width="38" height="4" rx="2" fill="#d4d4d7"/>
+                  <rect x="10" y="81" width="42" height="4" rx="2" fill="#d4d4d7"/>
+                  <rect x="10" y="93" width="36" height="4" rx="2" fill="#d4d4d7"/>
+                </svg>
+              </div>
+              <div class="nav-tile-info">
+                <div class="nav-tile-check"><i class="ti ti-check"></i></div>
+                <div class="nav-tile-name">Hamburger + drawer</div>
+                <div class="nav-tile-desc">Nav hidden by default, opens as an overlay. Maximizes content space. Common on mobile-first apps.</div>
+              </div>
+            </div>
+
+            <!-- 6. Command palette -->
+            <div class="nav-tile" data-nav="command-palette" onclick="selectNav(this)">
+              <div class="nav-tile-thumb">
+                <svg viewBox="0 0 240 150" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <!-- App frame -->
+                  <rect width="240" height="150" rx="6" fill="#f9f9fa"/>
+                  <!-- Header -->
+                  <rect width="240" height="26" rx="5" fill="#f0f0f2"/>
+                  <rect x="0" y="6" width="240" height="20" fill="#f0f0f2"/>
+                  <!-- Logo in header -->
+                  <circle cx="16" cy="13" r="5" fill="#a1a1aa"/>
+                  <rect x="26" y="10" width="34" height="5" rx="2.5" fill="#c4c4c8"/>
+                  <!-- Cmd+K hint pill in header (right side) -->
+                  <rect x="164" y="8" width="62" height="10" rx="4" fill="#e4e4e7"/>
+                  <rect x="168" y="11" width="16" height="4" rx="2" fill="#a1a1aa"/>
+                  <rect x="188" y="11" width="3" height="4" rx="1" fill="#c4c4c8"/>
+                  <rect x="195" y="11" width="12" height="4" rx="2" fill="#a1a1aa"/>
+                  <!-- Minimal sidebar (icon rail) -->
+                  <rect x="0" y="26" width="28" height="124" fill="#ebebed"/>
+                  <line x1="28" y1="26" x2="28" y2="150" stroke="#e0e0e3" stroke-width="1"/>
+                  <rect x="8" y="40" width="12" height="12" rx="3" fill="#18181b"/>
+                  <rect x="8" y="60" width="12" height="12" rx="3" fill="#d4d4d7"/>
+                  <rect x="8" y="80" width="12" height="12" rx="3" fill="#d4d4d7"/>
+                  <rect x="8" y="100" width="12" height="12" rx="3" fill="#d4d4d7"/>
+                  <!-- Content area -->
+                  <rect x="28" y="26" width="212" height="124" fill="#f9f9fa"/>
+                  <!-- Content placeholder (dimmed, palette is focus) -->
+                  <rect x="38" y="40" width="80" height="6" rx="3" fill="#e8e8ea"/>
+                  <rect x="38" y="54" width="172" height="48" rx="5" fill="#eeeeef"/>
+                  <!-- Command palette overlay -->
+                  <rect x="40" y="54" width="160" height="72" rx="8" fill="#fff" opacity="0.55"/>
+                  <rect x="44" y="58" width="152" height="60" rx="8" fill="#fff" filter="drop-shadow(0 8px 24px rgba(0,0,0,0.18))"/>
+                  <!-- Search input row -->
+                  <rect x="50" y="66" width="10" height="10" rx="3" fill="#e0e0e3"/>
+                  <rect x="64" y="69" width="60" height="4" rx="2" fill="#c4c4c8"/>
+                  <rect x="128" y="69" width="1.5" height="6" rx="0.75" fill="#18181b"/>
+                  <line x1="44" y1="82" x2="196" y2="82" stroke="#f0f0f2" stroke-width="1"/>
+                  <!-- Result items -->
+                  <rect x="50" y="88" width="70" height="4" rx="2" fill="#d4d4d7"/>
+                  <rect x="50" y="98" width="55" height="4" rx="2" fill="#e4e4e7"/>
+                  <rect x="50" y="108" width="65" height="4" rx="2" fill="#e4e4e7"/>
+                </svg>
+              </div>
+              <div class="nav-tile-info">
+                <div class="nav-tile-check"><i class="ti ti-check"></i></div>
+                <div class="nav-tile-name">Command palette</div>
+                <div class="nav-tile-desc">Cmd+K launcher as primary navigation. Best for power users with predictable workflows.</div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- Sticky footer -->
+  <div class="cfg-sticky-footer">
+    <div class="cfg-sticky-footer-inner">
+      <button class="cfg-revert-btn" id="cfg-revert-btn" onclick="revertNav()" disabled>Revert changes</button>
+      <button class="cfg-save-btn"   id="cfg-save-btn"   onclick="saveNav()" disabled>Save Navigation</button>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="cfg-toast" id="cfg-toast"></div>
+
+</div>
+
+<script>
+  var _savedNav    = 'persistent-sidebar';
+  var _selectedNav = 'persistent-sidebar';
+
+  function selectNav(tile) {
+    document.querySelectorAll('.nav-tile').forEach(function(t) { t.classList.remove('selected'); });
+    tile.classList.add('selected');
+    _selectedNav = tile.getAttribute('data-nav');
+    _syncButtons();
+  }
+
+  function _syncButtons() {
+    var changed = _selectedNav !== _savedNav;
+    document.getElementById('cfg-revert-btn').disabled = !changed;
+    document.getElementById('cfg-save-btn').disabled   = !changed;
+  }
+
+  function saveNav() {
+    _savedNav = _selectedNav;
+    _syncButtons();
+    showToast('Navigation saved');
+    /* TODO: persist _savedNav to Supabase profiles.nav_pattern keyed to user ID */
+  }
+
+  function revertNav() {
+    _selectedNav = _savedNav;
+    document.querySelectorAll('.nav-tile').forEach(function(t) {
+      t.classList.toggle('selected', t.getAttribute('data-nav') === _savedNav);
+    });
+    _syncButtons();
+    showToast('Changes reverted');
+  }
+
+  function showToast(msg) {
+    var t = document.getElementById('cfg-toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(t._tid);
+    t._tid = setTimeout(function() { t.classList.remove('show'); }, 2800);
+  }
+</script>
+
+</body>
+</html>
