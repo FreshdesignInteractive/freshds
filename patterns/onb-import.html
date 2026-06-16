@@ -86,7 +86,7 @@
         <p class="onb-sub">Import existing data to hit the ground running. Supports CSV, JSON, and direct paste.</p>
 
         <div class="import-tabs">
-          <fresh-simple-tabs
+          <fresh-topbar-menu
             id="import-tabs"
             tabs='[
               {"key":"upload","label":"Upload file"},
@@ -94,7 +94,7 @@
               {"key":"url","label":"From URL"}
             ]'
             active="upload">
-          </fresh-simple-tabs>
+          </fresh-topbar-menu>
         </div>
 
         <!-- Upload panel -->
@@ -159,7 +159,7 @@
 </script>
 <script src="../components/core/fresh-button.js"></script>
 <script src="../components/core/fresh-input.js"></script>
-<script src="../components/navigation/fresh-simple-tabs.js"></script>
+<script src="../components/navigation/fresh-topbar-menu.js"></script>
 <script>
   document.getElementById('import-tabs').addEventListener('change', e => {
     document.querySelectorAll('.import-panel').forEach(p => p.classList.remove('active'));

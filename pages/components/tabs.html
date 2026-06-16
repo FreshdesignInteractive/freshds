@@ -121,10 +121,10 @@
         </div>
         <ul class="spec-rule-list" id="rules-general">
           <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Always listen to the <code>change</code> event and update panel visibility in the handler. Never rely on CSS-only display toggling for panel switching.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
-          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Use <code>badge</code> within a tab item only for unread counts or status indicators, not for decorative labels. Use <code>fresh-simple-tabs</code> for top-level navigation where badge support is not needed.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Use <code>badge</code> within a tab item only for unread counts or status indicators, not for decorative labels. Use <code>fresh-topbar-menu</code> for top-level navigation where badge support is not needed.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
           <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Set <code>active</code> to the key of the initially selected tab on page load. Do not leave it blank or the tab bar will render with no active state.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
           <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Keep tab labels short (one or two words). If a label requires more than three words, consider restructuring the IA rather than wrapping the tab text.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
-          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Do not mix <code>fresh-tabs</code> and <code>fresh-simple-tabs</code> on the same page. Choose one tab style per product context for visual consistency.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Do not mix <code>fresh-tabs</code> and <code>fresh-topbar-menu</code> on the same page. Choose one tab style per product context for visual consistency.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
         </ul>
         <button class="spec-add-rule" onclick="addRule('rules-general')"><i class="ti ti-plus"></i> Add rule</button>
       </div>
@@ -321,10 +321,10 @@
   var DEFAULT_RULES = {
     'rules-general': [
       'Always listen to the <code>change</code> event and update panel visibility in the handler. Never rely on CSS-only display toggling for panel switching.',
-      'Use <code>badge</code> within a tab item only for unread counts or status indicators, not for decorative labels. Use <code>fresh-simple-tabs</code> for top-level navigation where badge support is not needed.',
+      'Use <code>badge</code> within a tab item only for unread counts or status indicators, not for decorative labels. Use <code>fresh-topbar-menu</code> for top-level navigation where badge support is not needed.',
       'Set <code>active</code> to the key of the initially selected tab on page load. Do not leave it blank or the tab bar will render with no active state.',
       'Keep tab labels short (one or two words). If a label requires more than three words, consider restructuring the IA rather than wrapping the tab text.',
-      'Do not mix <code>fresh-tabs</code> and <code>fresh-simple-tabs</code> on the same page. Choose one tab style per product context for visual consistency.'
+      'Do not mix <code>fresh-tabs</code> and <code>fresh-topbar-menu</code> on the same page. Choose one tab style per product context for visual consistency.'
     ]
   };
   function restoreDefaults() {

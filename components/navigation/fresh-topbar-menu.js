@@ -1,18 +1,18 @@
 /* ============================================================
-   FreshDS, <fresh-simple-tabs>
+   FreshDS, <fresh-topbar-menu>
 
    Text-first tab bar with a pill background on the active tab.
    No underline, ideal for top-level navigation, marketing
    pages, and any context where the underline style is too heavy.
 
    Usage:
-     <fresh-simple-tabs
+     <fresh-topbar-menu
        tabs='[{"key":"overview","label":"Overview"},{"key":"activity","label":"Activity"}]'
        active="overview">
-     </fresh-simple-tabs>
+     </fresh-topbar-menu>
 
      <script>
-       document.querySelector('fresh-simple-tabs').addEventListener('change', e => {
+       document.querySelector('fresh-topbar-menu').addEventListener('change', e => {
          // e.detail.key — the newly active tab key
        });
      </script>
@@ -26,7 +26,7 @@
      change , CustomEvent({ detail: { key } }), bubbles, composed
    ============================================================ */
 
-class FreshSimpleTabs extends HTMLElement {
+class FreshTopbarMenu extends HTMLElement {
   static get observedAttributes() { return ['tabs', 'active', 'size']; }
 
   constructor() {
@@ -149,4 +149,4 @@ class FreshSimpleTabs extends HTMLElement {
   }
 }
 
-customElements.define('fresh-simple-tabs', FreshSimpleTabs);
+customElements.define('fresh-topbar-menu', FreshTopbarMenu);

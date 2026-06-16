@@ -98,7 +98,7 @@
           <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Add <code>hamburger</code> only when a collapsible sidebar or mobile drawer is present on the same page. Wire the <code>hamburger-click</code> event to toggle that panel.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
           <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Place the user avatar or account menu in the <code>actions</code> slot on the far right, always the last element in that slot.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
           <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Limit the <code>nav</code> slot to top-level destination links only. Section or sub-page links belong in a sidebar or secondary nav, not in the navbar.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
-          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Cap the <code>nav</code> slot at 5 destination items. Beyond 5, links overflow the bar at typical viewport widths. Move lower-priority destinations to a secondary menu or sidebar. Use <code>fresh-simple-tabs</code> with <code>size="sm"</code> as the nav slot content to get built-in hover and active states without custom styling.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Cap the <code>nav</code> slot at 5 destination items. Beyond 5, links overflow the bar at typical viewport widths. Move lower-priority destinations to a secondary menu or sidebar. Use <code>fresh-topbar-menu</code> with <code>size="sm"</code> as the nav slot content to get built-in hover and active states without custom styling.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
         </ul>
         <button class="spec-add-rule" onclick="addRule('rules-general')"><i class="ti ti-plus"></i> Add rule</button>
       </div>
@@ -153,10 +153,10 @@
       <div style="padding:16px 20px;display:flex;flex-direction:column;gap:0;">
 
         <div class="code-block" data-code="&lt;fresh-navbar&gt;
-  &lt;fresh-simple-tabs slot=&quot;nav&quot; size=&quot;sm&quot;
+  &lt;fresh-topbar-menu slot=&quot;nav&quot; size=&quot;sm&quot;
     tabs='[{&quot;key&quot;:&quot;dashboard&quot;,&quot;label&quot;:&quot;Dashboard&quot;},{&quot;key&quot;:&quot;projects&quot;,&quot;label&quot;:&quot;Projects&quot;},{&quot;key&quot;:&quot;settings&quot;,&quot;label&quot;:&quot;Settings&quot;}]'
     active=&quot;projects&quot;&gt;
-  &lt;/fresh-simple-tabs&gt;
+  &lt;/fresh-topbar-menu&gt;
   &lt;div slot=&quot;actions&quot; style=&quot;display:flex;align-items:center;gap:8px&quot;&gt;
     &lt;fresh-button variant=&quot;ghost&quot; icon-only size=&quot;sm&quot; aria-label=&quot;Search&quot;&gt;&lt;i class=&quot;ti ti-search&quot;&gt;&lt;/i&gt;&lt;/fresh-button&gt;
     &lt;fresh-avatar name=&quot;Jane Smith&quot; size=&quot;sm&quot;&gt;&lt;/fresh-avatar&gt;
@@ -164,10 +164,10 @@
 &lt;/fresh-navbar&gt;">
           <div class="code-block-header"><span><span class="code-lang">HTML</span><span class="code-context">Default with nav and actions</span></span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
           <div class="code-body"><span class="hl-pun">&lt;</span><span class="hl-tag">fresh-navbar</span><span class="hl-pun">&gt;</span>
-  <span class="hl-pun">&lt;</span><span class="hl-tag">fresh-simple-tabs</span> <span class="hl-attr">slot</span><span class="hl-pun">=</span><span class="hl-val">"nav"</span> <span class="hl-attr">size</span><span class="hl-pun">=</span><span class="hl-val">"sm"</span>
+  <span class="hl-pun">&lt;</span><span class="hl-tag">fresh-topbar-menu</span> <span class="hl-attr">slot</span><span class="hl-pun">=</span><span class="hl-val">"nav"</span> <span class="hl-attr">size</span><span class="hl-pun">=</span><span class="hl-val">"sm"</span>
     <span class="hl-attr">tabs</span><span class="hl-pun">=</span><span class="hl-val">'[{"key":"dashboard","label":"Dashboard"},{"key":"projects","label":"Projects"},{"key":"settings","label":"Settings"}]'</span>
     <span class="hl-attr">active</span><span class="hl-pun">=</span><span class="hl-val">"projects"</span><span class="hl-pun">&gt;</span>
-  <span class="hl-pun">&lt;/</span><span class="hl-tag">fresh-simple-tabs</span><span class="hl-pun">&gt;</span>
+  <span class="hl-pun">&lt;/</span><span class="hl-tag">fresh-topbar-menu</span><span class="hl-pun">&gt;</span>
   <span class="hl-pun">&lt;</span><span class="hl-tag">div</span> <span class="hl-attr">slot</span><span class="hl-pun">=</span><span class="hl-val">"actions"</span> <span class="hl-attr">style</span><span class="hl-pun">=</span><span class="hl-val">"display:flex;align-items:center;gap:8px"</span><span class="hl-pun">&gt;</span>
     <span class="hl-pun">&lt;</span><span class="hl-tag">fresh-button</span> <span class="hl-attr">variant</span><span class="hl-pun">=</span><span class="hl-val">"ghost"</span> <span class="hl-attr">icon-only</span> <span class="hl-attr">size</span><span class="hl-pun">=</span><span class="hl-val">"sm"</span> <span class="hl-attr">aria-label</span><span class="hl-pun">=</span><span class="hl-val">"Search"</span><span class="hl-pun">&gt;&lt;</span><span class="hl-tag">i</span> <span class="hl-attr">class</span><span class="hl-pun">=</span><span class="hl-val">"ti ti-search"</span><span class="hl-pun">&gt;&lt;/</span><span class="hl-tag">i</span><span class="hl-pun">&gt;&lt;/</span><span class="hl-tag">fresh-button</span><span class="hl-pun">&gt;</span>
     <span class="hl-pun">&lt;</span><span class="hl-tag">fresh-avatar</span> <span class="hl-attr">name</span><span class="hl-pun">=</span><span class="hl-val">"Jane Smith"</span> <span class="hl-attr">size</span><span class="hl-pun">=</span><span class="hl-val">"sm"</span><span class="hl-pun">&gt;&lt;/</span><span class="hl-tag">fresh-avatar</span><span class="hl-pun">&gt;</span>
@@ -176,10 +176,10 @@
         </div>
 
         <div class="code-block" data-code="&lt;fresh-navbar hamburger id=&quot;app-navbar&quot;&gt;
-  &lt;fresh-simple-tabs slot=&quot;nav&quot; size=&quot;sm&quot;
+  &lt;fresh-topbar-menu slot=&quot;nav&quot; size=&quot;sm&quot;
     tabs='[{&quot;key&quot;:&quot;dashboard&quot;,&quot;label&quot;:&quot;Dashboard&quot;}]'
     active=&quot;dashboard&quot; id=&quot;nav-tabs&quot;&gt;
-  &lt;/fresh-simple-tabs&gt;
+  &lt;/fresh-topbar-menu&gt;
   &lt;div slot=&quot;actions&quot;&gt;
     &lt;fresh-avatar name=&quot;Jane Smith&quot; size=&quot;sm&quot;&gt;&lt;/fresh-avatar&gt;
   &lt;/div&gt;
@@ -194,10 +194,10 @@
 &lt;/script&gt;">
           <div class="code-block-header"><span><span class="code-lang">HTML</span><span class="code-context">Hamburger with sidebar toggle</span></span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
           <div class="code-body"><span class="hl-pun">&lt;</span><span class="hl-tag">fresh-navbar</span> <span class="hl-attr">hamburger</span> <span class="hl-attr">id</span><span class="hl-pun">=</span><span class="hl-val">"app-navbar"</span><span class="hl-pun">&gt;</span>
-  <span class="hl-pun">&lt;</span><span class="hl-tag">fresh-simple-tabs</span> <span class="hl-attr">slot</span><span class="hl-pun">=</span><span class="hl-val">"nav"</span> <span class="hl-attr">size</span><span class="hl-pun">=</span><span class="hl-val">"sm"</span>
+  <span class="hl-pun">&lt;</span><span class="hl-tag">fresh-topbar-menu</span> <span class="hl-attr">slot</span><span class="hl-pun">=</span><span class="hl-val">"nav"</span> <span class="hl-attr">size</span><span class="hl-pun">=</span><span class="hl-val">"sm"</span>
     <span class="hl-attr">tabs</span><span class="hl-pun">=</span><span class="hl-val">'[{"key":"dashboard","label":"Dashboard"}]'</span>
     <span class="hl-attr">active</span><span class="hl-pun">=</span><span class="hl-val">"dashboard"</span> <span class="hl-attr">id</span><span class="hl-pun">=</span><span class="hl-val">"nav-tabs"</span><span class="hl-pun">&gt;</span>
-  <span class="hl-pun">&lt;/</span><span class="hl-tag">fresh-simple-tabs</span><span class="hl-pun">&gt;</span>
+  <span class="hl-pun">&lt;/</span><span class="hl-tag">fresh-topbar-menu</span><span class="hl-pun">&gt;</span>
   <span class="hl-pun">&lt;</span><span class="hl-tag">div</span> <span class="hl-attr">slot</span><span class="hl-pun">=</span><span class="hl-val">"actions"</span><span class="hl-pun">&gt;</span>
     <span class="hl-pun">&lt;</span><span class="hl-tag">fresh-avatar</span> <span class="hl-attr">name</span><span class="hl-pun">=</span><span class="hl-val">"Jane Smith"</span> <span class="hl-attr">size</span><span class="hl-pun">=</span><span class="hl-val">"sm"</span><span class="hl-pun">&gt;&lt;/</span><span class="hl-tag">fresh-avatar</span><span class="hl-pun">&gt;</span>
   <span class="hl-pun">&lt;/</span><span class="hl-tag">div</span><span class="hl-pun">&gt;</span>
@@ -279,7 +279,7 @@
 
 <script src="components/core/fresh-button.js"></script>
 <script src="components/data/fresh-avatar.js"></script>
-<script src="components/navigation/fresh-simple-tabs.js"></script>
+<script src="components/navigation/fresh-topbar-menu.js"></script>
 <script src="components/navigation/fresh-navbar.js"></script>
 <script src="js/spec-page.js"></script>
 
@@ -356,7 +356,7 @@
       'Add <code>hamburger</code> only when a collapsible sidebar or mobile drawer is present on the same page. Wire the <code>hamburger-click</code> event to toggle that panel.',
       'Place the user avatar or account menu in the <code>actions</code> slot on the far right, always the last element in that slot.',
       'Limit the <code>nav</code> slot to top-level destination links only. Section or sub-page links belong in a sidebar or secondary nav, not in the navbar.',
-      'Cap the <code>nav</code> slot at 5 destination items. Beyond 5, links overflow the bar at typical viewport widths. Move lower-priority destinations to a secondary menu or sidebar. Use <code>fresh-simple-tabs</code> with <code>size="sm"</code> as the nav slot content to get built-in hover and active states without custom styling.'
+      'Cap the <code>nav</code> slot at 5 destination items. Beyond 5, links overflow the bar at typical viewport widths. Move lower-priority destinations to a secondary menu or sidebar. Use <code>fresh-topbar-menu</code> with <code>size="sm"</code> as the nav slot content to get built-in hover and active states without custom styling.'
     ]
   };
   function restoreDefaults() {
