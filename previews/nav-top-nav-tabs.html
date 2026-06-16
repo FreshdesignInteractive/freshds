@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en" id="app">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FreshDS Shell Preview | Top Nav Tabs</title>
+
+<!-- DS token layers -->
+<link rel="stylesheet" href="/tokens/primitives.css">
+<link rel="stylesheet" href="/tokens/theme.css">
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<!-- Tabler icons -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+
+<!-- DS color engine -->
+<script src="/js/freshds.js"></script>
+
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; height: 100%; font-family: var(--font-sans); -webkit-font-smoothing: antialiased; }
+
+  .shell-outer { display: flex; flex-direction: column; height: 100vh; overflow: hidden; background: var(--surface-bg); }
+
+  /* Tab strip sits between navbar and content */
+  .tab-strip {
+    background: var(--surface-nav);
+    border-bottom: 1px solid var(--surface-border);
+    padding: 0 var(--space-5);
+    display: flex;
+    align-items: center;
+    height: 44px;
+    flex-shrink: 0;
+  }
+
+  /* Scrollable content area */
+  .shell-content {
+    flex: 1;
+    overflow-y: auto;
+    background: var(--surface-bg);
+    padding: var(--space-8) var(--space-5);
+  }
+
+  /* Content panels */
+  .tab-panel { display: none; max-width: 900px; }
+  .tab-panel.active { display: block; }
+
+  .panel-heading {
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--text-primary);
+    letter-spacing: -0.02em;
+    margin: 0 0 var(--space-2);
+  }
+  .panel-subheading {
+    font-size: var(--font-size-md);
+    color: var(--text-secondary);
+    margin: 0 0 var(--space-8);
+  }
+
+  /* Placeholder card grid */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-4);
+    margin-bottom: var(--space-6);
+  }
+  @media (max-width: 640px) { .card-grid { grid-template-columns: 1fr; } }
+
+  .stat-card {
+    background: var(--surface-canvas);
+    border: 1px solid var(--surface-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-5);
+  }
+  .stat-label { font-size: var(--font-size-xs); font-weight: 500; color: var(--text-tertiary); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: var(--space-2); }
+  .stat-value { font-size: 28px; font-weight: 700; color: var(--text-primary); letter-spacing: -0.03em; margin-bottom: var(--space-1); }
+  .stat-delta { font-size: var(--font-size-sm); color: var(--color-success); display: flex; align-items: center; gap: 4px; }
+  .stat-delta.down { color: var(--color-danger); }
+
+  .content-card {
+    background: var(--surface-canvas);
+    border: 1px solid var(--surface-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-5);
+    margin-bottom: var(--space-4);
+  }
+  .content-card-title { font-size: var(--font-size-md); font-weight: 600; color: var(--text-primary); margin-bottom: var(--space-3); }
+
+  /* Placeholder rows in cards */
+  .placeholder-row { height: 8px; border-radius: var(--radius-sm); background: var(--surface-subtle); margin-bottom: var(--space-2); }
+  .placeholder-row.short { width: 40%; }
+  .placeholder-row.medium { width: 65%; }
+  .placeholder-row.long { width: 90%; }
+
+  .empty-state {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    padding: var(--space-12) var(--space-5); gap: var(--space-3);
+    text-align: center;
+  }
+  .empty-icon { font-size: 40px; color: var(--text-tertiary); }
+  .empty-title { font-size: var(--font-size-lg); font-weight: 600; color: var(--text-primary); }
+  .empty-desc { font-size: var(--font-size-md); color: var(--text-secondary); max-width: 320px; }
+
+  /* Brand slot */
+  .brand-slot { display: flex; align-items: center; gap: var(--space-2); }
+  .brand-mark { width: 28px; height: 28px; border-radius: var(--radius-sm); background: var(--color-interactive); display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700; color: #fff; flex-shrink: 0; letter-spacing: -0.02em; }
+  .brand-name { font-size: var(--font-size-md); font-weight: 600; color: var(--text-primary); letter-spacing: -0.01em; white-space: nowrap; }
+</style>
+</head>
+
+<body>
+<div class="shell-outer">
+
+  <fresh-navbar id="app-navbar">
+    <div slot="brand" id="nb-brand" class="brand-slot">
+      <div class="brand-mark">A</div>
+      <span class="brand-name">Acme Corp</span>
+    </div>
+    <div slot="actions" id="nb-actions" style="display:flex;align-items:center;gap:var(--space-1)">
+      <fresh-button variant="ghost" size="sm" aria-label="Search"><i class="ti ti-search"></i></fresh-button>
+      <fresh-button variant="ghost" size="sm" aria-label="Notifications"><i class="ti ti-bell"></i></fresh-button>
+      <fresh-avatar name="Jane Smith" size="sm"></fresh-avatar>
+    </div>
+  </fresh-navbar>
+
+  <!-- Tab strip: top-level section navigation -->
+  <div class="tab-strip">
+    <fresh-simple-tabs
+      id="top-tabs"
+      tabs='[{"key":"overview","label":"Overview"},{"key":"analytics","label":"Analytics"},{"key":"reports","label":"Reports"},{"key":"projects","label":"Projects"},{"key":"settings","label":"Settings"}]'
+      active="overview">
+    </fresh-simple-tabs>
+  </div>
+
+  <main class="shell-content">
+
+    <!-- Overview -->
+    <div class="tab-panel active" id="panel-overview">
+      <h1 class="panel-heading">Overview</h1>
+      <p class="panel-subheading">Your workspace at a glance. Here is what is happening today.</p>
+      <div class="card-grid">
+        <div class="stat-card">
+          <div class="stat-label">Total users</div>
+          <div class="stat-value">24,512</div>
+          <div class="stat-delta"><i class="ti ti-trending-up"></i> +12% this month</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Revenue</div>
+          <div class="stat-value">$84.2k</div>
+          <div class="stat-delta"><i class="ti ti-trending-up"></i> +8.4% vs last month</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Churn rate</div>
+          <div class="stat-value">1.8%</div>
+          <div class="stat-delta down"><i class="ti ti-trending-down"></i> -0.3% this month</div>
+        </div>
+      </div>
+      <div class="content-card">
+        <div class="content-card-title">Recent activity</div>
+        <div class="placeholder-row long"></div>
+        <div class="placeholder-row medium"></div>
+        <div class="placeholder-row long"></div>
+        <div class="placeholder-row short"></div>
+        <div class="placeholder-row medium"></div>
+      </div>
+      <div class="content-card">
+        <div class="content-card-title">Quick actions</div>
+        <div style="display:flex;gap:var(--space-3);flex-wrap:wrap">
+          <fresh-button variant="primary" size="sm"><i class="ti ti-plus"></i> New project</fresh-button>
+          <fresh-button variant="secondary" size="sm"><i class="ti ti-users"></i> Invite team</fresh-button>
+          <fresh-button variant="ghost" size="sm"><i class="ti ti-file-description"></i> View reports</fresh-button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Analytics -->
+    <div class="tab-panel" id="panel-analytics">
+      <h1 class="panel-heading">Analytics</h1>
+      <p class="panel-subheading">Usage trends, retention, and performance metrics.</p>
+      <div class="card-grid">
+        <div class="stat-card">
+          <div class="stat-label">Page views</div>
+          <div class="stat-value">1.2M</div>
+          <div class="stat-delta"><i class="ti ti-trending-up"></i> +22% this week</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Avg. session</div>
+          <div class="stat-value">4m 12s</div>
+          <div class="stat-delta"><i class="ti ti-trending-up"></i> +0.4m vs last week</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Bounce rate</div>
+          <div class="stat-value">28.4%</div>
+          <div class="stat-delta down"><i class="ti ti-trending-up"></i> +2.1% this week</div>
+        </div>
+      </div>
+      <div class="content-card">
+        <div class="content-card-title">Traffic over time</div>
+        <div style="height:140px;display:flex;align-items:flex-end;gap:6px;padding:var(--space-2) 0">
+          <div style="flex:1;height:40%;background:var(--surface-subtle);border-radius:var(--radius-sm) var(--radius-sm) 0 0"></div>
+          <div style="flex:1;height:60%;background:var(--surface-subtle);border-radius:var(--radius-sm) var(--radius-sm) 0 0"></div>
+          <div style="flex:1;height:50%;background:var(--surface-subtle);border-radius:var(--radius-sm) var(--radius-sm) 0 0"></div>
+          <div style="flex:1;height:75%;background:var(--surface-subtle);border-radius:var(--radius-sm) var(--radius-sm) 0 0"></div>
+          <div style="flex:1;height:55%;background:var(--surface-subtle);border-radius:var(--radius-sm) var(--radius-sm) 0 0"></div>
+          <div style="flex:1;height:90%;background:var(--color-interactive);border-radius:var(--radius-sm) var(--radius-sm) 0 0;opacity:0.7"></div>
+          <div style="flex:1;height:80%;background:var(--surface-subtle);border-radius:var(--radius-sm) var(--radius-sm) 0 0"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Reports -->
+    <div class="tab-panel" id="panel-reports">
+      <h1 class="panel-heading">Reports</h1>
+      <p class="panel-subheading">Generate, schedule, and export detailed reports.</p>
+      <div class="content-card">
+        <div class="content-card-title">Recent reports</div>
+        <div style="display:flex;flex-direction:column;gap:var(--space-3)">
+          <div style="display:flex;align-items:center;gap:var(--space-3);padding:var(--space-3);border:1px solid var(--surface-border);border-radius:var(--radius-md)">
+            <i class="ti ti-file-description" style="font-size:20px;color:var(--text-tertiary);flex-shrink:0"></i>
+            <div style="flex:1;min-width:0"><div style="font-size:var(--font-size-sm);font-weight:500;color:var(--text-primary)">Monthly revenue summary</div><div style="font-size:var(--font-size-xs);color:var(--text-tertiary);margin-top:2px">Generated Jun 1, 2026</div></div>
+            <fresh-button variant="ghost" size="sm"><i class="ti ti-download"></i></fresh-button>
+          </div>
+          <div style="display:flex;align-items:center;gap:var(--space-3);padding:var(--space-3);border:1px solid var(--surface-border);border-radius:var(--radius-md)">
+            <i class="ti ti-chart-bar" style="font-size:20px;color:var(--text-tertiary);flex-shrink:0"></i>
+            <div style="flex:1;min-width:0"><div style="font-size:var(--font-size-sm);font-weight:500;color:var(--text-primary)">User acquisition by channel</div><div style="font-size:var(--font-size-xs);color:var(--text-tertiary);margin-top:2px">Generated May 28, 2026</div></div>
+            <fresh-button variant="ghost" size="sm"><i class="ti ti-download"></i></fresh-button>
+          </div>
+          <div style="display:flex;align-items:center;gap:var(--space-3);padding:var(--space-3);border:1px solid var(--surface-border);border-radius:var(--radius-md)">
+            <i class="ti ti-users" style="font-size:20px;color:var(--text-tertiary);flex-shrink:0"></i>
+            <div style="flex:1;min-width:0"><div style="font-size:var(--font-size-sm);font-weight:500;color:var(--text-primary)">Team performance Q2</div><div style="font-size:var(--font-size-xs);color:var(--text-tertiary);margin-top:2px">Generated May 15, 2026</div></div>
+            <fresh-button variant="ghost" size="sm"><i class="ti ti-download"></i></fresh-button>
+          </div>
+        </div>
+      </div>
+      <fresh-button variant="primary" size="sm"><i class="ti ti-plus"></i> New report</fresh-button>
+    </div>
+
+    <!-- Projects -->
+    <div class="tab-panel" id="panel-projects">
+      <h1 class="panel-heading">Projects</h1>
+      <p class="panel-subheading">Track progress across all active projects.</p>
+      <div class="content-card">
+        <div class="content-card-title">Active projects</div>
+        <div style="display:flex;flex-direction:column;gap:var(--space-3)">
+          <div style="display:flex;align-items:center;gap:var(--space-3)">
+            <div style="width:8px;height:8px;border-radius:50%;background:var(--color-success);flex-shrink:0"></div>
+            <div style="flex:1;min-width:0">
+              <div style="font-size:var(--font-size-sm);font-weight:500;color:var(--text-primary)">Design system v2</div>
+              <div style="margin-top:4px;height:4px;border-radius:var(--radius-full);background:var(--surface-subtle)"><div style="height:100%;width:72%;border-radius:var(--radius-full);background:var(--color-interactive)"></div></div>
+            </div>
+            <span style="font-size:var(--font-size-xs);color:var(--text-tertiary);flex-shrink:0">72%</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:var(--space-3)">
+            <div style="width:8px;height:8px;border-radius:50%;background:var(--color-warning);flex-shrink:0"></div>
+            <div style="flex:1;min-width:0">
+              <div style="font-size:var(--font-size-sm);font-weight:500;color:var(--text-primary)">Mobile redesign</div>
+              <div style="margin-top:4px;height:4px;border-radius:var(--radius-full);background:var(--surface-subtle)"><div style="height:100%;width:38%;border-radius:var(--radius-full);background:var(--color-warning)"></div></div>
+            </div>
+            <span style="font-size:var(--font-size-xs);color:var(--text-tertiary);flex-shrink:0">38%</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:var(--space-3)">
+            <div style="width:8px;height:8px;border-radius:50%;background:var(--color-interactive);flex-shrink:0"></div>
+            <div style="flex:1;min-width:0">
+              <div style="font-size:var(--font-size-sm);font-weight:500;color:var(--text-primary)">API integration</div>
+              <div style="margin-top:4px;height:4px;border-radius:var(--radius-full);background:var(--surface-subtle)"><div style="height:100%;width:91%;border-radius:var(--radius-full);background:var(--color-interactive)"></div></div>
+            </div>
+            <span style="font-size:var(--font-size-xs);color:var(--text-tertiary);flex-shrink:0">91%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Settings -->
+    <div class="tab-panel" id="panel-settings">
+      <h1 class="panel-heading">Settings</h1>
+      <p class="panel-subheading">Manage your workspace preferences and integrations.</p>
+      <div class="content-card">
+        <div class="content-card-title">General</div>
+        <div style="display:flex;flex-direction:column;gap:var(--space-4)">
+          <div style="display:flex;align-items:center;gap:var(--space-3)">
+            <div style="flex:1">
+              <div style="font-size:var(--font-size-sm);font-weight:500;color:var(--text-primary)">Workspace name</div>
+              <div style="font-size:var(--font-size-xs);color:var(--text-tertiary);margin-top:2px">Displayed across the app and in notifications</div>
+            </div>
+            <fresh-button variant="secondary" size="sm">Edit</fresh-button>
+          </div>
+          <div style="border-top:1px solid var(--surface-border);padding-top:var(--space-4);display:flex;align-items:center;gap:var(--space-3)">
+            <div style="flex:1">
+              <div style="font-size:var(--font-size-sm);font-weight:500;color:var(--text-primary)">Email notifications</div>
+              <div style="font-size:var(--font-size-xs);color:var(--text-tertiary);margin-top:2px">Receive weekly digests and activity summaries</div>
+            </div>
+            <fresh-button variant="secondary" size="sm">Configure</fresh-button>
+          </div>
+          <div style="border-top:1px solid var(--surface-border);padding-top:var(--space-4);display:flex;align-items:center;gap:var(--space-3)">
+            <div style="flex:1">
+              <div style="font-size:var(--font-size-sm);font-weight:500;color:var(--text-primary)">Delete workspace</div>
+              <div style="font-size:var(--font-size-xs);color:var(--text-tertiary);margin-top:2px">Permanently remove this workspace and all its data</div>
+            </div>
+            <fresh-button variant="danger" size="sm">Delete</fresh-button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+</div>
+
+<script>
+  (function() {
+    var DEF = {
+      primary: '#1f2328', secondary: '#6b7280',
+      scaleDark: '#1f2328', scaleLight: '#ffffff',
+      success: '#22c55e', warning: '#f59e0b', danger: '#f43f5e',
+      info: '#3b82f6', aiAction: '#0d9488',
+      pageBg: '#ffffff', inputSurface: '#ffffff',
+      radiusSm: '4', radiusMd: '8', radiusLg: '12', radiusXl: '20',
+      fontSans: 'Inter', fontMono: 'JetBrains Mono',
+      density: 'default', mode: 'light'
+    };
+    var DENSITY = {
+      compact:     { 1:'3px', 2:'6px',  3:'10px', 4:'12px', 5:'16px', 6:'20px', 8:'28px', 10:'34px', 12:'42px' },
+      default:     { 1:'4px', 2:'8px',  3:'12px', 4:'16px', 5:'20px', 6:'24px', 8:'32px', 10:'40px', 12:'48px' },
+      comfortable: { 1:'5px', 2:'10px', 3:'15px', 4:'20px', 5:'26px', 6:'30px', 8:'42px', 10:'52px', 12:'62px' }
+    };
+    var t = DEF;
+    try { var s = localStorage.getItem('freshds-theme'); if (s) t = Object.assign({}, DEF, JSON.parse(s)); } catch(e) {}
+    var root = document.documentElement;
+    applyScalesToElement(root, t.primary, t.secondary, t.scaleDark, t.scaleLight, t.success, t.warning, t.danger, t.info, t.aiAction);
+    root.style.setProperty('--color-page-bg',       t.pageBg       || '#ffffff');
+    root.style.setProperty('--color-input-surface', t.inputSurface || '#ffffff');
+    if (t.radiusSm !== undefined) root.style.setProperty('--radius-sm', t.radiusSm + 'px');
+    if (t.radiusMd !== undefined) root.style.setProperty('--radius-md', t.radiusMd + 'px');
+    if (t.radiusLg !== undefined) root.style.setProperty('--radius-lg', t.radiusLg + 'px');
+    if (t.radiusXl !== undefined) root.style.setProperty('--radius-xl', t.radiusXl + 'px');
+    if (t.fontSans && typeof loadFont === 'function' && SANS_FONTS && SANS_FONTS[t.fontSans]) {
+      loadFont(t.fontSans, SANS_FONTS[t.fontSans]);
+      root.style.setProperty('--font-sans', "'" + t.fontSans + "', system-ui, sans-serif");
+    }
+    if (t.fontMono && typeof loadFont === 'function' && MONO_FONTS && MONO_FONTS[t.fontMono]) {
+      loadFont(t.fontMono, MONO_FONTS[t.fontMono]);
+      root.style.setProperty('--font-mono', "'" + t.fontMono + "', monospace");
+    }
+    var spacing = DENSITY[t.density] || DENSITY.default;
+    Object.keys(spacing).forEach(function(k) { root.style.setProperty('--space-' + k, spacing[k]); });
+    if (t.mode === 'dark') document.getElementById('app') && document.getElementById('app').setAttribute('data-mode', 'dark');
+  })();
+</script>
+
+<!-- DS components -->
+<script src="/components/core/fresh-button.js"></script>
+<script src="/components/navigation/fresh-navbar.js"></script>
+<script src="/components/navigation/fresh-simple-tabs.js"></script>
+<script src="/components/data/fresh-avatar.js"></script>
+
+<script>
+  var PANELS = ['overview', 'analytics', 'reports', 'projects', 'settings'];
+
+  function switchTab(key) {
+    PANELS.forEach(function(k) {
+      var el = document.getElementById('panel-' + k);
+      if (el) el.classList.toggle('active', k === key);
+    });
+  }
+
+  document.getElementById('top-tabs').addEventListener('change', function(e) {
+    switchTab(e.detail.key);
+  });
+</script>
+
+<script>
+  (function() {
+    var NB_ICONS = [
+      { key: 'search',   icon: 'ti-search',         label: 'Search' },
+      { key: 'bell',     icon: 'ti-bell',            label: 'Notifications' },
+      { key: 'help',     icon: 'ti-help-circle',     label: 'Help' },
+      { key: 'plus',     icon: 'ti-circle-plus',     label: 'New' },
+      { key: 'grid',     icon: 'ti-grid-dots',       label: 'Apps' },
+      { key: 'settings', icon: 'ti-settings-2',      label: 'Settings' },
+      { key: 'messages', icon: 'ti-message-circle',  label: 'Messages' },
+      { key: 'bookmark', icon: 'ti-bookmark',        label: 'Saved' }
+    ];
+    var cfg = { logoType: 'default', logoUrl: '', activeIcons: ['search', 'bell'] };
+    try {
+      var s = localStorage.getItem('freshds-nav-cfg');
+      if (s) { var stored = JSON.parse(s); cfg = Object.assign(cfg, stored.navbar_cfg || stored); }
+    } catch(e) {}
+    var brand = document.getElementById('nb-brand');
+    if (brand && cfg.logoType === 'custom' && cfg.logoUrl) {
+      brand.innerHTML = '<img src="' + cfg.logoUrl.replace(/"/g, '&quot;') + '" alt="Logo" style="height:28px;max-width:140px;object-fit:contain;display:block">';
+    }
+    var actions = document.getElementById('nb-actions');
+    if (actions) {
+      var iconsHtml = (cfg.activeIcons || []).map(function(key) {
+        var ic = NB_ICONS.filter(function(i) { return i.key === key; })[0];
+        return ic ? '<fresh-button variant="ghost" size="sm" aria-label="' + ic.label + '"><i class="ti ' + ic.icon + '"></i></fresh-button>' : '';
+      }).join('');
+      actions.innerHTML = iconsHtml + '<fresh-avatar name="Jane Smith" size="sm"></fresh-avatar>';
+    }
+  })();
+</script>
+
+</body>
+</html>
