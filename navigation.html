@@ -195,15 +195,14 @@
   .nav-tile-preview-link {
     display: inline-flex;
     align-items: center;
-    gap: 5px;
-    margin-top: 10px;
-    font-size: 12px;
-    font-weight: 500;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
     color: var(--text-secondary);
     text-decoration: none;
-    padding: 5px 11px;
-    border: 1px solid var(--border);
-    border-radius: 6px;
+    flex-shrink: 0;
     transition: background 0.12s, color 0.12s, border-color 0.12s;
     background: transparent;
   }
@@ -212,7 +211,7 @@
     color: var(--text-primary);
     border-color: #a1a1aa;
   }
-  .nav-tile-preview-link .ti { font-size: 11px; }
+  .nav-tile-preview-link .ti { font-size: 13px; }
 
   /* ── Navbar designer ───────────────────────────────────────── */
   .nb-section-label {
@@ -390,6 +389,7 @@
     align-items: center;
     justify-content: center;
     padding: var(--space-4);
+    position: relative;
   }
   .nav-tile-thumb svg {
     width: 100%;
@@ -399,27 +399,10 @@
     border-radius: 6px;
     box-shadow: 0 1px 4px rgba(0,0,0,0.10);
   }
-
-  .nav-tile-info {
-    padding: 14px 16px 16px;
-    position: relative;
-  }
-  .nav-tile-name {
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--text-primary);
-    margin-bottom: 4px;
-    padding-right: 28px;
-  }
-  .nav-tile-desc {
-    font-size: 12px;
-    color: var(--text-secondary);
-    line-height: 1.55;
-  }
   .nav-tile-check {
     position: absolute;
-    top: 12px;
-    right: 14px;
+    top: 10px;
+    right: 10px;
     width: 22px;
     height: 22px;
     border-radius: 50%;
@@ -429,8 +412,28 @@
     align-items: center;
     justify-content: center;
     font-size: 12px;
+    z-index: 1;
   }
   .nav-tile.selected .nav-tile-check { display: flex; }
+
+  .nav-tile-info {
+    padding: 12px 14px 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .nav-tile-text { flex: 1; min-width: 0; }
+  .nav-tile-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 3px;
+  }
+  .nav-tile-desc {
+    font-size: 11px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+  }
 </style>
 </head>
 
@@ -494,6 +497,7 @@
             <!-- 1. Persistent sidebar -->
             <div class="nav-tile selected" data-nav="persistent-sidebar" onclick="selectNav(this)">
               <div class="nav-tile-thumb">
+                <div class="nav-tile-check"><i class="ti ti-check"></i></div>
                 <svg viewBox="0 0 240 150" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <!-- App frame -->
                   <rect width="240" height="150" rx="6" fill="#f9f9fa"/>
@@ -530,16 +534,18 @@
                 </svg>
               </div>
               <div class="nav-tile-info">
-                <div class="nav-tile-check"><i class="ti ti-check"></i></div>
-                <div class="nav-tile-name">Persistent sidebar</div>
-                <div class="nav-tile-desc">Full-width sidebar always visible with labels. Standard for most enterprise apps.</div>
-                <a class="nav-tile-preview-link" href="/previews/nav-persistent-sidebar.html" target="_blank" onclick="event.stopPropagation()"><i class="ti ti-external-link"></i> Preview</a>
+                <div class="nav-tile-text">
+                  <div class="nav-tile-name">Persistent sidebar</div>
+                  <div class="nav-tile-desc">Full-width sidebar always visible with labels. Standard for most enterprise apps.</div>
+                </div>
+                <a class="nav-tile-preview-link" href="/previews/nav-persistent-sidebar.html" target="_blank" onclick="event.stopPropagation()" title="Preview"><i class="ti ti-external-link"></i></a>
               </div>
             </div>
 
             <!-- 2. Collapsible sidebar / icon rail -->
             <div class="nav-tile" data-nav="collapsible-sidebar" onclick="selectNav(this)">
               <div class="nav-tile-thumb">
+                <div class="nav-tile-check"><i class="ti ti-check"></i></div>
                 <svg viewBox="0 0 240 150" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <!-- App frame -->
                   <rect width="240" height="150" rx="6" fill="#f9f9fa"/>
@@ -574,15 +580,17 @@
                 </svg>
               </div>
               <div class="nav-tile-info">
-                <div class="nav-tile-check"><i class="ti ti-check"></i></div>
-                <div class="nav-tile-name">Collapsible sidebar</div>
-                <div class="nav-tile-desc">Collapses to icon-only rail to save space. Expands on hover or click.</div>
+                <div class="nav-tile-text">
+                  <div class="nav-tile-name">Collapsible sidebar</div>
+                  <div class="nav-tile-desc">Collapses to icon-only rail to save space. Expands on hover or click.</div>
+                </div>
               </div>
             </div>
 
             <!-- 3. Top nav tabs -->
             <div class="nav-tile" data-nav="top-nav-tabs" onclick="selectNav(this)">
               <div class="nav-tile-thumb">
+                <div class="nav-tile-check"><i class="ti ti-check"></i></div>
                 <svg viewBox="0 0 240 150" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <!-- App frame -->
                   <rect width="240" height="150" rx="6" fill="#f9f9fa"/>
@@ -612,15 +620,17 @@
                 </svg>
               </div>
               <div class="nav-tile-info">
-                <div class="nav-tile-check"><i class="ti ti-check"></i></div>
-                <div class="nav-tile-name">Top nav tabs</div>
-                <div class="nav-tile-desc">Horizontal tabs directly below the header. Clean for apps with 3 to 6 top-level sections.</div>
+                <div class="nav-tile-text">
+                  <div class="nav-tile-name">Top nav tabs</div>
+                  <div class="nav-tile-desc">Horizontal tabs directly below the header. Clean for apps with 3 to 6 top-level sections.</div>
+                </div>
               </div>
             </div>
 
             <!-- 4. Dual-level nav -->
             <div class="nav-tile" data-nav="dual-level" onclick="selectNav(this)">
               <div class="nav-tile-thumb">
+                <div class="nav-tile-check"><i class="ti ti-check"></i></div>
                 <svg viewBox="0 0 240 150" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <!-- App frame -->
                   <rect width="240" height="150" rx="6" fill="#f9f9fa"/>
@@ -655,15 +665,17 @@
                 </svg>
               </div>
               <div class="nav-tile-info">
-                <div class="nav-tile-check"><i class="ti ti-check"></i></div>
-                <div class="nav-tile-name">Dual-level nav</div>
-                <div class="nav-tile-desc">Top bar owns global section switching. Sidebar owns in-section pages. Scales to complex apps.</div>
+                <div class="nav-tile-text">
+                  <div class="nav-tile-name">Dual-level nav</div>
+                  <div class="nav-tile-desc">Top bar owns global section switching. Sidebar owns in-section pages. Scales to complex apps.</div>
+                </div>
               </div>
             </div>
 
             <!-- 5. Hamburger + drawer -->
             <div class="nav-tile" data-nav="hamburger-drawer" onclick="selectNav(this)">
               <div class="nav-tile-thumb">
+                <div class="nav-tile-check"><i class="ti ti-check"></i></div>
                 <svg viewBox="0 0 240 150" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <!-- App frame -->
                   <rect width="240" height="150" rx="6" fill="#f9f9fa"/>
@@ -697,15 +709,17 @@
                 </svg>
               </div>
               <div class="nav-tile-info">
-                <div class="nav-tile-check"><i class="ti ti-check"></i></div>
-                <div class="nav-tile-name">Hamburger + drawer</div>
-                <div class="nav-tile-desc">Nav hidden by default, opens as an overlay. Maximizes content space. Common on mobile-first apps.</div>
+                <div class="nav-tile-text">
+                  <div class="nav-tile-name">Hamburger + drawer</div>
+                  <div class="nav-tile-desc">Nav hidden by default, opens as an overlay. Maximizes content space. Common on mobile-first apps.</div>
+                </div>
               </div>
             </div>
 
             <!-- 6. Command palette -->
             <div class="nav-tile" data-nav="command-palette" onclick="selectNav(this)">
               <div class="nav-tile-thumb">
+                <div class="nav-tile-check"><i class="ti ti-check"></i></div>
                 <svg viewBox="0 0 240 150" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <!-- App frame -->
                   <rect width="240" height="150" rx="6" fill="#f9f9fa"/>
@@ -747,9 +761,10 @@
                 </svg>
               </div>
               <div class="nav-tile-info">
-                <div class="nav-tile-check"><i class="ti ti-check"></i></div>
-                <div class="nav-tile-name">Command palette</div>
-                <div class="nav-tile-desc">Cmd+K launcher as primary navigation. Best for power users with predictable workflows.</div>
+                <div class="nav-tile-text">
+                  <div class="nav-tile-name">Command palette</div>
+                  <div class="nav-tile-desc">Cmd+K launcher as primary navigation. Best for power users with predictable workflows.</div>
+                </div>
               </div>
             </div>
 
