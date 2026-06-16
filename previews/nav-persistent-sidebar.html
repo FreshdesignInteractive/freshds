@@ -94,27 +94,6 @@
     white-space: nowrap;
   }
 
-  /* ── Navbar actions slot ── */
-  .navbar-actions {
-    display: flex;
-    align-items: center;
-    gap: var(--space-2);
-  }
-  .icon-btn {
-    all: unset;
-    width: 34px;
-    height: 34px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: var(--radius-md);
-    color: var(--text-secondary);
-    cursor: pointer;
-    transition: background 120ms, color 120ms;
-  }
-  .icon-btn:hover { background: var(--surface-subtle); color: var(--text-primary); }
-  .icon-btn .ti { font-size: 18px; }
-
   /* ── Sidebar footer slot ── */
   .sidebar-footer {
     display: flex;
@@ -141,21 +120,7 @@
     color: var(--text-tertiary);
     white-space: nowrap;
   }
-  .footer-icon-btn {
-    all: unset;
-    width: 28px;
-    height: 28px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: var(--radius-md);
-    color: var(--text-tertiary);
-    cursor: pointer;
-    flex-shrink: 0;
-    transition: background 120ms, color 120ms;
-  }
-  .footer-icon-btn:hover { background: var(--surface-subtle); color: var(--text-primary); }
-  .footer-icon-btn .ti { font-size: 15px; }
+  .footer-icon-btn { flex-shrink: 0; }
 </style>
 </head>
 
@@ -168,9 +133,9 @@
       <div class="brand-mark">A</div>
       <span class="brand-name">Acme Corp</span>
     </div>
-    <div slot="actions" class="navbar-actions">
-      <button class="icon-btn" aria-label="Search"><i class="ti ti-search"></i></button>
-      <button class="icon-btn" aria-label="Notifications"><i class="ti ti-bell"></i></button>
+    <div slot="actions" style="display:flex;align-items:center;gap:var(--space-1)">
+      <fresh-button variant="ghost" size="sm" aria-label="Search"><i class="ti ti-search"></i></fresh-button>
+      <fresh-button variant="ghost" size="sm" aria-label="Notifications"><i class="ti ti-bell"></i></fresh-button>
       <fresh-avatar name="Jane Smith" size="sm" status="online"></fresh-avatar>
     </div>
   </fresh-navbar>
@@ -179,12 +144,6 @@
   <div class="shell-body fds-sidebar-layout">
 
     <fresh-sidebar>
-
-      <!-- Brand area inside sidebar -->
-      <div slot="brand" class="brand-slot">
-        <div class="brand-mark">A</div>
-        <span class="brand-name">Acme Corp</span>
-      </div>
 
       <!-- Navigation groups -->
       <fresh-nav-group label="Getting started" open>
@@ -217,9 +176,7 @@
           <div class="footer-user-name">Jane Smith</div>
           <div class="footer-user-role">Admin</div>
         </div>
-        <button class="footer-icon-btn" aria-label="Settings">
-          <i class="ti ti-settings"></i>
-        </button>
+        <fresh-button class="footer-icon-btn" variant="ghost" size="sm" aria-label="Settings"><i class="ti ti-settings"></i></fresh-button>
       </div>
 
     </fresh-sidebar>
@@ -284,6 +241,7 @@
 </script>
 
 <!-- DS components -->
+<script src="/components/core/fresh-button.js"></script>
 <script src="/components/navigation/fresh-navbar.js"></script>
 <script src="/components/navigation/fresh-sidebar.js"></script>
 <script src="/components/data/fresh-avatar.js"></script>

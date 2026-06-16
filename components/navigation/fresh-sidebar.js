@@ -70,29 +70,6 @@ class FreshSidebar extends HTMLElement {
           flex-shrink: 0;
         }
 
-        .brand {
-          height: var(--topbar-h, 52px);
-          display: flex;
-          align-items: center;
-          padding: 0 var(--space-4);
-          border-bottom: 1px solid var(--surface-border);
-          flex-shrink: 0;
-        }
-
-        ::slotted([slot="brand"]) {
-          display: flex;
-          align-items: center;
-          gap: var(--space-2);
-          font-family: var(--font-sans);
-          font-size: var(--font-size-lg);
-          font-weight: 600;
-          letter-spacing: -0.02em;
-          color: var(--text-primary);
-          -webkit-font-smoothing: antialiased;
-          white-space: nowrap;
-          overflow: hidden;
-        }
-
         .content {
           flex: 1;
           overflow-y: auto;
@@ -119,9 +96,6 @@ class FreshSidebar extends HTMLElement {
       </style>
 
       <div class="sidebar" part="sidebar">
-        <div class="brand" part="brand">
-          <slot name="brand"></slot>
-        </div>
         <div class="content" part="content">
           <slot></slot>
         </div>
