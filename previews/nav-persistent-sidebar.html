@@ -232,21 +232,55 @@
 </div>
 
 <script>
-  /* Apply FreshDS default theme to :root so all token vars resolve */
-  applyScalesToElement(
-    document.documentElement,
-    '#942192',  /* primary   — purple */
-    '#6b7280',  /* secondary — gray   */
-    '#1f2328',  /* dark anchor        */
-    '#ffffff',  /* light anchor       */
-    '#22c55e',  /* success            */
-    '#f59e0b',  /* warning            */
-    '#f43f5e',  /* danger             */
-    '#3b82f6',  /* info               */
-    '#0d9488'   /* ai action          */
-  );
-  document.documentElement.style.setProperty('--color-page-bg',       '#ffffff');
-  document.documentElement.style.setProperty('--color-input-surface', '#ffffff');
+  (function() {
+    var DEF = {
+      primary: '#1f2328', secondary: '#6b7280',
+      scaleDark: '#1f2328', scaleLight: '#ffffff',
+      success: '#22c55e', warning: '#f59e0b', danger: '#f43f5e',
+      info: '#3b82f6', aiAction: '#0d9488',
+      pageBg: '#ffffff', inputSurface: '#ffffff',
+      radiusSm: '4', radiusMd: '8', radiusLg: '12', radiusXl: '20',
+      fontSans: 'Inter', fontMono: 'JetBrains Mono',
+      density: 'default', mode: 'light'
+    };
+    var DENSITY = {
+      compact:     { 1:'3px', 2:'6px',  3:'10px', 4:'12px', 5:'16px', 6:'20px', 8:'28px', 10:'34px', 12:'42px' },
+      default:     { 1:'4px', 2:'8px',  3:'12px', 4:'16px', 5:'20px', 6:'24px', 8:'32px', 10:'40px', 12:'48px' },
+      comfortable: { 1:'5px', 2:'10px', 3:'15px', 4:'20px', 5:'26px', 6:'30px', 8:'42px', 10:'52px', 12:'62px' }
+    };
+    var t = DEF;
+    try { var s = localStorage.getItem('freshds-theme'); if (s) t = Object.assign({}, DEF, JSON.parse(s)); } catch(e) {}
+
+    var root = document.documentElement;
+
+    applyScalesToElement(
+      root,
+      t.primary, t.secondary, t.scaleDark, t.scaleLight,
+      t.success, t.warning, t.danger, t.info, t.aiAction
+    );
+
+    root.style.setProperty('--color-page-bg',       t.pageBg       || '#ffffff');
+    root.style.setProperty('--color-input-surface', t.inputSurface || '#ffffff');
+
+    if (t.radiusSm !== undefined) root.style.setProperty('--radius-sm', t.radiusSm + 'px');
+    if (t.radiusMd !== undefined) root.style.setProperty('--radius-md', t.radiusMd + 'px');
+    if (t.radiusLg !== undefined) root.style.setProperty('--radius-lg', t.radiusLg + 'px');
+    if (t.radiusXl !== undefined) root.style.setProperty('--radius-xl', t.radiusXl + 'px');
+
+    if (t.fontSans && typeof loadFont === 'function' && SANS_FONTS && SANS_FONTS[t.fontSans]) {
+      loadFont(t.fontSans, SANS_FONTS[t.fontSans]);
+      root.style.setProperty('--font-sans', "'" + t.fontSans + "', system-ui, sans-serif");
+    }
+    if (t.fontMono && typeof loadFont === 'function' && MONO_FONTS && MONO_FONTS[t.fontMono]) {
+      loadFont(t.fontMono, MONO_FONTS[t.fontMono]);
+      root.style.setProperty('--font-mono', "'" + t.fontMono + "', monospace");
+    }
+
+    var spacing = DENSITY[t.density] || DENSITY.default;
+    Object.keys(spacing).forEach(function(k) { root.style.setProperty('--space-' + k, spacing[k]); });
+
+    if (t.mode === 'dark') document.getElementById('app') && document.getElementById('app').setAttribute('data-mode', 'dark');
+  })();
 </script>
 
 <!-- DS components -->
