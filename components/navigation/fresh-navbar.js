@@ -23,12 +23,17 @@
    Attributes:
      hamburger  boolean, show hamburger menu button left of brand (default: false)
 
+   Attributes:
+     hamburger  boolean, show hamburger menu button left of brand (default: false)
+     search     boolean, show a search icon button that fires search-open event (default: false)
+
    Events:
      hamburger-click, fired when the hamburger button is clicked
+     search-open    , fired when the search button is clicked
    ============================================================ */
 
 class FreshNavbar extends HTMLElement {
-  static get observedAttributes() { return ['hamburger']; }
+  static get observedAttributes() { return ['hamburger', 'search']; }
 
   constructor() {
     super();
@@ -40,6 +45,7 @@ class FreshNavbar extends HTMLElement {
 
   _render() {
     const hamburger = this.hasAttribute('hamburger');
+    const search    = this.hasAttribute('search');
 
     this.shadowRoot.innerHTML = `
       <style>
@@ -137,6 +143,23 @@ class FreshNavbar extends HTMLElement {
           align-items: center;
           gap: var(--space-2);
         }
+
+        /* Built-in search button */
+        .search-btn {
+          all: unset;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 32px;
+          height: 32px;
+          border-radius: var(--radius-md);
+          color: var(--text-secondary);
+          cursor: pointer;
+          flex-shrink: 0;
+          transition: background 120ms ease, color 120ms ease;
+        }
+        .search-btn:hover { background: var(--surface-subtle); color: var(--text-primary); }
+        .search-btn .ti { font-size: var(--font-size-2xl); line-height: 1; }
       </style>
 
       <header class="bar" part="bar">
@@ -150,6 +173,7 @@ class FreshNavbar extends HTMLElement {
           </div>
         </div>
         <div class="actions" part="actions">
+          ${search ? '<button class="search-btn" part="search" aria-label="Search"><i class="ti ti-search"></i></button>' : ''}
           <slot name="actions"></slot>
         </div>
       </header>
@@ -158,6 +182,12 @@ class FreshNavbar extends HTMLElement {
     if (hamburger) {
       this.shadowRoot.querySelector('.hamburger-btn')?.addEventListener('click', () => {
         this.dispatchEvent(new CustomEvent('hamburger-click', { bubbles: true, composed: true }));
+      });
+    }
+
+    if (search) {
+      this.shadowRoot.querySelector('.search-btn')?.addEventListener('click', () => {
+        this.dispatchEvent(new CustomEvent('search-open', { bubbles: true, composed: true }));
       });
     }
   }

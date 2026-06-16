@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FreshDS Shell Preview — Command Palette</title>
+<title>FreshDS Shell Preview | Command Palette</title>
 
 <!-- DS token layers -->
 <link rel="stylesheet" href="/tokens/primitives.css">
@@ -31,39 +31,10 @@
   .shell-body fresh-sidebar { flex-shrink: 0; height: 100%; overflow: hidden; }
   .shell-content { flex: 1; overflow-y: auto; background: var(--surface-bg); height: 100%; }
 
-  /* ── Cmd+K search trigger in nav slot ── */
-  .cmdK-trigger {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 5px 12px;
-    border: 1px solid var(--surface-border);
-    border-radius: var(--radius-full);
-    background: var(--surface-subtle);
-    font-family: var(--font-sans);
-    font-size: 13px;
-    color: var(--text-tertiary);
-    cursor: pointer;
-    transition: border-color 0.15s, background 0.15s;
-    width: 220px;
-  }
-  .cmdK-trigger:hover { border-color: var(--surface-border-strong); background: var(--surface-overlay); color: var(--text-secondary); }
-  .cmdK-trigger .ti { font-size: 14px; }
-  .cmdK-trigger-label { flex: 1; text-align: left; }
-  .cmdK-hint { display: flex; gap: 2px; margin-left: auto; }
-  .cmdK-hint kbd {
-    display: inline-flex; align-items: center; justify-content: center;
-    height: 18px; min-width: 18px; padding: 0 4px;
-    border: 1px solid var(--surface-border-strong);
-    border-radius: 3px;
-    font-size: 10px; font-family: var(--font-mono);
-    color: var(--text-tertiary); background: var(--surface-canvas);
-  }
-
-  /* ── Sidebar footer ── */
+  /* Sidebar footer */
   .sidebar-footer { display: flex; align-items: center; justify-content: center; width: 100%; }
 
-  /* ── Command palette overlay ── */
+  /* Command palette overlay */
   .palette-overlay {
     position: fixed;
     inset: 0;
@@ -94,11 +65,7 @@
     padding: 14px 18px;
     border-bottom: 1px solid var(--surface-border);
   }
-  .palette-search .ti {
-    font-size: 18px;
-    color: var(--text-tertiary);
-    flex-shrink: 0;
-  }
+  .palette-search .ti { font-size: 18px; color: var(--text-tertiary); flex-shrink: 0; }
   .palette-input {
     flex: 1;
     border: none;
@@ -110,56 +77,33 @@
   }
   .palette-input::placeholder { color: var(--text-tertiary); }
 
-  .palette-results {
-    max-height: 340px;
-    overflow-y: auto;
-    padding: 6px 0;
-  }
+  .palette-results { max-height: 340px; overflow-y: auto; padding: 6px 0; }
   .palette-results::-webkit-scrollbar { width: 4px; }
   .palette-results::-webkit-scrollbar-thumb { background: var(--surface-border-strong); border-radius: 2px; }
 
   .palette-group-label {
-    font-size: 10px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--text-tertiary);
-    padding: 10px 18px 4px;
+    font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em;
+    color: var(--text-tertiary); padding: 10px 18px 4px;
   }
-
   .palette-item {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 8px 18px;
-    cursor: pointer;
-    font-size: 13px;
-    color: var(--text-primary);
-    transition: background 100ms;
+    display: flex; align-items: center; gap: 12px; padding: 8px 18px;
+    cursor: pointer; font-size: 13px; color: var(--text-primary); transition: background 100ms;
   }
-  .palette-item:hover,
-  .palette-item.active { background: var(--surface-subtle); }
+  .palette-item:hover, .palette-item.active { background: var(--surface-subtle); }
   .pitem-icon { font-size: 15px; color: var(--text-secondary); width: 18px; flex-shrink: 0; }
   .pitem-group { margin-left: auto; font-size: 11px; color: var(--text-tertiary); }
   .pitem-empty { padding: 32px 18px; text-align: center; font-size: 13px; color: var(--text-tertiary); }
 
   .palette-footer {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    padding: 9px 18px;
-    border-top: 1px solid var(--surface-border);
-    font-size: 11px;
-    color: var(--text-tertiary);
+    display: flex; align-items: center; gap: 16px; padding: 9px 18px;
+    border-top: 1px solid var(--surface-border); font-size: 11px; color: var(--text-tertiary);
   }
   .palette-footer-hint { display: flex; align-items: center; gap: 5px; }
   .palette-footer-hint kbd {
     display: inline-flex; align-items: center; justify-content: center;
     height: 18px; min-width: 18px; padding: 0 4px;
-    border: 1px solid var(--surface-border-strong);
-    border-radius: 3px;
-    font-size: 10px; font-family: var(--font-mono);
-    color: var(--text-tertiary);
+    border: 1px solid var(--surface-border-strong); border-radius: 3px;
+    font-size: 10px; font-family: var(--font-mono); color: var(--text-tertiary);
   }
 
   /* Brand slot */
@@ -172,20 +116,13 @@
 <body>
 <div class="shell-outer">
 
-  <fresh-navbar id="app-navbar">
+  <!-- search attribute: navbar renders built-in search icon that fires search-open event -->
+  <fresh-navbar id="app-navbar" search>
     <div slot="brand" id="nb-brand" class="brand-slot">
       <div class="brand-mark">A</div>
       <span class="brand-name">Acme Corp</span>
     </div>
-    <div slot="nav">
-      <button class="cmdK-trigger" onclick="openPalette()">
-        <i class="ti ti-search"></i>
-        <span class="cmdK-trigger-label">Search...</span>
-        <span class="cmdK-hint"><kbd>⌘</kbd><kbd>K</kbd></span>
-      </button>
-    </div>
     <div slot="actions" id="nb-actions" style="display:flex;align-items:center;gap:var(--space-1)">
-      <fresh-button variant="ghost" size="sm" aria-label="Search"><i class="ti ti-search"></i></fresh-button>
       <fresh-button variant="ghost" size="sm" aria-label="Notifications"><i class="ti ti-bell"></i></fresh-button>
       <fresh-avatar name="Jane Smith" size="sm"></fresh-avatar>
     </div>
@@ -212,7 +149,7 @@
 
   </div>
 
-  <!-- ── Command palette ── -->
+  <!-- Command palette -->
   <div class="palette-overlay" id="palette-overlay">
     <div class="palette-box" id="palette-box">
       <div class="palette-search">
@@ -312,7 +249,6 @@
     _filtered = q
       ? NAV_ITEMS.filter(function(i) { return i.label.toLowerCase().indexOf(q) !== -1 || i.group.toLowerCase().indexOf(q) !== -1; })
       : NAV_ITEMS.slice();
-
     _activeIdx = _filtered.length > 0 ? 0 : -1;
 
     var html = '';
@@ -341,7 +277,6 @@
         });
       });
     }
-
     document.getElementById('palette-results').innerHTML = html;
   }
 
@@ -356,9 +291,7 @@
 
   function selectItem(idx) { closePalette(); }
 
-  document.getElementById('palette-input').addEventListener('input', function() {
-    renderResults(this.value);
-  });
+  document.getElementById('palette-input').addEventListener('input', function() { renderResults(this.value); });
 
   document.getElementById('palette-input').addEventListener('keydown', function(e) {
     if (e.key === 'ArrowDown') { e.preventDefault(); setActive(_activeIdx + 1); }
@@ -371,6 +304,9 @@
     if (e.target === this) closePalette();
   });
 
+  /* Navbar search button fires search-open; Cmd+K also works globally */
+  document.getElementById('app-navbar').addEventListener('search-open', openPalette);
+
   document.addEventListener('keydown', function(e) {
     if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
       e.preventDefault();
@@ -382,14 +318,14 @@
 <script>
   (function() {
     var NB_ICONS = [
-      { key: 'search',    icon: 'ti-search',         label: 'Search' },
-      { key: 'bell',      icon: 'ti-bell',           label: 'Notifications' },
-      { key: 'help',      icon: 'ti-help-circle',    label: 'Help' },
-      { key: 'plus',      icon: 'ti-circle-plus',    label: 'New' },
-      { key: 'grid',      icon: 'ti-grid-dots',      label: 'Apps' },
-      { key: 'settings',  icon: 'ti-settings-2',     label: 'Settings' },
-      { key: 'messages',  icon: 'ti-message-circle', label: 'Messages' },
-      { key: 'bookmark',  icon: 'ti-bookmark',       label: 'Saved' }
+      { key: 'search',   icon: 'ti-search',         label: 'Search' },
+      { key: 'bell',     icon: 'ti-bell',            label: 'Notifications' },
+      { key: 'help',     icon: 'ti-help-circle',     label: 'Help' },
+      { key: 'plus',     icon: 'ti-circle-plus',     label: 'New' },
+      { key: 'grid',     icon: 'ti-grid-dots',       label: 'Apps' },
+      { key: 'settings', icon: 'ti-settings-2',      label: 'Settings' },
+      { key: 'messages', icon: 'ti-message-circle',  label: 'Messages' },
+      { key: 'bookmark', icon: 'ti-bookmark',        label: 'Saved' }
     ];
     var cfg = { logoType: 'default', logoUrl: '', activeIcons: ['search', 'bell'] };
     try {
@@ -404,7 +340,8 @@
 
     var actions = document.getElementById('nb-actions');
     if (actions) {
-      var iconsHtml = (cfg.activeIcons || []).map(function(key) {
+      /* Filter 'search' — navbar handles it via the search attribute */
+      var iconsHtml = (cfg.activeIcons || []).filter(function(key) { return key !== 'search'; }).map(function(key) {
         var ic = NB_ICONS.filter(function(i) { return i.key === key; })[0];
         return ic ? '<fresh-button variant="ghost" size="sm" aria-label="' + ic.label + '"><i class="ti ' + ic.icon + '"></i></fresh-button>' : '';
       }).join('');
