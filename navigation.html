@@ -141,6 +141,29 @@
     margin-bottom: var(--space-4);
   }
 
+  /* ── Preview link ───────────────────────────────────────────── */
+  .nav-tile-preview-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    margin-top: 10px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    text-decoration: none;
+    padding: 5px 11px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    transition: background 0.12s, color 0.12s, border-color 0.12s;
+    background: transparent;
+  }
+  .nav-tile-preview-link:hover {
+    background: var(--bg);
+    color: var(--text-primary);
+    border-color: #a1a1aa;
+  }
+  .nav-tile-preview-link .ti { font-size: 11px; }
+
   /* ── Navigation option tiles ────────────────────────────────── */
   .nav-options-grid {
     display: grid;
@@ -279,6 +302,7 @@
                 <div class="nav-tile-check"><i class="ti ti-check"></i></div>
                 <div class="nav-tile-name">Persistent sidebar</div>
                 <div class="nav-tile-desc">Full-width sidebar always visible with labels. Standard for most enterprise apps.</div>
+                <a class="nav-tile-preview-link" href="/previews/nav-persistent-sidebar.html" target="_blank" onclick="event.stopPropagation()"><i class="ti ti-external-link"></i> Preview</a>
               </div>
             </div>
 

@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en" id="app">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FreshDS Shell Preview — Persistent Sidebar</title>
+
+<!-- DS token layers -->
+<link rel="stylesheet" href="/tokens/primitives.css">
+<link rel="stylesheet" href="/tokens/theme.css">
+
+<!-- FreshDS grid system -->
+<link rel="stylesheet" href="/styles/grid.css">
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<!-- Tabler icons -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+
+<!-- DS color engine -->
+<script src="/js/freshds.js"></script>
+
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── App shell ── */
+  .shell-outer {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow: hidden;
+    background: var(--surface-bg);
+  }
+
+  /* ── Body row: sidebar + content ── */
+  /* Extends .fds-sidebar-layout — overrides gap and column width to match
+     the sidebar component's own --sidebar-w custom property */
+  .shell-body {
+    flex: 1;
+    overflow: hidden;
+    grid-template-columns: var(--sidebar-w, 240px) 1fr;
+    gap: 0;
+  }
+
+  /* Sidebar fills the full height of its grid cell */
+  .shell-body fresh-sidebar {
+    height: 100%;
+    overflow: hidden;
+  }
+
+  /* ── Empty content area ── */
+  .shell-content {
+    overflow-y: auto;
+    background: var(--surface-bg);
+    height: 100%;
+  }
+
+  /* ── Brand slot content ── */
+  .brand-slot {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+  }
+  .brand-mark {
+    width: 28px;
+    height: 28px;
+    border-radius: var(--radius-sm);
+    background: var(--color-interactive);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 700;
+    color: #fff;
+    flex-shrink: 0;
+    letter-spacing: -0.02em;
+  }
+  .brand-name {
+    font-size: var(--font-size-md);
+    font-weight: 600;
+    color: var(--text-primary);
+    letter-spacing: -0.01em;
+    white-space: nowrap;
+  }
+
+  /* ── Navbar actions slot ── */
+  .navbar-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+  }
+  .icon-btn {
+    all: unset;
+    width: 34px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-md);
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: background 120ms, color 120ms;
+  }
+  .icon-btn:hover { background: var(--surface-subtle); color: var(--text-primary); }
+  .icon-btn .ti { font-size: 18px; }
+
+  /* ── Sidebar footer slot ── */
+  .sidebar-footer {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    width: 100%;
+    min-width: 0;
+  }
+  .footer-user-info {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+  }
+  .footer-user-name {
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+    color: var(--text-primary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .footer-user-role {
+    font-size: var(--font-size-xs);
+    color: var(--text-tertiary);
+    white-space: nowrap;
+  }
+  .footer-icon-btn {
+    all: unset;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-md);
+    color: var(--text-tertiary);
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: background 120ms, color 120ms;
+  }
+  .footer-icon-btn:hover { background: var(--surface-subtle); color: var(--text-primary); }
+  .footer-icon-btn .ti { font-size: 15px; }
+</style>
+</head>
+
+<body>
+<div class="shell-outer">
+
+  <!-- ── Top navbar ── -->
+  <fresh-navbar>
+    <div slot="brand" class="brand-slot">
+      <div class="brand-mark">A</div>
+      <span class="brand-name">Acme Corp</span>
+    </div>
+    <div slot="actions" class="navbar-actions">
+      <button class="icon-btn" aria-label="Search"><i class="ti ti-search"></i></button>
+      <button class="icon-btn" aria-label="Notifications"><i class="ti ti-bell"></i></button>
+      <fresh-avatar name="Jane Smith" size="sm" status="online"></fresh-avatar>
+    </div>
+  </fresh-navbar>
+
+  <!-- ── Sidebar + content using FreshDS grid sidebar layout ── -->
+  <div class="shell-body fds-sidebar-layout">
+
+    <fresh-sidebar>
+
+      <!-- Brand area inside sidebar -->
+      <div slot="brand" class="brand-slot">
+        <div class="brand-mark">A</div>
+        <span class="brand-name">Acme Corp</span>
+      </div>
+
+      <!-- Navigation groups -->
+      <fresh-nav-group label="Getting started" open>
+        <fresh-nav-item icon="ti-home" active>Overview</fresh-nav-item>
+        <fresh-nav-item icon="ti-book">Documentation</fresh-nav-item>
+      </fresh-nav-group>
+
+      <fresh-nav-group label="Product" open>
+        <fresh-nav-item icon="ti-layout-dashboard">Dashboard</fresh-nav-item>
+        <fresh-nav-item icon="ti-chart-bar">Analytics</fresh-nav-item>
+        <fresh-nav-item icon="ti-file-description">Reports</fresh-nav-item>
+      </fresh-nav-group>
+
+      <fresh-nav-group label="Manage">
+        <fresh-nav-item icon="ti-folders">Projects</fresh-nav-item>
+        <fresh-nav-item icon="ti-users">Team members</fresh-nav-item>
+        <fresh-nav-item icon="ti-plug-connected">Integrations</fresh-nav-item>
+      </fresh-nav-group>
+
+      <fresh-nav-group label="Settings">
+        <fresh-nav-item icon="ti-user-circle">Account</fresh-nav-item>
+        <fresh-nav-item icon="ti-bell">Notifications</fresh-nav-item>
+        <fresh-nav-item icon="ti-lock">Security</fresh-nav-item>
+      </fresh-nav-group>
+
+      <!-- Sidebar footer -->
+      <div slot="footer" class="sidebar-footer">
+        <fresh-avatar name="Jane Smith" size="sm" status="online"></fresh-avatar>
+        <div class="footer-user-info">
+          <div class="footer-user-name">Jane Smith</div>
+          <div class="footer-user-role">Admin</div>
+        </div>
+        <button class="footer-icon-btn" aria-label="Settings">
+          <i class="ti ti-settings"></i>
+        </button>
+      </div>
+
+    </fresh-sidebar>
+
+    <!-- Empty content area -->
+    <main class="shell-content"></main>
+
+  </div>
+
+</div>
+
+<script>
+  /* Apply FreshDS default theme to :root so all token vars resolve */
+  applyScalesToElement(
+    document.documentElement,
+    '#942192',  /* primary   — purple */
+    '#6b7280',  /* secondary — gray   */
+    '#1f2328',  /* dark anchor        */
+    '#ffffff',  /* light anchor       */
+    '#22c55e',  /* success            */
+    '#f59e0b',  /* warning            */
+    '#f43f5e',  /* danger             */
+    '#3b82f6',  /* info               */
+    '#0d9488'   /* ai action          */
+  );
+  document.documentElement.style.setProperty('--color-page-bg',       '#ffffff');
+  document.documentElement.style.setProperty('--color-input-surface', '#ffffff');
+</script>
+
+<!-- DS components -->
+<script src="/components/navigation/fresh-navbar.js"></script>
+<script src="/components/navigation/fresh-sidebar.js"></script>
+<script src="/components/data/fresh-avatar.js"></script>
+
+</body>
+</html>
