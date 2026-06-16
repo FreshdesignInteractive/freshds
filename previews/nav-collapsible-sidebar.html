@@ -191,15 +191,22 @@
 <script src="/components/data/fresh-avatar.js"></script>
 
 <script>
-  /* Hamburger toggles the sidebar between expanded and collapsed icon rail */
+  var sidebar = document.getElementById('app-sidebar');
+
+  /* Hamburger toggles collapsed state */
   document.getElementById('app-navbar').addEventListener('hamburger-click', function() {
-    var sidebar = document.getElementById('app-sidebar');
-    if (sidebar.hasAttribute('collapsed')) {
-      sidebar.removeAttribute('collapsed');
-    } else {
-      sidebar.setAttribute('collapsed', '');
-    }
+    if (sidebar.hasAttribute('collapsed')) sidebar.removeAttribute('collapsed');
+    else                                   sidebar.setAttribute('collapsed', '');
   });
+
+  /* Auto-collapse at mobile breakpoint */
+  var mq = window.matchMedia('(max-width: 767px)');
+  function onBreakpoint(e) {
+    if (e.matches) sidebar.setAttribute('collapsed', '');
+    else           sidebar.removeAttribute('collapsed');
+  }
+  mq.addEventListener('change', onBreakpoint);
+  onBreakpoint(mq);
 </script>
 
 <script>
