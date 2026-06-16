@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en" id="app">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FreshDS Shell Preview | Dual-level Nav</title>
+
+<!-- DS token layers -->
+<link rel="stylesheet" href="/tokens/primitives.css">
+<link rel="stylesheet" href="/tokens/theme.css">
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<!-- Tabler icons -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+
+<!-- DS color engine -->
+<script src="/js/freshds.js"></script>
+
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; height: 100%; font-family: var(--font-sans); -webkit-font-smoothing: antialiased; }
+
+  .shell-outer { display: flex; flex-direction: column; height: 100vh; overflow: hidden; background: var(--surface-bg); }
+
+  /* Flexbox body: sidebar + content */
+  .shell-body { flex: 1; display: flex; overflow: hidden; }
+  .shell-body fresh-sidebar { flex-shrink: 0; height: 100%; overflow: hidden; }
+  .shell-content { flex: 1; overflow-y: auto; background: var(--surface-bg); height: 100%; padding: var(--space-8) var(--space-5); }
+
+  /* Section nav divs (show/hide per active section) */
+  .section-nav { display: none; }
+  .section-nav.active { display: contents; }
+
+  /* Sidebar footer */
+  .sidebar-footer { display: flex; align-items: center; gap: var(--space-3); width: 100%; min-width: 0; }
+  .footer-user-info { flex: 1; min-width: 0; overflow: hidden; }
+  .footer-user-name { font-size: var(--font-size-sm); font-weight: 500; color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .footer-user-role { font-size: var(--font-size-xs); color: var(--text-tertiary); white-space: nowrap; }
+
+  /* Content panels */
+  .content-panel { display: none; max-width: 880px; }
+  .content-panel.active { display: block; }
+
+  .panel-heading { font-size: 22px; font-weight: 600; color: var(--text-primary); letter-spacing: -0.02em; margin: 0 0 var(--space-2); }
+  .panel-subheading { font-size: var(--font-size-md); color: var(--text-secondary); margin: 0 0 var(--space-8); }
+
+  .card-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-4); margin-bottom: var(--space-6); }
+  @media (max-width: 640px) { .card-grid { grid-template-columns: 1fr; } }
+
+  .stat-card { background: var(--surface-canvas); border: 1px solid var(--surface-border); border-radius: var(--radius-lg); padding: var(--space-5); }
+  .stat-label { font-size: var(--font-size-xs); font-weight: 500; color: var(--text-tertiary); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: var(--space-2); }
+  .stat-value { font-size: 28px; font-weight: 700; color: var(--text-primary); letter-spacing: -0.03em; margin-bottom: var(--space-1); }
+  .stat-delta { font-size: var(--font-size-sm); color: var(--color-success); display: flex; align-items: center; gap: 4px; }
+
+  .content-card { background: var(--surface-canvas); border: 1px solid var(--surface-border); border-radius: var(--radius-lg); padding: var(--space-5); margin-bottom: var(--space-4); }
+  .content-card-title { font-size: var(--font-size-md); font-weight: 600; color: var(--text-primary); margin-bottom: var(--space-4); }
+
+  .list-row { display: flex; align-items: center; gap: var(--space-3); padding: var(--space-3) 0; border-bottom: 1px solid var(--surface-border); }
+  .list-row:last-child { border-bottom: none; padding-bottom: 0; }
+  .list-row-icon { width: 32px; height: 32px; border-radius: var(--radius-md); background: var(--surface-subtle); display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 15px; color: var(--text-secondary); }
+  .list-row-text { flex: 1; min-width: 0; }
+  .list-row-name { font-size: var(--font-size-sm); font-weight: 500; color: var(--text-primary); }
+  .list-row-meta { font-size: var(--font-size-xs); color: var(--text-tertiary); margin-top: 2px; }
+
+  /* Brand slot */
+  .brand-mark { width: 28px; height: 28px; border-radius: var(--radius-sm); background: var(--color-interactive); display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700; color: #fff; flex-shrink: 0; letter-spacing: -0.02em; }
+
+  /* Command palette overlay */
+  .palette-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 200; display: none; align-items: flex-start; justify-content: center; padding-top: 14vh; }
+  .palette-overlay.open { display: flex; }
+  .palette-box { width: 560px; max-width: calc(100vw - 32px); background: var(--surface-canvas); border-radius: var(--radius-lg); box-shadow: 0 24px 64px rgba(0,0,0,0.22), 0 0 0 1px var(--surface-border); overflow: hidden; display: flex; flex-direction: column; }
+  .palette-search { display: flex; align-items: center; gap: 12px; padding: 14px 18px; border-bottom: 1px solid var(--surface-border); }
+  .palette-search .ti { font-size: 18px; color: var(--text-tertiary); flex-shrink: 0; }
+  .palette-input { flex: 1; border: none; outline: none; font-size: 15px; font-family: var(--font-sans); color: var(--text-primary); background: transparent; }
+  .palette-input::placeholder { color: var(--text-tertiary); }
+  .palette-results { max-height: 340px; overflow-y: auto; padding: 6px 0; }
+  .palette-results::-webkit-scrollbar { width: 4px; }
+  .palette-results::-webkit-scrollbar-thumb { background: var(--surface-border-strong); border-radius: 2px; }
+  .palette-group-label { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-tertiary); padding: 10px 18px 4px; }
+  .palette-item { display: flex; align-items: center; gap: 12px; padding: 8px 18px; cursor: pointer; font-size: 13px; color: var(--text-primary); transition: background 100ms; }
+  .palette-item:hover, .palette-item.active { background: var(--surface-subtle); }
+  .pitem-icon { font-size: 15px; color: var(--text-secondary); width: 18px; flex-shrink: 0; }
+  .pitem-group { margin-left: auto; font-size: 11px; color: var(--text-tertiary); }
+  .pitem-empty { padding: 32px 18px; text-align: center; font-size: 13px; color: var(--text-tertiary); }
+  .palette-footer { display: flex; align-items: center; gap: 16px; padding: 9px 18px; border-top: 1px solid var(--surface-border); font-size: 11px; color: var(--text-tertiary); }
+  .palette-footer-hint { display: flex; align-items: center; gap: 5px; }
+  .palette-footer-hint kbd { display: inline-flex; align-items: center; justify-content: center; height: 18px; min-width: 18px; padding: 0 4px; border: 1px solid var(--surface-border-strong); border-radius: 3px; font-size: 10px; font-family: var(--font-mono); color: var(--text-tertiary); }
+</style>
+</head>
+
+<body>
+<div class="shell-outer">
+
+  <!--
+    data-mode="dark" makes the navbar dark:
+    --surface-nav resolves to scale-12 (near black),
+    text tokens resolve light so brand/tabs/icons are readable on dark.
+  -->
+  <fresh-navbar id="app-navbar" data-mode="dark" search>
+    <div slot="brand" id="nb-brand" style="display:flex;align-items:center;gap:var(--space-2)">
+      <div class="brand-mark">A</div>
+    </div>
+    <div slot="nav" style="display:flex;align-items:center">
+      <fresh-simple-tabs
+        id="section-tabs"
+        tabs='[{"key":"product","label":"Product"},{"key":"team","label":"Team"},{"key":"settings","label":"Settings"},{"key":"billing","label":"Billing"}]'
+        active="product">
+      </fresh-simple-tabs>
+    </div>
+    <div slot="actions" id="nb-actions" style="display:flex;align-items:center;gap:var(--space-1)">
+      <fresh-button variant="ghost" size="sm" aria-label="Notifications"><i class="ti ti-bell"></i></fresh-button>
+      <fresh-avatar name="Jane Smith" size="sm"></fresh-avatar>
+    </div>
+  </fresh-navbar>
+
+  <div class="shell-body">
+
+    <fresh-sidebar id="app-sidebar">
+
+      <!-- Product section -->
+      <div class="section-nav active" id="snav-product">
+        <fresh-nav-group label="Overview" open>
+          <fresh-nav-item icon="ti-layout-dashboard" active>Dashboard</fresh-nav-item>
+          <fresh-nav-item icon="ti-chart-bar">Analytics</fresh-nav-item>
+          <fresh-nav-item icon="ti-file-description">Reports</fresh-nav-item>
+        </fresh-nav-group>
+        <fresh-nav-group label="Build" open>
+          <fresh-nav-item icon="ti-toggle-left">Feature flags</fresh-nav-item>
+          <fresh-nav-item icon="ti-rocket">Releases</fresh-nav-item>
+          <fresh-nav-item icon="ti-plug-connected">Integrations</fresh-nav-item>
+        </fresh-nav-group>
+      </div>
+
+      <!-- Team section -->
+      <div class="section-nav" id="snav-team">
+        <fresh-nav-group label="People" open>
+          <fresh-nav-item icon="ti-users">All members</fresh-nav-item>
+          <fresh-nav-item icon="ti-user-plus">Invitations</fresh-nav-item>
+        </fresh-nav-group>
+        <fresh-nav-group label="Access" open>
+          <fresh-nav-item icon="ti-shield-check">Roles</fresh-nav-item>
+          <fresh-nav-item icon="ti-lock">Permissions</fresh-nav-item>
+          <fresh-nav-item icon="ti-key">API access</fresh-nav-item>
+        </fresh-nav-group>
+      </div>
+
+      <!-- Settings section -->
+      <div class="section-nav" id="snav-settings">
+        <fresh-nav-group label="Workspace" open>
+          <fresh-nav-item icon="ti-settings-2">General</fresh-nav-item>
+          <fresh-nav-item icon="ti-paint">Appearance</fresh-nav-item>
+          <fresh-nav-item icon="ti-bell">Notifications</fresh-nav-item>
+        </fresh-nav-group>
+        <fresh-nav-group label="Security" open>
+          <fresh-nav-item icon="ti-lock">Authentication</fresh-nav-item>
+          <fresh-nav-item icon="ti-activity">Audit log</fresh-nav-item>
+        </fresh-nav-group>
+      </div>
+
+      <!-- Billing section -->
+      <div class="section-nav" id="snav-billing">
+        <fresh-nav-group label="Billing" open>
+          <fresh-nav-item icon="ti-credit-card">Overview</fresh-nav-item>
+          <fresh-nav-item icon="ti-receipt">Invoices</fresh-nav-item>
+          <fresh-nav-item icon="ti-package">Plans</fresh-nav-item>
+        </fresh-nav-group>
+      </div>
+
+      <div slot="footer" class="sidebar-footer">
+        <fresh-avatar name="Jane Smith" size="sm"></fresh-avatar>
+        <div class="footer-user-info">
+          <div class="footer-user-name">Jane Smith</div>
+          <div class="footer-user-role">Admin</div>
+        </div>
+      </div>
+
+    </fresh-sidebar>
+
+    <main class="shell-content">
+
+      <!-- Product content -->
+      <div class="content-panel active" id="panel-product">
+        <h1 class="panel-heading">Product</h1>
+        <p class="panel-subheading">Monitor usage, analytics, and feature performance across your product.</p>
+        <div class="card-grid">
+          <div class="stat-card">
+            <div class="stat-label">Monthly active users</div>
+            <div class="stat-value">24,512</div>
+            <div class="stat-delta"><i class="ti ti-trending-up"></i> +12% this month</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Feature adoption</div>
+            <div class="stat-value">68%</div>
+            <div class="stat-delta"><i class="ti ti-trending-up"></i> +5pts vs last month</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Avg. session</div>
+            <div class="stat-value">4m 12s</div>
+            <div class="stat-delta"><i class="ti ti-trending-up"></i> +0.4m this week</div>
+          </div>
+        </div>
+        <div class="content-card">
+          <div class="content-card-title">Recent releases</div>
+          <div class="list-row">
+            <div class="list-row-icon"><i class="ti ti-rocket"></i></div>
+            <div class="list-row-text"><div class="list-row-name">v3.2.0 — Dashboard redesign</div><div class="list-row-meta">Released Jun 1, 2026 by Jane Smith</div></div>
+            <fresh-badge variant="success" size="sm">Live</fresh-badge>
+          </div>
+          <div class="list-row">
+            <div class="list-row-icon"><i class="ti ti-rocket"></i></div>
+            <div class="list-row-text"><div class="list-row-name">v3.1.5 — Performance improvements</div><div class="list-row-meta">Released May 22, 2026 by Mark Lee</div></div>
+            <fresh-badge variant="success" size="sm">Live</fresh-badge>
+          </div>
+          <div class="list-row">
+            <div class="list-row-icon"><i class="ti ti-rocket"></i></div>
+            <div class="list-row-text"><div class="list-row-name">v3.3.0 — Collaboration features</div><div class="list-row-meta">Scheduled for Jun 20, 2026</div></div>
+            <fresh-badge variant="warning" size="sm">Staged</fresh-badge>
+          </div>
+        </div>
+      </div>
+
+      <!-- Team content -->
+      <div class="content-panel" id="panel-team">
+        <h1 class="panel-heading">Team</h1>
+        <p class="panel-subheading">Manage members, roles, and access controls for your workspace.</p>
+        <div class="content-card">
+          <div class="content-card-title">Members</div>
+          <div class="list-row">
+            <fresh-avatar name="Jane Smith" size="sm"></fresh-avatar>
+            <div class="list-row-text"><div class="list-row-name">Jane Smith</div><div class="list-row-meta">jane@acme.com</div></div>
+            <fresh-badge variant="primary" size="sm">Admin</fresh-badge>
+          </div>
+          <div class="list-row">
+            <fresh-avatar name="Mark Lee" size="sm"></fresh-avatar>
+            <div class="list-row-text"><div class="list-row-name">Mark Lee</div><div class="list-row-meta">mark@acme.com</div></div>
+            <fresh-badge variant="secondary" size="sm">Editor</fresh-badge>
+          </div>
+          <div class="list-row">
+            <fresh-avatar name="Sara Kim" size="sm"></fresh-avatar>
+            <div class="list-row-text"><div class="list-row-name">Sara Kim</div><div class="list-row-meta">sara@acme.com</div></div>
+            <fresh-badge variant="secondary" size="sm">Viewer</fresh-badge>
+          </div>
+        </div>
+        <fresh-button variant="primary" size="sm"><i class="ti ti-user-plus"></i> Invite member</fresh-button>
+      </div>
+
+      <!-- Settings content -->
+      <div class="content-panel" id="panel-settings">
+        <h1 class="panel-heading">Settings</h1>
+        <p class="panel-subheading">Configure your workspace preferences, notifications, and security.</p>
+        <div class="content-card">
+          <div class="content-card-title">Workspace</div>
+          <div style="display:flex;flex-direction:column;gap:var(--space-4)">
+            <div style="display:flex;align-items:center;gap:var(--space-3)">
+              <div style="flex:1"><div style="font-size:var(--font-size-sm);font-weight:500;color:var(--text-primary)">Workspace name</div><div style="font-size:var(--font-size-xs);color:var(--text-tertiary);margin-top:2px">Acme Corp</div></div>
+              <fresh-button variant="secondary" size="sm">Edit</fresh-button>
+            </div>
+            <div style="border-top:1px solid var(--surface-border);padding-top:var(--space-4);display:flex;align-items:center;gap:var(--space-3)">
+              <div style="flex:1"><div style="font-size:var(--font-size-sm);font-weight:500;color:var(--text-primary)">Default timezone</div><div style="font-size:var(--font-size-xs);color:var(--text-tertiary);margin-top:2px">UTC-7 (Pacific Time)</div></div>
+              <fresh-button variant="secondary" size="sm">Change</fresh-button>
+            </div>
+            <div style="border-top:1px solid var(--surface-border);padding-top:var(--space-4);display:flex;align-items:center;gap:var(--space-3)">
+              <div style="flex:1"><div style="font-size:var(--font-size-sm);font-weight:500;color:var(--text-primary)">Session timeout</div><div style="font-size:var(--font-size-xs);color:var(--text-tertiary);margin-top:2px">30 minutes of inactivity</div></div>
+              <fresh-button variant="secondary" size="sm">Configure</fresh-button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Billing content -->
+      <div class="content-panel" id="panel-billing">
+        <h1 class="panel-heading">Billing</h1>
+        <p class="panel-subheading">Manage your subscription, invoices, and payment methods.</p>
+        <div class="content-card">
+          <div class="content-card-title">Current plan</div>
+          <div style="display:flex;align-items:center;gap:var(--space-4)">
+            <div style="flex:1">
+              <div style="font-size:var(--font-size-lg);font-weight:700;color:var(--text-primary)">Pro</div>
+              <div style="font-size:var(--font-size-sm);color:var(--text-secondary);margin-top:var(--space-1)">25 seats included. Renews Jul 1, 2026.</div>
+            </div>
+            <fresh-button variant="primary" size="sm">Upgrade</fresh-button>
+          </div>
+        </div>
+        <div class="content-card">
+          <div class="content-card-title">Recent invoices</div>
+          <div class="list-row">
+            <div class="list-row-icon"><i class="ti ti-receipt"></i></div>
+            <div class="list-row-text"><div class="list-row-name">Jun 1, 2026</div><div class="list-row-meta">25 seats x $12/mo</div></div>
+            <fresh-button variant="ghost" size="sm"><i class="ti ti-download"></i></fresh-button>
+          </div>
+          <div class="list-row">
+            <div class="list-row-icon"><i class="ti ti-receipt"></i></div>
+            <div class="list-row-text"><div class="list-row-name">May 1, 2026</div><div class="list-row-meta">25 seats x $12/mo</div></div>
+            <fresh-button variant="ghost" size="sm"><i class="ti ti-download"></i></fresh-button>
+          </div>
+        </div>
+      </div>
+
+    </main>
+
+  </div>
+
+  <!-- Command palette -->
+  <div class="palette-overlay" id="palette-overlay">
+    <div class="palette-box">
+      <div class="palette-search">
+        <i class="ti ti-search"></i>
+        <input class="palette-input" id="palette-input" placeholder="Search pages, actions..." autocomplete="off" spellcheck="false">
+      </div>
+      <div class="palette-results" id="palette-results"></div>
+      <div class="palette-footer">
+        <span class="palette-footer-hint"><kbd>↑</kbd><kbd>↓</kbd> navigate</span>
+        <span class="palette-footer-hint"><kbd>↵</kbd> select</span>
+        <span class="palette-footer-hint"><kbd>esc</kbd> close</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  (function() {
+    var DEF = {
+      primary: '#1f2328', secondary: '#6b7280',
+      scaleDark: '#1f2328', scaleLight: '#ffffff',
+      success: '#22c55e', warning: '#f59e0b', danger: '#f43f5e',
+      info: '#3b82f6', aiAction: '#0d9488',
+      pageBg: '#ffffff', inputSurface: '#ffffff',
+      radiusSm: '4', radiusMd: '8', radiusLg: '12', radiusXl: '20',
+      fontSans: 'Inter', fontMono: 'JetBrains Mono',
+      density: 'default', mode: 'light'
+    };
+    var DENSITY = {
+      compact:     { 1:'3px', 2:'6px',  3:'10px', 4:'12px', 5:'16px', 6:'20px', 8:'28px', 10:'34px', 12:'42px' },
+      default:     { 1:'4px', 2:'8px',  3:'12px', 4:'16px', 5:'20px', 6:'24px', 8:'32px', 10:'40px', 12:'48px' },
+      comfortable: { 1:'5px', 2:'10px', 3:'15px', 4:'20px', 5:'26px', 6:'30px', 8:'42px', 10:'52px', 12:'62px' }
+    };
+    var t = DEF;
+    try { var s = localStorage.getItem('freshds-theme'); if (s) t = Object.assign({}, DEF, JSON.parse(s)); } catch(e) {}
+    var root = document.documentElement;
+    applyScalesToElement(root, t.primary, t.secondary, t.scaleDark, t.scaleLight, t.success, t.warning, t.danger, t.info, t.aiAction);
+    root.style.setProperty('--color-page-bg',       t.pageBg       || '#ffffff');
+    root.style.setProperty('--color-input-surface', t.inputSurface || '#ffffff');
+    if (t.radiusSm !== undefined) root.style.setProperty('--radius-sm', t.radiusSm + 'px');
+    if (t.radiusMd !== undefined) root.style.setProperty('--radius-md', t.radiusMd + 'px');
+    if (t.radiusLg !== undefined) root.style.setProperty('--radius-lg', t.radiusLg + 'px');
+    if (t.radiusXl !== undefined) root.style.setProperty('--radius-xl', t.radiusXl + 'px');
+    if (t.fontSans && typeof loadFont === 'function' && SANS_FONTS && SANS_FONTS[t.fontSans]) {
+      loadFont(t.fontSans, SANS_FONTS[t.fontSans]);
+      root.style.setProperty('--font-sans', "'" + t.fontSans + "', system-ui, sans-serif");
+    }
+    if (t.fontMono && typeof loadFont === 'function' && MONO_FONTS && MONO_FONTS[t.fontMono]) {
+      loadFont(t.fontMono, MONO_FONTS[t.fontMono]);
+      root.style.setProperty('--font-mono', "'" + t.fontMono + "', monospace");
+    }
+    var spacing = DENSITY[t.density] || DENSITY.default;
+    Object.keys(spacing).forEach(function(k) { root.style.setProperty('--space-' + k, spacing[k]); });
+    /* Page itself stays light even if user saved dark mode; only navbar is dark */
+  })();
+</script>
+
+<!-- DS components -->
+<script src="/components/core/fresh-button.js"></script>
+<script src="/components/feedback/fresh-badge.js"></script>
+<script src="/components/navigation/fresh-navbar.js"></script>
+<script src="/components/navigation/fresh-sidebar.js"></script>
+<script src="/components/navigation/fresh-simple-tabs.js"></script>
+<script src="/components/data/fresh-avatar.js"></script>
+
+<script>
+  var SECTIONS = ['product', 'team', 'settings', 'billing'];
+
+  function switchSection(key) {
+    SECTIONS.forEach(function(k) {
+      var snav = document.getElementById('snav-' + k);
+      var panel = document.getElementById('panel-' + k);
+      if (snav)  snav.classList.toggle('active',  k === key);
+      if (panel) panel.classList.toggle('active', k === key);
+    });
+    /* Re-propagate sidebar-collapsed to newly visible items */
+    var sidebar = document.getElementById('app-sidebar');
+    if (sidebar && typeof sidebar._propagateCollapsed === 'function') {
+      requestAnimationFrame(function() { sidebar._propagateCollapsed(); });
+    }
+  }
+
+  document.getElementById('section-tabs').addEventListener('change', function(e) {
+    switchSection(e.detail.key);
+  });
+</script>
+
+<script>
+  var NAV_ITEMS = [
+    { label: 'Dashboard',     icon: 'ti-layout-dashboard', group: 'Product' },
+    { label: 'Analytics',     icon: 'ti-chart-bar',        group: 'Product' },
+    { label: 'Reports',       icon: 'ti-file-description', group: 'Product' },
+    { label: 'Feature flags', icon: 'ti-toggle-left',      group: 'Product' },
+    { label: 'Releases',      icon: 'ti-rocket',           group: 'Product' },
+    { label: 'All members',   icon: 'ti-users',            group: 'Team' },
+    { label: 'Invitations',   icon: 'ti-user-plus',        group: 'Team' },
+    { label: 'Roles',         icon: 'ti-shield-check',     group: 'Team' },
+    { label: 'General',       icon: 'ti-settings-2',       group: 'Settings' },
+    { label: 'Notifications', icon: 'ti-bell',             group: 'Settings' },
+    { label: 'Authentication',icon: 'ti-lock',             group: 'Settings' },
+    { label: 'Overview',      icon: 'ti-credit-card',      group: 'Billing' },
+    { label: 'Invoices',      icon: 'ti-receipt',          group: 'Billing' },
+    { label: 'Plans',         icon: 'ti-package',          group: 'Billing' },
+  ];
+  var _activeIdx = 0, _filtered = NAV_ITEMS.slice();
+
+  function openPalette() {
+    document.getElementById('palette-overlay').classList.add('open');
+    document.getElementById('palette-input').value = '';
+    renderResults('');
+    setTimeout(function() { document.getElementById('palette-input').focus(); }, 30);
+  }
+  function closePalette() { document.getElementById('palette-overlay').classList.remove('open'); _activeIdx = 0; }
+
+  function renderResults(query) {
+    var q = query.toLowerCase().trim();
+    _filtered = q ? NAV_ITEMS.filter(function(i) { return i.label.toLowerCase().indexOf(q) !== -1 || i.group.toLowerCase().indexOf(q) !== -1; }) : NAV_ITEMS.slice();
+    _activeIdx = _filtered.length > 0 ? 0 : -1;
+    var html = '';
+    if (_filtered.length === 0) {
+      html = '<div class="pitem-empty">No results for "' + query + '"</div>';
+    } else if (q) {
+      html = _filtered.map(function(item, i) { return '<div class="palette-item' + (i === 0 ? ' active' : '') + '" onclick="selectItem(' + i + ')"><i class="ti ' + item.icon + ' pitem-icon"></i><span>' + item.label + '</span><span class="pitem-group">' + item.group + '</span></div>'; }).join('');
+    } else {
+      var groups = []; _filtered.forEach(function(item) { if (groups.indexOf(item.group) === -1) groups.push(item.group); });
+      var fi = 0; groups.forEach(function(group) { html += '<div class="palette-group-label">' + group + '</div>'; _filtered.filter(function(i) { return i.group === group; }).forEach(function(item) { var idx = fi++; html += '<div class="palette-item' + (idx === 0 ? ' active' : '') + '" onclick="selectItem(' + idx + ')"><i class="ti ' + item.icon + ' pitem-icon"></i><span>' + item.label + '</span></div>'; }); });
+    }
+    document.getElementById('palette-results').innerHTML = html;
+  }
+  function setActive(idx) {
+    _activeIdx = Math.max(0, Math.min(idx, _filtered.length - 1));
+    document.querySelectorAll('.palette-item').forEach(function(el, i) { el.classList.toggle('active', i === _activeIdx); });
+    var a = document.querySelectorAll('.palette-item')[_activeIdx]; if (a) a.scrollIntoView({ block: 'nearest' });
+  }
+  function selectItem(idx) { closePalette(); }
+
+  document.getElementById('palette-input').addEventListener('input', function() { renderResults(this.value); });
+  document.getElementById('palette-input').addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowDown') { e.preventDefault(); setActive(_activeIdx + 1); }
+    else if (e.key === 'ArrowUp') { e.preventDefault(); setActive(_activeIdx - 1); }
+    else if (e.key === 'Enter')  { if (_activeIdx >= 0) selectItem(_activeIdx); }
+    else if (e.key === 'Escape') { closePalette(); }
+  });
+  document.getElementById('palette-overlay').addEventListener('click', function(e) { if (e.target === this) closePalette(); });
+  document.getElementById('app-navbar').addEventListener('search-open', openPalette);
+  document.addEventListener('keydown', function(e) {
+    if ((e.metaKey || e.ctrlKey) && e.key === 'k') { e.preventDefault(); document.getElementById('palette-overlay').classList.contains('open') ? closePalette() : openPalette(); }
+  });
+</script>
+
+<script>
+  (function() {
+    var NB_ICONS = [
+      { key: 'search',   icon: 'ti-search',         label: 'Search' },
+      { key: 'bell',     icon: 'ti-bell',            label: 'Notifications' },
+      { key: 'help',     icon: 'ti-help-circle',     label: 'Help' },
+      { key: 'plus',     icon: 'ti-circle-plus',     label: 'New' },
+      { key: 'grid',     icon: 'ti-grid-dots',       label: 'Apps' },
+      { key: 'settings', icon: 'ti-settings-2',      label: 'Settings' },
+      { key: 'messages', icon: 'ti-message-circle',  label: 'Messages' },
+      { key: 'bookmark', icon: 'ti-bookmark',        label: 'Saved' }
+    ];
+    var cfg = { logoType: 'default', logoUrl: '', activeIcons: ['search', 'bell'] };
+    try {
+      var s = localStorage.getItem('freshds-nav-cfg');
+      if (s) { var stored = JSON.parse(s); cfg = Object.assign(cfg, stored.navbar_cfg || stored); }
+    } catch(e) {}
+
+    var brand = document.getElementById('nb-brand');
+    if (brand && cfg.logoType === 'custom' && cfg.logoUrl) {
+      brand.innerHTML = '<img src="' + cfg.logoUrl.replace(/"/g, '&quot;') + '" alt="Logo" style="height:28px;max-width:140px;object-fit:contain;display:block">';
+    }
+
+    var actions = document.getElementById('nb-actions');
+    if (actions) {
+      /* Filter 'search' — navbar handles it via the search attribute */
+      var iconsHtml = (cfg.activeIcons || []).filter(function(key) { return key !== 'search'; }).map(function(key) {
+        var ic = NB_ICONS.filter(function(i) { return i.key === key; })[0];
+        return ic ? '<fresh-button variant="ghost" size="sm" aria-label="' + ic.label + '"><i class="ti ' + ic.icon + '"></i></fresh-button>' : '';
+      }).join('');
+      actions.innerHTML = iconsHtml + '<fresh-avatar name="Jane Smith" size="sm"></fresh-avatar>';
+    }
+  })();
+</script>
+
+</body>
+</html>
