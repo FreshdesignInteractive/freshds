@@ -45,26 +45,6 @@
   .content-panel { display: none; max-width: 880px; }
   .content-panel.active { display: block; }
 
-  .panel-heading { font-size: 22px; font-weight: 600; color: var(--text-primary); letter-spacing: -0.02em; margin: 0 0 var(--space-2); }
-  .panel-subheading { font-size: var(--font-size-md); color: var(--text-secondary); margin: 0 0 var(--space-8); }
-
-  .card-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-4); margin-bottom: var(--space-6); }
-  @media (max-width: 640px) { .card-grid { grid-template-columns: 1fr; } }
-
-  .stat-card { background: var(--surface-canvas); border: 1px solid var(--surface-border); border-radius: var(--radius-lg); padding: var(--space-5); }
-  .stat-label { font-size: var(--font-size-xs); font-weight: 500; color: var(--text-tertiary); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: var(--space-2); }
-  .stat-value { font-size: 28px; font-weight: 700; color: var(--text-primary); letter-spacing: -0.03em; margin-bottom: var(--space-1); }
-  .stat-delta { font-size: var(--font-size-sm); color: var(--color-success); display: flex; align-items: center; gap: 4px; }
-
-  .content-card { background: var(--surface-canvas); border: 1px solid var(--surface-border); border-radius: var(--radius-lg); padding: var(--space-5); margin-bottom: var(--space-4); }
-  .content-card-title { font-size: var(--font-size-md); font-weight: 600; color: var(--text-primary); margin-bottom: var(--space-4); }
-
-  .list-row { display: flex; align-items: center; gap: var(--space-3); padding: var(--space-3) 0; border-bottom: 1px solid var(--surface-border); }
-  .list-row:last-child { border-bottom: none; padding-bottom: 0; }
-  .list-row-icon { width: 32px; height: 32px; border-radius: var(--radius-md); background: var(--surface-subtle); display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 15px; color: var(--text-secondary); }
-  .list-row-text { flex: 1; min-width: 0; }
-  .list-row-name { font-size: var(--font-size-sm); font-weight: 500; color: var(--text-primary); }
-  .list-row-meta { font-size: var(--font-size-xs); color: var(--text-tertiary); margin-top: 2px; }
 
   /* Brand slot */
   .brand-mark { width: 28px; height: 28px; border-radius: var(--radius-sm); background: var(--color-interactive); display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700; color: #fff; flex-shrink: 0; letter-spacing: -0.02em; }
@@ -175,127 +155,7 @@
 
     </fresh-sidebar>
 
-    <main class="shell-content">
-
-      <!-- Product content -->
-      <div class="content-panel active" id="panel-product">
-        <h1 class="panel-heading">Product</h1>
-        <p class="panel-subheading">Monitor usage, analytics, and feature performance across your product.</p>
-        <div class="card-grid">
-          <div class="stat-card">
-            <div class="stat-label">Monthly active users</div>
-            <div class="stat-value">24,512</div>
-            <div class="stat-delta"><i class="ti ti-trending-up"></i> +12% this month</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-label">Feature adoption</div>
-            <div class="stat-value">68%</div>
-            <div class="stat-delta"><i class="ti ti-trending-up"></i> +5pts vs last month</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-label">Avg. session</div>
-            <div class="stat-value">4m 12s</div>
-            <div class="stat-delta"><i class="ti ti-trending-up"></i> +0.4m this week</div>
-          </div>
-        </div>
-        <div class="content-card">
-          <div class="content-card-title">Recent releases</div>
-          <div class="list-row">
-            <div class="list-row-icon"><i class="ti ti-rocket"></i></div>
-            <div class="list-row-text"><div class="list-row-name">v3.2.0 — Dashboard redesign</div><div class="list-row-meta">Released Jun 1, 2026 by Jane Smith</div></div>
-            <fresh-badge variant="success" size="sm">Live</fresh-badge>
-          </div>
-          <div class="list-row">
-            <div class="list-row-icon"><i class="ti ti-rocket"></i></div>
-            <div class="list-row-text"><div class="list-row-name">v3.1.5 — Performance improvements</div><div class="list-row-meta">Released May 22, 2026 by Mark Lee</div></div>
-            <fresh-badge variant="success" size="sm">Live</fresh-badge>
-          </div>
-          <div class="list-row">
-            <div class="list-row-icon"><i class="ti ti-rocket"></i></div>
-            <div class="list-row-text"><div class="list-row-name">v3.3.0 — Collaboration features</div><div class="list-row-meta">Scheduled for Jun 20, 2026</div></div>
-            <fresh-badge variant="warning" size="sm">Staged</fresh-badge>
-          </div>
-        </div>
-      </div>
-
-      <!-- Team content -->
-      <div class="content-panel" id="panel-team">
-        <h1 class="panel-heading">Team</h1>
-        <p class="panel-subheading">Manage members, roles, and access controls for your workspace.</p>
-        <div class="content-card">
-          <div class="content-card-title">Members</div>
-          <div class="list-row">
-            <fresh-avatar name="Jane Smith" size="sm"></fresh-avatar>
-            <div class="list-row-text"><div class="list-row-name">Jane Smith</div><div class="list-row-meta">jane@acme.com</div></div>
-            <fresh-badge variant="primary" size="sm">Admin</fresh-badge>
-          </div>
-          <div class="list-row">
-            <fresh-avatar name="Mark Lee" size="sm"></fresh-avatar>
-            <div class="list-row-text"><div class="list-row-name">Mark Lee</div><div class="list-row-meta">mark@acme.com</div></div>
-            <fresh-badge variant="secondary" size="sm">Editor</fresh-badge>
-          </div>
-          <div class="list-row">
-            <fresh-avatar name="Sara Kim" size="sm"></fresh-avatar>
-            <div class="list-row-text"><div class="list-row-name">Sara Kim</div><div class="list-row-meta">sara@acme.com</div></div>
-            <fresh-badge variant="secondary" size="sm">Viewer</fresh-badge>
-          </div>
-        </div>
-        <fresh-button variant="primary" size="sm"><i class="ti ti-user-plus"></i> Invite member</fresh-button>
-      </div>
-
-      <!-- Settings content -->
-      <div class="content-panel" id="panel-settings">
-        <h1 class="panel-heading">Settings</h1>
-        <p class="panel-subheading">Configure your workspace preferences, notifications, and security.</p>
-        <div class="content-card">
-          <div class="content-card-title">Workspace</div>
-          <div style="display:flex;flex-direction:column;gap:var(--space-4)">
-            <div style="display:flex;align-items:center;gap:var(--space-3)">
-              <div style="flex:1"><div style="font-size:var(--font-size-sm);font-weight:500;color:var(--text-primary)">Workspace name</div><div style="font-size:var(--font-size-xs);color:var(--text-tertiary);margin-top:2px">Acme Corp</div></div>
-              <fresh-button variant="secondary" size="sm">Edit</fresh-button>
-            </div>
-            <div style="border-top:1px solid var(--surface-border);padding-top:var(--space-4);display:flex;align-items:center;gap:var(--space-3)">
-              <div style="flex:1"><div style="font-size:var(--font-size-sm);font-weight:500;color:var(--text-primary)">Default timezone</div><div style="font-size:var(--font-size-xs);color:var(--text-tertiary);margin-top:2px">UTC-7 (Pacific Time)</div></div>
-              <fresh-button variant="secondary" size="sm">Change</fresh-button>
-            </div>
-            <div style="border-top:1px solid var(--surface-border);padding-top:var(--space-4);display:flex;align-items:center;gap:var(--space-3)">
-              <div style="flex:1"><div style="font-size:var(--font-size-sm);font-weight:500;color:var(--text-primary)">Session timeout</div><div style="font-size:var(--font-size-xs);color:var(--text-tertiary);margin-top:2px">30 minutes of inactivity</div></div>
-              <fresh-button variant="secondary" size="sm">Configure</fresh-button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Billing content -->
-      <div class="content-panel" id="panel-billing">
-        <h1 class="panel-heading">Billing</h1>
-        <p class="panel-subheading">Manage your subscription, invoices, and payment methods.</p>
-        <div class="content-card">
-          <div class="content-card-title">Current plan</div>
-          <div style="display:flex;align-items:center;gap:var(--space-4)">
-            <div style="flex:1">
-              <div style="font-size:var(--font-size-lg);font-weight:700;color:var(--text-primary)">Pro</div>
-              <div style="font-size:var(--font-size-sm);color:var(--text-secondary);margin-top:var(--space-1)">25 seats included. Renews Jul 1, 2026.</div>
-            </div>
-            <fresh-button variant="primary" size="sm">Upgrade</fresh-button>
-          </div>
-        </div>
-        <div class="content-card">
-          <div class="content-card-title">Recent invoices</div>
-          <div class="list-row">
-            <div class="list-row-icon"><i class="ti ti-receipt"></i></div>
-            <div class="list-row-text"><div class="list-row-name">Jun 1, 2026</div><div class="list-row-meta">25 seats x $12/mo</div></div>
-            <fresh-button variant="ghost" size="sm"><i class="ti ti-download"></i></fresh-button>
-          </div>
-          <div class="list-row">
-            <div class="list-row-icon"><i class="ti ti-receipt"></i></div>
-            <div class="list-row-text"><div class="list-row-name">May 1, 2026</div><div class="list-row-meta">25 seats x $12/mo</div></div>
-            <fresh-button variant="ghost" size="sm"><i class="ti ti-download"></i></fresh-button>
-          </div>
-        </div>
-      </div>
-
-    </main>
+    <main class="shell-content"></main>
 
   </div>
 
@@ -360,7 +220,6 @@
 
 <!-- DS components -->
 <script src="/components/core/fresh-button.js"></script>
-<script src="/components/feedback/fresh-badge.js"></script>
 <script src="/components/navigation/fresh-navbar.js"></script>
 <script src="/components/navigation/fresh-sidebar.js"></script>
 <script src="/components/navigation/fresh-simple-tabs.js"></script>
