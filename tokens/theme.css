@@ -12,7 +12,7 @@
 
   /* ── Tier 2: Semantic — Surfaces ── */
   --surface-bg:             var(--color-page-bg);    /* page bg + navbar, user-defined */
-  --surface-canvas:         var(--color-page-bg);    /* cards/panels, matches page in light mode */
+  --surface-canvas:         var(--scale-1);           /* cards/panels, fixed light surface */
   --surface-input:          var(--color-input-surface); /* form controls, user-defined */
   --surface-subtle:         var(--scale-2);
   --surface-overlay:        var(--scale-3);

@@ -43,7 +43,7 @@ JS only sets raw scale steps and the two user-defined primitives (`--color-page-
 | Token | Light mode | Dark mode | Use for |
 |---|---|---|---|
 | `--surface-bg` | `--color-page-bg` | `--scale-12` | Page background, navbar |
-| `--surface-canvas` | `--color-page-bg` | `--scale-10` | Cards, panels, elevated surfaces |
+| `--surface-canvas` | `--scale-1` | `--scale-10` | Cards, panels, elevated surfaces |
 | `--surface-input` | `--color-input-surface` | `--scale-11` | Form controls |
 | `--surface-subtle` | `--scale-2` | `--scale-11` | Hover tints, section backgrounds |
 | `--surface-overlay` | `--scale-3` | `--scale-9` | Dropdowns, modals |
