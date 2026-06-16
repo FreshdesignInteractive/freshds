@@ -164,6 +164,140 @@
   }
   .nav-tile-preview-link .ti { font-size: 11px; }
 
+  /* ── Navbar designer ───────────────────────────────────────── */
+  .nb-section-label {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-tertiary);
+    margin-bottom: var(--space-3);
+  }
+  .nb-radio-row {
+    display: flex;
+    gap: var(--space-5);
+    margin-bottom: var(--space-3);
+  }
+  .nb-radio-opt {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: 13px;
+    color: var(--text-secondary);
+    cursor: pointer;
+  }
+  .nb-logo-input-row {
+    display: flex;
+    gap: var(--space-2);
+    align-items: center;
+    margin-bottom: var(--space-4);
+  }
+  .nb-text-input {
+    flex: 1;
+    height: 36px;
+    padding: 0 12px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    font-family: inherit;
+    font-size: 13px;
+    color: var(--text-primary);
+    background: var(--card);
+    outline: none;
+    transition: border-color 0.15s;
+    box-sizing: border-box;
+  }
+  .nb-text-input:focus { border-color: var(--scale-11); }
+  .nb-text-input::placeholder { color: var(--text-tertiary); }
+  .nb-upload-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    height: 36px;
+    padding: 0 14px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: border-color 0.15s, color 0.15s;
+    white-space: nowrap;
+    box-sizing: border-box;
+  }
+  .nb-upload-btn:hover { border-color: var(--scale-11); color: var(--text-primary); }
+  .nb-upload-btn .ti { font-size: 13px; }
+  .nb-icon-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+  .nb-icon-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    height: 32px;
+    padding: 0 12px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-full);
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: border-color 0.15s, background 0.15s, color 0.15s;
+    user-select: none;
+    background: transparent;
+  }
+  .nb-icon-chip:hover { border-color: #a1a1aa; color: var(--text-primary); }
+  .nb-icon-chip.active { border-color: var(--text-primary); background: var(--text-primary); color: #fff; }
+  .nb-icon-chip .ti { font-size: 13px; }
+  .nb-preview-label {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--text-tertiary);
+    margin-bottom: 6px;
+  }
+  .nb-preview-bar {
+    display: flex;
+    align-items: center;
+    height: 50px;
+    padding: 0 16px;
+    background: var(--scale-0);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    gap: 8px;
+  }
+  .nb-preview-logo { display: flex; align-items: center; flex-shrink: 0; }
+  .nb-preview-logo img { height: 24px; max-width: 120px; object-fit: contain; display: block; }
+  .nb-preview-logo-text { font-size: 18px; font-weight: 800; color: var(--text-primary); letter-spacing: -0.04em; }
+  .nb-preview-spacer { flex: 1; }
+  .nb-preview-actions { display: flex; align-items: center; gap: 2px; }
+  .nb-preview-icon {
+    width: 30px; height: 30px;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: var(--radius-md);
+    color: var(--text-secondary);
+    font-size: 15px;
+  }
+  .nb-preview-avatar {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    background: var(--scale-9);
+    color: var(--scale-1);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 600;
+    margin-left: 6px; flex-shrink: 0;
+  }
+  .nb-preview-login-btn {
+    height: 28px; padding: 0 14px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-full);
+    font-family: inherit; font-size: 12px; font-weight: 500;
+    color: var(--text-secondary); background: transparent;
+    display: flex; align-items: center;
+  }
+
   /* ── Navigation option tiles ────────────────────────────────── */
   .nav-options-grid {
     display: grid;
