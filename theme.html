@@ -610,7 +610,7 @@
   <div class="cfg-sticky-footer">
     <div class="cfg-sticky-footer-inner">
       <button class="cfg-revert-btn" id="cfg-revert-btn" onclick="revertChanges()" disabled>Revert changes</button>
-      <button class="cfg-save-btn"   id="cfg-save-btn"   onclick="saveConfiguration()" disabled>Save configuration</button>
+      <button class="cfg-save-btn"   id="cfg-save-btn"   onclick="saveConfiguration()" disabled>Save Theme</button>
     </div>
   </div>
 
@@ -656,7 +656,7 @@
   // Save / revert actions
   function saveConfiguration() {
     applyStagedToSite();
-    showToast('Configuration saved');
+    showToast('Theme saved');
   }
   function revertChanges() {
     discardStagedChanges();
