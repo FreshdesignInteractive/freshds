@@ -385,9 +385,48 @@
   <main class="cfg-body">
     <div class="cfg-body-inner">
 
-      <div class="cfg-page-title">Choose your navigation</div>
+      <div class="cfg-page-title">Navigation</div>
 
       <div class="config-grid">
+
+        <!-- Navbar designer -->
+        <div class="config-card">
+          <div class="cfg-card-heading">Navbar</div>
+
+          <!-- Logo -->
+          <div class="nb-section-label">Logo</div>
+          <div class="nb-radio-row">
+            <label class="nb-radio-opt">
+              <input type="radio" name="nb-logo-type" value="default" checked onchange="setLogoType('default')">
+              <span>Default (Acme)</span>
+            </label>
+            <label class="nb-radio-opt">
+              <input type="radio" name="nb-logo-type" value="custom" onchange="setLogoType('custom')">
+              <span>Custom</span>
+            </label>
+          </div>
+          <div id="nb-custom-logo-row" style="display:none">
+            <div class="nb-logo-input-row">
+              <input type="text" id="nb-logo-url" placeholder="Paste image URL..." class="nb-text-input" oninput="setLogoUrl(this.value)">
+              <label class="nb-upload-btn">
+                <i class="ti ti-upload"></i> Upload
+                <input type="file" accept="image/*" style="display:none" onchange="handleLogoUpload(this)">
+              </label>
+            </div>
+          </div>
+
+          <!-- Action icons (logged in) -->
+          <div class="nb-section-label" style="margin-top: var(--space-5)">Action icons (logged in)</div>
+          <div class="nb-icon-grid" id="nb-icon-grid"></div>
+
+          <!-- Previews -->
+          <div style="margin-top: var(--space-5)">
+            <div class="nb-preview-label">Logged in</div>
+            <div class="nb-preview-bar" id="nb-preview-in"></div>
+            <div class="nb-preview-label" style="margin-top: var(--space-3)">Logged out</div>
+            <div class="nb-preview-bar" id="nb-preview-out"></div>
+          </div>
+        </div>
 
         <!-- Navigation pattern -->
         <div class="config-card">
@@ -677,6 +716,7 @@
 </div>
 
 <script>
+  /* ── Layout pattern state ─────────────────────────────── */
   var _savedNav    = 'persistent-sidebar';
   var _selectedNav = 'persistent-sidebar';
 
@@ -687,17 +727,113 @@
     _syncButtons();
   }
 
+  /* ── Navbar designer state ───────────────────────────── */
+  var NB_ICONS = [
+    { key: 'search',    icon: 'ti-search',         label: 'Search' },
+    { key: 'bell',      icon: 'ti-bell',           label: 'Notifications' },
+    { key: 'help',      icon: 'ti-help-circle',    label: 'Help' },
+    { key: 'plus',      icon: 'ti-circle-plus',    label: 'New' },
+    { key: 'grid',      icon: 'ti-grid-dots',      label: 'Apps' },
+    { key: 'settings',  icon: 'ti-settings-2',     label: 'Settings' },
+    { key: 'messages',  icon: 'ti-message-circle', label: 'Messages' },
+    { key: 'bookmark',  icon: 'ti-bookmark',       label: 'Saved' }
+  ];
+
+  var _nbDefault = { logoType: 'default', logoUrl: '', activeIcons: ['search', 'bell'] };
+  var _savedNb   = JSON.parse(JSON.stringify(_nbDefault));
+  var _nb        = JSON.parse(JSON.stringify(_nbDefault));
+
+  function _nbChanged() {
+    return JSON.stringify(_nb) !== JSON.stringify(_savedNb);
+  }
+
+  function setLogoType(type) {
+    _nb.logoType = type;
+    document.getElementById('nb-custom-logo-row').style.display = type === 'custom' ? '' : 'none';
+    _renderNbPreviews();
+    _syncButtons();
+  }
+
+  function setLogoUrl(url) {
+    _nb.logoUrl = url;
+    _renderNbPreviews();
+    _syncButtons();
+  }
+
+  function handleLogoUpload(input) {
+    var file = input.files && input.files[0];
+    if (!file) return;
+    var reader = new FileReader();
+    reader.onload = function(e) {
+      _nb.logoUrl = e.target.result;
+      document.getElementById('nb-logo-url').value = '';
+      _renderNbPreviews();
+      _syncButtons();
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function toggleIcon(key) {
+    var idx = _nb.activeIcons.indexOf(key);
+    if (idx === -1) _nb.activeIcons.push(key);
+    else            _nb.activeIcons.splice(idx, 1);
+    document.querySelectorAll('.nb-icon-chip').forEach(function(c) {
+      c.classList.toggle('active', _nb.activeIcons.indexOf(c.dataset.key) !== -1);
+    });
+    _renderNbPreviews();
+    _syncButtons();
+  }
+
+  function _nbLogoHtml() {
+    if (_nb.logoType === 'custom' && _nb.logoUrl) {
+      return '<img src="' + _nb.logoUrl.replace(/"/g, '&quot;') + '" alt="Logo" onerror="this.style.display=\'none\'">';
+    }
+    return '<span class="nb-preview-logo-text">acme</span>';
+  }
+
+  function _renderNbPreviews() {
+    var iconHtml = _nb.activeIcons.map(function(key) {
+      var ic = NB_ICONS.filter(function(i) { return i.key === key; })[0];
+      return ic ? '<div class="nb-preview-icon"><i class="ti ' + ic.icon + '"></i></div>' : '';
+    }).join('');
+
+    document.getElementById('nb-preview-in').innerHTML =
+      '<div class="nb-preview-logo">' + _nbLogoHtml() + '</div>' +
+      '<div class="nb-preview-spacer"></div>' +
+      '<div class="nb-preview-actions">' + iconHtml +
+      '<div class="nb-preview-avatar">JS</div></div>';
+
+    document.getElementById('nb-preview-out').innerHTML =
+      '<div class="nb-preview-logo">' + _nbLogoHtml() + '</div>' +
+      '<div class="nb-preview-spacer"></div>' +
+      '<div class="nb-preview-actions">' +
+      '<div class="nb-preview-login-btn">Sign in</div></div>';
+  }
+
+  function _buildIconGrid() {
+    var grid = document.getElementById('nb-icon-grid');
+    if (!grid) return;
+    grid.innerHTML = NB_ICONS.map(function(ic) {
+      var active = _nb.activeIcons.indexOf(ic.key) !== -1;
+      return '<div class="nb-icon-chip' + (active ? ' active' : '') + '" data-key="' + ic.key + '" onclick="toggleIcon(\'' + ic.key + '\')">' +
+        '<i class="ti ' + ic.icon + '"></i>' + ic.label + '</div>';
+    }).join('');
+  }
+
+  /* ── Shared save / revert ────────────────────────────── */
   function _syncButtons() {
-    var changed = _selectedNav !== _savedNav;
+    var changed = _selectedNav !== _savedNav || _nbChanged();
     document.getElementById('cfg-revert-btn').disabled = !changed;
     document.getElementById('cfg-save-btn').disabled   = !changed;
   }
 
   function saveNav() {
     _savedNav = _selectedNav;
+    _savedNb  = JSON.parse(JSON.stringify(_nb));
     _syncButtons();
     showToast('Navigation saved');
-    /* TODO: persist _savedNav to Supabase profiles.nav_pattern keyed to user ID */
+    /* TODO: persist to Supabase profiles keyed to user ID:
+       { nav_pattern: _savedNav, navbar_cfg: _savedNb } */
   }
 
   function revertNav() {
@@ -705,6 +841,12 @@
     document.querySelectorAll('.nav-tile').forEach(function(t) {
       t.classList.toggle('selected', t.getAttribute('data-nav') === _savedNav);
     });
+    _nb = JSON.parse(JSON.stringify(_savedNb));
+    document.querySelector('input[name="nb-logo-type"][value="' + _nb.logoType + '"]').checked = true;
+    document.getElementById('nb-custom-logo-row').style.display = _nb.logoType === 'custom' ? '' : 'none';
+    document.getElementById('nb-logo-url').value = (_nb.logoType === 'custom' && !_nb.logoUrl.startsWith('data:')) ? _nb.logoUrl : '';
+    _buildIconGrid();
+    _renderNbPreviews();
     _syncButtons();
     showToast('Changes reverted');
   }
@@ -716,6 +858,10 @@
     clearTimeout(t._tid);
     t._tid = setTimeout(function() { t.classList.remove('show'); }, 2800);
   }
+
+  /* ── Init ────────────────────────────────────────────── */
+  _buildIconGrid();
+  _renderNbPreviews();
 </script>
 
 </body>
