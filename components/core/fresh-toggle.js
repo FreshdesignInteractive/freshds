@@ -115,7 +115,7 @@ class FreshToggle extends HTMLElement {
 
         input:focus-visible ~ .track {
           box-shadow:
-            0 0 0 2px var(--surface-bg),
+            0 0 0 2px var(--surface-canvas),
             0 0 0 4px var(--color-interactive);
         }
 

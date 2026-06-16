@@ -185,13 +185,13 @@ class FreshStepper extends HTMLElement {
         }
 
         .circle.active {
-          background: var(--surface-bg);
+          background: var(--surface-canvas);
           border: 2px solid var(--color-interactive-text);
           box-shadow: 0 0 0 3px var(--input-focus-ring);
         }
 
         .circle.upcoming {
-          background: var(--surface-bg);
+          background: var(--surface-canvas);
           border: 1.5px solid var(--surface-border-strong);
         }
 

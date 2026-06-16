@@ -79,7 +79,7 @@ body {
 /* ── Conversation sidebar ── */
 .ai-sidebar {
   width: 240px;
-  background: var(--surface-bg);
+  background: var(--surface-nav);
   border-right: 1px solid var(--surface-border);
   display: flex;
   flex-direction: column;
@@ -150,7 +150,7 @@ body {
   align-items: center;
   justify-content: space-between;
   padding: var(--space-4) var(--space-5);
-  background: var(--surface-bg);
+  background: var(--surface-nav);
   border-bottom: 1px solid var(--surface-border);
   flex-shrink: 0;
   gap: var(--space-3);
@@ -176,7 +176,7 @@ body {
 /* ── Input area ── */
 .ai-input-area {
   padding: var(--space-4) var(--space-5);
-  background: var(--surface-bg);
+  background: var(--surface-canvas);
   border-top: 1px solid var(--surface-border);
   flex-shrink: 0;
 }
@@ -285,7 +285,7 @@ body {
   width: 220px;
   max-width: 0;
   overflow: hidden;
-  background: var(--surface-bg);
+  background: var(--surface-nav);
   border-right: 1px solid var(--surface-border);
   transition: max-width 240ms ease;
   display: flex;

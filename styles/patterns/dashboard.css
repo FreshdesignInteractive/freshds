@@ -72,7 +72,7 @@ body {
 /* ── Global topbar ── */
 .dash-topbar {
   height: 52px;
-  background: var(--surface-bg);
+  background: var(--surface-nav);
   border-bottom: 1px solid var(--surface-border);
   display: flex;
   align-items: center;
@@ -123,7 +123,7 @@ body {
 /* ── Sidebar ── */
 .dash-sidebar {
   width: 220px;
-  background: var(--surface-bg);
+  background: var(--surface-nav);
   border-right: 1px solid var(--surface-border);
   padding: var(--space-4) var(--space-3);
   display: flex;
@@ -177,7 +177,7 @@ body {
   justify-content: space-between;
   padding: var(--space-5) var(--space-6) var(--space-4) var(--space-6);
   flex-shrink: 0;
-  background: var(--surface-bg);
+  background: var(--surface-canvas);
   border-bottom: 1px solid var(--surface-border);
   gap: var(--space-4);
 }
@@ -289,7 +289,7 @@ body {
   width: 220px;
   max-width: 0;
   overflow: hidden;
-  background: var(--surface-bg);
+  background: var(--surface-nav);
   border-right: 1px solid var(--surface-border);
   transition: max-width 240ms ease;
   display: flex;

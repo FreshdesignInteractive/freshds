@@ -123,7 +123,7 @@ class FreshPopover extends HTMLElement {
 
         .panel {
           position: fixed;
-          background: var(--surface-bg);
+          background: var(--surface-canvas);
           border: 1px solid var(--surface-border-strong);
           border-radius: var(--radius-lg);
           box-shadow: var(--elev-3);

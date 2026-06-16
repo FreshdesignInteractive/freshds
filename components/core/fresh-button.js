@@ -209,7 +209,7 @@ class FreshButton extends HTMLElement {
         button:focus-visible {
           outline: none;
           box-shadow:
-            0 0 0 2px var(--surface-bg),
+            0 0 0 2px var(--surface-canvas),
             0 0 0 4px var(--color-interactive);
         }
       </style>

@@ -59,7 +59,7 @@ class FreshMediaCard extends HTMLElement {
         .card {
           display: flex;
           flex-direction: column;
-          background: var(--surface-bg);
+          background: var(--surface-canvas);
           border: 1px solid var(--surface-border);
           border-radius: var(--radius-lg);
           overflow: hidden;
@@ -72,7 +72,7 @@ class FreshMediaCard extends HTMLElement {
           cursor: pointer;
         }
         :host([no-hover]) .card { cursor: default; }
-        :host([no-hover]) .thumb { background: var(--surface-bg); }
+        :host([no-hover]) .thumb { background: var(--surface-canvas); }
 
         :host(:not([no-hover])) .card:hover {
           border-color: var(--surface-border-strong);

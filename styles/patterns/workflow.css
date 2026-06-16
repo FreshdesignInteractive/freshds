@@ -46,7 +46,7 @@
 }
 .wf-wizard-footer {
   border-top: 1px solid var(--surface-border);
-  background: var(--surface-bg);
+  background: var(--surface-canvas);
   padding: var(--space-4) var(--space-6);
   display: flex;
   align-items: center;
@@ -88,7 +88,7 @@
   border-right: 1px solid var(--surface-border);
   overflow-y: auto;
   padding: var(--space-3);
-  background: var(--surface-bg);
+  background: var(--surface-nav);
 }
 .wf-palette-group { margin-bottom: var(--space-4); }
 .wf-palette-group-title {
@@ -193,7 +193,7 @@
   width: 20px;
   height: 20px;
   border-radius: var(--radius-full);
-  background: var(--surface-bg);
+  background: var(--surface-canvas);
   border: 1.5px solid var(--surface-border-strong);
   display: flex;
   align-items: center;
@@ -209,7 +209,7 @@
   width: 280px;
   flex-shrink: 0;
   border-left: 1px solid var(--surface-border);
-  background: var(--surface-bg);
+  background: var(--surface-canvas);
   overflow-y: auto;
   display: flex;
   flex-direction: column;
@@ -255,7 +255,7 @@
 .wf-rule-section-label { font-size: var(--font-size-sm); font-weight: 700; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.06em; }
 .wf-rule-section-body { padding: var(--space-4); }
 .wf-condition-group {
-  background: var(--surface-bg);
+  background: var(--surface-canvas);
   border: 1px solid var(--surface-border);
   border-radius: var(--radius-md);
   margin-bottom: var(--space-3);
@@ -329,7 +329,7 @@
   align-items: flex-start;
   gap: var(--space-3);
   padding: var(--space-3);
-  background: var(--surface-bg);
+  background: var(--surface-canvas);
   border: 1px solid var(--surface-border);
   border-radius: var(--radius-md);
   margin-bottom: var(--space-2);
@@ -406,7 +406,7 @@
   border-bottom: 1px solid var(--surface-border);
   overflow-x: auto;
   flex-shrink: 0;
-  background: var(--surface-bg);
+  background: var(--surface-nav);
 }
 .wf-approval-stage {
   display: flex;
@@ -455,7 +455,7 @@
   border-left: 1px solid var(--surface-border);
   overflow-y: auto;
   padding: var(--space-4);
-  background: var(--surface-bg);
+  background: var(--surface-canvas);
 }
 .wf-request-card {
   background: var(--surface-canvas);
@@ -486,7 +486,7 @@
   border-right: 1px solid var(--surface-border);
   overflow-y: auto;
   padding: var(--space-5);
-  background: var(--surface-bg);
+  background: var(--surface-nav);
   display: flex;
   flex-direction: column;
   gap: var(--space-4);
@@ -501,7 +501,7 @@
 .wf-agent-test-header {
   padding: var(--space-4) var(--space-5);
   border-bottom: 1px solid var(--surface-border);
-  background: var(--surface-bg);
+  background: var(--surface-canvas);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -519,7 +519,7 @@
 .wf-agent-test-footer {
   padding: var(--space-3) var(--space-4);
   border-top: 1px solid var(--surface-border);
-  background: var(--surface-bg);
+  background: var(--surface-canvas);
   flex-shrink: 0;
 }
 .wf-config-card {
@@ -552,7 +552,7 @@
   flex-shrink: 0;
   border-right: 1px solid var(--surface-border);
   overflow-y: auto;
-  background: var(--surface-bg);
+  background: var(--surface-nav);
 }
 .wf-task-row {
   display: flex;
@@ -752,7 +752,7 @@
   gap: var(--space-3);
   padding: var(--space-3) var(--space-5);
   border-bottom: 1px solid var(--surface-border);
-  background: var(--surface-bg);
+  background: var(--surface-nav);
   flex-shrink: 0;
 }
 .wf-history-list { flex: 1; overflow-y: auto; }

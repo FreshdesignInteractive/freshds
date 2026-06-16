@@ -104,7 +104,7 @@ class FreshModal extends HTMLElement {
         }
 
         .panel {
-          background: var(--surface-bg);
+          background: var(--surface-canvas);
           border: 1px solid var(--surface-border);
           border-radius: var(--radius-xl);
           box-shadow: var(--elev-3);

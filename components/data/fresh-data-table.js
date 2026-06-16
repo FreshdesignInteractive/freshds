@@ -153,7 +153,7 @@ class FreshDataTable extends HTMLElement {
           font-family: var(--font-sans);
           font-size: var(--font-size-md);
           color: var(--text-primary);
-          background: var(--surface-bg);
+          background: var(--surface-canvas);
           border: 1px solid var(--surface-border-strong);
           border-radius: var(--radius-md);
           transition: border-color 150ms, box-shadow 150ms;

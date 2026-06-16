@@ -104,7 +104,7 @@ class FreshDrawer extends HTMLElement {
           width: ${w};
           max-width: calc(100vw - var(--space-8));
           height: 100vh;
-          background: var(--surface-bg);
+          background: var(--surface-canvas);
           border-${placement === 'right' ? 'left' : 'right'}: 1px solid var(--surface-border);
           box-shadow: var(--elev-3);
           display: flex;

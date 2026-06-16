@@ -54,7 +54,7 @@ class FreshCard extends HTMLElement {
         .card {
           display: flex;
           flex-direction: column;
-          background: var(--surface-bg);
+          background: var(--surface-canvas);
           border: 1px solid var(--surface-border);
           border-radius: var(--radius-lg);
           overflow: hidden;

@@ -113,7 +113,7 @@ class FreshAccordionItem extends HTMLElement {
       <style>
         *, *::before, *::after { box-sizing: border-box; }
 
-        :host { display: block; background: var(--surface-bg); }
+        :host { display: block; background: var(--surface-canvas); }
 
         .trigger {
           all: unset;

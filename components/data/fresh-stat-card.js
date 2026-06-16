@@ -58,7 +58,7 @@ class FreshStatCard extends HTMLElement {
         :host { display: block; }
 
         .card {
-          background: var(--surface-bg);
+          background: var(--surface-canvas);
           border: 1px solid var(--surface-border);
           border-radius: var(--radius-lg);
           padding: var(--space-5) var(--space-6);

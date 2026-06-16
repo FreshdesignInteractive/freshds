@@ -54,7 +54,7 @@ class FreshChart extends HTMLElement {
         :host { display: block; }
 
         .card {
-          background: var(--surface-bg);
+          background: var(--surface-canvas);
           border: 1px solid var(--surface-border);
           border-radius: var(--radius-lg);
           overflow: hidden;

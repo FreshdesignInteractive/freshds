@@ -76,7 +76,7 @@ body {
   align-items: center;
   justify-content: space-between;
   padding: var(--space-3) var(--space-8);
-  background: var(--surface-bg);
+  background: var(--surface-nav);
   border-bottom: 1px solid var(--surface-border);
   flex-shrink: 0;
 }
@@ -490,7 +490,7 @@ body {
 .page-body-row { flex: 1; display: flex; overflow: hidden; }
 .app-nav {
   flex-shrink: 0; min-width: 0; width: 220px; max-width: 0;
-  overflow: hidden; background: var(--surface-bg);
+  overflow: hidden; background: var(--surface-nav);
   border-right: 1px solid var(--surface-border);
   transition: max-width 240ms ease; display: flex; flex-direction: column;
 }

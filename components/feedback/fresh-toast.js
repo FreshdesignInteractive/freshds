@@ -111,7 +111,7 @@ class FreshToast extends HTMLElement {
           max-width: 420px;
           padding: 12px 14px;
           border-radius: var(--radius-lg);
-          background: var(--surface-bg);
+          background: var(--surface-canvas);
           border: 1px solid var(--surface-border-strong);
           box-shadow: var(--elev-3);
           -webkit-font-smoothing: antialiased;

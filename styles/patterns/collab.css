@@ -13,7 +13,7 @@
   width: 220px;          /* natural width when open            */
   max-width: 0;          /* collapsed by default               */
   overflow: hidden;
-  background: var(--surface-bg);
+  background: var(--surface-nav);
   border-right: 1px solid var(--surface-border);
   transition: max-width 240ms ease;
   display: flex;
@@ -62,7 +62,7 @@
   flex-shrink: 0;
   border-right: 1px solid var(--surface-border);
   overflow-y: auto;
-  background: var(--surface-bg);
+  background: var(--surface-nav);
   display: flex;
   flex-direction: column;
 }
@@ -142,7 +142,7 @@
   flex-shrink: 0;
   border-right: 1px solid var(--surface-border);
   overflow-y: auto;
-  background: var(--surface-bg);
+  background: var(--surface-nav);
 }
 .col-perm-role-item {
   display: flex;
@@ -197,7 +197,7 @@
 }
 .col-perm-table td:first-child {
   text-align: left;
-  background: var(--surface-bg);
+  background: var(--surface-canvas);
   position: sticky;
   left: 0;
 }
@@ -223,7 +223,7 @@
   border-left: 1px solid var(--surface-border);
   overflow-y: auto;
   padding: var(--space-4);
-  background: var(--surface-bg);
+  background: var(--surface-canvas);
 }
 .col-resource-row {
   display: flex;
@@ -266,7 +266,7 @@
   flex-shrink: 0;
   border-left: 1px solid var(--surface-border);
   overflow-y: auto;
-  background: var(--surface-bg);
+  background: var(--surface-canvas);
   padding: var(--space-4);
 }
 .col-doc-title {
@@ -288,7 +288,7 @@
   align-items: center;
   justify-content: space-between;
   padding: var(--space-2) var(--space-5);
-  background: var(--surface-bg);
+  background: var(--surface-nav);
   border-bottom: 1px solid var(--surface-border);
   flex-shrink: 0;
 }
@@ -297,7 +297,7 @@
   width: 28px;
   height: 28px;
   border-radius: var(--radius-full);
-  border: 2px solid var(--surface-bg);
+  border: 2px solid var(--surface-canvas);
   margin-left: -8px;
   display: flex;
   align-items: center;

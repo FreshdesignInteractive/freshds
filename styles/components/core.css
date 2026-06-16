@@ -25,7 +25,7 @@
   font-family: var(--font-sans); font-size: var(--font-size-md);
   padding: 8px 12px; border-radius: var(--radius-md);
   border: 1px solid var(--surface-border-strong);
-  background: var(--surface-bg); color: var(--text-primary);
+  background: var(--surface-input); color: var(--text-primary);
   outline: none; width: 100%;
   transition: border-color 0.15s, box-shadow 0.15s;
 }

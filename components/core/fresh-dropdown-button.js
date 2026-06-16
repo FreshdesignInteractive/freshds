@@ -236,7 +236,7 @@ class FreshDropdownButton extends HTMLElement {
         .btn-base:focus-visible {
           outline: none;
           box-shadow:
-            0 0 0 2px var(--surface-bg),
+            0 0 0 2px var(--surface-canvas),
             0 0 0 4px var(--color-interactive);
           z-index: 1;
         }

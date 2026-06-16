@@ -161,7 +161,7 @@ body {
 .com-compare-section td {
   font-size: var(--font-size-xs); font-weight: 700; text-transform: uppercase;
   letter-spacing: 0.08em; color: var(--text-tertiary);
-  background: var(--surface-bg); padding-top: var(--space-4);
+  background: var(--surface-canvas); padding-top: var(--space-4);
 }
 .com-check { color: var(--color-success); font-size: 16px; }
 .com-dash  { color: var(--text-tertiary); font-size: 16px; }
@@ -169,7 +169,7 @@ body {
 /* ── CTA hero ── */
 .com-hero {
   text-align: center; padding: var(--space-16) var(--space-4);
-  background: linear-gradient(160deg, var(--color-interactive-subtle) 0%, var(--surface-bg) 60%);
+  background: linear-gradient(160deg, var(--color-interactive-subtle) 0%, var(--surface-canvas) 60%);
   border-radius: var(--radius-xl);
   margin-bottom: var(--space-8);
 }
@@ -495,7 +495,7 @@ body {
 .page-body-row { flex: 1; display: flex; overflow: hidden; }
 .app-nav {
   flex-shrink: 0; min-width: 0; width: 220px; max-width: 0;
-  overflow: hidden; background: var(--surface-bg);
+  overflow: hidden; background: var(--surface-nav);
   border-right: 1px solid var(--surface-border);
   transition: max-width 240ms ease; display: flex; flex-direction: column;
 }

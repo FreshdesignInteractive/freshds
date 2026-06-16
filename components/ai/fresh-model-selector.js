@@ -66,7 +66,7 @@ class FreshModelSelector extends HTMLElement {
           gap: 7px;
           height: 34px;
           padding: 0 12px;
-          background: var(--surface-bg);
+          background: var(--surface-canvas);
           border: 1px solid var(--surface-border-strong);
           border-radius: var(--radius-md);
           font-family: var(--font-sans);
@@ -90,7 +90,7 @@ class FreshModelSelector extends HTMLElement {
           top: calc(100% + 6px);
           left: 0;
           min-width: 240px;
-          background: var(--surface-bg);
+          background: var(--surface-canvas);
           border: 1px solid var(--surface-border-strong);
           border-radius: var(--radius-lg);
           box-shadow: var(--elev-3);

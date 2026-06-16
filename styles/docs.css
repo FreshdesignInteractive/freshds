@@ -146,7 +146,7 @@
   border: 1px solid var(--surface-border);
 }
 .swatch-color { height: 72px; }
-.swatch-info  { padding: 8px 10px; background: var(--surface-bg); }
+.swatch-info  { padding: 8px 10px; background: var(--surface-canvas); }
 .swatch-name  { font-size: var(--font-size-xs); font-weight: 600; color: var(--text-primary); white-space: nowrap; }
 .swatch-val   { font-size: var(--font-size-2xs); font-family: var(--font-mono); color: var(--text-tertiary); margin-top: 2px; white-space: nowrap; }
 .swatch-hex   { font-size: var(--font-size-2xs); font-family: var(--font-mono); color: var(--color-interactive-text); margin-top: 1px; white-space: nowrap; }
@@ -192,7 +192,7 @@
   padding: var(--space-3); border-radius: var(--radius-md);
   border: 1px solid var(--surface-border);
   cursor: pointer; transition: all 0.15s;
-  background: var(--surface-bg);
+  background: var(--surface-canvas);
 }
 .icon-item:hover { border-color: var(--color-interactive-text); background: var(--surface-subtle); }
 .icon-item .ti   { font-size: 20px; color: var(--text-secondary); }
@@ -286,7 +286,7 @@
   position: relative;
   min-width: 0;
   border-radius: var(--radius-lg);
-  background: var(--surface-bg);
+  background: var(--surface-canvas);
   cursor: pointer;
   transition: box-shadow 0.15s;
   overflow: hidden;
@@ -321,10 +321,10 @@
 .theme-applied-check {
   position: absolute; top: 6px; right: 6px;
   width: 20px; height: 20px; border-radius: 50%;
-  background: var(--color-success); color: var(--surface-bg);
+  background: var(--color-success); color: var(--scale-0);
   display: flex; align-items: center; justify-content: center;
   font-size: var(--font-size-xs); pointer-events: none;
-  box-shadow: 0 0 0 2px var(--surface-bg), 0 1px 3px rgba(0,0,0,0.2);
+  box-shadow: 0 0 0 2px var(--surface-canvas), 0 1px 3px rgba(0,0,0,0.2);
 }
 
 /* 12-step neutral scale strip */

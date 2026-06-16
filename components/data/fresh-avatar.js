@@ -145,7 +145,7 @@ class FreshAvatar extends HTMLElement {
           height: ${statusDotSz};
           border-radius: 50%;
           background: ${statusColor};
-          border: ${statusBd} solid var(--surface-bg);
+          border: ${statusBd} solid var(--surface-canvas);
           display: ${status ? 'block' : 'none'};
         }
       </style>

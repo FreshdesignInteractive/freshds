@@ -15,7 +15,7 @@
   flex-shrink: 0;
   border-right: 1px solid var(--surface-border);
   overflow-y: auto;
-  background: var(--surface-bg);
+  background: var(--surface-nav);
   padding: var(--space-4) 0;
 }
 .stg-nav-section {
