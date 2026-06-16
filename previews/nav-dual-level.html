@@ -95,12 +95,7 @@
 <body>
 <div class="shell-outer">
 
-  <!--
-    data-mode="dark" makes the navbar dark:
-    --surface-nav resolves to scale-12 (near black),
-    text tokens resolve light so brand/tabs/icons are readable on dark.
-  -->
-  <fresh-navbar id="app-navbar" data-mode="dark" search>
+  <fresh-navbar id="app-navbar" search>
     <div slot="brand" id="nb-brand" style="display:flex;align-items:center;gap:var(--space-2)">
       <div class="brand-mark">A</div>
     </div>
@@ -359,7 +354,7 @@
     }
     var spacing = DENSITY[t.density] || DENSITY.default;
     Object.keys(spacing).forEach(function(k) { root.style.setProperty('--space-' + k, spacing[k]); });
-    /* Page itself stays light even if user saved dark mode; only navbar is dark */
+    if (t.mode === 'dark') document.getElementById('app') && document.getElementById('app').setAttribute('data-mode', 'dark');
   })();
 </script>
 
