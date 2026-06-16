@@ -51,11 +51,22 @@ class FreshNavbar extends HTMLElement {
   connectedCallback() {
     this._render();
     this.addEventListener('click', this._onHostClick);
+    this._avatarObserver = new MutationObserver(() => this._styleAvatar());
+    this._avatarObserver.observe(this, { childList: true, subtree: true });
   }
 
   disconnectedCallback() {
     this.removeEventListener('click', this._onHostClick);
+    this._avatarObserver?.disconnect();
     this._closeAvatarMenu();
+  }
+
+  _styleAvatar() {
+    const av = this.querySelector('fresh-avatar');
+    if (av && av.style.marginLeft !== '10px') {
+      av.style.marginLeft = '10px';
+      av.style.cursor = 'pointer';
+    }
   }
 
   attributeChangedCallback() { this._render(); }
@@ -284,14 +295,8 @@ class FreshNavbar extends HTMLElement {
       });
     }
 
-    // Apply 10px gap before slotted fresh-avatar, now and on future slot changes
-    const actionsSlot = this.shadowRoot.querySelector('slot[name="actions"]');
-    const applyAvatarSpacing = () => {
-      const av = this.querySelector('fresh-avatar');
-      if (av) av.style.marginLeft = '10px';
-    };
-    actionsSlot?.addEventListener('slotchange', applyAvatarSpacing);
-    applyAvatarSpacing();
+    // Apply spacing/cursor immediately (MutationObserver handles dynamic replacements)
+    this._styleAvatar();
 
     // Restore open state if menu was open before re-render
     if (this._menuOpen) {
