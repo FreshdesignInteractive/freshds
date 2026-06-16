@@ -35,18 +35,17 @@
       </div>
       <div id="spec-viewport" class="spec-viewport">
 
-        <!-- Default -->
+        <!-- Logged in -->
         <div class="spec-variant-row">
           <div class="spec-variant-header">
-            <span class="spec-variant-name">Default</span>
+            <span class="spec-variant-name">Logged in</span>
             <span class="spec-variant-sep">·</span>
-            <span class="spec-variant-desc">Brand slot, nav links, and action area with avatar and icon buttons.</span>
+            <span class="spec-variant-desc">Logo and configured action icons with user avatar.</span>
           </div>
           <div class="spec-variant-body">
             <div class="spec-demos" style="display:block;padding:0;width:100%;">
-              <fresh-navbar>
-                <fresh-simple-tabs slot="nav" size="sm" tabs='[{"key":"dashboard","label":"Dashboard"},{"key":"projects","label":"Projects"},{"key":"settings","label":"Settings"}]' active="projects"></fresh-simple-tabs>
-                <div slot="actions" style="display:flex;align-items:center;gap:8px">
+              <fresh-navbar id="nb-spec-loggedin">
+                <div slot="actions" id="nb-spec-actions-in" style="display:flex;align-items:center;gap:8px">
                   <fresh-button variant="ghost" icon-only size="sm" aria-label="Search"><i class="ti ti-search"></i></fresh-button>
                   <fresh-button variant="ghost" icon-only size="sm" aria-label="Notifications"><i class="ti ti-bell"></i></fresh-button>
                   <fresh-avatar name="Jane Smith" size="sm"></fresh-avatar>
@@ -56,42 +55,19 @@
           </div>
         </div>
 
-        <!-- With hamburger -->
+        <!-- Logged out -->
         <div class="spec-variant-row">
           <div class="spec-variant-header">
-            <span class="spec-variant-name">With hamburger</span>
-            <span class="spec-attr-chip">hamburger</span>
+            <span class="spec-variant-name">Logged out</span>
             <span class="spec-variant-sep">·</span>
-            <span class="spec-variant-desc">Adds a menu toggle button left of brand. Fires the hamburger-click event when pressed.</span>
+            <span class="spec-variant-desc">Logo with Sign in and Sign up CTAs, no icon actions.</span>
           </div>
           <div class="spec-variant-body">
             <div class="spec-demos" style="display:block;padding:0;width:100%;">
-              <fresh-navbar hamburger>
-                <fresh-simple-tabs slot="nav" size="sm" tabs='[{"key":"dashboard","label":"Dashboard"},{"key":"projects","label":"Projects"},{"key":"settings","label":"Settings"}]' active="projects"></fresh-simple-tabs>
+              <fresh-navbar id="nb-spec-loggedout">
                 <div slot="actions" style="display:flex;align-items:center;gap:8px">
-                  <fresh-button variant="ghost" icon-only size="sm" aria-label="Search"><i class="ti ti-search"></i></fresh-button>
-                  <fresh-avatar name="Jane Smith" size="sm"></fresh-avatar>
-                </div>
-              </fresh-navbar>
-            </div>
-          </div>
-        </div>
-
-        <!-- Actions only (marketing-style) -->
-        <div class="spec-variant-row">
-          <div class="spec-variant-header">
-            <span class="spec-variant-name">Actions only</span>
-            <span class="spec-attr-chip">slot="actions"</span>
-            <span class="spec-variant-sep">·</span>
-            <span class="spec-variant-desc">Marketing or auth layouts: brand on left, CTA buttons on right, no nav links.</span>
-          </div>
-          <div class="spec-variant-body">
-            <div class="spec-demos" style="display:block;padding:0;width:100%;">
-              <fresh-navbar>
-                <div slot="actions" style="display:flex;align-items:center;gap:8px">
-                  <fresh-button variant="ghost" size="sm">Docs</fresh-button>
                   <fresh-button variant="secondary" size="sm">Sign in</fresh-button>
-                  <fresh-button variant="primary" size="sm">Get started</fresh-button>
+                  <fresh-button variant="primary" size="sm">Sign up</fresh-button>
                 </div>
               </fresh-navbar>
             </div>
@@ -268,7 +244,7 @@
       <table class="spec-a11y-table">
         <thead><tr><th style="width:220px">Token</th><th style="width:200px">Role</th><th>State</th></tr></thead>
         <tbody>
-          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--surface-bg</td><td class="spec-a11y-req">Bar background</td><td class="spec-a11y-req">all</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--surface-nav</td><td class="spec-a11y-req">Bar background</td><td class="spec-a11y-req">all</td></tr>
           <tr class="spec-a11y-row"><td class="spec-a11y-concern">--surface-border</td><td class="spec-a11y-req">Bottom border</td><td class="spec-a11y-req">border on</td></tr>
           <tr class="spec-a11y-row"><td class="spec-a11y-concern">--surface-subtle</td><td class="spec-a11y-req">Hamburger hover background</td><td class="spec-a11y-req">hover</td></tr>
           <tr class="spec-a11y-row"><td class="spec-a11y-concern">--text-primary</td><td class="spec-a11y-req">Brand text, active nav link</td><td class="spec-a11y-req">default</td></tr>
@@ -306,6 +282,52 @@
 <script src="components/navigation/fresh-simple-tabs.js"></script>
 <script src="components/navigation/fresh-navbar.js"></script>
 <script src="js/spec-page.js"></script>
+
+<script>
+  (function() {
+    var NB_ICONS = [
+      { key: 'search',    icon: 'ti-search',         label: 'Search' },
+      { key: 'bell',      icon: 'ti-bell',           label: 'Notifications' },
+      { key: 'help',      icon: 'ti-help-circle',    label: 'Help' },
+      { key: 'plus',      icon: 'ti-circle-plus',    label: 'New' },
+      { key: 'grid',      icon: 'ti-grid-dots',      label: 'Apps' },
+      { key: 'settings',  icon: 'ti-settings-2',     label: 'Settings' },
+      { key: 'messages',  icon: 'ti-message-circle', label: 'Messages' },
+      { key: 'bookmark',  icon: 'ti-bookmark',       label: 'Saved' }
+    ];
+
+    var cfg = { logoType: 'default', logoUrl: '', activeIcons: ['search', 'bell'] };
+    try {
+      var s = localStorage.getItem('freshds-nav-cfg');
+      if (s) {
+        var stored = JSON.parse(s);
+        cfg = Object.assign(cfg, stored.navbar_cfg || stored);
+      }
+    } catch(e) {}
+
+    // Apply custom logo to both navbar instances
+    if (cfg.logoType === 'custom' && cfg.logoUrl) {
+      ['nb-spec-loggedin', 'nb-spec-loggedout'].forEach(function(id) {
+        var navbar = document.getElementById(id);
+        if (!navbar) return;
+        var brandDiv = document.createElement('div');
+        brandDiv.setAttribute('slot', 'brand');
+        brandDiv.innerHTML = '<img src="' + cfg.logoUrl.replace(/"/g, '&quot;') + '" alt="Logo" style="height:24px;max-width:140px;object-fit:contain;display:block">';
+        navbar.insertBefore(brandDiv, navbar.firstChild);
+      });
+    }
+
+    // Apply configured action icons + avatar to logged-in navbar
+    var actionsIn = document.getElementById('nb-spec-actions-in');
+    if (actionsIn) {
+      var iconsHtml = (cfg.activeIcons || []).map(function(key) {
+        var ic = NB_ICONS.filter(function(i) { return i.key === key; })[0];
+        return ic ? '<fresh-button variant="ghost" icon-only size="sm" aria-label="' + ic.label + '"><i class="ti ' + ic.icon + '"></i></fresh-button>' : '';
+      }).join('');
+      actionsIn.innerHTML = iconsHtml + '<fresh-avatar name="Jane Smith" size="sm"></fresh-avatar>';
+    }
+  })();
+</script>
 
 <script type="module">
   import { supabase } from '/js/supabase-client.js'
