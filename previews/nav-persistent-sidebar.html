@@ -129,11 +129,11 @@
 
   <!-- ── Top navbar ── -->
   <fresh-navbar>
-    <div slot="brand" class="brand-slot">
+    <div slot="brand" id="nb-brand" class="brand-slot">
       <div class="brand-mark">A</div>
       <span class="brand-name">Acme Corp</span>
     </div>
-    <div slot="actions" style="display:flex;align-items:center;gap:var(--space-1)">
+    <div slot="actions" id="nb-actions" style="display:flex;align-items:center;gap:var(--space-1)">
       <fresh-button variant="ghost" size="sm" aria-label="Search"><i class="ti ti-search"></i></fresh-button>
       <fresh-button variant="ghost" size="sm" aria-label="Notifications"><i class="ti ti-bell"></i></fresh-button>
       <fresh-avatar name="Jane Smith" size="sm" status="online"></fresh-avatar>
@@ -245,6 +245,45 @@
 <script src="/components/navigation/fresh-navbar.js"></script>
 <script src="/components/navigation/fresh-sidebar.js"></script>
 <script src="/components/data/fresh-avatar.js"></script>
+
+<script>
+  (function() {
+    var NB_ICONS = [
+      { key: 'search',    icon: 'ti-search',         label: 'Search' },
+      { key: 'bell',      icon: 'ti-bell',           label: 'Notifications' },
+      { key: 'help',      icon: 'ti-help-circle',    label: 'Help' },
+      { key: 'plus',      icon: 'ti-circle-plus',    label: 'New' },
+      { key: 'grid',      icon: 'ti-grid-dots',      label: 'Apps' },
+      { key: 'settings',  icon: 'ti-settings-2',     label: 'Settings' },
+      { key: 'messages',  icon: 'ti-message-circle', label: 'Messages' },
+      { key: 'bookmark',  icon: 'ti-bookmark',       label: 'Saved' }
+    ];
+
+    var cfg = { logoType: 'default', logoUrl: '', activeIcons: ['search', 'bell'] };
+    try {
+      var s = localStorage.getItem('freshds-nav-cfg');
+      if (s) {
+        var stored = JSON.parse(s);
+        // stored is { nav_pattern, navbar_cfg } — pull out navbar_cfg
+        cfg = Object.assign(cfg, stored.navbar_cfg || stored);
+      }
+    } catch(e) {}
+
+    var brand = document.getElementById('nb-brand');
+    if (brand && cfg.logoType === 'custom' && cfg.logoUrl) {
+      brand.innerHTML = '<img src="' + cfg.logoUrl.replace(/"/g, '&quot;') + '" alt="Logo" style="height:28px;max-width:140px;object-fit:contain;display:block">';
+    }
+
+    var actions = document.getElementById('nb-actions');
+    if (actions) {
+      var iconsHtml = (cfg.activeIcons || []).map(function(key) {
+        var ic = NB_ICONS.filter(function(i) { return i.key === key; })[0];
+        return ic ? '<fresh-button variant="ghost" size="sm" aria-label="' + ic.label + '"><i class="ti ' + ic.icon + '"></i></fresh-button>' : '';
+      }).join('');
+      actions.innerHTML = iconsHtml + '<fresh-avatar name="Jane Smith" size="sm" status="online"></fresh-avatar>';
+    }
+  })();
+</script>
 
 </body>
 </html>

@@ -11,6 +11,56 @@
 <link rel="stylesheet" href="/styles/site-header.css">
 <script type="module" src="/js/site-header.js"></script>
 
+<!-- Supabase nav sync -->
+<script type="module">
+  import { supabase } from '/js/supabase-client.js'
+
+  window.__saveNavToCloud = async function(navData) {
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return;
+      await supabase.from('profiles').update({ nav_cfg: navData }).eq('id', user.id);
+    } catch(e) {}
+  };
+
+  (async function() {
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return;
+      const { data: profile } = await supabase
+        .from('profiles').select('nav_cfg').eq('id', user.id).single();
+      if (!profile?.nav_cfg) return;
+      const saved = profile.nav_cfg;
+      // Sync to localStorage so preview pages can read it without auth
+      localStorage.setItem('freshds-nav-cfg', JSON.stringify(saved));
+      // Apply navbar config to UI state
+      if (saved.navbar_cfg && window._nb) {
+        window._nb = Object.assign(window._nb, saved.navbar_cfg);
+        window._savedNb = JSON.parse(JSON.stringify(window._nb));
+        if (typeof window._buildIconGrid   === 'function') window._buildIconGrid();
+        if (typeof window._renderNbPreviews === 'function') window._renderNbPreviews();
+        var radio = document.querySelector('input[name="nb-logo-type"][value="' + window._nb.logoType + '"]');
+        if (radio) radio.checked = true;
+        var row = document.getElementById('nb-custom-logo-row');
+        if (row) row.style.display = window._nb.logoType === 'custom' ? '' : 'none';
+        var urlIn = document.getElementById('nb-logo-url');
+        if (urlIn && window._nb.logoType === 'custom' && window._nb.logoUrl && !window._nb.logoUrl.startsWith('data:')) {
+          urlIn.value = window._nb.logoUrl;
+        }
+      }
+      // Apply saved layout pattern
+      if (saved.nav_pattern) {
+        window._savedNav    = saved.nav_pattern;
+        window._selectedNav = saved.nav_pattern;
+        document.querySelectorAll('.nav-tile').forEach(function(t) {
+          t.classList.toggle('selected', t.getAttribute('data-nav') === window._savedNav);
+        });
+      }
+      if (typeof window._syncButtons === 'function') window._syncButtons();
+    } catch(e) {}
+  })();
+</script>
+
 <!-- Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -295,6 +345,14 @@
     border-radius: var(--radius-full);
     font-family: inherit; font-size: 12px; font-weight: 500;
     color: var(--text-secondary); background: transparent;
+    display: flex; align-items: center;
+  }
+  .nb-preview-signup-btn {
+    height: 28px; padding: 0 14px;
+    border: 1px solid transparent;
+    border-radius: var(--radius-full);
+    font-family: inherit; font-size: 12px; font-weight: 600;
+    color: #fff; background: var(--text-primary);
     display: flex; align-items: center;
   }
 
@@ -806,8 +864,9 @@
     document.getElementById('nb-preview-out').innerHTML =
       '<div class="nb-preview-logo">' + _nbLogoHtml() + '</div>' +
       '<div class="nb-preview-spacer"></div>' +
-      '<div class="nb-preview-actions">' +
-      '<div class="nb-preview-login-btn">Sign in</div></div>';
+      '<div class="nb-preview-actions" style="gap:6px">' +
+      '<div class="nb-preview-login-btn">Sign in</div>' +
+      '<div class="nb-preview-signup-btn">Sign up</div></div>';
   }
 
   function _buildIconGrid() {
@@ -831,9 +890,10 @@
     _savedNav = _selectedNav;
     _savedNb  = JSON.parse(JSON.stringify(_nb));
     _syncButtons();
+    var navData = { nav_pattern: _savedNav, navbar_cfg: _savedNb };
+    localStorage.setItem('freshds-nav-cfg', JSON.stringify(navData));
+    if (typeof window.__saveNavToCloud === 'function') window.__saveNavToCloud(navData);
     showToast('Navigation saved');
-    /* TODO: persist to Supabase profiles keyed to user ID:
-       { nav_pattern: _savedNav, navbar_cfg: _savedNb } */
   }
 
   function revertNav() {
