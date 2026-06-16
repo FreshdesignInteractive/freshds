@@ -3,22 +3,13 @@
 
    Usage:
      <fresh-sidebar>
-       <div slot="brand">
-         <strong>Acme DS</strong>
-       </div>
-
        <fresh-nav-group label="Getting started" open>
          <fresh-nav-item active icon="ti-home">Overview</fresh-nav-item>
          <fresh-nav-item icon="ti-adjustments-horizontal">Theme</fresh-nav-item>
        </fresh-nav-group>
 
-       <fresh-nav-group label="Components">
-         <fresh-nav-item icon="ti-cursor">Button</fresh-nav-item>
-         <fresh-nav-item icon="ti-forms">Input</fresh-nav-item>
-       </fresh-nav-group>
-
        <div slot="footer">
-         <fresh-avatar name="Jane Smith" size="sm" status="online"></fresh-avatar>
+         <fresh-avatar name="Jane Smith" size="sm"></fresh-avatar>
        </div>
      </fresh-sidebar>
 
@@ -44,8 +35,23 @@ class FreshSidebar extends HTMLElement {
     this.attachShadow({ mode: 'open' });
   }
 
-  connectedCallback()        { this._render(); }
-  attributeChangedCallback() { this._render(); }
+  connectedCallback() {
+    this._render();
+    requestAnimationFrame(() => this._propagateCollapsed());
+  }
+
+  attributeChangedCallback() {
+    this._render();
+    requestAnimationFrame(() => this._propagateCollapsed());
+  }
+
+  _propagateCollapsed() {
+    const collapsed = this.hasAttribute('collapsed');
+    this.querySelectorAll('fresh-nav-group, fresh-nav-item').forEach(el => {
+      if (collapsed) el.setAttribute('sidebar-collapsed', '');
+      else           el.removeAttribute('sidebar-collapsed');
+    });
+  }
 
   _render() {
     const collapsed = this.hasAttribute('collapsed');
@@ -84,8 +90,10 @@ class FreshSidebar extends HTMLElement {
 
         .footer {
           border-top: 1px solid var(--surface-border);
-          padding: var(--space-3) var(--space-4);
+          padding: var(--space-3) ${collapsed ? 'var(--space-2)' : 'var(--space-4)'};
           flex-shrink: 0;
+          display: flex;
+          justify-content: ${collapsed ? 'center' : 'flex-start'};
         }
 
         ::slotted([slot="footer"]) {
@@ -109,7 +117,7 @@ class FreshSidebar extends HTMLElement {
 
 /* ── fresh-nav-group ── */
 class FreshNavGroup extends HTMLElement {
-  static get observedAttributes() { return ['label', 'open']; }
+  static get observedAttributes() { return ['label', 'open', 'sidebar-collapsed']; }
 
   constructor() {
     super();
@@ -130,12 +138,14 @@ class FreshNavGroup extends HTMLElement {
   _toggle() {
     this._open = !this._open;
     if (this._open) this.setAttribute('open', '');
-    else this.removeAttribute('open');
+    else            this.removeAttribute('open');
     this._render();
   }
 
   _render() {
-    const label = this.getAttribute('label') || '';
+    const label     = this.getAttribute('label') || '';
+    const collapsed = this.hasAttribute('sidebar-collapsed');
+    const showItems = collapsed || this._open;
 
     this.shadowRoot.innerHTML = `
       <style>
@@ -146,7 +156,7 @@ class FreshNavGroup extends HTMLElement {
         :host { display: block; margin-bottom: var(--space-1); }
 
         .header {
-          display: flex;
+          display: ${collapsed ? 'none' : 'flex'};
           align-items: center;
           justify-content: space-between;
           padding: var(--space-2) var(--space-4);
@@ -173,7 +183,7 @@ class FreshNavGroup extends HTMLElement {
 
         .items {
           overflow: hidden;
-          display: ${this._open ? 'block' : 'none'};
+          display: ${showItems ? 'block' : 'none'};
         }
       </style>
 
@@ -193,7 +203,7 @@ class FreshNavGroup extends HTMLElement {
 
 /* ── fresh-nav-item ── */
 class FreshNavItem extends HTMLElement {
-  static get observedAttributes() { return ['active', 'icon', 'href', 'badge']; }
+  static get observedAttributes() { return ['active', 'icon', 'href', 'badge', 'sidebar-collapsed']; }
 
   constructor() {
     super();
@@ -204,12 +214,13 @@ class FreshNavItem extends HTMLElement {
   attributeChangedCallback() { this._render(); }
 
   _render() {
-    const active = this.hasAttribute('active');
-    const icon   = this.getAttribute('icon')  || '';
-    const href   = this.getAttribute('href')  || null;
-    const badge  = this.getAttribute('badge') || '';
-    const tag    = href ? 'a' : 'div';
-    const hrefAttr = href ? `href="${href}"` : '';
+    const active    = this.hasAttribute('active');
+    const icon      = this.getAttribute('icon')  || '';
+    const href      = this.getAttribute('href')  || null;
+    const badge     = this.getAttribute('badge') || '';
+    const collapsed = this.hasAttribute('sidebar-collapsed');
+    const tag       = href ? 'a' : 'div';
+    const hrefAttr  = href ? `href="${href}"` : '';
 
     this.shadowRoot.innerHTML = `
       <style>
@@ -222,20 +233,23 @@ class FreshNavItem extends HTMLElement {
         .item {
           display: flex;
           align-items: center;
-          gap: var(--space-2);
-          padding: 6px var(--space-4) 6px calc(var(--space-4) + 8px);
+          justify-content: ${collapsed ? 'center' : 'flex-start'};
+          gap: ${collapsed ? '0' : 'var(--space-2)'};
+          padding: ${collapsed ? '8px 0' : '6px var(--space-4) 6px calc(var(--space-4) + 8px)'};
           font-family: var(--font-sans);
           font-size: var(--font-size-md);
           font-weight: ${active ? '500' : '400'};
           color: ${active ? 'var(--nav-active-text)' : 'var(--text-secondary)'};
           background: ${active ? 'var(--nav-active-bg)' : 'transparent'};
-          border-left: 2px solid ${active ? 'var(--color-interactive)' : 'transparent'};
+          border-left: ${collapsed ? 'none' : `2px solid ${active ? 'var(--color-interactive)' : 'transparent'}`};
           text-decoration: none;
           cursor: pointer;
-          transition: color 120ms ease, background 120ms ease, border-color 120ms ease;
+          transition: color 120ms ease, background 120ms ease;
           user-select: none;
           -webkit-font-smoothing: antialiased;
           margin: 1px 0;
+          width: 100%;
+          box-sizing: border-box;
         }
 
         .item:hover {
@@ -244,7 +258,7 @@ class FreshNavItem extends HTMLElement {
         }
 
         .icon {
-          font-size: var(--font-size-lg);
+          font-size: ${collapsed ? '20px' : 'var(--font-size-lg)'};
           opacity: ${active ? '1' : '0.6'};
           flex-shrink: 0;
           transition: opacity 120ms ease;
@@ -252,9 +266,14 @@ class FreshNavItem extends HTMLElement {
 
         .item:hover .icon { opacity: 1; }
 
-        .label { flex: 1; min-width: 0; }
+        .label {
+          display: ${collapsed ? 'none' : 'block'};
+          flex: 1;
+          min-width: 0;
+        }
 
         .badge-chip {
+          display: ${collapsed ? 'none' : 'inline-flex'};
           font-size: var(--font-size-3xs);
           font-weight: 600;
           letter-spacing: 0.05em;
@@ -284,6 +303,6 @@ class FreshNavItem extends HTMLElement {
   }
 }
 
-customElements.define('fresh-sidebar',  FreshSidebar);
+customElements.define('fresh-sidebar',   FreshSidebar);
 customElements.define('fresh-nav-group', FreshNavGroup);
 customElements.define('fresh-nav-item',  FreshNavItem);

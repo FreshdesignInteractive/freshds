@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en" id="app">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FreshDS Shell Preview — Collapsible Sidebar</title>
+
+<!-- DS token layers -->
+<link rel="stylesheet" href="/tokens/primitives.css">
+<link rel="stylesheet" href="/tokens/theme.css">
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<!-- Tabler icons -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+
+<!-- DS color engine -->
+<script src="/js/freshds.js"></script>
+
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+
+  html, body {
+    margin: 0; padding: 0; height: 100%;
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .shell-outer {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow: hidden;
+    background: var(--surface-bg);
+  }
+
+  /* Flexbox (not grid) so content area fills space freed when sidebar collapses */
+  .shell-body {
+    flex: 1;
+    display: flex;
+    overflow: hidden;
+  }
+
+  .shell-body fresh-sidebar {
+    flex-shrink: 0;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .shell-content {
+    flex: 1;
+    overflow-y: auto;
+    background: var(--surface-bg);
+    height: 100%;
+  }
+
+  .brand-slot { display: flex; align-items: center; gap: var(--space-2); }
+  .brand-mark {
+    width: 28px; height: 28px;
+    border-radius: var(--radius-sm);
+    background: var(--color-interactive);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; font-weight: 700; color: #fff;
+    flex-shrink: 0; letter-spacing: -0.02em;
+  }
+  .brand-name {
+    font-size: var(--font-size-md); font-weight: 600;
+    color: var(--text-primary); letter-spacing: -0.01em; white-space: nowrap;
+  }
+
+  .sidebar-footer { display: flex; align-items: center; gap: var(--space-3); width: 100%; min-width: 0; }
+  .footer-user-info { flex: 1; min-width: 0; overflow: hidden; }
+  .footer-user-name { font-size: var(--font-size-sm); font-weight: 500; color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .footer-user-role { font-size: var(--font-size-xs); color: var(--text-tertiary); white-space: nowrap; }
+  .footer-icon-btn { flex-shrink: 0; }
+
+  /* Collapsed icon-rail: hide footer text and settings, center avatar */
+  fresh-sidebar[collapsed] .footer-user-info,
+  fresh-sidebar[collapsed] .footer-icon-btn { display: none; }
+</style>
+</head>
+
+<body>
+<div class="shell-outer">
+
+  <fresh-navbar id="app-navbar" hamburger>
+    <div slot="brand" id="nb-brand" class="brand-slot">
+      <div class="brand-mark">A</div>
+      <span class="brand-name">Acme Corp</span>
+    </div>
+    <div slot="actions" id="nb-actions" style="display:flex;align-items:center;gap:var(--space-1)">
+      <fresh-button variant="ghost" size="sm" aria-label="Search"><i class="ti ti-search"></i></fresh-button>
+      <fresh-button variant="ghost" size="sm" aria-label="Notifications"><i class="ti ti-bell"></i></fresh-button>
+      <fresh-avatar name="Jane Smith" size="sm"></fresh-avatar>
+    </div>
+  </fresh-navbar>
+
+  <div class="shell-body">
+
+    <fresh-sidebar id="app-sidebar">
+
+      <fresh-nav-group label="Getting started" open>
+        <fresh-nav-item icon="ti-home" active>Overview</fresh-nav-item>
+        <fresh-nav-item icon="ti-book">Documentation</fresh-nav-item>
+      </fresh-nav-group>
+
+      <fresh-nav-group label="Product" open>
+        <fresh-nav-item icon="ti-layout-dashboard">Dashboard</fresh-nav-item>
+        <fresh-nav-item icon="ti-chart-bar">Analytics</fresh-nav-item>
+        <fresh-nav-item icon="ti-file-description">Reports</fresh-nav-item>
+      </fresh-nav-group>
+
+      <fresh-nav-group label="Manage">
+        <fresh-nav-item icon="ti-folders">Projects</fresh-nav-item>
+        <fresh-nav-item icon="ti-users">Team members</fresh-nav-item>
+        <fresh-nav-item icon="ti-plug-connected">Integrations</fresh-nav-item>
+      </fresh-nav-group>
+
+      <fresh-nav-group label="Settings">
+        <fresh-nav-item icon="ti-user-circle">Account</fresh-nav-item>
+        <fresh-nav-item icon="ti-bell">Notifications</fresh-nav-item>
+        <fresh-nav-item icon="ti-lock">Security</fresh-nav-item>
+      </fresh-nav-group>
+
+      <div slot="footer" class="sidebar-footer">
+        <fresh-avatar name="Jane Smith" size="sm"></fresh-avatar>
+        <div class="footer-user-info">
+          <div class="footer-user-name">Jane Smith</div>
+          <div class="footer-user-role">Admin</div>
+        </div>
+        <fresh-button class="footer-icon-btn" variant="ghost" size="sm" aria-label="Settings"><i class="ti ti-settings"></i></fresh-button>
+      </div>
+
+    </fresh-sidebar>
+
+    <main class="shell-content"></main>
+
+  </div>
+
+</div>
+
+<script>
+  (function() {
+    var DEF = {
+      primary: '#1f2328', secondary: '#6b7280',
+      scaleDark: '#1f2328', scaleLight: '#ffffff',
+      success: '#22c55e', warning: '#f59e0b', danger: '#f43f5e',
+      info: '#3b82f6', aiAction: '#0d9488',
+      pageBg: '#ffffff', inputSurface: '#ffffff',
+      radiusSm: '4', radiusMd: '8', radiusLg: '12', radiusXl: '20',
+      fontSans: 'Inter', fontMono: 'JetBrains Mono',
+      density: 'default', mode: 'light'
+    };
+    var DENSITY = {
+      compact:     { 1:'3px', 2:'6px',  3:'10px', 4:'12px', 5:'16px', 6:'20px', 8:'28px', 10:'34px', 12:'42px' },
+      default:     { 1:'4px', 2:'8px',  3:'12px', 4:'16px', 5:'20px', 6:'24px', 8:'32px', 10:'40px', 12:'48px' },
+      comfortable: { 1:'5px', 2:'10px', 3:'15px', 4:'20px', 5:'26px', 6:'30px', 8:'42px', 10:'52px', 12:'62px' }
+    };
+    var t = DEF;
+    try { var s = localStorage.getItem('freshds-theme'); if (s) t = Object.assign({}, DEF, JSON.parse(s)); } catch(e) {}
+
+    var root = document.documentElement;
+    applyScalesToElement(root, t.primary, t.secondary, t.scaleDark, t.scaleLight, t.success, t.warning, t.danger, t.info, t.aiAction);
+    root.style.setProperty('--color-page-bg',       t.pageBg       || '#ffffff');
+    root.style.setProperty('--color-input-surface', t.inputSurface || '#ffffff');
+    if (t.radiusSm !== undefined) root.style.setProperty('--radius-sm', t.radiusSm + 'px');
+    if (t.radiusMd !== undefined) root.style.setProperty('--radius-md', t.radiusMd + 'px');
+    if (t.radiusLg !== undefined) root.style.setProperty('--radius-lg', t.radiusLg + 'px');
+    if (t.radiusXl !== undefined) root.style.setProperty('--radius-xl', t.radiusXl + 'px');
+    if (t.fontSans && typeof loadFont === 'function' && SANS_FONTS && SANS_FONTS[t.fontSans]) {
+      loadFont(t.fontSans, SANS_FONTS[t.fontSans]);
+      root.style.setProperty('--font-sans', "'" + t.fontSans + "', system-ui, sans-serif");
+    }
+    if (t.fontMono && typeof loadFont === 'function' && MONO_FONTS && MONO_FONTS[t.fontMono]) {
+      loadFont(t.fontMono, MONO_FONTS[t.fontMono]);
+      root.style.setProperty('--font-mono', "'" + t.fontMono + "', monospace");
+    }
+    var spacing = DENSITY[t.density] || DENSITY.default;
+    Object.keys(spacing).forEach(function(k) { root.style.setProperty('--space-' + k, spacing[k]); });
+    if (t.mode === 'dark') document.getElementById('app') && document.getElementById('app').setAttribute('data-mode', 'dark');
+  })();
+</script>
+
+<!-- DS components -->
+<script src="/components/core/fresh-button.js"></script>
+<script src="/components/navigation/fresh-navbar.js"></script>
+<script src="/components/navigation/fresh-sidebar.js"></script>
+<script src="/components/data/fresh-avatar.js"></script>
+
+<script>
+  /* Hamburger toggles the sidebar between expanded and collapsed icon rail */
+  document.getElementById('app-navbar').addEventListener('hamburger-click', function() {
+    var sidebar = document.getElementById('app-sidebar');
+    if (sidebar.hasAttribute('collapsed')) {
+      sidebar.removeAttribute('collapsed');
+    } else {
+      sidebar.setAttribute('collapsed', '');
+    }
+  });
+</script>
+
+<script>
+  (function() {
+    var NB_ICONS = [
+      { key: 'search',    icon: 'ti-search',         label: 'Search' },
+      { key: 'bell',      icon: 'ti-bell',           label: 'Notifications' },
+      { key: 'help',      icon: 'ti-help-circle',    label: 'Help' },
+      { key: 'plus',      icon: 'ti-circle-plus',    label: 'New' },
+      { key: 'grid',      icon: 'ti-grid-dots',      label: 'Apps' },
+      { key: 'settings',  icon: 'ti-settings-2',     label: 'Settings' },
+      { key: 'messages',  icon: 'ti-message-circle', label: 'Messages' },
+      { key: 'bookmark',  icon: 'ti-bookmark',       label: 'Saved' }
+    ];
+
+    var cfg = { logoType: 'default', logoUrl: '', activeIcons: ['search', 'bell'] };
+    try {
+      var s = localStorage.getItem('freshds-nav-cfg');
+      if (s) { var stored = JSON.parse(s); cfg = Object.assign(cfg, stored.navbar_cfg || stored); }
+    } catch(e) {}
+
+    var brand = document.getElementById('nb-brand');
+    if (brand && cfg.logoType === 'custom' && cfg.logoUrl) {
+      brand.innerHTML = '<img src="' + cfg.logoUrl.replace(/"/g, '&quot;') + '" alt="Logo" style="height:28px;max-width:140px;object-fit:contain;display:block">';
+    }
+
+    var actions = document.getElementById('nb-actions');
+    if (actions) {
+      var iconsHtml = (cfg.activeIcons || []).map(function(key) {
+        var ic = NB_ICONS.filter(function(i) { return i.key === key; })[0];
+        return ic ? '<fresh-button variant="ghost" size="sm" aria-label="' + ic.label + '"><i class="ti ' + ic.icon + '"></i></fresh-button>' : '';
+      }).join('');
+      actions.innerHTML = iconsHtml + '<fresh-avatar name="Jane Smith" size="sm"></fresh-avatar>';
+    }
+  })();
+</script>
+
+</body>
+</html>
