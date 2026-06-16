@@ -143,7 +143,7 @@
       <span class="brand-name">Acme Corp</span>
     </div>
     <div slot="actions" id="nb-actions" style="display:flex;align-items:center;gap:var(--space-1)">
-      <fresh-button variant="ghost" size="sm" aria-label="Notifications"><i class="ti ti-bell"></i></fresh-button>
+      <fresh-button variant="ghost" icon-only size="sm" aria-label="Notifications"><i class="ti ti-bell"></i></fresh-button>
       <fresh-avatar name="Jane Smith" size="sm"></fresh-avatar>
     </div>
   </fresh-navbar>
@@ -425,7 +425,7 @@
       /* Filter 'search' — navbar handles it via the search attribute */
       var iconsHtml = (cfg.activeIcons || []).filter(function(key) { return key !== 'search'; }).map(function(key) {
         var ic = NB_ICONS.filter(function(i) { return i.key === key; })[0];
-        return ic ? '<fresh-button variant="ghost" size="sm" aria-label="' + ic.label + '"><i class="ti ' + ic.icon + '"></i></fresh-button>' : '';
+        return ic ? '<fresh-button variant="ghost" icon-only size="sm" aria-label="' + ic.label + '"><i class="ti ' + ic.icon + '"></i></fresh-button>' : '';
       }).join('');
       actions.innerHTML = iconsHtml + '<fresh-avatar name="Jane Smith" size="sm"></fresh-avatar>';
     }

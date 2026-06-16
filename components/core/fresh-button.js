@@ -95,8 +95,8 @@ class FreshButton extends HTMLElement {
           border-radius: var(--radius-md);
         }
 
-        /* ── Icon-only: square ── */
-        button.icon-only { padding: 0; }
+        /* ── Icon-only: square, uses icon-button size from primitives ── */
+        button.icon-only { padding: 0; font-size: var(--font-size-2xl); }
         button.icon-only.size-sm { width: 28px; }
         button.icon-only.size-md { width: 34px; }
         button.icon-only.size-lg { width: 40px; }
