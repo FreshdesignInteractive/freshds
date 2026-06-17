@@ -121,6 +121,9 @@
   .demo-mode-btn, .demo-collapse-btn { width: 28px; height: 28px; border: none; border-radius: var(--radius-full); background: transparent; display: flex; align-items: center; justify-content: center; color: var(--text-secondary); cursor: pointer; font-size: var(--font-size-lg); flex-shrink: 0; transition: background 150ms, color 150ms; }
   .demo-mode-btn:hover, .demo-collapse-btn:hover { background: var(--surface-subtle); color: var(--text-primary); }
   .demo-collapse-btn { color: var(--text-tertiary); font-size: var(--font-size-md); }
+  .logo-dark { display: none; }
+  [data-mode="dark"] .logo-light { display: none; }
+  [data-mode="dark"] .logo-dark { display: block; }
 </style>
 <script>if(location.href.indexOf('?thumb')!==-1)document.write('<style>#demo-bar{display:none!important}</style>');</script>
 <script src="/js/pattern-bar.js"></script>
