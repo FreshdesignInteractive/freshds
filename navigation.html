@@ -43,9 +43,10 @@
         if (radio) radio.checked = true;
         var row = document.getElementById('nb-custom-logo-row');
         if (row) row.style.display = window._nb.logoType === 'custom' ? '' : 'none';
-        var urlIn = document.getElementById('nb-logo-url');
-        if (urlIn && window._nb.logoType === 'custom' && window._nb.logoUrl && !window._nb.logoUrl.startsWith('data:')) {
-          urlIn.value = window._nb.logoUrl;
+        if (window._nb.logoType === 'custom') {
+          var cfgRow = document.getElementById('nb-custom-logo-row');
+          if (cfgRow) cfgRow.style.display = '';
+          if (typeof window._renderLogoFields === 'function') window._renderLogoFields();
         }
       }
       // Apply saved layout pattern
@@ -355,6 +356,34 @@
     display: flex; align-items: center;
   }
 
+  /* ── Custom logo fields ─────────────────────────────────────── */
+  .nb-logo-pair { display: flex; flex-direction: column; gap: var(--space-3); margin-bottom: var(--space-4); }
+  .nb-logo-field-group { display: flex; flex-direction: column; gap: 4px; }
+  .nb-logo-field-label-sm { font-size: 11px; font-weight: 600; color: var(--text-secondary); }
+  .nb-logo-thumb-wrap { position: relative; display: inline-flex; align-items: center; }
+  .nb-logo-thumb {
+    height: 36px; max-width: 160px; object-fit: contain;
+    border: 1px solid var(--border); border-radius: var(--radius-md);
+    padding: 4px 10px; background: var(--card);
+    display: block; box-sizing: border-box;
+  }
+  .nb-logo-clear-btn {
+    all: unset;
+    position: absolute; top: -7px; right: -7px;
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    background: var(--text-primary); color: var(--scale-1);
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 9px; line-height: 1;
+    transition: opacity 0.12s;
+  }
+  .nb-logo-clear-btn:hover { opacity: 0.75; }
+  /* Preview logo mode switching */
+  .nb-logo-for-dark { display: none; }
+  [data-mode="dark"] .nb-logo-for-light { display: none; }
+  [data-mode="dark"] .nb-logo-for-dark { display: block; }
+
   /* ── Navigation option tiles ────────────────────────────────── */
   .nav-options-grid {
     display: grid;
@@ -467,12 +496,15 @@
             </label>
           </div>
           <div id="nb-custom-logo-row" style="display:none">
-            <div class="nb-logo-input-row">
-              <input type="text" id="nb-logo-url" placeholder="Paste image URL..." class="nb-text-input" oninput="setLogoUrl(this.value)">
-              <label class="nb-upload-btn">
-                <i class="ti ti-upload"></i> Upload
-                <input type="file" accept="image/*" style="display:none" onchange="handleLogoUpload(this)">
-              </label>
+            <div class="nb-logo-pair">
+              <div class="nb-logo-field-group">
+                <div class="nb-logo-field-label-sm">Light mode</div>
+                <div id="nb-logo-light-field"></div>
+              </div>
+              <div class="nb-logo-field-group">
+                <div class="nb-logo-field-label-sm">Dark mode</div>
+                <div id="nb-logo-dark-field"></div>
+              </div>
             </div>
           </div>
 
@@ -817,7 +849,7 @@
     { key: 'bookmark',  icon: 'ti-bookmark',       label: 'Saved' }
   ];
 
-  var _nbDefault = { logoType: 'default', logoUrl: '', activeIcons: ['search', 'bell'] };
+  var _nbDefault = { logoType: 'default', logoUrl: '', logoUrlDark: '', activeIcons: ['search', 'bell'] };
   var _savedNb   = JSON.parse(JSON.stringify(_nbDefault));
   var _nb        = JSON.parse(JSON.stringify(_nbDefault));
 
@@ -825,30 +857,66 @@
     return JSON.stringify(_nb) !== JSON.stringify(_savedNb);
   }
 
+  function _renderLogoField(fieldId, mode, url) {
+    var el = document.getElementById(fieldId);
+    if (!el) return;
+    if (url) {
+      el.innerHTML =
+        '<div class="nb-logo-thumb-wrap">' +
+        '<img class="nb-logo-thumb" src="' + url.replace(/"/g, '&quot;') + '" alt="Logo">' +
+        '<button class="nb-logo-clear-btn" onclick="clearLogo(\'' + mode + '\')" aria-label="Remove logo"><i class="ti ti-x"></i></button>' +
+        '</div>';
+    } else {
+      el.innerHTML =
+        '<div class="nb-logo-input-row">' +
+        '<input type="text" placeholder="Paste image URL..." class="nb-text-input" oninput="setLogoUrl(this.value, \'' + mode + '\')">' +
+        '<label class="nb-upload-btn"><i class="ti ti-upload"></i> Upload' +
+        '<input type="file" accept="image/*" style="display:none" onchange="handleLogoUpload(this, \'' + mode + '\')">' +
+        '</label></div>';
+    }
+  }
+
+  function _renderLogoFields() {
+    _renderLogoField('nb-logo-light-field', 'light', _nb.logoUrl);
+    _renderLogoField('nb-logo-dark-field',  'dark',  _nb.logoUrlDark || '');
+  }
+
   function setLogoType(type) {
     _nb.logoType = type;
-    document.getElementById('nb-custom-logo-row').style.display = type === 'custom' ? '' : 'none';
+    var row = document.getElementById('nb-custom-logo-row');
+    if (row) row.style.display = type === 'custom' ? '' : 'none';
+    if (type === 'custom') _renderLogoFields();
     _renderNbPreviews();
     _syncButtons();
   }
 
-  function setLogoUrl(url) {
-    _nb.logoUrl = url;
+  function setLogoUrl(url, mode) {
+    if (mode === 'dark') _nb.logoUrlDark = url;
+    else _nb.logoUrl = url;
     _renderNbPreviews();
     _syncButtons();
   }
 
-  function handleLogoUpload(input) {
+  function handleLogoUpload(input, mode) {
     var file = input.files && input.files[0];
     if (!file) return;
     var reader = new FileReader();
     reader.onload = function(e) {
-      _nb.logoUrl = e.target.result;
-      document.getElementById('nb-logo-url').value = '';
+      if (mode === 'dark') _nb.logoUrlDark = e.target.result;
+      else _nb.logoUrl = e.target.result;
+      _renderLogoFields();
       _renderNbPreviews();
       _syncButtons();
     };
     reader.readAsDataURL(file);
+  }
+
+  function clearLogo(mode) {
+    if (mode === 'dark') _nb.logoUrlDark = '';
+    else _nb.logoUrl = '';
+    _renderLogoFields();
+    _renderNbPreviews();
+    _syncButtons();
   }
 
   function toggleIcon(key) {
@@ -863,8 +931,11 @@
   }
 
   function _nbLogoHtml() {
-    if (_nb.logoType === 'custom' && _nb.logoUrl) {
-      return '<img src="' + _nb.logoUrl.replace(/"/g, '&quot;') + '" alt="Logo" onerror="this.style.display=\'none\'">';
+    if (_nb.logoType === 'custom') {
+      var html = '';
+      if (_nb.logoUrl)     html += '<img class="nb-logo-for-light" src="' + _nb.logoUrl.replace(/"/g, '&quot;')     + '" alt="Logo" onerror="this.style.display=\'none\'" style="height:24px;max-width:120px;object-fit:contain">';
+      if (_nb.logoUrlDark) html += '<img class="nb-logo-for-dark"  src="' + _nb.logoUrlDark.replace(/"/g, '&quot;') + '" alt="Logo" onerror="this.style.display=\'none\'" style="height:24px;max-width:120px;object-fit:contain">';
+      if (html) return html;
     }
     return '<span class="nb-preview-logo-text">acme</span>';
   }
@@ -924,7 +995,7 @@
     _nb = JSON.parse(JSON.stringify(_savedNb));
     document.querySelector('input[name="nb-logo-type"][value="' + _nb.logoType + '"]').checked = true;
     document.getElementById('nb-custom-logo-row').style.display = _nb.logoType === 'custom' ? '' : 'none';
-    document.getElementById('nb-logo-url').value = (_nb.logoType === 'custom' && !_nb.logoUrl.startsWith('data:')) ? _nb.logoUrl : '';
+    if (_nb.logoType === 'custom') _renderLogoFields();
     _buildIconGrid();
     _renderNbPreviews();
     _syncButtons();

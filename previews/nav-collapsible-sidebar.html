@@ -263,7 +263,7 @@
       { key: 'bookmark',  icon: 'ti-bookmark',       label: 'Saved' }
     ];
 
-    var cfg = { logoType: 'default', logoUrl: '', activeIcons: ['search', 'bell'] };
+    var cfg = { logoType: 'default', logoUrl: '', logoUrlDark: '', activeIcons: ['search', 'bell'] };
     try {
       var s = localStorage.getItem('freshds-nav-cfg');
       if (s) { var stored = JSON.parse(s); cfg = Object.assign(cfg, stored.navbar_cfg || stored); }
@@ -271,9 +271,12 @@
 
     var brand = document.getElementById('nb-brand');
     if (brand) {
-      if (cfg.logoType === 'custom' && cfg.logoUrl) {
+      if (cfg.logoType === 'custom' && (cfg.logoUrl || cfg.logoUrlDark)) {
         brand.setAttribute('slot', 'brand');
-        brand.innerHTML = '<img src="' + cfg.logoUrl.replace(/"/g, '&quot;') + '" alt="Logo" style="height:28px;max-width:140px;object-fit:contain;display:block">';
+        var logoHtml = '';
+        if (cfg.logoUrl)     logoHtml += '<img class="logo-light" src="' + cfg.logoUrl.replace(/"/g, '&quot;')     + '" alt="Logo" style="height:28px;max-width:140px;object-fit:contain">';
+        if (cfg.logoUrlDark) logoHtml += '<img class="logo-dark"  src="' + cfg.logoUrlDark.replace(/"/g, '&quot;') + '" alt="Logo" style="height:28px;max-width:140px;object-fit:contain">';
+        brand.innerHTML = logoHtml;
       } else {
         brand.removeAttribute('slot');
         brand.innerHTML = '';
