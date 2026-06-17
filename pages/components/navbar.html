@@ -16,6 +16,11 @@
 <script src="js/freshds.js"></script>
 <script src="js/freshds-site.js"></script>
 <link rel="stylesheet" href="styles/components/spec-page.css">
+<style>
+  .logo-dark { display: none; }
+  [data-mode="dark"] .logo-light { display: none; }
+  [data-mode="dark"] .logo-dark { display: block; }
+</style>
 </head>
 <body>
 
@@ -296,7 +301,7 @@
       { key: 'bookmark',  icon: 'ti-bookmark',       label: 'Saved' }
     ];
 
-    var cfg = { logoType: 'default', logoUrl: '', activeIcons: ['search', 'bell'] };
+    var cfg = { logoUrl: '', logoUrlDark: '', activeIcons: ['search', 'bell'] };
     try {
       var s = localStorage.getItem('freshds-nav-cfg');
       if (s) {
@@ -306,14 +311,23 @@
     } catch(e) {}
 
     // Apply logo to both navbar instances (remove any previous brand slot first)
+    var _effLight = cfg.logoUrl    || cfg.logoUrlDark;
+    var _effDark  = cfg.logoUrlDark || cfg.logoUrl;
     ['nb-spec-loggedin', 'nb-spec-loggedout'].forEach(function(id) {
       var navbar = document.getElementById(id);
       if (!navbar) return;
       navbar.querySelectorAll('[slot="brand"]').forEach(function(el) { el.remove(); });
-      if (cfg.logoType === 'custom' && cfg.logoUrl) {
+      if (_effLight || _effDark) {
         var brandDiv = document.createElement('div');
         brandDiv.setAttribute('slot', 'brand');
-        brandDiv.innerHTML = '<img src="' + cfg.logoUrl.replace(/"/g, '&quot;') + '" alt="Logo" style="height:24px;max-width:140px;object-fit:contain;display:block">';
+        var logoHtml;
+        if (_effLight === _effDark) {
+          logoHtml = '<img src="' + _effLight.replace(/"/g, '&quot;') + '" alt="Logo" style="height:24px;max-width:140px;object-fit:contain">';
+        } else {
+          logoHtml = '<img class="logo-light" src="' + _effLight.replace(/"/g, '&quot;') + '" alt="Logo" style="height:24px;max-width:140px;object-fit:contain">' +
+                     '<img class="logo-dark"  src="' + _effDark.replace(/"/g, '&quot;')  + '" alt="Logo" style="height:24px;max-width:140px;object-fit:contain">';
+        }
+        brandDiv.innerHTML = logoHtml;
         navbar.insertBefore(brandDiv, navbar.firstChild);
       }
     });
