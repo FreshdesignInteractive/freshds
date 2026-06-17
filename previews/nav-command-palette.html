@@ -348,7 +348,7 @@
       { key: 'messages', icon: 'ti-message-circle',  label: 'Messages' },
       { key: 'bookmark', icon: 'ti-bookmark',        label: 'Saved' }
     ];
-    var cfg = { logoType: 'default', logoUrl: '', logoUrlDark: '', activeIcons: ['search', 'bell'] };
+    var cfg = { logoUrl: '', logoUrlDark: '', activeIcons: ['search', 'bell'] };
     try {
       var s = localStorage.getItem('freshds-nav-cfg');
       if (s) { var stored = JSON.parse(s); cfg = Object.assign(cfg, stored.navbar_cfg || stored); }
@@ -356,11 +356,17 @@
 
     var brand = document.getElementById('nb-brand');
     if (brand) {
-      if (cfg.logoType === 'custom' && (cfg.logoUrl || cfg.logoUrlDark)) {
+      var _effectiveLight = cfg.logoUrl    || cfg.logoUrlDark;
+      var _effectiveDark  = cfg.logoUrlDark || cfg.logoUrl;
+      if (_effectiveLight || _effectiveDark) {
         brand.setAttribute('slot', 'brand');
-        var logoHtml = '';
-        if (cfg.logoUrl)     logoHtml += '<img class="logo-light" src="' + cfg.logoUrl.replace(/"/g, '&quot;')     + '" alt="Logo" style="height:28px;max-width:140px;object-fit:contain">';
-        if (cfg.logoUrlDark) logoHtml += '<img class="logo-dark"  src="' + cfg.logoUrlDark.replace(/"/g, '&quot;') + '" alt="Logo" style="height:28px;max-width:140px;object-fit:contain">';
+        var logoHtml;
+        if (_effectiveLight === _effectiveDark) {
+          logoHtml = '<img src="' + _effectiveLight.replace(/"/g, '&quot;') + '" alt="Logo" style="height:28px;max-width:140px;object-fit:contain">';
+        } else {
+          logoHtml = '<img class="logo-light" src="' + _effectiveLight.replace(/"/g, '&quot;') + '" alt="Logo" style="height:28px;max-width:140px;object-fit:contain">' +
+                     '<img class="logo-dark"  src="' + _effectiveDark.replace(/"/g, '&quot;')  + '" alt="Logo" style="height:28px;max-width:140px;object-fit:contain">';
+        }
         brand.innerHTML = logoHtml;
       } else {
         brand.removeAttribute('slot');

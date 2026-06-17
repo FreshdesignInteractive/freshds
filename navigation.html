@@ -39,15 +39,7 @@
         window._savedNb = JSON.parse(JSON.stringify(window._nb));
         if (typeof window._buildIconGrid   === 'function') window._buildIconGrid();
         if (typeof window._renderNbPreviews === 'function') window._renderNbPreviews();
-        var radio = document.querySelector('input[name="nb-logo-type"][value="' + window._nb.logoType + '"]');
-        if (radio) radio.checked = true;
-        var row = document.getElementById('nb-custom-logo-row');
-        if (row) row.style.display = window._nb.logoType === 'custom' ? '' : 'none';
-        if (window._nb.logoType === 'custom') {
-          var cfgRow = document.getElementById('nb-custom-logo-row');
-          if (cfgRow) cfgRow.style.display = '';
-          if (typeof window._renderLogoFields === 'function') window._renderLogoFields();
-        }
+        if (typeof window._renderLogoFields === 'function') window._renderLogoFields();
       }
       // Apply saved layout pattern
       if (saved.nav_pattern) {
@@ -486,17 +478,7 @@
 
           <!-- Logo -->
           <div class="nb-section-label">Logo</div>
-          <div class="nb-radio-row">
-            <label class="nb-radio-opt">
-              <input type="radio" name="nb-logo-type" value="default" checked onchange="setLogoType('default')">
-              <span>Default (Acme)</span>
-            </label>
-            <label class="nb-radio-opt">
-              <input type="radio" name="nb-logo-type" value="custom" onchange="setLogoType('custom')">
-              <span>Custom</span>
-            </label>
-          </div>
-          <div id="nb-custom-logo-row" style="display:none">
+          <div id="nb-custom-logo-row">
             <div class="nb-logo-pair">
               <div class="nb-logo-field-group">
                 <div class="nb-logo-field-label-sm">Light mode</div>
@@ -850,7 +832,7 @@
     { key: 'bookmark',  icon: 'ti-bookmark',       label: 'Saved' }
   ];
 
-  var _nbDefault = { logoType: 'default', logoUrl: '', logoUrlDark: '', activeIcons: ['search', 'bell'] };
+  var _nbDefault = { logoUrl: '', logoUrlDark: '', activeIcons: ['search', 'bell'] };
   var _savedNb   = JSON.parse(JSON.stringify(_nbDefault));
   var _nb        = JSON.parse(JSON.stringify(_nbDefault));
 
@@ -881,15 +863,6 @@
   function _renderLogoFields() {
     _renderLogoField('nb-logo-light-field', 'light', _nb.logoUrl);
     _renderLogoField('nb-logo-dark-field',  'dark',  _nb.logoUrlDark || '');
-  }
-
-  function setLogoType(type) {
-    _nb.logoType = type;
-    var row = document.getElementById('nb-custom-logo-row');
-    if (row) row.style.display = type === 'custom' ? '' : 'none';
-    if (type === 'custom') _renderLogoFields();
-    _renderNbPreviews();
-    _syncButtons();
   }
 
   function setLogoUrl(url, mode) {
@@ -933,13 +906,14 @@
   }
 
   function _nbLogoHtml() {
-    if (_nb.logoType === 'custom') {
-      var html = '';
-      if (_nb.logoUrl)     html += '<img class="nb-logo-for-light" src="' + _nb.logoUrl.replace(/"/g, '&quot;')     + '" alt="Logo" onerror="this.style.display=\'none\'" style="height:24px;max-width:120px;object-fit:contain">';
-      if (_nb.logoUrlDark) html += '<img class="nb-logo-for-dark"  src="' + _nb.logoUrlDark.replace(/"/g, '&quot;') + '" alt="Logo" onerror="this.style.display=\'none\'" style="height:24px;max-width:120px;object-fit:contain">';
-      if (html) return html;
+    var light = _nb.logoUrl    || _nb.logoUrlDark;
+    var dark  = _nb.logoUrlDark || _nb.logoUrl;
+    if (!light) return '<span class="nb-preview-logo-text">acme</span>';
+    if (light === dark) {
+      return '<img src="' + light.replace(/"/g, '&quot;') + '" alt="Logo" onerror="this.style.display=\'none\'" style="height:24px;max-width:120px;object-fit:contain">';
     }
-    return '<span class="nb-preview-logo-text">acme</span>';
+    return '<img class="nb-logo-for-light" src="' + light.replace(/"/g, '&quot;') + '" alt="Logo" onerror="this.style.display=\'none\'" style="height:24px;max-width:120px;object-fit:contain">' +
+           '<img class="nb-logo-for-dark"  src="' + dark.replace(/"/g, '&quot;')  + '" alt="Logo" onerror="this.style.display=\'none\'" style="height:24px;max-width:120px;object-fit:contain">';
   }
 
   function _renderNbPreviews() {
@@ -995,9 +969,7 @@
       t.classList.toggle('selected', t.getAttribute('data-nav') === _savedNav);
     });
     _nb = JSON.parse(JSON.stringify(_savedNb));
-    document.querySelector('input[name="nb-logo-type"][value="' + _nb.logoType + '"]').checked = true;
-    document.getElementById('nb-custom-logo-row').style.display = _nb.logoType === 'custom' ? '' : 'none';
-    if (_nb.logoType === 'custom') _renderLogoFields();
+    _renderLogoFields();
     _buildIconGrid();
     _renderNbPreviews();
     _syncButtons();
@@ -1013,6 +985,7 @@
   }
 
   /* ── Init ────────────────────────────────────────────── */
+  _renderLogoFields();
   _buildIconGrid();
   _renderNbPreviews();
 </script>
