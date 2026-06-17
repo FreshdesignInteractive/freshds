@@ -372,10 +372,10 @@
     transition: opacity 0.12s;
   }
   .nb-logo-clear-btn:hover { opacity: 0.75; }
-  /* Preview logo mode switching */
-  .nb-logo-for-dark { display: none; }
-  [data-mode="dark"] .nb-logo-for-light { display: none; }
-  [data-mode="dark"] .nb-logo-for-dark { display: block; }
+  /* Preview logo mode switching — !important beats .nb-preview-logo img specificity */
+  .nb-logo-for-dark { display: none !important; }
+  [data-mode="dark"] .nb-logo-for-light { display: none !important; }
+  [data-mode="dark"] .nb-logo-for-dark { display: block !important; }
 
   /* ── Navigation option tiles ────────────────────────────────── */
   .nav-options-grid {
