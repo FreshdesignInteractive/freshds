@@ -357,16 +357,17 @@
   }
 
   /* ── Custom logo fields ─────────────────────────────────────── */
-  .nb-logo-pair { display: flex; flex-direction: column; gap: var(--space-3); margin-bottom: var(--space-4); }
-  .nb-logo-field-group { display: flex; flex-direction: column; gap: 4px; }
+  .nb-logo-pair { display: flex; flex-direction: row; gap: var(--space-4); margin-bottom: var(--space-4); align-items: flex-start; }
+  .nb-logo-field-group { display: flex; flex-direction: column; gap: 4px; flex: 1; min-width: 0; }
   .nb-logo-field-label-sm { font-size: 11px; font-weight: 600; color: var(--text-secondary); }
-  .nb-logo-thumb-wrap { position: relative; display: inline-flex; align-items: center; }
+  .nb-logo-thumb-wrap { position: relative; display: flex; align-items: center; width: 100%; }
   .nb-logo-thumb {
-    height: 36px; max-width: 160px; object-fit: contain;
+    height: 36px; flex: 1; min-width: 0; object-fit: contain;
     border: 1px solid var(--border); border-radius: var(--radius-md);
     padding: 4px 10px; background: var(--card);
     display: block; box-sizing: border-box;
   }
+  .nb-logo-thumb--dark { background: var(--scale-12); border-color: var(--scale-10); }
   .nb-logo-clear-btn {
     all: unset;
     position: absolute; top: -7px; right: -7px;
@@ -860,10 +861,11 @@
   function _renderLogoField(fieldId, mode, url) {
     var el = document.getElementById(fieldId);
     if (!el) return;
+    var isDark = mode === 'dark';
     if (url) {
       el.innerHTML =
         '<div class="nb-logo-thumb-wrap">' +
-        '<img class="nb-logo-thumb" src="' + url.replace(/"/g, '&quot;') + '" alt="Logo">' +
+        '<img class="nb-logo-thumb' + (isDark ? ' nb-logo-thumb--dark' : '') + '" src="' + url.replace(/"/g, '&quot;') + '" alt="Logo">' +
         '<button class="nb-logo-clear-btn" onclick="clearLogo(\'' + mode + '\')" aria-label="Remove logo"><i class="ti ti-x"></i></button>' +
         '</div>';
     } else {
