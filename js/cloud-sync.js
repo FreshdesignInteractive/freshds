@@ -1,5 +1,15 @@
 import { supabase } from '/js/supabase-client.js';
 
+// Returns the current session access token, or null if not signed in.
+window.__getAuthToken = async function() {
+  try {
+    const { data } = await supabase.auth.getSession();
+    return data?.session?.access_token || null;
+  } catch (_) {
+    return null;
+  }
+};
+
 // Debounced save to any column in the profiles table.
 // Usage: window.__saveToCloud('theme_config', dataObject)
 const _timers = {};

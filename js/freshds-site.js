@@ -1250,65 +1250,42 @@ function _zipAndDownload(zip, filename) {
   });
 }
 
-// Dev bundle — core engine + tokens + components only. No site JS.
-function exportDeveloperBundle() {
-  if (typeof JSZip === 'undefined') { alert('JSZip not loaded, check your internet connection.'); return; }
+// Calls /api/export, streams the zip back and triggers browser download.
+function _apiExport(type, filename) {
+  var getToken = typeof window.__getAuthToken === 'function'
+    ? window.__getAuthToken()
+    : Promise.resolve(null);
 
-  var staticPaths = [
-    'tokens/primitives.css',
-    'tokens/theme.css',
-    'styles/grid.css',
-    'styles/components/core.css',
-    'js/freshds.js'
-  ].concat(_COMPONENT_FILES);
-
-  _fetchAll(staticPaths).then(function(files) {
-    var zip = new JSZip();
-    var root = 'freshds-bundle/';
-    zip.file(root + 'tokens/theme-vars.css', _generateThemeVarsCss());
-    files.forEach(function(f) { zip.file(root + f.path, f.text); });
-    zip.file(root + 'README.md', _generateReadme(false));
-    _zipAndDownload(zip, 'freshds-bundle.zip');
+  getToken.then(function(token) {
+    if (!token) {
+      alert('Sign in to download your design system.');
+      return;
+    }
+    return fetch('/api/export?type=' + type, {
+      headers: { 'Authorization': 'Bearer ' + token }
+    }).then(function(res) {
+      if (res.status === 403) throw new Error('A paid subscription is required to export.');
+      if (!res.ok) return res.json().then(function(e) { throw new Error(e.error || 'Export failed'); });
+      return res.blob();
+    }).then(function(blob) {
+      var a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = filename;
+      a.click();
+    });
   }).catch(function(err) {
     alert('Export failed: ' + err.message);
   });
 }
 
-// Full site export — includes both JS files, all pattern pages, and baked theme.
+// Dev bundle — core engine + tokens + components only. No site JS.
+function exportDeveloperBundle() {
+  _apiExport('devkit', 'freshds-bundle.zip');
+}
+
+// Full site export — complete docs site with baked theme.
 function exportDSSite() {
-  if (typeof JSZip === 'undefined') { alert('JSZip not loaded, check your internet connection.'); return; }
-
-  var sitePaths = [
-    'tokens/primitives.css',
-    'tokens/theme.css',
-    'styles/layout.css',
-    'styles/grid.css',
-    'styles/docs.css',
-    'styles/components/core.css',
-    'js/freshds.js',
-    'js/freshds-site.js',
-    'js/pattern-bar.js',
-    'js/pattern-topbar-v2.js',
-    'favicon.svg',
-    'components.html'
-  ].concat(_COMPONENT_FILES).concat(_PATTERN_HTML_FILES).concat(_PATTERN_CSS_FILES);
-
-  var seed = _generateBakedThemeScript();
-
-  _fetchAll(sitePaths).then(function(files) {
-    var zip = new JSZip();
-    var root = 'FreshDS/';
-    zip.file(root + 'tokens/theme-vars.css', _generateThemeVarsCss());
-    files.forEach(function(f) {
-      var content = f.text;
-      if (f.path.endsWith('.html')) content = _injectThemeSeed(content, seed);
-      zip.file(root + f.path, content);
-    });
-    zip.file(root + 'README.md', _generateReadme(true));
-    _zipAndDownload(zip, 'FreshDS.zip');
-  }).catch(function(err) {
-    alert('Export failed: ' + err.message);
-  });
+  _apiExport('fullsite', 'FreshDS.zip');
 }
 
 // ── Init ───────────────────────────────────────────────────────
