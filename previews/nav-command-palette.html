@@ -108,6 +108,46 @@
     font-size: 10px; font-family: var(--font-mono); color: var(--text-tertiary);
   }
 
+  /* Icon rail flyout sub-nav */
+  .icon-flyout {
+    position: fixed;
+    left: 56px;
+    top: 64px;
+    width: 192px;
+    background: var(--surface-canvas);
+    border: 1px solid var(--surface-border);
+    border-radius: var(--radius-md);
+    box-shadow: 0 8px 28px rgba(0,0,0,0.12), 0 2px 6px rgba(0,0,0,0.06);
+    z-index: 90;
+    display: none;
+    overflow: hidden;
+  }
+  .icon-flyout.open { display: block; }
+
+  .icon-flyout-label {
+    padding: var(--space-2) var(--space-3) var(--space-1);
+    font-size: var(--font-size-xs);
+    font-weight: 600;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    border-bottom: 1px solid var(--surface-border);
+  }
+
+  .flyout-item {
+    display: flex;
+    align-items: center;
+    padding: 7px var(--space-3);
+    font-size: var(--font-size-sm);
+    font-family: var(--font-sans);
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: background 100ms, color 100ms;
+    -webkit-font-smoothing: antialiased;
+  }
+  .flyout-item:hover  { background: var(--surface-subtle); color: var(--text-primary); }
+  .flyout-item.active { background: var(--nav-active-bg); color: var(--nav-active-text); font-weight: 500; }
+
   /* Brand slot */
   .brand-slot { display: flex; align-items: center; gap: var(--space-2); }
   .brand-mark { width: 28px; height: 28px; border-radius: var(--radius-sm); background: var(--color-interactive); display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700; color: #fff; flex-shrink: 0; letter-spacing: -0.02em; }
@@ -164,6 +204,12 @@
         <fresh-avatar name="Jane Smith" size="sm"></fresh-avatar>
       </div>
     </fresh-sidebar>
+
+    <!-- Icon flyout: secondary links for the active rail item -->
+    <div class="icon-flyout" id="icon-flyout">
+      <div class="icon-flyout-label" id="icon-flyout-label"></div>
+      <div id="icon-flyout-items"></div>
+    </div>
 
     <main class="shell-content"></main>
 
@@ -235,11 +281,90 @@
 <script src="/components/data/fresh-avatar.js"></script>
 
 <script>
-  /* Populate icon rail and palette items from taxonomy */
+  /* ── Icon rail + flyout ──────────────────────────────────── */
+  var _cpTax       = loadTaxonomy();
+  var _flyoutIdx   = -1;
+
+  /* Build icon rail with data-tax-idx on each item */
   (function() {
-    var tax = loadTaxonomy();
-    document.getElementById('icon-rail-content').innerHTML = buildIconRailHtml(tax);
+    var html = '<fresh-nav-group label="Main" open>';
+    _cpTax.forEach(function(item, idx) {
+      var iconAttr = item.icon ? ' icon="' + item.icon + '"' : '';
+      html += '<fresh-nav-item' + iconAttr + (idx === 0 ? ' active' : '') +
+              ' data-tax-idx="' + idx + '">' + item.label + '</fresh-nav-item>';
+    });
+    html += '</fresh-nav-group>';
+    document.getElementById('icon-rail-content').innerHTML = html;
   })();
+
+  function _railItems() {
+    return Array.prototype.slice.call(
+      document.querySelectorAll('#icon-rail-content fresh-nav-item'));
+  }
+
+  function _setRailActive(idx) {
+    _railItems().forEach(function(el, i) {
+      if (i === idx) el.setAttribute('active', '');
+      else           el.removeAttribute('active');
+    });
+  }
+
+  function _closeFlyout() {
+    _flyoutIdx = -1;
+    document.getElementById('icon-flyout').classList.remove('open');
+  }
+
+  function _openFlyout(idx, anchorEl) {
+    var tax  = _cpTax[idx];
+    var kids = (tax && tax.children) || [];
+    if (kids.length === 0) { _closeFlyout(); return; }
+
+    _flyoutIdx = idx;
+    document.getElementById('icon-flyout-label').textContent = tax.label;
+    document.getElementById('icon-flyout-items').innerHTML = kids.map(function(child, ci) {
+      return '<div class="flyout-item' + (ci === 0 ? ' active' : '') + '">' + child.label + '</div>';
+    }).join('');
+
+    /* Position at the top of the clicked icon item */
+    var rect   = anchorEl.getBoundingClientRect();
+    var flyout = document.getElementById('icon-flyout');
+    flyout.style.top = rect.top + 'px';
+    flyout.classList.add('open');
+
+    /* Clamp so it doesn't overflow viewport bottom */
+    requestAnimationFrame(function() {
+      var fh = flyout.offsetHeight;
+      var vh = window.innerHeight;
+      if (rect.top + fh > vh - 8) {
+        flyout.style.top = Math.max(8, vh - fh - 8) + 'px';
+      }
+    });
+  }
+
+  /* nav-click bubbles from fresh-nav-item up through light DOM */
+  document.getElementById('icon-rail-content').addEventListener('nav-click', function(e) {
+    var item = e.target;
+    if (!item || item.tagName.toLowerCase() !== 'fresh-nav-item') return;
+    var idx = parseInt(item.dataset.taxIdx, 10);
+    if (isNaN(idx)) return;
+    _setRailActive(idx);
+    if (idx === _flyoutIdx) { _closeFlyout(); return; }
+    _openFlyout(idx, item);
+  });
+
+  /* Stop icon rail native clicks from reaching document close listener */
+  document.getElementById('icon-rail-content').addEventListener('click', function(e) {
+    e.stopPropagation();
+  });
+  document.getElementById('icon-flyout').addEventListener('click', function(e) {
+    e.stopPropagation();
+  });
+
+  /* Close flyout on outside click or Escape */
+  document.addEventListener('click', _closeFlyout);
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') _closeFlyout();
+  });
 </script>
 
 <script>

@@ -184,6 +184,47 @@
     margin-bottom: var(--space-4);
   }
 
+  .cfg-card-heading-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    margin-bottom: var(--space-4);
+  }
+
+  .cfg-card-heading-row .cfg-card-heading {
+    margin-bottom: 0;
+  }
+
+  .tx-restore-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1);
+    padding: 5px var(--space-3);
+    font-size: var(--font-size-sm);
+    font-family: var(--font-sans);
+    font-weight: 400;
+    color: var(--text-tertiary);
+    background: transparent;
+    border: 1px solid var(--surface-border-strong);
+    border-radius: var(--radius-full);
+    cursor: pointer;
+    white-space: nowrap;
+    flex-shrink: 0;
+    transition: color 120ms ease, border-color 120ms ease, background 120ms ease;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .tx-restore-btn:hover {
+    color: var(--text-secondary);
+    border-color: var(--text-tertiary);
+    background: var(--surface-subtle);
+  }
+
+  .tx-restore-btn .ti {
+    font-size: 13px;
+  }
+
   /* ── Preview link ───────────────────────────────────────────── */
   .nav-tile-preview-link {
     display: inline-flex;
@@ -865,7 +906,10 @@
 
         <!-- Taxonomy -->
         <div class="config-card">
-          <div class="cfg-card-heading">Taxonomy</div>
+          <div class="cfg-card-heading-row">
+            <div class="cfg-card-heading">Taxonomy</div>
+            <button class="tx-restore-btn" onclick="_restoreDefaultTaxonomy()"><i class="ti ti-restore"></i> Restore FreshDS defaults</button>
+          </div>
           <p style="font-size:13px;color:var(--text-secondary);line-height:1.55;margin-bottom:var(--space-4);">Define your primary and secondary navigation structure. First-level items appear as main nav sections and can have an icon. Second-level items are pages or sub-sections within them.</p>
           <div class="tx-list" id="tx-list"></div>
           <button class="tx-add-primary-btn" onclick="_addPrimaryItem()"><i class="ti ti-plus"></i> Add nav item</button>
@@ -1042,6 +1086,12 @@
   function _taxId() { return 'tx' + Date.now().toString(36) + Math.random().toString(36).slice(2, 5); }
 
   function _taxChanged() { return JSON.stringify(_tax) !== JSON.stringify(_savedTax); }
+
+  function _restoreDefaultTaxonomy() {
+    _tax = JSON.parse(JSON.stringify(DEFAULT_TAXONOMY));
+    _renderTaxList();
+    _syncButtons();
+  }
 
   function _taxEsc(s) {
     return (s || '').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');

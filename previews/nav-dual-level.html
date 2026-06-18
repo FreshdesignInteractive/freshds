@@ -37,6 +37,9 @@
   .section-nav { display: none; }
   .section-nav.active { display: contents; }
 
+  /* Hide sidebar when active section has no children */
+  #app-sidebar.sidebar-hidden { display: none !important; }
+
   /* Sidebar footer */
   .sidebar-footer { display: flex; align-items: center; gap: var(--space-3); width: 100%; min-width: 0; }
   .footer-user-info { flex: 1; min-width: 0; overflow: hidden; }
@@ -225,11 +228,19 @@
       var snav = document.getElementById('snav-' + k);
       if (snav) snav.classList.toggle('active', k === key);
     });
+    var activeSnav = document.getElementById('snav-' + key);
+    var hasChildren = activeSnav && activeSnav.dataset.hasChildren === '1';
     var sidebar = document.getElementById('app-sidebar');
-    if (sidebar && typeof sidebar._propagateCollapsed === 'function') {
-      requestAnimationFrame(function() { sidebar._propagateCollapsed(); });
+    if (sidebar) {
+      sidebar.classList.toggle('sidebar-hidden', !hasChildren);
+      if (hasChildren && typeof sidebar._propagateCollapsed === 'function') {
+        requestAnimationFrame(function() { sidebar._propagateCollapsed(); });
+      }
     }
   }
+
+  /* Apply initial state */
+  if (_dualTax[0]) switchSection(_dualTax[0].id);
 
   document.getElementById('section-tabs').addEventListener('change', function(e) {
     switchSection(e.detail.key);

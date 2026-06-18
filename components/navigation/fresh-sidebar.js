@@ -146,7 +146,8 @@ class FreshNavGroup extends HTMLElement {
     const label     = this.getAttribute('label') || '';
     const icon      = this.getAttribute('icon')  || '';
     const collapsed = this.hasAttribute('sidebar-collapsed');
-    const showItems = collapsed || this._open;
+    const hasItems  = this.childElementCount > 0;
+    const showItems = hasItems && (collapsed || this._open);
 
     this.shadowRoot.innerHTML = `
       <style>
@@ -167,7 +168,7 @@ class FreshNavGroup extends HTMLElement {
           letter-spacing: 0.07em;
           text-transform: uppercase;
           color: var(--text-tertiary);
-          cursor: pointer;
+          cursor: ${hasItems ? 'pointer' : 'default'};
           user-select: none;
           transition: color 120ms ease;
           -webkit-font-smoothing: antialiased;
@@ -201,15 +202,17 @@ class FreshNavGroup extends HTMLElement {
       <div class="header" part="header">
         ${icon ? `<i class="ti ${icon} group-icon" aria-hidden="true"></i>` : ''}
         <span class="group-label">${label}</span>
-        <i class="ti ti-chevron-right chevron ${this._open ? 'open' : ''}" aria-hidden="true"></i>
+        ${hasItems ? `<i class="ti ti-chevron-right chevron ${this._open ? 'open' : ''}" aria-hidden="true"></i>` : ''}
       </div>
       <div class="items" part="items">
         <slot></slot>
       </div>
     `;
 
-    this.shadowRoot.querySelector('.header')
-      ?.addEventListener('click', () => this._toggle());
+    if (hasItems) {
+      this.shadowRoot.querySelector('.header')
+        ?.addEventListener('click', () => this._toggle());
+    }
   }
 }
 

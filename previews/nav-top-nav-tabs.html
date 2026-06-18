@@ -51,6 +51,37 @@
   .tab-panel { display: none; max-width: 900px; }
   .tab-panel.active { display: block; }
 
+  /* Tab dropdown sub-nav */
+  .tab-dropdown {
+    position: fixed;
+    top: 0;
+    left: 0;
+    min-width: 168px;
+    background: var(--surface-canvas);
+    border: 1px solid var(--surface-border);
+    border-radius: var(--radius-md);
+    box-shadow: 0 8px 28px rgba(0,0,0,0.12), 0 2px 6px rgba(0,0,0,0.06);
+    z-index: 90;
+    display: none;
+    overflow: hidden;
+    padding: var(--space-1) 0;
+  }
+  .tab-dropdown.open { display: block; }
+
+  .tab-drop-item {
+    display: flex;
+    align-items: center;
+    padding: 7px var(--space-4);
+    font-size: var(--font-size-sm);
+    font-family: var(--font-sans);
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: background 100ms, color 100ms;
+    -webkit-font-smoothing: antialiased;
+  }
+  .tab-drop-item:hover  { background: var(--surface-subtle); color: var(--text-primary); }
+  .tab-drop-item.active { color: var(--nav-active-text); background: var(--nav-active-bg); font-weight: 500; }
+
 
   /* Brand slot */
   .brand-slot { display: flex; align-items: center; gap: var(--space-2); }
@@ -127,6 +158,9 @@
     </fresh-topbar-menu>
   </div>
 
+  <!-- Tab dropdown (secondary links) -->
+  <div class="tab-dropdown" id="tab-dropdown"></div>
+
   <main class="shell-content"></main>
 
 </div>
@@ -179,12 +213,77 @@
 <script src="/components/data/fresh-avatar.js"></script>
 
 <script>
-  /* Set tabs from taxonomy */
+  /* ── Tab strip + dropdown sub-nav ─────────────────────────── */
   (function() {
-    var tax = loadTaxonomy();
-    var tm = document.getElementById('top-tabs');
-    tm.setAttribute('tabs', buildTabsJson(tax));
-    if (tax[0]) tm.setAttribute('active', tax[0].id);
+    var tax     = loadTaxonomy();
+    var topTabs = document.getElementById('top-tabs');
+    var firstId = tax[0] ? tax[0].id : '';
+
+    topTabs.setAttribute('tabs', buildTabsJson(tax));
+    if (firstId) topTabs.setAttribute('active', firstId);
+
+    var _dropKey    = null;
+    var _clickX     = 0;
+    var _prevActive = firstId;
+
+    function _closeDrop() {
+      _dropKey = null;
+      document.getElementById('tab-dropdown').classList.remove('open');
+    }
+
+    function _openDrop(key, x) {
+      var item = null;
+      for (var i = 0; i < tax.length; i++) { if (tax[i].id === key) { item = tax[i]; break; } }
+      var kids = (item && item.children) || [];
+      if (kids.length === 0) { _closeDrop(); return; }
+
+      _dropKey = key;
+      var drop     = document.getElementById('tab-dropdown');
+      var tabStrip = document.querySelector('.tab-strip');
+      var stripBot = tabStrip ? tabStrip.getBoundingClientRect().bottom : 96;
+
+      drop.innerHTML = kids.map(function(child, ci) {
+        return '<div class="tab-drop-item' + (ci === 0 ? ' active' : '') + '">' + child.label + '</div>';
+      }).join('');
+
+      drop.style.top  = stripBot + 'px';
+      drop.style.left = '0';
+      drop.classList.add('open');
+
+      /* Center under click, clamped to viewport */
+      requestAnimationFrame(function() {
+        var w    = drop.offsetWidth;
+        var vw   = window.innerWidth;
+        var left = Math.max(8, Math.min(x - w / 2, vw - w - 8));
+        drop.style.left = left + 'px';
+      });
+    }
+
+    /* The shadow button's internal click listener runs _select() synchronously,
+       updating the active attribute BEFORE this click handler fires.
+       So we can compare active before/after to detect same-tab re-clicks. */
+    topTabs.addEventListener('click', function(e) {
+      _clickX = e.clientX;
+      e.stopPropagation();
+      var activeNow = topTabs.getAttribute('active');
+      if (activeNow !== _prevActive) {
+        _prevActive = activeNow;
+        _openDrop(activeNow, _clickX);
+      } else {
+        if (_dropKey === activeNow) _closeDrop();
+        else _openDrop(activeNow, _clickX);
+      }
+    });
+
+    /* Clicks inside dropdown don't close it */
+    document.getElementById('tab-dropdown').addEventListener('click', function(e) {
+      e.stopPropagation();
+    });
+
+    document.addEventListener('click', _closeDrop);
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') _closeDrop();
+    });
   })();
 </script>
 
