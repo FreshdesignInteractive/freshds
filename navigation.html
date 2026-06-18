@@ -536,6 +536,12 @@
     transition: background 0.12s, color 0.12s; box-sizing: border-box;
   }
   .tx-remove-btn:hover { background: var(--bg); color: var(--text-primary); }
+  .tx-has-children-badge {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 20px; height: 20px; flex-shrink: 0;
+    color: var(--text-tertiary); font-size: 13px; pointer-events: none;
+    transition: color 0.12s;
+  }
   .tx-add-child-row {
     padding: 5px 8px; background: var(--bg); border-top: 1px solid var(--border);
   }
@@ -1203,11 +1209,16 @@
           '</div>';
       }).join('');
 
+      var hasChildren = item.children && item.children.length > 0;
+      var childChevron = hasChildren
+        ? '<span class="tx-has-children-badge" title="Has child pages"><i class="ti ti-chevron-down"></i></span>'
+        : '';
       return '<div class="tx-item">' +
         '<div class="tx-item-row">' +
           '<button class="tx-icon-btn' + hasIcon + '" onclick="event.stopPropagation();_openTaxPicker(\'' + item.id + '\',this)" title="Pick icon">' + iconEl + '</button>' +
           '<input class="nb-text-input" type="text" placeholder="Section name..." value="' + _taxEsc(item.label) + '" ' +
           'oninput="_updatePrimaryLabel(\'' + item.id + '\',this.value)" style="flex:1;min-width:0;">' +
+          childChevron +
           '<button class="tx-remove-btn" onclick="_removePrimaryItem(\'' + item.id + '\')" title="Remove"><i class="ti ti-x"></i></button>' +
         '</div>' +
         (childrenHtml ? '<div class="tx-children">' + childrenHtml + '</div>' : '') +
