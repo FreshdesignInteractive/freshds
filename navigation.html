@@ -587,6 +587,17 @@
 
       <div class="config-grid">
 
+        <!-- Taxonomy -->
+        <div class="config-card">
+          <div class="cfg-card-heading-row">
+            <div class="cfg-card-heading">Taxonomy</div>
+            <button class="tx-restore-btn" onclick="_restoreDefaultTaxonomy()"><i class="ti ti-restore"></i> Restore FreshDS defaults</button>
+          </div>
+          <p style="font-size:13px;color:var(--text-secondary);line-height:1.55;margin-bottom:var(--space-4);">Define your primary and secondary navigation structure. First-level items appear as main nav sections and can have an icon. Second-level items are pages or sub-sections within them.</p>
+          <div class="tx-list" id="tx-list"></div>
+          <button class="tx-add-primary-btn" onclick="_addPrimaryItem()"><i class="ti ti-plus"></i> Add nav item</button>
+        </div>
+
         <!-- Navbar designer -->
         <div class="config-card">
           <div class="cfg-card-heading">Navbar</div>
@@ -906,16 +917,6 @@
           </div>
         </div>
 
-        <!-- Taxonomy -->
-        <div class="config-card">
-          <div class="cfg-card-heading-row">
-            <div class="cfg-card-heading">Taxonomy</div>
-            <button class="tx-restore-btn" onclick="_restoreDefaultTaxonomy()"><i class="ti ti-restore"></i> Restore FreshDS defaults</button>
-          </div>
-          <p style="font-size:13px;color:var(--text-secondary);line-height:1.55;margin-bottom:var(--space-4);">Define your primary and secondary navigation structure. First-level items appear as main nav sections and can have an icon. Second-level items are pages or sub-sections within them.</p>
-          <div class="tx-list" id="tx-list"></div>
-          <button class="tx-add-primary-btn" onclick="_addPrimaryItem()"><i class="ti ti-plus"></i> Add nav item</button>
-        </div>
 
       </div>
     </div>
