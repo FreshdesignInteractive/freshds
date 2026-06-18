@@ -273,6 +273,7 @@ const DEVKIT_FILES = [
 ];
 
 const FULLSITE_EXTRA_FILES = [
+  'CLAUDE.md',
   'styles/layout.css',
   'styles/docs.css',
   'js/freshds-site.js',
