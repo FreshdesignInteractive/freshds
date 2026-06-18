@@ -105,7 +105,7 @@ _applyFullThemeToEl(document.documentElement, {
   fontSans: ds.fontSans, fontMono: ds.fontMono, density: ds.density
 });
 
-// ── When loaded in an iframe (app.html #comp-frame), receive theme from parent ─
+// ── When loaded in an iframe (components.html #comp-frame), receive theme from parent ─
 if (window !== window.top) {
   window.addEventListener('message', function(evt) {
     var d = evt.data;
@@ -591,7 +591,7 @@ function navigate(page) {
     return;
   }
 
-  if (!document.getElementById('page-' + page)) { window.location.href = 'app.html#' + page; return; }
+  if (!document.getElementById('page-' + page)) { window.location.href = 'components.html#' + page; return; }
   document.querySelectorAll('.fds-page').forEach(function(p){ p.classList.remove('active'); });
   document.querySelectorAll('.nav-item').forEach(function(el){ el.classList.remove('active'); });
   var target = document.getElementById('page-' + page);
@@ -1289,7 +1289,7 @@ function exportDSSite() {
     'js/pattern-bar.js',
     'js/pattern-topbar-v2.js',
     'favicon.svg',
-    'app.html'
+    'components.html'
   ].concat(_COMPONENT_FILES).concat(_PATTERN_HTML_FILES).concat(_PATTERN_CSS_FILES);
 
   var seed = _generateBakedThemeScript();
@@ -1488,7 +1488,7 @@ document.addEventListener('DOMContentLoaded', function() {
       var tabsEl = this.querySelector('#section-tabs');
       if (tabsEl) tabsEl.addEventListener('change', function(e) {
         if (e.detail && e.detail.key === 'patterns') window.location.href = 'patterns.html';
-        else if (e.detail && e.detail.key === 'ds') window.location.href = 'app.html';
+        else if (e.detail && e.detail.key === 'ds') window.location.href = 'components.html';
       });
     }
   }
@@ -1501,7 +1501,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   var NAV_GROUPS = [
     { group: 'Getting started', icon: 'ti-home', items: [
-      { id: 'home', label: 'Overview', href: 'app.html#home' }
+      { id: 'home', label: 'Overview', href: 'components.html#home' }
     ]},
     { group: 'Foundation', icon: 'ti-stack-2', items: [
       { id: 'typography',  label: 'Typography',    href: 'pages/foundation/typography.html' },
@@ -1514,64 +1514,64 @@ document.addEventListener('DOMContentLoaded', function() {
       { id: 'accessibility', label: 'Accessibility', href: 'pages/foundation/accessibility.html' }
     ]},
     { group: 'Core UI', icon: 'ti-components', items: [
-      { id: 'button',          label: 'Button',          href: 'app.html#button' },
-      { id: 'dropdown-button', label: 'Dropdown button', href: 'app.html#dropdown-button' },
-      { id: 'input',           label: 'Input',           href: 'app.html#input' },
-      { id: 'select',          label: 'Select',          href: 'app.html#select' },
-      { id: 'checkbox',        label: 'Checkbox',        href: 'app.html#checkbox' },
-      { id: 'radio',           label: 'Radio',           href: 'app.html#radio' },
-      { id: 'toggle',          label: 'Toggle',          href: 'app.html#toggle' },
-      { id: 'slider',          label: 'Slider',          href: 'app.html#slider' },
-      { id: 'formfield',       label: 'Form field',      href: 'app.html#formfield' }
+      { id: 'button',          label: 'Button',          href: 'components.html#button' },
+      { id: 'dropdown-button', label: 'Dropdown button', href: 'components.html#dropdown-button' },
+      { id: 'input',           label: 'Input',           href: 'components.html#input' },
+      { id: 'select',          label: 'Select',          href: 'components.html#select' },
+      { id: 'checkbox',        label: 'Checkbox',        href: 'components.html#checkbox' },
+      { id: 'radio',           label: 'Radio',           href: 'components.html#radio' },
+      { id: 'toggle',          label: 'Toggle',          href: 'components.html#toggle' },
+      { id: 'slider',          label: 'Slider',          href: 'components.html#slider' },
+      { id: 'formfield',       label: 'Form field',      href: 'components.html#formfield' }
     ]},
     { group: 'Feedback &amp; status', icon: 'ti-bell', items: [
-      { id: 'badge',      label: 'Badge',        href: 'app.html#badge' },
-      { id: 'alert',      label: 'Alert',        href: 'app.html#alert' },
-      { id: 'toast',      label: 'Toast',        href: 'app.html#toast' },
-      { id: 'tooltip',    label: 'Tooltip',      href: 'app.html#tooltip' },
-      { id: 'progress',   label: 'Progress bar', href: 'app.html#progress' },
-      { id: 'skeleton',   label: 'Skeleton',     href: 'app.html#skeleton' },
-      { id: 'spinner',    label: 'Spinner',      href: 'app.html#spinner' },
-      { id: 'emptystate', label: 'Empty state',  href: 'app.html#emptystate' }
+      { id: 'badge',      label: 'Badge',        href: 'components.html#badge' },
+      { id: 'alert',      label: 'Alert',        href: 'components.html#alert' },
+      { id: 'toast',      label: 'Toast',        href: 'components.html#toast' },
+      { id: 'tooltip',    label: 'Tooltip',      href: 'components.html#tooltip' },
+      { id: 'progress',   label: 'Progress bar', href: 'components.html#progress' },
+      { id: 'skeleton',   label: 'Skeleton',     href: 'components.html#skeleton' },
+      { id: 'spinner',    label: 'Spinner',      href: 'components.html#spinner' },
+      { id: 'emptystate', label: 'Empty state',  href: 'components.html#emptystate' }
     ]},
     { group: 'Navigation', icon: 'ti-compass', items: [
-      { id: 'navbar',       label: 'Navbar',      href: 'app.html#navbar' },
-      { id: 'sidebar-menu', label: 'Sidebar Menu', href: 'app.html#sidebar-menu' },
-      { id: 'topbarmenu',   label: 'Topbar Menu', href: 'app.html#topbarmenu' },
-      { id: 'tabs',         label: 'Tabs',        href: 'app.html#tabs' },
-      { id: 'breadcrumb',   label: 'Breadcrumb',  href: 'app.html#breadcrumb' },
-      { id: 'pagination',   label: 'Pagination',  href: 'app.html#pagination' },
-      { id: 'stepper',      label: 'Stepper',     href: 'app.html#stepper' }
+      { id: 'navbar',       label: 'Navbar',      href: 'components.html#navbar' },
+      { id: 'sidebar-menu', label: 'Sidebar Menu', href: 'components.html#sidebar-menu' },
+      { id: 'topbarmenu',   label: 'Topbar Menu', href: 'components.html#topbarmenu' },
+      { id: 'tabs',         label: 'Tabs',        href: 'components.html#tabs' },
+      { id: 'breadcrumb',   label: 'Breadcrumb',  href: 'components.html#breadcrumb' },
+      { id: 'pagination',   label: 'Pagination',  href: 'components.html#pagination' },
+      { id: 'stepper',      label: 'Stepper',     href: 'components.html#stepper' }
     ]},
     { group: 'Containers', icon: 'ti-box', items: [
-      { id: 'card',      label: 'Card',       href: 'app.html#card' },
-      { id: 'mediacard', label: 'Media card', href: 'app.html#mediacard' },
-      { id: 'modal',     label: 'Modal',      href: 'app.html#modal' },
-      { id: 'drawer',    label: 'Drawer',     href: 'app.html#drawer' },
-      { id: 'accordion', label: 'Accordion',  href: 'app.html#accordion' },
-      { id: 'popover',   label: 'Popover',    href: 'app.html#popover' },
-      { id: 'table',     label: 'Table',      href: 'app.html#table' }
+      { id: 'card',      label: 'Card',       href: 'components.html#card' },
+      { id: 'mediacard', label: 'Media card', href: 'components.html#mediacard' },
+      { id: 'modal',     label: 'Modal',      href: 'components.html#modal' },
+      { id: 'drawer',    label: 'Drawer',     href: 'components.html#drawer' },
+      { id: 'accordion', label: 'Accordion',  href: 'components.html#accordion' },
+      { id: 'popover',   label: 'Popover',    href: 'components.html#popover' },
+      { id: 'table',     label: 'Table',      href: 'components.html#table' }
     ]},
     { group: 'Data display', icon: 'ti-chart-bar', items: [
-      { id: 'statcard',  label: 'Stat card',     href: 'app.html#statcard' },
-      { id: 'datatable', label: 'Data table',    href: 'app.html#datatable' },
-      { id: 'chart',     label: 'Chart wrapper', href: 'app.html#chart' },
-      { id: 'timeline',  label: 'Timeline',      href: 'app.html#timeline' },
-      { id: 'avatar',    label: 'Avatar',        href: 'app.html#avatar' }
+      { id: 'statcard',  label: 'Stat card',     href: 'components.html#statcard' },
+      { id: 'datatable', label: 'Data table',    href: 'components.html#datatable' },
+      { id: 'chart',     label: 'Chart wrapper', href: 'components.html#chart' },
+      { id: 'timeline',  label: 'Timeline',      href: 'components.html#timeline' },
+      { id: 'avatar',    label: 'Avatar',        href: 'components.html#avatar' }
     ]},
     { group: 'AI components', icon: 'ti-sparkles', items: [
-      { id: 'promptinput',   label: 'Prompt input',       href: 'app.html#promptinput' },
-      { id: 'airesponse',    label: 'Response bubble',    href: 'app.html#airesponse' },
-      { id: 'thinking',      label: 'Thinking indicator', href: 'app.html#thinking' },
-      { id: 'confidence',    label: 'Confidence badge',   href: 'app.html#confidence' },
-      { id: 'citation',      label: 'Citation chip',      href: 'app.html#citation' },
-      { id: 'suggestion',    label: 'Suggestion card',    href: 'app.html#suggestion' },
-      { id: 'modelselector', label: 'Model selector',     href: 'app.html#modelselector' },
-      { id: 'tokenmeter',    label: 'Token meter',        href: 'app.html#tokenmeter' },
-      { id: 'feedback',      label: 'Feedback row',       href: 'app.html#feedback' },
-      { id: 'diffviewer',    label: 'Diff viewer',        href: 'app.html#diffviewer' },
-      { id: 'prompthistory', label: 'Prompt history',     href: 'app.html#prompthistory' },
-      { id: 'aimodetoggle',  label: 'AI mode toggle',     href: 'app.html#aimodetoggle' }
+      { id: 'promptinput',   label: 'Prompt input',       href: 'components.html#promptinput' },
+      { id: 'airesponse',    label: 'Response bubble',    href: 'components.html#airesponse' },
+      { id: 'thinking',      label: 'Thinking indicator', href: 'components.html#thinking' },
+      { id: 'confidence',    label: 'Confidence badge',   href: 'components.html#confidence' },
+      { id: 'citation',      label: 'Citation chip',      href: 'components.html#citation' },
+      { id: 'suggestion',    label: 'Suggestion card',    href: 'components.html#suggestion' },
+      { id: 'modelselector', label: 'Model selector',     href: 'components.html#modelselector' },
+      { id: 'tokenmeter',    label: 'Token meter',        href: 'components.html#tokenmeter' },
+      { id: 'feedback',      label: 'Feedback row',       href: 'components.html#feedback' },
+      { id: 'diffviewer',    label: 'Diff viewer',        href: 'components.html#diffviewer' },
+      { id: 'prompthistory', label: 'Prompt history',     href: 'components.html#prompthistory' },
+      { id: 'aimodetoggle',  label: 'AI mode toggle',     href: 'components.html#aimodetoggle' }
     ]}
   ];
 

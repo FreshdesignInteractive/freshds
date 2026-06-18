@@ -29,7 +29,7 @@ const headerHTML = `<header class="site-header" id="site-header">
     ${tab('dashboard',  'Dashboard',       '/dashboard.html', false)}
     ${tab('theme',      'Theme',           '/theme.html', true)}
     ${tab('navigation', 'Navigation',      '/navigation.html', true)}
-    ${tab('components', 'Components',      '/app.html', true)}
+    ${tab('components', 'Components',      '/components.html', true)}
     ${tab('patterns',   'Pattern Library', '/patterns.html', true)}
   </nav>
   <div class="sh-right">
