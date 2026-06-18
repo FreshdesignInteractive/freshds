@@ -3,7 +3,10 @@ const path = require('path');
 const { createClient } = require('@supabase/supabase-js');
 const JSZip = require('jszip');
 
-const ROOT = process.cwd();
+const ROOT         = process.cwd();
+const SUPABASE_URL = process.env.SUPABASE_URL || 'https://fvfveljfslfxcxrepfid.supabase.co';
+// Publishable key — safe to embed, same value already in supabase-client.js
+const SUPABASE_ANON_KEY = 'sb_publishable_Cyts4seRFYkwB7LR_mBzKw_glcS8BTe';
 
 const DEFAULT_THEME = {
   primary: '#1f2328', secondary: '#6b7280',
@@ -338,21 +341,31 @@ async function handler(req, res) {
   }
 
   const token = authHeader.slice(7);
-  const supabase = createClient(
-    process.env.SUPABASE_URL,
-    process.env.SUPABASE_SERVICE_ROLE_KEY
-  );
 
-  const { data: { user }, error: authError } = await supabase.auth.getUser(token);
+  // Validate the JWT — works with either key
+  const supabaseAuth = createClient(
+    SUPABASE_URL,
+    process.env.SUPABASE_SERVICE_ROLE_KEY || SUPABASE_ANON_KEY
+  );
+  const { data: { user }, error: authError } = await supabaseAuth.auth.getUser(token);
   if (authError || !user) return res.status(401).json({ error: 'Invalid session' });
 
-  const { data: profile } = await supabase
+  // Read profile as the user — identical to how the dashboard reads it,
+  // so RLS grants access and has_paid is always correct
+  const supabaseUser = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+    global: { headers: { Authorization: 'Bearer ' + token } }
+  });
+  const { data: profile, error: profileErr } = await supabaseUser
     .from('profiles')
     .select('has_paid, theme_config')
     .eq('id', user.id)
     .single();
+  if (profileErr) console.error('[export] profile read failed:', profileErr.message);
 
-  if (!profile || !profile.has_paid) {
+  const adminIds = (process.env.ADMIN_USER_IDS || '').split(',').map(s => s.trim()).filter(Boolean);
+  const isAdmin  = adminIds.includes(user.id);
+
+  if (!isAdmin && (!profile || !profile.has_paid)) {
     return res.status(403).json({ error: 'Subscription required' });
   }
 
