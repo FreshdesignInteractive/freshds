@@ -67,9 +67,9 @@
 
 <!-- Theme engine -->
 <script src="js/freshds.js"></script>
-<script src="js/freshds-site.js"></script>
 
 <style>
+  :root { --surface-nav: var(--card); --font-size-2xl: 18px; }
   /* ── Page shell (identical to theme.html) ───────────────────── */
   .cfg-page {
     display: flex;
@@ -248,7 +248,7 @@
     transition: border-color 0.15s;
     box-sizing: border-box;
   }
-  .nb-text-input:focus { border-color: var(--scale-11); }
+  .nb-text-input:focus { border-color: var(--text-primary); }
   .nb-text-input::placeholder { color: var(--text-tertiary); }
   .nb-upload-btn {
     display: inline-flex;
@@ -267,7 +267,7 @@
     white-space: nowrap;
     box-sizing: border-box;
   }
-  .nb-upload-btn:hover { border-color: var(--scale-11); color: var(--text-primary); }
+  .nb-upload-btn:hover { border-color: var(--text-primary); color: var(--text-primary); }
   .nb-upload-btn .ti { font-size: 13px; }
   .nb-icon-grid {
     display: flex;
@@ -305,7 +305,7 @@
     align-items: center;
     height: 50px;
     padding: 0 16px;
-    background: var(--scale-0);
+    background: var(--card);
     border: 1px solid var(--border);
     border-radius: var(--radius-md);
     gap: 8px;
@@ -320,13 +320,13 @@
     display: flex; align-items: center; justify-content: center;
     border-radius: var(--radius-md);
     color: var(--text-secondary);
-    font-size: var(--font-size-2xl);
+    font-size: 18px;
   }
   .nb-preview-avatar {
     width: 28px; height: 28px;
     border-radius: 50%;
-    background: var(--scale-9);
-    color: var(--scale-1);
+    background: #6b7280;
+    color: #fff;
     display: flex; align-items: center; justify-content: center;
     font-size: 11px; font-weight: 600;
     margin-left: 6px; flex-shrink: 0;
@@ -359,13 +359,13 @@
     padding: 4px 10px; background: var(--card);
     display: block; box-sizing: border-box;
   }
-  .nb-logo-thumb--dark { background: var(--scale-12); border-color: var(--scale-10); }
+  .nb-logo-thumb--dark { background: #18181b; border-color: #3f3f46; }
   .nb-logo-clear-btn {
     all: unset;
     position: absolute; top: -7px; right: -7px;
     width: 18px; height: 18px;
     border-radius: 50%;
-    background: var(--text-primary); color: var(--scale-1);
+    background: var(--text-primary); color: #fff;
     cursor: pointer;
     display: flex; align-items: center; justify-content: center;
     font-size: 9px; line-height: 1;
