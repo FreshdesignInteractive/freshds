@@ -21,7 +21,7 @@
 
 <div class="comp-page">
   <h1 class="comp-title">Sidebar Menu</h1>
-  <p class="comp-desc">Vertical navigation panel composed from three parts: <code>fresh-sidebar</code> (shell with brand/footer slots), <code>fresh-nav-group</code> (collapsible labeled sections), and <code>fresh-nav-item</code> (individual links with icons and optional badges).</p>
+  <p class="comp-desc">Vertical navigation panel composed from three parts: <code>fresh-sidebar</code> (shell with brand/footer slots), <code>fresh-nav-group</code> (collapsible labeled sections with an optional leading icon), and <code>fresh-nav-item</code> (individual links with icons and optional badges). Groups with no children hide their chevron and are non-interactive.</p>
 
   <!-- STATES CARD -->
   <div class="comp-section">
@@ -123,6 +123,30 @@
           </div>
         </div>
 
+        <!-- Group icon + childless group -->
+        <div class="spec-variant-row">
+          <div class="spec-variant-header">
+            <span class="spec-variant-name">Group icon + no-children behaviour</span>
+            <span class="spec-attr-chip">icon</span>
+            <span class="spec-variant-sep">·</span>
+            <span class="spec-variant-desc">Groups accept an <code>icon</code> attribute that renders a leading Tabler icon beside the label. Groups with no children hide their chevron and cannot be expanded or collapsed.</span>
+          </div>
+          <div class="spec-variant-body">
+            <div class="spec-demos" style="display:block;padding:0;width:260px;">
+              <fresh-nav-group label="Home" icon="ti-home"></fresh-nav-group>
+              <fresh-nav-group label="Work" icon="ti-layout-dashboard" open>
+                <fresh-nav-item active>My tasks</fresh-nav-item>
+                <fresh-nav-item>Projects</fresh-nav-item>
+              </fresh-nav-group>
+              <fresh-nav-group label="Analytics" icon="ti-chart-bar"></fresh-nav-group>
+              <fresh-nav-group label="Settings" icon="ti-settings" open>
+                <fresh-nav-item>Account</fresh-nav-item>
+                <fresh-nav-item>Security</fresh-nav-item>
+              </fresh-nav-group>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   </div>
@@ -148,6 +172,8 @@
           <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Use <code>href</code> on <code>fresh-nav-item</code> for real navigation links. Omit <code>href</code> and listen to the <code>nav-click</code> event for client-side routing or actions that don't change the URL.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
           <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Reserve <code>badge</code> on a <code>fresh-nav-item</code> for short labels ("AI", "New", "Beta") or counts (unread notifications). Do not use long strings as badges.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
           <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Toggle <code>collapsed</code> on the sidebar element to switch between icon-only and full label mode. Pair with a hamburger button in the navbar for touch/mobile contexts.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Use the <code>icon</code> attribute on <code>fresh-nav-group</code> to show a Tabler icon beside the section label. Icons are most useful in taxonomy-driven sidebars where each primary section maps to a recognisable symbol.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Do not add a chevron manually. <code>fresh-nav-group</code> hides its chevron automatically when the group has no child items, preventing a non-functional expand affordance on leaf sections.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
         </ul>
         <button class="spec-add-rule" onclick="addRule('rules-general')"><i class="ti ti-plus"></i> Add rule</button>
       </div>
@@ -163,7 +189,8 @@
         <tbody>
           <tr class="spec-a11y-row"><td class="spec-a11y-concern">fresh-sidebar: collapsed</td><td class="spec-a11y-req">boolean</td><td class="spec-a11y-req">-</td><td class="spec-a11y-req">Icon-only narrow mode. Width collapses to 56px; labels are hidden.</td></tr>
           <tr class="spec-a11y-row"><td class="spec-a11y-concern">fresh-nav-group: label</td><td class="spec-a11y-req">string</td><td class="spec-a11y-req">-</td><td class="spec-a11y-req">Section heading text rendered in uppercase caps above the items.</td></tr>
-          <tr class="spec-a11y-row"><td class="spec-a11y-concern">fresh-nav-group: open</td><td class="spec-a11y-req">boolean</td><td class="spec-a11y-req">-</td><td class="spec-a11y-req">Expands the group so items are visible. Clicking the header toggles this.</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">fresh-nav-group: icon</td><td class="spec-a11y-req">Tabler icon class e.g. <code>ti-home</code></td><td class="spec-a11y-req">-</td><td class="spec-a11y-req">Optional leading icon rendered before the group label. Use the <code>ti-</code> class name only.</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">fresh-nav-group: open</td><td class="spec-a11y-req">boolean</td><td class="spec-a11y-req">-</td><td class="spec-a11y-req">Expands the group so items are visible. Clicking the header toggles this. Groups with no children hide the chevron entirely and cannot be toggled.</td></tr>
           <tr class="spec-a11y-row"><td class="spec-a11y-concern">fresh-nav-item: active</td><td class="spec-a11y-req">boolean</td><td class="spec-a11y-req">-</td><td class="spec-a11y-req">Highlights item with the interactive colour and a left border accent.</td></tr>
           <tr class="spec-a11y-row"><td class="spec-a11y-concern">fresh-nav-item: icon</td><td class="spec-a11y-req">Tabler icon class e.g. <code>ti-home</code></td><td class="spec-a11y-req">-</td><td class="spec-a11y-req">Icon rendered before the label. Prefix with <code>ti-</code>, not the full class.</td></tr>
           <tr class="spec-a11y-row"><td class="spec-a11y-concern">fresh-nav-item: href</td><td class="spec-a11y-req">string (URL)</td><td class="spec-a11y-req">-</td><td class="spec-a11y-req">When set, renders the item as an <code>&lt;a&gt;</code> tag. Omit for button-mode items.</td></tr>
@@ -230,6 +257,37 @@
   <span class="hl-pun">&lt;</span><span class="hl-tag">div</span> <span class="hl-attr">slot</span><span class="hl-pun">=</span><span class="hl-val">"footer"</span><span class="hl-pun">&gt;</span>
     <span class="hl-pun">&lt;</span><span class="hl-tag">fresh-avatar</span> <span class="hl-attr">name</span><span class="hl-pun">=</span><span class="hl-val">"Jane Smith"</span> <span class="hl-attr">size</span><span class="hl-pun">=</span><span class="hl-val">"sm"</span> <span class="hl-attr">status</span><span class="hl-pun">=</span><span class="hl-val">"online"</span><span class="hl-pun">&gt;&lt;/</span><span class="hl-tag">fresh-avatar</span><span class="hl-pun">&gt;</span>
   <span class="hl-pun">&lt;/</span><span class="hl-tag">div</span><span class="hl-pun">&gt;</span>
+<span class="hl-pun">&lt;/</span><span class="hl-tag">fresh-sidebar</span><span class="hl-pun">&gt;</span></div>
+        </div>
+
+        <div class="code-block" data-code="&lt;!-- Groups with icons (taxonomy-driven sidebar) --&gt;
+&lt;fresh-sidebar style=&quot;height:100vh&quot;&gt;
+  &lt;fresh-nav-group label=&quot;Home&quot; icon=&quot;ti-home&quot;&gt;&lt;/fresh-nav-group&gt;
+
+  &lt;fresh-nav-group label=&quot;Work&quot; icon=&quot;ti-layout-dashboard&quot; open&gt;
+    &lt;fresh-nav-item active&gt;My tasks&lt;/fresh-nav-item&gt;
+    &lt;fresh-nav-item&gt;Projects&lt;/fresh-nav-item&gt;
+  &lt;/fresh-nav-group&gt;
+
+  &lt;fresh-nav-group label=&quot;Settings&quot; icon=&quot;ti-settings&quot;&gt;
+    &lt;fresh-nav-item&gt;Account&lt;/fresh-nav-item&gt;
+    &lt;fresh-nav-item&gt;Security&lt;/fresh-nav-item&gt;
+  &lt;/fresh-nav-group&gt;
+&lt;/fresh-sidebar&gt;">
+          <div class="code-block-header"><span><span class="code-lang">HTML</span><span class="code-context">Groups with icons</span></span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+          <div class="code-body"><span class="hl-com">&lt;!-- Groups with icons (taxonomy-driven sidebar) --&gt;</span>
+<span class="hl-pun">&lt;</span><span class="hl-tag">fresh-sidebar</span> <span class="hl-attr">style</span><span class="hl-pun">=</span><span class="hl-val">"height:100vh"</span><span class="hl-pun">&gt;</span>
+  <span class="hl-pun">&lt;</span><span class="hl-tag">fresh-nav-group</span> <span class="hl-attr">label</span><span class="hl-pun">=</span><span class="hl-val">"Home"</span> <span class="hl-attr">icon</span><span class="hl-pun">=</span><span class="hl-val">"ti-home"</span><span class="hl-pun">&gt;&lt;/</span><span class="hl-tag">fresh-nav-group</span><span class="hl-pun">&gt;</span>
+
+  <span class="hl-pun">&lt;</span><span class="hl-tag">fresh-nav-group</span> <span class="hl-attr">label</span><span class="hl-pun">=</span><span class="hl-val">"Work"</span> <span class="hl-attr">icon</span><span class="hl-pun">=</span><span class="hl-val">"ti-layout-dashboard"</span> <span class="hl-attr">open</span><span class="hl-pun">&gt;</span>
+    <span class="hl-pun">&lt;</span><span class="hl-tag">fresh-nav-item</span> <span class="hl-attr">active</span><span class="hl-pun">&gt;</span><span class="hl-txt">My tasks</span><span class="hl-pun">&lt;/</span><span class="hl-tag">fresh-nav-item</span><span class="hl-pun">&gt;</span>
+    <span class="hl-pun">&lt;</span><span class="hl-tag">fresh-nav-item</span><span class="hl-pun">&gt;</span><span class="hl-txt">Projects</span><span class="hl-pun">&lt;/</span><span class="hl-tag">fresh-nav-item</span><span class="hl-pun">&gt;</span>
+  <span class="hl-pun">&lt;/</span><span class="hl-tag">fresh-nav-group</span><span class="hl-pun">&gt;</span>
+
+  <span class="hl-pun">&lt;</span><span class="hl-tag">fresh-nav-group</span> <span class="hl-attr">label</span><span class="hl-pun">=</span><span class="hl-val">"Settings"</span> <span class="hl-attr">icon</span><span class="hl-pun">=</span><span class="hl-val">"ti-settings"</span><span class="hl-pun">&gt;</span>
+    <span class="hl-pun">&lt;</span><span class="hl-tag">fresh-nav-item</span><span class="hl-pun">&gt;</span><span class="hl-txt">Account</span><span class="hl-pun">&lt;/</span><span class="hl-tag">fresh-nav-item</span><span class="hl-pun">&gt;</span>
+    <span class="hl-pun">&lt;</span><span class="hl-tag">fresh-nav-item</span><span class="hl-pun">&gt;</span><span class="hl-txt">Security</span><span class="hl-pun">&lt;/</span><span class="hl-tag">fresh-nav-item</span><span class="hl-pun">&gt;</span>
+  <span class="hl-pun">&lt;/</span><span class="hl-tag">fresh-nav-group</span><span class="hl-pun">&gt;</span>
 <span class="hl-pun">&lt;/</span><span class="hl-tag">fresh-sidebar</span><span class="hl-pun">&gt;</span></div>
         </div>
 
@@ -341,7 +399,9 @@
       'Mark exactly one <code>fresh-nav-item</code> as <code>active</code> at any time, matching the user\'s current route.',
       'Use <code>href</code> on <code>fresh-nav-item</code> for real navigation links. Omit <code>href</code> and listen to the <code>nav-click</code> event for client-side routing or actions that don\'t change the URL.',
       'Reserve <code>badge</code> on a <code>fresh-nav-item</code> for short labels ("AI", "New", "Beta") or counts (unread notifications). Do not use long strings as badges.',
-      'Toggle <code>collapsed</code> on the sidebar element to switch between icon-only and full label mode. Pair with a hamburger button in the navbar for touch/mobile contexts.'
+      'Toggle <code>collapsed</code> on the sidebar element to switch between icon-only and full label mode. Pair with a hamburger button in the navbar for touch/mobile contexts.',
+      'Use the <code>icon</code> attribute on <code>fresh-nav-group</code> to show a Tabler icon beside the section label. Icons are most useful in taxonomy-driven sidebars where each primary section maps to a recognisable symbol.',
+      'Do not add a chevron manually. <code>fresh-nav-group</code> hides its chevron automatically when the group has no child items, preventing a non-functional expand affordance on leaf sections.'
     ]
   };
   function restoreDefaults() {
