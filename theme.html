@@ -154,20 +154,28 @@
     justify-content: space-between;
   }
   .cfg-reset-link {
+    all: unset;
+    box-sizing: border-box;
     display: inline-flex;
     align-items: center;
-    gap: 4px;
-    font-size: 11px;
+    gap: var(--space-1);
+    font-size: var(--font-size-xs);
     font-weight: 500;
-    color: #888;
-    text-decoration: none;
-    padding: 3px 8px;
-    border-radius: 4px;
-    border: 1px solid #d4d4d7;
+    color: var(--text-tertiary);
+    cursor: pointer;
+    padding: 4px var(--space-2);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--surface-border);
     background: transparent;
-    transition: background 0.12s, color 0.12s, border-color 0.12s;
+    white-space: nowrap;
+    transition: background 120ms ease, color 120ms ease, border-color 120ms ease;
   }
-  .cfg-reset-link:hover { background: #fff; color: #333; border-color: #bbb; }
+  .cfg-reset-link:hover {
+    background: var(--surface-subtle);
+    color: var(--text-secondary);
+    border-color: var(--surface-border-strong);
+  }
+  .cfg-reset-link .ti { font-size: 13px; }
 
   /* ── Color pickers ──────────────────────────────────────────── */
   .cfg-color-block { display: flex; flex-direction: column; gap: var(--space-2); flex: 1; min-width: 0; }
@@ -374,7 +382,7 @@
         <div class="config-card">
           <div class="cfg-card-heading">
             Colors
-            <a href="#" class="cfg-reset-link" onclick="resetToDefaults();return false;"><i class="ti ti-rotate" style="font-size:10px;"></i> Restore FreshDS defaults</a>
+            <button class="cfg-reset-link" onclick="resetToDefaults()"><i class="ti ti-restore"></i> Restore FreshDS defaults</button>
           </div>
           <div style="display:flex;flex-direction:column;gap:var(--space-5)">
             <!-- Row 1: Brand + neutral surface -->
