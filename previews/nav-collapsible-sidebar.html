@@ -19,6 +19,8 @@
 
 <!-- DS color engine -->
 <script src="/js/freshds.js"></script>
+<!-- Taxonomy utility -->
+<script src="/js/nav-taxonomy.js"></script>
 
 <style>
   *, *::before, *::after { box-sizing: border-box; }
@@ -146,28 +148,8 @@
 
     <fresh-sidebar id="app-sidebar">
 
-      <fresh-nav-group label="Getting started" open>
-        <fresh-nav-item icon="ti-home" active>Overview</fresh-nav-item>
-        <fresh-nav-item icon="ti-book">Documentation</fresh-nav-item>
-      </fresh-nav-group>
-
-      <fresh-nav-group label="Product" open>
-        <fresh-nav-item icon="ti-layout-dashboard">Dashboard</fresh-nav-item>
-        <fresh-nav-item icon="ti-chart-bar">Analytics</fresh-nav-item>
-        <fresh-nav-item icon="ti-file-description">Reports</fresh-nav-item>
-      </fresh-nav-group>
-
-      <fresh-nav-group label="Manage">
-        <fresh-nav-item icon="ti-folders">Projects</fresh-nav-item>
-        <fresh-nav-item icon="ti-users">Team members</fresh-nav-item>
-        <fresh-nav-item icon="ti-plug-connected">Integrations</fresh-nav-item>
-      </fresh-nav-group>
-
-      <fresh-nav-group label="Settings">
-        <fresh-nav-item icon="ti-user-circle">Account</fresh-nav-item>
-        <fresh-nav-item icon="ti-bell">Notifications</fresh-nav-item>
-        <fresh-nav-item icon="ti-lock">Security</fresh-nav-item>
-      </fresh-nav-group>
+      <!-- Navigation groups (taxonomy-driven) -->
+      <div id="nav-content"></div>
 
       <div slot="footer" class="sidebar-footer">
         <fresh-avatar name="Jane Smith" size="sm"></fresh-avatar>
@@ -233,6 +215,11 @@
 <script src="/components/navigation/fresh-navbar.js"></script>
 <script src="/components/navigation/fresh-sidebar.js"></script>
 <script src="/components/data/fresh-avatar.js"></script>
+
+<script>
+  /* Populate sidebar from taxonomy */
+  document.getElementById('nav-content').innerHTML = buildSidebarHtml(loadTaxonomy());
+</script>
 
 <script>
   var sidebar = document.getElementById('app-sidebar');
@@ -321,19 +308,7 @@
 </div>
 
 <script>
-  var NAV_ITEMS = [
-    { label: 'Overview',      icon: 'ti-home',             group: 'Getting started' },
-    { label: 'Documentation', icon: 'ti-book',             group: 'Getting started' },
-    { label: 'Dashboard',     icon: 'ti-layout-dashboard', group: 'Product' },
-    { label: 'Analytics',     icon: 'ti-chart-bar',        group: 'Product' },
-    { label: 'Reports',       icon: 'ti-file-description', group: 'Product' },
-    { label: 'Projects',      icon: 'ti-folders',          group: 'Manage' },
-    { label: 'Team members',  icon: 'ti-users',            group: 'Manage' },
-    { label: 'Integrations',  icon: 'ti-plug-connected',   group: 'Manage' },
-    { label: 'Account',       icon: 'ti-user-circle',      group: 'Settings' },
-    { label: 'Notifications', icon: 'ti-bell',             group: 'Settings' },
-    { label: 'Security',      icon: 'ti-lock',             group: 'Settings' },
-  ];
+  var NAV_ITEMS = buildPaletteItems(loadTaxonomy());
   var _activeIdx = 0, _filtered = NAV_ITEMS.slice();
 
   function openPalette() {

@@ -65,6 +65,8 @@
 
 <!-- Theme engine -->
 <script src="js/freshds.js"></script>
+<!-- Taxonomy defaults shared with all nav preview pages -->
+<script src="js/nav-taxonomy.js"></script>
 
 <style>
   :root { --surface-nav: var(--card); --font-size-2xl: 18px; }
@@ -1033,8 +1035,8 @@
     'ti-message-circle', 'ti-help-circle', 'ti-globe', 'ti-cloud', 'ti-rocket', 'ti-layers', 'ti-grid-dots'
   ];
 
-  var _savedTax    = [];
-  var _tax         = [];
+  var _savedTax    = JSON.parse(JSON.stringify(DEFAULT_TAXONOMY));
+  var _tax         = JSON.parse(JSON.stringify(DEFAULT_TAXONOMY));
   var _txPickerId  = null;
 
   function _taxId() { return 'tx' + Date.now().toString(36) + Math.random().toString(36).slice(2, 5); }

@@ -19,6 +19,8 @@
 
 <!-- DS color engine -->
 <script src="/js/freshds.js"></script>
+<!-- Taxonomy utility -->
+<script src="/js/nav-taxonomy.js"></script>
 
 <style>
   *, *::before, *::after { box-sizing: border-box; }
@@ -154,15 +156,9 @@
 
   <div class="shell-body">
 
-    <!-- Always-collapsed icon rail: primary section switcher -->
+    <!-- Always-collapsed icon rail: primary section switcher (taxonomy-driven) -->
     <fresh-sidebar collapsed>
-      <fresh-nav-group label="Main" open>
-        <fresh-nav-item icon="ti-home" active>Overview</fresh-nav-item>
-        <fresh-nav-item icon="ti-layout-dashboard">Dashboard</fresh-nav-item>
-        <fresh-nav-item icon="ti-chart-bar">Analytics</fresh-nav-item>
-        <fresh-nav-item icon="ti-folders">Projects</fresh-nav-item>
-        <fresh-nav-item icon="ti-users">Team</fresh-nav-item>
-      </fresh-nav-group>
+      <div id="icon-rail-content"></div>
 
       <div slot="footer" class="sidebar-footer">
         <fresh-avatar name="Jane Smith" size="sm"></fresh-avatar>
@@ -239,19 +235,15 @@
 <script src="/components/data/fresh-avatar.js"></script>
 
 <script>
-  var NAV_ITEMS = [
-    { label: 'Overview',       icon: 'ti-home',              group: 'Getting started' },
-    { label: 'Documentation',  icon: 'ti-book',              group: 'Getting started' },
-    { label: 'Dashboard',      icon: 'ti-layout-dashboard',  group: 'Product' },
-    { label: 'Analytics',      icon: 'ti-chart-bar',         group: 'Product' },
-    { label: 'Reports',        icon: 'ti-file-description',  group: 'Product' },
-    { label: 'Projects',       icon: 'ti-folders',           group: 'Manage' },
-    { label: 'Team members',   icon: 'ti-users',             group: 'Manage' },
-    { label: 'Integrations',   icon: 'ti-plug-connected',    group: 'Manage' },
-    { label: 'Account',        icon: 'ti-user-circle',       group: 'Settings' },
-    { label: 'Notifications',  icon: 'ti-bell',              group: 'Settings' },
-    { label: 'Security',       icon: 'ti-lock',              group: 'Settings' },
-  ];
+  /* Populate icon rail and palette items from taxonomy */
+  (function() {
+    var tax = loadTaxonomy();
+    document.getElementById('icon-rail-content').innerHTML = buildIconRailHtml(tax);
+  })();
+</script>
+
+<script>
+  var NAV_ITEMS = buildPaletteItems(loadTaxonomy());
 
   var _activeIdx = 0;
   var _filtered  = NAV_ITEMS.slice();

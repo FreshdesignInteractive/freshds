@@ -19,6 +19,8 @@
 
 <!-- DS color engine -->
 <script src="/js/freshds.js"></script>
+<!-- Taxonomy utility -->
+<script src="/js/nav-taxonomy.js"></script>
 
 <style>
   *, *::before, *::after { box-sizing: border-box; }
@@ -106,8 +108,8 @@
     <div slot="nav" style="display:flex;align-items:center">
       <fresh-topbar-menu
         id="section-tabs"
-        tabs='[{"key":"product","label":"Product"},{"key":"team","label":"Team"},{"key":"settings","label":"Settings"},{"key":"billing","label":"Billing"}]'
-        active="product">
+        tabs='[]'
+        active="">
       </fresh-topbar-menu>
     </div>
     <div slot="actions" id="nb-actions" style="display:flex;align-items:center;gap:var(--space-1)">
@@ -120,54 +122,8 @@
 
     <fresh-sidebar id="app-sidebar">
 
-      <!-- Product section -->
-      <div class="section-nav active" id="snav-product">
-        <fresh-nav-group label="Overview" open>
-          <fresh-nav-item icon="ti-layout-dashboard" active>Dashboard</fresh-nav-item>
-          <fresh-nav-item icon="ti-chart-bar">Analytics</fresh-nav-item>
-          <fresh-nav-item icon="ti-file-description">Reports</fresh-nav-item>
-        </fresh-nav-group>
-        <fresh-nav-group label="Build" open>
-          <fresh-nav-item icon="ti-toggle-left">Feature flags</fresh-nav-item>
-          <fresh-nav-item icon="ti-rocket">Releases</fresh-nav-item>
-          <fresh-nav-item icon="ti-plug-connected">Integrations</fresh-nav-item>
-        </fresh-nav-group>
-      </div>
-
-      <!-- Team section -->
-      <div class="section-nav" id="snav-team">
-        <fresh-nav-group label="People" open>
-          <fresh-nav-item icon="ti-users">All members</fresh-nav-item>
-          <fresh-nav-item icon="ti-user-plus">Invitations</fresh-nav-item>
-        </fresh-nav-group>
-        <fresh-nav-group label="Access" open>
-          <fresh-nav-item icon="ti-shield-check">Roles</fresh-nav-item>
-          <fresh-nav-item icon="ti-lock">Permissions</fresh-nav-item>
-          <fresh-nav-item icon="ti-key">API access</fresh-nav-item>
-        </fresh-nav-group>
-      </div>
-
-      <!-- Settings section -->
-      <div class="section-nav" id="snav-settings">
-        <fresh-nav-group label="Workspace" open>
-          <fresh-nav-item icon="ti-settings-2">General</fresh-nav-item>
-          <fresh-nav-item icon="ti-paint">Appearance</fresh-nav-item>
-          <fresh-nav-item icon="ti-bell">Notifications</fresh-nav-item>
-        </fresh-nav-group>
-        <fresh-nav-group label="Security" open>
-          <fresh-nav-item icon="ti-lock">Authentication</fresh-nav-item>
-          <fresh-nav-item icon="ti-activity">Audit log</fresh-nav-item>
-        </fresh-nav-group>
-      </div>
-
-      <!-- Billing section -->
-      <div class="section-nav" id="snav-billing">
-        <fresh-nav-group label="Billing" open>
-          <fresh-nav-item icon="ti-credit-card">Overview</fresh-nav-item>
-          <fresh-nav-item icon="ti-receipt">Invoices</fresh-nav-item>
-          <fresh-nav-item icon="ti-package">Plans</fresh-nav-item>
-        </fresh-nav-group>
-      </div>
+      <!-- Section nav groups (taxonomy-driven) -->
+      <div id="section-nav-container"></div>
 
       <div slot="footer" class="sidebar-footer">
         <fresh-avatar name="Jane Smith" size="sm"></fresh-avatar>
@@ -250,16 +206,25 @@
 <script src="/components/data/fresh-avatar.js"></script>
 
 <script>
-  var SECTIONS = ['product', 'team', 'settings', 'billing'];
+  /* Build taxonomy-driven tabs and section nav */
+  var _dualTax = loadTaxonomy();
+  var SECTIONS  = _dualTax.map(function(i) { return i.id; });
+
+  /* Populate tabs */
+  (function() {
+    var tm = document.getElementById('section-tabs');
+    tm.setAttribute('tabs', buildTabsJson(_dualTax));
+    if (_dualTax[0]) tm.setAttribute('active', _dualTax[0].id);
+  })();
+
+  /* Populate sidebar sections */
+  document.getElementById('section-nav-container').innerHTML = buildDualLevelSections(_dualTax);
 
   function switchSection(key) {
     SECTIONS.forEach(function(k) {
       var snav = document.getElementById('snav-' + k);
-      var panel = document.getElementById('panel-' + k);
-      if (snav)  snav.classList.toggle('active',  k === key);
-      if (panel) panel.classList.toggle('active', k === key);
+      if (snav) snav.classList.toggle('active', k === key);
     });
-    /* Re-propagate sidebar-collapsed to newly visible items */
     var sidebar = document.getElementById('app-sidebar');
     if (sidebar && typeof sidebar._propagateCollapsed === 'function') {
       requestAnimationFrame(function() { sidebar._propagateCollapsed(); });
@@ -272,22 +237,7 @@
 </script>
 
 <script>
-  var NAV_ITEMS = [
-    { label: 'Dashboard',     icon: 'ti-layout-dashboard', group: 'Product' },
-    { label: 'Analytics',     icon: 'ti-chart-bar',        group: 'Product' },
-    { label: 'Reports',       icon: 'ti-file-description', group: 'Product' },
-    { label: 'Feature flags', icon: 'ti-toggle-left',      group: 'Product' },
-    { label: 'Releases',      icon: 'ti-rocket',           group: 'Product' },
-    { label: 'All members',   icon: 'ti-users',            group: 'Team' },
-    { label: 'Invitations',   icon: 'ti-user-plus',        group: 'Team' },
-    { label: 'Roles',         icon: 'ti-shield-check',     group: 'Team' },
-    { label: 'General',       icon: 'ti-settings-2',       group: 'Settings' },
-    { label: 'Notifications', icon: 'ti-bell',             group: 'Settings' },
-    { label: 'Authentication',icon: 'ti-lock',             group: 'Settings' },
-    { label: 'Overview',      icon: 'ti-credit-card',      group: 'Billing' },
-    { label: 'Invoices',      icon: 'ti-receipt',          group: 'Billing' },
-    { label: 'Plans',         icon: 'ti-package',          group: 'Billing' },
-  ];
+  var NAV_ITEMS = buildPaletteItems(loadTaxonomy());
   var _activeIdx = 0, _filtered = NAV_ITEMS.slice();
 
   function openPalette() {

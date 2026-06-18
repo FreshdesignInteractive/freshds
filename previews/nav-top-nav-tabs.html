@@ -19,6 +19,8 @@
 
 <!-- DS color engine -->
 <script src="/js/freshds.js"></script>
+<!-- Taxonomy utility -->
+<script src="/js/nav-taxonomy.js"></script>
 
 <style>
   *, *::before, *::after { box-sizing: border-box; }
@@ -177,18 +179,13 @@
 <script src="/components/data/fresh-avatar.js"></script>
 
 <script>
-  var PANELS = ['overview', 'analytics', 'reports', 'projects', 'settings'];
-
-  function switchTab(key) {
-    PANELS.forEach(function(k) {
-      var el = document.getElementById('panel-' + k);
-      if (el) el.classList.toggle('active', k === key);
-    });
-  }
-
-  document.getElementById('top-tabs').addEventListener('change', function(e) {
-    switchTab(e.detail.key);
-  });
+  /* Set tabs from taxonomy */
+  (function() {
+    var tax = loadTaxonomy();
+    var tm = document.getElementById('top-tabs');
+    tm.setAttribute('tabs', buildTabsJson(tax));
+    if (tax[0]) tm.setAttribute('active', tax[0].id);
+  })();
 </script>
 
 <script>
@@ -256,19 +253,7 @@
 </div>
 
 <script>
-  var NAV_ITEMS = [
-    { label: 'Overview',      icon: 'ti-home',             group: 'Getting started' },
-    { label: 'Documentation', icon: 'ti-book',             group: 'Getting started' },
-    { label: 'Dashboard',     icon: 'ti-layout-dashboard', group: 'Product' },
-    { label: 'Analytics',     icon: 'ti-chart-bar',        group: 'Product' },
-    { label: 'Reports',       icon: 'ti-file-description', group: 'Product' },
-    { label: 'Projects',      icon: 'ti-folders',          group: 'Manage' },
-    { label: 'Team members',  icon: 'ti-users',            group: 'Manage' },
-    { label: 'Integrations',  icon: 'ti-plug-connected',   group: 'Manage' },
-    { label: 'Account',       icon: 'ti-user-circle',      group: 'Settings' },
-    { label: 'Notifications', icon: 'ti-bell',             group: 'Settings' },
-    { label: 'Security',      icon: 'ti-lock',             group: 'Settings' },
-  ];
+  var NAV_ITEMS = buildPaletteItems(loadTaxonomy());
   var _activeIdx = 0, _filtered = NAV_ITEMS.slice();
 
   function openPalette() {

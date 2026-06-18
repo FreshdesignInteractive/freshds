@@ -117,7 +117,7 @@ class FreshSidebar extends HTMLElement {
 
 /* ── fresh-nav-group ── */
 class FreshNavGroup extends HTMLElement {
-  static get observedAttributes() { return ['label', 'open', 'sidebar-collapsed']; }
+  static get observedAttributes() { return ['label', 'open', 'sidebar-collapsed', 'icon']; }
 
   constructor() {
     super();
@@ -144,6 +144,7 @@ class FreshNavGroup extends HTMLElement {
 
   _render() {
     const label     = this.getAttribute('label') || '';
+    const icon      = this.getAttribute('icon')  || '';
     const collapsed = this.hasAttribute('sidebar-collapsed');
     const showItems = collapsed || this._open;
 
@@ -158,7 +159,7 @@ class FreshNavGroup extends HTMLElement {
         .header {
           display: ${collapsed ? 'none' : 'flex'};
           align-items: center;
-          justify-content: space-between;
+          gap: 6px;
           padding: var(--space-2) var(--space-4);
           font-family: var(--font-sans);
           font-size: var(--font-size-xs);
@@ -174,6 +175,16 @@ class FreshNavGroup extends HTMLElement {
 
         .header:hover { color: var(--text-secondary); }
 
+        .group-icon {
+          font-size: 13px;
+          opacity: 0.7;
+          flex-shrink: 0;
+          text-transform: none;
+          letter-spacing: 0;
+        }
+
+        .group-label { flex: 1; }
+
         .chevron {
           font-size: var(--font-size-xs);
           transition: transform 200ms ease;
@@ -188,7 +199,8 @@ class FreshNavGroup extends HTMLElement {
       </style>
 
       <div class="header" part="header">
-        <span>${label}</span>
+        ${icon ? `<i class="ti ${icon} group-icon" aria-hidden="true"></i>` : ''}
+        <span class="group-label">${label}</span>
         <i class="ti ti-chevron-right chevron ${this._open ? 'open' : ''}" aria-hidden="true"></i>
       </div>
       <div class="items" part="items">
