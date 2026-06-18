@@ -1,9 +1,5 @@
-const fs   = require('fs');
-const path = require('path');
 const { createClient } = require('@supabase/supabase-js');
 const JSZip = require('jszip');
-
-const ROOT         = process.cwd();
 const SUPABASE_URL = process.env.SUPABASE_URL || 'https://fvfveljfslfxcxrepfid.supabase.co';
 // Publishable key — safe to embed, same value already in supabase-client.js
 const SUPABASE_ANON_KEY = 'sb_publishable_Cyts4seRFYkwB7LR_mBzKw_glcS8BTe';
@@ -374,22 +370,29 @@ async function handler(req, res) {
   const t          = Object.assign({}, DEFAULT_THEME, profile.theme_config || {});
   const root       = isFullSite ? 'FreshDS/' : 'freshds-bundle/';
 
+  // Fetch static files from the CDN (same deployment) in parallel
+  const proto   = req.headers['x-forwarded-proto'] || 'https';
+  const host    = req.headers['x-forwarded-host']  || req.headers.host;
+  const baseUrl = proto + '://' + host;
+
+  const allFiles = isFullSite ? DEVKIT_FILES.concat(FULLSITE_EXTRA_FILES) : DEVKIT_FILES;
+  const fetched  = await Promise.all(
+    allFiles.map(function(relPath) {
+      return fetch(baseUrl + '/' + relPath)
+        .then(function(r) { return r.ok ? r.text().then(function(text) { return { relPath, text }; }) : null; })
+        .catch(function() { return null; });
+    })
+  );
+
   const zip = new JSZip();
   zip.file(root + 'tokens/theme-vars.css', _generateThemeVarsCss(t));
 
-  const allFiles = isFullSite ? DEVKIT_FILES.concat(FULLSITE_EXTRA_FILES) : DEVKIT_FILES;
-  for (const relPath of allFiles) {
-    try {
-      const content = fs.readFileSync(path.join(ROOT, relPath), 'utf8');
-      if (relPath.endsWith('.html') && isFullSite) {
-        zip.file(root + relPath, _injectThemeSeed(content, t));
-      } else {
-        zip.file(root + relPath, content);
-      }
-    } catch (_) {
-      // skip missing optional files
-    }
-  }
+  fetched.forEach(function(file) {
+    if (!file) return;
+    var content = file.text;
+    if (file.relPath.endsWith('.html') && isFullSite) content = _injectThemeSeed(content, t);
+    zip.file(root + file.relPath, content);
+  });
 
   zip.file(root + 'README.md', _generateReadme(isFullSite, t));
 
