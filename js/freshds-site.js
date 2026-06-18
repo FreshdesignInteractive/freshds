@@ -321,6 +321,7 @@ function resetToDefaults() {
   ds.radiusLg     = ds.stagedRadiusLg     = DEFAULT_THEME.radiusLg;
   ds.radiusXl     = ds.stagedRadiusXl     = DEFAULT_THEME.radiusXl;
   localStorage.removeItem('freshds-theme');
+  if (typeof window.__saveToCloud === 'function') window.__saveToCloud('theme_config', null);
   pushToRoot(DEFAULT_THEME.primary, DEFAULT_THEME.secondary, DEFAULT_THEME.scaleDark, DEFAULT_THEME.scaleLight, DEFAULT_THEME.pageBg, DEFAULT_THEME.inputSurface);
   _syncConfiguratorUI();
   _updateElevPreviews();
