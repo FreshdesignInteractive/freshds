@@ -447,8 +447,8 @@ function _saveTheme() {
       radiusXl:     ds.radiusXl
     };
     localStorage.setItem('freshds-theme', JSON.stringify(themeData));
-    if (typeof window.__saveThemeToCloud === 'function') {
-      window.__saveThemeToCloud(themeData);
+    if (typeof window.__saveToCloud === 'function') {
+      window.__saveToCloud('theme_config', themeData);
     }
   } catch(e) {}
 }

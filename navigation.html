@@ -11,37 +11,30 @@
 <link rel="stylesheet" href="/styles/site-header.css">
 <script type="module" src="/js/site-header.js"></script>
 
-<!-- Supabase nav sync -->
+<!-- Supabase cloud sync: shared save hook -->
+<script type="module" src="/js/cloud-sync.js"></script>
+<!-- Nav config load: page-specific UI application -->
 <script type="module">
   import { supabase } from '/js/supabase-client.js'
 
-  window.__saveNavToCloud = async function(navData) {
-    try {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) return;
-      await supabase.from('profiles').update({ nav_cfg: navData }).eq('id', user.id);
-    } catch(e) {}
-  };
-
   (async function() {
     try {
-      const { data: { user } } = await supabase.auth.getUser();
+      const { data: authData } = await supabase.auth.getUser();
+      const user = authData?.user;
       if (!user) return;
-      const { data: profile } = await supabase
+      const { data: profile, error } = await supabase
         .from('profiles').select('nav_cfg').eq('id', user.id).single();
+      if (error) { console.error('[cloud-sync] nav load failed:', error.message, error); return; }
       if (!profile?.nav_cfg) return;
       const saved = profile.nav_cfg;
-      // Sync to localStorage so preview pages can read it without auth
       localStorage.setItem('freshds-nav-cfg', JSON.stringify(saved));
-      // Apply navbar config to UI state
       if (saved.navbar_cfg && window._nb) {
         window._nb = Object.assign(window._nb, saved.navbar_cfg);
         window._savedNb = JSON.parse(JSON.stringify(window._nb));
-        if (typeof window._buildIconGrid   === 'function') window._buildIconGrid();
+        if (typeof window._buildIconGrid    === 'function') window._buildIconGrid();
         if (typeof window._renderNbPreviews === 'function') window._renderNbPreviews();
         if (typeof window._renderLogoFields === 'function') window._renderLogoFields();
       }
-      // Apply saved layout pattern
       if (saved.nav_pattern) {
         window._savedNav    = saved.nav_pattern;
         window._selectedNav = saved.nav_pattern;
@@ -50,7 +43,7 @@
         });
       }
       if (typeof window._syncButtons === 'function') window._syncButtons();
-    } catch(e) {}
+    } catch(e) { console.error('[cloud-sync] nav load error:', e); }
   })();
 </script>
 
@@ -959,7 +952,7 @@
     _syncButtons();
     var navData = { nav_pattern: _savedNav, navbar_cfg: _savedNb };
     localStorage.setItem('freshds-nav-cfg', JSON.stringify(navData));
-    if (typeof window.__saveNavToCloud === 'function') window.__saveNavToCloud(navData);
+    if (typeof window.__saveToCloud === 'function') window.__saveToCloud('nav_cfg', navData);
     showToast('Navigation saved');
   }
 
