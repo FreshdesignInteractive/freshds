@@ -1,21 +1,20 @@
-import { supabase } from '/js/supabase-client.js';
+// site-header.js — no top-level Supabase import so header injection
+// always runs even if the ESM CDN is slow or stale after long inactivity.
 
 const path = window.location.pathname;
 const isActive = (page) => {
-  if (page === 'dashboard') return path.includes('dashboard') || path === '/' || path === '/index.html';
-  if (page === 'theme') return path.includes('theme.html');
-  if (page === 'navigation') return path.includes('navigation.html');
-  if (page === 'components') return path.includes('app');
-  if (page === 'patterns') return path.includes('patterns');
+  if (page === 'dashboard')   return path.includes('dashboard') || path === '/' || path === '/index.html';
+  if (page === 'theme')       return path.includes('theme.html');
+  if (page === 'navigation')  return path.includes('navigation.html');
+  if (page === 'components')  return path.includes('app');
+  if (page === 'patterns')    return path.includes('patterns');
   return false;
 };
 
-// Paid-required tabs default to locked until profile confirms has_paid
 function tab(key, label, href, locked) {
   const active = isActive(key);
   const lockIcon = locked ? '<i class="ti ti-lock sh-tab-lock"></i>' : '';
   const cls = ['sh-tab', active ? 'sh-tab-active' : '', locked ? 'sh-tab-locked' : ''].filter(Boolean).join(' ');
-  // Locked tabs go to dashboard on click
   const dest = locked ? '/dashboard.html' : href;
   return `<a class="sh-tab-wrap" href="${dest}" data-key="${key}" data-real-href="${href}">`
        + `<span class="${cls}">${label}${lockIcon}</span></a>`;
@@ -27,11 +26,11 @@ const headerHTML = `<header class="site-header" id="site-header">
     <img class="sh-logo-emblem" src="/assets/freshdesign-emblem.svg" alt="Freshdesign" height="30">
   </a>
   <nav class="sh-nav">
-    ${tab('dashboard',    'Dashboard',       '/dashboard.html', false)}
-    ${tab('theme',        'Theme',            '/theme.html', true)}
-    ${tab('navigation',   'Navigation',      '/navigation.html', true)}
-    ${tab('components',   'Components',      '/app.html', true)}
-    ${tab('patterns',     'Pattern Library', '/patterns.html', true)}
+    ${tab('dashboard',  'Dashboard',       '/dashboard.html', false)}
+    ${tab('theme',      'Theme',           '/theme.html', true)}
+    ${tab('navigation', 'Navigation',      '/navigation.html', true)}
+    ${tab('components', 'Components',      '/app.html', true)}
+    ${tab('patterns',   'Pattern Library', '/patterns.html', true)}
   </nav>
   <div class="sh-right">
     <div class="sh-av-wrap" id="sh-av-wrap">
@@ -46,6 +45,7 @@ const headerHTML = `<header class="site-header" id="site-header">
   </div>
 </header>`;
 
+// ── Inject header immediately (synchronous, no Supabase needed) ──
 const mount = document.getElementById('sh-mount');
 if (mount) {
   mount.outerHTML = headerHTML;
@@ -53,12 +53,7 @@ if (mount) {
   document.body.insertAdjacentHTML('afterbegin', headerHTML);
 }
 
-window.__shSignOut = async function() {
-  try { localStorage.removeItem('freshds-theme'); } catch(e) {}
-  await supabase.auth.signOut();
-  window.location.replace('/');
-};
-
+// ── Global header actions ────────────────────────────────────────
 window.__shToggle = function() {
   const dd = document.getElementById('sh-av-dd');
   if (dd) dd.classList.toggle('open');
@@ -72,11 +67,22 @@ document.addEventListener('click', function(e) {
   }
 });
 
-// Single profile fetch — avatar + payment status
+window.__shSignOut = async function() {
+  try { localStorage.removeItem('freshds-theme'); } catch(e) {}
+  try {
+    const { supabase } = await import('/js/supabase-client.js');
+    await supabase.auth.signOut();
+  } catch(e) {}
+  window.location.replace('/');
+};
+
+// ── Load user profile async — Supabase failure stays isolated ───
 (async function() {
   try {
+    const { supabase } = await import('/js/supabase-client.js');
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) return;
+
     const { data: p } = await supabase
       .from('profiles')
       .select('full_name, avatar_url, has_paid')
@@ -112,5 +118,7 @@ document.addEventListener('click', function(e) {
         }
       });
     }
-  } catch(e) {}
+  } catch(e) {
+    // Supabase unavailable — header still rendered, just no avatar/unlock
+  }
 })();
