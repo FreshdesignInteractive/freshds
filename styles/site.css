@@ -72,7 +72,7 @@
 }
 
 body {
-  font-family: var(--font-sans);
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
   background: var(--bg);
   color: var(--text-primary);
   min-height: 100dvh;
@@ -162,7 +162,7 @@ body {
   border: 1.5px solid var(--border);
   border-radius: var(--radius-pill);
   background: var(--card);
-  font-family: var(--font-sans);
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
   font-size: 13px;
   font-weight: 500;
   color: var(--text-primary);
@@ -184,7 +184,7 @@ body {
   border: none;
   border-radius: var(--radius-pill);
   background: transparent;
-  font-family: var(--font-sans);
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
   font-size: 13px;
   font-weight: 500;
   color: var(--text-secondary);
@@ -202,7 +202,7 @@ body {
   border: none;
   border-radius: var(--radius-pill);
   background: var(--purple);
-  font-family: var(--font-sans);
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
   font-size: 13px;
   font-weight: 600;
   color: #fff;
@@ -219,7 +219,7 @@ body {
   border: 1.5px solid var(--border);
   border-radius: 10px;
   background: var(--card);
-  font-family: var(--font-sans);
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
   font-size: 13px;
   color: var(--text-primary);
   outline: none;
@@ -287,7 +287,7 @@ body {
   cursor: pointer;
   border-radius: 8px;
   transition: background 0.12s;
-  font-family: var(--font-sans);
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
 }
 .site-dropdown-item:hover { background: var(--bg); }
 
