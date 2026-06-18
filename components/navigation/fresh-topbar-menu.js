@@ -7,7 +7,7 @@
 
    Usage:
      <fresh-topbar-menu
-       tabs='[{"key":"overview","label":"Overview"},{"key":"activity","label":"Activity"}]'
+       tabs='[{"key":"overview","label":"Overview"},{"key":"activity","label":"Activity","children":[{"key":"a1","label":"Sub item"}]}]'
        active="overview">
      </fresh-topbar-menu>
 
@@ -18,7 +18,9 @@
      </script>
 
    Attributes:
-     tabs    JSON array of { key, label, disabled? }
+     tabs    JSON array of { key, label, disabled?, children? }
+             When children is a non-empty array, a chevron-down indicator
+             is shown on the right side of that tab.
      active  string, key of the active tab
      size    sm | md | lg   (default: md)
 
@@ -65,22 +67,29 @@ class FreshTopbarMenu extends HTMLElement {
     const radius = { sm: 'var(--radius-sm)', md: 'var(--radius-md)', lg: 'var(--radius-lg)' };
 
     const items = tabs.map(t => {
-      const isActive   = t.key === active;
-      const isDisabled = t.disabled;
+      const isActive      = t.key === active;
+      const isDisabled    = t.disabled;
+      const hasChildren   = Array.isArray(t.children) && t.children.length > 0;
+      const chevron       = hasChildren
+        ? `<i class="ti ti-chevron-down tab-chevron" aria-hidden="true"></i>`
+        : '';
       return `
         <button
           class="tab${isActive ? ' active' : ''}${isDisabled ? ' disabled' : ''}"
           data-key="${t.key}"
+          data-has-children="${hasChildren ? '1' : '0'}"
           role="tab"
           aria-selected="${isActive}"
+          aria-haspopup="${hasChildren ? 'true' : 'false'}"
           ${isDisabled ? 'disabled' : ''}
           part="tab${isActive ? ' tab-active' : ''}"
-        >${t.label}</button>
+        >${t.label}${chevron}</button>
       `;
     }).join('');
 
     this.shadowRoot.innerHTML = `
       <style>
+        @import url('https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css');
         *, *::before, *::after { box-sizing: border-box; }
         :host { display: block; }
 
@@ -95,6 +104,7 @@ class FreshTopbarMenu extends HTMLElement {
           display: inline-flex;
           align-items: center;
           justify-content: center;
+          gap: 4px;
           padding: ${py[size]} ${px[size]};
           font-family: var(--font-sans);
           font-size: ${fsize[size]};
@@ -128,6 +138,16 @@ class FreshTopbarMenu extends HTMLElement {
         .tab:focus-visible {
           outline: 2px solid var(--color-interactive);
           outline-offset: 2px;
+        }
+
+        .tab-chevron {
+          font-size: 12px;
+          opacity: 0.6;
+          transition: transform 150ms ease, opacity 150ms ease;
+        }
+
+        .tab.active .tab-chevron {
+          opacity: 1;
         }
       </style>
 

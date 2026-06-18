@@ -96,7 +96,13 @@ function buildSidebarHtml(tax) {
 /* Top-nav tabs: primary items become tab objects for fresh-topbar-menu */
 function buildTabsJson(tax) {
   return JSON.stringify((tax || []).map(function(item) {
-    return { key: item.id, label: item.label || 'Section' };
+    var obj = { key: item.id, label: item.label || 'Section' };
+    if (item.children && item.children.length > 0) {
+      obj.children = item.children.map(function(c) {
+        return { key: c.id, label: c.label };
+      });
+    }
+    return obj;
   }));
 }
 
