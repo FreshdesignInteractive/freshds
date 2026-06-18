@@ -1,7 +1,10 @@
 {
   "functions": {
-    "api/*.js": {
-      "maxDuration": 30
+    "api/create-checkout.js":  { "maxDuration": 30 },
+    "api/stripe-webhook.js":   { "maxDuration": 30 },
+    "api/export.js": {
+      "maxDuration": 60,
+      "includeFiles": "tokens/**,styles/**,components/**,js/freshds.js,js/freshds-site.js,js/pattern-bar.js,js/pattern-topbar-v2.js,patterns/**,components.html,patterns.html,favicon.svg,CLAUDE.md"
     }
   },
   "redirects": [
