@@ -122,6 +122,8 @@
           <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Listen to the <code>change</code> event to update the page view or URL. <code>fresh-topbar-menu</code> does not manage panel visibility itself.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
           <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true"><code>fresh-topbar-menu</code> does not support <code>badge</code>. If badge counts are needed on the tabs, use <code>fresh-tabs</code> instead.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
           <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Size should match the surrounding UI density: sm for compact toolbars, md for standard content pages, lg for marketing or landing page navigation.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">When tabs have secondary children (a two-level taxonomy), wire up a dropdown sub-nav at the page level: intercept the native <code>click</code> event on the component host to capture the click X position, then compare the <code>active</code> attribute before and after to detect which tab was selected. Show a <code>position:fixed</code> dropdown below the tab strip centred on the click position. The <code>change</code> event is not suitable for this because it does not fire on re-clicks of the already-active tab.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Tabs with no secondary children should not show a dropdown. Suppress the dropdown and let the tab behave as a plain section switch.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
         </ul>
         <button class="spec-add-rule" onclick="addRule('rules-general')"><i class="ti ti-plus"></i> Add rule</button>
       </div>
@@ -214,6 +216,87 @@
   ]'</span>
   <span class="hl-attr">active</span><span class="hl-pun">=</span><span class="hl-val">"features"</span><span class="hl-pun">&gt;</span>
 <span class="hl-pun">&lt;/</span><span class="hl-tag">fresh-topbar-menu</span><span class="hl-pun">&gt;</span></div>
+        </div>
+
+        <div class="code-block" data-code="&lt;!-- Dropdown sub-nav for tabs with secondary children --&gt;
+&lt;fresh-topbar-menu id=&quot;top-tabs&quot;
+  tabs='[
+    {&quot;key&quot;:&quot;home&quot;,&quot;label&quot;:&quot;Home&quot;},
+    {&quot;key&quot;:&quot;work&quot;,&quot;label&quot;:&quot;Work&quot;},
+    {&quot;key&quot;:&quot;settings&quot;,&quot;label&quot;:&quot;Settings&quot;}
+  ]'
+  active=&quot;home&quot;&gt;
+&lt;/fresh-topbar-menu&gt;
+&lt;div id=&quot;tab-dropdown&quot; style=&quot;position:fixed;display:none;&quot;&gt;&lt;/div&gt;
+
+&lt;script&gt;
+  var CHILDREN = {
+    work:     ['My tasks', 'Projects', 'Calendar'],
+    settings: ['Account', 'Security', 'Billing']
+  };
+  var tabs = document.getElementById('top-tabs');
+  var drop = document.getElementById('tab-dropdown');
+  var prevActive = tabs.getAttribute('active');
+  var openKey = null, clickX = 0;
+
+  function closeDrop() { openKey = null; drop.style.display = 'none'; }
+
+  function openDrop(key, x) {
+    var kids = CHILDREN[key];
+    if (!kids || kids.length === 0) { closeDrop(); return; }
+    openKey = key;
+    drop.innerHTML = kids.map(k =&gt; '&lt;div&gt;' + k + '&lt;/div&gt;').join('');
+    drop.style.display = 'block';
+    drop.style.top = '96px';
+    drop.style.left = (x - 80) + 'px';
+  }
+
+  tabs.addEventListener('click', e =&gt; {
+    clickX = e.clientX;
+    e.stopPropagation();
+    var activeNow = tabs.getAttribute('active');
+    if (activeNow !== prevActive) { prevActive = activeNow; openDrop(activeNow, clickX); }
+    else { openKey === activeNow ? closeDrop() : openDrop(activeNow, clickX); }
+  });
+  document.addEventListener('click', closeDrop);
+&lt;/script&gt;">
+          <div class="code-block-header"><span><span class="code-lang">HTML</span><span class="code-context">Dropdown sub-nav for secondary children</span></span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+          <div class="code-body"><span class="hl-com">&lt;!-- Dropdown sub-nav for tabs with secondary children --&gt;</span>
+<span class="hl-pun">&lt;</span><span class="hl-tag">fresh-topbar-menu</span> <span class="hl-attr">id</span><span class="hl-pun">=</span><span class="hl-val">"top-tabs"</span>
+  <span class="hl-attr">tabs</span><span class="hl-pun">=</span><span class="hl-val">'[
+    {"key":"home","label":"Home"},
+    {"key":"work","label":"Work"},
+    {"key":"settings","label":"Settings"}
+  ]'</span>
+  <span class="hl-attr">active</span><span class="hl-pun">=</span><span class="hl-val">"home"</span><span class="hl-pun">&gt;</span>
+<span class="hl-pun">&lt;/</span><span class="hl-tag">fresh-topbar-menu</span><span class="hl-pun">&gt;</span>
+<span class="hl-pun">&lt;</span><span class="hl-tag">div</span> <span class="hl-attr">id</span><span class="hl-pun">=</span><span class="hl-val">"tab-dropdown"</span> <span class="hl-attr">style</span><span class="hl-pun">=</span><span class="hl-val">"position:fixed;display:none;"</span><span class="hl-pun">&gt;&lt;/</span><span class="hl-tag">div</span><span class="hl-pun">&gt;</span>
+
+<span class="hl-pun">&lt;</span><span class="hl-tag">script</span><span class="hl-pun">&gt;</span>
+  <span class="hl-com">/* Shadow button runs _select() synchronously — active attr is</span>
+<span class="hl-com">     already updated by the time the host click listener fires.  */</span>
+  <span class="hl-txt">var CHILDREN = {</span>
+    <span class="hl-txt">work:     ['My tasks', 'Projects', 'Calendar'],</span>
+    <span class="hl-txt">settings: ['Account', 'Security', 'Billing']</span>
+  <span class="hl-txt">};</span>
+  <span class="hl-txt">var tabs = document.getElementById('top-tabs');</span>
+  <span class="hl-txt">var drop = document.getElementById('tab-dropdown');</span>
+  <span class="hl-txt">var prevActive = tabs.getAttribute('active'), openKey = null, clickX = 0;</span>
+
+  <span class="hl-txt">function closeDrop() { openKey = null; drop.style.display = 'none'; }</span>
+  <span class="hl-txt">function openDrop(key, x) {</span>
+    <span class="hl-txt">var kids = CHILDREN[key]; if (!kids) { closeDrop(); return; }</span>
+    <span class="hl-txt">openKey = key; drop.innerHTML = kids.map(k =&gt; '&lt;div&gt;' + k + '&lt;/div&gt;').join('');</span>
+    <span class="hl-txt">drop.style.cssText = 'position:fixed;display:block;top:96px;left:' + (x-80) + 'px';</span>
+  <span class="hl-txt">}</span>
+  <span class="hl-txt">tabs.addEventListener('click', e =&gt; {</span>
+    <span class="hl-txt">clickX = e.clientX; e.stopPropagation();</span>
+    <span class="hl-txt">var now = tabs.getAttribute('active');</span>
+    <span class="hl-txt">if (now !== prevActive) { prevActive = now; openDrop(now, clickX); }</span>
+    <span class="hl-txt">else { openKey === now ? closeDrop() : openDrop(now, clickX); }</span>
+  <span class="hl-txt">});</span>
+  <span class="hl-txt">document.addEventListener('click', closeDrop);</span>
+<span class="hl-pun">&lt;/</span><span class="hl-tag">script</span><span class="hl-pun">&gt;</span></div>
         </div>
 
         <div class="code-block" data-code="&lt;!-- Programmatic control --&gt;
