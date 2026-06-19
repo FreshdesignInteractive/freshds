@@ -15,10 +15,14 @@
 <link rel="stylesheet" href="../styles/reset.css">
 <link rel="stylesheet" href="../styles/patterns/auth.css">
 <script>if(location.href.indexOf('?thumb')!==-1)document.write('<style>#demo-bar{display:none!important}</style>');</script>
-<script src="../js/pattern-topbar.js"></script>
 <script src="../js/freshds.js"></script>
 <script src="../js/pattern-bar.js"></script>
 <style>
+/* Logo dark/light switching for nav brand slot (slotted content = light DOM) */
+.nav-logo-dark { display: none; }
+[data-mode="dark"] .nav-logo-light { display: none; }
+[data-mode="dark"] .nav-logo-dark  { display: block; }
+
 /* ── Spec trigger button (in demo bar) ── */
 .demo-spec-btn {
   display: inline-flex;
@@ -431,8 +435,12 @@
   </div>
 
   <div class="auth-page">
-    <pattern-topbar>
-    </pattern-topbar>
+    <fresh-navbar id="auth-topbar">
+      <div slot="actions" style="display:flex;align-items:center;gap:8px;">
+        <fresh-button variant="secondary" size="sm">Sign in</fresh-button>
+        <fresh-button variant="primary" size="sm">Sign up</fresh-button>
+      </div>
+    </fresh-navbar>
 
     <div class="auth-body">
       <div class="auth-left" aria-hidden="true">
@@ -532,9 +540,51 @@
   </div>
 </div>
 
+<script src="../components/navigation/fresh-navbar.js"></script>
 <script src="../components/core/fresh-input.js"></script>
 <script src="../components/core/fresh-checkbox.js"></script>
 <script src="../components/core/fresh-button.js"></script>
+<script>
+/* ── Apply navigation config from freshds-nav-cfg ─────────── */
+function _applyNavCfg() {
+  var cfg = { logoUrl: '', logoUrlDark: '' };
+  try {
+    var s = localStorage.getItem('freshds-nav-cfg');
+    if (s) {
+      var stored = JSON.parse(s);
+      cfg = Object.assign(cfg, stored.navbar_cfg || stored);
+    }
+  } catch(e) {}
+
+  var navbar = document.getElementById('auth-topbar');
+  if (!navbar) return;
+
+  navbar.querySelectorAll('[slot="brand"]').forEach(function(el) { el.remove(); });
+
+  var effLight = cfg.logoUrl    || cfg.logoUrlDark;
+  var effDark  = cfg.logoUrlDark || cfg.logoUrl;
+
+  if (effLight || effDark) {
+    var brandDiv = document.createElement('div');
+    brandDiv.setAttribute('slot', 'brand');
+    if (effLight === effDark) {
+      brandDiv.innerHTML = '<img src="' + effLight.replace(/"/g, '&quot;') + '" alt="Logo" style="height:24px;max-width:140px;object-fit:contain">';
+    } else {
+      brandDiv.innerHTML =
+        '<img class="nav-logo-light" src="' + effLight.replace(/"/g, '&quot;') + '" alt="Logo" style="height:24px;max-width:140px;object-fit:contain">' +
+        '<img class="nav-logo-dark"  src="' + effDark.replace(/"/g,  '&quot;') + '" alt="Logo" style="height:24px;max-width:140px;object-fit:contain">';
+    }
+    navbar.insertBefore(brandDiv, navbar.firstChild);
+  }
+}
+
+_applyNavCfg();
+
+/* Reflect live changes made in navigation.html without a page reload */
+window.addEventListener('storage', function(e) {
+  if (e.key === 'freshds-nav-cfg') _applyNavCfg();
+});
+</script>
 <script>
 /* ── Spec panel data ─────────────────────────────────────── */
 
