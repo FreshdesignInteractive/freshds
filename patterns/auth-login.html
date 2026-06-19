@@ -34,7 +34,7 @@
 .auth-divider::before,
 .auth-divider::after { content: ''; flex: 1; height: 1px; background: var(--surface-border); }
 .auth-divider span { font-size: var(--font-size-sm); color: var(--text-tertiary); white-space: nowrap; }
-.auth-social-btns { display: flex; flex-direction: column; gap: var(--space-3); }
+.auth-social-btns { display: flex; flex-direction: row; gap: var(--space-3); }
 
 /* ── Spec trigger button (in demo bar) ── */
 .demo-spec-btn {
@@ -491,8 +491,8 @@
             <div class="auth-social" id="auth-social" style="display:none">
               <div class="auth-divider"><span>or continue with</span></div>
               <div class="auth-social-btns">
-                <fresh-button variant="secondary" style="width:100%;display:block"><i class="ti ti-brand-google"></i> Google</fresh-button>
-                <fresh-button variant="secondary" style="width:100%;display:block"><i class="ti ti-brand-github"></i> GitHub</fresh-button>
+                <fresh-button variant="secondary" style="flex:1;display:block"><i class="ti ti-brand-google"></i> Google</fresh-button>
+                <fresh-button variant="secondary" style="flex:1;display:block"><i class="ti ti-brand-github"></i> GitHub</fresh-button>
               </div>
             </div>
           </div>
