@@ -8,8 +8,6 @@
 <!-- Auth guard -->
 <script type="module" src="/js/auth-guard.js"></script>
 <script type="module" src="/js/paid-guard.js"></script>
-<link rel="stylesheet" href="/styles/site-header.css">
-<script type="module" src="/js/site-header.js"></script>
 <script type="module" src="/js/cloud-sync.js"></script>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -225,6 +223,11 @@
     transition: opacity 300ms ease;
   }
   .pl-thumb-frame.loaded { opacity: 1; }
+
+  /* ── Navbar logo dark/light switching ── */
+  .pl-nav-logo-dark  { display: none; }
+  [data-mode="dark"] .pl-nav-logo-light { display: none; }
+  [data-mode="dark"] .pl-nav-logo-dark  { display: block; }
 
   /* ── Spec-trigger wrapper (cards that open the builder) ── */
   .pl-spec-trigger { cursor: pointer; display: contents; }
@@ -463,7 +466,13 @@
 <body>
 <div class="fds-app" id="app">
 
-  <div id="sh-mount"></div>
+  <fresh-navbar id="pl-navbar">
+    <div slot="brand" id="pl-nav-brand"></div>
+    <div slot="actions" style="display:flex;align-items:center;gap:var(--space-2)">
+      <fresh-button variant="secondary" size="sm">Sign in</fresh-button>
+      <fresh-button variant="primary" size="sm">Sign up</fresh-button>
+    </div>
+  </fresh-navbar>
 
   <!-- PATTERN LIBRARY BODY -->
   <div class="pl-body">
@@ -545,6 +554,7 @@
 </div>
 
 <!-- Component scripts -->
+<script src="components/navigation/fresh-navbar.js"></script>
 <script src="components/core/fresh-button.js"></script>
 <script src="components/navigation/fresh-topbar-menu.js"></script>
 <script src="components/core/fresh-input.js"></script>
@@ -1283,6 +1293,23 @@
   });
 
   _renderGrid();
+
+  // ── Apply configured logo to the navbar ─────────────────────────
+  (function() {
+    var cfg = {};
+    try {
+      var s = localStorage.getItem('freshds-nav-cfg');
+      if (s) { var stored = JSON.parse(s); cfg = stored.navbar_cfg || stored; }
+    } catch(e) {}
+    var effLight = cfg.logoUrl     || cfg.logoUrlDark || '';
+    var effDark  = cfg.logoUrlDark || cfg.logoUrl     || '';
+    var brandDiv = document.getElementById('pl-nav-brand');
+    if (!brandDiv || (!effLight && !effDark)) return;
+    brandDiv.innerHTML = (effLight === effDark || !effDark)
+      ? '<img src="' + effLight + '" alt="Logo" style="height:24px;max-width:140px;object-fit:contain">'
+      : '<img class="pl-nav-logo-light" src="' + effLight + '" alt="Logo" style="height:24px;max-width:140px;object-fit:contain">'
+        + '<img class="pl-nav-logo-dark" src="' + effDark + '" alt="Logo" style="height:24px;max-width:140px;object-fit:contain">';
+  })();
 </script>
 </body>
 </html>
