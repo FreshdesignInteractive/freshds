@@ -23,6 +23,19 @@
 [data-mode="dark"] .nav-logo-light { display: none; }
 [data-mode="dark"] .nav-logo-dark  { display: block; }
 
+/* Social login section */
+.auth-social { margin-top: var(--space-5); }
+.auth-divider {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+}
+.auth-divider::before,
+.auth-divider::after { content: ''; flex: 1; height: 1px; background: var(--surface-border); }
+.auth-divider span { font-size: var(--font-size-sm); color: var(--text-tertiary); white-space: nowrap; }
+.auth-social-btns { display: flex; flex-direction: column; gap: var(--space-3); }
+
 /* ── Spec trigger button (in demo bar) ── */
 .demo-spec-btn {
   display: inline-flex;
@@ -321,6 +334,7 @@
 }
 .sp-btn i { font-size: 12px; }
 .sp-btn:hover { background: #1e2438; color: #e8ecf4; border-color: #3a4160; }
+.sp-btn-icon { width: 34px; height: 34px; padding: 0; justify-content: center; flex-shrink: 0; }
 .sp-btn-primary {
   margin-left: auto;
   background: #6c63ff;
@@ -473,6 +487,14 @@
             </div>
 
             <fresh-button>Login</fresh-button>
+
+            <div class="auth-social" id="auth-social" style="display:none">
+              <div class="auth-divider"><span>or continue with</span></div>
+              <div class="auth-social-btns">
+                <fresh-button variant="secondary" style="width:100%;display:block"><i class="ti ti-brand-google"></i> Google</fresh-button>
+                <fresh-button variant="secondary" style="width:100%;display:block"><i class="ti ti-brand-github"></i> GitHub</fresh-button>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -509,11 +531,8 @@
     </div>
   </div>
   <div class="sp-bottom">
-    <button class="sp-btn" onclick="spClose()">
-      <i class="ti ti-x"></i> Close spec
-    </button>
-    <button class="sp-btn" id="sp-share-btn" onclick="spShare()">
-      <i class="ti ti-share-2"></i> Share builder link
+    <button class="sp-btn sp-btn-icon" id="sp-share-btn" onclick="spShare()" title="Share builder link" aria-label="Share builder link">
+      <i class="ti ti-link"></i>
     </button>
     <button class="sp-btn sp-btn-primary" onclick="spStartBuilding()">
       Start building <i class="ti ti-arrow-right"></i>
@@ -586,23 +605,38 @@ window.addEventListener('storage', function(e) {
 });
 </script>
 <script>
+/* ── Zone toggle functions ───────────────────────────────── */
+
+function _zoneBrandPanel(on) {
+  var left = document.querySelector('.auth-left');
+  if (left) left.style.display = on ? '' : 'none';
+}
+
+function _zoneSocialLogin(on) {
+  var el = document.getElementById('auth-social');
+  if (el) el.style.display = on ? '' : 'none';
+}
+
+function _zoneHelperLinks(on) {
+  var link = document.querySelector('.auth-options .auth-link');
+  if (link) link.style.display = on ? '' : 'none';
+}
+
 /* ── Spec panel data ─────────────────────────────────────── */
 
 var SP_ZONES = [
-  { id: 'brand-panel',  name: 'Brand Panel',         required: false, on: true  },
-  { id: 'logo-name',    name: 'Logo / Product Name',  required: false, on: false },
-  { id: 'signin-form',  name: 'Sign-in Form',         required: true,  on: true  },
-  { id: 'social-login', name: 'Social Login',         required: false, on: false },
-  { id: 'helper-links', name: 'Helper Links',         required: false, on: true  },
-  { id: 'signup-link',  name: 'Sign-up Link',         required: false, on: true  }
+  { id: 'brand-panel',  name: 'Brand Panel',  required: false, on: true,  onToggle: _zoneBrandPanel  },
+  { id: 'social-login', name: 'Social Login', required: false, on: false, onToggle: _zoneSocialLogin },
+  { id: 'helper-links', name: 'Helper Links', required: false, on: true,  onToggle: _zoneHelperLinks }
 ];
 
-var SP_ZONE_COLORS = ['#e85454','#f97316','#6c63ff','#22c55e','#06b6d4','#a78bfa'];
+var SP_ZONE_COLORS = ['#e85454','#22c55e','#06b6d4'];
 
 var SP_RULES = {
   'LAYOUT': [
     'Form container max-width is 380px, centered vertically in the right panel.',
-    'Left brand panel is 50% viewport width and hidden below 768px.'
+    'Brand panel is 50% viewport width. Disable it to give the form full-page width.',
+    'Brand panel is always hidden below 768px regardless of zone setting.'
   ],
   'FORM BEHAVIOUR': [
     'Validate fields on blur, not on submit, to surface errors early.',
@@ -612,19 +646,24 @@ var SP_RULES = {
     'Never display the email address in validation error messages.',
     'Show a generic "incorrect credentials" message, never confirm which field failed.'
   ],
-  'NAVIGATION': [
-    'Forgot password links to the reset flow, never to a help article.',
-    'Sign-up link at the footer takes users to the registration page.'
+  'SOCIAL AUTH': [
+    'Social login buttons appear below the primary form, separated by an "or continue with" divider.',
+    'Order: Google first, then GitHub. Match order to provider priority in your auth stack.'
   ]
 };
 
 /* ── Open / close ────────────────────────────────────────── */
+
+function _spApplyAllZones() {
+  SP_ZONES.forEach(function(z) { if (z.onToggle) z.onToggle(z.on); });
+}
 
 function spOpen() {
   document.getElementById('sp-panel').classList.add('open');
   document.getElementById('sp-panel').setAttribute('aria-hidden', 'false');
   _spRenderZones();
   _spRenderCats();
+  _spApplyAllZones();
   var u = new URL(location.href);
   u.searchParams.set('spec', 'open');
   history.replaceState(null, '', u.toString());
@@ -667,6 +706,7 @@ function _spRenderZones() {
       (function(zone) {
         row.querySelector('input[type="checkbox"]').addEventListener('change', function(e) {
           zone.on = e.target.checked;
+          if (zone.onToggle) zone.onToggle(zone.on);
         });
       })(z);
     }
