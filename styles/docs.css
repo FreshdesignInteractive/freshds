@@ -845,20 +845,16 @@ input[type="color"].color-picker:disabled { opacity: 1; cursor: not-allowed; }
 }
 
 /* ── AI Rules panel ──────────────────────────────────────────────────────────
-   Permitted exception: #f4f2ff / #ddd8ff are docs-only lavender tints for the
-   AI rules panel background, not part of the DS token system, never exported.
-   Dark overrides use rgba so they remain semi-transparent over any dark surface.
+   Permitted exception: panel is intentionally always-dark (not mode-adaptive)
+   to signal "machine-readable spec". Raw hex values here are docs-only and
+   never exported to the DS bundle.
    ─────────────────────────────────────────────────────────────────────────── */
 .spec-rules-panel {
-  background: #f4f2ff;
-  border: 1px solid #ddd8ff;
+  background: #15132b;
+  border: 1px solid #28255a;
   border-radius: var(--radius-lg);
   overflow: hidden;
   margin-bottom: var(--space-5);
-}
-[data-mode="dark"] .spec-rules-panel {
-  background: rgba(85, 80, 232, 0.07);
-  border-color: rgba(85, 80, 232, 0.18);
 }
 
 .spec-rules-topbar {
@@ -866,28 +862,26 @@ input[type="color"].color-picker:disabled { opacity: 1; cursor: not-allowed; }
   align-items: center;
   justify-content: space-between;
   padding: var(--space-3) var(--space-5);
-  border-bottom: 1px solid #ddd8ff;
+  border-bottom: 1px solid #28255a;
 }
-[data-mode="dark"] .spec-rules-topbar { border-bottom-color: rgba(85, 80, 232, 0.18); }
 
 .spec-rules-title {
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: #5550e8;
+  color: #8480f2;
 }
 
 .spec-rules-hint {
   font-size: 11px;
-  color: var(--text-tertiary);
+  color: #5a5880;
 }
 
 .spec-rules-section {
   padding: var(--space-4) var(--space-5);
-  border-bottom: 1px solid #ddd8ff;
+  border-bottom: 1px solid #221f48;
 }
-[data-mode="dark"] .spec-rules-section { border-bottom-color: rgba(85, 80, 232, 0.15); }
 .spec-rules-section:last-child { border-bottom: none; }
 
 .spec-rules-section-head {
@@ -902,7 +896,7 @@ input[type="color"].color-picker:disabled { opacity: 1; cursor: not-allowed; }
   font-weight: 700;
   letter-spacing: 0.07em;
   text-transform: uppercase;
-  color: var(--text-primary);
+  color: #c8c5f5;
 }
 
 .spec-rule-list { list-style: none; padding: 0; margin: 0; }
@@ -915,10 +909,10 @@ input[type="color"].color-picker:disabled { opacity: 1; cursor: not-allowed; }
   border-radius: var(--radius-sm);
   margin: 0 calc(-1 * var(--space-2));
 }
-.spec-rule-li:hover { background: rgba(85, 80, 232, 0.06); }
+.spec-rule-li:hover { background: rgba(100, 96, 200, 0.12); }
 
 .spec-rule-bullet {
-  color: var(--text-tertiary);
+  color: #5550c8;
   flex-shrink: 0;
   font-size: 14px;
   line-height: 1.5;
@@ -927,19 +921,18 @@ input[type="color"].color-picker:disabled { opacity: 1; cursor: not-allowed; }
 
 .spec-rule-text {
   font-size: 13px;
-  color: var(--text-primary);
+  color: #dddcf8;
   line-height: 1.5;
   flex: 1;
   outline: none;
   min-width: 0;
 }
 .spec-rule-text:focus {
-  background: rgba(255, 255, 255, 0.55);
+  background: rgba(255, 255, 255, 0.08);
   border-radius: 2px;
   padding: 0 3px;
   margin: 0 -3px;
 }
-[data-mode="dark"] .spec-rule-text:focus { background: rgba(255, 255, 255, 0.07); }
 
 .spec-rule-actions {
   display: none;
@@ -961,8 +954,8 @@ input[type="color"].color-picker:disabled { opacity: 1; cursor: not-allowed; }
   font-size: 12px;
   transition: background 0.1s, color 0.1s;
 }
-.spec-rule-btn:hover { background: rgba(85, 80, 232, 0.12); color: #5550e8; }
-.spec-rule-btn.del:hover { background: var(--color-danger-subtle); color: var(--color-danger); }
+.spec-rule-btn:hover { background: rgba(100, 96, 200, 0.18); color: #9896f5; }
+.spec-rule-btn.del:hover { background: rgba(244, 63, 94, 0.18); color: #f87096; }
 
 .spec-add-rule {
   all: unset;
@@ -972,15 +965,35 @@ input[type="color"].color-picker:disabled { opacity: 1; cursor: not-allowed; }
   gap: 5px;
   font-size: 11px;
   font-weight: 500;
-  color: #5550e8;
+  color: #7a77f0;
   padding: 3px 10px;
-  border: 1.5px dashed #c8c0ff;
+  border: 1.5px dashed #34316a;
   border-radius: var(--radius-sm);
   cursor: pointer;
   margin-top: var(--space-2);
   transition: background 0.1s;
 }
-.spec-add-rule:hover { background: rgba(85, 80, 232, 0.06); }
+.spec-add-rule:hover { background: rgba(100, 96, 200, 0.12); }
+
+/* attr chip and reset button overrides inside the always-dark spec panel */
+.spec-rules-panel .spec-attr-chip {
+  background: #262356;
+  color: #9896f5;
+  border-color: #3a3770;
+}
+
+.spec-rules-reset {
+  all: unset;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  color: #5a5880;
+  cursor: pointer;
+  transition: color 0.1s;
+}
+.spec-rules-reset:hover { color: #8480f2; }
 
 /* Accessibility table */
 .spec-a11y-table { width: 100%; border-collapse: collapse; }
