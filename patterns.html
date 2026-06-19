@@ -225,6 +225,239 @@
     transition: opacity 300ms ease;
   }
   .pl-thumb-frame.loaded { opacity: 1; }
+
+  /* ── Spec-trigger wrapper (cards that open the builder) ── */
+  .pl-spec-trigger { cursor: pointer; display: contents; }
+
+  /* ── Pattern Builder overlay ── */
+  .pb-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 900;
+    display: flex;
+    flex-direction: column;
+    background: var(--surface-bg);
+  }
+  .pb-overlay[hidden] { display: none; }
+
+  .pb-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 var(--space-6);
+    border-bottom: 1px solid var(--surface-border);
+    flex-shrink: 0;
+    height: 52px;
+    gap: var(--space-4);
+  }
+  .pb-header-title {
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    color: var(--text-primary);
+    flex: 1;
+  }
+  .pb-close-btn {
+    all: unset;
+    box-sizing: border-box;
+    width: 32px; height: 32px;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    color: var(--text-tertiary);
+    font-size: 16px;
+    transition: background 0.1s, color 0.1s;
+    flex-shrink: 0;
+  }
+  .pb-close-btn:hover { background: var(--surface-subtle); color: var(--text-primary); }
+
+  .pb-body {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+  }
+
+  /* Left: live preview */
+  .pb-left {
+    flex: 1;
+    position: relative;
+    background: var(--surface-subtle);
+    overflow: hidden;
+  }
+  .pb-frame {
+    position: absolute;
+    top: 0; left: 0;
+    width: 1280px; height: 800px;
+    border: none;
+    transform-origin: top left;
+  }
+
+  /* Right: spec panel */
+  .pb-right {
+    width: 340px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    border-left: 1px solid var(--surface-border);
+    background: var(--surface-canvas);
+  }
+  .pb-right-inner {
+    flex: 1;
+    overflow-y: auto;
+    padding: var(--space-5);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+  }
+
+  .pb-section-head {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    margin-bottom: var(--space-3);
+  }
+
+  /* Zone list */
+  .pb-zone-list { display: flex; flex-direction: column; gap: var(--space-2); }
+  .pb-zone-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-3);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--surface-border);
+    background: var(--surface-bg);
+  }
+  .pb-zone-meta { flex: 1; min-width: 0; }
+  .pb-zone-label {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-primary);
+    line-height: 1.3;
+  }
+  .pb-zone-label.required::after { content: ' *'; color: var(--color-danger); }
+  .pb-zone-desc {
+    font-size: 11px;
+    color: var(--text-tertiary);
+    margin-top: 2px;
+    line-height: 1.4;
+  }
+  .pb-zone-toggle {
+    all: unset;
+    box-sizing: border-box;
+    width: 36px; height: 20px;
+    border-radius: var(--radius-full);
+    background: var(--surface-border);
+    position: relative;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: background 0.15s;
+  }
+  .pb-zone-toggle::after {
+    content: '';
+    position: absolute;
+    top: 2px; left: 2px;
+    width: 16px; height: 16px;
+    border-radius: var(--radius-full);
+    background: var(--surface-canvas);
+    transition: transform 0.15s;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+  }
+  .pb-zone-toggle.on { background: var(--color-interactive); }
+  .pb-zone-toggle.on::after { transform: translateX(16px); }
+  .pb-zone-toggle[disabled] { opacity: 0.4; cursor: not-allowed; }
+
+  /* Footer */
+  .pb-footer {
+    padding: var(--space-4) var(--space-5);
+    border-top: 1px solid var(--surface-border);
+    flex-shrink: 0;
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  /* Prompt modal */
+  .pb-modal-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    background: rgba(0,0,0,0.45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-6);
+  }
+  .pb-modal-backdrop[hidden] { display: none; }
+  .pb-modal {
+    background: var(--surface-canvas);
+    border-radius: var(--radius-xl);
+    border: 1px solid var(--surface-border);
+    width: 100%;
+    max-width: 640px;
+    max-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: 0 24px 80px rgba(0,0,0,0.18);
+  }
+  .pb-modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-4) var(--space-6);
+    border-bottom: 1px solid var(--surface-border);
+    flex-shrink: 0;
+    gap: var(--space-3);
+  }
+  .pb-modal-title {
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    color: var(--text-primary);
+    flex: 1;
+  }
+  .pb-modal-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: var(--space-5) var(--space-6);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+  .pb-modal-label {
+    display: block;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    margin-bottom: var(--space-2);
+  }
+  .pb-prompt-output {
+    background: var(--surface-subtle);
+    border: 1px solid var(--surface-border);
+    border-radius: var(--radius-md);
+    padding: var(--space-4);
+    flex: 1;
+    overflow-y: auto;
+    min-height: 200px;
+    max-height: 300px;
+  }
+  .pb-prompt-text {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-primary);
+    white-space: pre-wrap;
+    word-break: break-word;
+    line-height: 1.6;
+    margin: 0;
+  }
+  .pb-modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--space-3);
+    padding: var(--space-4) var(--space-6);
+    border-top: 1px solid var(--surface-border);
+    flex-shrink: 0;
+  }
 </style>
 </head>
 <body>
@@ -257,6 +490,58 @@
     </div>
 
   </div>
+
+  <!-- Pattern Builder overlay -->
+  <div class="pb-overlay" id="pb-overlay" hidden aria-modal="true" role="dialog">
+    <div class="pb-header">
+      <span class="pb-header-title" id="pb-title">Pattern Spec</span>
+      <button class="pb-close-btn" id="pb-close-header" aria-label="Close"><i class="ti ti-x"></i></button>
+    </div>
+    <div class="pb-body">
+      <div class="pb-left">
+        <iframe class="pb-frame" id="pb-frame" src="about:blank" scrolling="no" tabindex="-1"></iframe>
+      </div>
+      <div class="pb-right">
+        <div class="pb-right-inner">
+          <div>
+            <div class="pb-section-head">Zones</div>
+            <div id="pb-zones"></div>
+          </div>
+          <div>
+            <div class="pb-section-head">Template Rules</div>
+            <div id="pb-rules"></div>
+          </div>
+        </div>
+        <div class="pb-footer">
+          <fresh-button id="pb-start-btn" variant="primary">Start Building</fresh-button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Prompt generator modal -->
+  <div class="pb-modal-backdrop" id="pb-modal-backdrop" hidden>
+    <div class="pb-modal">
+      <div class="pb-modal-header">
+        <span class="pb-modal-title">Claude Code Prompt</span>
+        <button class="pb-close-btn" id="pb-close-modal" aria-label="Close"><i class="ti ti-x"></i></button>
+      </div>
+      <div class="pb-modal-body">
+        <div>
+          <label class="pb-modal-label" for="pb-entity-input">What are you building?</label>
+          <fresh-input id="pb-entity-input" placeholder="e.g. Project management tool, CRM, E-commerce app"></fresh-input>
+        </div>
+        <div class="pb-prompt-output">
+          <pre class="pb-prompt-text" id="pb-prompt-text"></pre>
+        </div>
+      </div>
+      <div class="pb-modal-footer">
+        <fresh-button id="pb-cancel-btn" variant="ghost">Cancel</fresh-button>
+        <fresh-button id="pb-copy-btn" variant="primary">Copy Prompt</fresh-button>
+      </div>
+    </div>
+  </div>
+
 </div>
 
 <!-- Component scripts -->
@@ -459,10 +744,16 @@
 
   /* Build one card's HTML */
   function _cardHTML(p) {
+    var hasSpec = !!PL_SPECS[p.id];
     var hasLink = p.href !== '#';
     var thumb = hasLink
       ? '<div slot="thumb" class="pl-thumb"><iframe class="pl-thumb-frame" data-src="' + _buildThumbSrc(p.href) + '" scrolling="no" tabindex="-1" aria-hidden="true"></iframe></div>'
       : '<div slot="thumb" class="pl-thumb"></div>';
+    if (hasSpec) {
+      return '<div class="pl-spec-trigger" onclick="openBuilder(\'' + p.id + '\')">'
+        + '<fresh-media-card title="' + p.name + '">' + thumb + '</fresh-media-card>'
+        + '</div>';
+    }
     return '<fresh-media-card title="' + p.name + '"'
       + (hasLink ? ' href="' + p.href + '" target="freshds-pattern"' : '')
       + '>' + thumb + '</fresh-media-card>';
@@ -716,6 +1007,280 @@
       f.src = src; // trigger reload
     });
   };
+
+  // ── Pattern Specs ────────────────────────────────────────────────
+  var PL_SPECS = {
+    'auth-login': {
+      label: 'Sign In',
+      zones: [
+        { id: 'brand-panel',  label: 'Brand Panel',       optional: true,  on: true,  desc: 'Left-side brand image or color fill' },
+        { id: 'logo',         label: 'Logo / Product Name', optional: true, on: false, desc: 'Product logo or name above the form' },
+        { id: 'sign-in-form', label: 'Sign-in Form',      optional: false, on: true,  desc: 'Email, password, and submit (required)' },
+        { id: 'social-login', label: 'Social Login',      optional: true,  on: false, desc: 'OAuth buttons: Google, GitHub, etc.' },
+        { id: 'helper-links', label: 'Helper Links',      optional: true,  on: true,  desc: '"Forgot password?" link below the form' },
+        { id: 'signup-link',  label: 'Sign-up Link',      optional: true,  on: true,  desc: '"Don\'t have an account?" footer' },
+      ],
+      rules: {
+        'Layout': [
+          'Split layout: brand panel left, form right at >= 768px; single column below',
+          'Form column max-width 420px, vertically centered',
+          'Brand panel fills full height with background image or gradient',
+        ],
+        'Form Behaviour': [
+          'Email field validates format on blur, before submit',
+          'Password field has a show/hide toggle',
+          '"Remember me" checkbox persists session for 30 days',
+          'Submit button enters loading state while request is in flight',
+          'Show inline error on the affected field; never use a modal alert',
+        ],
+        'Security UX': [
+          'Use a single generic message for wrong credentials; never name the failing field',
+          'Disable submit after 5 consecutive failures and show a lockout timer',
+          'Never auto-fill the password field with a visible placeholder',
+        ],
+        'Navigation': [
+          '"Forgot password?" routes to the reset-password page',
+          '"Sign up" link navigates to the sign-up page without losing form data',
+          'Successful sign-in redirects to the last-visited dashboard route',
+        ],
+      }
+    }
+  };
+
+  // ── Pattern Builder state ────────────────────────────────────────
+  var _pbCurrentId   = null;
+  var _pbRuleData    = {};
+  var _pbEntityName  = '';
+
+  // ── Builder open/close ───────────────────────────────────────────
+  function openBuilder(id) {
+    var spec = PL_SPECS[id];
+    if (!spec) return;
+    _pbCurrentId = id;
+
+    _pbRuleData = {};
+    Object.keys(spec.rules).forEach(function(cat) {
+      _pbRuleData[cat] = spec.rules[cat].slice();
+    });
+
+    document.getElementById('pb-title').textContent = spec.label + ' Pattern';
+    _renderPbZones(spec);
+    _renderPbRules();
+
+    var pattern = PL_PATTERNS.find(function(p) { return p.id === id; });
+    var frame = document.getElementById('pb-frame');
+    if (pattern && pattern.href !== '#') {
+      frame.addEventListener('load', function onLoad() {
+        frame.removeEventListener('load', onLoad);
+        _scalePbFrame();
+        _pushTheme(frame);
+      });
+      frame.src = pattern.href;
+    }
+
+    document.getElementById('pb-overlay').hidden = false;
+    document.body.style.overflow = 'hidden';
+    _scalePbFrame();
+  }
+
+  function closeBuilder() {
+    document.getElementById('pb-overlay').hidden = true;
+    document.body.style.overflow = '';
+    var frame = document.getElementById('pb-frame');
+    frame.src = 'about:blank';
+    _pbCurrentId = null;
+  }
+
+  function _scalePbFrame() {
+    var left  = document.querySelector('.pb-left');
+    var frame = document.getElementById('pb-frame');
+    if (!left || !frame) return;
+    var scale = Math.min(left.clientWidth / 1280, left.clientHeight / 800);
+    frame.style.transform = 'scale(' + scale + ')';
+    frame.style.left = Math.round((left.clientWidth  - 1280 * scale) / 2) + 'px';
+    frame.style.top  = Math.round((left.clientHeight - 800  * scale) / 2) + 'px';
+  }
+
+  window.addEventListener('resize', function() {
+    if (document.getElementById('pb-overlay') && !document.getElementById('pb-overlay').hidden) {
+      _scalePbFrame();
+    }
+  });
+
+  // ── Zones ────────────────────────────────────────────────────────
+  function _renderPbZones(spec) {
+    var html = '<div class="pb-zone-list">';
+    spec.zones.forEach(function(z) {
+      html += '<div class="pb-zone-item">'
+        +   '<div class="pb-zone-meta">'
+        +     '<div class="pb-zone-label' + (!z.optional ? ' required' : '') + '">' + _escHtml(z.label) + '</div>'
+        +     '<div class="pb-zone-desc">' + _escHtml(z.desc) + '</div>'
+        +   '</div>';
+      if (z.optional) {
+        html += '<button class="pb-zone-toggle' + (z.on ? ' on' : '') + '" data-zone-id="' + z.id + '" aria-label="Toggle ' + _escHtml(z.label) + '"></button>';
+      } else {
+        html += '<button class="pb-zone-toggle on" disabled aria-label="Required"></button>';
+      }
+      html += '</div>';
+    });
+    html += '</div>';
+    document.getElementById('pb-zones').innerHTML = html;
+
+    document.querySelectorAll('.pb-zone-toggle[data-zone-id]').forEach(function(btn) {
+      btn.addEventListener('click', function() { toggleZone(btn.dataset.zoneId); });
+    });
+  }
+
+  function toggleZone(zoneId) {
+    var spec = PL_SPECS[_pbCurrentId];
+    if (!spec) return;
+    var zone = spec.zones.find(function(z) { return z.id === zoneId; });
+    if (!zone || !zone.optional) return;
+    zone.on = !zone.on;
+    var btn = document.querySelector('.pb-zone-toggle[data-zone-id="' + zoneId + '"]');
+    if (btn) btn.classList.toggle('on', zone.on);
+  }
+
+  // ── Rules ────────────────────────────────────────────────────────
+  function _escHtml(s) {
+    return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  function _renderPbRules() {
+    var html = '<div class="spec-rules-panel">';
+    html += '<div class="spec-rules-topbar">'
+      + '<span class="spec-rules-title">Global Template Rules</span>'
+      + '<span class="spec-rules-hint">Click to edit</span>'
+      + '</div>';
+    Object.keys(_pbRuleData).forEach(function(cat) {
+      html += '<div class="spec-rules-section">'
+        + '<div class="spec-rules-section-head"><span class="spec-rules-variant">' + _escHtml(cat) + '</span></div>'
+        + '<ul class="spec-rule-list">';
+      _pbRuleData[cat].forEach(function(rule, idx) {
+        html += '<li class="spec-rule-li">'
+          + '<span class="spec-rule-bullet">·</span>'
+          + '<span class="spec-rule-text" contenteditable="true" data-cat="' + _escHtml(cat) + '" data-idx="' + idx + '">' + _escHtml(rule) + '</span>'
+          + '<div class="spec-rule-actions">'
+          + '<button class="spec-rule-btn del" data-del-cat="' + _escHtml(cat) + '" data-del-idx="' + idx + '" title="Delete"><i class="ti ti-trash"></i></button>'
+          + '</div>'
+          + '</li>';
+      });
+      html += '</ul>'
+        + '<button class="spec-add-rule" data-add-cat="' + _escHtml(cat) + '"><i class="ti ti-plus"></i> Add rule</button>'
+        + '</div>';
+    });
+    html += '</div>';
+    document.getElementById('pb-rules').innerHTML = html;
+
+    document.querySelectorAll('.spec-rule-text[contenteditable]').forEach(function(el) {
+      el.addEventListener('blur', function() {
+        var cat = el.dataset.cat;
+        var idx = parseInt(el.dataset.idx, 10);
+        if (_pbRuleData[cat]) _pbRuleData[cat][idx] = el.textContent.trim() || _pbRuleData[cat][idx];
+      });
+      el.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') { e.preventDefault(); el.blur(); }
+      });
+    });
+    document.querySelectorAll('.spec-rule-btn.del[data-del-cat]').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var cat = btn.dataset.delCat;
+        var idx = parseInt(btn.dataset.delIdx, 10);
+        if (_pbRuleData[cat]) { _pbRuleData[cat].splice(idx, 1); _renderPbRules(); }
+      });
+    });
+    document.querySelectorAll('.spec-add-rule[data-add-cat]').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var cat = btn.dataset.addCat;
+        if (!_pbRuleData[cat]) return;
+        _pbRuleData[cat].push('New rule');
+        _renderPbRules();
+        var items = document.querySelectorAll('[data-cat="' + cat + '"]');
+        var last = items[items.length - 1];
+        if (last) {
+          last.focus();
+          var r = document.createRange();
+          r.selectNodeContents(last);
+          var sel = window.getSelection();
+          sel.removeAllRanges();
+          sel.addRange(r);
+        }
+      });
+    });
+  }
+
+  // ── Prompt modal ─────────────────────────────────────────────────
+  function openPromptModal() {
+    _pbEntityName = '';
+    document.getElementById('pb-entity-input').value = '';
+    _updatePrompt();
+    document.getElementById('pb-modal-backdrop').hidden = false;
+  }
+
+  function closePromptModal() {
+    document.getElementById('pb-modal-backdrop').hidden = true;
+  }
+
+  function _updatePrompt() {
+    var spec = PL_SPECS[_pbCurrentId];
+    if (!spec) return;
+    var pattern = PL_PATTERNS.find(function(p) { return p.id === _pbCurrentId; });
+    var entity  = _pbEntityName.trim() || '[your product name]';
+    var activeZones = spec.zones.filter(function(z) { return z.on; }).map(function(z) { return z.label; });
+
+    var lines = [
+      'Build a Sign In page for ' + entity + ' using FreshDS.',
+      '',
+      'Reference pattern: ' + (pattern && pattern.href !== '#' ? pattern.href : spec.label),
+      '',
+      'Zones to include:',
+    ];
+    activeZones.forEach(function(z) { lines.push('  - ' + z); });
+    lines.push('');
+    lines.push('Template rules:');
+    Object.keys(_pbRuleData).forEach(function(cat) {
+      lines.push('');
+      lines.push(cat + ':');
+      _pbRuleData[cat].forEach(function(r) { lines.push('  - ' + r); });
+    });
+    lines.push('');
+    lines.push('Use only FreshDS web components (fresh-button, fresh-input, fresh-checkbox, etc.) and DS tokens.');
+    lines.push('Dark mode is required. Responsive: >= 768px uses split layout; below 768px is single column.');
+
+    document.getElementById('pb-prompt-text').textContent = lines.join('\n');
+  }
+
+  function copyPrompt() {
+    var text = document.getElementById('pb-prompt-text').textContent;
+    navigator.clipboard.writeText(text).then(function() {
+      var btn = document.getElementById('pb-copy-btn');
+      btn.textContent = 'Copied!';
+      setTimeout(function() { btn.textContent = 'Copy Prompt'; }, 2000);
+    });
+  }
+
+  // ── Wire up builder UI event listeners ──────────────────────────
+  document.getElementById('pb-close-header').addEventListener('click', closeBuilder);
+  document.getElementById('pb-start-btn').addEventListener('click', openPromptModal);
+  document.getElementById('pb-close-modal').addEventListener('click', closePromptModal);
+  document.getElementById('pb-cancel-btn').addEventListener('click', closePromptModal);
+  document.getElementById('pb-copy-btn').addEventListener('click', copyPrompt);
+
+  document.getElementById('pb-entity-input').addEventListener('input', function(e) {
+    _pbEntityName = (e.detail ? e.detail.value : this.value) || '';
+    _updatePrompt();
+  });
+
+  document.getElementById('pb-modal-backdrop').addEventListener('click', function(e) {
+    if (e.target === this) closePromptModal();
+  });
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      if (!document.getElementById('pb-modal-backdrop').hidden) { closePromptModal(); return; }
+      if (!document.getElementById('pb-overlay').hidden) { closeBuilder(); }
+    }
+  });
 
   _renderGrid();
 </script>
