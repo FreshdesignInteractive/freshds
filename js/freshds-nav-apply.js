@@ -68,7 +68,7 @@
     var icons = (cfg.activeIcons || []).map(function (key) {
       var cls = NB_ICON_MAP[key];
       return cls
-        ? '<fresh-button variant="ghost" icon-only aria-label="' + key + '"><i class="ti ' + cls + '"></i></fresh-button>'
+        ? '<fresh-button variant="ghost" icon-only size="sm" aria-label="' + key + '"><i class="ti ' + cls + '"></i></fresh-button>'
         : '';
     }).join('');
 

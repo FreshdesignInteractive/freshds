@@ -23,6 +23,14 @@
 [data-mode="dark"] .nav-logo-light { display: none; }
 [data-mode="dark"] .nav-logo-dark  { display: block; }
 
+/* Sidebar footer */
+.bs-sidebar-footer { display: flex; align-items: center; gap: var(--space-3); width: 100%; min-width: 0; }
+.bs-sidebar-user-info { flex: 1; min-width: 0; overflow: hidden; }
+.bs-sidebar-user-name { font-size: var(--font-size-sm); font-weight: 500; color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.bs-sidebar-user-role { font-size: var(--font-size-xs); color: var(--text-tertiary); white-space: nowrap; }
+/* Hide text labels when sidebar collapses to icon rail */
+fresh-sidebar[collapsed] .bs-sidebar-user-info { display: none; }
+
 /* ── Spec trigger button ── */
 .demo-spec-btn {
   display: inline-flex;
@@ -247,6 +255,17 @@
     </fresh-navbar>
 
     <div class="dash-body">
+      <!-- sidebar: shown only in logged-in state, pattern driven by nav_pattern config -->
+      <fresh-sidebar id="blank-sidebar" style="display:none;flex-shrink:0;height:100%;overflow:hidden;">
+        <div id="blank-nav-content"></div>
+        <div slot="footer" class="bs-sidebar-footer">
+          <fresh-avatar name="Jane Smith" size="sm"></fresh-avatar>
+          <div class="bs-sidebar-user-info">
+            <div class="bs-sidebar-user-name">Jane Smith</div>
+            <div class="bs-sidebar-user-role">Admin</div>
+          </div>
+        </div>
+      </fresh-sidebar>
       <main class="dash-main" style="overflow-y:auto;"></main>
     </div>
   </div>
@@ -306,20 +325,72 @@
 </div>
 
 <script src="../components/navigation/fresh-navbar.js"></script>
+<script src="../components/navigation/fresh-sidebar.js"></script>
 <script src="../components/data/fresh-avatar.js"></script>
 <script src="../components/core/fresh-button.js"></script>
+<script src="../js/nav-taxonomy.js"></script>
 <script src="../js/freshds-nav-apply.js"></script>
 <script>
+/* ── Sidebar builder ─────────────────────────────────────── */
+
+function _buildSidebar() {
+  var cfg = { nav_pattern: 'persistent-sidebar', taxonomy: [] };
+  try {
+    var s = localStorage.getItem('freshds-nav-cfg');
+    if (s) { var stored = JSON.parse(s); Object.assign(cfg, stored); }
+  } catch(e) {}
+
+  var tax = (Array.isArray(cfg.taxonomy) && cfg.taxonomy.length > 0)
+    ? cfg.taxonomy
+    : (typeof DEFAULT_TAXONOMY !== 'undefined' ? DEFAULT_TAXONOMY : []);
+
+  var sidebar = document.getElementById('blank-sidebar');
+  if (cfg.nav_pattern === 'collapsible-sidebar') {
+    sidebar.setAttribute('collapsed', '');
+  } else {
+    sidebar.removeAttribute('collapsed');
+  }
+
+  document.getElementById('blank-nav-content').innerHTML =
+    typeof buildSidebarHtml === 'function' ? buildSidebarHtml(tax) : '';
+}
+
 /* ── Zone toggles ────────────────────────────────────────── */
 
 function _zoneLoggedIn(on) {
   var navbar = document.getElementById('blank-topbar');
-  if (on) navbar.setAttribute('data-nav-logged-in', '');
-  else    navbar.removeAttribute('data-nav-logged-in');
+  var sidebar = document.getElementById('blank-sidebar');
+  if (on) {
+    navbar.setAttribute('data-nav-logged-in', '');
+    navbar.setAttribute('hamburger', '');
+    _buildSidebar();
+    sidebar.style.display = '';
+  } else {
+    navbar.removeAttribute('data-nav-logged-in');
+    navbar.removeAttribute('hamburger');
+    sidebar.style.display = 'none';
+  }
   document.getElementById('bs-actions-out').style.display = on ? 'none' : 'flex';
   document.getElementById('bs-actions-in').style.display  = on ? ''     : 'none';
   if (on && window.FreshNavApply) window.FreshNavApply.apply();
 }
+
+/* Hamburger toggles sidebar collapsed state */
+document.addEventListener('DOMContentLoaded', function() {
+  document.getElementById('blank-topbar').addEventListener('hamburger-click', function() {
+    var sb = document.getElementById('blank-sidebar');
+    if (sb.hasAttribute('collapsed')) sb.removeAttribute('collapsed');
+    else sb.setAttribute('collapsed', '');
+  });
+});
+
+/* Live-sync when navigation designer changes settings */
+window.addEventListener('storage', function(e) {
+  if (e.key === 'freshds-nav-cfg') {
+    var loggedIn = SP_ZONES[0] && SP_ZONES[0].on;
+    if (loggedIn) _buildSidebar();
+  }
+});
 
 /* ── Spec data ───────────────────────────────────────────── */
 
@@ -332,13 +403,21 @@ var SP_ZONE_COLORS = ['#22c55e'];
 var SP_RULES = {
   'SHELL': [
     'The page shell is always full viewport height with the navbar pinned at the top.',
+    'When logged-in with a sidebar pattern, the sidebar renders between the navbar and main content.',
     'The content area fills the remaining height and scrolls independently of the navbar.',
     'Background of the content area uses var(--surface-bg); match this in all child pages.'
   ],
   'HEADER STATES': [
     'Logged-out state: Sign in (secondary) and Sign up (primary) buttons in the actions slot.',
-    'Logged-in state: fresh-avatar in the actions slot; the navbar handles the user dropdown automatically.',
+    'Logged-in state: configured icon buttons plus fresh-avatar in the actions slot; the navbar handles the user dropdown.',
     'Never duplicate the logo -- always use the brand slot, never render it inline.'
+  ],
+  'NAVIGATION PATTERN': [
+    'The sidebar pattern is driven by nav_pattern in freshds-nav-cfg (set in the navigation designer).',
+    'persistent-sidebar: full-width sidebar (240px), always visible, expanded nav groups.',
+    'collapsible-sidebar: icon rail (56px collapsed), expands via the hamburger button in the navbar.',
+    'Nav items come from the taxonomy array in freshds-nav-cfg, falling back to the DS default taxonomy.',
+    'Changes in the navigation designer apply live to this page without reload.'
   ],
   'PAGE GRID': [
     'Content below the navbar uses var(--space-6) padding on all sides (desktop).',
