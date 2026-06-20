@@ -83,6 +83,44 @@
   fresh-sidebar[collapsed] .footer-user-info,
   fresh-sidebar[collapsed] .footer-icon-btn { display: none; }
 
+  /* Icon rail flyout */
+  .icon-flyout {
+    position: fixed;
+    left: 57px;
+    top: 0;
+    width: 200px;
+    background: var(--surface-canvas);
+    border: 1px solid var(--surface-border);
+    border-radius: var(--radius-md);
+    box-shadow: 0 8px 28px rgba(0,0,0,0.12), 0 2px 6px rgba(0,0,0,0.06);
+    z-index: 90;
+    display: none;
+    overflow: hidden;
+  }
+  .icon-flyout.open { display: block; }
+  .icon-flyout-label {
+    padding: var(--space-2) var(--space-3) var(--space-1);
+    font-size: var(--font-size-xs);
+    font-weight: 600;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    border-bottom: 1px solid var(--surface-border);
+  }
+  .flyout-item {
+    display: flex;
+    align-items: center;
+    padding: 7px var(--space-3);
+    font-size: var(--font-size-sm);
+    font-family: var(--font-sans);
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: background 100ms, color 100ms;
+    -webkit-font-smoothing: antialiased;
+  }
+  .flyout-item:hover { background: var(--surface-subtle); color: var(--text-primary); }
+  .flyout-item.active { background: var(--nav-active-bg); color: var(--nav-active-text); font-weight: 500; }
+
   /* Command palette overlay */
   .palette-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 200; display: none; align-items: flex-start; justify-content: center; padding-top: 14vh; }
   .palette-overlay.open { display: flex; }
@@ -146,7 +184,7 @@
 
   <div class="shell-body">
 
-    <fresh-sidebar id="app-sidebar">
+    <fresh-sidebar id="app-sidebar" collapsed>
 
       <!-- Navigation groups (taxonomy-driven) -->
       <div id="nav-content"></div>
@@ -161,6 +199,12 @@
       </div>
 
     </fresh-sidebar>
+
+    <!-- Icon rail flyout: appears to the right of the collapsed sidebar on nav-item click -->
+    <div class="icon-flyout" id="icon-flyout">
+      <div class="icon-flyout-label" id="icon-flyout-label"></div>
+      <div id="icon-flyout-items"></div>
+    </div>
 
     <main class="shell-content"></main>
 
@@ -217,24 +261,102 @@
 <script src="/components/data/fresh-avatar.js"></script>
 
 <script>
-  /* Populate sidebar from taxonomy */
-  document.getElementById('nav-content').innerHTML = buildSidebarHtml(loadTaxonomy());
-</script>
+  var _tax      = loadTaxonomy();
+  var sidebar   = document.getElementById('app-sidebar');
+  var _flyoutIdx = -1;
 
-<script>
-  var sidebar = document.getElementById('app-sidebar');
+  /* Build icon rail: top-level taxonomy items as nav-items with section icons */
+  function _buildIconRail(tax) {
+    var html = '<fresh-nav-group label="Nav" open>';
+    tax.forEach(function(item, idx) {
+      var iconAttr = item.icon ? ' icon="' + item.icon + '"' : '';
+      html += '<fresh-nav-item' + iconAttr + (idx === 0 ? ' active' : '') +
+              ' data-tax-idx="' + idx + '">' + (item.label || '') + '</fresh-nav-item>';
+    });
+    html += '</fresh-nav-group>';
+    return html;
+  }
 
-  /* Hamburger toggles collapsed state */
-  document.getElementById('app-navbar').addEventListener('hamburger-click', function() {
-    if (sidebar.hasAttribute('collapsed')) sidebar.removeAttribute('collapsed');
-    else                                   sidebar.setAttribute('collapsed', '');
+  /* Initialize as collapsed icon rail */
+  document.getElementById('nav-content').innerHTML = _buildIconRail(_tax);
+
+  /* ── Flyout ── */
+  function _railItems() {
+    return Array.prototype.slice.call(document.querySelectorAll('#nav-content fresh-nav-item'));
+  }
+
+  function _setRailActive(idx) {
+    _railItems().forEach(function(el, i) {
+      if (i === idx) el.setAttribute('active', '');
+      else           el.removeAttribute('active');
+    });
+  }
+
+  function _closeFlyout() {
+    _flyoutIdx = -1;
+    document.getElementById('icon-flyout').classList.remove('open');
+  }
+
+  function _openFlyout(idx, anchorEl) {
+    var section = _tax[idx];
+    var kids    = (section && section.children) || [];
+    if (kids.length === 0) { _closeFlyout(); return; }
+
+    _flyoutIdx = idx;
+    document.getElementById('icon-flyout-label').textContent = section.label || '';
+    document.getElementById('icon-flyout-items').innerHTML = kids.map(function(child, ci) {
+      return '<div class="flyout-item' + (ci === 0 ? ' active' : '') + '">' + (child.label || '') + '</div>';
+    }).join('');
+
+    var rect   = anchorEl.getBoundingClientRect();
+    var flyout = document.getElementById('icon-flyout');
+    flyout.style.top = rect.top + 'px';
+    flyout.classList.add('open');
+
+    requestAnimationFrame(function() {
+      var fh = flyout.offsetHeight;
+      var vh = window.innerHeight;
+      if (rect.top + fh > vh - 8) flyout.style.top = Math.max(8, vh - fh - 8) + 'px';
+    });
+  }
+
+  /* nav-click on icon rail items */
+  document.getElementById('nav-content').addEventListener('nav-click', function(e) {
+    if (!sidebar.hasAttribute('collapsed')) return;
+    var item = e.target;
+    if (!item || item.tagName.toLowerCase() !== 'fresh-nav-item') return;
+    var idx = parseInt(item.dataset.taxIdx, 10);
+    if (isNaN(idx)) return;
+    _setRailActive(idx);
+    if (idx === _flyoutIdx) { _closeFlyout(); return; }
+    _openFlyout(idx, item);
   });
 
-  /* Auto-collapse at mobile breakpoint */
+  document.getElementById('nav-content').addEventListener('click', function(e) { e.stopPropagation(); });
+  document.getElementById('icon-flyout').addEventListener('click', function(e) { e.stopPropagation(); });
+  document.addEventListener('click', _closeFlyout);
+  document.addEventListener('keydown', function(e) { if (e.key === 'Escape') _closeFlyout(); });
+
+  /* ── Hamburger: toggle collapsed + swap content ── */
+  document.getElementById('app-navbar').addEventListener('hamburger-click', function() {
+    if (sidebar.hasAttribute('collapsed')) {
+      sidebar.removeAttribute('collapsed');
+      document.getElementById('nav-content').innerHTML = buildSidebarHtml(_tax);
+      _closeFlyout();
+    } else {
+      sidebar.setAttribute('collapsed', '');
+      document.getElementById('nav-content').innerHTML = _buildIconRail(_tax);
+    }
+  });
+
+  /* Auto-collapse to icon rail at mobile breakpoint */
   var mq = window.matchMedia('(max-width: 767px)');
   function onBreakpoint(e) {
-    if (e.matches) sidebar.setAttribute('collapsed', '');
-    else           sidebar.removeAttribute('collapsed');
+    if (e.matches) {
+      sidebar.setAttribute('collapsed', '');
+      document.getElementById('nav-content').innerHTML = _buildIconRail(_tax);
+      _closeFlyout();
+    }
   }
   mq.addEventListener('change', onBreakpoint);
   onBreakpoint(mq);
