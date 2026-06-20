@@ -184,7 +184,7 @@
 
   <div class="shell-body">
 
-    <fresh-sidebar id="app-sidebar" collapsed>
+    <fresh-sidebar id="app-sidebar">
 
       <!-- Navigation groups (taxonomy-driven) -->
       <div id="nav-content"></div>
@@ -277,8 +277,8 @@
     return html;
   }
 
-  /* Initialize as collapsed icon rail */
-  document.getElementById('nav-content').innerHTML = _buildIconRail(_tax);
+  /* Initialize as expanded full sidebar */
+  document.getElementById('nav-content').innerHTML = buildSidebarHtml(_tax);
 
   /* ── Flyout ── */
   function _railItems() {
