@@ -242,10 +242,8 @@
         <fresh-button variant="secondary" size="sm">Sign in</fresh-button>
         <fresh-button variant="primary" size="sm">Sign up</fresh-button>
       </div>
-      <!-- logged-in state: hidden until toggled -->
-      <div id="bs-actions-in" slot="actions" style="display:none;">
-        <fresh-avatar name="Jane Smith" size="sm"></fresh-avatar>
-      </div>
+      <!-- logged-in state: populated by freshds-nav-apply.js when data-nav-logged-in is set -->
+      <div id="bs-actions-in" slot="actions" style="display:none;" data-nav-actions-logged-in></div>
     </fresh-navbar>
 
     <div class="dash-body">
@@ -310,71 +308,17 @@
 <script src="../components/navigation/fresh-navbar.js"></script>
 <script src="../components/data/fresh-avatar.js"></script>
 <script src="../components/core/fresh-button.js"></script>
-<script>
-/* ── Icon key -> Tabler class map (mirrors navigation.html) ─ */
-var NB_ICON_MAP = {
-  search:   'ti-search',
-  bell:     'ti-bell',
-  help:     'ti-help-circle',
-  plus:     'ti-circle-plus',
-  grid:     'ti-grid-dots',
-  settings: 'ti-settings-2',
-  messages: 'ti-message-circle',
-  bookmark: 'ti-bookmark'
-};
-
-/* ── Apply full navbar config from navigation designer ───── */
-function _applyNavCfg() {
-  var cfg = { logoUrl: '', logoUrlDark: '', activeIcons: [] };
-  try {
-    var s = localStorage.getItem('freshds-nav-cfg');
-    if (s) {
-      var stored = JSON.parse(s);
-      cfg = Object.assign(cfg, stored.navbar_cfg || stored);
-    }
-  } catch(e) {}
-
-  var navbar = document.getElementById('blank-topbar');
-  if (!navbar) return;
-
-  /* Logo */
-  navbar.querySelectorAll('[slot="brand"]').forEach(function(el) { el.remove(); });
-  var effLight = cfg.logoUrl    || cfg.logoUrlDark;
-  var effDark  = cfg.logoUrlDark || cfg.logoUrl;
-  if (effLight || effDark) {
-    var brandDiv = document.createElement('div');
-    brandDiv.setAttribute('slot', 'brand');
-    if (effLight === effDark) {
-      brandDiv.innerHTML = '<img src="' + effLight.replace(/"/g, '&quot;') + '" alt="Logo" style="height:24px;max-width:140px;object-fit:contain">';
-    } else {
-      brandDiv.innerHTML =
-        '<img class="nav-logo-light" src="' + effLight.replace(/"/g, '&quot;') + '" alt="Logo" style="height:24px;max-width:140px;object-fit:contain">' +
-        '<img class="nav-logo-dark"  src="' + effDark.replace(/"/g,  '&quot;') + '" alt="Logo" style="height:24px;max-width:140px;object-fit:contain">';
-    }
-    navbar.insertBefore(brandDiv, navbar.firstChild);
-  }
-
-  /* Logged-in action icons */
-  var icons = (cfg.activeIcons || []).map(function(key) {
-    var cls = NB_ICON_MAP[key];
-    if (!cls) return '';
-    return '<fresh-button variant="ghost" size="sm" aria-label="' + key + '"><i class="ti ' + cls + '"></i></fresh-button>';
-  }).join('');
-  document.getElementById('bs-actions-in').innerHTML =
-    icons + '<fresh-avatar name="Jane Smith" size="sm"></fresh-avatar>';
-}
-
-_applyNavCfg();
-window.addEventListener('storage', function(e) {
-  if (e.key === 'freshds-nav-cfg') _applyNavCfg();
-});
-</script>
+<script src="../js/freshds-nav-apply.js"></script>
 <script>
 /* ── Zone toggles ────────────────────────────────────────── */
 
 function _zoneLoggedIn(on) {
+  var navbar = document.getElementById('blank-topbar');
+  if (on) navbar.setAttribute('data-nav-logged-in', '');
+  else    navbar.removeAttribute('data-nav-logged-in');
   document.getElementById('bs-actions-out').style.display = on ? 'none' : 'flex';
   document.getElementById('bs-actions-in').style.display  = on ? ''     : 'none';
+  if (on && window.FreshNavApply) window.FreshNavApply.apply();
 }
 
 /* ── Spec data ───────────────────────────────────────────── */
