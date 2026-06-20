@@ -273,8 +273,8 @@
   var PL_PATTERNS = [
 
     // ── 1. Authentication & Access ── front door, built first ────
-    { id: 'auth-login',        name: 'Sign In',             section: 'auth',       href: 'patterns/auth-login.html',           tags: ['sign in', 'login', 'authentication', 'credentials'] },
-    { id: 'auth-signup',       name: 'Sign Up',             section: 'auth',       href: 'patterns/auth-signup.html',          tags: ['register', 'create account', 'signup', 'new user'] },
+    { id: 'auth-login',        name: 'Sign In',             section: 'auth',       also: ['pages'], href: 'patterns/auth-login.html',           tags: ['sign in', 'login', 'authentication', 'credentials'] },
+    { id: 'auth-signup',       name: 'Sign Up',             section: 'auth',       also: ['pages'], href: 'patterns/auth-signup.html',          tags: ['register', 'create account', 'signup', 'new user'] },
     { id: 'auth-forgot',       name: 'Forgot Password',     section: 'auth',       href: 'patterns/auth-forgot-password.html', tags: ['forgot', 'reset password', 'recover'] },
     { id: 'auth-email-sent',   name: 'Email Sent',          section: 'auth',       href: 'patterns/auth-email-sent.html',      tags: ['email sent', 'check email', 'reset link', 'magic link'] },
     { id: 'auth-reset',        name: 'Reset Password',      section: 'auth',       href: 'patterns/auth-reset.html',  tags: ['reset', 'new password', 'password change'] },
@@ -515,7 +515,7 @@
     if (!grid) return;
 
     _plFiltered = PL_PATTERNS.filter(function(p) {
-      var matchSection = _plSection === 'all' || (_plSection === 'ai' && p.ai) || p.section === _plSection;
+      var matchSection = _plSection === 'all' || (_plSection === 'ai' && p.ai) || p.section === _plSection || (p.also && p.also.indexOf(_plSection) !== -1);
       var q = _plQuery.toLowerCase();
       var matchSearch = !_plQuery
         || p.name.toLowerCase().includes(q)
