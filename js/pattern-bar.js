@@ -45,7 +45,7 @@ if (_isThumb) {
 } else {
   /* ── Normal page mode — apply theme from localStorage ── */
   (function () {
-    var p    = '#7c6af7', s    = '#2dd4bf';
+    var p    = '#1f2328', s    = '#6b7280';
     var dark = '#1f2328', light = '#ffffff';
     var suc  = '#22c55e', warn  = '#f59e0b';
     var dang = '#f43f5e', info  = '#3b82f6', ai = '#0d9488';
