@@ -31,6 +31,44 @@
 /* Hide text labels when sidebar collapses to icon rail */
 fresh-sidebar[collapsed] .bs-sidebar-user-info { display: none; }
 
+/* Tab strip (top-nav-tabs pattern) */
+.bs-tab-strip {
+  background: var(--surface-nav);
+  border-bottom: 1px solid var(--surface-border);
+  padding: 0 var(--space-5);
+  display: flex;
+  align-items: center;
+  height: 44px;
+  flex-shrink: 0;
+}
+.bs-tab-dropdown {
+  position: fixed;
+  top: 0; left: 0;
+  min-width: 168px;
+  background: var(--surface-canvas);
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius-md);
+  box-shadow: 0 8px 28px rgba(0,0,0,0.12), 0 2px 6px rgba(0,0,0,0.06);
+  z-index: 90;
+  display: none;
+  overflow: hidden;
+  padding: var(--space-1) 0;
+}
+.bs-tab-dropdown.open { display: block; }
+.bs-tab-drop-item {
+  display: flex;
+  align-items: center;
+  padding: 7px var(--space-4);
+  font-size: var(--font-size-sm);
+  font-family: var(--font-sans);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: background 100ms, color 100ms;
+  -webkit-font-smoothing: antialiased;
+}
+.bs-tab-drop-item:hover  { background: var(--surface-subtle); color: var(--text-primary); }
+.bs-tab-drop-item.active { color: var(--nav-active-text); background: var(--nav-active-bg); font-weight: 500; }
+
 /* ── Spec trigger button ── */
 .demo-spec-btn {
   display: inline-flex;
@@ -254,6 +292,12 @@ fresh-sidebar[collapsed] .bs-sidebar-user-info { display: none; }
       <div id="bs-actions-in" slot="actions" style="display:none;" data-nav-actions-logged-in></div>
     </fresh-navbar>
 
+    <!-- Tab strip: shown for top-nav-tabs pattern -->
+    <div id="blank-tab-strip" class="bs-tab-strip" style="display:none;">
+      <fresh-topbar-menu id="blank-top-tabs"></fresh-topbar-menu>
+    </div>
+    <div class="bs-tab-dropdown" id="blank-tab-dropdown"></div>
+
     <div class="dash-body">
       <!-- sidebar: shown only in logged-in state, pattern driven by nav_pattern config -->
       <fresh-sidebar id="blank-sidebar" style="display:none;flex-shrink:0;height:100%;overflow:hidden;">
@@ -326,69 +370,166 @@ fresh-sidebar[collapsed] .bs-sidebar-user-info { display: none; }
 
 <script src="../components/navigation/fresh-navbar.js"></script>
 <script src="../components/navigation/fresh-sidebar.js"></script>
+<script src="../components/navigation/fresh-topbar-menu.js"></script>
 <script src="../components/data/fresh-avatar.js"></script>
 <script src="../components/core/fresh-button.js"></script>
 <script src="../js/nav-taxonomy.js"></script>
 <script src="../js/freshds-nav-apply.js"></script>
 <script>
-/* ── Sidebar builder ─────────────────────────────────────── */
+/* ── Nav pattern router ──────────────────────────────────── */
 
-function _buildSidebar() {
+var _currentPattern = 'persistent-sidebar';
+
+function _readNavCfg() {
   var cfg = { nav_pattern: 'persistent-sidebar', taxonomy: [] };
   try {
     var s = localStorage.getItem('freshds-nav-cfg');
-    if (s) { var stored = JSON.parse(s); Object.assign(cfg, stored); }
+    if (s) Object.assign(cfg, JSON.parse(s));
   } catch(e) {}
+  return cfg;
+}
 
-  var tax = (Array.isArray(cfg.taxonomy) && cfg.taxonomy.length > 0)
-    ? cfg.taxonomy
-    : (typeof DEFAULT_TAXONOMY !== 'undefined' ? DEFAULT_TAXONOMY : []);
+function _buildIconRail(tax) {
+  var html = '<fresh-nav-group label="Nav" open>';
+  tax.forEach(function(item, idx) {
+    var iconAttr = item.icon ? ' icon="' + item.icon + '"' : '';
+    html += '<fresh-nav-item' + iconAttr + (idx === 0 ? ' active' : '') +
+            ' data-tax-idx="' + idx + '">' + (item.label || '') + '</fresh-nav-item>';
+  });
+  return html + '</fresh-nav-group>';
+}
 
-  var sidebar = document.getElementById('blank-sidebar');
-  if (cfg.nav_pattern === 'collapsible-sidebar') {
-    sidebar.setAttribute('collapsed', '');
-  } else {
-    sidebar.removeAttribute('collapsed');
+function _applyNavPattern() {
+  var cfg     = _readNavCfg();
+  var tax     = (Array.isArray(cfg.taxonomy) && cfg.taxonomy.length > 0)
+                ? cfg.taxonomy
+                : (typeof DEFAULT_TAXONOMY !== 'undefined' ? DEFAULT_TAXONOMY : []);
+  _currentPattern = cfg.nav_pattern || 'persistent-sidebar';
+
+  var navbar   = document.getElementById('blank-topbar');
+  var sidebar  = document.getElementById('blank-sidebar');
+  var tabStrip = document.getElementById('blank-tab-strip');
+
+  /* Reset all nav chrome */
+  sidebar.style.display  = 'none';
+  tabStrip.style.display = 'none';
+  sidebar.removeAttribute('collapsed');
+  navbar.removeAttribute('hamburger');
+  document.getElementById('blank-tab-dropdown').classList.remove('open');
+
+  if (_currentPattern === 'persistent-sidebar') {
+    sidebar.style.display = '';
+    document.getElementById('blank-nav-content').innerHTML = buildSidebarHtml(tax);
+
+  } else if (_currentPattern === 'collapsible-sidebar') {
+    sidebar.style.display = '';
+    navbar.setAttribute('hamburger', '');
+    document.getElementById('blank-nav-content').innerHTML = buildSidebarHtml(tax);
+
+  } else if (_currentPattern === 'top-nav-tabs') {
+    tabStrip.style.display = '';
+    var tabsEl = document.getElementById('blank-top-tabs');
+    tabsEl.setAttribute('tabs', buildTabsJson(tax));
+    if (tax[0]) tabsEl.setAttribute('active', tax[0].id);
+
   }
-
-  document.getElementById('blank-nav-content').innerHTML =
-    typeof buildSidebarHtml === 'function' ? buildSidebarHtml(tax) : '';
+  /* All other patterns (dual-level, hamburger-drawer, command-palette):
+     navbar only — no secondary nav chrome on the blank slate */
 }
 
 /* ── Zone toggles ────────────────────────────────────────── */
 
 function _zoneLoggedIn(on) {
   var navbar = document.getElementById('blank-topbar');
-  var sidebar = document.getElementById('blank-sidebar');
   if (on) {
     navbar.setAttribute('data-nav-logged-in', '');
-    navbar.setAttribute('hamburger', '');
-    _buildSidebar();
-    sidebar.style.display = '';
+    _applyNavPattern();
   } else {
     navbar.removeAttribute('data-nav-logged-in');
     navbar.removeAttribute('hamburger');
-    sidebar.style.display = 'none';
+    document.getElementById('blank-sidebar').style.display  = 'none';
+    document.getElementById('blank-tab-strip').style.display = 'none';
+    document.getElementById('blank-tab-dropdown').classList.remove('open');
   }
   document.getElementById('bs-actions-out').style.display = on ? 'none' : 'flex';
   document.getElementById('bs-actions-in').style.display  = on ? ''     : 'none';
   if (on && window.FreshNavApply) window.FreshNavApply.apply();
 }
 
-/* Hamburger toggles sidebar collapsed state */
+/* ── Hamburger: collapsible sidebar toggle ───────────────── */
 document.addEventListener('DOMContentLoaded', function() {
   document.getElementById('blank-topbar').addEventListener('hamburger-click', function() {
-    var sb = document.getElementById('blank-sidebar');
-    if (sb.hasAttribute('collapsed')) sb.removeAttribute('collapsed');
-    else sb.setAttribute('collapsed', '');
+    if (_currentPattern !== 'collapsible-sidebar') return;
+    var sb  = document.getElementById('blank-sidebar');
+    var tax = _readNavCfg();
+    var tx  = (Array.isArray(tax.taxonomy) && tax.taxonomy.length > 0)
+              ? tax.taxonomy
+              : (typeof DEFAULT_TAXONOMY !== 'undefined' ? DEFAULT_TAXONOMY : []);
+    if (sb.hasAttribute('collapsed')) {
+      sb.removeAttribute('collapsed');
+      document.getElementById('blank-nav-content').innerHTML = buildSidebarHtml(tx);
+    } else {
+      sb.setAttribute('collapsed', '');
+      document.getElementById('blank-nav-content').innerHTML = _buildIconRail(tx);
+    }
   });
+
+  /* ── Tab strip dropdown ──────────────────────────────── */
+  var _dropKey = null, _prevActive = '', _clickX = 0;
+  var drop = document.getElementById('blank-tab-dropdown');
+
+  function _closeDrop() {
+    _dropKey = null;
+    drop.classList.remove('open');
+  }
+
+  function _openDrop(key, x) {
+    var tax = _readNavCfg();
+    var tx  = (Array.isArray(tax.taxonomy) && tax.taxonomy.length > 0)
+              ? tax.taxonomy
+              : (typeof DEFAULT_TAXONOMY !== 'undefined' ? DEFAULT_TAXONOMY : []);
+    var item = null;
+    for (var i = 0; i < tx.length; i++) { if (tx[i].id === key) { item = tx[i]; break; } }
+    var kids = (item && item.children) || [];
+    if (!kids.length) { _closeDrop(); return; }
+    _dropKey = key;
+    var stripBot = document.getElementById('blank-tab-strip').getBoundingClientRect().bottom;
+    drop.innerHTML = kids.map(function(child, ci) {
+      return '<div class="bs-tab-drop-item' + (ci === 0 ? ' active' : '') + '">' + (child.label || '') + '</div>';
+    }).join('');
+    drop.style.top = stripBot + 'px';
+    drop.style.left = '0';
+    drop.classList.add('open');
+    requestAnimationFrame(function() {
+      var w = drop.offsetWidth, vw = window.innerWidth;
+      drop.style.left = Math.max(8, Math.min(x - w / 2, vw - w - 8)) + 'px';
+    });
+  }
+
+  document.getElementById('blank-top-tabs').addEventListener('click', function(e) {
+    if (_currentPattern !== 'top-nav-tabs') return;
+    _clickX = e.clientX;
+    e.stopPropagation();
+    var activeNow = this.getAttribute('active');
+    if (activeNow !== _prevActive) {
+      _prevActive = activeNow;
+      _openDrop(activeNow, _clickX);
+    } else {
+      if (_dropKey === activeNow) _closeDrop();
+      else _openDrop(activeNow, _clickX);
+    }
+  });
+
+  drop.addEventListener('click', function(e) { e.stopPropagation(); });
+  document.addEventListener('click', function() { if (_currentPattern === 'top-nav-tabs') _closeDrop(); });
+  document.addEventListener('keydown', function(e) { if (e.key === 'Escape') _closeDrop(); });
 });
 
 /* Live-sync when navigation designer changes settings */
 window.addEventListener('storage', function(e) {
   if (e.key === 'freshds-nav-cfg') {
     var loggedIn = SP_ZONES[0] && SP_ZONES[0].on;
-    if (loggedIn) _buildSidebar();
+    if (loggedIn) _applyNavPattern();
   }
 });
 
@@ -413,11 +554,13 @@ var SP_RULES = {
     'Never duplicate the logo -- always use the brand slot, never render it inline.'
   ],
   'NAVIGATION PATTERN': [
-    'The sidebar pattern is driven by nav_pattern in freshds-nav-cfg (set in the navigation designer).',
+    'The nav pattern is driven by nav_pattern in freshds-nav-cfg (set in the navigation designer).',
     'persistent-sidebar: full-width sidebar (240px), always visible, expanded nav groups.',
-    'collapsible-sidebar: icon rail (56px collapsed), expands via the hamburger button in the navbar.',
+    'collapsible-sidebar: sidebar starts expanded, hamburger collapses to 56px icon rail with flyout sub-menus.',
+    'top-nav-tabs: tab strip below the navbar (fresh-topbar-menu), no sidebar; clicking a tab shows child links in a dropdown.',
+    'dual-level, hamburger-drawer, command-palette: navbar only on blank slate; no secondary nav chrome.',
     'Nav items come from the taxonomy array in freshds-nav-cfg, falling back to the DS default taxonomy.',
-    'Changes in the navigation designer apply live to this page without reload.'
+    'Changes in the navigation designer apply live without reload.'
   ],
   'PAGE GRID': [
     'Content below the navbar uses var(--space-6) padding on all sides (desktop).',
