@@ -42,25 +42,21 @@
   align-items: center;
   gap: 5px;
   height: 28px;
-  padding: 0 10px;
-  border: 1px solid rgba(108,99,255,0.35);
-  border-radius: 99px;
-  background: rgba(108,99,255,0.12);
-  color: #9490ff;
+  padding: 0 4px;
+  border: none;
+  border-radius: var(--radius-full);
+  background: transparent;
+  color: var(--text-secondary);
   font-size: 12px;
   font-weight: 500;
   font-family: -apple-system, BlinkMacSystemFont, 'Inter', system-ui, sans-serif;
   cursor: pointer;
   white-space: nowrap;
   flex-shrink: 0;
-  transition: background 150ms, color 150ms, border-color 150ms;
+  transition: background 150ms, color 150ms;
   -webkit-font-smoothing: antialiased;
 }
-.demo-spec-btn:hover {
-  background: rgba(108,99,255,0.22);
-  border-color: rgba(108,99,255,0.6);
-  color: #c0bcff;
-}
+.demo-spec-btn:hover { background: var(--surface-subtle); color: var(--text-primary); }
 .demo-spec-btn i { font-size: 13px; }
 
 /* ============================================================
@@ -150,14 +146,7 @@
   transition: background 120ms;
 }
 .sp-zone:hover { background: #1a1f30; }
-.sp-zone-num {
-  font-size: 11px;
-  font-weight: 600;
-  color: #5c6b90;
-  width: 13px;
-  flex-shrink: 0;
-  text-align: right;
-}
+.sp-zone-num { display: none; }
 .sp-zone-dot {
   width: 8px;
   height: 8px;
@@ -254,7 +243,7 @@
   transition: background 120ms;
 }
 .sp-rule:hover { background: #1c2134; }
-.sp-rule:focus-within { background: #1e2540; box-shadow: inset 2px 0 0 #6c63ff; }
+.sp-rule:focus-within { background: rgba(140, 130, 255, 0.18); }
 .sp-rule-dot {
   width: 5px;
   height: 5px;
@@ -275,20 +264,20 @@
 }
 .sp-rule-text:focus { color: #e8ecf4; }
 .sp-rule-del {
-  width: 18px;
-  height: 18px;
+  width: 22px;
+  height: 22px;
   border: none;
   border-radius: 4px;
   background: transparent;
-  color: #6870a0;
+  color: #8890c0;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 11px;
-  opacity: 0.35;
+  font-size: 14px;
+  opacity: 0.45;
   flex-shrink: 0;
-  margin-top: 3px;
+  margin-top: 2px;
   transition: opacity 150ms, background 150ms, color 150ms;
 }
 .sp-rule:hover .sp-rule-del { opacity: 1; }
