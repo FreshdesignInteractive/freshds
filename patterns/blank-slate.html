@@ -442,11 +442,32 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 
-/* Live-sync when navigation designer saves changes */
+/* Live-sync when navigation designer saves changes (cross-tab storage event) */
 window.addEventListener('storage', function(e) {
   if (e.key !== 'freshds-nav-cfg') return;
   _applyNavPattern();
   if (window.FreshNavApply) window.FreshNavApply.apply();
+});
+
+/* Polling fallback: catches same-tab navigation and bfcache restores
+   where the storage event never fires */
+var _lastNavCfgStr = null;
+(function _poll() {
+  var s = localStorage.getItem('freshds-nav-cfg') || '';
+  if (s !== _lastNavCfgStr) {
+    _lastNavCfgStr = s;
+    _applyNavPattern();
+    if (window.FreshNavApply) window.FreshNavApply.apply();
+  }
+  setTimeout(_poll, 400);
+}());
+
+/* Re-apply on bfcache restore (browser back button) */
+window.addEventListener('pageshow', function(e) {
+  if (e.persisted) {
+    _applyNavPattern();
+    if (window.FreshNavApply) window.FreshNavApply.apply();
+  }
 });
 
 /* ── Spec data ───────────────────────────────────────────── */
