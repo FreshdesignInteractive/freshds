@@ -137,7 +137,7 @@
   font-size: 10px;
   font-weight: 700;
   letter-spacing: 0.09em;
-  color: #4a5470;
+  color: #7282a8;
   padding: 0 16px 8px;
 }
 
@@ -153,7 +153,7 @@
 .sp-zone-num {
   font-size: 11px;
   font-weight: 600;
-  color: #4a5470;
+  color: #5c6b90;
   width: 13px;
   flex-shrink: 0;
   text-align: right;
@@ -175,7 +175,7 @@
   font-size: 10px;
   font-weight: 600;
   letter-spacing: 0.04em;
-  color: #4a5470;
+  color: #5c6b90;
   flex-shrink: 0;
 }
 .sp-zone-badge.sp-req { color: #7c74ff; }
@@ -241,15 +241,20 @@
   font-size: 10px;
   font-weight: 700;
   letter-spacing: 0.07em;
-  color: #4a5470;
+  color: #7282a8;
   margin-bottom: 6px;
 }
 .sp-rule {
   display: flex;
   align-items: flex-start;
   gap: 8px;
-  padding: 4px 0;
+  padding: 4px 6px;
+  margin: 0 -6px;
+  border-radius: 5px;
+  transition: background 120ms;
 }
+.sp-rule:hover { background: #1c2134; }
+.sp-rule:focus-within { background: #1e2540; box-shadow: inset 2px 0 0 #6c63ff; }
 .sp-rule-dot {
   width: 5px;
   height: 5px;
@@ -262,7 +267,7 @@
   flex: 1;
   font-size: 12px;
   line-height: 1.6;
-  color: #9aa3be;
+  color: #b0bace;
   outline: none;
   word-break: break-word;
   min-width: 0;
@@ -275,19 +280,19 @@
   border: none;
   border-radius: 4px;
   background: transparent;
-  color: #4a5470;
+  color: #6870a0;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 11px;
-  opacity: 0;
+  opacity: 0.35;
   flex-shrink: 0;
   margin-top: 3px;
   transition: opacity 150ms, background 150ms, color 150ms;
 }
 .sp-rule:hover .sp-rule-del { opacity: 1; }
-.sp-rule-del:hover { background: rgba(232,84,84,0.15); color: #e85454; }
+.sp-rule-del:hover { background: rgba(255,80,100,0.18); color: #ff6080; }
 .sp-add-rule {
   display: inline-flex;
   align-items: center;
@@ -295,7 +300,7 @@
   margin-top: 4px;
   padding: 3px 0;
   font-size: 11px;
-  color: #4a5470;
+  color: #6272a0;
   cursor: pointer;
   border: none;
   background: transparent;
@@ -303,7 +308,7 @@
   -webkit-font-smoothing: antialiased;
   transition: color 150ms;
 }
-.sp-add-rule:hover { color: #6c63ff; }
+.sp-add-rule:hover { color: #9490ff; }
 
 /* bottom bar */
 .sp-bottom {
