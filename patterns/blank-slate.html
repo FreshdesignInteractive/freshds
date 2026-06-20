@@ -311,9 +311,21 @@
 <script src="../components/data/fresh-avatar.js"></script>
 <script src="../components/core/fresh-button.js"></script>
 <script>
-/* ── Apply logo config from navigation designer ─────────── */
+/* ── Icon key -> Tabler class map (mirrors navigation.html) ─ */
+var NB_ICON_MAP = {
+  search:   'ti-search',
+  bell:     'ti-bell',
+  help:     'ti-help-circle',
+  plus:     'ti-circle-plus',
+  grid:     'ti-grid-dots',
+  settings: 'ti-settings-2',
+  messages: 'ti-message-circle',
+  bookmark: 'ti-bookmark'
+};
+
+/* ── Apply full navbar config from navigation designer ───── */
 function _applyNavCfg() {
-  var cfg = { logoUrl: '', logoUrlDark: '' };
+  var cfg = { logoUrl: '', logoUrlDark: '', activeIcons: [] };
   try {
     var s = localStorage.getItem('freshds-nav-cfg');
     if (s) {
@@ -325,11 +337,10 @@ function _applyNavCfg() {
   var navbar = document.getElementById('blank-topbar');
   if (!navbar) return;
 
+  /* Logo */
   navbar.querySelectorAll('[slot="brand"]').forEach(function(el) { el.remove(); });
-
   var effLight = cfg.logoUrl    || cfg.logoUrlDark;
   var effDark  = cfg.logoUrlDark || cfg.logoUrl;
-
   if (effLight || effDark) {
     var brandDiv = document.createElement('div');
     brandDiv.setAttribute('slot', 'brand');
@@ -342,6 +353,15 @@ function _applyNavCfg() {
     }
     navbar.insertBefore(brandDiv, navbar.firstChild);
   }
+
+  /* Logged-in action icons */
+  var icons = (cfg.activeIcons || []).map(function(key) {
+    var cls = NB_ICON_MAP[key];
+    if (!cls) return '';
+    return '<fresh-button variant="ghost" size="sm" aria-label="' + key + '"><i class="ti ' + cls + '"></i></fresh-button>';
+  }).join('');
+  document.getElementById('bs-actions-in').innerHTML =
+    icons + '<fresh-avatar name="Jane Smith" size="sm"></fresh-avatar>';
 }
 
 _applyNavCfg();
