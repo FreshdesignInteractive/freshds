@@ -190,24 +190,8 @@
 
           <!-- Live chart -->
           <div style="margin-bottom:var(--space-4)">
-            <fresh-chart title="Request rate — last 5 minutes" description="Requests per second · Live" height="180px">
-              <svg viewBox="0 0 600 120" style="width:100%;height:100%;display:block;" preserveAspectRatio="none">
-                <defs>
-                  <linearGradient id="rt-grad" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stop-color="var(--dv-1)" stop-opacity="0.2"/>
-                    <stop offset="100%" stop-color="var(--dv-1)" stop-opacity="0"/>
-                  </linearGradient>
-                </defs>
-                <!-- horizontal guides -->
-                <line x1="0" y1="30" x2="600" y2="30" stroke="var(--surface-border)" stroke-width="1"/>
-                <line x1="0" y1="60" x2="600" y2="60" stroke="var(--surface-border)" stroke-width="1"/>
-                <line x1="0" y1="90" x2="600" y2="90" stroke="var(--surface-border)" stroke-width="1"/>
-                <!-- fill -->
-                <path d="M0,80 C20,75 40,70 60,65 C80,60 100,72 120,68 C140,64 160,55 180,52 C200,49 220,58 240,54 C260,50 280,42 300,45 C320,48 340,38 360,35 C380,32 400,40 420,36 C440,32 460,25 480,22 C500,19 520,28 540,24 C560,20 580,16 600,14 L600,120 L0,120 Z" fill="url(#rt-grad)"/>
-                <path d="M0,80 C20,75 40,70 60,65 C80,60 100,72 120,68 C140,64 160,55 180,52 C200,49 220,58 240,54 C260,50 280,42 300,45 C320,48 340,38 360,35 C380,32 400,40 420,36 C440,32 460,25 480,22 C500,19 520,28 540,24 C560,20 580,16 600,14" fill="none" stroke="var(--dv-1)" stroke-width="2" stroke-linecap="round"/>
-                <!-- active dot at end -->
-                <circle cx="600" cy="14" r="5" fill="var(--dv-1)" stroke="var(--surface-canvas)" stroke-width="2"/>
-              </svg>
+            <fresh-chart title="Request rate — last 5 minutes" description="Requests per second, Live" height="180px">
+              <canvas id="dr-req-canvas" style="display:block;" aria-hidden="true"></canvas>
             </fresh-chart>
           </div>
 
@@ -241,8 +225,39 @@
     document.getElementById('app-nav').classList.toggle('open');
   });
 </script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.min.js"></script>
 <script src="../components/core/fresh-button.js"></script>
 <script src="../components/data/fresh-avatar.js"></script>
 <script src="../components/data/fresh-chart.js"></script>
+<script>
+(function() {
+  var _chart = null;
+  function _tok(n) { return getComputedStyle(document.documentElement).getPropertyValue(n).trim(); }
+  function _render() {
+    if (_chart) { _chart.destroy(); _chart = null; }
+    var canvas = document.getElementById('dr-req-canvas');
+    if (!canvas || typeof Chart === 'undefined') return;
+    var dv1 = _tok('--dv-1'), dv1s = _tok('--dv-1-subtle');
+    var t = _tok('--text-tertiary'), b = _tok('--surface-border');
+    var axTick = { color: t, font: { family: 'Inter,sans-serif', size: 11 } };
+    _chart = new Chart(canvas, { type: 'line', data: {
+      labels: ['-5:00','-4:45','-4:30','-4:15','-4:00','-3:45','-3:30','-3:15','-3:00','-2:45','-2:30','-2:15','-2:00','-1:45','-1:30','-1:15','-1:00','-0:45','-0:30','Now'],
+      datasets: [{ label: 'req/s', data: [58,62,68,65,72,80,75,85,78,90,88,95,92,88,96,102,98,110,108,115],
+        borderColor: dv1, backgroundColor: dv1s, fill: true, tension: 0.3, borderWidth: 2,
+        pointBackgroundColor: dv1, pointBorderColor: 'transparent', pointRadius: 0, pointHoverRadius: 5 }]
+    }, options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false },
+        tooltip: { callbacks: { label: function(ctx) { return ctx.parsed.y + ' req/s'; } } } },
+      scales: {
+        x: { grid: { color: b }, ticks: Object.assign({}, axTick, { maxTicksLimit: 6 }) },
+        y: { grid: { color: b }, ticks: Object.assign({}, axTick, { callback: function(v) { return v + '/s'; } }) }
+      }
+    }});
+  }
+  new MutationObserver(_render).observe(document.documentElement, { attributes: true, attributeFilter: ['data-mode'] });
+  requestAnimationFrame(_render);
+}());
+</script>
 </body>
 </html>

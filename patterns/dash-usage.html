@@ -232,19 +232,7 @@
 
               <!-- Usage trend chart -->
               <fresh-chart title="API usage trend" description="Daily API calls over last 30 days" height="180px">
-                <svg viewBox="0 0 300 120" style="width:100%;height:100%;display:block;" preserveAspectRatio="none">
-                  <defs>
-                    <linearGradient id="usage-grad" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0%" stop-color="var(--dv-5)" stop-opacity="0.2"/>
-                      <stop offset="100%" stop-color="var(--dv-5)" stop-opacity="0"/>
-                    </linearGradient>
-                  </defs>
-                  <path d="M0,100 C20,96 40,90 60,84 C80,78 100,82 120,74 C140,66 160,60 180,54 C200,48 220,52 240,44 C260,36 280,30 300,22 L300,120 L0,120 Z" fill="url(#usage-grad)"/>
-                  <path d="M0,100 C20,96 40,90 60,84 C80,78 100,82 120,74 C140,66 160,60 180,54 C200,48 220,52 240,44 C260,36 280,30 300,22" fill="none" stroke="var(--dv-5)" stroke-width="2" stroke-linecap="round"/>
-                  <!-- warning threshold line -->
-                  <line x1="0" y1="32" x2="300" y2="32" stroke="var(--color-danger)" stroke-width="1" stroke-dasharray="4 3" opacity="0.6"/>
-                  <text x="4" y="28" font-size="8" fill="var(--color-danger)" opacity="0.8">80% limit</text>
-                </svg>
+                <canvas id="du-api-canvas" style="display:block;" aria-hidden="true"></canvas>
               </fresh-chart>
             </div>
 
@@ -261,10 +249,47 @@
     document.getElementById('app-nav').classList.toggle('open');
   });
 </script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.min.js"></script>
 <script src="../components/core/fresh-button.js"></script>
 <script src="../components/data/fresh-avatar.js"></script>
 <script src="../components/data/fresh-chart.js"></script>
 <script src="../components/feedback/fresh-progress.js"></script>
 <script src="../components/ai/fresh-token-meter.js"></script>
+<script>
+(function() {
+  var _chart = null;
+  function _tok(n) { return getComputedStyle(document.documentElement).getPropertyValue(n).trim(); }
+  function _render() {
+    if (_chart) { _chart.destroy(); _chart = null; }
+    var canvas = document.getElementById('du-api-canvas');
+    if (!canvas || typeof Chart === 'undefined') return;
+    var dv5 = _tok('--dv-5'), dv5s = _tok('--dv-5-subtle'), danger = _tok('--color-danger');
+    var t = _tok('--text-tertiary'), b = _tok('--surface-border');
+    var axTick = { color: t, font: { family: 'Inter,sans-serif', size: 11 } };
+    _chart = new Chart(canvas, { type: 'line', data: {
+      labels: ['Apr 1','Apr 4','Apr 7','Apr 10','Apr 13','Apr 16','Apr 19','Apr 22','Apr 25','Apr 28'],
+      datasets: [
+        { label: 'API calls', data: [12400,13800,14200,15600,16800,17200,18600,19400,20800,22100],
+          borderColor: dv5, backgroundColor: dv5s, fill: true, tension: 0.4, borderWidth: 2,
+          pointBackgroundColor: dv5, pointBorderColor: 'transparent', pointRadius: 0, pointHoverRadius: 5 },
+        { label: '80% limit', data: [22400,22400,22400,22400,22400,22400,22400,22400,22400,22400],
+          borderColor: danger, backgroundColor: 'transparent', fill: false,
+          borderWidth: 1, borderDash: [4,3], pointRadius: 0, pointHoverRadius: 0 }
+      ]
+    }, options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false },
+        tooltip: { filter: function(item) { return item.datasetIndex === 0; },
+          callbacks: { label: function(ctx) { return ctx.parsed.y.toLocaleString() + ' calls'; } } } },
+      scales: {
+        x: { grid: { color: b }, ticks: axTick },
+        y: { grid: { color: b }, ticks: Object.assign({}, axTick, { callback: function(v) { return (v/1000)+'k'; } }) }
+      }
+    }});
+  }
+  new MutationObserver(_render).observe(document.documentElement, { attributes: true, attributeFilter: ['data-mode'] });
+  requestAnimationFrame(_render);
+}());
+</script>
 </body>
 </html>
