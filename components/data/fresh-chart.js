@@ -36,7 +36,15 @@ class FreshChart extends HTMLElement {
   attributeChangedCallback() { this._render(); }
 
   _render() {
-    const title   = this.getAttribute('title')       || '';
+    if (this._rendering) return;
+    this._rendering = true;
+
+    /* Read title before removing it; removing triggers attributeChangedCallback
+       which would re-enter _render() — the guard above stops that. */
+    const title = this.getAttribute('title') || this._chartTitle || '';
+    if (title) this._chartTitle = title;
+    if (this.hasAttribute('title')) this.removeAttribute('title');
+
     const desc    = this.getAttribute('description') || '';
     const height  = this.getAttribute('height')      || '280px';
     const loading = this.hasAttribute('loading');
@@ -93,11 +101,11 @@ class FreshChart extends HTMLElement {
 
         .chart-area {
           height: ${height};
-          padding: var(--space-5) var(--space-6);
           display: flex;
           align-items: center;
           justify-content: center;
           position: relative;
+          overflow: hidden;
         }
 
         .loading-overlay {
@@ -149,6 +157,7 @@ class FreshChart extends HTMLElement {
         </div>
       </div>
     `;
+    this._rendering = false;
   }
 }
 
