@@ -22,7 +22,7 @@
 
 <div class="comp-page">
   <h1 class="comp-title">Chart</h1>
-  <p class="comp-desc">A consistent container for any chart library, Chart.js, Recharts, D3, or custom SVG. Provides the FreshDS card header, border, and responsive padding. You supply the chart via the default slot.</p>
+  <p class="comp-desc">Chart container using Chart.js. Provides the FreshDS card header, border, and a 20px-guttered chart area. The component owns a built-in canvas; initialize Chart.js by passing <code>element.chartCanvas</code> directly to <code>new Chart()</code>. Do not place a <code>&lt;canvas&gt;</code> inside the element. Use the <code>actions</code> slot for header controls.</p>
 
   <!-- STATES CARD -->
   <div class="comp-section">
@@ -42,7 +42,7 @@
             <span class="spec-variant-name">Area chart</span>
             <span class="spec-attr-chip">title + description</span>
             <span class="spec-variant-sep">·</span>
-            <span class="spec-variant-desc">Card header is shown when either title or description is provided. Chart content goes in the default slot.</span>
+            <span class="spec-variant-desc">Card header is shown when either title or description is provided. Initialize Chart.js by reading <code>element.chartCanvas</code> and passing it to <code>new Chart()</code>.</span>
           </div>
           <div class="spec-variant-body">
             <div class="spec-demos" style="display:block;width:100%;">
@@ -57,7 +57,7 @@
             <span class="spec-variant-name">Bar chart</span>
             <span class="spec-attr-chip">default slot</span>
             <span class="spec-variant-sep">·</span>
-            <span class="spec-variant-desc">Any SVG, canvas, or chart library output can go in the slot. Use --dv-1 through --dv-8 for series colors.</span>
+            <span class="spec-variant-desc">Use <code>--dv-1</code> through <code>--dv-8</code> for series colors. Pass an array to <code>backgroundColor</code> for per-bar coloring across series.</span>
           </div>
           <div class="spec-variant-body">
             <div class="spec-demos" style="display:block;width:100%;">
@@ -137,11 +137,13 @@
           <span class="spec-attr-chip">fresh-chart</span>
         </div>
         <ul class="spec-rule-list" id="rules-general">
-          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Always use <code>--dv-1</code> through <code>--dv-8</code> tokens for chart series colors. Never use brand scale tokens (<code>--primary-*</code>, <code>--secondary-*</code>) inside charts.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
-          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Assign series colors in order starting at <code>--dv-1</code>. Do not skip tokens or pick arbitrary ones. Consistent ordering makes multi-chart dashboards scannable.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
-          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Show the <code>loading</code> state immediately when data is being fetched. Do not render a chart with empty or placeholder data, use <code>loading</code> then replace the attribute when data arrives.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
-          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Always provide <code>aria-hidden="true"</code> on the chart SVG or canvas and describe the key insight in <code>description</code> so screen readers get context without parsing chart graphics.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
-          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Load <code>tokens/dataviz.css</code> on any page that uses <code>fresh-chart</code>. The <code>--dv-*</code> tokens are defined in that file and are not included in theme.css.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">This component uses Chart.js v4. Load <code>cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.min.js</code> before <code>fresh-chart.js</code> on every page that renders charts.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Initialize Chart.js by calling <code>element.chartCanvas</code> on the <code>&lt;fresh-chart&gt;</code> element and passing the result to <code>new Chart()</code>. Do not place a <code>&lt;canvas&gt;</code> inside the element — the canvas is built into the shadow DOM.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Always use <code>responsive: true, maintainAspectRatio: false</code> in Chart.js options. The canvas is already sized to fill the 20px-guttered chart area; no additional layout config is needed.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Read dataviz tokens at render time: <code>getComputedStyle(element).getPropertyValue('--dv-1').trim()</code>. On dark mode change, destroy the chart and re-initialize by observing the <code>data-mode</code> attribute on <code>document.documentElement</code> (pattern pages) or <code>#spec-viewport</code> (this component doc page).</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Always use <code>--dv-1</code> through <code>--dv-8</code> tokens for chart series colors. Never use brand scale tokens (<code>--primary-*</code>, <code>--secondary-*</code>) inside charts. Assign in order starting at <code>--dv-1</code>; do not skip.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Show the <code>loading</code> attribute immediately when data is fetching. Remove it and call <code>element.chartCanvas</code> only once data is ready. Use <code>empty</code> when a query returns no results.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Load <code>tokens/dataviz.css</code> on any page that uses <code>fresh-chart</code>. The <code>--dv-*</code> tokens are defined there and are not included in theme.css.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
         </ul>
         <button class="spec-add-rule" onclick="addRule('rules-general')"><i class="ti ti-plus"></i> Add rule</button>
       </div>
@@ -173,8 +175,7 @@
       <table class="spec-a11y-table">
         <thead><tr><th style="width:130px">Slot</th><th>Description</th></tr></thead>
         <tbody>
-          <tr class="spec-a11y-row"><td class="spec-a11y-concern">default</td><td class="spec-a11y-req">Your chart element: an SVG, canvas, or a chart library component. Sized to fill the chart area via <code>::slotted(*) { width:100%; height:100%; }</code>.</td></tr>
-          <tr class="spec-a11y-row"><td class="spec-a11y-concern">actions</td><td class="spec-a11y-req">Buttons or controls rendered top-right in the card header. Requires <code>title</code> or <code>description</code> to be set for the header to appear.</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">actions</td><td class="spec-a11y-req">Buttons or controls rendered top-right in the card header. Requires <code>title</code> or <code>description</code> to be set for the header to appear. Chart content is not slotted; use <code>element.chartCanvas</code> instead.</td></tr>
         </tbody>
       </table>
     </div>
@@ -186,55 +187,77 @@
       <div class="spec-rules-topbar"><span class="spec-rules-title">Code</span></div>
       <div style="padding:16px 20px;display:flex;flex-direction:column;gap:0;">
 
-        <div class="code-block" data-code="&lt;fresh-chart title=&quot;Monthly revenue&quot; description=&quot;MRR across all plans, last 6 months&quot; height=&quot;220px&quot;&gt;
-  &lt;svg viewBox=&quot;0 0 480 160&quot; style=&quot;width:100%;height:100%&quot; aria-hidden=&quot;true&quot;&gt;
-    &lt;!-- your chart path/rect elements here --&gt;
-    &lt;!-- Use var(--dv-1) through var(--dv-8) for series colors --&gt;
-  &lt;/svg&gt;
-&lt;/fresh-chart&gt;">
-          <div class="code-block-header"><span><span class="code-lang">HTML</span><span class="code-context">Area chart</span></span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
-          <div class="code-body"><span class="hl-pun">&lt;</span><span class="hl-tag">fresh-chart</span> <span class="hl-attr">title</span><span class="hl-pun">=</span><span class="hl-val">"Monthly revenue"</span> <span class="hl-attr">description</span><span class="hl-pun">=</span><span class="hl-val">"MRR across all plans, last 6 months"</span> <span class="hl-attr">height</span><span class="hl-pun">=</span><span class="hl-val">"220px"</span><span class="hl-pun">&gt;</span>
-  <span class="hl-pun">&lt;</span><span class="hl-tag">svg</span> <span class="hl-attr">viewBox</span><span class="hl-pun">=</span><span class="hl-val">"0 0 480 160"</span> <span class="hl-attr">style</span><span class="hl-pun">=</span><span class="hl-val">"width:100%;height:100%"</span> <span class="hl-attr">aria-hidden</span><span class="hl-pun">=</span><span class="hl-val">"true"</span><span class="hl-pun">&gt;</span>
-    <span class="hl-cmt">&lt;!-- your chart path/rect elements here --&gt;</span>
-    <span class="hl-cmt">&lt;!-- Use var(--dv-1) through var(--dv-8) for series colors --&gt;</span>
-  <span class="hl-pun">&lt;/</span><span class="hl-tag">svg</span><span class="hl-pun">&gt;</span>
-<span class="hl-pun">&lt;/</span><span class="hl-tag">fresh-chart</span><span class="hl-pun">&gt;</span></div>
+        <div class="code-block" data-code="&lt;fresh-chart id=&quot;revenue-fc&quot; title=&quot;Monthly revenue&quot; description=&quot;MRR across all plans&quot; height=&quot;220px&quot;&gt;&lt;/fresh-chart&gt;
+
+// Access the component's built-in canvas and pass to Chart.js
+var canvas = document.getElementById('revenue-fc').chartCanvas;
+new Chart(canvas, {
+  type: 'line',
+  data: {
+    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+    datasets: [{ data: [32, 35.8, 38.5, 41.2, 44.8, 48.3],
+      borderColor: getComputedStyle(document.documentElement).getPropertyValue('--dv-1').trim(),
+      backgroundColor: getComputedStyle(document.documentElement).getPropertyValue('--dv-1-subtle').trim(),
+      fill: true, tension: 0.4, borderWidth: 2 }]
+  },
+  options: { responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { display: false } } }
+});">
+          <div class="code-block-header"><span><span class="code-lang">HTML + JS</span><span class="code-context">Initialize Chart.js</span></span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+          <div class="code-body"><span class="hl-pun">&lt;</span><span class="hl-tag">fresh-chart</span> <span class="hl-attr">id</span><span class="hl-pun">=</span><span class="hl-val">"revenue-fc"</span> <span class="hl-attr">title</span><span class="hl-pun">=</span><span class="hl-val">"Monthly revenue"</span> <span class="hl-attr">description</span><span class="hl-pun">=</span><span class="hl-val">"MRR across all plans"</span> <span class="hl-attr">height</span><span class="hl-pun">=</span><span class="hl-val">"220px"</span><span class="hl-pun">&gt;&lt;/</span><span class="hl-tag">fresh-chart</span><span class="hl-pun">&gt;</span>
+
+<span class="hl-cmt">// Access the component's built-in canvas and pass to Chart.js</span>
+var canvas = document.getElementById(<span class="hl-val">'revenue-fc'</span>).chartCanvas;
+new Chart(canvas, {
+  type: <span class="hl-val">'line'</span>,
+  data: {
+    labels: [<span class="hl-val">'Jan'</span>, <span class="hl-val">'Feb'</span>, <span class="hl-val">'Mar'</span>, <span class="hl-val">'Apr'</span>, <span class="hl-val">'May'</span>, <span class="hl-val">'Jun'</span>],
+    datasets: [{ data: [<span class="hl-num">32</span>, <span class="hl-num">35.8</span>, <span class="hl-num">38.5</span>, <span class="hl-num">41.2</span>, <span class="hl-num">44.8</span>, <span class="hl-num">48.3</span>],
+      borderColor: getComputedStyle(document.documentElement).getPropertyValue(<span class="hl-val">'--dv-1'</span>).trim(),
+      backgroundColor: getComputedStyle(document.documentElement).getPropertyValue(<span class="hl-val">'--dv-1-subtle'</span>).trim(),
+      fill: true, tension: <span class="hl-num">0.4</span>, borderWidth: <span class="hl-num">2</span> }]
+  },
+  options: { responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { display: false } } }
+});</div>
         </div>
 
-        <div class="code-block" data-code="&lt;!-- Loading skeleton while data fetches --&gt;
-&lt;fresh-chart title=&quot;Revenue&quot; loading height=&quot;220px&quot;&gt;&lt;/fresh-chart&gt;
+        <div class="code-block" data-code="&lt;fresh-chart id=&quot;revenue-fc&quot; title=&quot;Revenue&quot; loading height=&quot;220px&quot;&gt;&lt;/fresh-chart&gt;
 
-&lt;!-- Once data loads, replace loading with chart content --&gt;
-&lt;fresh-chart title=&quot;Revenue&quot; height=&quot;220px&quot;&gt;
-  &lt;canvas id=&quot;revenue-chart&quot;&gt;&lt;/canvas&gt;
-&lt;/fresh-chart&gt;">
-          <div class="code-block-header"><span><span class="code-lang">HTML</span><span class="code-context">Loading then content</span></span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
-          <div class="code-body"><span class="hl-cmt">&lt;!-- Loading skeleton while data fetches --&gt;</span>
-<span class="hl-pun">&lt;</span><span class="hl-tag">fresh-chart</span> <span class="hl-attr">title</span><span class="hl-pun">=</span><span class="hl-val">"Revenue"</span> <span class="hl-attr">loading</span> <span class="hl-attr">height</span><span class="hl-pun">=</span><span class="hl-val">"220px"</span><span class="hl-pun">&gt;&lt;/</span><span class="hl-tag">fresh-chart</span><span class="hl-pun">&gt;</span>
+// When data arrives: remove loading, then initialize Chart.js
+var fc = document.getElementById('revenue-fc');
+fc.removeAttribute('loading');
+new Chart(fc.chartCanvas, { type: 'line', data: { ... },
+  options: { responsive: true, maintainAspectRatio: false } });">
+          <div class="code-block-header"><span><span class="code-lang">HTML + JS</span><span class="code-context">Loading then content</span></span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+          <div class="code-body"><span class="hl-pun">&lt;</span><span class="hl-tag">fresh-chart</span> <span class="hl-attr">id</span><span class="hl-pun">=</span><span class="hl-val">"revenue-fc"</span> <span class="hl-attr">title</span><span class="hl-pun">=</span><span class="hl-val">"Revenue"</span> <span class="hl-attr">loading</span> <span class="hl-attr">height</span><span class="hl-pun">=</span><span class="hl-val">"220px"</span><span class="hl-pun">&gt;&lt;/</span><span class="hl-tag">fresh-chart</span><span class="hl-pun">&gt;</span>
 
-<span class="hl-cmt">&lt;!-- Once data loads, replace loading with chart content --&gt;</span>
-<span class="hl-pun">&lt;</span><span class="hl-tag">fresh-chart</span> <span class="hl-attr">title</span><span class="hl-pun">=</span><span class="hl-val">"Revenue"</span> <span class="hl-attr">height</span><span class="hl-pun">=</span><span class="hl-val">"220px"</span><span class="hl-pun">&gt;</span>
-  <span class="hl-pun">&lt;</span><span class="hl-tag">canvas</span> <span class="hl-attr">id</span><span class="hl-pun">=</span><span class="hl-val">"revenue-chart"</span><span class="hl-pun">&gt;&lt;/</span><span class="hl-tag">canvas</span><span class="hl-pun">&gt;</span>
-<span class="hl-pun">&lt;/</span><span class="hl-tag">fresh-chart</span><span class="hl-pun">&gt;</span></div>
+<span class="hl-cmt">// When data arrives: remove loading, then initialize Chart.js</span>
+var fc = document.getElementById(<span class="hl-val">'revenue-fc'</span>);
+fc.removeAttribute(<span class="hl-val">'loading'</span>);
+new Chart(fc.chartCanvas, { type: <span class="hl-val">'line'</span>, data: { ... },
+  options: { responsive: true, maintainAspectRatio: false } });</div>
         </div>
 
-        <div class="code-block" data-code="&lt;fresh-chart title=&quot;Sessions&quot; description=&quot;Last 24 hours&quot; height=&quot;200px&quot;&gt;
+        <div class="code-block" data-code="&lt;fresh-chart id=&quot;sessions-fc&quot; title=&quot;Sessions&quot; description=&quot;Last 24 hours&quot; height=&quot;200px&quot;&gt;
   &lt;div slot=&quot;actions&quot;&gt;
     &lt;fresh-button variant=&quot;ghost&quot; size=&quot;sm&quot;&gt;
       &lt;i class=&quot;ti ti-download&quot;&gt;&lt;/i&gt; Export
     &lt;/fresh-button&gt;
   &lt;/div&gt;
-  &lt;canvas id=&quot;sessions-chart&quot;&gt;&lt;/canvas&gt;
-&lt;/fresh-chart&gt;">
-          <div class="code-block-header"><span><span class="code-lang">HTML</span><span class="code-context">With actions slot</span></span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
-          <div class="code-body"><span class="hl-pun">&lt;</span><span class="hl-tag">fresh-chart</span> <span class="hl-attr">title</span><span class="hl-pun">=</span><span class="hl-val">"Sessions"</span> <span class="hl-attr">description</span><span class="hl-pun">=</span><span class="hl-val">"Last 24 hours"</span> <span class="hl-attr">height</span><span class="hl-pun">=</span><span class="hl-val">"200px"</span><span class="hl-pun">&gt;</span>
+&lt;/fresh-chart&gt;
+
+new Chart(document.getElementById('sessions-fc').chartCanvas, { ... });">
+          <div class="code-block-header"><span><span class="code-lang">HTML + JS</span><span class="code-context">With actions slot</span></span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+          <div class="code-body"><span class="hl-pun">&lt;</span><span class="hl-tag">fresh-chart</span> <span class="hl-attr">id</span><span class="hl-pun">=</span><span class="hl-val">"sessions-fc"</span> <span class="hl-attr">title</span><span class="hl-pun">=</span><span class="hl-val">"Sessions"</span> <span class="hl-attr">description</span><span class="hl-pun">=</span><span class="hl-val">"Last 24 hours"</span> <span class="hl-attr">height</span><span class="hl-pun">=</span><span class="hl-val">"200px"</span><span class="hl-pun">&gt;</span>
   <span class="hl-pun">&lt;</span><span class="hl-tag">div</span> <span class="hl-attr">slot</span><span class="hl-pun">=</span><span class="hl-val">"actions"</span><span class="hl-pun">&gt;</span>
     <span class="hl-pun">&lt;</span><span class="hl-tag">fresh-button</span> <span class="hl-attr">variant</span><span class="hl-pun">=</span><span class="hl-val">"ghost"</span> <span class="hl-attr">size</span><span class="hl-pun">=</span><span class="hl-val">"sm"</span><span class="hl-pun">&gt;</span>
       <span class="hl-pun">&lt;</span><span class="hl-tag">i</span> <span class="hl-attr">class</span><span class="hl-pun">=</span><span class="hl-val">"ti ti-download"</span><span class="hl-pun">&gt;&lt;/</span><span class="hl-tag">i</span><span class="hl-pun">&gt;</span> <span class="hl-txt">Export</span>
     <span class="hl-pun">&lt;/</span><span class="hl-tag">fresh-button</span><span class="hl-pun">&gt;</span>
   <span class="hl-pun">&lt;/</span><span class="hl-tag">div</span><span class="hl-pun">&gt;</span>
-  <span class="hl-pun">&lt;</span><span class="hl-tag">canvas</span> <span class="hl-attr">id</span><span class="hl-pun">=</span><span class="hl-val">"sessions-chart"</span><span class="hl-pun">&gt;&lt;/</span><span class="hl-tag">canvas</span><span class="hl-pun">&gt;</span>
-<span class="hl-pun">&lt;/</span><span class="hl-tag">fresh-chart</span><span class="hl-pun">&gt;</span></div>
+<span class="hl-pun">&lt;/</span><span class="hl-tag">fresh-chart</span><span class="hl-pun">&gt;</span>
+
+new Chart(document.getElementById(<span class="hl-val">'sessions-fc'</span>).chartCanvas, { ... });</div>
         </div>
 
       </div>
@@ -271,7 +294,7 @@
       <table class="spec-a11y-table">
         <thead><tr><th>Concern</th><th>Requirement</th></tr></thead>
         <tbody>
-          <tr class="spec-a11y-row"><td class="spec-a11y-concern">chart content</td><td class="spec-a11y-req">The slotted chart SVG or canvas must carry <code>aria-hidden="true"</code>. Use the <code>description</code> attribute or a visually-hidden text summary to communicate the key data insight to screen readers.</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">chart content</td><td class="spec-a11y-req">The built-in canvas carries <code>aria-hidden="true"</code> automatically. Use the <code>description</code> attribute to communicate the key data insight to screen readers; do not rely on chart graphics for meaning.</td></tr>
           <tr class="spec-a11y-row"><td class="spec-a11y-concern">color-only series</td><td class="spec-a11y-req">When rendering multi-series charts, do not rely on color alone to distinguish series. Add patterns, shapes, or labels directly in the chart so users with color vision deficiency can differentiate them.</td></tr>
           <tr class="spec-a11y-row"><td class="spec-a11y-concern">loading state</td><td class="spec-a11y-req">The shimmer overlay is <code>aria-hidden="true"</code>. Announce loading status with a surrounding <code>aria-live="polite"</code> region if the chart is a primary content area.</td></tr>
         </tbody>
@@ -402,11 +425,13 @@
 <script>
   var DEFAULT_RULES = {
     'rules-general': [
-      'Always use <code>--dv-1</code> through <code>--dv-8</code> tokens for chart series colors. Never use brand scale tokens (<code>--primary-*</code>, <code>--secondary-*</code>) inside charts.',
-      'Assign series colors in order starting at <code>--dv-1</code>. Do not skip tokens or pick arbitrary ones. Consistent ordering makes multi-chart dashboards scannable.',
-      'Show the <code>loading</code> state immediately when data is being fetched. Do not render a chart with empty or placeholder data, use <code>loading</code> then replace the attribute when data arrives.',
-      'Always provide <code>aria-hidden="true"</code> on the chart SVG or canvas and describe the key insight in <code>description</code> so screen readers get context without parsing chart graphics.',
-      'Load <code>tokens/dataviz.css</code> on any page that uses <code>fresh-chart</code>. The <code>--dv-*</code> tokens are defined in that file and are not included in theme.css.'
+      'This component uses Chart.js v4. Load <code>cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.min.js</code> before <code>fresh-chart.js</code> on every page that renders charts.',
+      'Initialize Chart.js by calling <code>element.chartCanvas</code> on the <code>&lt;fresh-chart&gt;</code> element and passing the result to <code>new Chart()</code>. Do not place a <code>&lt;canvas&gt;</code> inside the element — the canvas is built into the shadow DOM.',
+      'Always use <code>responsive: true, maintainAspectRatio: false</code> in Chart.js options. The canvas is already sized to fill the 20px-guttered chart area; no additional layout config is needed.',
+      'Read dataviz tokens at render time: <code>getComputedStyle(element).getPropertyValue(\'--dv-1\').trim()</code>. On dark mode change, destroy the chart and re-initialize by observing the <code>data-mode</code> attribute on <code>document.documentElement</code> (pattern pages) or <code>#spec-viewport</code> (this component doc page).',
+      'Always use <code>--dv-1</code> through <code>--dv-8</code> tokens for chart series colors. Never use brand scale tokens (<code>--primary-*</code>, <code>--secondary-*</code>) inside charts. Assign in order starting at <code>--dv-1</code>; do not skip.',
+      'Show the <code>loading</code> attribute immediately when data is fetching. Remove it and call <code>element.chartCanvas</code> only once data is ready. Use <code>empty</code> when a query returns no results.',
+      'Load <code>tokens/dataviz.css</code> on any page that uses <code>fresh-chart</code>. The <code>--dv-*</code> tokens are defined there and are not included in theme.css.'
     ]
   };
   function restoreDefaults() {
