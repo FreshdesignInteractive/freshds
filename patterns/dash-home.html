@@ -79,18 +79,21 @@ fresh-sidebar[collapsed] .dh-sidebar-user-info { display: none; }
 .dh-tab-drop-item.active { color: var(--nav-active-text); background: var(--nav-active-bg); font-weight: 500; }
 
 /* Content layout */
-/* Stat cards: always 4 in a row, custom grid avoids fds-grid span edge cases */
+/* Stat cards: 4 in a row, minmax(0,1fr) lets tracks shrink below card min-content */
 .dh-stat-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: var(--space-4);
   margin-bottom: var(--space-4);
+}
+@media (max-width: 767px) {
+  .dh-stat-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
 /* Quick stats: 3 in a row at md+, full width stacked on small */
 .dh-quick-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: var(--space-4);
 }
 @media (max-width: 767px) {
@@ -155,9 +158,10 @@ fresh-sidebar[collapsed] .dh-sidebar-user-info { display: none; }
   .dh-main-row { flex-direction: column; align-items: stretch; }
   .dh-activity-col { width: 100%; }
 }
-/* Keep full padding on all screen sizes; override dashboard.css reduction */
-@media (max-width: 767px) {
-  .dash-content { padding: var(--space-6) var(--space-6) var(--space-16) !important; }
+/* Keep consistent padding at all sizes; override dashboard.css reduction */
+#app .dash-content {
+  padding: var(--space-6);
+  padding-bottom: var(--space-16);
 }
 
 /* Spec trigger */
