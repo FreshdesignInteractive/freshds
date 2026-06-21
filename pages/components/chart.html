@@ -323,7 +323,7 @@
         datasets: [{ data: [28000,31500,34800,38200,41400,44600,48320],
           borderColor: dv1, backgroundColor: dv1s, fill: true, tension: 0.4, borderWidth: 2.5,
           pointBackgroundColor: dv1, pointBorderColor: 'transparent', pointRadius: 4, pointHoverRadius: 6 }]
-      }, options: { responsive: true, maintainAspectRatio: false,
+      }, options: { responsive: true, maintainAspectRatio: false, layout: { padding: 20 },
         plugins: { legend: { display: false },
           tooltip: { callbacks: { label: function(ctx) { return '$'+(ctx.parsed.y/1000).toFixed(1)+'k'; } } } },
         scales: { x: { grid: { color: b }, ticks: axTick },
@@ -339,7 +339,7 @@
         datasets: [{ data: [40,82,48,68,92,55],
           backgroundColor: [dv1,dv1,dv1,dv2,dv2,dv2],
           borderRadius: 4, borderWidth: 0 }]
-      }, options: { responsive: true, maintainAspectRatio: false,
+      }, options: { responsive: true, maintainAspectRatio: false, layout: { padding: 20 },
         plugins: { legend: { display: false } },
         scales: { x: { grid: { display: false }, ticks: axTick },
           y: { grid: { color: b }, ticks: Object.assign({}, axTick, { callback: function(v) { return v+'k'; } }) } }
@@ -356,7 +356,7 @@
           { label: 'Pro',        data: [42,49,58,65,74], borderColor: dv2, backgroundColor: 'transparent', fill: false, tension: 0.3, borderWidth: 2, pointRadius: 3, pointBackgroundColor: dv2 },
           { label: 'Enterprise', data: [18,24,32,40,50], borderColor: dv3, backgroundColor: 'transparent', fill: false, tension: 0.3, borderWidth: 2, pointRadius: 3, pointBackgroundColor: dv3 }
         ]
-      }, options: { responsive: true, maintainAspectRatio: false,
+      }, options: { responsive: true, maintainAspectRatio: false, layout: { padding: 20 },
         plugins: { legend: { display: true, labels: { color: t2, boxWidth: 10, boxHeight: 10, font: { family: 'Inter,sans-serif', size: 11 } } } },
         scales: { x: { grid: { color: b }, ticks: axTick },
           y: { grid: { color: b }, ticks: axTick } }
@@ -372,7 +372,7 @@
           borderColor: dv3, backgroundColor: 'transparent', fill: false,
           tension: 0.3, borderWidth: 2.5,
           pointBackgroundColor: dv3, pointBorderColor: 'transparent', pointRadius: 3, pointHoverRadius: 5 }]
-      }, options: { responsive: true, maintainAspectRatio: false,
+      }, options: { responsive: true, maintainAspectRatio: false, layout: { padding: 20 },
         plugins: { legend: { display: false } },
         scales: { x: { grid: { color: b }, ticks: axTick },
           y: { grid: { color: b }, ticks: axTick } }
