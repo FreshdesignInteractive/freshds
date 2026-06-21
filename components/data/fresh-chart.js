@@ -101,16 +101,22 @@ class FreshChart extends HTMLElement {
 
         .chart-area {
           height: ${height};
+          position: relative;
+        }
+
+        /* Inner wrapper is inset 20px on all sides — gives the guaranteed gutter.
+           The canvas fills this div, so no chart content can reach the card border. */
+        .chart-inner {
+          position: absolute;
+          inset: 20px;
           display: flex;
           align-items: center;
           justify-content: center;
-          position: relative;
-          overflow: hidden;
         }
 
         .loading-overlay {
           position: absolute;
-          inset: var(--space-5) var(--space-6);
+          inset: 20px;
           border-radius: var(--radius-md);
           ${shimmer}
         }
@@ -147,13 +153,15 @@ class FreshChart extends HTMLElement {
 
         <div class="chart-area" part="chart-area">
           ${loading ? `<div class="loading-overlay" aria-hidden="true"></div>` : ''}
-          ${empty && !loading
-            ? `<div class="empty-msg">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M3 3v18h18M8 17V9m4 8V5m4 12v-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                No data available
-               </div>`
-            : '<slot></slot>'
-          }
+          <div class="chart-inner">
+            ${empty && !loading
+              ? `<div class="empty-msg">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M3 3v18h18M8 17V9m4 8V5m4 12v-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  No data available
+                 </div>`
+              : '<slot></slot>'
+            }
+          </div>
         </div>
       </div>
     `;
