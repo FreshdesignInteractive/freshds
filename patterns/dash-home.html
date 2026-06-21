@@ -348,32 +348,8 @@ fresh-sidebar[collapsed] .dh-sidebar-user-info { display: none; }
 
               <!-- Zone: Revenue Chart -->
               <div id="dh-chart-section">
-                <fresh-chart title="Revenue over time" description="Monthly MRR — last 6 months">
-                  <!-- Wrapped in a div so ::slotted(*) height:100% doesn't force SVG to stretch -->
-                  <div style="width:100%;height:auto;">
-                    <svg viewBox="0 0 400 170" style="width:100%;height:auto;display:block;">
-                      <defs>
-                        <linearGradient id="rev-grad" x1="0" y1="0" x2="0" y2="1">
-                          <stop offset="0%" stop-color="var(--dv-1)" stop-opacity="0.18"/>
-                          <stop offset="100%" stop-color="var(--dv-1)" stop-opacity="0"/>
-                        </linearGradient>
-                      </defs>
-                      <path d="M0,120 C50,110 80,95 120,85 C160,75 190,60 240,50 C280,42 320,35 400,28 L400,150 L0,150 Z" fill="url(#rev-grad)"/>
-                      <path d="M0,120 C50,110 80,95 120,85 C160,75 190,60 240,50 C280,42 320,35 400,28" fill="none" stroke="var(--dv-1)" stroke-width="2.5" stroke-linecap="round"/>
-                      <circle cx="0"   cy="120" r="4" fill="var(--dv-1)"/>
-                      <circle cx="80"  cy="95"  r="4" fill="var(--dv-1)"/>
-                      <circle cx="160" cy="75"  r="4" fill="var(--dv-1)"/>
-                      <circle cx="240" cy="50"  r="4" fill="var(--dv-1)"/>
-                      <circle cx="320" cy="35"  r="4" fill="var(--dv-1)"/>
-                      <circle cx="400" cy="28"  r="5" fill="var(--dv-1)" stroke="var(--surface-canvas)" stroke-width="2"/>
-                      <text x="0"   y="165" font-size="9" fill="var(--text-tertiary)" text-anchor="middle">Jan</text>
-                      <text x="80"  y="165" font-size="9" fill="var(--text-tertiary)" text-anchor="middle">Feb</text>
-                      <text x="160" y="165" font-size="9" fill="var(--text-tertiary)" text-anchor="middle">Mar</text>
-                      <text x="240" y="165" font-size="9" fill="var(--text-tertiary)" text-anchor="middle">Apr</text>
-                      <text x="320" y="165" font-size="9" fill="var(--text-tertiary)" text-anchor="middle">May</text>
-                      <text x="400" y="165" font-size="9" fill="var(--text-tertiary)" text-anchor="middle">Jun</text>
-                    </svg>
-                  </div>
+                <fresh-chart title="Revenue over time" description="Monthly MRR, last 6 months">
+                  <canvas id="dh-revenue-chart" style="display:block;"></canvas>
                 </fresh-chart>
               </div>
 
@@ -458,6 +434,7 @@ fresh-sidebar[collapsed] .dh-sidebar-user-info { display: none; }
   </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.min.js"></script>
 <script src="../components/navigation/fresh-navbar.js"></script>
 <script src="../components/navigation/fresh-sidebar.js"></script>
 <script src="../components/navigation/fresh-topbar-menu.js"></script>
@@ -677,6 +654,79 @@ window.addEventListener('pageshow', function(e) {
   }
 });
 
+/* ── Revenue chart (Chart.js) ────────────────────────────── */
+
+var _dhChart = null;
+
+function _token(name) {
+  return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+}
+
+function _renderRevenueChart() {
+  var canvas = document.getElementById('dh-revenue-chart');
+  if (!canvas || typeof Chart === 'undefined') return;
+  if (_dhChart) { _dhChart.destroy(); _dhChart = null; }
+
+  var dv1       = _token('--dv-1');
+  var dv1Subtle = _token('--dv-1-subtle');
+  var textTert  = _token('--text-tertiary');
+  var border    = _token('--surface-border');
+
+  _dhChart = new Chart(canvas, {
+    type: 'line',
+    data: {
+      labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+      datasets: [{
+        data: [32000, 35800, 38500, 41200, 44800, 48320],
+        borderColor: dv1,
+        backgroundColor: dv1Subtle,
+        fill: true,
+        tension: 0.4,
+        pointBackgroundColor: dv1,
+        pointBorderColor: 'transparent',
+        pointRadius: 4,
+        pointHoverRadius: 6,
+        borderWidth: 2.5
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            label: function(ctx) { return '$' + ctx.parsed.y.toLocaleString(); }
+          }
+        }
+      },
+      scales: {
+        x: {
+          grid: { color: border },
+          ticks: { color: textTert, font: { family: 'Inter, sans-serif', size: 11 } }
+        },
+        y: {
+          grid: { color: border },
+          ticks: {
+            color: textTert,
+            font: { family: 'Inter, sans-serif', size: 11 },
+            callback: function(v) { return '$' + (v / 1000) + 'k'; }
+          }
+        }
+      }
+    }
+  });
+}
+
+/* Re-render when dark mode toggles so colors update */
+var _dhAppEl = document.getElementById('app');
+if (_dhAppEl) {
+  new MutationObserver(_renderRevenueChart).observe(_dhAppEl, { attributes: true, attributeFilter: ['data-mode'] });
+}
+
+/* Defer one frame so fresh-chart shadow DOM is ready */
+requestAnimationFrame(_renderRevenueChart);
+
 /* ── Spec panel ──────────────────────────────────────────── */
 
 var SP_ZONES = [
@@ -714,8 +764,9 @@ var SP_RULES = {
   ],
   'CHART': [
     'Revenue chart uses fresh-chart wrapper with title and description.',
-    'SVG is wrapped in a div with height:auto so it scales by aspect ratio, not container height.',
-    'Use dv-1 (Indigo) for the line and gradient fill.'
+    'Chart.js (line, fill:true) renders into a canvas slot inside fresh-chart.',
+    'Use --dv-1 for the line color and --dv-1-subtle for the area fill.',
+    'Read token values via getComputedStyle so chart re-renders correctly in dark mode.'
   ],
   'ACTIVITY FEED': [
     'Use fresh-timeline for the activity list.',
