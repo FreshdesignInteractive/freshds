@@ -137,6 +137,10 @@ fresh-sidebar[collapsed] .dh-sidebar-user-info { display: none; }
   .dh-main-row { flex-direction: column; }
   .dh-activity-col { width: 100%; }
 }
+/* Keep full padding on all screen sizes; override dashboard.css reduction */
+@media (max-width: 767px) {
+  .dash-content { padding: var(--space-6) var(--space-6) var(--space-16) !important; }
+}
 
 /* Spec trigger */
 .demo-spec-btn {
@@ -280,10 +284,10 @@ fresh-sidebar[collapsed] .dh-sidebar-user-info { display: none; }
           <!-- Zone: Stat Cards -->
           <div id="dh-stat-section">
             <div class="fds-grid" style="margin-bottom:var(--space-4);">
-              <fresh-stat-card class="fds-col-3 fds-col-md-6" value="$48,320" label="Monthly revenue" trend="12.4" trend-label="vs last month" icon="ti-currency-dollar"></fresh-stat-card>
-              <fresh-stat-card class="fds-col-3 fds-col-md-6" value="1,847"   label="Active users"    trend="8.1"  trend-label="vs last month" icon="ti-users"></fresh-stat-card>
-              <fresh-stat-card class="fds-col-3 fds-col-md-6" value="24"      label="Open projects"   trend="-2"   trend-label="vs last week"  icon="ti-folders"></fresh-stat-card>
-              <fresh-stat-card class="fds-col-3 fds-col-md-6" value="98.7%"   label="Uptime"          trend="0.2"  trend-label="this week"     icon="ti-server"></fresh-stat-card>
+              <fresh-stat-card class="fds-col-3" value="$48,320" label="Monthly revenue" trend="12.4" trend-label="vs last month" icon="ti-currency-dollar"></fresh-stat-card>
+              <fresh-stat-card class="fds-col-3" value="1,847"   label="Active users"    trend="8.1"  trend-label="vs last month" icon="ti-users"></fresh-stat-card>
+              <fresh-stat-card class="fds-col-3" value="24"      label="Open projects"   trend="-2"   trend-label="vs last week"  icon="ti-folders"></fresh-stat-card>
+              <fresh-stat-card class="fds-col-3" value="98.7%"   label="Uptime"          trend="0.2"  trend-label="this week"     icon="ti-server"></fresh-stat-card>
             </div>
           </div>
 
@@ -296,21 +300,21 @@ fresh-sidebar[collapsed] .dh-sidebar-user-info { display: none; }
               <!-- Zone: Quick Stats -->
               <div id="dh-quick-section">
                 <div class="fds-grid">
-                  <div class="quick-stat fds-col-4 fds-col-md-12">
+                  <div class="quick-stat fds-col-12 fds-col-md-4">
                     <div class="quick-stat-icon"><i class="ti ti-check"></i></div>
                     <div>
                       <div class="quick-stat-label">Tasks done today</div>
                       <div class="quick-stat-value">18</div>
                     </div>
                   </div>
-                  <div class="quick-stat fds-col-4 fds-col-md-12">
+                  <div class="quick-stat fds-col-12 fds-col-md-4">
                     <div class="quick-stat-icon"><i class="ti ti-message"></i></div>
                     <div>
                       <div class="quick-stat-label">New comments</div>
                       <div class="quick-stat-value">37</div>
                     </div>
                   </div>
-                  <div class="quick-stat fds-col-4 fds-col-md-12">
+                  <div class="quick-stat fds-col-12 fds-col-md-4">
                     <div class="quick-stat-icon"><i class="ti ti-rocket"></i></div>
                     <div>
                       <div class="quick-stat-label">Deploys this week</div>
