@@ -124,9 +124,7 @@
 
           <!-- Main chart full-width -->
           <div style="margin-bottom:var(--space-4)">
-            <fresh-chart title="Revenue — last 90 days" description="Compared against previous period (dashed)" height="220px">
-              <canvas id="da-rev-canvas" style="display:block;" aria-hidden="true"></canvas>
-            </fresh-chart>
+            <fresh-chart id="da-rev-fc" title="Revenue — last 90 days" description="Compared against previous period (dashed)" height="220px"></fresh-chart>
           </div>
 
           <!-- Breakdown + second chart -->
@@ -154,9 +152,7 @@
               </div>
             </div>
 
-            <fresh-chart title="User engagement" description="DAU / MAU ratio over 90 days" height="180px">
-              <canvas id="da-eng-canvas" style="display:block;" aria-hidden="true"></canvas>
-            </fresh-chart>
+            <fresh-chart id="da-eng-fc" title="User engagement" description="DAU / MAU ratio over 90 days" height="180px"></fresh-chart>
           </div>
 
         </div>
@@ -201,7 +197,7 @@
     var dv1 = _tok('--dv-1'), dv1s = _tok('--dv-1-subtle'), dv7 = _tok('--dv-7'), dv7s = _tok('--dv-7-subtle');
 
     /* Revenue chart: current period (filled) + previous period (dashed) */
-    var c1 = document.getElementById('da-rev-canvas');
+    var c1 = document.getElementById('da-rev-fc') ? document.getElementById('da-rev-fc').chartCanvas : null;
     if (c1 && typeof Chart !== 'undefined') {
       _charts.rev = new Chart(c1, { type: 'line', data: {
         labels: ['W1','W2','W3','W4','W5','W6','W7','W8','W9','W10','W11','W12','W13'],
@@ -222,7 +218,7 @@
     }
 
     /* Engagement chart: DAU/MAU area */
-    var c2 = document.getElementById('da-eng-canvas');
+    var c2 = document.getElementById('da-eng-fc') ? document.getElementById('da-eng-fc').chartCanvas : null;
     if (c2 && typeof Chart !== 'undefined') {
       _charts.eng = new Chart(c2, { type: 'line', data: {
         labels: ['W1','W2','W3','W4','W5','W6','W7','W8','W9','W10','W11','W12','W13'],

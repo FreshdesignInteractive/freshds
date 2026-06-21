@@ -77,20 +77,14 @@
 
           <!-- Full-width line chart -->
           <div style="margin-bottom:var(--space-4)">
-            <fresh-chart title="Revenue trend" description="Daily MRR over the past 30 days" height="200px">
-              <canvas id="dm-rev-canvas" style="display:block;" aria-hidden="true"></canvas>
-            </fresh-chart>
+            <fresh-chart id="dm-rev-fc" title="Revenue trend" description="Daily MRR over the past 30 days" height="200px"></fresh-chart>
           </div>
 
           <!-- Two charts side by side -->
           <div class="dash-cols-2">
-            <fresh-chart title="User signups" description="New accounts per week" height="160px">
-              <canvas id="dm-sig-canvas" style="display:block;" aria-hidden="true"></canvas>
-            </fresh-chart>
+            <fresh-chart id="dm-sig-fc" title="User signups" description="New accounts per week" height="160px"></fresh-chart>
 
-            <fresh-chart title="Response time" description="Average latency in ms" height="160px">
-              <canvas id="dm-lat-canvas" style="display:block;" aria-hidden="true"></canvas>
-            </fresh-chart>
+            <fresh-chart id="dm-lat-fc" title="Response time" description="Average latency in ms" height="160px"></fresh-chart>
           </div>
 
         </div>
@@ -127,7 +121,7 @@
     var axTick = { color: t, font: { family: 'Inter,sans-serif', size: 11 } };
 
     /* Revenue trend: current + dashed previous */
-    var c1 = document.getElementById('dm-rev-canvas');
+    var c1 = document.getElementById('dm-rev-fc') ? document.getElementById('dm-rev-fc').chartCanvas : null;
     if (c1 && typeof Chart !== 'undefined') {
       _charts.rev = new Chart(c1, { type: 'line', data: {
         labels: ['W1','W2','W3','W4','W5','W6','W7'],
@@ -148,7 +142,7 @@
     }
 
     /* User signups: bar */
-    var c2 = document.getElementById('dm-sig-canvas');
+    var c2 = document.getElementById('dm-sig-fc') ? document.getElementById('dm-sig-fc').chartCanvas : null;
     if (c2 && typeof Chart !== 'undefined') {
       _charts.sig = new Chart(c2, { type: 'bar', data: {
         labels: ['W1','W2','W3','W4','W5','W6'],
@@ -162,7 +156,7 @@
     }
 
     /* Response time: area */
-    var c3 = document.getElementById('dm-lat-canvas');
+    var c3 = document.getElementById('dm-lat-fc') ? document.getElementById('dm-lat-fc').chartCanvas : null;
     if (c3 && typeof Chart !== 'undefined') {
       _charts.lat = new Chart(c3, { type: 'line', data: {
         labels: ['W1','W2','W3','W4','W5','W6'],

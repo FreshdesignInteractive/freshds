@@ -231,9 +231,7 @@
               </div>
 
               <!-- Usage trend chart -->
-              <fresh-chart title="API usage trend" description="Daily API calls over last 30 days" height="180px">
-                <canvas id="du-api-canvas" style="display:block;" aria-hidden="true"></canvas>
-              </fresh-chart>
+              <fresh-chart id="du-api-fc" title="API usage trend" description="Daily API calls over last 30 days" height="180px"></fresh-chart>
             </div>
 
           </div>
@@ -261,7 +259,8 @@
   function _tok(n) { return getComputedStyle(document.documentElement).getPropertyValue(n).trim(); }
   function _render() {
     if (_chart) { _chart.destroy(); _chart = null; }
-    var canvas = document.getElementById('du-api-canvas');
+    var fc = document.getElementById('du-api-fc');
+    var canvas = fc ? fc.chartCanvas : null;
     if (!canvas || typeof Chart === 'undefined') return;
     var dv5 = _tok('--dv-5'), dv5s = _tok('--dv-5-subtle'), danger = _tok('--color-danger');
     var t = _tok('--text-tertiary'), b = _tok('--surface-border');

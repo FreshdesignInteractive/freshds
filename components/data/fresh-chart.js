@@ -30,10 +30,18 @@ class FreshChart extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({ mode: 'open' });
+    /* Persistent canvas lives in shadow DOM so Chart.js reads .chart-inner
+       dimensions (inset 20px from chart-area) — not the full card height. */
+    this._canvas = document.createElement('canvas');
+    this._canvas.setAttribute('aria-hidden', 'true');
+    this._canvas.style.cssText = 'display:block;';
   }
 
   connectedCallback()        { this._render(); }
   attributeChangedCallback() { this._render(); }
+
+  /** Returns the shadow-DOM canvas for Chart.js initialization. */
+  get chartCanvas() { return this._canvas; }
 
   _render() {
     if (this._rendering) return;
@@ -104,8 +112,8 @@ class FreshChart extends HTMLElement {
           position: relative;
         }
 
-        /* Inner wrapper is inset 20px on all sides — gives the guaranteed gutter.
-           The canvas fills this div, so no chart content can reach the card border. */
+        /* 20px inset on all sides. Canvas is appended here after render so
+           Chart.js reads .chart-inner dimensions, not the full card height. */
         .chart-inner {
           position: absolute;
           inset: 20px;
@@ -130,8 +138,6 @@ class FreshChart extends HTMLElement {
           font-family: var(--font-sans);
           font-size: var(--font-size-md);
         }
-
-        ::slotted(*) { width: 100%; height: 100%; }
 
         @keyframes shimmer {
           0%   { background-position: 200% 0; }
@@ -159,12 +165,19 @@ class FreshChart extends HTMLElement {
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M3 3v18h18M8 17V9m4 8V5m4 12v-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
                   No data available
                  </div>`
-              : '<slot></slot>'
+              : ''
             }
           </div>
         </div>
       </div>
     `;
+
+    /* Re-attach the persistent canvas so Chart.js watches .chart-inner. */
+    if (!empty && !loading) {
+      const inner = this.shadowRoot.querySelector('.chart-inner');
+      if (inner) inner.appendChild(this._canvas);
+    }
+
     this._rendering = false;
   }
 }

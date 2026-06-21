@@ -190,9 +190,7 @@
 
           <!-- Live chart -->
           <div style="margin-bottom:var(--space-4)">
-            <fresh-chart title="Request rate — last 5 minutes" description="Requests per second, Live" height="180px">
-              <canvas id="dr-req-canvas" style="display:block;" aria-hidden="true"></canvas>
-            </fresh-chart>
+            <fresh-chart id="dr-req-fc" title="Request rate — last 5 minutes" description="Requests per second, Live" height="180px"></fresh-chart>
           </div>
 
           <!-- Event log -->
@@ -235,7 +233,8 @@
   function _tok(n) { return getComputedStyle(document.documentElement).getPropertyValue(n).trim(); }
   function _render() {
     if (_chart) { _chart.destroy(); _chart = null; }
-    var canvas = document.getElementById('dr-req-canvas');
+    var fc = document.getElementById('dr-req-fc');
+    var canvas = fc ? fc.chartCanvas : null;
     if (!canvas || typeof Chart === 'undefined') return;
     var dv1 = _tok('--dv-1'), dv1s = _tok('--dv-1-subtle');
     var t = _tok('--text-tertiary'), b = _tok('--surface-border');

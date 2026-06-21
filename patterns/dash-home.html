@@ -348,9 +348,7 @@ fresh-sidebar[collapsed] .dh-sidebar-user-info { display: none; }
 
               <!-- Zone: Revenue Chart -->
               <div id="dh-chart-section">
-                <fresh-chart title="Revenue over time" description="Monthly MRR, last 6 months">
-                  <canvas id="dh-revenue-chart" style="display:block;"></canvas>
-                </fresh-chart>
+                <fresh-chart id="dh-revenue-fc" title="Revenue over time" description="Monthly MRR, last 6 months"></fresh-chart>
               </div>
 
             </div><!-- /dh-chart-col -->
@@ -663,7 +661,8 @@ function _token(name) {
 }
 
 function _renderRevenueChart() {
-  var canvas = document.getElementById('dh-revenue-chart');
+  var fc = document.getElementById('dh-revenue-fc');
+  var canvas = fc ? fc.chartCanvas : null;
   if (!canvas || typeof Chart === 'undefined') return;
   if (_dhChart) { _dhChart.destroy(); _dhChart = null; }
 

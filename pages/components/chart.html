@@ -46,9 +46,7 @@
           </div>
           <div class="spec-variant-body">
             <div class="spec-demos" style="display:block;width:100%;">
-              <fresh-chart title="Monthly recurring revenue" description="MRR across all plans, last 6 months" height="220px">
-                <canvas id="cmp-area-canvas" style="display:block;" aria-hidden="true"></canvas>
-              </fresh-chart>
+              <fresh-chart id="cmp-area-fc" title="Monthly recurring revenue" description="MRR across all plans, last 6 months" height="220px"></fresh-chart>
             </div>
           </div>
         </div>
@@ -63,9 +61,7 @@
           </div>
           <div class="spec-variant-body">
             <div class="spec-demos" style="display:block;width:100%;">
-              <fresh-chart title="Token usage by model" description="Daily average across all API calls" height="200px">
-                <canvas id="cmp-bar-canvas" style="display:block;" aria-hidden="true"></canvas>
-              </fresh-chart>
+              <fresh-chart id="cmp-bar-fc" title="Token usage by model" description="Daily average across all API calls" height="200px"></fresh-chart>
             </div>
           </div>
         </div>
@@ -80,9 +76,7 @@
           </div>
           <div class="spec-variant-body">
             <div class="spec-demos" style="display:block;width:100%;">
-              <fresh-chart title="Plan distribution" description="Starter, Pro, and Enterprise over 5 months" height="200px">
-                <canvas id="cmp-multi-canvas" style="display:block;" aria-hidden="true"></canvas>
-              </fresh-chart>
+              <fresh-chart id="cmp-multi-fc" title="Plan distribution" description="Starter, Pro, and Enterprise over 5 months" height="200px"></fresh-chart>
             </div>
           </div>
         </div>
@@ -113,11 +107,10 @@
           </div>
           <div class="spec-variant-body">
             <div class="spec-demos" style="display:block;width:100%;">
-              <fresh-chart title="Active sessions" description="Live connections over 24 hours" height="160px">
+              <fresh-chart id="cmp-sessions-fc" title="Active sessions" description="Live connections over 24 hours" height="160px">
                 <div slot="actions">
                   <fresh-button variant="ghost" size="sm"><i class="ti ti-download"></i> Export</fresh-button>
                 </div>
-                <canvas id="cmp-sessions-canvas" style="display:block;" aria-hidden="true"></canvas>
               </fresh-chart>
             </div>
           </div>
@@ -316,7 +309,7 @@
     var axTick = { color: t, font: { family: 'Inter,sans-serif', size: 11 } };
 
     /* Area chart: MRR */
-    var c1 = document.getElementById('cmp-area-canvas');
+    var c1 = document.getElementById('cmp-area-fc') ? document.getElementById('cmp-area-fc').chartCanvas : null;
     if (c1 && typeof Chart !== 'undefined') {
       _charts.area = new Chart(c1, { type: 'line', data: {
         labels: ['Nov','Dec','Jan','Feb','Mar','Apr','May'],
@@ -332,7 +325,7 @@
     }
 
     /* Bar chart: token usage by model — dv-1 for Anthropic, dv-2 for others */
-    var c2 = document.getElementById('cmp-bar-canvas');
+    var c2 = document.getElementById('cmp-bar-fc') ? document.getElementById('cmp-bar-fc').chartCanvas : null;
     if (c2 && typeof Chart !== 'undefined') {
       _charts.bar = new Chart(c2, { type: 'bar', data: {
         labels: ['Opus','Sonnet','Haiku','GPT-4o','Gemini','Llama'],
@@ -347,7 +340,7 @@
     }
 
     /* Multi-series line: plan distribution */
-    var c3 = document.getElementById('cmp-multi-canvas');
+    var c3 = document.getElementById('cmp-multi-fc') ? document.getElementById('cmp-multi-fc').chartCanvas : null;
     if (c3 && typeof Chart !== 'undefined') {
       _charts.multi = new Chart(c3, { type: 'line', data: {
         labels: ['Jan','Feb','Mar','Apr','May'],
@@ -364,7 +357,7 @@
     }
 
     /* Header actions slot: active sessions line */
-    var c4 = document.getElementById('cmp-sessions-canvas');
+    var c4 = document.getElementById('cmp-sessions-fc') ? document.getElementById('cmp-sessions-fc').chartCanvas : null;
     if (c4 && typeof Chart !== 'undefined') {
       _charts.sessions = new Chart(c4, { type: 'line', data: {
         labels: ['0h','3h','6h','9h','12h','15h','18h','21h'],
