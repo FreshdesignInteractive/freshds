@@ -34,7 +34,6 @@ class FreshChart extends HTMLElement {
        dimensions (inset 20px from chart-area) — not the full card height. */
     this._canvas = document.createElement('canvas');
     this._canvas.setAttribute('aria-hidden', 'true');
-    this._canvas.style.cssText = 'display:block;';
   }
 
   connectedCallback()        { this._render(); }
@@ -117,9 +116,15 @@ class FreshChart extends HTMLElement {
         .chart-inner {
           position: absolute;
           inset: 20px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
+          overflow: hidden;
+        }
+
+        /* Canvas fills .chart-inner — percentage resolves against .chart-inner's
+           definite absolute-positioned dimensions, not the full card. */
+        .chart-inner > canvas {
+          display: block;
+          width: 100%;
+          height: 100%;
         }
 
         .loading-overlay {
@@ -130,9 +135,12 @@ class FreshChart extends HTMLElement {
         }
 
         .empty-msg {
+          width: 100%;
+          height: 100%;
           display: flex;
           flex-direction: column;
           align-items: center;
+          justify-content: center;
           gap: var(--space-2);
           color: var(--text-tertiary);
           font-family: var(--font-sans);
