@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Import | Acme</title>
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="../tokens/primitives.css">
+<link rel="stylesheet" href="../tokens/theme.css">
+<link rel="stylesheet" href="../tokens/dataviz.css">
+<link rel="stylesheet" href="../styles/reset.css">
+<link rel="stylesheet" href="../styles/patterns/dashboard.css">
+<link rel="stylesheet" href="../styles/patterns/onboarding.css">
+<script>if(location.href.indexOf('?thumb')!==-1)document.write('<style>#demo-bar{display:none!important}</style>');</script>
+<script src="../js/freshds.js"></script>
+<script src="../js/pattern-bar.js"></script>
+<style>
+/* Logo switching */
+.nav-logo-dark { display: none; }
+[data-mode="dark"] .nav-logo-light { display: none; }
+[data-mode="dark"] .nav-logo-dark  { display: block; }
+
+/* Sidebar footer */
+.im-sidebar-footer { display: flex; align-items: center; gap: var(--space-3); width: 100%; min-width: 0; }
+.im-sidebar-user-info { flex: 1; min-width: 0; overflow: hidden; }
+.im-sidebar-user-name { font-size: var(--font-size-sm); font-weight: 500; color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.im-sidebar-user-role { font-size: var(--font-size-xs); color: var(--text-tertiary); white-space: nowrap; }
+fresh-sidebar[collapsed] .im-sidebar-user-info { display: none; }
+
+/* Icon rail flyout */
+.im-icon-flyout {
+  position: fixed; left: 57px; top: 0; width: 200px;
+  background: var(--surface-canvas); border: 1px solid var(--surface-border);
+  border-radius: var(--radius-md);
+  box-shadow: 0 8px 28px rgba(0,0,0,0.12), 0 2px 6px rgba(0,0,0,0.06);
+  z-index: 90; display: none; overflow: hidden;
+}
+.im-icon-flyout.open { display: block; }
+.im-flyout-label {
+  padding: var(--space-2) var(--space-3) var(--space-1);
+  font-size: var(--font-size-xs); font-weight: 600; letter-spacing: 0.07em;
+  text-transform: uppercase; color: var(--text-tertiary);
+  border-bottom: 1px solid var(--surface-border);
+}
+.im-flyout-item {
+  display: flex; align-items: center; padding: 7px var(--space-3);
+  font-size: var(--font-size-sm); font-family: var(--font-sans);
+  color: var(--text-secondary); cursor: pointer;
+  transition: background 100ms, color 100ms; -webkit-font-smoothing: antialiased;
+}
+.im-flyout-item:hover  { background: var(--surface-subtle); color: var(--text-primary); }
+.im-flyout-item.active { background: var(--nav-active-bg); color: var(--nav-active-text); font-weight: 500; }
+
+/* Tab strip */
+.im-tab-strip {
+  background: var(--surface-nav); border-bottom: 1px solid var(--surface-border);
+  padding: 0 var(--space-5); display: flex; align-items: center;
+  height: 44px; flex-shrink: 0;
+}
+.im-tab-dropdown {
+  position: fixed; top: 0; left: 0; min-width: 168px;
+  background: var(--surface-canvas); border: 1px solid var(--surface-border);
+  border-radius: var(--radius-md);
+  box-shadow: 0 8px 28px rgba(0,0,0,0.12), 0 2px 6px rgba(0,0,0,0.06);
+  z-index: 90; display: none; overflow: hidden; padding: var(--space-1) 0;
+}
+.im-tab-dropdown.open { display: block; }
+.im-tab-drop-item {
+  display: flex; align-items: center; padding: 7px var(--space-4);
+  font-size: var(--font-size-sm); font-family: var(--font-sans);
+  color: var(--text-secondary); cursor: pointer;
+  transition: background 100ms, color 100ms; -webkit-font-smoothing: antialiased;
+}
+.im-tab-drop-item:hover  { background: var(--surface-subtle); color: var(--text-primary); }
+.im-tab-drop-item.active { color: var(--nav-active-text); background: var(--nav-active-bg); font-weight: 500; }
+
+/* onb-body fills dash-main */
+.dash-main > .onb-body { flex: 1; min-height: 0; }
+
+/* Import tabs row */
+.im-tabs-row { margin-bottom: var(--space-6); }
+
+/* Tab panels */
+.im-panel { display: none; }
+.im-panel.active { display: block; }
+
+/* Paste textarea */
+.im-paste-textarea {
+  width: 100%; min-height: 160px;
+  padding: var(--space-3);
+  background: var(--surface-input);
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius-md);
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
+  font-size: 12px; color: var(--text-primary);
+  line-height: 1.6; resize: vertical; outline: none;
+  transition: border-color 150ms, box-shadow 150ms;
+}
+.im-paste-textarea::placeholder { color: var(--text-tertiary); font-family: var(--font-sans); font-size: 13px; }
+.im-paste-textarea:focus { border-color: var(--color-interactive); box-shadow: 0 0 0 3px var(--color-interactive-subtle); }
+
+/* Spec trigger */
+.demo-spec-btn {
+  display: inline-flex; align-items: center; gap: 5px; height: 28px; padding: 0 4px;
+  border: none; border-radius: var(--radius-full); background: transparent;
+  color: var(--text-secondary); font-size: 12px; font-weight: 500;
+  font-family: -apple-system, BlinkMacSystemFont, 'Inter', system-ui, sans-serif;
+  cursor: pointer; white-space: nowrap; flex-shrink: 0;
+  transition: background 150ms, color 150ms; -webkit-font-smoothing: antialiased;
+}
+.demo-spec-btn:hover { background: var(--surface-subtle); color: var(--text-primary); }
+.demo-spec-btn i { font-size: 13px; }
+
+/* Spec panel */
+.sp-panel { position: fixed; top: 0; right: -340px; width: 320px; height: 100vh; display: flex; flex-direction: column; background: #141720; border-left: 1px solid #242836; z-index: 300; transition: right 280ms cubic-bezier(0.4,0,0.2,1); font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', system-ui, sans-serif; -webkit-font-smoothing: antialiased; color: #e8ecf4; font-size: 13px; }
+.sp-panel.open { right: 0; }
+.sp-hdr { display: flex; align-items: center; justify-content: space-between; padding: 0 16px; height: 52px; border-bottom: 1px solid #242836; flex-shrink: 0; background: #0f1219; }
+.sp-hdr-title { font-size: 13px; font-weight: 600; color: #e8ecf4; letter-spacing: -0.01em; }
+.sp-hdr-close { width: 28px; height: 28px; border: none; border-radius: 6px; background: transparent; color: #6b7591; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 15px; transition: background 150ms, color 150ms; }
+.sp-hdr-close:hover { background: #1e2333; color: #e8ecf4; }
+.sp-body { flex: 1; overflow-y: auto; scrollbar-width: thin; scrollbar-color: #2a3049 transparent; }
+.sp-body::-webkit-scrollbar { width: 4px; }
+.sp-body::-webkit-scrollbar-thumb { background: #2a3049; border-radius: 4px; }
+.sp-section { padding: 14px 0 4px; }
+.sp-section + .sp-section { border-top: 1px solid #1c2030; padding-top: 16px; }
+.sp-section-label { font-size: 10px; font-weight: 700; letter-spacing: 0.09em; color: #7282a8; padding: 0 16px 8px; }
+.sp-zone-row { display: flex; align-items: center; gap: 10px; padding: 7px 16px; transition: background 120ms; }
+.sp-zone-row:hover { background: #1a1f30; }
+.sp-zone-label { flex: 1; font-size: 12px; font-weight: 500; color: #b0bace; }
+.sp-toggle { position: relative; width: 32px; height: 18px; flex-shrink: 0; }
+.sp-toggle input { opacity: 0; width: 0; height: 0; position: absolute; }
+.sp-toggle-track { position: absolute; inset: 0; background: #2a3049; border-radius: 9px; transition: background 200ms; cursor: pointer; }
+.sp-toggle input:checked + .sp-toggle-track { background: #6c63ff; }
+.sp-toggle-thumb { position: absolute; top: 2px; left: 2px; width: 14px; height: 14px; background: #fff; border-radius: 50%; transition: transform 200ms; pointer-events: none; }
+.sp-toggle input:checked ~ .sp-toggle-thumb { transform: translateX(14px); }
+.sp-rules-hdr { display: flex; align-items: center; gap: 8px; margin: 0 12px 4px; padding: 8px 12px; background: #1a1f30; border-radius: 8px; }
+.sp-rules-hdr-icon { font-size: 13px; color: #6c63ff; flex-shrink: 0; }
+.sp-rules-hdr-name { flex: 1; font-size: 11px; font-weight: 700; letter-spacing: 0.06em; color: #8b95b4; }
+.sp-rules-hdr-hint { font-size: 10px; font-weight: 500; color: #6c63ff; }
+.sp-cat { padding: 10px 16px 4px; }
+.sp-cat-label { font-size: 10px; font-weight: 700; letter-spacing: 0.07em; color: #7282a8; margin-bottom: 6px; }
+.sp-rule { display: flex; align-items: flex-start; gap: 8px; padding: 4px 6px; margin: 0 -6px; border-radius: 5px; transition: background 120ms; }
+.sp-rule:hover { background: #1c2134; }
+.sp-rule:focus-within { background: rgba(140,130,255,0.18); }
+.sp-rule-dot { width: 5px; height: 5px; border-radius: 50%; background: #6c63ff; flex-shrink: 0; margin-top: 7px; }
+.sp-rule-text { flex: 1; font-size: 12px; line-height: 1.6; color: #b0bace; outline: none; word-break: break-word; min-width: 0; cursor: text; }
+.sp-rule-text:focus { color: #e8ecf4; }
+.sp-rule-del { width: 22px; height: 22px; border: none; border-radius: 4px; background: transparent; color: #8890c0; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 14px; opacity: 0.45; flex-shrink: 0; margin-top: 2px; transition: opacity 150ms, background 150ms, color 150ms; }
+.sp-rule:hover .sp-rule-del { opacity: 1; }
+.sp-rule-del:hover { background: rgba(255,80,100,0.18); color: #ff6080; }
+.sp-add-rule { display: inline-flex; align-items: center; gap: 5px; margin-top: 4px; padding: 3px 0; font-size: 11px; color: #6272a0; cursor: pointer; border: none; background: transparent; font-family: inherit; -webkit-font-smoothing: antialiased; transition: color 150ms; }
+.sp-add-rule:hover { color: #9490ff; }
+.sp-bottom { display: flex; align-items: center; gap: 6px; padding: 10px 12px; border-top: 1px solid #242836; background: #0f1219; flex-shrink: 0; }
+.sp-btn { display: inline-flex; align-items: center; gap: 5px; padding: 6px 10px; border-radius: 6px; border: 1px solid #242836; background: #1a1f30; color: #9aa3be; font-size: 12px; font-weight: 500; font-family: inherit; -webkit-font-smoothing: antialiased; cursor: pointer; white-space: nowrap; transition: background 150ms, color 150ms, border-color 150ms; }
+.sp-btn i { font-size: 12px; }
+.sp-btn:hover { background: #1e2438; color: #e8ecf4; border-color: #3a4160; }
+.sp-btn-icon { width: 34px; height: 34px; padding: 0; justify-content: center; flex-shrink: 0; }
+.sp-btn-primary { margin-left: auto; background: #6c63ff; border-color: #6c63ff; color: #fff; }
+.sp-btn-primary:hover { background: #7b74ff; border-color: #7b74ff; }
+.sp-modal-backdrop { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.55); z-index: 400; align-items: center; justify-content: center; }
+.sp-modal-backdrop.open { display: flex; }
+.sp-modal { background: #141720; border: 1px solid #242836; border-radius: 12px; width: 600px; max-width: calc(100vw - 40px); max-height: 80vh; display: flex; flex-direction: column; font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+.sp-modal-hdr { display: flex; align-items: center; justify-content: space-between; padding: 14px 16px; border-bottom: 1px solid #242836; font-size: 13px; font-weight: 600; color: #e8ecf4; flex-shrink: 0; }
+.sp-modal-close { width: 26px; height: 26px; border: none; border-radius: 5px; background: transparent; color: #6b7591; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 14px; transition: background 150ms, color 150ms; }
+.sp-modal-close:hover { background: #1e2333; color: #e8ecf4; }
+.sp-modal-body { flex: 1; overflow-y: auto; padding: 14px 16px; min-height: 220px; }
+.sp-modal-pre { background: #0f1219; border: 1px solid #242836; border-radius: 8px; padding: 14px; font-family: 'JetBrains Mono', 'Fira Code', monospace; font-size: 12px; line-height: 1.65; color: #9aa3be; white-space: pre-wrap; word-break: break-word; margin: 0; }
+.sp-modal-foot { display: flex; align-items: center; justify-content: flex-end; gap: 8px; padding: 10px 12px; border-top: 1px solid #242836; flex-shrink: 0; }
+.sp-copy-ok { font-size: 12px; color: #6c63ff; opacity: 0; transition: opacity 200ms; }
+.sp-copy-ok.show { opacity: 1; }
+</style>
+</head>
+<body>
+<div id="app">
+
+  <div class="demo-bar" id="demo-bar">
+    <div class="demo-inner" id="demo-inner">
+      <button class="demo-mode-btn" id="mode-toggle-btn" onclick="toggleDemoMode()" aria-label="Toggle dark mode">
+        <i class="ti ti-moon"></i>
+      </button>
+      <div class="demo-sep"></div>
+      <button class="demo-spec-btn" onclick="spOpen()" aria-label="Configure pattern">
+        <i class="ti ti-layout-sidebar-right"></i> Configure
+      </button>
+    </div>
+    <div class="demo-sep"></div>
+    <button class="demo-collapse-btn" id="demo-collapse-btn" onclick="toggleDemoBar()" aria-label="Collapse toolbar">
+      <i class="ti ti-minus"></i>
+    </button>
+  </div>
+
+  <div class="dash-shell">
+
+    <fresh-navbar id="im-topbar" data-nav-logged-in>
+      <div slot="actions" data-nav-actions-logged-in></div>
+    </fresh-navbar>
+
+    <div id="im-tab-strip" class="im-tab-strip" style="display:none;">
+      <fresh-topbar-menu id="im-top-tabs"></fresh-topbar-menu>
+    </div>
+    <div class="im-tab-dropdown" id="im-tab-dropdown"></div>
+
+    <div class="dash-body">
+
+      <fresh-sidebar id="im-sidebar" style="display:none;flex-shrink:0;height:100%;overflow:hidden;">
+        <div id="im-nav-content"></div>
+        <div slot="footer" class="im-sidebar-footer">
+          <fresh-avatar name="Jamie Rivera" size="sm"></fresh-avatar>
+          <div class="im-sidebar-user-info">
+            <div class="im-sidebar-user-name">Jamie Rivera</div>
+            <div class="im-sidebar-user-role">Setting up account</div>
+          </div>
+        </div>
+      </fresh-sidebar>
+
+      <div class="im-icon-flyout" id="im-icon-flyout">
+        <div class="im-flyout-label" id="im-flyout-label"></div>
+        <div id="im-flyout-items"></div>
+      </div>
+
+      <main class="dash-main">
+
+        <div class="onb-body">
+          <div class="onb-wrap" id="im-wrap">
+
+            <div class="onb-eyebrow" id="im-eyebrow">Data Import</div>
+            <h1 class="onb-title" id="im-title">Bring in your data</h1>
+            <p class="onb-sub" id="im-sub">Import existing data to hit the ground running. Supports CSV, JSON, and direct paste.</p>
+
+            <div class="im-tabs-row" id="im-tabs-row">
+              <fresh-topbar-menu
+                id="im-import-tabs"
+                tabs='[{"key":"upload","label":"Upload file"},{"key":"paste","label":"Paste data"},{"key":"url","label":"From URL"}]'
+                active="upload">
+              </fresh-topbar-menu>
+            </div>
+
+            <!-- Upload panel -->
+            <div class="im-panel active" id="im-panel-upload">
+              <div class="import-drop" id="im-drop-zone">
+                <div class="import-drop-icon"><i class="ti ti-cloud-upload"></i></div>
+                <div class="import-drop-title">Drag &amp; drop your file here</div>
+                <div class="import-drop-sub">or <a class="import-drop-link" href="#">browse to upload</a></div>
+                <div class="import-drop-sub" style="margin-top:var(--space-2);font-size:12px;color:var(--text-tertiary);">
+                  CSV, JSON, XLSX &middot; Max 50 MB
+                </div>
+              </div>
+            </div>
+
+            <!-- Paste panel -->
+            <div class="im-panel" id="im-panel-paste">
+              <div class="onb-field">
+                <label class="onb-label" for="im-paste-input">Paste your data</label>
+                <textarea
+                  class="im-paste-textarea"
+                  id="im-paste-input"
+                  placeholder="Paste CSV, JSON, or tab-separated data here…"
+                ></textarea>
+                <div class="onb-hint">First row will be treated as column headers for CSV and TSV data.</div>
+              </div>
+            </div>
+
+            <!-- URL panel -->
+            <div class="im-panel" id="im-panel-url">
+              <div class="onb-field-stack">
+                <div class="onb-field">
+                  <label class="onb-label" for="im-url-input">Data URL</label>
+                  <fresh-input
+                    id="im-url-input"
+                    placeholder="https://example.com/data.csv"
+                    type="url"
+                    clearable>
+                  </fresh-input>
+                  <div class="onb-hint">Must be a publicly accessible CSV or JSON endpoint.</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="onb-nav" id="im-bottom-nav">
+              <fresh-button variant="ghost"><i class="ti ti-arrow-left"></i> Back</fresh-button>
+              <div class="onb-nav-right">
+                <a class="onb-skip" href="#">Skip for now</a>
+                <fresh-button variant="primary">Import <i class="ti ti-arrow-right"></i></fresh-button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+</div>
+
+<!-- Spec panel -->
+<aside class="sp-panel" id="sp-panel" aria-label="Pattern spec" aria-hidden="true">
+  <div class="sp-hdr">
+    <span class="sp-hdr-title">Configure</span>
+    <button class="sp-hdr-close" onclick="spClose()" aria-label="Close"><i class="ti ti-x"></i></button>
+  </div>
+  <div class="sp-body">
+    <div class="sp-section">
+      <div class="sp-section-label">ZONES</div>
+      <div id="sp-zones"></div>
+    </div>
+    <div class="sp-section">
+      <div class="sp-section-label">GLOBAL TEMPLATE RULES</div>
+      <div class="sp-rules-hdr">
+        <i class="ti ti-sparkles sp-rules-hdr-icon"></i>
+        <span class="sp-rules-hdr-name">AI RULES: DATA IMPORT</span>
+        <span class="sp-rules-hdr-hint">Click to edit</span>
+      </div>
+      <div id="sp-cats"></div>
+    </div>
+  </div>
+  <div class="sp-bottom">
+    <button class="sp-btn sp-btn-icon" id="sp-share-btn" onclick="spShare()" title="Share link" aria-label="Share link">
+      <i class="ti ti-link"></i>
+    </button>
+    <button class="sp-btn sp-btn-primary" onclick="spStartBuilding()">
+      Configure <i class="ti ti-arrow-right"></i>
+    </button>
+  </div>
+</aside>
+
+<!-- Prompt modal -->
+<div class="sp-modal-backdrop" id="sp-modal-backdrop" onclick="spCloseModal()">
+  <div class="sp-modal" onclick="event.stopPropagation()">
+    <div class="sp-modal-hdr">
+      <span>Claude Code Prompt</span>
+      <button class="sp-modal-close" onclick="spCloseModal()"><i class="ti ti-x"></i></button>
+    </div>
+    <div class="sp-modal-body">
+      <pre class="sp-modal-pre" id="sp-modal-pre"></pre>
+    </div>
+    <div class="sp-modal-foot">
+      <span class="sp-copy-ok" id="sp-copy-ok">Copied to clipboard</span>
+      <button class="sp-btn sp-btn-primary" onclick="spCopyPrompt()">
+        <i class="ti ti-copy"></i> Copy prompt
+      </button>
+    </div>
+  </div>
+</div>
+
+<script src="../components/navigation/fresh-navbar.js"></script>
+<script src="../components/navigation/fresh-sidebar.js"></script>
+<script src="../components/navigation/fresh-topbar-menu.js"></script>
+<script src="../components/data/fresh-avatar.js"></script>
+<script src="../components/core/fresh-button.js"></script>
+<script src="../components/core/fresh-input.js"></script>
+<script src="../js/nav-taxonomy.js"></script>
+<script src="../js/freshds-nav-apply.js"></script>
+
+<script>
+/* ── Nav pattern router ──────────────────────────────────── */
+
+var _currentPattern = 'persistent-sidebar';
+var _flyoutIdx = -1;
+
+function _readNavCfg() {
+  var cfg = { nav_pattern: 'persistent-sidebar', taxonomy: [] };
+  try { var s = localStorage.getItem('freshds-nav-cfg'); if (s) Object.assign(cfg, JSON.parse(s)); } catch(e) {}
+  return cfg;
+}
+
+function _getTax(cfg) {
+  return (Array.isArray(cfg.taxonomy) && cfg.taxonomy.length > 0)
+    ? cfg.taxonomy
+    : (typeof DEFAULT_TAXONOMY !== 'undefined' ? DEFAULT_TAXONOMY : []);
+}
+
+function _buildIconRail(tax) {
+  var html = '<fresh-nav-group label="Nav" open>';
+  tax.forEach(function(item, idx) {
+    var ic = item.icon ? ' icon="' + item.icon + '"' : '';
+    html += '<fresh-nav-item' + ic + (idx === 0 ? ' active' : '') +
+            ' data-tax-idx="' + idx + '">' + (item.label || '') + '</fresh-nav-item>';
+  });
+  return html + '</fresh-nav-group>';
+}
+
+function _applyNavPattern() {
+  var cfg  = _readNavCfg();
+  var tax  = _getTax(cfg);
+  _currentPattern = cfg.nav_pattern || 'persistent-sidebar';
+
+  var navbar   = document.getElementById('im-topbar');
+  var sidebar  = document.getElementById('im-sidebar');
+  var tabStrip = document.getElementById('im-tab-strip');
+
+  sidebar.style.display  = 'none';
+  tabStrip.style.display = 'none';
+  sidebar.removeAttribute('collapsed');
+  navbar.removeAttribute('hamburger');
+  _closeFlyout();
+  document.getElementById('im-tab-dropdown').classList.remove('open');
+
+  if (_currentPattern === 'persistent-sidebar') {
+    sidebar.style.display = '';
+    document.getElementById('im-nav-content').innerHTML = buildSidebarHtml(tax);
+  } else if (_currentPattern === 'collapsible-sidebar') {
+    sidebar.style.display = '';
+    navbar.setAttribute('hamburger', '');
+    document.getElementById('im-nav-content').innerHTML = buildSidebarHtml(tax);
+  } else if (_currentPattern === 'top-nav-tabs') {
+    tabStrip.style.display = '';
+    var tabsEl = document.getElementById('im-top-tabs');
+    tabsEl.setAttribute('tabs', buildTabsJson(tax));
+    if (tax[0]) tabsEl.setAttribute('active', tax[0].id);
+  }
+}
+
+function _closeFlyout() {
+  _flyoutIdx = -1;
+  document.getElementById('im-icon-flyout').classList.remove('open');
+}
+
+function _openFlyout(idx, anchorEl) {
+  var cfg     = _readNavCfg();
+  var tax     = _getTax(cfg);
+  var section = tax[idx];
+  var kids    = (section && section.children) || [];
+  if (!kids.length) { _closeFlyout(); return; }
+  _flyoutIdx = idx;
+  document.getElementById('im-flyout-label').textContent = section.label || '';
+  document.getElementById('im-flyout-items').innerHTML = kids.map(function(child, ci) {
+    return '<div class="im-flyout-item' + (ci === 0 ? ' active' : '') + '">' + (child.label || '') + '</div>';
+  }).join('');
+  var rect   = anchorEl.getBoundingClientRect();
+  var flyout = document.getElementById('im-icon-flyout');
+  flyout.style.top = rect.top + 'px';
+  flyout.classList.add('open');
+  requestAnimationFrame(function() {
+    var fh = flyout.offsetHeight, vh = window.innerHeight;
+    if (rect.top + fh > vh - 8) flyout.style.top = Math.max(8, vh - fh - 8) + 'px';
+  });
+}
+
+var _tabDropKey = null, _tabPrevActive = '', _tabClickX = 0;
+
+function _closeTabDrop() {
+  _tabDropKey = null;
+  document.getElementById('im-tab-dropdown').classList.remove('open');
+}
+
+function _openTabDrop(key, x) {
+  var cfg  = _readNavCfg();
+  var tax  = _getTax(cfg);
+  var item = null;
+  for (var i = 0; i < tax.length; i++) { if (tax[i].id === key) { item = tax[i]; break; } }
+  var kids = (item && item.children) || [];
+  if (!kids.length) { _closeTabDrop(); return; }
+  _tabDropKey = key;
+  var drop     = document.getElementById('im-tab-dropdown');
+  var stripBot = document.getElementById('im-tab-strip').getBoundingClientRect().bottom;
+  drop.innerHTML = kids.map(function(child, ci) {
+    return '<div class="im-tab-drop-item' + (ci === 0 ? ' active' : '') + '">' + (child.label || '') + '</div>';
+  }).join('');
+  drop.style.top = stripBot + 'px';
+  drop.style.left = '0';
+  drop.classList.add('open');
+  requestAnimationFrame(function() {
+    var w = drop.offsetWidth, vw = window.innerWidth;
+    drop.style.left = Math.max(8, Math.min(x - w / 2, vw - w - 8)) + 'px';
+  });
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  _applyNavPattern();
+  if (window.FreshNavApply) window.FreshNavApply.apply();
+
+  document.getElementById('im-topbar').addEventListener('hamburger-click', function() {
+    if (_currentPattern !== 'collapsible-sidebar') return;
+    var sb  = document.getElementById('im-sidebar');
+    var tax = _getTax(_readNavCfg());
+    if (sb.hasAttribute('collapsed')) {
+      sb.removeAttribute('collapsed');
+      document.getElementById('im-nav-content').innerHTML = buildSidebarHtml(tax);
+      _closeFlyout();
+    } else {
+      sb.setAttribute('collapsed', '');
+      document.getElementById('im-nav-content').innerHTML = _buildIconRail(tax);
+    }
+  });
+
+  document.getElementById('im-nav-content').addEventListener('nav-click', function(e) {
+    if (_currentPattern !== 'collapsible-sidebar') return;
+    var sb = document.getElementById('im-sidebar');
+    if (!sb.hasAttribute('collapsed')) return;
+    var item = e.target;
+    if (!item || item.tagName.toLowerCase() !== 'fresh-nav-item') return;
+    var idx = parseInt(item.dataset.taxIdx, 10);
+    if (isNaN(idx)) return;
+    Array.prototype.slice.call(document.querySelectorAll('#im-nav-content fresh-nav-item'))
+      .forEach(function(el, i) { if (i === idx) el.setAttribute('active', ''); else el.removeAttribute('active'); });
+    if (idx === _flyoutIdx) { _closeFlyout(); return; }
+    _openFlyout(idx, item);
+  });
+  document.getElementById('im-nav-content').addEventListener('click', function(e) { e.stopPropagation(); });
+  document.getElementById('im-icon-flyout').addEventListener('click', function(e) { e.stopPropagation(); });
+
+  document.getElementById('im-top-tabs').addEventListener('click', function(e) {
+    if (_currentPattern !== 'top-nav-tabs') return;
+    _tabClickX = e.clientX;
+    e.stopPropagation();
+    var activeNow = this.getAttribute('active');
+    if (activeNow !== _tabPrevActive) {
+      _tabPrevActive = activeNow;
+      _openTabDrop(activeNow, _tabClickX);
+    } else {
+      if (_tabDropKey === activeNow) _closeTabDrop();
+      else _openTabDrop(activeNow, _tabClickX);
+    }
+  });
+  document.getElementById('im-tab-dropdown').addEventListener('click', function(e) { e.stopPropagation(); });
+
+  document.addEventListener('click', function() { _closeFlyout(); _closeTabDrop(); });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') { _closeFlyout(); _closeTabDrop(); spClose(); spCloseModal(); }
+  });
+
+  /* Import tab switching */
+  document.getElementById('im-import-tabs').addEventListener('change', function(e) {
+    document.querySelectorAll('.im-panel').forEach(function(p) { p.classList.remove('active'); });
+    var panel = document.getElementById('im-panel-' + e.detail.key);
+    if (panel) panel.classList.add('active');
+  });
+
+  /* Drag-and-drop visual feedback */
+  var dz = document.getElementById('im-drop-zone');
+  if (dz) {
+    dz.addEventListener('dragover', function(e) {
+      e.preventDefault();
+      dz.style.borderColor = 'var(--color-interactive)';
+      dz.style.background  = 'var(--color-interactive-subtle)';
+    });
+    dz.addEventListener('dragleave', function() {
+      dz.style.borderColor = '';
+      dz.style.background  = '';
+    });
+    dz.addEventListener('drop', function(e) {
+      e.preventDefault();
+      dz.style.borderColor = '';
+      dz.style.background  = '';
+    });
+  }
+});
+
+/* ── Live sync ───────────────────────────────────────────── */
+
+window.addEventListener('storage', function(e) {
+  if (e.key !== 'freshds-nav-cfg') return;
+  _applyNavPattern();
+  if (window.FreshNavApply) window.FreshNavApply.apply();
+});
+
+var _lastNavCfgStr = null;
+(function _poll() {
+  var s = localStorage.getItem('freshds-nav-cfg') || '';
+  if (s !== _lastNavCfgStr) {
+    _lastNavCfgStr = s;
+    _applyNavPattern();
+    if (window.FreshNavApply) window.FreshNavApply.apply();
+  }
+  setTimeout(_poll, 400);
+}());
+
+window.addEventListener('pageshow', function(e) {
+  if (e.persisted) {
+    _applyNavPattern();
+    if (window.FreshNavApply) window.FreshNavApply.apply();
+  }
+});
+
+/* ── Spec panel ──────────────────────────────────────────── */
+
+var SP_ZONES = [
+  { key: 'eyebrow',   label: 'Eyebrow + heading', el: 'im-eyebrow',   on: true },
+  { key: 'sub',       label: 'Subtitle',           el: 'im-sub',       on: true },
+  { key: 'tabs-row',  label: 'Source tabs',        el: 'im-tabs-row',  on: true },
+  { key: 'bottom-nav',label: 'Bottom nav',         el: 'im-bottom-nav',on: true }
+];
+
+var SP_RULES = {
+  'LAYOUT': [
+    'The import step lives inside the full app shell (navbar + sidebar from nav config).',
+    'Content is vertically and horizontally centered in dash-main using onb-body (flex, align-items: center, justify-content: center).',
+    'Max content width is 520px via onb-wrap. All content is constrained to this width.'
+  ],
+  'SOURCE TABS': [
+    'Use fresh-topbar-menu to switch between import sources: Upload file, Paste data, From URL.',
+    'Only one panel is visible at a time. Switching tabs shows the corresponding panel and hides all others.',
+    'Default active tab is Upload file, as it is the most common import path.'
+  ],
+  'UPLOAD': [
+    'Use import-drop (dashed border, surface-canvas bg) for the drop zone.',
+    'Show a cloud-upload icon (32px, text-tertiary), a title "Drag & drop your file here", a "browse to upload" link, and a format/size hint below.',
+    'On dragover: border switches to color-interactive, background to color-interactive-subtle. Reset on dragleave and drop.',
+    'Accepted formats and size limit appear as tertiary hint text (12px) below the drop instruction.'
+  ],
+  'PASTE': [
+    'Render a monospace textarea (font-mono, 12px) with min-height 160px for raw data paste.',
+    'Placeholder text uses font-sans at 13px to distinguish from entered content.',
+    'Show a hint below: "First row will be treated as column headers for CSV and TSV data."'
+  ],
+  'FROM URL': [
+    'Render a single fresh-input with type="url" and clearable for the data endpoint URL.',
+    'Placeholder: "https://example.com/data.csv".',
+    'Show a hint: "Must be a publicly accessible CSV or JSON endpoint."'
+  ],
+  'NAVIGATION': [
+    'Bottom nav: Back (ghost) on the left. Skip for now (link) + Import primary button on the right.',
+    'Skip for now is an anchor styled as onb-skip (tertiary color, no underline by default).',
+    '"Import" primary button triggers the import action for whichever tab is active.'
+  ]
+};
+
+function spOpen() {
+  document.getElementById('sp-panel').classList.add('open');
+  document.getElementById('sp-panel').setAttribute('aria-hidden', 'false');
+  _spRenderZones();
+  _spRenderCats();
+  var u = new URL(location.href); u.searchParams.set('spec', 'open');
+  history.replaceState(null, '', u.toString());
+}
+
+function spClose() {
+  document.getElementById('sp-panel').classList.remove('open');
+  document.getElementById('sp-panel').setAttribute('aria-hidden', 'true');
+  var u = new URL(location.href); u.searchParams.delete('spec');
+  history.replaceState(null, '', u.toString());
+}
+
+function _spRenderZones() {
+  var el = document.getElementById('sp-zones'); el.innerHTML = '';
+  SP_ZONES.forEach(function(z) {
+    var row = document.createElement('div'); row.className = 'sp-zone-row';
+    row.innerHTML = '<span class="sp-zone-label">' + z.label + '</span>' +
+      '<label class="sp-toggle"><input type="checkbox"' + (z.on ? ' checked' : '') + '>' +
+      '<span class="sp-toggle-track"></span><span class="sp-toggle-thumb"></span></label>';
+    row.querySelector('input').addEventListener('change', function() {
+      z.on = this.checked;
+      var t = document.getElementById(z.el); if (t) t.style.display = z.on ? '' : 'none';
+    });
+    el.appendChild(row);
+  });
+}
+
+function _spRenderCats() {
+  var el = document.getElementById('sp-cats'); el.innerHTML = '';
+  Object.keys(SP_RULES).forEach(function(cat) {
+    var wrap = document.createElement('div'); wrap.className = 'sp-cat';
+    _spBuildCat(cat, wrap); el.appendChild(wrap);
+  });
+}
+
+function _spBuildCat(cat, wrap) {
+  wrap.innerHTML = '';
+  var label = document.createElement('div'); label.className = 'sp-cat-label'; label.textContent = cat;
+  wrap.appendChild(label);
+  SP_RULES[cat].forEach(function(rule, ri) { wrap.appendChild(_spRuleRow(cat, ri, rule, wrap)); });
+  var addBtn = document.createElement('button'); addBtn.className = 'sp-add-rule';
+  addBtn.innerHTML = '<i class="ti ti-plus"></i> Add rule';
+  addBtn.addEventListener('click', function() {
+    SP_RULES[cat].push('New rule'); _spBuildCat(cat, wrap);
+    var texts = wrap.querySelectorAll('.sp-rule-text'); var last = texts[texts.length - 1];
+    if (last) { last.focus(); var r = document.createRange(); r.selectNodeContents(last); var s = window.getSelection(); s.removeAllRanges(); s.addRange(r); }
+  });
+  wrap.appendChild(addBtn);
+}
+
+function _spRuleRow(cat, ri, text, wrap) {
+  var row  = document.createElement('div'); row.className = 'sp-rule';
+  var dot  = document.createElement('span'); dot.className = 'sp-rule-dot';
+  var span = document.createElement('span'); span.className = 'sp-rule-text';
+  span.contentEditable = 'true'; span.textContent = text;
+  span.addEventListener('input', function() { SP_RULES[cat][ri] = span.textContent; });
+  var del  = document.createElement('button'); del.className = 'sp-rule-del';
+  del.innerHTML = '<i class="ti ti-trash"></i>'; del.setAttribute('aria-label', 'Delete rule');
+  del.addEventListener('click', function() { SP_RULES[cat].splice(ri, 1); _spBuildCat(cat, wrap); });
+  row.appendChild(dot); row.appendChild(span); row.appendChild(del);
+  return row;
+}
+
+function spShare() {
+  var u = new URL(location.href); u.searchParams.set('spec', 'open');
+  var btn = document.getElementById('sp-share-btn');
+  navigator.clipboard.writeText(u.toString()).then(function() {
+    var orig = btn.innerHTML; btn.innerHTML = '<i class="ti ti-check"></i>';
+    setTimeout(function() { btn.innerHTML = orig; }, 1800);
+  }).catch(function() {});
+}
+
+function spStartBuilding() {
+  var lines = ['Build a data import step using the FreshDS design system.', ''];
+  Object.keys(SP_RULES).forEach(function(cat) {
+    lines.push('## ' + cat);
+    SP_RULES[cat].forEach(function(rule) { lines.push('- ' + rule); });
+    lines.push('');
+  });
+  lines.push('## ACTIVE ZONES');
+  SP_ZONES.forEach(function(z) { lines.push('- ' + z.label + ': ' + (z.on ? 'SHOWN' : 'HIDDEN')); });
+  document.getElementById('sp-modal-pre').textContent = lines.join('\n');
+  document.getElementById('sp-modal-backdrop').classList.add('open');
+}
+
+function spCloseModal() { document.getElementById('sp-modal-backdrop').classList.remove('open'); }
+
+function spCopyPrompt() {
+  navigator.clipboard.writeText(document.getElementById('sp-modal-pre').textContent).then(function() {
+    var ok = document.getElementById('sp-copy-ok'); ok.classList.add('show');
+    setTimeout(function() { ok.classList.remove('show'); }, 1800);
+  }).catch(function() {});
+}
+
+if (new URL(location.href).searchParams.get('spec') === 'open') {
+  document.addEventListener('DOMContentLoaded', spOpen);
+}
+</script>
+</body>
+</html>
