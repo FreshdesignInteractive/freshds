@@ -638,6 +638,10 @@ function _spRenderZones() {
     row.querySelector('input').addEventListener('change', function() {
       z.on = this.checked;
       var t = document.getElementById(z.el); if (t) t.style.display = z.on ? '' : 'none';
+      if (z.key === 'tasks-panel') {
+        var table = document.querySelector('.cnt-tl-table');
+        if (table) table.style.gridTemplateColumns = z.on ? '' : '1fr';
+      }
     });
     el.appendChild(row);
   });
