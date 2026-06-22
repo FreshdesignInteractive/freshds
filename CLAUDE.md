@@ -128,52 +128,314 @@ That means:
 
 ### Pages patterns: nav config integration (non-negotiable)
 
-Any pattern tagged `also: ['pages']` in `patterns.html` is a full-page app layout. These patterns MUST use the navigation configuration the user sets in `navigation.html` — never hardcoded nav.
+Any pattern tagged `also: ['pages']` in `patterns.html` is a full-page app layout. These patterns MUST use the navigation configuration the user sets in `navigation.html`. Never hardcode nav items, logos, or nav structure.
 
-**Required structure** (copy from `patterns/dash-home.html` as the reference implementation):
+**Forbidden:**
+- `<pattern-topbar>` / `pattern-topbar-v2.js`
+- `<nav class="app-nav">` hardcoded sidebar
+- Any hardcoded logo URLs or nav items
 
-```html
-<fresh-navbar id="{p}-topbar" data-nav-logged-in search>
-  <div slot="actions" data-nav-actions-logged-in></div>
-</fresh-navbar>
+**How the system works:**
+- User configures nav once in `navigation.html`; saved to `localStorage['freshds-nav-cfg']` as `{ nav_pattern, navbar_cfg, taxonomy }`
+- `nav_pattern` values: `persistent-sidebar`, `collapsible-sidebar`, `top-nav-tabs`, `hamburger-drawer`, `dual-level`, `command-palette`
+- `js/nav-taxonomy.js` provides: `DEFAULT_TAXONOMY`, `loadTaxonomy()`, `buildSidebarHtml(tax)`, `buildTabsJson(tax)`, `buildIconRailHtml(tax)`
+- `js/freshds-nav-apply.js` reads `navbar_cfg` and applies logo + action icons to every `<fresh-navbar>` on the page automatically
 
-<!-- Tab strip: shown for top-nav-tabs pattern only -->
-<div id="{p}-tab-strip" class="..." style="display:none;">
-  <fresh-topbar-menu id="{p}-top-tabs"></fresh-topbar-menu>
-</div>
-
-<div class="dash-body">
-  <!-- Sidebar: shown for sidebar patterns only -->
-  <fresh-sidebar id="{p}-sidebar" style="display:none;flex-shrink:0;height:100%;overflow:hidden;">
-    <div id="{p}-nav-content"></div>
-  </fresh-sidebar>
-
-  <!-- Icon flyout for collapsible sidebar collapsed state -->
-  <div class="..." id="{p}-icon-flyout">...</div>
-
-  <main class="dash-main">...</main>
-</div>
-```
-
-**Required scripts** (load after component JS):
+**Required scripts** (load after all component JS):
 ```html
 <script src="../js/nav-taxonomy.js"></script>
 <script src="../js/freshds-nav-apply.js"></script>
 ```
 
-**Required JS** (inline, use page prefix `{p}-` for all IDs):
-- `_readNavCfg()`: reads `freshds-nav-cfg` from localStorage
-- `_getTax(cfg)`: returns taxonomy array (falls back to `DEFAULT_TAXONOMY`)
-- `_applyNavPattern()`: reads `nav_pattern` and shows/hides sidebar, tab strip, or neither; populates nav content via `buildSidebarHtml()` / `buildTabsJson()`; sets `hamburger` attr on navbar for collapsible pattern
-- Hamburger click handler: toggles `collapsed` attr on sidebar; swaps to icon rail html
-- Icon flyout open/close for collapsible collapsed state
-- Tab dropdown open/close for top-nav-tabs children
-- Live sync: `window.addEventListener('storage', ...)` + 400ms polling + `pageshow` event
+**Required page CSS** (add to the page `<style>` block, replace `{p}` with page prefix):
+```css
+/* Logo dark/light switching */
+.nav-logo-dark { display: none; }
+[data-mode="dark"] .nav-logo-light { display: none; }
+[data-mode="dark"] .nav-logo-dark  { display: block; }
 
-**Forbidden in Pages patterns:**
-- `<pattern-topbar>` / `pattern-topbar-v2.js` — never use
-- `<nav class="app-nav">` hardcoded sidebar — never use
-- Any hardcoded nav items or logo URLs — always read from `freshds-nav-cfg`
+/* Sidebar footer user info hides when sidebar is collapsed */
+fresh-sidebar[collapsed] .{p}-sidebar-user-info { display: none; }
+
+/* Icon rail flyout (collapsible-sidebar collapsed state) */
+.{p}-icon-flyout {
+  position: fixed; left: 57px; top: 0; width: 200px;
+  background: var(--surface-canvas); border: 1px solid var(--surface-border);
+  border-radius: var(--radius-md);
+  box-shadow: 0 8px 28px rgba(0,0,0,0.12), 0 2px 6px rgba(0,0,0,0.06);
+  z-index: 90; display: none; overflow: hidden;
+}
+.{p}-icon-flyout.open { display: block; }
+.{p}-flyout-label {
+  padding: var(--space-2) var(--space-3) var(--space-1);
+  font-size: var(--font-size-xs); font-weight: 600; letter-spacing: 0.07em;
+  text-transform: uppercase; color: var(--text-tertiary);
+  border-bottom: 1px solid var(--surface-border);
+}
+.{p}-flyout-item {
+  display: flex; align-items: center; padding: 7px var(--space-3);
+  font-size: var(--font-size-sm); font-family: var(--font-sans);
+  color: var(--text-secondary); cursor: pointer;
+  transition: background 100ms, color 100ms; -webkit-font-smoothing: antialiased;
+}
+.{p}-flyout-item:hover  { background: var(--surface-subtle); color: var(--text-primary); }
+.{p}-flyout-item.active { background: var(--nav-active-bg); color: var(--nav-active-text); font-weight: 500; }
+
+/* Tab strip (top-nav-tabs pattern) */
+.{p}-tab-strip {
+  background: var(--surface-nav); border-bottom: 1px solid var(--surface-border);
+  padding: 0 var(--space-5); display: flex; align-items: center;
+  height: 44px; flex-shrink: 0;
+}
+.{p}-tab-dropdown {
+  position: fixed; top: 0; left: 0; min-width: 168px;
+  background: var(--surface-canvas); border: 1px solid var(--surface-border);
+  border-radius: var(--radius-md);
+  box-shadow: 0 8px 28px rgba(0,0,0,0.12), 0 2px 6px rgba(0,0,0,0.06);
+  z-index: 90; display: none; overflow: hidden; padding: var(--space-1) 0;
+}
+.{p}-tab-dropdown.open { display: block; }
+.{p}-tab-drop-item {
+  display: flex; align-items: center; padding: 7px var(--space-4);
+  font-size: var(--font-size-sm); font-family: var(--font-sans);
+  color: var(--text-secondary); cursor: pointer;
+  transition: background 100ms, color 100ms; -webkit-font-smoothing: antialiased;
+}
+.{p}-tab-drop-item:hover  { background: var(--surface-subtle); color: var(--text-primary); }
+.{p}-tab-drop-item.active { color: var(--nav-active-text); background: var(--nav-active-bg); font-weight: 500; }
+```
+
+**Required HTML shell** (replace `{p}` with a short page prefix, e.g. `cf` for content-filter, `dh` for dash-home):
+```html
+<div class="dash-shell">
+
+  <fresh-navbar id="{p}-topbar" data-nav-logged-in search>
+    <div slot="actions" data-nav-actions-logged-in></div>
+  </fresh-navbar>
+
+  <div id="{p}-tab-strip" class="{p}-tab-strip" style="display:none;">
+    <fresh-topbar-menu id="{p}-top-tabs"></fresh-topbar-menu>
+  </div>
+  <div class="{p}-tab-dropdown" id="{p}-tab-dropdown"></div>
+
+  <div class="dash-body">
+
+    <fresh-sidebar id="{p}-sidebar" style="display:none;flex-shrink:0;height:100%;overflow:hidden;">
+      <div id="{p}-nav-content"></div>
+      <div slot="footer">
+        <!-- sidebar footer content, e.g. user avatar -->
+      </div>
+    </fresh-sidebar>
+
+    <div class="{p}-icon-flyout" id="{p}-icon-flyout">
+      <div class="{p}-flyout-label" id="{p}-flyout-label"></div>
+      <div id="{p}-flyout-items"></div>
+    </div>
+
+    <main class="dash-main">
+      <!-- page content here -->
+    </main>
+
+  </div>
+</div>
+```
+
+**Required inline JS** (complete, copy verbatim, replace `{p}` throughout):
+```js
+var _currentPattern = 'persistent-sidebar';
+var _flyoutIdx = -1;
+
+function _readNavCfg() {
+  var cfg = { nav_pattern: 'persistent-sidebar', taxonomy: [] };
+  try { var s = localStorage.getItem('freshds-nav-cfg'); if (s) Object.assign(cfg, JSON.parse(s)); } catch(e) {}
+  return cfg;
+}
+
+function _getTax(cfg) {
+  return (Array.isArray(cfg.taxonomy) && cfg.taxonomy.length > 0)
+    ? cfg.taxonomy
+    : (typeof DEFAULT_TAXONOMY !== 'undefined' ? DEFAULT_TAXONOMY : []);
+}
+
+function _buildIconRail(tax) {
+  var html = '<fresh-nav-group label="Nav" open>';
+  tax.forEach(function(item, idx) {
+    var ic = item.icon ? ' icon="' + item.icon + '"' : '';
+    html += '<fresh-nav-item' + ic + (idx === 0 ? ' active' : '') +
+            ' data-tax-idx="' + idx + '">' + (item.label || '') + '</fresh-nav-item>';
+  });
+  return html + '</fresh-nav-group>';
+}
+
+function _applyNavPattern() {
+  var cfg  = _readNavCfg();
+  var tax  = _getTax(cfg);
+  _currentPattern = cfg.nav_pattern || 'persistent-sidebar';
+
+  var navbar   = document.getElementById('{p}-topbar');
+  var sidebar  = document.getElementById('{p}-sidebar');
+  var tabStrip = document.getElementById('{p}-tab-strip');
+
+  sidebar.style.display  = 'none';
+  tabStrip.style.display = 'none';
+  sidebar.removeAttribute('collapsed');
+  navbar.removeAttribute('hamburger');
+  _closeFlyout();
+  document.getElementById('{p}-tab-dropdown').classList.remove('open');
+
+  if (_currentPattern === 'persistent-sidebar') {
+    sidebar.style.display = '';
+    document.getElementById('{p}-nav-content').innerHTML = buildSidebarHtml(tax);
+  } else if (_currentPattern === 'collapsible-sidebar') {
+    sidebar.style.display = '';
+    navbar.setAttribute('hamburger', '');
+    document.getElementById('{p}-nav-content').innerHTML = buildSidebarHtml(tax);
+  } else if (_currentPattern === 'top-nav-tabs') {
+    tabStrip.style.display = '';
+    var tabsEl = document.getElementById('{p}-top-tabs');
+    tabsEl.setAttribute('tabs', buildTabsJson(tax));
+    if (tax[0]) tabsEl.setAttribute('active', tax[0].id);
+  }
+}
+
+function _closeFlyout() {
+  _flyoutIdx = -1;
+  document.getElementById('{p}-icon-flyout').classList.remove('open');
+}
+
+function _openFlyout(idx, anchorEl) {
+  var cfg     = _readNavCfg();
+  var tax     = _getTax(cfg);
+  var section = tax[idx];
+  var kids    = (section && section.children) || [];
+  if (!kids.length) { _closeFlyout(); return; }
+  _flyoutIdx = idx;
+  document.getElementById('{p}-flyout-label').textContent = section.label || '';
+  document.getElementById('{p}-flyout-items').innerHTML = kids.map(function(child, ci) {
+    return '<div class="{p}-flyout-item' + (ci === 0 ? ' active' : '') + '">' + (child.label || '') + '</div>';
+  }).join('');
+  var rect   = anchorEl.getBoundingClientRect();
+  var flyout = document.getElementById('{p}-icon-flyout');
+  flyout.style.top = rect.top + 'px';
+  flyout.classList.add('open');
+  requestAnimationFrame(function() {
+    var fh = flyout.offsetHeight, vh = window.innerHeight;
+    if (rect.top + fh > vh - 8) flyout.style.top = Math.max(8, vh - fh - 8) + 'px';
+  });
+}
+
+var _tabDropKey = null, _tabPrevActive = '', _tabClickX = 0;
+
+function _closeTabDrop() {
+  _tabDropKey = null;
+  document.getElementById('{p}-tab-dropdown').classList.remove('open');
+}
+
+function _openTabDrop(key, x) {
+  var cfg  = _readNavCfg();
+  var tax  = _getTax(cfg);
+  var item = null;
+  for (var i = 0; i < tax.length; i++) { if (tax[i].id === key) { item = tax[i]; break; } }
+  var kids = (item && item.children) || [];
+  if (!kids.length) { _closeTabDrop(); return; }
+  _tabDropKey = key;
+  var drop     = document.getElementById('{p}-tab-dropdown');
+  var stripBot = document.getElementById('{p}-tab-strip').getBoundingClientRect().bottom;
+  drop.innerHTML = kids.map(function(child, ci) {
+    return '<div class="{p}-tab-drop-item' + (ci === 0 ? ' active' : '') + '">' + (child.label || '') + '</div>';
+  }).join('');
+  drop.style.top = stripBot + 'px';
+  drop.style.left = '0';
+  drop.classList.add('open');
+  requestAnimationFrame(function() {
+    var w = drop.offsetWidth, vw = window.innerWidth;
+    drop.style.left = Math.max(8, Math.min(x - w / 2, vw - w - 8)) + 'px';
+  });
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  _applyNavPattern();
+  if (window.FreshNavApply) window.FreshNavApply.apply();
+
+  /* Hamburger toggle */
+  document.getElementById('{p}-topbar').addEventListener('hamburger-click', function() {
+    if (_currentPattern !== 'collapsible-sidebar') return;
+    var sb  = document.getElementById('{p}-sidebar');
+    var tax = _getTax(_readNavCfg());
+    if (sb.hasAttribute('collapsed')) {
+      sb.removeAttribute('collapsed');
+      document.getElementById('{p}-nav-content').innerHTML = buildSidebarHtml(tax);
+      _closeFlyout();
+    } else {
+      sb.setAttribute('collapsed', '');
+      document.getElementById('{p}-nav-content').innerHTML = _buildIconRail(tax);
+    }
+  });
+
+  /* Icon rail click: open flyout */
+  document.getElementById('{p}-nav-content').addEventListener('nav-click', function(e) {
+    if (_currentPattern !== 'collapsible-sidebar') return;
+    var sb = document.getElementById('{p}-sidebar');
+    if (!sb.hasAttribute('collapsed')) return;
+    var item = e.target;
+    if (!item || item.tagName.toLowerCase() !== 'fresh-nav-item') return;
+    var idx = parseInt(item.dataset.taxIdx, 10);
+    if (isNaN(idx)) return;
+    Array.prototype.slice.call(document.querySelectorAll('#{p}-nav-content fresh-nav-item'))
+      .forEach(function(el, i) { if (i === idx) el.setAttribute('active', ''); else el.removeAttribute('active'); });
+    if (idx === _flyoutIdx) { _closeFlyout(); return; }
+    _openFlyout(idx, item);
+  });
+  document.getElementById('{p}-nav-content').addEventListener('click', function(e) { e.stopPropagation(); });
+  document.getElementById('{p}-icon-flyout').addEventListener('click', function(e) { e.stopPropagation(); });
+
+  /* Tab strip click */
+  document.getElementById('{p}-top-tabs').addEventListener('click', function(e) {
+    if (_currentPattern !== 'top-nav-tabs') return;
+    _tabClickX = e.clientX;
+    e.stopPropagation();
+    var activeNow = this.getAttribute('active');
+    if (activeNow !== _tabPrevActive) {
+      _tabPrevActive = activeNow;
+      _openTabDrop(activeNow, _tabClickX);
+    } else {
+      if (_tabDropKey === activeNow) _closeTabDrop();
+      else _openTabDrop(activeNow, _tabClickX);
+    }
+  });
+  document.getElementById('{p}-tab-dropdown').addEventListener('click', function(e) { e.stopPropagation(); });
+
+  document.addEventListener('click', function() { _closeFlyout(); _closeTabDrop(); });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') { _closeFlyout(); _closeTabDrop(); }
+  });
+});
+
+/* Live sync: picks up changes from navigation.html in real time */
+window.addEventListener('storage', function(e) {
+  if (e.key !== 'freshds-nav-cfg') return;
+  _applyNavPattern();
+  if (window.FreshNavApply) window.FreshNavApply.apply();
+});
+
+var _lastNavCfgStr = null;
+(function _poll() {
+  var s = localStorage.getItem('freshds-nav-cfg') || '';
+  if (s !== _lastNavCfgStr) {
+    _lastNavCfgStr = s;
+    _applyNavPattern();
+    if (window.FreshNavApply) window.FreshNavApply.apply();
+  }
+  setTimeout(_poll, 400);
+}());
+
+window.addEventListener('pageshow', function(e) {
+  if (e.persisted) {
+    _applyNavPattern();
+    if (window.FreshNavApply) window.FreshNavApply.apply();
+  }
+});
+```
 
 ## Component doc page format (index.html)
 
