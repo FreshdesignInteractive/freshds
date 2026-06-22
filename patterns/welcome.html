@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Wizard | Acme</title>
+<title>Welcome | Acme</title>
 <link rel="icon" type="image/svg+xml" href="../favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -25,61 +25,61 @@
 [data-mode="dark"] .nav-logo-dark  { display: block; }
 
 /* Sidebar footer */
-.or-sidebar-footer { display: flex; align-items: center; gap: var(--space-3); width: 100%; min-width: 0; }
-.or-sidebar-user-info { flex: 1; min-width: 0; overflow: hidden; }
-.or-sidebar-user-name { font-size: var(--font-size-sm); font-weight: 500; color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.or-sidebar-user-role { font-size: var(--font-size-xs); color: var(--text-tertiary); white-space: nowrap; }
-fresh-sidebar[collapsed] .or-sidebar-user-info { display: none; }
+.ow-sidebar-footer { display: flex; align-items: center; gap: var(--space-3); width: 100%; min-width: 0; }
+.ow-sidebar-user-info { flex: 1; min-width: 0; overflow: hidden; }
+.ow-sidebar-user-name { font-size: var(--font-size-sm); font-weight: 500; color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ow-sidebar-user-role { font-size: var(--font-size-xs); color: var(--text-tertiary); white-space: nowrap; }
+fresh-sidebar[collapsed] .ow-sidebar-user-info { display: none; }
 
 /* Icon rail flyout */
-.or-icon-flyout {
+.ow-icon-flyout {
   position: fixed; left: 57px; top: 0; width: 200px;
   background: var(--surface-canvas); border: 1px solid var(--surface-border);
   border-radius: var(--radius-md);
   box-shadow: 0 8px 28px rgba(0,0,0,0.12), 0 2px 6px rgba(0,0,0,0.06);
   z-index: 90; display: none; overflow: hidden;
 }
-.or-icon-flyout.open { display: block; }
-.or-flyout-label {
+.ow-icon-flyout.open { display: block; }
+.ow-flyout-label {
   padding: var(--space-2) var(--space-3) var(--space-1);
   font-size: var(--font-size-xs); font-weight: 600; letter-spacing: 0.07em;
   text-transform: uppercase; color: var(--text-tertiary);
   border-bottom: 1px solid var(--surface-border);
 }
-.or-flyout-item {
+.ow-flyout-item {
   display: flex; align-items: center; padding: 7px var(--space-3);
   font-size: var(--font-size-sm); font-family: var(--font-sans);
   color: var(--text-secondary); cursor: pointer;
   transition: background 100ms, color 100ms; -webkit-font-smoothing: antialiased;
 }
-.or-flyout-item:hover  { background: var(--surface-subtle); color: var(--text-primary); }
-.or-flyout-item.active { background: var(--nav-active-bg); color: var(--nav-active-text); font-weight: 500; }
+.ow-flyout-item:hover  { background: var(--surface-subtle); color: var(--text-primary); }
+.ow-flyout-item.active { background: var(--nav-active-bg); color: var(--nav-active-text); font-weight: 500; }
 
 /* Tab strip */
-.or-tab-strip {
+.ow-tab-strip {
   background: var(--surface-nav); border-bottom: 1px solid var(--surface-border);
   padding: 0 var(--space-5); display: flex; align-items: center;
   height: 44px; flex-shrink: 0;
 }
-.or-tab-dropdown {
+.ow-tab-dropdown {
   position: fixed; top: 0; left: 0; min-width: 168px;
   background: var(--surface-canvas); border: 1px solid var(--surface-border);
   border-radius: var(--radius-md);
   box-shadow: 0 8px 28px rgba(0,0,0,0.12), 0 2px 6px rgba(0,0,0,0.06);
   z-index: 90; display: none; overflow: hidden; padding: var(--space-1) 0;
 }
-.or-tab-dropdown.open { display: block; }
-.or-tab-drop-item {
+.ow-tab-dropdown.open { display: block; }
+.ow-tab-drop-item {
   display: flex; align-items: center; padding: 7px var(--space-4);
   font-size: var(--font-size-sm); font-family: var(--font-sans);
   color: var(--text-secondary); cursor: pointer;
   transition: background 100ms, color 100ms; -webkit-font-smoothing: antialiased;
 }
-.or-tab-drop-item:hover  { background: var(--surface-subtle); color: var(--text-primary); }
-.or-tab-drop-item.active { color: var(--nav-active-text); background: var(--nav-active-bg); font-weight: 500; }
+.ow-tab-drop-item:hover  { background: var(--surface-subtle); color: var(--text-primary); }
+.ow-tab-drop-item.active { color: var(--nav-active-text); background: var(--nav-active-bg); font-weight: 500; }
 
-/* Make onb-body fill dash-main */
-.dash-main > .onb-body { flex: 1; min-height: 0; }
+/* onb-welcome-body fills dash-main */
+.dash-main > .onb-welcome-body { flex: 1; min-height: 0; }
 
 /* Spec trigger */
 .demo-spec-btn {
@@ -173,97 +173,51 @@ fresh-sidebar[collapsed] .or-sidebar-user-info { display: none; }
 
   <div class="dash-shell">
 
-    <fresh-navbar id="or-topbar" data-nav-logged-in>
+    <fresh-navbar id="ow-topbar" data-nav-logged-in>
       <div slot="actions" data-nav-actions-logged-in></div>
     </fresh-navbar>
 
-    <div id="or-tab-strip" class="or-tab-strip" style="display:none;">
-      <fresh-topbar-menu id="or-top-tabs"></fresh-topbar-menu>
+    <div id="ow-tab-strip" class="ow-tab-strip" style="display:none;">
+      <fresh-topbar-menu id="ow-top-tabs"></fresh-topbar-menu>
     </div>
-    <div class="or-tab-dropdown" id="or-tab-dropdown"></div>
+    <div class="ow-tab-dropdown" id="ow-tab-dropdown"></div>
 
     <div class="dash-body">
 
-      <fresh-sidebar id="or-sidebar" style="display:none;flex-shrink:0;height:100%;overflow:hidden;">
-        <div id="or-nav-content"></div>
-        <div slot="footer" class="or-sidebar-footer">
+      <fresh-sidebar id="ow-sidebar" style="display:none;flex-shrink:0;height:100%;overflow:hidden;">
+        <div id="ow-nav-content"></div>
+        <div slot="footer" class="ow-sidebar-footer">
           <fresh-avatar name="Jamie Rivera" size="sm"></fresh-avatar>
-          <div class="or-sidebar-user-info">
-            <div class="or-sidebar-user-name">Jamie Rivera</div>
-            <div class="or-sidebar-user-role">Setting up account</div>
+          <div class="ow-sidebar-user-info">
+            <div class="ow-sidebar-user-name">Jamie Rivera</div>
+            <div class="ow-sidebar-user-role">Setting up account</div>
           </div>
         </div>
       </fresh-sidebar>
 
-      <div class="or-icon-flyout" id="or-icon-flyout">
-        <div class="or-flyout-label" id="or-flyout-label"></div>
-        <div id="or-flyout-items"></div>
+      <div class="ow-icon-flyout" id="ow-icon-flyout">
+        <div class="ow-flyout-label" id="ow-flyout-label"></div>
+        <div id="ow-flyout-items"></div>
       </div>
 
       <main class="dash-main">
 
-        <div class="onb-body">
-          <div class="onb-wrap">
+        <div class="onb-welcome-body">
+          <div class="onb-welcome-wrap">
 
-            <div class="onb-stepper" id="or-stepper">
-              <fresh-stepper step="1" steps='[
-                {"label":"Role"},
-                {"label":"Use case"},
-                {"label":"Profile"},
-                {"label":"Workspace"},
-                {"label":"Team"},
-                {"label":"Integrations"}
-              ]'></fresh-stepper>
+            <div class="onb-welcome-illo" id="ow-illo" aria-hidden="true">
+              <i class="ti ti-confetti"></i>
             </div>
 
-            <div class="onb-eyebrow">Step 1 of 6</div>
-            <h1 class="onb-title">What best describes your role?</h1>
-            <p class="onb-sub">We'll tailor your experience based on how you work.</p>
+            <h1 class="onb-welcome-title" id="ow-title">Welcome to Acme,<br>Jamie!</h1>
 
-            <div class="pick-grid" id="or-role-grid">
-              <div class="pick-card" data-role="engineer" onclick="selectCard(this)">
-                <div class="pick-card-check"><i class="ti ti-check"></i></div>
-                <div class="pick-card-icon"><i class="ti ti-code"></i></div>
-                <div class="pick-card-label">Engineer</div>
-                <div class="pick-card-desc">Building products and shipping code</div>
-              </div>
-              <div class="pick-card" data-role="designer" onclick="selectCard(this)">
-                <div class="pick-card-check"><i class="ti ti-check"></i></div>
-                <div class="pick-card-icon"><i class="ti ti-vector-bezier-2"></i></div>
-                <div class="pick-card-label">Designer</div>
-                <div class="pick-card-desc">Crafting interfaces and experiences</div>
-              </div>
-              <div class="pick-card" data-role="pm" onclick="selectCard(this)">
-                <div class="pick-card-check"><i class="ti ti-check"></i></div>
-                <div class="pick-card-icon"><i class="ti ti-layout-kanban"></i></div>
-                <div class="pick-card-label">Product Manager</div>
-                <div class="pick-card-desc">Defining strategy and roadmaps</div>
-              </div>
-              <div class="pick-card" data-role="data" onclick="selectCard(this)">
-                <div class="pick-card-check"><i class="ti ti-check"></i></div>
-                <div class="pick-card-icon"><i class="ti ti-chart-bar"></i></div>
-                <div class="pick-card-label">Data &amp; Analytics</div>
-                <div class="pick-card-desc">Turning data into decisions</div>
-              </div>
-              <div class="pick-card" data-role="marketing" onclick="selectCard(this)">
-                <div class="pick-card-check"><i class="ti ti-check"></i></div>
-                <div class="pick-card-icon"><i class="ti ti-speakerphone"></i></div>
-                <div class="pick-card-label">Marketing</div>
-                <div class="pick-card-desc">Growing the audience and brand</div>
-              </div>
-              <div class="pick-card" data-role="other" onclick="selectCard(this)">
-                <div class="pick-card-check"><i class="ti ti-check"></i></div>
-                <div class="pick-card-icon"><i class="ti ti-dots"></i></div>
-                <div class="pick-card-label">Other</div>
-                <div class="pick-card-desc">Something else entirely</div>
-              </div>
-            </div>
+            <p class="onb-welcome-sub" id="ow-sub">
+              Let's get your workspace set up. It only takes a couple of minutes and you'll be ready to collaborate with your team.
+            </p>
 
-            <div class="onb-nav" id="or-bottom-nav">
-              <span></span>
-              <div class="onb-nav-right">
-                <fresh-button variant="primary">Continue <i class="ti ti-arrow-right"></i></fresh-button>
-              </div>
+            <div class="onb-welcome-actions" id="ow-actions">
+              <fresh-button size="lg" variant="primary">Get started <i class="ti ti-arrow-right"></i></fresh-button>
+              <span class="onb-welcome-hint">Takes about 3 minutes</span>
             </div>
 
           </div>
@@ -290,7 +244,7 @@ fresh-sidebar[collapsed] .or-sidebar-user-info { display: none; }
       <div class="sp-section-label">GLOBAL TEMPLATE RULES</div>
       <div class="sp-rules-hdr">
         <i class="ti ti-sparkles sp-rules-hdr-icon"></i>
-        <span class="sp-rules-hdr-name">AI RULES: ROLE SELECTION</span>
+        <span class="sp-rules-hdr-name">AI RULES: WELCOME SCREEN</span>
         <span class="sp-rules-hdr-hint">Click to edit</span>
       </div>
       <div id="sp-cats"></div>
@@ -330,25 +284,10 @@ fresh-sidebar[collapsed] .or-sidebar-user-info { display: none; }
 <script src="../components/navigation/fresh-topbar-menu.js"></script>
 <script src="../components/data/fresh-avatar.js"></script>
 <script src="../components/core/fresh-button.js"></script>
-<script src="../components/navigation/fresh-stepper.js"></script>
 <script src="../js/nav-taxonomy.js"></script>
 <script src="../js/freshds-nav-apply.js"></script>
 
 <script>
-/* ── Card selection ──────────────────────────────────────── */
-
-function selectCard(card) {
-  document.querySelectorAll('#or-role-grid .pick-card').forEach(function(c) {
-    c.classList.remove('selected');
-  });
-  card.classList.add('selected');
-}
-
-document.addEventListener('DOMContentLoaded', function() {
-  var def = document.querySelector('#or-role-grid .pick-card[data-role="engineer"]');
-  if (def) def.classList.add('selected');
-});
-
 /* ── Nav pattern router ──────────────────────────────────── */
 
 var _currentPattern = 'persistent-sidebar';
@@ -381,27 +320,27 @@ function _applyNavPattern() {
   var tax  = _getTax(cfg);
   _currentPattern = cfg.nav_pattern || 'persistent-sidebar';
 
-  var navbar   = document.getElementById('or-topbar');
-  var sidebar  = document.getElementById('or-sidebar');
-  var tabStrip = document.getElementById('or-tab-strip');
+  var navbar   = document.getElementById('ow-topbar');
+  var sidebar  = document.getElementById('ow-sidebar');
+  var tabStrip = document.getElementById('ow-tab-strip');
 
   sidebar.style.display  = 'none';
   tabStrip.style.display = 'none';
   sidebar.removeAttribute('collapsed');
   navbar.removeAttribute('hamburger');
   _closeFlyout();
-  document.getElementById('or-tab-dropdown').classList.remove('open');
+  document.getElementById('ow-tab-dropdown').classList.remove('open');
 
   if (_currentPattern === 'persistent-sidebar') {
     sidebar.style.display = '';
-    document.getElementById('or-nav-content').innerHTML = buildSidebarHtml(tax);
+    document.getElementById('ow-nav-content').innerHTML = buildSidebarHtml(tax);
   } else if (_currentPattern === 'collapsible-sidebar') {
     sidebar.style.display = '';
     navbar.setAttribute('hamburger', '');
-    document.getElementById('or-nav-content').innerHTML = buildSidebarHtml(tax);
+    document.getElementById('ow-nav-content').innerHTML = buildSidebarHtml(tax);
   } else if (_currentPattern === 'top-nav-tabs') {
     tabStrip.style.display = '';
-    var tabsEl = document.getElementById('or-top-tabs');
+    var tabsEl = document.getElementById('ow-top-tabs');
     tabsEl.setAttribute('tabs', buildTabsJson(tax));
     if (tax[0]) tabsEl.setAttribute('active', tax[0].id);
   }
@@ -409,7 +348,7 @@ function _applyNavPattern() {
 
 function _closeFlyout() {
   _flyoutIdx = -1;
-  document.getElementById('or-icon-flyout').classList.remove('open');
+  document.getElementById('ow-icon-flyout').classList.remove('open');
 }
 
 function _openFlyout(idx, anchorEl) {
@@ -419,12 +358,12 @@ function _openFlyout(idx, anchorEl) {
   var kids    = (section && section.children) || [];
   if (!kids.length) { _closeFlyout(); return; }
   _flyoutIdx = idx;
-  document.getElementById('or-flyout-label').textContent = section.label || '';
-  document.getElementById('or-flyout-items').innerHTML = kids.map(function(child, ci) {
-    return '<div class="or-flyout-item' + (ci === 0 ? ' active' : '') + '">' + (child.label || '') + '</div>';
+  document.getElementById('ow-flyout-label').textContent = section.label || '';
+  document.getElementById('ow-flyout-items').innerHTML = kids.map(function(child, ci) {
+    return '<div class="ow-flyout-item' + (ci === 0 ? ' active' : '') + '">' + (child.label || '') + '</div>';
   }).join('');
   var rect   = anchorEl.getBoundingClientRect();
-  var flyout = document.getElementById('or-icon-flyout');
+  var flyout = document.getElementById('ow-icon-flyout');
   flyout.style.top = rect.top + 'px';
   flyout.classList.add('open');
   requestAnimationFrame(function() {
@@ -437,7 +376,7 @@ var _tabDropKey = null, _tabPrevActive = '', _tabClickX = 0;
 
 function _closeTabDrop() {
   _tabDropKey = null;
-  document.getElementById('or-tab-dropdown').classList.remove('open');
+  document.getElementById('ow-tab-dropdown').classList.remove('open');
 }
 
 function _openTabDrop(key, x) {
@@ -448,10 +387,10 @@ function _openTabDrop(key, x) {
   var kids = (item && item.children) || [];
   if (!kids.length) { _closeTabDrop(); return; }
   _tabDropKey = key;
-  var drop     = document.getElementById('or-tab-dropdown');
-  var stripBot = document.getElementById('or-tab-strip').getBoundingClientRect().bottom;
+  var drop     = document.getElementById('ow-tab-dropdown');
+  var stripBot = document.getElementById('ow-tab-strip').getBoundingClientRect().bottom;
   drop.innerHTML = kids.map(function(child, ci) {
-    return '<div class="or-tab-drop-item' + (ci === 0 ? ' active' : '') + '">' + (child.label || '') + '</div>';
+    return '<div class="ow-tab-drop-item' + (ci === 0 ? ' active' : '') + '">' + (child.label || '') + '</div>';
   }).join('');
   drop.style.top = stripBot + 'px';
   drop.style.left = '0';
@@ -466,37 +405,37 @@ document.addEventListener('DOMContentLoaded', function() {
   _applyNavPattern();
   if (window.FreshNavApply) window.FreshNavApply.apply();
 
-  document.getElementById('or-topbar').addEventListener('hamburger-click', function() {
+  document.getElementById('ow-topbar').addEventListener('hamburger-click', function() {
     if (_currentPattern !== 'collapsible-sidebar') return;
-    var sb  = document.getElementById('or-sidebar');
+    var sb  = document.getElementById('ow-sidebar');
     var tax = _getTax(_readNavCfg());
     if (sb.hasAttribute('collapsed')) {
       sb.removeAttribute('collapsed');
-      document.getElementById('or-nav-content').innerHTML = buildSidebarHtml(tax);
+      document.getElementById('ow-nav-content').innerHTML = buildSidebarHtml(tax);
       _closeFlyout();
     } else {
       sb.setAttribute('collapsed', '');
-      document.getElementById('or-nav-content').innerHTML = _buildIconRail(tax);
+      document.getElementById('ow-nav-content').innerHTML = _buildIconRail(tax);
     }
   });
 
-  document.getElementById('or-nav-content').addEventListener('nav-click', function(e) {
+  document.getElementById('ow-nav-content').addEventListener('nav-click', function(e) {
     if (_currentPattern !== 'collapsible-sidebar') return;
-    var sb = document.getElementById('or-sidebar');
+    var sb = document.getElementById('ow-sidebar');
     if (!sb.hasAttribute('collapsed')) return;
     var item = e.target;
     if (!item || item.tagName.toLowerCase() !== 'fresh-nav-item') return;
     var idx = parseInt(item.dataset.taxIdx, 10);
     if (isNaN(idx)) return;
-    Array.prototype.slice.call(document.querySelectorAll('#or-nav-content fresh-nav-item'))
+    Array.prototype.slice.call(document.querySelectorAll('#ow-nav-content fresh-nav-item'))
       .forEach(function(el, i) { if (i === idx) el.setAttribute('active', ''); else el.removeAttribute('active'); });
     if (idx === _flyoutIdx) { _closeFlyout(); return; }
     _openFlyout(idx, item);
   });
-  document.getElementById('or-nav-content').addEventListener('click', function(e) { e.stopPropagation(); });
-  document.getElementById('or-icon-flyout').addEventListener('click', function(e) { e.stopPropagation(); });
+  document.getElementById('ow-nav-content').addEventListener('click', function(e) { e.stopPropagation(); });
+  document.getElementById('ow-icon-flyout').addEventListener('click', function(e) { e.stopPropagation(); });
 
-  document.getElementById('or-top-tabs').addEventListener('click', function(e) {
+  document.getElementById('ow-top-tabs').addEventListener('click', function(e) {
     if (_currentPattern !== 'top-nav-tabs') return;
     _tabClickX = e.clientX;
     e.stopPropagation();
@@ -509,7 +448,7 @@ document.addEventListener('DOMContentLoaded', function() {
       else _openTabDrop(activeNow, _tabClickX);
     }
   });
-  document.getElementById('or-tab-dropdown').addEventListener('click', function(e) { e.stopPropagation(); });
+  document.getElementById('ow-tab-dropdown').addEventListener('click', function(e) { e.stopPropagation(); });
 
   document.addEventListener('click', function() { _closeFlyout(); _closeTabDrop(); });
   document.addEventListener('keydown', function(e) {
@@ -546,33 +485,32 @@ window.addEventListener('pageshow', function(e) {
 /* ── Spec panel ──────────────────────────────────────────── */
 
 var SP_ZONES = [
-  { key: 'stepper',    label: 'Progress stepper',  el: 'or-stepper',    on: true },
-  { key: 'role-grid',  label: 'Role picker cards',  el: 'or-role-grid',  on: true },
-  { key: 'bottom-nav', label: 'Bottom navigation',  el: 'or-bottom-nav', on: true }
+  { key: 'illo',    label: 'Illustration',   el: 'ow-illo',    on: true },
+  { key: 'title',   label: 'Welcome heading', el: 'ow-title',   on: true },
+  { key: 'sub',     label: 'Subtext',         el: 'ow-sub',     on: true },
+  { key: 'actions', label: 'CTA + hint',      el: 'ow-actions', on: true }
 ];
 
 var SP_RULES = {
   'LAYOUT': [
-    'Onboarding steps render inside the full app shell (navbar + sidebar from nav config), not on a standalone blank page.',
-    'The content is centered using onb-body (flex, justify-content: center, overflow-y: auto) inside dash-main.',
-    'Max content width is 640px via onb-wrap. This keeps the wizard readable without stretching to full viewport width.'
+    'The welcome screen renders inside the full app shell (navbar + sidebar from nav config).',
+    'Content is vertically and horizontally centered in dash-main using onb-welcome-body (flex, align-items: center, justify-content: center).',
+    'Max content width is 520px via onb-welcome-wrap. Everything is text-align: center.'
   ],
-  'STEPPER': [
-    'Use fresh-stepper with step="N" and a steps array to show progress across all onboarding steps.',
-    'The current step index is 1-based. Completed steps show a checkmark; the current step is highlighted.',
-    'Show the step count as an eyebrow label above the title ("Step 1 of 6").'
+  'ILLUSTRATION': [
+    'Use a 120x120px rounded square (onb-welcome-illo) with interactive-subtle background, dashed interactive-border, and a large icon at 48px.',
+    'Icon should feel celebratory or inviting: ti-confetti, ti-sparkles, ti-rocket, or a brand-specific illustration.',
+    'The illustration sits above the headline with margin-bottom: space-8.'
   ],
-  'ROLE CARDS': [
-    'Use pick-grid with pick-card items for single-select role choices.',
-    'Each pick-card has: pick-card-check (checkmark, hidden until selected), pick-card-icon, pick-card-label, pick-card-desc.',
-    'Clicking a card adds the "selected" class and removes it from all siblings — single-selection only.',
-    'Pre-select the most common role by adding "selected" class on DOMContentLoaded.',
-    'Icons should clearly represent the role: ti-code for Engineer, ti-vector-bezier-2 for Designer, ti-layout-kanban for PM, ti-chart-bar for Data, ti-speakerphone for Marketing, ti-dots for Other.'
+  'HEADING AND COPY': [
+    'Title is 32px / weight 700 / letter-spacing -0.04em. Personalise with the user first name: "Welcome to [Product], [Name]!".',
+    'Subtitle is xl font size, secondary text color, line-height 1.6. Keep it to 1-2 sentences — explain what happens next and set a time expectation.',
+    'Avoid technical jargon in the subtitle. Focus on the outcome ("collaborate with your team"), not the steps.'
   ],
-  'NAVIGATION': [
-    'Onboarding nav sits below the content: left side is empty on step 1 (no back button); right side has the primary Continue CTA.',
-    'On steps 2+, show a ghost "Back" button on the left and "Continue" on the right.',
-    'The Continue button should be disabled until a selection is made (if enforcing required selection).'
+  'CTA': [
+    'Single primary large CTA: "Get started" with a right arrow icon.',
+    'Below the button, show a low-pressure hint in tertiary color: "Takes about 3 minutes".',
+    'No back or skip link on the welcome screen — it is the entry point.'
   ]
 };
 
@@ -653,7 +591,7 @@ function spShare() {
 }
 
 function spStartBuilding() {
-  var lines = ['Build a role selection onboarding step using the FreshDS design system.', ''];
+  var lines = ['Build a welcome screen using the FreshDS design system.', ''];
   Object.keys(SP_RULES).forEach(function(cat) {
     lines.push('## ' + cat);
     SP_RULES[cat].forEach(function(rule) { lines.push('- ' + rule); });
