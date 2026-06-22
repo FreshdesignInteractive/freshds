@@ -126,6 +126,83 @@ That means:
 - Do NOT flag standard layout structure (a two-column layout is not a missing component, use the grid)
 - Do NOT flag text, headings, labels, those are raw HTML with DS token styles, always allowed
 
+### Filter & Search pattern: mobile responsive behavior
+
+The `cnt-filter-layout` / `cnt-filter-sidebar` pattern collapses badly on mobile (sidebar takes full width, results disappear). Every filter page MUST implement the mobile drawer pattern:
+
+**On mobile (`max-width: 767px`):**
+- The filter sidebar becomes a `position: fixed` left drawer (280px wide, `transform: translateX(-100%)` when closed)
+- A FAB chip button appears in a thin strip below the search bar (or below the page header if there is no search bar), showing the active filter count
+- Clicking the FAB opens the drawer; a dark backdrop covers the rest of the screen
+- Results take full width because the sidebar is out of the normal flow
+
+**Required CSS additions to the page `<style>` block** (these override `content.css` at `max-width: 767px`):
+```css
+.cf-filter-fab-row { display: none; align-items: center; padding: var(--space-2) var(--space-4); border-bottom: 1px solid var(--surface-border); background: var(--surface-canvas); flex-shrink: 0; }
+.cf-filter-fab-btn { display: inline-flex; align-items: center; gap: 6px; padding: 6px var(--space-3); border: 1px solid var(--surface-border); border-radius: var(--radius-full); background: var(--surface-canvas); color: var(--text-secondary); font-size: var(--font-size-sm); font-weight: 500; font-family: var(--font-sans); cursor: pointer; box-shadow: 0 1px 4px rgba(0,0,0,0.08); transition: background 150ms, color 150ms; }
+.cf-filter-fab-badge { display: inline-flex; align-items: center; justify-content: center; width: 18px; height: 18px; border-radius: 50%; background: var(--color-interactive); color: #fff; font-size: 10px; font-weight: 700; }
+.cf-filter-backdrop { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 150; }
+.cf-filter-backdrop.open { display: block; }
+.cf-filter-drawer-hdr { display: none; align-items: center; justify-content: space-between; padding: var(--space-3) var(--space-4); border-bottom: 1px solid var(--surface-border); background: var(--surface-canvas); flex-shrink: 0; }
+.cf-filter-drawer-hdr-title { font-size: var(--font-size-md); font-weight: 600; color: var(--text-primary); }
+.cf-filter-drawer-hdr-close { width: 28px; height: 28px; border: none; border-radius: var(--radius-md); background: transparent; color: var(--text-secondary); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 16px; transition: background 150ms; }
+
+@media (max-width: 767px) {
+  .cf-filter-fab-row { display: flex; }
+  .cf-filter-drawer-hdr { display: flex; }
+  .cnt-filter-sidebar {
+    position: fixed !important; top: 0; left: 0; bottom: 0;
+    width: 280px !important; padding: 0 !important;
+    display: flex !important; flex-direction: column;
+    border-right: 1px solid var(--surface-border) !important; border-bottom: none !important;
+    transform: translateX(-100%); transition: transform 260ms cubic-bezier(0.4,0,0.2,1);
+    z-index: 160; box-shadow: 4px 0 20px rgba(0,0,0,0.12);
+  }
+  .cnt-filter-sidebar.mobile-open { transform: translateX(0); }
+  .cf-filter-drawer-body { flex: 1; overflow-y: auto; padding: var(--space-4); }
+  .cnt-filter-layout { flex-direction: row !important; }
+}
+```
+
+**Required HTML additions:**
+```html
+<!-- FAB: place between search strip and cnt-filter-layout -->
+<div class="cf-filter-fab-row" id="cf-filter-fab-row">
+  <button class="cf-filter-fab-btn" onclick="openFilterDrawer()">
+    <i class="ti ti-adjustments-horizontal"></i>
+    Filters
+    <span class="cf-filter-fab-badge">{activeCount}</span>
+  </button>
+</div>
+
+<!-- Inside .cnt-filter-sidebar, as first child: -->
+<div class="cf-filter-drawer-hdr">
+  <span class="cf-filter-drawer-hdr-title">Filters</span>
+  <button class="cf-filter-drawer-hdr-close" onclick="closeFilterDrawer()"><i class="ti ti-x"></i></button>
+</div>
+<div class="cf-filter-drawer-body">
+  <!-- all cnt-filter-group elements go here -->
+</div>
+
+<!-- Backdrop: outside #app, before spec panel -->
+<div class="cf-filter-backdrop" id="cf-filter-backdrop" onclick="closeFilterDrawer()"></div>
+```
+
+**Required JS:**
+```js
+function openFilterDrawer() {
+  document.getElementById('cf-filter-sidebar').classList.add('mobile-open');
+  document.getElementById('cf-filter-backdrop').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeFilterDrawer() {
+  document.getElementById('cf-filter-sidebar').classList.remove('mobile-open');
+  document.getElementById('cf-filter-backdrop').classList.remove('open');
+  document.body.style.overflow = '';
+}
+// Also call closeFilterDrawer() in the Escape keydown handler
+```
+
 ### Pages patterns: nav config integration (non-negotiable)
 
 Any pattern tagged `also: ['pages']` in `patterns.html` is a full-page app layout. These patterns MUST use the navigation configuration the user sets in `navigation.html`. Never hardcode nav items, logos, or nav structure.
