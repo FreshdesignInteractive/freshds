@@ -764,7 +764,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   document.addEventListener('click', function() { _closeFlyout(); _closeTabDrop(); });
   document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') { _closeFlyout(); _closeTabDrop(); closeFilterDrawer(); }
+    if (e.key === 'Escape') { _closeFlyout(); _closeTabDrop(); closeFilterDrawer(); spClose(); spCloseModal(); }
   });
 });
 

@@ -200,7 +200,7 @@ function closeFilterDrawer() {
   document.getElementById('cf-filter-backdrop').classList.remove('open');
   document.body.style.overflow = '';
 }
-// Also call closeFilterDrawer() in the Escape keydown handler
+// Escape handler must call all four: _closeFlyout(); _closeTabDrop(); closeFilterDrawer(); spClose(); spCloseModal();
 ```
 
 ### Pages patterns: nav config integration (non-negotiable)
@@ -484,7 +484,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   document.addEventListener('click', function() { _closeFlyout(); _closeTabDrop(); });
   document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') { _closeFlyout(); _closeTabDrop(); }
+    if (e.key === 'Escape') { _closeFlyout(); _closeTabDrop(); spClose(); spCloseModal(); }
   });
 });
 
