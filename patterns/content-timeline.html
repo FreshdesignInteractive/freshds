@@ -215,7 +215,7 @@
           <div class="cnt-tl-table">
 
             <!-- Labels column -->
-            <div class="cnt-tl-labels">
+            <div class="cnt-tl-labels" id="ct-tl-labels">
               <div class="cnt-tl-label-header">Task / Milestone</div>
               <div class="cnt-tl-row"><fresh-avatar name="Priya Sharma" size="xs"></fresh-avatar> AI Copilot Beta</div>
               <div class="cnt-tl-row"><fresh-avatar name="Marcus Chen" size="xs"></fresh-avatar> Design System v2</div>
@@ -586,8 +586,8 @@ window.addEventListener('pageshow', function(e) {
 /* ── Spec panel ──────────────────────────────────────────── */
 
 var SP_ZONES = [
-  { key: 'page-header',    label: 'Page Header',    el: 'ct-page-header',    on: true },
-  { key: 'timeline-grid',  label: 'Timeline Grid',  el: 'ct-timeline-grid',  on: true }
+  { key: 'page-header',  label: 'Page Header',         el: 'ct-page-header', on: true },
+  { key: 'tasks-panel',  label: 'Tasks / Milestones',  el: 'ct-tl-labels',   on: true }
 ];
 
 var SP_RULES = {
