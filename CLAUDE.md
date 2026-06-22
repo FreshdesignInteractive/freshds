@@ -126,6 +126,55 @@ That means:
 - Do NOT flag standard layout structure (a two-column layout is not a missing component, use the grid)
 - Do NOT flag text, headings, labels, those are raw HTML with DS token styles, always allowed
 
+### Pages patterns: nav config integration (non-negotiable)
+
+Any pattern tagged `also: ['pages']` in `patterns.html` is a full-page app layout. These patterns MUST use the navigation configuration the user sets in `navigation.html` — never hardcoded nav.
+
+**Required structure** (copy from `patterns/dash-home.html` as the reference implementation):
+
+```html
+<fresh-navbar id="{p}-topbar" data-nav-logged-in search>
+  <div slot="actions" data-nav-actions-logged-in></div>
+</fresh-navbar>
+
+<!-- Tab strip: shown for top-nav-tabs pattern only -->
+<div id="{p}-tab-strip" class="..." style="display:none;">
+  <fresh-topbar-menu id="{p}-top-tabs"></fresh-topbar-menu>
+</div>
+
+<div class="dash-body">
+  <!-- Sidebar: shown for sidebar patterns only -->
+  <fresh-sidebar id="{p}-sidebar" style="display:none;flex-shrink:0;height:100%;overflow:hidden;">
+    <div id="{p}-nav-content"></div>
+  </fresh-sidebar>
+
+  <!-- Icon flyout for collapsible sidebar collapsed state -->
+  <div class="..." id="{p}-icon-flyout">...</div>
+
+  <main class="dash-main">...</main>
+</div>
+```
+
+**Required scripts** (load after component JS):
+```html
+<script src="../js/nav-taxonomy.js"></script>
+<script src="../js/freshds-nav-apply.js"></script>
+```
+
+**Required JS** (inline, use page prefix `{p}-` for all IDs):
+- `_readNavCfg()`: reads `freshds-nav-cfg` from localStorage
+- `_getTax(cfg)`: returns taxonomy array (falls back to `DEFAULT_TAXONOMY`)
+- `_applyNavPattern()`: reads `nav_pattern` and shows/hides sidebar, tab strip, or neither; populates nav content via `buildSidebarHtml()` / `buildTabsJson()`; sets `hamburger` attr on navbar for collapsible pattern
+- Hamburger click handler: toggles `collapsed` attr on sidebar; swaps to icon rail html
+- Icon flyout open/close for collapsible collapsed state
+- Tab dropdown open/close for top-nav-tabs children
+- Live sync: `window.addEventListener('storage', ...)` + 400ms polling + `pageshow` event
+
+**Forbidden in Pages patterns:**
+- `<pattern-topbar>` / `pattern-topbar-v2.js` — never use
+- `<nav class="app-nav">` hardcoded sidebar — never use
+- Any hardcoded nav items or logo URLs — always read from `freshds-nav-cfg`
+
 ## Component doc page format (index.html)
 
 Every component page lives inside `<div class="fds-page" id="page-{name}">` in `index.html`. Use this exact structure, no custom classes, no invented markup.
