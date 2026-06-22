@@ -16,9 +16,90 @@
 <link rel="stylesheet" href="../styles/patterns/dashboard.css">
 <link rel="stylesheet" href="../styles/patterns/content.css">
 <script>if(location.href.indexOf('?thumb')!==-1)document.write('<style>#demo-bar{display:none!important}</style>');</script>
-<script src="../js/pattern-topbar-v2.js"></script>
 <script src="../js/freshds.js"></script>
 <script src="../js/pattern-bar.js"></script>
+<style>
+  /* Logo dark/light switching */
+  .nav-logo-dark { display: none; }
+  [data-mode="dark"] .nav-logo-light { display: none; }
+  [data-mode="dark"] .nav-logo-dark  { display: block; }
+
+  /* Sidebar footer */
+  .cf-sidebar-footer { display: flex; align-items: center; gap: var(--space-3); width: 100%; min-width: 0; }
+  .cf-sidebar-user-info { flex: 1; min-width: 0; overflow: hidden; }
+  .cf-sidebar-user-name { font-size: var(--font-size-sm); font-weight: 500; color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .cf-sidebar-user-role { font-size: var(--font-size-xs); color: var(--text-tertiary); white-space: nowrap; }
+  fresh-sidebar[collapsed] .cf-sidebar-user-info { display: none; }
+
+  /* Icon rail flyout (collapsible sidebar) */
+  .cf-icon-flyout {
+    position: fixed; left: 57px; top: 0; width: 200px;
+    background: var(--surface-canvas); border: 1px solid var(--surface-border);
+    border-radius: var(--radius-md);
+    box-shadow: 0 8px 28px rgba(0,0,0,0.12), 0 2px 6px rgba(0,0,0,0.06);
+    z-index: 90; display: none; overflow: hidden;
+  }
+  .cf-icon-flyout.open { display: block; }
+  .cf-flyout-label {
+    padding: var(--space-2) var(--space-3) var(--space-1);
+    font-size: var(--font-size-xs); font-weight: 600; letter-spacing: 0.07em;
+    text-transform: uppercase; color: var(--text-tertiary);
+    border-bottom: 1px solid var(--surface-border);
+  }
+  .cf-flyout-item {
+    display: flex; align-items: center; padding: 7px var(--space-3);
+    font-size: var(--font-size-sm); font-family: var(--font-sans);
+    color: var(--text-secondary); cursor: pointer;
+    transition: background 100ms, color 100ms; -webkit-font-smoothing: antialiased;
+  }
+  .cf-flyout-item:hover  { background: var(--surface-subtle); color: var(--text-primary); }
+  .cf-flyout-item.active { background: var(--nav-active-bg); color: var(--nav-active-text); font-weight: 500; }
+
+  /* Tab strip (top-nav-tabs pattern) */
+  .cf-tab-strip {
+    background: var(--surface-nav); border-bottom: 1px solid var(--surface-border);
+    padding: 0 var(--space-5); display: flex; align-items: center;
+    height: 44px; flex-shrink: 0;
+  }
+  .cf-tab-dropdown {
+    position: fixed; top: 0; left: 0; min-width: 168px;
+    background: var(--surface-canvas); border: 1px solid var(--surface-border);
+    border-radius: var(--radius-md);
+    box-shadow: 0 8px 28px rgba(0,0,0,0.12), 0 2px 6px rgba(0,0,0,0.06);
+    z-index: 90; display: none; overflow: hidden; padding: var(--space-1) 0;
+  }
+  .cf-tab-dropdown.open { display: block; }
+  .cf-tab-drop-item {
+    display: flex; align-items: center; padding: 7px var(--space-4);
+    font-size: var(--font-size-sm); font-family: var(--font-sans);
+    color: var(--text-secondary); cursor: pointer;
+    transition: background 100ms, color 100ms; -webkit-font-smoothing: antialiased;
+  }
+  .cf-tab-drop-item:hover  { background: var(--surface-subtle); color: var(--text-primary); }
+  .cf-tab-drop-item.active { color: var(--nav-active-text); background: var(--nav-active-bg); font-weight: 500; }
+
+  /* Search + chips strip */
+  .cf-search-strip {
+    padding: var(--space-3) var(--space-6);
+    border-bottom: 1px solid var(--surface-border);
+    background: var(--surface-canvas);
+    flex-shrink: 0;
+  }
+  .cf-chip-row { display: flex; align-items: center; gap: var(--space-2); margin-top: var(--space-2); flex-wrap: wrap; }
+  .cf-chip-label { font-size: 12px; color: var(--text-tertiary); font-weight: 500; }
+  .cf-chip {
+    display: inline-flex; align-items: center; gap: 4px;
+    padding: 3px 10px 3px 8px;
+    background: var(--color-interactive-subtle); color: var(--color-interactive-text);
+    border-radius: var(--radius-full); font-size: 12px; font-weight: 500; cursor: default;
+  }
+  .cf-chip i { font-size: 10px; cursor: pointer; }
+  .cf-chip i:hover { opacity: 0.7; }
+
+  /* Deal row extras */
+  .deal-stage-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .deal-amount { font-size: 13px; font-weight: 700; color: var(--text-primary); min-width: 44px; text-align: right; }
+</style>
 </head>
 <body>
 <div id="app">
@@ -37,29 +118,43 @@
 
   <div class="dash-shell">
 
-    <pattern-topbar logged-in></pattern-topbar>
+    <!-- Navbar: brand + action icons driven by freshds-nav-apply.js -->
+    <fresh-navbar id="cf-topbar" data-nav-logged-in search>
+      <div slot="actions" data-nav-actions-logged-in></div>
+    </fresh-navbar>
+
+    <!-- Tab strip: shown for top-nav-tabs pattern -->
+    <div id="cf-tab-strip" class="cf-tab-strip" style="display:none;">
+      <fresh-topbar-menu id="cf-top-tabs"></fresh-topbar-menu>
+    </div>
+    <div class="cf-tab-dropdown" id="cf-tab-dropdown"></div>
 
     <div class="dash-body">
 
-      <nav class="app-nav open" id="app-nav" aria-label="Main navigation">
-        <div class="app-nav-inner">
-          <button class="app-nav-item active"><i class="ti ti-home"></i> Home</button>
-          <button class="app-nav-item"><i class="ti ti-chart-bar"></i> Analytics</button>
-          <button class="app-nav-item"><i class="ti ti-activity"></i> Activity</button>
-          <button class="app-nav-item"><i class="ti ti-folders"></i> Projects</button>
-          <button class="app-nav-item"><i class="ti ti-check"></i> My tasks</button>
-          <button class="app-nav-item"><i class="ti ti-calendar-event"></i> Calendar</button>
-          <button class="app-nav-item"><i class="ti ti-users"></i> Members</button>
-          <button class="app-nav-item"><i class="ti ti-settings"></i> Settings</button>
+      <!-- Sidebar: shown for sidebar patterns; taxonomy-driven -->
+      <fresh-sidebar id="cf-sidebar" style="display:none;flex-shrink:0;height:100%;overflow:hidden;">
+        <div id="cf-nav-content"></div>
+        <div slot="footer" class="cf-sidebar-footer">
+          <fresh-avatar name="Jamie Rivera" size="sm"></fresh-avatar>
+          <div class="cf-sidebar-user-info">
+            <div class="cf-sidebar-user-name">Jamie Rivera</div>
+            <div class="cf-sidebar-user-role">Admin</div>
+          </div>
         </div>
-      </nav>
+      </fresh-sidebar>
+
+      <!-- Icon rail flyout: collapsible sidebar collapsed state -->
+      <div class="cf-icon-flyout" id="cf-icon-flyout">
+        <div class="cf-flyout-label" id="cf-flyout-label"></div>
+        <div id="cf-flyout-items"></div>
+      </div>
 
       <main class="dash-main">
 
         <div class="dash-page-header">
           <div>
-            <div class="dash-page-title">Filter &amp; search</div>
-            <div class="dash-page-subtitle">Narrow results using facets, date ranges, and keywords.</div>
+            <div class="dash-page-title">Deals</div>
+            <div class="dash-page-subtitle">Filter and search across 100 open deals.</div>
           </div>
           <div class="dash-page-actions">
             <fresh-button variant="secondary" size="sm"><i class="ti ti-bookmark"></i> Save filter</fresh-button>
@@ -67,25 +162,15 @@
           </div>
         </div>
 
-        <!-- Search bar + active filter chips -->
-        <div style="padding:var(--space-4) var(--space-6);border-bottom:1px solid var(--surface-border);background:var(--surface-bg);flex-shrink:0;">
-          <fresh-input
-            placeholder="Search deals by name, company, or owner…"
-            clearable
-            style="max-width:100%;display:block;">
-          </fresh-input>
-          <div style="display:flex;align-items:center;gap:var(--space-2);margin-top:var(--space-3);flex-wrap:wrap;">
-            <span style="font-size:12px;color:var(--text-tertiary);font-weight:500;">Active filters:</span>
-            <span style="display:flex;align-items:center;gap:var(--space-1);padding:3px 10px 3px 8px;background:var(--color-interactive-subtle);color:var(--color-interactive-text);border-radius:var(--radius-full);font-size:12px;font-weight:500;">
-              Stage: Proposal <i class="ti ti-x" style="font-size:10px;cursor:pointer;margin-left:2px;"></i>
-            </span>
-            <span style="display:flex;align-items:center;gap:var(--space-1);padding:3px 10px 3px 8px;background:var(--color-interactive-subtle);color:var(--color-interactive-text);border-radius:var(--radius-full);font-size:12px;font-weight:500;">
-              Owner: Priya <i class="ti ti-x" style="font-size:10px;cursor:pointer;margin-left:2px;"></i>
-            </span>
-            <span style="display:flex;align-items:center;gap:var(--space-1);padding:3px 10px 3px 8px;background:var(--color-interactive-subtle);color:var(--color-interactive-text);border-radius:var(--radius-full);font-size:12px;font-weight:500;">
-              Value: &gt;$100K <i class="ti ti-x" style="font-size:10px;cursor:pointer;margin-left:2px;"></i>
-            </span>
-            <fresh-button variant="ghost" size="sm" style="font-size:12px;padding:0;color:var(--text-tertiary);">Clear all</fresh-button>
+        <!-- Search + active filter chips -->
+        <div class="cf-search-strip">
+          <fresh-input placeholder="Search deals by name, company, or owner…" clearable icon="ti-search" style="display:block;"></fresh-input>
+          <div class="cf-chip-row">
+            <span class="cf-chip-label">Active filters:</span>
+            <span class="cf-chip">Stage: Proposal <i class="ti ti-x"></i></span>
+            <span class="cf-chip">Owner: Priya <i class="ti ti-x"></i></span>
+            <span class="cf-chip">Value: Over $100K <i class="ti ti-x"></i></span>
+            <fresh-button variant="ghost" size="sm" style="font-size:12px;color:var(--text-tertiary);">Clear all</fresh-button>
           </div>
         </div>
 
@@ -142,91 +227,110 @@
           <div class="cnt-filter-results">
 
             <div class="cnt-results-header">
-              <div class="cnt-results-count">6 results matching your filters</div>
+              <div class="cnt-results-count">6 results</div>
               <div style="display:flex;align-items:center;gap:var(--space-2);">
                 <span style="font-size:13px;color:var(--text-secondary);">Sort:</span>
-                <fresh-select style="--input-width:160px;">
-                  <option>Deal value (high to low)</option>
-                  <option>Close date (soonest)</option>
-                  <option>Last updated</option>
-                </fresh-select>
+                <fresh-topbar-menu id="cf-sort-tabs">
+                  <button slot="tab" class="active">Value</button>
+                  <button slot="tab">Close date</button>
+                  <button slot="tab">Last updated</button>
+                </fresh-topbar-menu>
               </div>
             </div>
 
-            <div class="cnt-list dash-card" style="padding:0;overflow:hidden;">
+            <div class="dash-card" style="padding:0;overflow:hidden;">
+              <div class="cnt-list">
 
-              <div class="cnt-list-row">
-                <div style="width:8px;height:8px;border-radius:50%;background:var(--color-warning);flex-shrink:0;"></div>
-                <div class="cnt-list-info">
-                  <div class="cnt-list-name">AI Copilot Rollout: Orbis Labs</div>
-                  <div class="cnt-list-meta">Proposal · Priya Sharma · Close: Jul 28, 2026</div>
+                <div class="cnt-list-row">
+                  <div class="deal-stage-dot" style="background:var(--color-warning);"></div>
+                  <fresh-avatar name="Orbis Labs" size="sm"></fresh-avatar>
+                  <div class="cnt-list-info">
+                    <div class="cnt-list-name">AI Copilot Rollout</div>
+                    <div class="cnt-list-meta">Proposal · Priya Sharma · Close: Jul 28, 2026</div>
+                  </div>
+                  <div class="cnt-list-aside">
+                    <span class="deal-amount">$210K</span>
+                    <fresh-badge variant="warning">55%</fresh-badge>
+                    <fresh-button variant="ghost" size="sm" icon-only aria-label="More"><i class="ti ti-dots"></i></fresh-button>
+                  </div>
                 </div>
-                <div class="cnt-list-aside">
-                  <span style="font-size:13px;font-weight:700;color:var(--text-primary);">$210K</span>
-                  <fresh-badge variant="warning">55%</fresh-badge>
+
+                <div class="cnt-list-row">
+                  <div class="deal-stage-dot" style="background:var(--color-warning);"></div>
+                  <fresh-avatar name="Nexara Inc" size="sm"></fresh-avatar>
+                  <div class="cnt-list-info">
+                    <div class="cnt-list-name">Security Suite Upgrade</div>
+                    <div class="cnt-list-meta">Proposal · Priya Sharma · Close: Jul 22, 2026</div>
+                  </div>
+                  <div class="cnt-list-aside">
+                    <span class="deal-amount">$180K</span>
+                    <fresh-badge variant="warning">50%</fresh-badge>
+                    <fresh-button variant="ghost" size="sm" icon-only aria-label="More"><i class="ti ti-dots"></i></fresh-button>
+                  </div>
                 </div>
+
+                <div class="cnt-list-row">
+                  <div class="deal-stage-dot" style="background:var(--color-warning);"></div>
+                  <fresh-avatar name="Helix Corp" size="sm"></fresh-avatar>
+                  <div class="cnt-list-info">
+                    <div class="cnt-list-name">Data Analytics Module</div>
+                    <div class="cnt-list-meta">Proposal · Priya Sharma · Close: Jul 18, 2026</div>
+                  </div>
+                  <div class="cnt-list-aside">
+                    <span class="deal-amount">$155K</span>
+                    <fresh-badge variant="success">70%</fresh-badge>
+                    <fresh-button variant="ghost" size="sm" icon-only aria-label="More"><i class="ti ti-dots"></i></fresh-button>
+                  </div>
+                </div>
+
+                <div class="cnt-list-row">
+                  <div class="deal-stage-dot" style="background:var(--color-warning);"></div>
+                  <fresh-avatar name="Techvault" size="sm"></fresh-avatar>
+                  <div class="cnt-list-info">
+                    <div class="cnt-list-name">Enterprise Expansion Q3</div>
+                    <div class="cnt-list-meta">Proposal · Priya Sharma · Close: Jul 15, 2026</div>
+                  </div>
+                  <div class="cnt-list-aside">
+                    <span class="deal-amount">$128K</span>
+                    <fresh-badge variant="warning">65%</fresh-badge>
+                    <fresh-button variant="ghost" size="sm" icon-only aria-label="More"><i class="ti ti-dots"></i></fresh-button>
+                  </div>
+                </div>
+
+                <div class="cnt-list-row">
+                  <div class="deal-stage-dot" style="background:var(--color-warning);"></div>
+                  <fresh-avatar name="Luminate Health" size="sm"></fresh-avatar>
+                  <div class="cnt-list-info">
+                    <div class="cnt-list-name">Platform License Renewal</div>
+                    <div class="cnt-list-meta">Proposal · Priya Sharma · Close: Jul 10, 2026</div>
+                  </div>
+                  <div class="cnt-list-aside">
+                    <span class="deal-amount">$118K</span>
+                    <fresh-badge variant="success">80%</fresh-badge>
+                    <fresh-button variant="ghost" size="sm" icon-only aria-label="More"><i class="ti ti-dots"></i></fresh-button>
+                  </div>
+                </div>
+
+                <div class="cnt-list-row">
+                  <div class="deal-stage-dot" style="background:var(--color-warning);"></div>
+                  <fresh-avatar name="Techvault" size="sm"></fresh-avatar>
+                  <div class="cnt-list-info">
+                    <div class="cnt-list-name">Compliance Module Add-on</div>
+                    <div class="cnt-list-meta">Proposal · Priya Sharma · Close: Jun 30, 2026</div>
+                  </div>
+                  <div class="cnt-list-aside">
+                    <span class="deal-amount">$108K</span>
+                    <fresh-badge variant="info">60%</fresh-badge>
+                    <fresh-button variant="ghost" size="sm" icon-only aria-label="More"><i class="ti ti-dots"></i></fresh-button>
+                  </div>
+                </div>
+
               </div>
+            </div>
 
-              <div class="cnt-list-row">
-                <div style="width:8px;height:8px;border-radius:50%;background:var(--color-warning);flex-shrink:0;"></div>
-                <div class="cnt-list-info">
-                  <div class="cnt-list-name">Security Suite Upgrade: Nexara Inc</div>
-                  <div class="cnt-list-meta">Proposal · Priya Sharma · Close: Jul 22, 2026</div>
-                </div>
-                <div class="cnt-list-aside">
-                  <span style="font-size:13px;font-weight:700;color:var(--text-primary);">$180K</span>
-                  <fresh-badge variant="warning">50%</fresh-badge>
-                </div>
-              </div>
-
-              <div class="cnt-list-row">
-                <div style="width:8px;height:8px;border-radius:50%;background:var(--color-warning);flex-shrink:0;"></div>
-                <div class="cnt-list-info">
-                  <div class="cnt-list-name">Data Analytics Module: Helix Corp</div>
-                  <div class="cnt-list-meta">Proposal · Priya Sharma · Close: Jul 18, 2026</div>
-                </div>
-                <div class="cnt-list-aside">
-                  <span style="font-size:13px;font-weight:700;color:var(--text-primary);">$155K</span>
-                  <fresh-badge variant="success">70%</fresh-badge>
-                </div>
-              </div>
-
-              <div class="cnt-list-row">
-                <div style="width:8px;height:8px;border-radius:50%;background:var(--color-warning);flex-shrink:0;"></div>
-                <div class="cnt-list-info">
-                  <div class="cnt-list-name">Enterprise Expansion Q3: Techvault</div>
-                  <div class="cnt-list-meta">Proposal · Priya Sharma · Close: Jul 15, 2026</div>
-                </div>
-                <div class="cnt-list-aside">
-                  <span style="font-size:13px;font-weight:700;color:var(--text-primary);">$128K</span>
-                  <fresh-badge variant="warning">65%</fresh-badge>
-                </div>
-              </div>
-
-              <div class="cnt-list-row">
-                <div style="width:8px;height:8px;border-radius:50%;background:var(--color-warning);flex-shrink:0;"></div>
-                <div class="cnt-list-info">
-                  <div class="cnt-list-name">Platform License Renewal: Luminate Health</div>
-                  <div class="cnt-list-meta">Proposal · Priya Sharma · Close: Jul 10, 2026</div>
-                </div>
-                <div class="cnt-list-aside">
-                  <span style="font-size:13px;font-weight:700;color:var(--text-primary);">$118K</span>
-                  <fresh-badge variant="success">80%</fresh-badge>
-                </div>
-              </div>
-
-              <div class="cnt-list-row">
-                <div style="width:8px;height:8px;border-radius:50%;background:var(--color-warning);flex-shrink:0;"></div>
-                <div class="cnt-list-info">
-                  <div class="cnt-list-name">Compliance Module Add-on: Techvault</div>
-                  <div class="cnt-list-meta">Proposal · Priya Sharma · Close: Jun 30, 2026</div>
-                </div>
-                <div class="cnt-list-aside">
-                  <span style="font-size:13px;font-weight:700;color:var(--text-primary);">$108K</span>
-                  <fresh-badge variant="info">60%</fresh-badge>
-                </div>
-              </div>
-
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-top:var(--space-4);">
+              <span style="font-size:13px;color:var(--text-secondary);">Showing 6 of 6 results</span>
+              <fresh-pagination total="6" page-size="10" current-page="1"></fresh-pagination>
             </div>
 
           </div>
@@ -238,16 +342,227 @@
   </div>
 
 </div>
-<script>
-  document.addEventListener('nav-toggle', function() {
-    document.getElementById('app-nav').classList.toggle('open');
-  });
-</script>
+
+<script src="../components/navigation/fresh-navbar.js"></script>
+<script src="../components/navigation/fresh-sidebar.js"></script>
+<script src="../components/navigation/fresh-topbar-menu.js"></script>
+<script src="../components/navigation/fresh-pagination.js"></script>
+<script src="../components/data/fresh-avatar.js"></script>
 <script src="../components/core/fresh-button.js"></script>
 <script src="../components/core/fresh-input.js"></script>
-<script src="../components/core/fresh-select.js"></script>
 <script src="../components/core/fresh-checkbox.js"></script>
 <script src="../components/core/fresh-radio.js"></script>
 <script src="../components/feedback/fresh-badge.js"></script>
+<script src="../js/nav-taxonomy.js"></script>
+<script src="../js/freshds-nav-apply.js"></script>
+
+<script>
+/* ── Nav pattern router ──────────────────────────────────── */
+
+var _currentPattern = 'persistent-sidebar';
+var _flyoutIdx = -1;
+
+function _readNavCfg() {
+  var cfg = { nav_pattern: 'persistent-sidebar', taxonomy: [] };
+  try {
+    var s = localStorage.getItem('freshds-nav-cfg');
+    if (s) Object.assign(cfg, JSON.parse(s));
+  } catch(e) {}
+  return cfg;
+}
+
+function _getTax(cfg) {
+  return (Array.isArray(cfg.taxonomy) && cfg.taxonomy.length > 0)
+    ? cfg.taxonomy
+    : (typeof DEFAULT_TAXONOMY !== 'undefined' ? DEFAULT_TAXONOMY : []);
+}
+
+function _buildIconRail(tax) {
+  var html = '<fresh-nav-group label="Nav" open>';
+  tax.forEach(function(item, idx) {
+    var ic = item.icon ? ' icon="' + item.icon + '"' : '';
+    html += '<fresh-nav-item' + ic + (idx === 0 ? ' active' : '') +
+            ' data-tax-idx="' + idx + '">' + (item.label || '') + '</fresh-nav-item>';
+  });
+  return html + '</fresh-nav-group>';
+}
+
+function _applyNavPattern() {
+  var cfg  = _readNavCfg();
+  var tax  = _getTax(cfg);
+  _currentPattern = cfg.nav_pattern || 'persistent-sidebar';
+
+  var navbar   = document.getElementById('cf-topbar');
+  var sidebar  = document.getElementById('cf-sidebar');
+  var tabStrip = document.getElementById('cf-tab-strip');
+
+  sidebar.style.display  = 'none';
+  tabStrip.style.display = 'none';
+  sidebar.removeAttribute('collapsed');
+  navbar.removeAttribute('hamburger');
+  _closeFlyout();
+  document.getElementById('cf-tab-dropdown').classList.remove('open');
+
+  if (_currentPattern === 'persistent-sidebar') {
+    sidebar.style.display = '';
+    document.getElementById('cf-nav-content').innerHTML = buildSidebarHtml(tax);
+  } else if (_currentPattern === 'collapsible-sidebar') {
+    sidebar.style.display = '';
+    navbar.setAttribute('hamburger', '');
+    document.getElementById('cf-nav-content').innerHTML = buildSidebarHtml(tax);
+  } else if (_currentPattern === 'top-nav-tabs') {
+    tabStrip.style.display = '';
+    var tabsEl = document.getElementById('cf-top-tabs');
+    tabsEl.setAttribute('tabs', buildTabsJson(tax));
+    if (tax[0]) tabsEl.setAttribute('active', tax[0].id);
+  }
+  /* Other patterns: navbar only */
+}
+
+/* ── Icon rail flyout ────────────────────────────────────── */
+
+function _closeFlyout() {
+  _flyoutIdx = -1;
+  document.getElementById('cf-icon-flyout').classList.remove('open');
+}
+
+function _openFlyout(idx, anchorEl) {
+  var cfg     = _readNavCfg();
+  var tax     = _getTax(cfg);
+  var section = tax[idx];
+  var kids    = (section && section.children) || [];
+  if (!kids.length) { _closeFlyout(); return; }
+  _flyoutIdx = idx;
+  document.getElementById('cf-flyout-label').textContent = section.label || '';
+  document.getElementById('cf-flyout-items').innerHTML = kids.map(function(child, ci) {
+    return '<div class="cf-flyout-item' + (ci === 0 ? ' active' : '') + '">' + (child.label || '') + '</div>';
+  }).join('');
+  var rect   = anchorEl.getBoundingClientRect();
+  var flyout = document.getElementById('cf-icon-flyout');
+  flyout.style.top = rect.top + 'px';
+  flyout.classList.add('open');
+  requestAnimationFrame(function() {
+    var fh = flyout.offsetHeight, vh = window.innerHeight;
+    if (rect.top + fh > vh - 8) flyout.style.top = Math.max(8, vh - fh - 8) + 'px';
+  });
+}
+
+/* ── Tab dropdown ────────────────────────────────────────── */
+
+var _tabDropKey = null, _tabPrevActive = '', _tabClickX = 0;
+
+function _closeTabDrop() {
+  _tabDropKey = null;
+  document.getElementById('cf-tab-dropdown').classList.remove('open');
+}
+
+function _openTabDrop(key, x) {
+  var cfg  = _readNavCfg();
+  var tax  = _getTax(cfg);
+  var item = null;
+  for (var i = 0; i < tax.length; i++) { if (tax[i].id === key) { item = tax[i]; break; } }
+  var kids = (item && item.children) || [];
+  if (!kids.length) { _closeTabDrop(); return; }
+  _tabDropKey = key;
+  var drop     = document.getElementById('cf-tab-dropdown');
+  var stripBot = document.getElementById('cf-tab-strip').getBoundingClientRect().bottom;
+  drop.innerHTML = kids.map(function(child, ci) {
+    return '<div class="cf-tab-drop-item' + (ci === 0 ? ' active' : '') + '">' + (child.label || '') + '</div>';
+  }).join('');
+  drop.style.top = stripBot + 'px';
+  drop.style.left = '0';
+  drop.classList.add('open');
+  requestAnimationFrame(function() {
+    var w = drop.offsetWidth, vw = window.innerWidth;
+    drop.style.left = Math.max(8, Math.min(x - w / 2, vw - w - 8)) + 'px';
+  });
+}
+
+/* ── Wire up on DOM ready ────────────────────────────────── */
+
+document.addEventListener('DOMContentLoaded', function() {
+  _applyNavPattern();
+  if (window.FreshNavApply) window.FreshNavApply.apply();
+
+  /* Hamburger */
+  document.getElementById('cf-topbar').addEventListener('hamburger-click', function() {
+    if (_currentPattern !== 'collapsible-sidebar') return;
+    var sb  = document.getElementById('cf-sidebar');
+    var tax = _getTax(_readNavCfg());
+    if (sb.hasAttribute('collapsed')) {
+      sb.removeAttribute('collapsed');
+      document.getElementById('cf-nav-content').innerHTML = buildSidebarHtml(tax);
+      _closeFlyout();
+    } else {
+      sb.setAttribute('collapsed', '');
+      document.getElementById('cf-nav-content').innerHTML = _buildIconRail(tax);
+    }
+  });
+
+  /* Icon rail nav-click */
+  document.getElementById('cf-nav-content').addEventListener('nav-click', function(e) {
+    if (_currentPattern !== 'collapsible-sidebar') return;
+    var sb = document.getElementById('cf-sidebar');
+    if (!sb.hasAttribute('collapsed')) return;
+    var item = e.target;
+    if (!item || item.tagName.toLowerCase() !== 'fresh-nav-item') return;
+    var idx = parseInt(item.dataset.taxIdx, 10);
+    if (isNaN(idx)) return;
+    Array.prototype.slice.call(document.querySelectorAll('#cf-nav-content fresh-nav-item'))
+      .forEach(function(el, i) { if (i === idx) el.setAttribute('active', ''); else el.removeAttribute('active'); });
+    if (idx === _flyoutIdx) { _closeFlyout(); return; }
+    _openFlyout(idx, item);
+  });
+  document.getElementById('cf-nav-content').addEventListener('click', function(e) { e.stopPropagation(); });
+  document.getElementById('cf-icon-flyout').addEventListener('click', function(e) { e.stopPropagation(); });
+
+  /* Tab strip click */
+  document.getElementById('cf-top-tabs').addEventListener('click', function(e) {
+    if (_currentPattern !== 'top-nav-tabs') return;
+    _tabClickX = e.clientX;
+    e.stopPropagation();
+    var activeNow = this.getAttribute('active');
+    if (activeNow !== _tabPrevActive) {
+      _tabPrevActive = activeNow;
+      _openTabDrop(activeNow, _tabClickX);
+    } else {
+      if (_tabDropKey === activeNow) _closeTabDrop();
+      else _openTabDrop(activeNow, _tabClickX);
+    }
+  });
+  document.getElementById('cf-tab-dropdown').addEventListener('click', function(e) { e.stopPropagation(); });
+
+  document.addEventListener('click', function() { _closeFlyout(); _closeTabDrop(); });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') { _closeFlyout(); _closeTabDrop(); }
+  });
+});
+
+/* ── Live sync ───────────────────────────────────────────── */
+
+window.addEventListener('storage', function(e) {
+  if (e.key !== 'freshds-nav-cfg') return;
+  _applyNavPattern();
+  if (window.FreshNavApply) window.FreshNavApply.apply();
+});
+
+var _lastNavCfgStr = null;
+(function _poll() {
+  var s = localStorage.getItem('freshds-nav-cfg') || '';
+  if (s !== _lastNavCfgStr) {
+    _lastNavCfgStr = s;
+    _applyNavPattern();
+    if (window.FreshNavApply) window.FreshNavApply.apply();
+  }
+  setTimeout(_poll, 400);
+}());
+
+window.addEventListener('pageshow', function(e) {
+  if (e.persisted) {
+    _applyNavPattern();
+    if (window.FreshNavApply) window.FreshNavApply.apply();
+  }
+});
+</script>
 </body>
 </html>
