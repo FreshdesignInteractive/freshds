@@ -437,6 +437,241 @@ window.addEventListener('pageshow', function(e) {
 });
 ```
 
+### Pages patterns: spec panel + copy prompt (non-negotiable)
+
+Every Pages pattern MUST include a Configure panel (spec panel) with zone toggles and editable AI rules, plus a Copy prompt modal. This is what the "Configure" button in the demo bar opens. See `patterns/dash-home.html` and `patterns/content-filter.html` as working references.
+
+**Add to the demo bar** (after the dark mode button, before the separator and collapse button):
+```html
+<div class="demo-sep"></div>
+<button class="demo-spec-btn" onclick="spOpen()" aria-label="Configure pattern">
+  <i class="ti ti-layout-sidebar-right"></i> Configure
+</button>
+```
+
+**Add to the page `<style>` block** (hardcoded dark values — spec panel is intentionally theme-independent):
+```css
+.demo-spec-btn { display: inline-flex; align-items: center; gap: 5px; height: 28px; padding: 0 4px; border: none; border-radius: var(--radius-full); background: transparent; color: var(--text-secondary); font-size: 12px; font-weight: 500; font-family: -apple-system, BlinkMacSystemFont, 'Inter', system-ui, sans-serif; cursor: pointer; white-space: nowrap; flex-shrink: 0; transition: background 150ms, color 150ms; -webkit-font-smoothing: antialiased; }
+.demo-spec-btn:hover { background: var(--surface-subtle); color: var(--text-primary); }
+.demo-spec-btn i { font-size: 13px; }
+.sp-panel { position: fixed; top: 0; right: -340px; width: 320px; height: 100vh; display: flex; flex-direction: column; background: #141720; border-left: 1px solid #242836; z-index: 300; transition: right 280ms cubic-bezier(0.4,0,0.2,1); font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', system-ui, sans-serif; -webkit-font-smoothing: antialiased; color: #e8ecf4; font-size: 13px; }
+.sp-panel.open { right: 0; }
+.sp-hdr { display: flex; align-items: center; justify-content: space-between; padding: 0 16px; height: 52px; border-bottom: 1px solid #242836; flex-shrink: 0; background: #0f1219; }
+.sp-hdr-title { font-size: 13px; font-weight: 600; color: #e8ecf4; letter-spacing: -0.01em; }
+.sp-hdr-close { width: 28px; height: 28px; border: none; border-radius: 6px; background: transparent; color: #6b7591; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 15px; transition: background 150ms, color 150ms; }
+.sp-hdr-close:hover { background: #1e2333; color: #e8ecf4; }
+.sp-body { flex: 1; overflow-y: auto; scrollbar-width: thin; scrollbar-color: #2a3049 transparent; }
+.sp-body::-webkit-scrollbar { width: 4px; } .sp-body::-webkit-scrollbar-thumb { background: #2a3049; border-radius: 4px; }
+.sp-section { padding: 14px 0 4px; } .sp-section + .sp-section { border-top: 1px solid #1c2030; padding-top: 16px; }
+.sp-section-label { font-size: 10px; font-weight: 700; letter-spacing: 0.09em; color: #7282a8; padding: 0 16px 8px; }
+.sp-zone-row { display: flex; align-items: center; gap: 10px; padding: 7px 16px; transition: background 120ms; }
+.sp-zone-row:hover { background: #1a1f30; }
+.sp-zone-label { flex: 1; font-size: 12px; font-weight: 500; color: #b0bace; }
+.sp-toggle { position: relative; width: 32px; height: 18px; flex-shrink: 0; }
+.sp-toggle input { opacity: 0; width: 0; height: 0; position: absolute; }
+.sp-toggle-track { position: absolute; inset: 0; background: #2a3049; border-radius: 9px; transition: background 200ms; cursor: pointer; }
+.sp-toggle input:checked + .sp-toggle-track { background: #6c63ff; }
+.sp-toggle-thumb { position: absolute; top: 2px; left: 2px; width: 14px; height: 14px; background: #fff; border-radius: 50%; transition: transform 200ms; pointer-events: none; }
+.sp-toggle input:checked ~ .sp-toggle-thumb { transform: translateX(14px); }
+.sp-rules-hdr { display: flex; align-items: center; gap: 8px; margin: 0 12px 4px; padding: 8px 12px; background: #1a1f30; border-radius: 8px; }
+.sp-rules-hdr-icon { font-size: 13px; color: #6c63ff; flex-shrink: 0; }
+.sp-rules-hdr-name { flex: 1; font-size: 11px; font-weight: 700; letter-spacing: 0.06em; color: #8b95b4; }
+.sp-rules-hdr-hint { font-size: 10px; font-weight: 500; color: #6c63ff; }
+.sp-cat { padding: 10px 16px 4px; }
+.sp-cat-label { font-size: 10px; font-weight: 700; letter-spacing: 0.07em; color: #7282a8; margin-bottom: 6px; }
+.sp-rule { display: flex; align-items: flex-start; gap: 8px; padding: 4px 6px; margin: 0 -6px; border-radius: 5px; transition: background 120ms; }
+.sp-rule:hover { background: #1c2134; } .sp-rule:focus-within { background: rgba(140,130,255,0.18); }
+.sp-rule-dot { width: 5px; height: 5px; border-radius: 50%; background: #6c63ff; flex-shrink: 0; margin-top: 7px; }
+.sp-rule-text { flex: 1; font-size: 12px; line-height: 1.6; color: #b0bace; outline: none; word-break: break-word; min-width: 0; cursor: text; }
+.sp-rule-text:focus { color: #e8ecf4; }
+.sp-rule-del { width: 22px; height: 22px; border: none; border-radius: 4px; background: transparent; color: #8890c0; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 14px; opacity: 0.45; flex-shrink: 0; margin-top: 2px; transition: opacity 150ms, background 150ms, color 150ms; }
+.sp-rule:hover .sp-rule-del { opacity: 1; } .sp-rule-del:hover { background: rgba(255,80,100,0.18); color: #ff6080; }
+.sp-add-rule { display: inline-flex; align-items: center; gap: 5px; margin-top: 4px; padding: 3px 0; font-size: 11px; color: #6272a0; cursor: pointer; border: none; background: transparent; font-family: inherit; transition: color 150ms; }
+.sp-add-rule:hover { color: #9490ff; }
+.sp-bottom { display: flex; align-items: center; gap: 6px; padding: 10px 12px; border-top: 1px solid #242836; background: #0f1219; flex-shrink: 0; }
+.sp-btn { display: inline-flex; align-items: center; gap: 5px; padding: 6px 10px; border-radius: 6px; border: 1px solid #242836; background: #1a1f30; color: #9aa3be; font-size: 12px; font-weight: 500; font-family: inherit; cursor: pointer; white-space: nowrap; transition: background 150ms, color 150ms, border-color 150ms; }
+.sp-btn i { font-size: 12px; } .sp-btn:hover { background: #1e2438; color: #e8ecf4; border-color: #3a4160; }
+.sp-btn-icon { width: 34px; height: 34px; padding: 0; justify-content: center; flex-shrink: 0; }
+.sp-btn-primary { margin-left: auto; background: #6c63ff; border-color: #6c63ff; color: #ffffff; }
+.sp-btn-primary:hover { background: #7b74ff; border-color: #7b74ff; }
+.sp-modal-backdrop { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.55); z-index: 400; align-items: center; justify-content: center; }
+.sp-modal-backdrop.open { display: flex; }
+.sp-modal { background: #141720; border: 1px solid #242836; border-radius: 12px; width: 600px; max-width: calc(100vw - 40px); max-height: 80vh; display: flex; flex-direction: column; font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', system-ui, sans-serif; }
+.sp-modal-hdr { display: flex; align-items: center; justify-content: space-between; padding: 14px 16px; border-bottom: 1px solid #242836; font-size: 13px; font-weight: 600; color: #e8ecf4; flex-shrink: 0; }
+.sp-modal-close { width: 26px; height: 26px; border: none; border-radius: 5px; background: transparent; color: #6b7591; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 14px; transition: background 150ms, color 150ms; }
+.sp-modal-close:hover { background: #1e2333; color: #e8ecf4; }
+.sp-modal-body { flex: 1; overflow-y: auto; padding: 14px 16px; min-height: 220px; }
+.sp-modal-pre { background: #0f1219; border: 1px solid #242836; border-radius: 8px; padding: 14px; font-family: 'JetBrains Mono', 'Fira Code', monospace; font-size: 12px; line-height: 1.65; color: #9aa3be; white-space: pre-wrap; word-break: break-word; margin: 0; }
+.sp-modal-foot { display: flex; align-items: center; justify-content: flex-end; gap: 8px; padding: 10px 12px; border-top: 1px solid #242836; flex-shrink: 0; }
+.sp-copy-ok { font-size: 12px; color: #6c63ff; opacity: 0; transition: opacity 200ms; }
+.sp-copy-ok.show { opacity: 1; }
+```
+
+**Add this HTML** outside `#app`, just before the first `<script src=...>` tag:
+```html
+<aside class="sp-panel" id="sp-panel" aria-label="Pattern spec" aria-hidden="true">
+  <div class="sp-hdr">
+    <span class="sp-hdr-title">Configure</span>
+    <button class="sp-hdr-close" onclick="spClose()" aria-label="Close"><i class="ti ti-x"></i></button>
+  </div>
+  <div class="sp-body">
+    <div class="sp-section">
+      <div class="sp-section-label">ZONES</div>
+      <div id="sp-zones"></div>
+    </div>
+    <div class="sp-section">
+      <div class="sp-section-label">GLOBAL TEMPLATE RULES</div>
+      <div class="sp-rules-hdr">
+        <i class="ti ti-sparkles sp-rules-hdr-icon"></i>
+        <span class="sp-rules-hdr-name">AI RULES: {PAGE NAME}</span>
+        <span class="sp-rules-hdr-hint">Click to edit</span>
+      </div>
+      <div id="sp-cats"></div>
+    </div>
+  </div>
+  <div class="sp-bottom">
+    <button class="sp-btn sp-btn-icon" id="sp-share-btn" onclick="spShare()" title="Share link" aria-label="Share link">
+      <i class="ti ti-link"></i>
+    </button>
+    <button class="sp-btn sp-btn-primary" onclick="spStartBuilding()">
+      Configure <i class="ti ti-arrow-right"></i>
+    </button>
+  </div>
+</aside>
+
+<div class="sp-modal-backdrop" id="sp-modal-backdrop" onclick="spCloseModal()">
+  <div class="sp-modal" onclick="event.stopPropagation()">
+    <div class="sp-modal-hdr">
+      <span>Claude Code Prompt</span>
+      <button class="sp-modal-close" onclick="spCloseModal()"><i class="ti ti-x"></i></button>
+    </div>
+    <div class="sp-modal-body"><pre class="sp-modal-pre" id="sp-modal-pre"></pre></div>
+    <div class="sp-modal-foot">
+      <span class="sp-copy-ok" id="sp-copy-ok">Copied to clipboard</span>
+      <button class="sp-btn sp-btn-primary" onclick="spCopyPrompt()">
+        <i class="ti ti-copy"></i> Copy prompt
+      </button>
+    </div>
+  </div>
+</div>
+```
+
+**Add zone IDs** to every major toggleable section of the page HTML:
+```html
+<div id="{p}-search-strip" class="...">...</div>
+<div id="{p}-filter-sidebar" class="...">...</div>
+<div id="{p}-results-card" class="...">...</div>
+<div id="{p}-pagination-row" style="...">...</div>
+```
+
+**Add the spec JS** inside the existing `<script>` block, after the live-sync code:
+```js
+var SP_ZONES = [
+  { key: 'zone-key', label: 'Display Label', el: '{p}-element-id', on: true },
+  /* one entry per toggleable section */
+];
+
+var SP_RULES = {
+  'LAYOUT': [ 'rule string', 'rule string' ],
+  'SECTION NAME': [ 'rule string' ],
+  /* one category per main content area */
+};
+
+function spOpen() {
+  document.getElementById('sp-panel').classList.add('open');
+  document.getElementById('sp-panel').setAttribute('aria-hidden', 'false');
+  _spRenderZones(); _spRenderCats();
+  var u = new URL(location.href); u.searchParams.set('spec', 'open');
+  history.replaceState(null, '', u.toString());
+}
+function spClose() {
+  document.getElementById('sp-panel').classList.remove('open');
+  document.getElementById('sp-panel').setAttribute('aria-hidden', 'true');
+  var u = new URL(location.href); u.searchParams.delete('spec');
+  history.replaceState(null, '', u.toString());
+}
+function _spRenderZones() {
+  var el = document.getElementById('sp-zones'); el.innerHTML = '';
+  SP_ZONES.forEach(function(z) {
+    var row = document.createElement('div'); row.className = 'sp-zone-row';
+    row.innerHTML = '<span class="sp-zone-label">' + z.label + '</span>' +
+      '<label class="sp-toggle"><input type="checkbox"' + (z.on ? ' checked' : '') + '>' +
+      '<span class="sp-toggle-track"></span><span class="sp-toggle-thumb"></span></label>';
+    row.querySelector('input').addEventListener('change', function() {
+      z.on = this.checked;
+      var t = document.getElementById(z.el); if (t) t.style.display = z.on ? '' : 'none';
+    });
+    el.appendChild(row);
+  });
+}
+function _spRenderCats() {
+  var el = document.getElementById('sp-cats'); el.innerHTML = '';
+  Object.keys(SP_RULES).forEach(function(cat) {
+    var wrap = document.createElement('div'); wrap.className = 'sp-cat';
+    _spBuildCat(cat, wrap); el.appendChild(wrap);
+  });
+}
+function _spBuildCat(cat, wrap) {
+  wrap.innerHTML = '';
+  var label = document.createElement('div'); label.className = 'sp-cat-label'; label.textContent = cat;
+  wrap.appendChild(label);
+  SP_RULES[cat].forEach(function(rule, ri) { wrap.appendChild(_spRuleRow(cat, ri, rule, wrap)); });
+  var addBtn = document.createElement('button'); addBtn.className = 'sp-add-rule';
+  addBtn.innerHTML = '<i class="ti ti-plus"></i> Add rule';
+  addBtn.addEventListener('click', function() {
+    SP_RULES[cat].push('New rule'); _spBuildCat(cat, wrap);
+    var texts = wrap.querySelectorAll('.sp-rule-text'); var last = texts[texts.length - 1];
+    if (last) { last.focus(); var r = document.createRange(); r.selectNodeContents(last); var s = window.getSelection(); s.removeAllRanges(); s.addRange(r); }
+  });
+  wrap.appendChild(addBtn);
+}
+function _spRuleRow(cat, ri, text, wrap) {
+  var row = document.createElement('div'); row.className = 'sp-rule';
+  var dot = document.createElement('span'); dot.className = 'sp-rule-dot';
+  var span = document.createElement('span'); span.className = 'sp-rule-text';
+  span.contentEditable = 'true'; span.textContent = text;
+  span.addEventListener('input', function() { SP_RULES[cat][ri] = span.textContent; });
+  var del = document.createElement('button'); del.className = 'sp-rule-del';
+  del.innerHTML = '<i class="ti ti-trash"></i>'; del.setAttribute('aria-label', 'Delete rule');
+  del.addEventListener('click', function() { SP_RULES[cat].splice(ri, 1); _spBuildCat(cat, wrap); });
+  row.appendChild(dot); row.appendChild(span); row.appendChild(del); return row;
+}
+function spShare() {
+  var u = new URL(location.href); u.searchParams.set('spec', 'open');
+  var btn = document.getElementById('sp-share-btn');
+  navigator.clipboard.writeText(u.toString()).then(function() {
+    var orig = btn.innerHTML; btn.innerHTML = '<i class="ti ti-check"></i>';
+    setTimeout(function() { btn.innerHTML = orig; }, 1800);
+  }).catch(function() {});
+}
+function spStartBuilding() {
+  var lines = ['Build a {Page Name} page using the FreshDS design system.', ''];
+  Object.keys(SP_RULES).forEach(function(cat) {
+    lines.push('## ' + cat);
+    SP_RULES[cat].forEach(function(rule) { lines.push('- ' + rule); });
+    lines.push('');
+  });
+  lines.push('## ACTIVE ZONES');
+  SP_ZONES.forEach(function(z) { lines.push('- ' + z.label + ': ' + (z.on ? 'SHOWN' : 'HIDDEN')); });
+  document.getElementById('sp-modal-pre').textContent = lines.join('\n');
+  document.getElementById('sp-modal-backdrop').classList.add('open');
+}
+function spCloseModal() { document.getElementById('sp-modal-backdrop').classList.remove('open'); }
+function spCopyPrompt() {
+  navigator.clipboard.writeText(document.getElementById('sp-modal-pre').textContent).then(function() {
+    var ok = document.getElementById('sp-copy-ok'); ok.classList.add('show');
+    setTimeout(function() { ok.classList.remove('show'); }, 1800);
+  }).catch(function() {});
+}
+if (new URL(location.href).searchParams.get('spec') === 'open') {
+  document.addEventListener('DOMContentLoaded', spOpen);
+}
+```
+
+**`SP_ZONES` guidelines:** one entry per major toggleable content section (not the nav itself). Each zone has a `key` (kebab), `label` (display), `el` (element ID in HTML), and `on: true`.
+
+**`SP_RULES` guidelines:** one key per logical section of the page (always start with `'LAYOUT'`). Rules are plain-English strings describing how to build each section using FreshDS components. The first line of `spStartBuilding()` should name the actual page: `'Build a Home Dashboard page...'` / `'Build a Filter and Search page...'` etc.
+
 ## Component doc page format (index.html)
 
 Every component page lives inside `<div class="fds-page" id="page-{name}">` in `index.html`. Use this exact structure, no custom classes, no invented markup.
