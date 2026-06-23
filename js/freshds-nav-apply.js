@@ -35,6 +35,30 @@
     return cfg;
   }
 
+  function _isDark() {
+    return document.documentElement.getAttribute('data-mode') === 'dark' ||
+           (document.getElementById('app') || document.body).getAttribute('data-mode') === 'dark';
+  }
+
+  function _updateLogoVisibility() {
+    var dark = _isDark();
+    document.querySelectorAll('.nav-logo-light').forEach(function (el) {
+      el.style.display = dark ? 'none' : '';
+    });
+    document.querySelectorAll('.nav-logo-dark').forEach(function (el) {
+      el.style.display = dark ? '' : 'none';
+    });
+  }
+
+  var _modeObserver = null;
+  function _ensureModeObserver() {
+    if (_modeObserver) return;
+    _modeObserver = new MutationObserver(_updateLogoVisibility);
+    _modeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['data-mode'] });
+    var app = document.getElementById('app');
+    if (app) _modeObserver.observe(app, { attributes: true, attributeFilter: ['data-mode'] });
+  }
+
   function _applyToNavbar(navbar, cfg) {
     /* ── Logo ── */
     navbar.querySelectorAll('[slot="brand"]').forEach(function (el) { el.remove(); });
@@ -43,6 +67,7 @@
     var effDark  = cfg.logoUrlDark || cfg.logoUrl;
 
     if (effLight || effDark) {
+      var dark = _isDark();
       var brandDiv = document.createElement('div');
       brandDiv.setAttribute('slot', 'brand');
       if (effLight === effDark) {
@@ -52,9 +77,9 @@
       } else {
         brandDiv.innerHTML =
           '<img class="nav-logo-light" src="' + effLight.replace(/"/g, '&quot;') + '"' +
-          ' alt="Logo" style="height:24px;max-width:140px;object-fit:contain">' +
+          ' alt="Logo" style="height:24px;max-width:140px;object-fit:contain;display:' + (dark ? 'none' : '') + '">' +
           '<img class="nav-logo-dark" src="' + effDark.replace(/"/g, '&quot;') + '"' +
-          ' alt="Logo" style="height:24px;max-width:140px;object-fit:contain">';
+          ' alt="Logo" style="height:24px;max-width:140px;object-fit:contain;display:' + (dark ? '' : 'none') + '">';
       }
       navbar.insertBefore(brandDiv, navbar.firstChild);
     }
@@ -80,6 +105,8 @@
     document.querySelectorAll('fresh-navbar').forEach(function (nb) {
       _applyToNavbar(nb, cfg);
     });
+    _updateLogoVisibility();
+    _ensureModeObserver();
   }
 
   /* Run on load */
