@@ -239,15 +239,18 @@ fresh-sidebar[collapsed] .st-sidebar-user-info { display: none; }
                     </div>
                   </div>
                 </div>
-                <div style="display:flex;flex-direction:column;gap:var(--space-3);">
-                  <fresh-form-field label="Workspace name" required>
-                    <fresh-input slot="input" value="Acme Corp"></fresh-input>
-                  </fresh-form-field>
-                  <fresh-form-field label="Workspace URL">
-                    <fresh-input slot="input" value="acme" prefix="app.acme.io/"></fresh-input>
-                  </fresh-form-field>
-                  <fresh-form-field label="Timezone">
-                    <fresh-select slot="input">
+                <div style="display:flex;flex-direction:column;gap:var(--space-4);">
+                  <div style="display:flex;flex-direction:column;gap:var(--space-1);">
+                    <div style="font-size:13px;font-weight:500;color:var(--text-primary);">Workspace name <span style="color:var(--color-danger-text);">*</span></div>
+                    <fresh-input value="Acme Corp"></fresh-input>
+                  </div>
+                  <div style="display:flex;flex-direction:column;gap:var(--space-1);">
+                    <div style="font-size:13px;font-weight:500;color:var(--text-primary);">Workspace URL</div>
+                    <fresh-input value="acme" prefix="app.acme.io/"></fresh-input>
+                  </div>
+                  <div style="display:flex;flex-direction:column;gap:var(--space-1);">
+                    <div style="font-size:13px;font-weight:500;color:var(--text-primary);">Timezone</div>
+                    <fresh-select>
                       <option>UTC</option>
                       <option selected>US/Pacific (GMT-7)</option>
                       <option>US/Eastern (GMT-4)</option>
@@ -255,16 +258,17 @@ fresh-sidebar[collapsed] .st-sidebar-user-info { display: none; }
                       <option>Asia/Kolkata (GMT+5:30)</option>
                       <option>Asia/Tokyo (GMT+9)</option>
                     </fresh-select>
-                  </fresh-form-field>
-                  <fresh-form-field label="Language">
-                    <fresh-select slot="input">
+                  </div>
+                  <div style="display:flex;flex-direction:column;gap:var(--space-1);">
+                    <div style="font-size:13px;font-weight:500;color:var(--text-primary);">Language</div>
+                    <fresh-select>
                       <option selected>English (US)</option>
                       <option>English (UK)</option>
                       <option>Español</option>
                       <option>Français</option>
                       <option>Deutsch</option>
                     </fresh-select>
-                  </fresh-form-field>
+                  </div>
                 </div>
                 <div style="display:flex;justify-content:flex-end;margin-top:var(--space-4);">
                   <fresh-button variant="primary" size="sm">Save changes</fresh-button>
@@ -337,7 +341,7 @@ fresh-sidebar[collapsed] .st-sidebar-user-info { display: none; }
                     <div class="stg-row-label">Session timeout</div>
                     <div class="stg-row-desc">Automatically sign out after a period of inactivity</div>
                   </div>
-                  <fresh-select class="stg-row-control" style="min-width:140px;">
+                  <fresh-select class="stg-row-control" style="width:160px;flex-shrink:0;">
                     <option>30 minutes</option>
                     <option selected>4 hours</option>
                     <option>1 day</option>
@@ -476,7 +480,6 @@ fresh-sidebar[collapsed] .st-sidebar-user-info { display: none; }
 <script src="../components/core/fresh-input.js"></script>
 <script src="../components/core/fresh-select.js"></script>
 <script src="../components/core/fresh-toggle.js"></script>
-<script src="../components/core/fresh-form-field.js"></script>
 <script src="../components/feedback/fresh-badge.js"></script>
 <script src="../js/nav-taxonomy.js"></script>
 <script src="../js/freshds-nav-apply.js"></script>
