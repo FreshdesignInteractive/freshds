@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI Output Review — Acme</title>
+<title>AI Output Review | Acme</title>
 <link rel="icon" type="image/svg+xml" href="../favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -14,8 +14,84 @@
 <link rel="stylesheet" href="../tokens/dataviz.css">
 <link rel="stylesheet" href="../styles/reset.css">
 <link rel="stylesheet" href="../styles/patterns/ai-chat.css">
-<script>if(location.href.indexOf('?thumb')!==-1)document.write('<style>#demo-bar{display:none!important}</style>');</script>
-<script src="../js/pattern-topbar-v2.js"></script>
+<script>if(location.href.indexOf('?thumb')!==-1)document.write('<style>#demo-bar{display:none!important}
+/* nav config */
+.nav-logo-dark { display: none; }
+[data-mode="dark"] .nav-logo-light { display: none; }
+[data-mode="dark"] .nav-logo-dark  { display: block; }
+.are-sidebar-footer { display: flex; align-items: center; gap: var(--space-3); width: 100%; min-width: 0; }
+.are-sidebar-user-info { flex: 1; min-width: 0; overflow: hidden; }
+.are-sidebar-user-name { font-size: var(--font-size-sm); font-weight: 500; color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.are-sidebar-user-role { font-size: var(--font-size-xs); color: var(--text-tertiary); white-space: nowrap; }
+fresh-sidebar[collapsed] .are-sidebar-user-info { display: none; }
+.are-icon-flyout { position: fixed; left: 57px; top: 0; width: 200px; background: var(--surface-canvas); border: 1px solid var(--surface-border); border-radius: var(--radius-md); box-shadow: 0 8px 28px rgba(0,0,0,0.12), 0 2px 6px rgba(0,0,0,0.06); z-index: 90; display: none; overflow: hidden; }
+.are-icon-flyout.open { display: block; }
+.are-flyout-label { padding: var(--space-2) var(--space-3) var(--space-1); font-size: var(--font-size-xs); font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: var(--text-tertiary); border-bottom: 1px solid var(--surface-border); }
+.are-flyout-item { display: flex; align-items: center; padding: 7px var(--space-3); font-size: var(--font-size-sm); font-family: var(--font-sans); color: var(--text-secondary); cursor: pointer; transition: background 100ms, color 100ms; -webkit-font-smoothing: antialiased; }
+.are-flyout-item:hover { background: var(--surface-subtle); color: var(--text-primary); }
+.are-flyout-item.active { background: var(--nav-active-bg); color: var(--nav-active-text); font-weight: 500; }
+.are-tab-strip { background: var(--surface-nav); border-bottom: 1px solid var(--surface-border); padding: 0 var(--space-5); display: flex; align-items: center; height: 44px; flex-shrink: 0; }
+.are-tab-dropdown { position: fixed; top: 0; left: 0; min-width: 168px; background: var(--surface-canvas); border: 1px solid var(--surface-border); border-radius: var(--radius-md); box-shadow: 0 8px 28px rgba(0,0,0,0.12), 0 2px 6px rgba(0,0,0,0.06); z-index: 90; display: none; overflow: hidden; padding: var(--space-1) 0; }
+.are-tab-dropdown.open { display: block; }
+.are-tab-drop-item { display: flex; align-items: center; padding: 7px var(--space-4); font-size: var(--font-size-sm); font-family: var(--font-sans); color: var(--text-secondary); cursor: pointer; transition: background 100ms, color 100ms; -webkit-font-smoothing: antialiased; }
+.are-tab-drop-item:hover { background: var(--surface-subtle); color: var(--text-primary); }
+.are-tab-drop-item.active { color: var(--nav-active-text); background: var(--nav-active-bg); font-weight: 500; }
+.demo-spec-btn { display: inline-flex; align-items: center; gap: 5px; height: 28px; padding: 0 4px; border: none; border-radius: var(--radius-full); background: transparent; color: var(--text-secondary); font-size: 12px; font-weight: 500; font-family: -apple-system, BlinkMacSystemFont, 'Inter', system-ui, sans-serif; cursor: pointer; white-space: nowrap; flex-shrink: 0; transition: background 150ms, color 150ms; -webkit-font-smoothing: antialiased; }
+.demo-spec-btn:hover { background: var(--surface-subtle); color: var(--text-primary); }
+.demo-spec-btn i { font-size: 13px; }
+/* spec panel */
+.sp-panel { position: fixed; top: 0; right: -340px; width: 320px; height: 100vh; display: flex; flex-direction: column; background: #141720; border-left: 1px solid #242836; z-index: 300; transition: right 280ms cubic-bezier(0.4,0,0.2,1); font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', system-ui, sans-serif; -webkit-font-smoothing: antialiased; color: #e8ecf4; font-size: 13px; }
+.sp-panel.open { right: 0; }
+.sp-hdr { display: flex; align-items: center; justify-content: space-between; padding: 0 16px; height: 52px; border-bottom: 1px solid #242836; flex-shrink: 0; background: #0f1219; }
+.sp-hdr-title { font-size: 13px; font-weight: 600; color: #e8ecf4; letter-spacing: -0.01em; }
+.sp-hdr-close { width: 28px; height: 28px; border: none; border-radius: 6px; background: transparent; color: #6b7591; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 15px; transition: background 150ms, color 150ms; }
+.sp-hdr-close:hover { background: #1e2333; color: #e8ecf4; }
+.sp-body { flex: 1; overflow-y: auto; scrollbar-width: thin; scrollbar-color: #2a3049 transparent; }
+.sp-body::-webkit-scrollbar { width: 4px; } .sp-body::-webkit-scrollbar-thumb { background: #2a3049; border-radius: 4px; }
+.sp-section { padding: 14px 0 4px; } .sp-section + .sp-section { border-top: 1px solid #1c2030; padding-top: 16px; }
+.sp-section-label { font-size: 10px; font-weight: 700; letter-spacing: 0.09em; color: #7282a8; padding: 0 16px 8px; }
+.sp-zone-row { display: flex; align-items: center; gap: 10px; padding: 7px 16px; transition: background 120ms; }
+.sp-zone-row:hover { background: #1a1f30; }
+.sp-zone-label { flex: 1; font-size: 12px; font-weight: 500; color: #b0bace; }
+.sp-toggle { position: relative; width: 32px; height: 18px; flex-shrink: 0; }
+.sp-toggle input { opacity: 0; width: 0; height: 0; position: absolute; }
+.sp-toggle-track { position: absolute; inset: 0; background: #2a3049; border-radius: 9px; transition: background 200ms; cursor: pointer; }
+.sp-toggle input:checked + .sp-toggle-track { background: #6c63ff; }
+.sp-toggle-thumb { position: absolute; top: 2px; left: 2px; width: 14px; height: 14px; background: #fff; border-radius: 50%; transition: transform 200ms; pointer-events: none; }
+.sp-toggle input:checked ~ .sp-toggle-thumb { transform: translateX(14px); }
+.sp-rules-hdr { display: flex; align-items: center; gap: 8px; margin: 0 12px 4px; padding: 8px 12px; background: #1a1f30; border-radius: 8px; }
+.sp-rules-hdr-icon { font-size: 13px; color: #6c63ff; flex-shrink: 0; }
+.sp-rules-hdr-name { flex: 1; font-size: 11px; font-weight: 700; letter-spacing: 0.06em; color: #8b95b4; }
+.sp-rules-hdr-hint { font-size: 10px; font-weight: 500; color: #6c63ff; }
+.sp-cat { padding: 10px 16px 4px; } .sp-cat-label { font-size: 10px; font-weight: 700; letter-spacing: 0.07em; color: #7282a8; margin-bottom: 6px; }
+.sp-rule { display: flex; align-items: flex-start; gap: 8px; padding: 4px 6px; margin: 0 -6px; border-radius: 5px; transition: background 120ms; }
+.sp-rule:hover { background: #1c2134; } .sp-rule:focus-within { background: rgba(140,130,255,0.18); }
+.sp-rule-dot { width: 5px; height: 5px; border-radius: 50%; background: #6c63ff; flex-shrink: 0; margin-top: 7px; }
+.sp-rule-text { flex: 1; font-size: 12px; line-height: 1.6; color: #b0bace; outline: none; word-break: break-word; min-width: 0; cursor: text; }
+.sp-rule-text:focus { color: #e8ecf4; }
+.sp-rule-del { width: 22px; height: 22px; border: none; border-radius: 4px; background: transparent; color: #8890c0; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 14px; opacity: 0.45; flex-shrink: 0; margin-top: 2px; transition: opacity 150ms, background 150ms, color 150ms; }
+.sp-rule:hover .sp-rule-del { opacity: 1; } .sp-rule-del:hover { background: rgba(255,80,100,0.18); color: #ff6080; }
+.sp-add-rule { display: inline-flex; align-items: center; gap: 5px; margin-top: 4px; padding: 3px 0; font-size: 11px; color: #6272a0; cursor: pointer; border: none; background: transparent; font-family: inherit; -webkit-font-smoothing: antialiased; transition: color 150ms; }
+.sp-add-rule:hover { color: #9490ff; }
+.sp-bottom { display: flex; align-items: center; gap: 6px; padding: 10px 12px; border-top: 1px solid #242836; background: #0f1219; flex-shrink: 0; }
+.sp-btn { display: inline-flex; align-items: center; gap: 5px; padding: 6px 10px; border-radius: 6px; border: 1px solid #242836; background: #1a1f30; color: #9aa3be; font-size: 12px; font-weight: 500; font-family: inherit; -webkit-font-smoothing: antialiased; cursor: pointer; white-space: nowrap; transition: background 150ms, color 150ms, border-color 150ms; }
+.sp-btn i { font-size: 12px; } .sp-btn:hover { background: #1e2438; color: #e8ecf4; border-color: #3a4160; }
+.sp-btn-icon { width: 34px; height: 34px; padding: 0; justify-content: center; flex-shrink: 0; }
+.sp-btn-primary { margin-left: auto; background: #6c63ff; border-color: #6c63ff; color: #ffffff; }
+.sp-btn-primary:hover { background: #7b74ff; border-color: #7b74ff; }
+.sp-modal-backdrop { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.55); z-index: 400; align-items: center; justify-content: center; }
+.sp-modal-backdrop.open { display: flex; }
+.sp-modal { background: #141720; border: 1px solid #242836; border-radius: 12px; width: 600px; max-width: calc(100vw - 40px); max-height: 80vh; display: flex; flex-direction: column; font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+.sp-modal-hdr { display: flex; align-items: center; justify-content: space-between; padding: 14px 16px; border-bottom: 1px solid #242836; font-size: 13px; font-weight: 600; color: #e8ecf4; flex-shrink: 0; }
+.sp-modal-close { width: 26px; height: 26px; border: none; border-radius: 5px; background: transparent; color: #6b7591; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 14px; transition: background 150ms, color 150ms; }
+.sp-modal-close:hover { background: #1e2333; color: #e8ecf4; }
+.sp-modal-body { flex: 1; overflow-y: auto; padding: 14px 16px; min-height: 220px; }
+.sp-modal-pre { background: #0f1219; border: 1px solid #242836; border-radius: 8px; padding: 14px; font-family: 'JetBrains Mono','Fira Code',monospace; font-size: 12px; line-height: 1.65; color: #9aa3be; white-space: pre-wrap; word-break: break-word; margin: 0; }
+.sp-modal-foot { display: flex; align-items: center; justify-content: flex-end; gap: 8px; padding: 10px 12px; border-top: 1px solid #242836; flex-shrink: 0; }
+.sp-copy-ok { font-size: 12px; color: #6c63ff; opacity: 0; transition: opacity 200ms; }
+.sp-copy-ok.show { opacity: 1; }
+/* NAV-CFG-STYLES-INJECTED */
+</style>');</script>
 <script src="../js/freshds.js"></script>
 <script src="../js/pattern-bar.js"></script>
 <style>
@@ -112,22 +188,34 @@
 
   <div class="ai-shell">
 
-    <pattern-topbar logged-in></pattern-topbar>
+    <fresh-navbar id="are-topbar" data-nav-logged-in>
+      <div slot="actions" data-nav-actions-logged-in></div>
+    </fresh-navbar>
+
+    <div id="are-tab-strip" class="are-tab-strip" style="display:none;">
+      <fresh-topbar-menu id="are-top-tabs"></fresh-topbar-menu>
+    </div>
+    <div class="are-tab-dropdown" id="are-tab-dropdown"></div>
+
 
     <div class="ai-body">
 
-      <nav class="app-nav open" id="app-nav" aria-label="Main navigation">
-        <div class="app-nav-inner">
-          <button class="app-nav-item active"><i class="ti ti-home"></i> Home</button>
-          <button class="app-nav-item"><i class="ti ti-chart-bar"></i> Analytics</button>
-          <button class="app-nav-item"><i class="ti ti-activity"></i> Activity</button>
-          <button class="app-nav-item"><i class="ti ti-folders"></i> Projects</button>
-          <button class="app-nav-item"><i class="ti ti-check"></i> My tasks</button>
-          <button class="app-nav-item"><i class="ti ti-calendar-event"></i> Calendar</button>
-          <button class="app-nav-item"><i class="ti ti-users"></i> Members</button>
-          <button class="app-nav-item"><i class="ti ti-settings"></i> Settings</button>
+
+      <fresh-sidebar id="are-sidebar" style="display:none;flex-shrink:0;height:100%;overflow:hidden;">
+        <div id="are-nav-content"></div>
+        <div slot="footer" class="are-sidebar-footer">
+          <fresh-avatar name="Jamie Chen" size="sm"></fresh-avatar>
+          <div class="are-sidebar-user-info">
+            <div class="are-sidebar-user-name">Jamie Chen</div>
+            <div class="are-sidebar-user-role">Admin</div>
+          </div>
         </div>
-      </nav>
+      </fresh-sidebar>
+
+      <div class="are-icon-flyout" id="are-icon-flyout">
+        <div class="are-flyout-label" id="are-flyout-label"></div>
+        <div id="are-flyout-items"></div>
+      </div>
       <div class="review-layout">
 
         <div class="review-main">
@@ -140,17 +228,17 @@
           <div class="review-card">
             <div class="review-card-header">
               <fresh-badge variant="warning" size="sm">Pending</fresh-badge>
-              <div class="review-card-title">Outreach email — NovaTech</div>
+              <div class="review-card-title">Outreach email | NovaTech</div>
               <fresh-confidence-badge value="82"></fresh-confidence-badge>
             </div>
             <div class="review-card-body">
               <div class="review-text">
                 <strong>To:</strong> sarah.kim@novatech.io<br>
-                <strong>Subject:</strong> Checking in — we want to help<br><br>
+                <strong>Subject:</strong> Checking in | we want to help<br><br>
                 Hi Sarah,<br><br>
                 I noticed a few support tickets have been open for longer than we'd like, and I want to make sure you're getting the help you need. Could we jump on a 15-minute call this week to work through any issues together?<br><br>
                 I'm also happy to loop in our engineering team if there's a technical blocker.<br><br>
-                — Jamie, Acme Customer Success
+                | Jamie, Acme Customer Success
               </div>
             </div>
             <div class="review-card-footer">
@@ -166,12 +254,12 @@
           <div class="review-card">
             <div class="review-card-header">
               <fresh-badge variant="primary" size="sm">Editing</fresh-badge>
-              <div class="review-card-title">Outreach email — DataCo</div>
+              <div class="review-card-title">Outreach email | DataCo</div>
               <fresh-confidence-badge value="71"></fresh-confidence-badge>
             </div>
             <div class="review-card-body">
               <textarea class="edit-area">To: mike.chen@dataco.io
-Subject: Missing you — let's reconnect
+Subject: Missing you | let's reconnect
 
 Hi Mike,
 
@@ -181,10 +269,10 @@ We've shipped several updates since your team last logged in, including the new 
 
 Happy to set up a quick demo of what's new.
 
-— Jamie, Acme Customer Success</textarea>
+| Jamie, Acme Customer Success</textarea>
             </div>
             <div class="review-card-footer">
-              <div style="font-size:12px;color:var(--text-tertiary)">Editing — unsaved changes</div>
+              <div style="font-size:12px;color:var(--text-tertiary)">Editing | unsaved changes</div>
               <div style="flex:1"></div>
               <fresh-button variant="ghost" size="sm">Cancel</fresh-button>
               <fresh-button variant="primary" size="sm"><i class="ti ti-check"></i> Save &amp; approve</fresh-button>
@@ -195,7 +283,7 @@ Happy to set up a quick demo of what's new.
           <div class="review-card" style="opacity:0.6">
             <div class="review-card-header">
               <fresh-badge variant="success" size="sm">Approved</fresh-badge>
-              <div class="review-card-title">Outreach email — Acme Labs</div>
+              <div class="review-card-title">Outreach email | Acme Labs</div>
               <fresh-confidence-badge value="89"></fresh-confidence-badge>
             </div>
             <div class="review-card-body">
@@ -233,11 +321,6 @@ Happy to set up a quick demo of what's new.
   </div>
 
 </div>
-<script>
-  document.addEventListener('nav-toggle', function() {
-    document.getElementById('app-nav').classList.toggle('open');
-  });
-</script>
 <script src="../components/core/fresh-button.js"></script>
 <script src="../components/feedback/fresh-badge.js"></script>
 <script src="../components/feedback/fresh-progress.js"></script>
@@ -245,5 +328,63 @@ Happy to set up a quick demo of what's new.
 <script src="../components/ai/fresh-confidence-badge.js"></script>
 <script src="../components/ai/fresh-feedback.js"></script>
 <script src="../components/ai/fresh-diff-viewer.js"></script>
+
+<aside class="sp-panel" id="sp-panel" aria-label="Pattern spec" aria-hidden="true">
+  <div class="sp-hdr"><span class="sp-hdr-title">Configure</span><button class="sp-hdr-close" onclick="spClose()" aria-label="Close"><i class="ti ti-x"></i></button></div>
+  <div class="sp-body">
+    <div class="sp-section"><div class="sp-section-label">ZONES</div><div id="sp-zones"></div></div>
+    <div class="sp-section">
+      <div class="sp-section-label">GLOBAL TEMPLATE RULES</div>
+      <div class="sp-rules-hdr"><i class="ti ti-sparkles sp-rules-hdr-icon"></i><span class="sp-rules-hdr-name">AI RULES</span><span class="sp-rules-hdr-hint">Click to edit</span></div>
+      <div id="sp-cats"></div>
+    </div>
+  </div>
+  <div class="sp-bottom">
+    <button class="sp-btn sp-btn-icon" id="sp-share-btn" onclick="spShare()" title="Share link" aria-label="Share link"><i class="ti ti-link"></i></button>
+    <button class="sp-btn sp-btn-primary" onclick="spStartBuilding()">Configure <i class="ti ti-arrow-right"></i></button>
+  </div>
+</aside>
+<div class="sp-modal-backdrop" id="sp-modal-backdrop" onclick="spCloseModal()">
+  <div class="sp-modal" onclick="event.stopPropagation()">
+    <div class="sp-modal-hdr"><span>Claude Code Prompt</span><button class="sp-modal-close" onclick="spCloseModal()"><i class="ti ti-x"></i></button></div>
+    <div class="sp-modal-body"><pre class="sp-modal-pre" id="sp-modal-pre"></pre></div>
+    <div class="sp-modal-foot"><span class="sp-copy-ok" id="sp-copy-ok">Copied to clipboard</span><button class="sp-btn sp-btn-primary" onclick="spCopyPrompt()"><i class="ti ti-copy"></i> Copy prompt</button></div>
+  </div>
+</div>
+<script src="../components/navigation/fresh-navbar.js"></script>
+<script src="../components/navigation/fresh-sidebar.js"></script>
+<script src="../components/navigation/fresh-topbar-menu.js"></script>
+<script src="../components/data/fresh-avatar.js"></script>
+<script src="../js/nav-taxonomy.js"></script>
+<script src="../js/freshds-nav-apply.js"></script>
+<script>
+var _currentPattern='persistent-sidebar',_flyoutIdx=-1;
+function _readNavCfg(){var cfg={nav_pattern:'persistent-sidebar',taxonomy:[]};try{var s=localStorage.getItem('freshds-nav-cfg');if(s)Object.assign(cfg,JSON.parse(s));}catch(e){}return cfg;}
+function _getTax(cfg){return(Array.isArray(cfg.taxonomy)&&cfg.taxonomy.length>0)?cfg.taxonomy:(typeof DEFAULT_TAXONOMY!=='undefined'?DEFAULT_TAXONOMY:[]);}
+function _buildIconRail(tax){var html='<fresh-nav-group label="Nav" open>';tax.forEach(function(item,idx){var ic=item.icon?' icon="'+item.icon+'"':'';html+='<fresh-nav-item'+ic+(idx===0?' active':'')+' data-tax-idx="'+idx+'">'+(item.label||'')+'</fresh-nav-item>';});return html+'</fresh-nav-group>';}
+function _applyNavPattern(){var cfg=_readNavCfg();var tax=_getTax(cfg);_currentPattern=cfg.nav_pattern||'persistent-sidebar';var navbar=document.getElementById('are-topbar');var sidebar=document.getElementById('are-sidebar');var tabStrip=document.getElementById('are-tab-strip');sidebar.style.display='none';tabStrip.style.display='none';sidebar.removeAttribute('collapsed');navbar.removeAttribute('hamburger');_closeFlyout();document.getElementById('are-tab-dropdown').classList.remove('open');if(_currentPattern==='persistent-sidebar'){sidebar.style.display='';document.getElementById('are-nav-content').innerHTML=buildSidebarHtml(tax);}else if(_currentPattern==='collapsible-sidebar'){sidebar.style.display='';navbar.setAttribute('hamburger','');document.getElementById('are-nav-content').innerHTML=buildSidebarHtml(tax);}else if(_currentPattern==='top-nav-tabs'){tabStrip.style.display='';var tabsEl=document.getElementById('are-top-tabs');tabsEl.setAttribute('tabs',buildTabsJson(tax));if(tax[0])tabsEl.setAttribute('active',tax[0].id);}}
+function _closeFlyout(){_flyoutIdx=-1;document.getElementById('are-icon-flyout').classList.remove('open');}
+function _openFlyout(idx,anchorEl){var cfg=_readNavCfg();var tax=_getTax(cfg);var section=tax[idx];var kids=(section&&section.children)||[];if(!kids.length){_closeFlyout();return;}_flyoutIdx=idx;document.getElementById('are-flyout-label').textContent=section.label||'';document.getElementById('are-flyout-items').innerHTML=kids.map(function(child,ci){return'<div class="are-flyout-item'+(ci===0?' active':'')+'">'+( child.label||'')+'</div>';}).join('');var rect=anchorEl.getBoundingClientRect();var flyout=document.getElementById('are-icon-flyout');flyout.style.top=rect.top+'px';flyout.classList.add('open');requestAnimationFrame(function(){var fh=flyout.offsetHeight,vh=window.innerHeight;if(rect.top+fh>vh-8)flyout.style.top=Math.max(8,vh-fh-8)+'px';});}
+var _tabDropKey=null,_tabPrevActive='',_tabClickX=0;
+function _closeTabDrop(){_tabDropKey=null;document.getElementById('are-tab-dropdown').classList.remove('open');}
+function _openTabDrop(key,x){var cfg=_readNavCfg();var tax=_getTax(cfg);var item=null;for(var i=0;i<tax.length;i++){if(tax[i].id===key){item=tax[i];break;}}var kids=(item&&item.children)||[];if(!kids.length){_closeTabDrop();return;}_tabDropKey=key;var drop=document.getElementById('are-tab-dropdown');var stripBot=document.getElementById('are-tab-strip').getBoundingClientRect().bottom;drop.innerHTML=kids.map(function(child,ci){return'<div class="are-tab-drop-item'+(ci===0?' active':'')+'">'+( child.label||'')+'</div>';}).join('');drop.style.top=stripBot+'px';drop.style.left='0';drop.classList.add('open');requestAnimationFrame(function(){var w=drop.offsetWidth,vw=window.innerWidth;drop.style.left=Math.max(8,Math.min(x-w/2,vw-w-8))+'px';});}
+document.addEventListener('DOMContentLoaded',function(){_applyNavPattern();if(window.FreshNavApply)window.FreshNavApply.apply();document.getElementById('are-topbar').addEventListener('hamburger-click',function(){if(_currentPattern!=='collapsible-sidebar')return;var sb=document.getElementById('are-sidebar');var tax=_getTax(_readNavCfg());if(sb.hasAttribute('collapsed')){sb.removeAttribute('collapsed');document.getElementById('are-nav-content').innerHTML=buildSidebarHtml(tax);_closeFlyout();}else{sb.setAttribute('collapsed','');document.getElementById('are-nav-content').innerHTML=_buildIconRail(tax);}});document.getElementById('are-nav-content').addEventListener('nav-click',function(e){if(_currentPattern!=='collapsible-sidebar')return;var sb=document.getElementById('are-sidebar');if(!sb.hasAttribute('collapsed'))return;var item=e.target;if(!item||item.tagName.toLowerCase()!=='fresh-nav-item')return;var idx=parseInt(item.dataset.taxIdx,10);if(isNaN(idx))return;Array.prototype.slice.call(document.querySelectorAll('#are-nav-content fresh-nav-item')).forEach(function(el,i){if(i===idx)el.setAttribute('active','');else el.removeAttribute('active');});if(idx===_flyoutIdx){_closeFlyout();return;}_openFlyout(idx,item);});document.getElementById('are-nav-content').addEventListener('click',function(e){e.stopPropagation();});document.getElementById('are-icon-flyout').addEventListener('click',function(e){e.stopPropagation();});document.getElementById('are-top-tabs').addEventListener('click',function(e){if(_currentPattern!=='top-nav-tabs')return;_tabClickX=e.clientX;e.stopPropagation();var activeNow=this.getAttribute('active');if(activeNow!==_tabPrevActive){_tabPrevActive=activeNow;_openTabDrop(activeNow,_tabClickX);}else{if(_tabDropKey===activeNow)_closeTabDrop();else _openTabDrop(activeNow,_tabClickX);}});document.getElementById('are-tab-dropdown').addEventListener('click',function(e){e.stopPropagation();});document.addEventListener('click',function(){_closeFlyout();_closeTabDrop();});document.addEventListener('keydown',function(e){if(e.key==='Escape'){_closeFlyout();_closeTabDrop();spClose();spCloseModal();}});});
+window.addEventListener('storage',function(e){if(e.key!=='freshds-nav-cfg')return;_applyNavPattern();if(window.FreshNavApply)window.FreshNavApply.apply();});
+var _lastNavCfgStr=null;(function _poll(){var s=localStorage.getItem('freshds-nav-cfg')||'';if(s!==_lastNavCfgStr){_lastNavCfgStr=s;_applyNavPattern();if(window.FreshNavApply)window.FreshNavApply.apply();}setTimeout(_poll,400);}());
+window.addEventListener('pageshow',function(e){if(e.persisted){_applyNavPattern();if(window.FreshNavApply)window.FreshNavApply.apply();}});
+var SP_ZONES=[{key:'header',label:'Page header',el:'are-header',on:true},{key:'content',label:'Page content',el:'are-content',on:true}];
+var SP_RULES={'LAYOUT':['Full app shell: dash-shell with fresh-navbar + fresh-sidebar from nav config.','dash-main: flex:1, overflow-y:auto, padding var(--space-5) var(--space-6).'],'PAGE HEADER':['dash-page-header: flex row, space-between, border-bottom. Title left, actions right.','Use fresh-button with appropriate variants for header actions.'],'CONTENT':['Wrap content sections in dash-card with dash-card-title.','Use FreshDS tokens for all spacing, color, and typography.']};
+function spOpen(){document.getElementById('sp-panel').classList.add('open');document.getElementById('sp-panel').setAttribute('aria-hidden','false');_spRenderZones();_spRenderCats();var u=new URL(location.href);u.searchParams.set('spec','open');history.replaceState(null,'',u.toString());}
+function spClose(){document.getElementById('sp-panel').classList.remove('open');document.getElementById('sp-panel').setAttribute('aria-hidden','true');var u=new URL(location.href);u.searchParams.delete('spec');history.replaceState(null,'',u.toString());}
+function _spRenderZones(){var el=document.getElementById('sp-zones');el.innerHTML='';SP_ZONES.forEach(function(z){var row=document.createElement('div');row.className='sp-zone-row';row.innerHTML='<span class="sp-zone-label">'+z.label+'</span><label class="sp-toggle"><input type="checkbox"'+(z.on?' checked':'')+'><span class="sp-toggle-track"></span><span class="sp-toggle-thumb"></span></label>';row.querySelector('input').addEventListener('change',function(){z.on=this.checked;var t=document.getElementById(z.el);if(t)t.style.display=z.on?'':'none';});el.appendChild(row);});}
+function _spRenderCats(){var el=document.getElementById('sp-cats');el.innerHTML='';Object.keys(SP_RULES).forEach(function(cat){var wrap=document.createElement('div');wrap.className='sp-cat';_spBuildCat(cat,wrap);el.appendChild(wrap);});}
+function _spBuildCat(cat,wrap){wrap.innerHTML='';var label=document.createElement('div');label.className='sp-cat-label';label.textContent=cat;wrap.appendChild(label);SP_RULES[cat].forEach(function(rule,ri){wrap.appendChild(_spRuleRow(cat,ri,rule,wrap));});var addBtn=document.createElement('button');addBtn.className='sp-add-rule';addBtn.innerHTML='<i class="ti ti-plus"></i> Add rule';addBtn.addEventListener('click',function(){SP_RULES[cat].push('New rule');_spBuildCat(cat,wrap);var texts=wrap.querySelectorAll('.sp-rule-text');var last=texts[texts.length-1];if(last){last.focus();var r=document.createRange();r.selectNodeContents(last);var s=window.getSelection();s.removeAllRanges();s.addRange(r);}});wrap.appendChild(addBtn);}
+function _spRuleRow(cat,ri,text,wrap){var row=document.createElement('div');row.className='sp-rule';var dot=document.createElement('span');dot.className='sp-rule-dot';var span=document.createElement('span');span.className='sp-rule-text';span.contentEditable='true';span.textContent=text;span.addEventListener('input',function(){SP_RULES[cat][ri]=span.textContent;});var del=document.createElement('button');del.className='sp-rule-del';del.innerHTML='<i class="ti ti-trash"></i>';del.setAttribute('aria-label','Delete rule');del.addEventListener('click',function(){SP_RULES[cat].splice(ri,1);_spBuildCat(cat,wrap);});row.appendChild(dot);row.appendChild(span);row.appendChild(del);return row;}
+function spShare(){var u=new URL(location.href);u.searchParams.set('spec','open');var btn=document.getElementById('sp-share-btn');navigator.clipboard.writeText(u.toString()).then(function(){var orig=btn.innerHTML;btn.innerHTML='<i class="ti ti-check"></i>';setTimeout(function(){btn.innerHTML=orig;},1800);}).catch(function(){});}
+function spStartBuilding(){var lines=['Build this page using the FreshDS design system.',''];Object.keys(SP_RULES).forEach(function(cat){lines.push('## '+cat);SP_RULES[cat].forEach(function(rule){lines.push('- '+rule);});lines.push('');});lines.push('## ACTIVE ZONES');SP_ZONES.forEach(function(z){lines.push('- '+z.label+': '+(z.on?'SHOWN':'HIDDEN'));});document.getElementById('sp-modal-pre').textContent=lines.join('\n');document.getElementById('sp-modal-backdrop').classList.add('open');}
+function spCloseModal(){document.getElementById('sp-modal-backdrop').classList.remove('open');}
+function spCopyPrompt(){navigator.clipboard.writeText(document.getElementById('sp-modal-pre').textContent).then(function(){var ok=document.getElementById('sp-copy-ok');ok.classList.add('show');setTimeout(function(){ok.classList.remove('show');},1800);}).catch(function(){});}
+if(new URL(location.href).searchParams.get('spec')==='open'){document.addEventListener('DOMContentLoaded',spOpen);}
+</script>
 </body>
 </html>
