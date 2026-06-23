@@ -94,6 +94,7 @@ class FreshPromptInput extends HTMLElement {
           gap: var(--space-2);
           width: 100%;
           max-width: 560px;
+          margin: 0 auto;
           background: var(--surface-input);
           border: 1px solid ${focused ? 'var(--input-focus-border)' : 'var(--surface-border)'};
           border-radius: var(--radius-xl);
