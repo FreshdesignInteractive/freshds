@@ -78,6 +78,17 @@ fresh-sidebar[collapsed] .ml-sidebar-user-info { display: none; }
 .ml-tab-drop-item:hover  { background: var(--surface-subtle); color: var(--text-primary); }
 .ml-tab-drop-item.active { color: var(--nav-active-text); background: var(--nav-active-bg); font-weight: 500; }
 
+/* Member rows: strip individual card boxes, use border separators instead */
+#ml-member-list .invited-list { gap: 0; }
+#ml-member-list .invited-item {
+  background: none;
+  border: none;
+  border-bottom: 1px solid var(--surface-border);
+  border-radius: 0;
+  padding: var(--space-3) var(--space-5);
+}
+#ml-member-list .invited-item:last-child { border-bottom: none; }
+
 /* Invite section */
 .ml-invite-section {
   background: var(--surface-canvas);
