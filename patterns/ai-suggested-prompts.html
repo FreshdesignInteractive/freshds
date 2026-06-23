@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Suggested Prompts — Acme</title>
+<title>Suggested Prompts | Acme</title>
 <link rel="icon" type="image/svg+xml" href="../favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -27,6 +27,7 @@
     justify-content: center;
     padding: var(--space-10) var(--space-6);
     text-align: center;
+    overflow-y: auto;
   }
   .empty-chat-icon {
     width: 56px; height: 56px;
@@ -52,7 +53,6 @@
     margin-bottom: var(--space-8);
   }
 
-  /* Suggestion cards grid */
   .suggestion-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -62,7 +62,6 @@
     margin-bottom: var(--space-6);
   }
 
-  /* Category tabs for filtering suggestions */
   .suggestion-tabs {
     display: flex;
     gap: var(--space-2);
@@ -127,14 +126,62 @@
         </div>
       </nav>
 
+      <!-- Conversation history sidebar -->
+      <aside class="ai-sidebar">
+        <div class="ai-sidebar-header">
+          <fresh-button variant="primary" size="sm" style="width:100%">
+            <i class="ti ti-plus"></i> New chat
+          </fresh-button>
+        </div>
+        <div class="ai-sidebar-list">
+          <div class="ai-sidebar-title" style="padding:var(--space-2) var(--space-3) var(--space-1)">Today</div>
+          <div class="ai-conv-item">
+            <i class="ti ti-message ai-conv-item-icon"></i>
+            <div class="ai-conv-item-body">
+              <div class="ai-conv-item-title">Revenue analysis Q2</div>
+              <div class="ai-conv-item-time">2 min ago</div>
+            </div>
+          </div>
+          <div class="ai-conv-item">
+            <i class="ti ti-message ai-conv-item-icon"></i>
+            <div class="ai-conv-item-body">
+              <div class="ai-conv-item-title">Summarise support tickets</div>
+              <div class="ai-conv-item-time">1 hr ago</div>
+            </div>
+          </div>
+          <div class="ai-conv-item">
+            <i class="ti ti-message ai-conv-item-icon"></i>
+            <div class="ai-conv-item-body">
+              <div class="ai-conv-item-title">Draft release notes v2.6</div>
+              <div class="ai-conv-item-time">4 hrs ago</div>
+            </div>
+          </div>
+          <div class="ai-sidebar-title" style="padding:var(--space-3) var(--space-3) var(--space-1)">Yesterday</div>
+          <div class="ai-conv-item">
+            <i class="ti ti-message ai-conv-item-icon"></i>
+            <div class="ai-conv-item-body">
+              <div class="ai-conv-item-title">Churn risk report</div>
+              <div class="ai-conv-item-time">Yesterday</div>
+            </div>
+          </div>
+          <div class="ai-conv-item">
+            <i class="ti ti-message ai-conv-item-icon"></i>
+            <div class="ai-conv-item-body">
+              <div class="ai-conv-item-title">API docs refactor plan</div>
+              <div class="ai-conv-item-time">Yesterday</div>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Suggested prompts main -->
       <main class="ai-main">
-        <!-- Empty state with suggestions -->
+
         <div class="empty-chat">
           <div class="empty-chat-icon"><i class="ti ti-sparkles"></i></div>
           <div class="empty-chat-title">Good morning, Jamie</div>
           <div class="empty-chat-sub">Ask anything about your workspace — data, drafts, summaries, or plans.</div>
 
-          <!-- Category filter tabs -->
           <div class="suggestion-tabs">
             <div class="suggestion-tab active">All</div>
             <div class="suggestion-tab">Analytics</div>
@@ -143,7 +190,6 @@
             <div class="suggestion-tab">Code</div>
           </div>
 
-          <!-- Suggestion cards 2×2 grid -->
           <div class="suggestion-grid">
             <fresh-suggestion-card
               icon="ti-chart-bar"
@@ -171,7 +217,6 @@
             </fresh-suggestion-card>
           </div>
 
-          <!-- Recent prompts row -->
           <div style="width:100%;max-width:580px">
             <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.07em;color:var(--text-tertiary);margin-bottom:var(--space-2)">Recent</div>
             <fresh-prompt-history prompts='[
@@ -190,6 +235,7 @@
             <span>Press Enter to send · Shift+Enter for new line</span>
           </div>
         </div>
+
       </main>
 
     </div>
