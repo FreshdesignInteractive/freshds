@@ -324,7 +324,8 @@ function _applyNavPattern() {
     sidebar.style.display = ''; document.getElementById('ac-nav-content').innerHTML = buildSidebarHtml(tax);
   } else if (_currentPattern === 'collapsible-sidebar') {
     sidebar.style.display = ''; navbar.setAttribute('hamburger', '');
-    document.getElementById('ac-nav-content').innerHTML = buildSidebarHtml(tax);
+    sidebar.setAttribute('collapsed', '');
+    document.getElementById('ac-nav-content').innerHTML = _buildIconRail(tax);
   } else if (_currentPattern === 'top-nav-tabs') {
     tabStrip.style.display = '';
     var tabsEl = document.getElementById('ac-top-tabs');

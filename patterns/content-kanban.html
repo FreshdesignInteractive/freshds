@@ -597,7 +597,8 @@ function _applyNavPattern() {
   } else if (_currentPattern === 'collapsible-sidebar') {
     sidebar.style.display = '';
     navbar.setAttribute('hamburger', '');
-    document.getElementById('kb-nav-content').innerHTML = buildSidebarHtml(tax);
+    sidebar.setAttribute('collapsed', '');
+    document.getElementById('kb-nav-content').innerHTML = _buildIconRail(tax);
   } else if (_currentPattern === 'top-nav-tabs') {
     tabStrip.style.display = '';
     var tabsEl = document.getElementById('kb-top-tabs');
