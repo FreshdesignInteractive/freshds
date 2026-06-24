@@ -567,9 +567,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
   document.getElementById('st-top-tabs').addEventListener('click', function(e) {
     if (_currentPattern !== 'top-nav-tabs') return;
-    _tabClickX = e.clientX;
     e.stopPropagation();
     var activeNow = this.getAttribute('active');
+    var _btn = this.shadowRoot && this.shadowRoot.querySelector('[data-key="' + activeNow + '"]');
+    _tabClickX = _btn ? _btn.getBoundingClientRect().left + _btn.getBoundingClientRect().width / 2 : e.clientX;
     if (activeNow !== _tabPrevActive) {
       _tabPrevActive = activeNow;
       _openTabDrop(activeNow, _tabClickX);
