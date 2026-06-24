@@ -466,10 +466,21 @@ document.addEventListener('DOMContentLoaded', function() {
   document.getElementById('{p}-nav-content').addEventListener('click', function(e) { e.stopPropagation(); });
   document.getElementById('{p}-icon-flyout').addEventListener('click', function(e) { e.stopPropagation(); });
 
-  /* Tab strip click */
+  /* Tab strip: mousedown captures clientX BEFORE _select() rebuilds shadow DOM.
+     WHY: fresh-topbar-menu._select() is called inside the shadow DOM button's click
+     listener, which fires BEFORE the outer click listener. _select() calls
+     setAttribute('active', key) → attributeChangedCallback → _render() which does
+     shadowRoot.innerHTML = ... destroying all old buttons. By the time the outer
+     click listener fires, the shadow DOM has new elements whose layout may not yet
+     be flushed, making getBoundingClientRect() unreliable. e.clientX on the click
+     event can also return 0 in this context. mousedown fires before _select() is
+     ever called, so e.clientX is always the real mouse position.
+     DO NOT change this to click-only or use shadowRoot.querySelector for positioning. */
+  document.getElementById('{p}-top-tabs').addEventListener('mousedown', function(e) {
+    _tabClickX = e.clientX;
+  });
   document.getElementById('{p}-top-tabs').addEventListener('click', function(e) {
     if (_currentPattern !== 'top-nav-tabs') return;
-    _tabClickX = e.clientX;
     e.stopPropagation();
     var activeNow = this.getAttribute('active');
     if (activeNow !== _tabPrevActive) {
