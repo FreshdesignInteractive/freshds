@@ -486,6 +486,7 @@ document.addEventListener('DOMContentLoaded', function() {
   document.getElementById('cl-nav-content').addEventListener('click', function(e) { e.stopPropagation(); });
   document.getElementById('cl-icon-flyout').addEventListener('click', function(e) { e.stopPropagation(); });
 
+  document.getElementById('cl-top-tabs').addEventListener('mousedown', function(e) { _tabClickX = e.clientX; });
   document.getElementById('cl-top-tabs').addEventListener('click', function(e) {
     if (_currentPattern !== 'top-nav-tabs') return;
     e.stopPropagation();

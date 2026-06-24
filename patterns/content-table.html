@@ -555,6 +555,7 @@ document.addEventListener('DOMContentLoaded', function() {
   document.getElementById('ctb-nav-content').addEventListener('click', function(e) { e.stopPropagation(); });
   document.getElementById('ctb-icon-flyout').addEventListener('click', function(e) { e.stopPropagation(); });
 
+  document.getElementById('ctb-top-tabs').addEventListener('mousedown', function(e) { _tabClickX = e.clientX; });
   document.getElementById('ctb-top-tabs').addEventListener('click', function(e) {
     if (_currentNavPattern !== 'top-nav-tabs') return;
     e.stopPropagation();

@@ -536,6 +536,7 @@ document.addEventListener('DOMContentLoaded', function() {
   document.getElementById('dh-icon-flyout').addEventListener('click', function(e) { e.stopPropagation(); });
 
   /* Tab strip click */
+  document.getElementById('dh-top-tabs').addEventListener('mousedown', function(e) { _tabClickX = e.clientX; });
   document.getElementById('dh-top-tabs').addEventListener('click', function(e) {
     if (_currentPattern !== 'top-nav-tabs') return;
     e.stopPropagation();

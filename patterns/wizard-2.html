@@ -429,6 +429,7 @@ document.addEventListener('DOMContentLoaded', function() {
   document.getElementById('or-nav-content').addEventListener('click', function(e) { e.stopPropagation(); });
   document.getElementById('or-icon-flyout').addEventListener('click', function(e) { e.stopPropagation(); });
 
+  document.getElementById('or-top-tabs').addEventListener('mousedown', function(e) { _tabClickX = e.clientX; });
   document.getElementById('or-top-tabs').addEventListener('click', function(e) {
     if (_currentPattern !== 'top-nav-tabs') return;
     e.stopPropagation();

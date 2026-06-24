@@ -325,6 +325,7 @@ document.addEventListener('DOMContentLoaded', function() {
   });
   document.getElementById('ac-nav-content').addEventListener('click', function(e) { e.stopPropagation(); });
   document.getElementById('ac-icon-flyout').addEventListener('click', function(e) { e.stopPropagation(); });
+  document.getElementById('ac-top-tabs').addEventListener('mousedown', function(e) { _tabClickX = e.clientX; });
   document.getElementById('ac-top-tabs').addEventListener('click', function(e) {
     if (_currentPattern !== 'top-nav-tabs') return;
     _tabClickX = e.clientX; e.stopPropagation();

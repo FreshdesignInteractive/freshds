@@ -470,6 +470,7 @@ document.addEventListener('DOMContentLoaded', function() {
   document.getElementById('ct-nav-content').addEventListener('click', function(e) { e.stopPropagation(); });
   document.getElementById('ct-icon-flyout').addEventListener('click', function(e) { e.stopPropagation(); });
 
+  document.getElementById('ct-top-tabs').addEventListener('mousedown', function(e) { _tabClickX = e.clientX; });
   document.getElementById('ct-top-tabs').addEventListener('click', function(e) {
     if (_currentPattern !== 'top-nav-tabs') return;
     e.stopPropagation();

@@ -455,6 +455,7 @@ document.addEventListener('DOMContentLoaded', function() {
   document.getElementById('sk-nav-content').addEventListener('click', function(e) { e.stopPropagation(); });
   document.getElementById('sk-icon-flyout').addEventListener('click', function(e) { e.stopPropagation(); });
 
+  document.getElementById('sk-top-tabs').addEventListener('mousedown', function(e) { _tabClickX = e.clientX; });
   document.getElementById('sk-top-tabs').addEventListener('click', function(e) {
     if (_currentPattern !== 'top-nav-tabs') return;
     e.stopPropagation();
