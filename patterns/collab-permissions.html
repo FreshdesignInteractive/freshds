@@ -37,64 +37,10 @@ fresh-sidebar[collapsed] .cpe-sidebar-user-info { display: none; }
 .cpe-tab-drop-item { display: flex; align-items: center; padding: 7px var(--space-4); font-size: var(--font-size-sm); font-family: var(--font-sans); color: var(--text-secondary); cursor: pointer; transition: background 100ms, color 100ms; -webkit-font-smoothing: antialiased; }
 .cpe-tab-drop-item:hover { background: var(--surface-subtle); color: var(--text-primary); }
 .cpe-tab-drop-item.active { color: var(--nav-active-text); background: var(--nav-active-bg); font-weight: 500; }
-.demo-spec-btn { display: inline-flex; align-items: center; gap: 5px; height: 28px; padding: 0 4px; border: none; border-radius: var(--radius-full); background: transparent; color: var(--text-secondary); font-size: 12px; font-weight: 500; font-family: -apple-system, BlinkMacSystemFont, 'Inter', system-ui, sans-serif; cursor: pointer; white-space: nowrap; flex-shrink: 0; transition: background 150ms, color 150ms; -webkit-font-smoothing: antialiased; }
-.demo-spec-btn:hover { background: var(--surface-subtle); color: var(--text-primary); }
-.demo-spec-btn i { font-size: 13px; }
-/* spec panel */
-.sp-panel { position: fixed; top: 0; right: -340px; width: 320px; height: 100vh; display: flex; flex-direction: column; background: #141720; border-left: 1px solid #242836; z-index: 300; transition: right 280ms cubic-bezier(0.4,0,0.2,1); font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', system-ui, sans-serif; -webkit-font-smoothing: antialiased; color: #e8ecf4; font-size: 13px; }
-.sp-panel.open { right: 0; }
-.sp-hdr { display: flex; align-items: center; justify-content: space-between; padding: 0 16px; height: 52px; border-bottom: 1px solid #242836; flex-shrink: 0; background: #0f1219; }
-.sp-hdr-title { font-size: 13px; font-weight: 600; color: #e8ecf4; letter-spacing: -0.01em; }
-.sp-hdr-close { width: 28px; height: 28px; border: none; border-radius: 6px; background: transparent; color: #6b7591; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 15px; transition: background 150ms, color 150ms; }
-.sp-hdr-close:hover { background: #1e2333; color: #e8ecf4; }
-.sp-body { flex: 1; overflow-y: auto; scrollbar-width: thin; scrollbar-color: #2a3049 transparent; }
-.sp-body::-webkit-scrollbar { width: 4px; } .sp-body::-webkit-scrollbar-thumb { background: #2a3049; border-radius: 4px; }
-.sp-section { padding: 14px 0 4px; } .sp-section + .sp-section { border-top: 1px solid #1c2030; padding-top: 16px; }
-.sp-section-label { font-size: 10px; font-weight: 700; letter-spacing: 0.09em; color: #7282a8; padding: 0 16px 8px; }
-.sp-zone-row { display: flex; align-items: center; gap: 10px; padding: 7px 16px; transition: background 120ms; }
-.sp-zone-row:hover { background: #1a1f30; }
-.sp-zone-label { flex: 1; font-size: 12px; font-weight: 500; color: #b0bace; }
-.sp-toggle { position: relative; width: 32px; height: 18px; flex-shrink: 0; }
-.sp-toggle input { opacity: 0; width: 0; height: 0; position: absolute; }
-.sp-toggle-track { position: absolute; inset: 0; background: #2a3049; border-radius: 9px; transition: background 200ms; cursor: pointer; }
-.sp-toggle input:checked + .sp-toggle-track { background: #6c63ff; }
-.sp-toggle-thumb { position: absolute; top: 2px; left: 2px; width: 14px; height: 14px; background: #fff; border-radius: 50%; transition: transform 200ms; pointer-events: none; }
-.sp-toggle input:checked ~ .sp-toggle-thumb { transform: translateX(14px); }
-.sp-rules-hdr { display: flex; align-items: center; gap: 8px; margin: 0 12px 4px; padding: 8px 12px; background: #1a1f30; border-radius: 8px; }
-.sp-rules-hdr-icon { font-size: 13px; color: #6c63ff; flex-shrink: 0; }
-.sp-rules-hdr-name { flex: 1; font-size: 11px; font-weight: 700; letter-spacing: 0.06em; color: #8b95b4; }
-.sp-rules-hdr-hint { font-size: 10px; font-weight: 500; color: #6c63ff; }
-.sp-cat { padding: 10px 16px 4px; } .sp-cat-label { font-size: 10px; font-weight: 700; letter-spacing: 0.07em; color: #7282a8; margin-bottom: 6px; }
-.sp-rule { display: flex; align-items: flex-start; gap: 8px; padding: 4px 6px; margin: 0 -6px; border-radius: 5px; transition: background 120ms; }
-.sp-rule:hover { background: #1c2134; } .sp-rule:focus-within { background: rgba(140,130,255,0.18); }
-.sp-rule-dot { width: 5px; height: 5px; border-radius: 50%; background: #6c63ff; flex-shrink: 0; margin-top: 7px; }
-.sp-rule-text { flex: 1; font-size: 12px; line-height: 1.6; color: #b0bace; outline: none; word-break: break-word; min-width: 0; cursor: text; }
-.sp-rule-text:focus { color: #e8ecf4; }
-.sp-rule-del { width: 22px; height: 22px; border: none; border-radius: 4px; background: transparent; color: #8890c0; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 14px; opacity: 0.45; flex-shrink: 0; margin-top: 2px; transition: opacity 150ms, background 150ms, color 150ms; }
-.sp-rule:hover .sp-rule-del { opacity: 1; } .sp-rule-del:hover { background: rgba(255,80,100,0.18); color: #ff6080; }
-.sp-add-rule { display: inline-flex; align-items: center; gap: 5px; margin-top: 4px; padding: 3px 0; font-size: 11px; color: #6272a0; cursor: pointer; border: none; background: transparent; font-family: inherit; -webkit-font-smoothing: antialiased; transition: color 150ms; }
-.sp-add-rule:hover { color: #9490ff; }
-.sp-bottom { display: flex; align-items: center; gap: 6px; padding: 10px 12px; border-top: 1px solid #242836; background: #0f1219; flex-shrink: 0; }
-.sp-btn { display: inline-flex; align-items: center; gap: 5px; padding: 6px 10px; border-radius: 6px; border: 1px solid #242836; background: #1a1f30; color: #9aa3be; font-size: 12px; font-weight: 500; font-family: inherit; -webkit-font-smoothing: antialiased; cursor: pointer; white-space: nowrap; transition: background 150ms, color 150ms, border-color 150ms; }
-.sp-btn i { font-size: 12px; } .sp-btn:hover { background: #1e2438; color: #e8ecf4; border-color: #3a4160; }
-.sp-btn-icon { width: 34px; height: 34px; padding: 0; justify-content: center; flex-shrink: 0; }
-.sp-btn-primary { margin-left: auto; background: #6c63ff; border-color: #6c63ff; color: #ffffff; }
-.sp-btn-primary:hover { background: #7b74ff; border-color: #7b74ff; }
-.sp-modal-backdrop { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.55); z-index: 400; align-items: center; justify-content: center; }
-.sp-modal-backdrop.open { display: flex; }
-.sp-modal { background: #141720; border: 1px solid #242836; border-radius: 12px; width: 600px; max-width: calc(100vw - 40px); max-height: 80vh; display: flex; flex-direction: column; font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
-.sp-modal-hdr { display: flex; align-items: center; justify-content: space-between; padding: 14px 16px; border-bottom: 1px solid #242836; font-size: 13px; font-weight: 600; color: #e8ecf4; flex-shrink: 0; }
-.sp-modal-close { width: 26px; height: 26px; border: none; border-radius: 5px; background: transparent; color: #6b7591; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 14px; transition: background 150ms, color 150ms; }
-.sp-modal-close:hover { background: #1e2333; color: #e8ecf4; }
-.sp-modal-body { flex: 1; overflow-y: auto; padding: 14px 16px; min-height: 220px; }
-.sp-modal-pre { background: #0f1219; border: 1px solid #242836; border-radius: 8px; padding: 14px; font-family: 'JetBrains Mono','Fira Code',monospace; font-size: 12px; line-height: 1.65; color: #9aa3be; white-space: pre-wrap; word-break: break-word; margin: 0; }
-.sp-modal-foot { display: flex; align-items: center; justify-content: flex-end; gap: 8px; padding: 10px 12px; border-top: 1px solid #242836; flex-shrink: 0; }
-.sp-copy-ok { font-size: 12px; color: #6c63ff; opacity: 0; transition: opacity 200ms; }
-.sp-copy-ok.show { opacity: 1; }
-/* NAV-CFG-STYLES-INJECTED */
 </style>');</script>
 <script src="../js/freshds.js"></script>
 <script src="../js/pattern-bar.js"></script>
+<link rel="stylesheet" href="../styles/spec-panel.css">
 </head>
 <body>
 <div id="app">
