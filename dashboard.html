@@ -421,8 +421,8 @@ body {
       <div class="download-title">Full DS</div>
       <p class="download-desc">Complete documentation site with all components, tokens, and guides. Host it for your team, configure your brand, then export the Dev Kit for your developers.</p>
       <div class="download-features">
-        <span class="download-feature"><i class="ti ti-check"></i>60 components</span>
-        <span class="download-feature"><i class="ti ti-check"></i>100+ patterns</span>
+        <span class="download-feature" id="ds-stat-components"><i class="ti ti-check"></i>48 components</span>
+        <span class="download-feature" id="ds-stat-patterns"><i class="ti ti-check"></i>75 patterns</span>
         <span class="download-feature"><i class="ti ti-check"></i>Theme designer + Dev Kit export</span>
         <span class="download-feature"><i class="ti ti-check"></i>Host anywhere</span>
       </div>
@@ -454,5 +454,24 @@ body {
   <span class="footer-copy">© 2026 Freshdesign. All Rights Reserved, Freshdesign Interactive, Inc.</span>
 </footer>
 
+<script>
+(function() {
+  function setStatText(id, text) {
+    var el = document.getElementById(id);
+    if (!el) return;
+    el.innerHTML = '<i class="ti ti-check"></i>' + text;
+  }
+  // Fetch patterns.html → count { id: entries in PL_PATTERNS array
+  fetch('/patterns.html').then(function(r){ return r.text(); }).then(function(html) {
+    var m = html.match(/\{\s*id:/g);
+    if (m && m.length > 0) setStatText('ds-stat-patterns', m.length + ' patterns');
+  }).catch(function(){});
+  // Fetch components.html → count unique components/**/*.js script tags
+  fetch('/components.html').then(function(r){ return r.text(); }).then(function(html) {
+    var m = html.match(/src="[^"]*\/components\/[^"]+\.js"/g);
+    if (m && m.length > 0) setStatText('ds-stat-components', m.length + ' components');
+  }).catch(function(){});
+}());
+</script>
 </body>
 </html>
