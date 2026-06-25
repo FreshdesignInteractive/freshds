@@ -377,6 +377,9 @@ function _applyNavPattern() {
     var tabsEl = document.getElementById('ca-top-tabs');
     tabsEl.setAttribute('tabs', buildTabsJson(tax));
     if (tax[0]) tabsEl.setAttribute('active', tax[0].id);
+  } else {
+    sidebar.style.display = '';
+    document.getElementById(sidebar.id.replace('-sidebar','-nav-content')).innerHTML = buildSidebarHtml(tax);
   }
 }
 
