@@ -203,11 +203,18 @@ function closeFilterDrawer() {
 // Escape handler must call all four: _closeFlyout(); _closeTabDrop(); closeFilterDrawer(); spClose(); spCloseModal();
 ```
 
-### Pages patterns: nav config integration (non-negotiable)
+### Nav config integration — applies to ALL non-auth pattern pages (non-negotiable)
 
-Any pattern tagged `also: ['pages']` in `patterns.html` is a full-page app layout. These patterns MUST use the navigation configuration the user sets in `navigation.html`. Never hardcode nav items, logos, or nav structure.
+Every pattern page that shows a logged-in app shell MUST reflect the navigation model the user configured in `navigation.html`. This includes every section: dashboards, onboarding wizards, content, settings, collab, commerce, workflows, AI/chat, feedback — everything except auth pages.
 
-**Forbidden:**
+**Auth pages are the only exception.** Auth pages (`auth-*.html`, login, signup, forgot-password, etc.) always show the logged-out navbar only. They never load nav-taxonomy or freshds-nav-apply.
+
+**The 6 nav patterns a user can choose from:**
+`persistent-sidebar`, `collapsible-sidebar`, `top-nav-tabs`, `hamburger-drawer`, `dual-level`, `command-palette`
+
+Every non-auth pattern page must implement all 6 and switch between them in real time as the user changes their selection in `navigation.html`.
+
+**Forbidden on any non-auth pattern page:**
 - `<pattern-topbar>` / `pattern-topbar-v2.js`
 - `<nav class="app-nav">` hardcoded sidebar
 - Any hardcoded logo URLs or nav items
