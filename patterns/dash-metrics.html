@@ -76,58 +76,6 @@ fresh-sidebar[collapsed] .dme-sidebar-user-info { display: none; }
 
       <fresh-sidebar id="dme-sidebar" style="display:none;flex-shrink:0;height:100%;overflow:hidden;">
         <div id="dme-nav-content"></div>
-        <div slot="footer" class="dme-sidebar-footer">
-          <fresh-avatar name="Jamie Chen" size="sm"></fresh-avatar>
-          <div class="dme-sidebar-user-info">
-            <div class="dme-sidebar-user-name">Jamie Chen</div>
-            <div class="dme-sidebar-user-role">Admin</div>
-          </div>
-        </div>
-      </fresh-sidebar>
-
-      <div class="dme-icon-flyout" id="dme-icon-flyout">
-        <div class="dme-flyout-label" id="dme-flyout-label"></div>
-        <div id="dme-flyout-items"></div>
-      </div>
-
-      <main class="dash-main">
-        <div class="dash-page-header" id="dme-header">
-          <div>
-            <div class="dash-page-title">Metrics Overview</div>
-            <div class="dash-page-subtitle">Key performance indicators across your workspace.</div>
-          </div>
-          <div class="dash-page-actions">
-            <fresh-button variant="secondary" size="sm"><i class="ti ti-calendar"></i> Last 30 days</fresh-button>
-            <fresh-button variant="secondary" size="sm"><i class="ti ti-download"></i> Export</fresh-button>
-          </div>
-        </div>
-
-        <div class="dash-content" id="dme-content">
-
-          <!-- 4 stat cards -->
-          <div class="dash-stat-row">
-            <fresh-stat-card value="$48,320" label="Monthly revenue" trend="12.4" trend-label="vs last month" icon="ti-currency-dollar"></fresh-stat-card>
-            <fresh-stat-card value="1,847"   label="Active users"    trend="8.1"  trend-label="vs last month" icon="ti-users"></fresh-stat-card>
-            <fresh-stat-card value="68ms"    label="Avg. response"   trend="-14"  trend-label="vs last month" icon="ti-bolt"></fresh-stat-card>
-            <fresh-stat-card value="4.8"     label="Satisfaction"    trend="0.3"  trend-label="vs last month" icon="ti-star"></fresh-stat-card>
-          </div>
-
-          <!-- Full-width line chart -->
-          <div style="margin-bottom:var(--space-4)">
-            <fresh-chart id="dm-rev-fc" title="Revenue trend" description="Daily MRR over the past 30 days" height="200px"></fresh-chart>
-          </div>
-
-          <!-- Two charts side by side -->
-          <div class="dash-cols-2">
-            <fresh-chart id="dm-sig-fc" title="User signups" description="New accounts per week" height="160px"></fresh-chart>
-
-            <fresh-chart id="dm-lat-fc" title="Response time" description="Average latency in ms" height="160px"></fresh-chart>
-          </div>
-
-        </div>
-      </main>
-
-    </div>
   </div>
 
 </div>
