@@ -188,207 +188,244 @@ function _injectThemeSeed(html, t) {
 
 function _generateReadme(isSite, t) {
   return (
-    '# FreshDS ' + (isSite ? 'Documentation Site' : 'Developer Bundle') + '\n\n' +
+    '# FreshDS ' + (isSite ? 'Full DS' : 'Dev Kit') + '\n\n' +
     'Primary: `' + t.primary   + '`\n' +
     'Secondary: `' + t.secondary + '`\n' +
     'Generated: ' + new Date().toISOString() + '\n\n' +
+    (isSite
+      ? '## Getting started\n\n' +
+        'Open `index.html` in a browser to browse components and patterns.\n\n' +
+        'Create your own project folder inside `projects/` — e.g. `projects/my-app/`.\n' +
+        'Pages you create there reference system files with `../../systems/`.\n\n'
+      : '## Getting started\n\n' +
+        'Add the `systems/` folder to your project. Create a project folder at the same\n' +
+        'level as `systems/` (e.g. `projects/my-app/`), then reference files as shown below.\n\n') +
     '## Quick start\n\n' +
     '```html\n' +
-    '<!-- 1. Load tokens -->\n' +
-    '<link rel="stylesheet" href="tokens/primitives.css">\n' +
-    '<link rel="stylesheet" href="tokens/theme-vars.css">\n' +
-    '<link rel="stylesheet" href="tokens/theme.css">\n\n' +
-    '<!-- 2. Load grid (optional) -->\n' +
-    '<link rel="stylesheet" href="styles/grid.css">\n\n' +
-    '<!-- 3. Register web components -->\n' +
-    '<script src="js/freshds.js"><\/script>\n' +
-    '<script src="components/core/fresh-button.js"><\/script>\n' +
-    '<!-- repeat for each component -->\n' +
+    '<!-- From a page inside projects/my-app/ -->\n' +
+    '<link rel="stylesheet" href="../../systems/tokens/primitives.css">\n' +
+    '<link rel="stylesheet" href="../../systems/tokens/theme-vars.css">\n' +
+    '<link rel="stylesheet" href="../../systems/tokens/theme.css">\n\n' +
+    '<!-- Grid (optional) -->\n' +
+    '<link rel="stylesheet" href="../../systems/styles/grid.css">\n\n' +
+    '<!-- Theme engine -->\n' +
+    '<script src="../../systems/js/freshds.js"><\/script>\n\n' +
+    '<!-- Web components (load only what you use) -->\n' +
+    '<script src="../../systems/components/core/fresh-button.js"><\/script>\n' +
     '```\n\n' +
-    '## Files\n\n' +
-    '- `tokens/theme-vars.css` - your computed brand scales (edit here to override)\n' +
-    '- `tokens/theme.css` - semantic token mappings (surface, text, color-interactive)\n' +
-    '- `tokens/primitives.css` - base primitives\n' +
-    '- `js/freshds.js` - color math engine (needed to re-generate scales at runtime)\n' +
-    '- `components/` - web components, one file per component\n'
+    '## Folder layout\n\n' +
+    '```\n' +
+    'freshds/\n' +
+    '├── systems/\n' +
+    '│   ├── tokens/         ← CSS custom properties (primitives, theme, dataviz)\n' +
+    '│   │   └── theme-vars.css  ← your computed brand palette (edit to override)\n' +
+    '│   ├── components/     ← web components (.js, one file per component)\n' +
+    '│   ├── styles/         ← shared layout and pattern CSS\n' +
+    '│   └── js/             ← theme engine (freshds.js)\n' +
+    (isSite
+      ? '├── projects/\n' +
+        '│   └── patterns/   ← reference patterns (copy-prompt source)\n' +
+        '├── index.html      ← local DS home\n'
+      : '') +
+    '└── README.md\n' +
+    '```\n'
   );
 }
 
 // ── Static file lists ──────────────────────────────────────────────────────
 const DEVKIT_FILES = [
-  'tokens/primitives.css',
-  'tokens/theme.css',
-  'tokens/dataviz.css',
-  'styles/grid.css',
-  'styles/components/core.css',
-  'js/freshds.js',
-  'components/core/fresh-button.js',
-  'components/core/fresh-input.js',
-  'components/core/fresh-select.js',
-  'components/core/fresh-checkbox.js',
-  'components/core/fresh-radio.js',
-  'components/core/fresh-toggle.js',
-  'components/core/fresh-slider.js',
-  'components/core/fresh-form-field.js',
-  'components/core/fresh-dropdown-button.js',
-  'components/feedback/fresh-badge.js',
-  'components/feedback/fresh-alert.js',
-  'components/feedback/fresh-toast.js',
-  'components/feedback/fresh-tooltip.js',
-  'components/feedback/fresh-progress.js',
-  'components/feedback/fresh-skeleton.js',
-  'components/feedback/fresh-spinner.js',
-  'components/feedback/fresh-empty-state.js',
-  'components/navigation/fresh-navbar.js',
-  'components/navigation/fresh-sidebar.js',
-  'components/navigation/fresh-tabs.js',
-  'components/navigation/fresh-topbar-menu.js',
-  'components/navigation/fresh-breadcrumb.js',
-  'components/navigation/fresh-pagination.js',
-  'components/navigation/fresh-stepper.js',
-  'components/containers/fresh-card.js',
-  'components/containers/fresh-modal.js',
-  'components/containers/fresh-drawer.js',
-  'components/containers/fresh-accordion.js',
-  'components/containers/fresh-popover.js',
-  'components/containers/fresh-media-card.js',
-  'components/data/fresh-avatar.js',
-  'components/data/fresh-stat-card.js',
-  'components/data/fresh-data-table.js',
-  'components/data/fresh-chart.js',
-  'components/data/fresh-timeline.js',
-  'components/ai/fresh-prompt-input.js',
-  'components/ai/fresh-ai-response.js',
-  'components/ai/fresh-thinking.js',
-  'components/ai/fresh-confidence-badge.js',
-  'components/ai/fresh-citation-chip.js',
-  'components/ai/fresh-suggestion-card.js',
-  'components/ai/fresh-model-selector.js',
-  'components/ai/fresh-token-meter.js',
-  'components/ai/fresh-feedback.js',
-  'components/ai/fresh-diff-viewer.js',
-  'components/ai/fresh-prompt-history.js',
-  'components/ai/fresh-ai-mode-toggle.js'
+  'systems/tokens/primitives.css',
+  'systems/tokens/theme.css',
+  'systems/tokens/dataviz.css',
+  'systems/styles/reset.css',
+  'systems/styles/grid.css',
+  'systems/styles/components/core.css',
+  'systems/js/freshds.js',
+  'systems/components/core/fresh-button.js',
+  'systems/components/core/fresh-input.js',
+  'systems/components/core/fresh-select.js',
+  'systems/components/core/fresh-checkbox.js',
+  'systems/components/core/fresh-radio.js',
+  'systems/components/core/fresh-toggle.js',
+  'systems/components/core/fresh-slider.js',
+  'systems/components/core/fresh-form-field.js',
+  'systems/components/core/fresh-dropdown-button.js',
+  'systems/components/feedback/fresh-badge.js',
+  'systems/components/feedback/fresh-alert.js',
+  'systems/components/feedback/fresh-toast.js',
+  'systems/components/feedback/fresh-tooltip.js',
+  'systems/components/feedback/fresh-progress.js',
+  'systems/components/feedback/fresh-skeleton.js',
+  'systems/components/feedback/fresh-spinner.js',
+  'systems/components/feedback/fresh-empty-state.js',
+  'systems/components/navigation/fresh-navbar.js',
+  'systems/components/navigation/fresh-sidebar.js',
+  'systems/components/navigation/fresh-tabs.js',
+  'systems/components/navigation/fresh-topbar-menu.js',
+  'systems/components/navigation/fresh-breadcrumb.js',
+  'systems/components/navigation/fresh-pagination.js',
+  'systems/components/navigation/fresh-stepper.js',
+  'systems/components/containers/fresh-card.js',
+  'systems/components/containers/fresh-modal.js',
+  'systems/components/containers/fresh-drawer.js',
+  'systems/components/containers/fresh-accordion.js',
+  'systems/components/containers/fresh-popover.js',
+  'systems/components/containers/fresh-media-card.js',
+  'systems/components/containers/fresh-table.js',
+  'systems/components/data/fresh-avatar.js',
+  'systems/components/data/fresh-stat-card.js',
+  'systems/components/data/fresh-data-table.js',
+  'systems/components/data/fresh-chart.js',
+  'systems/components/data/fresh-timeline.js',
+  'systems/components/ai/fresh-prompt-input.js',
+  'systems/components/ai/fresh-ai-response.js',
+  'systems/components/ai/fresh-thinking.js',
+  'systems/components/ai/fresh-confidence-badge.js',
+  'systems/components/ai/fresh-citation-chip.js',
+  'systems/components/ai/fresh-suggestion-card.js',
+  'systems/components/ai/fresh-model-selector.js',
+  'systems/components/ai/fresh-token-meter.js',
+  'systems/components/ai/fresh-feedback.js',
+  'systems/components/ai/fresh-diff-viewer.js',
+  'systems/components/ai/fresh-prompt-history.js',
+  'systems/components/ai/fresh-ai-mode-toggle.js'
 ];
 
 const FULLSITE_EXTRA_FILES = [
-  'CLAUDE.md',
-  'styles/layout.css',
-  'styles/docs.css',
-  // Component doc sub-pages (loaded in iframes by components.html)
-  'pages/components/accordion.html',
-  'pages/components/aimodetoggle.html',
-  'pages/components/airesponse.html',
-  'pages/components/alert.html',
-  'pages/components/avatar.html',
-  'pages/components/badge.html',
-  'pages/components/breadcrumb.html',
-  'pages/components/button.html',
-  'pages/components/card.html',
-  'pages/components/chart.html',
-  'pages/components/checkbox.html',
-  'pages/components/citation.html',
-  'pages/components/confidence.html',
-  'pages/components/datatable.html',
-  'pages/components/diffviewer.html',
-  'pages/components/drawer.html',
-  'pages/components/dropdown-button.html',
-  'pages/components/emptystate.html',
-  'pages/components/feedback.html',
-  'pages/components/formfield.html',
-  'pages/components/input.html',
-  'pages/components/mediacard.html',
-  'pages/components/modal.html',
-  'pages/components/modelselector.html',
-  'pages/components/navbar.html',
-  'pages/components/pagination.html',
-  'pages/components/popover.html',
-  'pages/components/progress.html',
-  'pages/components/prompthistory.html',
-  'pages/components/promptinput.html',
-  'pages/components/radio.html',
-  'pages/components/select.html',
-  'pages/components/sidebar.html',
-  'pages/components/skeleton.html',
-  'pages/components/slider.html',
-  'pages/components/spinner.html',
-  'pages/components/statcard.html',
-  'pages/components/stepper.html',
-  'pages/components/suggestion.html',
-  'pages/components/table.html',
-  'pages/components/tabs.html',
-  'pages/components/thinking.html',
-  'pages/components/timeline.html',
-  'pages/components/toast.html',
-  'pages/components/toggle.html',
-  'pages/components/tokenmeter.html',
-  'pages/components/tooltip.html',
-  'pages/components/topbarmenu.html',
-  // Foundation doc sub-pages
-  'pages/foundation/accessibility.html',
-  'pages/foundation/colors.html',
-  'pages/foundation/gridsystem.html',
-  'pages/foundation/iconography.html',
-  'pages/foundation/radius.html',
-  'pages/foundation/spacing.html',
-  'pages/foundation/tokens.html',
-  'pages/foundation/typography.html',
-  // Nav pattern previews
-  'previews/nav-collapsible-sidebar.html',
-  'previews/nav-command-palette.html',
-  'previews/nav-dual-level.html',
-  'previews/nav-hamburger-drawer.html',
-  'previews/nav-persistent-sidebar.html',
-  'previews/nav-top-nav-tabs.html',
-  'js/freshds-site.js',
-  'js/pattern-bar.js',
-  'js/pattern-topbar-v2.js',
-  'favicon.svg',
+  // Entry points
+  'index.html',
   'components.html',
   'patterns.html',
-  'patterns/ai-agent-feed.html','patterns/ai-chat.html','patterns/ai-config.html',
-  'patterns/ai-feedback.html','patterns/ai-history.html','patterns/ai-knowledge.html',
-  'patterns/ai-memory.html','patterns/ai-model-sel.html','patterns/ai-playground.html',
-  'patterns/ai-prompt.html','patterns/ai-review.html','patterns/ai-stream.html',
-  'patterns/ai-suggested.html','patterns/ai-thread.html','patterns/ai-tool-log.html',
-  'patterns/auth-2fa.html','patterns/auth-email-sent.html','patterns/auth-expired.html',
-  'patterns/auth-forgot-password.html','patterns/auth-invite.html','patterns/auth-locked.html',
-  'patterns/auth-login.html','patterns/auth-reset.html','patterns/auth-signup.html',
-  'patterns/auth-sso.html','patterns/auth-verify.html',
-  'patterns/collab-activity.html','patterns/collab-comments.html','patterns/collab-embeds.html',
-  'patterns/collab-mentions.html','patterns/collab-permissions.html','patterns/collab-presence.html',
-  'patterns/collab-share.html','patterns/collab-team.html','patterns/collab-workspace.html',
-  'patterns/commerce-checkout.html','patterns/commerce-compare.html','patterns/commerce-confirm.html',
-  'patterns/commerce-gates.html','patterns/commerce-invoice.html','patterns/commerce-payment.html',
-  'patterns/commerce-pricing.html','patterns/commerce-trial.html','patterns/commerce-upsell.html',
-  'patterns/content-audit.html','patterns/content-bulk.html','patterns/content-calendar.html',
-  'patterns/content-detail.html','patterns/content-filter.html','patterns/content-form.html',
-  'patterns/content-import.html','patterns/content-kanban.html','patterns/content-list.html',
-  'patterns/content-table.html','patterns/content-timeline.html','patterns/content-versions.html',
-  'patterns/dash-activity.html','patterns/dash-ai-insights.html','patterns/dash-analytics.html',
-  'patterns/dash-home.html','patterns/dash-metrics.html','patterns/dash-notifications.html',
-  'patterns/dash-realtime.html','patterns/dash-reports.html','patterns/dash-status.html',
-  'patterns/dash-usage.html',
-  'patterns/flow-agent.html','patterns/flow-approval.html','patterns/flow-history.html',
-  'patterns/flow-integration.html','patterns/flow-pipeline.html','patterns/flow-rules.html',
-  'patterns/flow-scheduled.html','patterns/flow-trigger.html','patterns/flow-webhook.html',
-  'patterns/flow-wizard.html',
-  'patterns/onb-ai-setup.html','patterns/onb-checklist.html','patterns/onb-empty-first.html',
-  'patterns/onb-import.html','patterns/onb-integration.html','patterns/onb-profile.html',
-  'patterns/onb-role.html','patterns/onb-team-invite.html','patterns/onb-tour.html',
-  'patterns/onb-usecase.html','patterns/onb-welcome.html','patterns/onb-workspace.html',
-  'patterns/settings-api.html','patterns/settings-billing.html','patterns/settings-danger.html',
-  'patterns/settings-general.html','patterns/settings-notifs.html','patterns/settings-privacy.html',
-  'patterns/settings-profile.html','patterns/settings-security.html','patterns/settings-theme.html',
-  'patterns/settings-upgrade.html','patterns/settings-usage.html',
-  'patterns/support-confirm.html','patterns/support-empty.html','patterns/support-error.html',
-  'patterns/support-feedback.html','patterns/support-help.html','patterns/support-nps.html',
-  'patterns/support-progress.html','patterns/support-skeleton.html','patterns/support-success.html',
-  'patterns/support-toast.html','patterns/support-tooltip.html',
-  'styles/patterns/ai-chat.css','styles/patterns/auth.css','styles/patterns/collab.css',
-  'styles/patterns/commerce.css','styles/patterns/content.css','styles/patterns/dashboard.css',
-  'styles/patterns/feedback.css','styles/patterns/onboarding.css','styles/patterns/settings.css',
-  'styles/patterns/workflow.css'
+  // Shared assets
+  'systems/favicon.svg',
+  'systems/freshdesign-logo.svg',
+  'systems/freshdesign-logo-dark.svg',
+  // Additional styles
+  'systems/styles/layout.css',
+  'systems/styles/docs.css',
+  'systems/styles/spec-panel.css',
+  // Pattern layout styles
+  'systems/styles/patterns/ai-chat.css',
+  'systems/styles/patterns/auth.css',
+  'systems/styles/patterns/collab.css',
+  'systems/styles/patterns/commerce.css',
+  'systems/styles/patterns/content.css',
+  'systems/styles/patterns/dashboard.css',
+  'systems/styles/patterns/feedback.css',
+  'systems/styles/patterns/onboarding.css',
+  'systems/styles/patterns/settings.css',
+  'systems/styles/patterns/workflow.css',
+  // Additional JS
+  'systems/js/freshds-site.js',
+  'systems/js/pattern-bar.js',
+  'systems/js/pattern-topbar-v2.js',
+  // Component doc sub-pages
+  'systems/pages/components/accordion.html',
+  'systems/pages/components/aimodetoggle.html',
+  'systems/pages/components/airesponse.html',
+  'systems/pages/components/alert.html',
+  'systems/pages/components/avatar.html',
+  'systems/pages/components/badge.html',
+  'systems/pages/components/breadcrumb.html',
+  'systems/pages/components/button.html',
+  'systems/pages/components/card.html',
+  'systems/pages/components/chart.html',
+  'systems/pages/components/checkbox.html',
+  'systems/pages/components/citation.html',
+  'systems/pages/components/confidence.html',
+  'systems/pages/components/datatable.html',
+  'systems/pages/components/diffviewer.html',
+  'systems/pages/components/drawer.html',
+  'systems/pages/components/dropdown-button.html',
+  'systems/pages/components/emptystate.html',
+  'systems/pages/components/feedback.html',
+  'systems/pages/components/formfield.html',
+  'systems/pages/components/input.html',
+  'systems/pages/components/mediacard.html',
+  'systems/pages/components/modal.html',
+  'systems/pages/components/modelselector.html',
+  'systems/pages/components/navbar.html',
+  'systems/pages/components/pagination.html',
+  'systems/pages/components/popover.html',
+  'systems/pages/components/progress.html',
+  'systems/pages/components/prompthistory.html',
+  'systems/pages/components/promptinput.html',
+  'systems/pages/components/radio.html',
+  'systems/pages/components/select.html',
+  'systems/pages/components/sidebar.html',
+  'systems/pages/components/skeleton.html',
+  'systems/pages/components/slider.html',
+  'systems/pages/components/spinner.html',
+  'systems/pages/components/statcard.html',
+  'systems/pages/components/stepper.html',
+  'systems/pages/components/suggestion.html',
+  'systems/pages/components/table.html',
+  'systems/pages/components/tabs.html',
+  'systems/pages/components/thinking.html',
+  'systems/pages/components/timeline.html',
+  'systems/pages/components/toast.html',
+  'systems/pages/components/toggle.html',
+  'systems/pages/components/tokenmeter.html',
+  'systems/pages/components/tooltip.html',
+  'systems/pages/components/topbarmenu.html',
+  // Foundation doc sub-pages
+  'systems/pages/foundation/accessibility.html',
+  'systems/pages/foundation/colors.html',
+  'systems/pages/foundation/gridsystem.html',
+  'systems/pages/foundation/iconography.html',
+  'systems/pages/foundation/radius.html',
+  'systems/pages/foundation/spacing.html',
+  'systems/pages/foundation/tokens.html',
+  'systems/pages/foundation/typography.html',
+  // Nav pattern previews
+  'systems/previews/nav-collapsible-sidebar.html',
+  'systems/previews/nav-command-palette.html',
+  'systems/previews/nav-dual-level.html',
+  'systems/previews/nav-hamburger-drawer.html',
+  'systems/previews/nav-persistent-sidebar.html',
+  'systems/previews/nav-top-nav-tabs.html',
+  // Reference patterns
+  'projects/patterns/ai-chat.html','projects/patterns/ai-config.html',
+  'projects/patterns/ai-model-selector.html','projects/patterns/ai-playground.html',
+  'projects/patterns/ai-suggested-prompts.html',
+  'projects/patterns/auth-2fa.html','projects/patterns/auth-email-sent.html',
+  'projects/patterns/auth-expired.html','projects/patterns/auth-forgot-password.html',
+  'projects/patterns/auth-invite.html','projects/patterns/auth-locked.html',
+  'projects/patterns/auth-login.html','projects/patterns/auth-reset.html',
+  'projects/patterns/auth-signup.html','projects/patterns/auth-sso.html',
+  'projects/patterns/auth-verify.html',
+  'projects/patterns/blank-slate.html','projects/patterns/blank-slate-logged-out.html',
+  'projects/patterns/calendar.html','projects/patterns/contact-list.html',
+  'projects/patterns/collab-permissions.html','projects/patterns/collab-team.html',
+  'projects/patterns/collab-workspace.html',
+  'projects/patterns/commerce-checkout.html','projects/patterns/commerce-confirm.html',
+  'projects/patterns/commerce-invoice.html','projects/patterns/commerce-payment.html',
+  'projects/patterns/commerce-pricing.html','projects/patterns/commerce-trial.html',
+  'projects/patterns/commerce-upsell.html',
+  'projects/patterns/content-bulk.html','projects/patterns/content-filter.html',
+  'projects/patterns/content-form.html','projects/patterns/content-kanban.html',
+  'projects/patterns/content-table.html','projects/patterns/content-timeline.html',
+  'projects/patterns/dash-activity.html','projects/patterns/dash-analytics.html',
+  'projects/patterns/dash-home.html','projects/patterns/dash-metrics.html',
+  'projects/patterns/dash-notifications.html','projects/patterns/dash-reports.html',
+  'projects/patterns/dash-status.html',
+  'projects/patterns/flow-pipeline.html','projects/patterns/flow-rules.html',
+  'projects/patterns/flow-scheduled.html','projects/patterns/flow-trigger.html',
+  'projects/patterns/flow-webhook.html','projects/patterns/flow-wizard.html',
+  'projects/patterns/import.html','projects/patterns/member-list.html',
+  'projects/patterns/onb-ai-setup.html','projects/patterns/onb-checklist.html',
+  'projects/patterns/settings-api.html','projects/patterns/settings-billing.html',
+  'projects/patterns/settings-notifs.html','projects/patterns/settings-profile.html',
+  'projects/patterns/settings-security.html','projects/patterns/settings-upgrade.html',
+  'projects/patterns/settings-usage.html','projects/patterns/settings.html',
+  'projects/patterns/skeleton.html',
+  'projects/patterns/support-confirm.html','projects/patterns/support-error.html',
+  'projects/patterns/support-feedback.html','projects/patterns/support-nps.html',
+  'projects/patterns/support-success.html','projects/patterns/support.html',
+  'projects/patterns/tour.html','projects/patterns/welcome.html',
+  'projects/patterns/wizard-1-role.html','projects/patterns/wizard-2-use-case.html',
+  'projects/patterns/wizard-3-profile.html','projects/patterns/wizard-4-workspace.html',
+  'projects/patterns/wizard-5-team.html','projects/patterns/wizard-6-integrations.html'
 ];
 
 // ── Handler ────────────────────────────────────────────────────────────────
@@ -450,7 +487,7 @@ async function handler(req, res) {
   );
 
   const zip = new JSZip();
-  zip.file(root + 'tokens/theme-vars.css', _generateThemeVarsCss(t));
+  zip.file(root + 'systems/tokens/theme-vars.css', _generateThemeVarsCss(t));
 
   fetched.forEach(function(file) {
     if (!file) return;
