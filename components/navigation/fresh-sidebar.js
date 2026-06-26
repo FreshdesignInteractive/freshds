@@ -112,6 +112,12 @@ class FreshSidebar extends HTMLElement {
         </div>
       </div>
     `;
+
+    const footerSlot = this.shadowRoot.querySelector('slot[name="footer"]');
+    const footerDiv  = this.shadowRoot.querySelector('.footer');
+    const syncFooter = () => { footerDiv.style.display = footerSlot.assignedElements().length ? '' : 'none'; };
+    footerSlot.addEventListener('slotchange', syncFooter);
+    syncFooter();
   }
 }
 
