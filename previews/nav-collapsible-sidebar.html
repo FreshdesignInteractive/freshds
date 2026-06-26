@@ -76,16 +76,6 @@
     color: var(--text-primary); letter-spacing: -0.01em; white-space: nowrap;
   }
 
-  .sidebar-footer { display: flex; align-items: center; gap: var(--space-3); width: 100%; min-width: 0; }
-  .footer-user-info { flex: 1; min-width: 0; overflow: hidden; }
-  .footer-user-name { font-size: var(--font-size-sm); font-weight: 500; color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .footer-user-role { font-size: var(--font-size-xs); color: var(--text-tertiary); white-space: nowrap; }
-  .footer-icon-btn { flex-shrink: 0; }
-
-  /* Collapsed icon-rail: hide footer text and settings, center avatar */
-  fresh-sidebar[collapsed] .footer-user-info,
-  fresh-sidebar[collapsed] .footer-icon-btn { display: none; }
-
   /* Icon rail flyout */
   .icon-flyout {
     position: fixed;

@@ -98,35 +98,6 @@
     letter-spacing: -0.01em;
     white-space: nowrap;
   }
-
-  /* ── Sidebar footer slot ── */
-  .sidebar-footer {
-    display: flex;
-    align-items: center;
-    gap: var(--space-3);
-    width: 100%;
-    min-width: 0;
-  }
-  .footer-user-info {
-    flex: 1;
-    min-width: 0;
-    overflow: hidden;
-  }
-  .footer-user-name {
-    font-size: var(--font-size-sm);
-    font-weight: 500;
-    color: var(--text-primary);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-  .footer-user-role {
-    font-size: var(--font-size-xs);
-    color: var(--text-tertiary);
-    white-space: nowrap;
-  }
-  .footer-icon-btn { flex-shrink: 0; }
-
   /* Command palette overlay */
   .palette-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 200; display: none; align-items: flex-start; justify-content: center; padding-top: 14vh; }
   .palette-overlay.open { display: flex; }
@@ -196,8 +167,6 @@
 
       <!-- Navigation groups (taxonomy-driven) -->
       <div id="nav-content"></div>
-
-      <!-- Sidebar footer -->
 
 </div>
 

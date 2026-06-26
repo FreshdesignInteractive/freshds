@@ -238,9 +238,6 @@ Every non-auth pattern page must implement all 6 and switch between them in real
 [data-mode="dark"] .nav-logo-light { display: none; }
 [data-mode="dark"] .nav-logo-dark  { display: block; }
 
-/* Sidebar footer user info hides when sidebar is collapsed */
-fresh-sidebar[collapsed] .{p}-sidebar-user-info { display: none; }
-
 /* Icon rail flyout (collapsible-sidebar collapsed state) */
 .{p}-icon-flyout {
   position: fixed; left: 57px; top: 0; width: 200px;
@@ -306,9 +303,6 @@ fresh-sidebar[collapsed] .{p}-sidebar-user-info { display: none; }
 
     <fresh-sidebar id="{p}-sidebar" style="display:none;flex-shrink:0;height:100%;overflow:hidden;">
       <div id="{p}-nav-content"></div>
-      <div slot="footer">
-        <!-- sidebar footer content, e.g. user avatar -->
-      </div>
     </fresh-sidebar>
 
     <div class="{p}-icon-flyout" id="{p}-icon-flyout">
