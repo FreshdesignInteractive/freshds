@@ -42,6 +42,17 @@ fresh-sidebar[collapsed] .dre-sidebar-user-info { display: none; }
 </style>');</script>
 <script src="../js/freshds.js"></script>
 <script src="../js/pattern-bar.js"></script>
+<style>
+@media (max-width: 1023px) {
+  .dash-page-header { padding: var(--space-4) var(--space-5); gap: var(--space-3); }
+  .dash-content { padding: var(--space-4) var(--space-5) var(--space-16); }
+}
+@media (max-width: 767px) {
+  .dash-page-header { flex-direction: column; align-items: flex-start; padding: var(--space-4); }
+  .dash-page-actions { width: 100%; justify-content: flex-end; }
+  .dash-content { padding: var(--space-3) var(--space-4) var(--space-16); }
+}
+</style>
 <link rel="stylesheet" href="../styles/spec-panel.css">
 </head>
 <body>
