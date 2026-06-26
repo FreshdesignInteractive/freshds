@@ -227,6 +227,16 @@ body {
 .dash-span-2 { grid-column: span 2; }
 .dash-span-3 { grid-column: span 3; }
 
+/* ── Invite rows (shared: onboarding + member management) ── */
+.invite-input-row { display: flex; gap: var(--space-2); align-items: flex-end; margin-bottom: var(--space-4); }
+.invite-input-row fresh-input { flex: 1; }
+.invited-list { display: flex; flex-direction: column; gap: var(--space-2); margin-bottom: var(--space-2); }
+.invited-item { display: flex; align-items: center; gap: var(--space-3); padding: var(--space-3) var(--space-4); background: var(--surface-canvas); border: 1px solid var(--surface-border); border-radius: var(--radius-md); }
+.invited-item-email { flex: 1; font-size: var(--font-size-md); color: var(--text-primary); }
+.invited-item-role { font-size: var(--font-size-sm); color: var(--text-tertiary); }
+.invited-item-remove { width: 24px; height: 24px; border: none; background: none; cursor: pointer; border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; color: var(--text-tertiary); font-size: var(--font-size-lg); transition: background 150ms, color 150ms; }
+.invited-item-remove:hover { background: var(--color-danger-subtle); color: var(--color-danger); }
+
 /* ── Generic card surface ── */
 .dash-card {
   background: var(--surface-canvas);
