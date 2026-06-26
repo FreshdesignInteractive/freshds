@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Auth guard: redirects to / if no session or unpaid -->
+<script type="module" src="/systems/js/auth-guard.js"></script>
+<script type="module" src="/systems/js/paid-guard.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Skeleton | FreshDS</title>
+<base href="../../">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="styles/site.css">
+<link rel="stylesheet" href="tokens/primitives.css">
+<link rel="stylesheet" href="tokens/theme.css">
+<script src="js/freshds.js"></script>
+<script src="js/freshds-site.js"></script>
+<link rel="stylesheet" href="styles/components/spec-page.css">
+</head>
+<body>
+
+<div class="comp-page">
+  <h1 class="comp-title">Skeleton</h1>
+  <p class="comp-desc">Shimmer placeholders that mirror the shape of loading content. Reduces perceived wait time by showing structure before data arrives.</p>
+
+  <!-- STATES CARD -->
+  <div class="comp-section">
+    <div class="spec-card">
+      <div class="spec-card-topbar">
+        <span class="spec-rules-title">Skeleton variants</span>
+        <div class="spec-mode-switcher">
+          <button class="spec-mode-btn active" id="mode-btn-light" onclick="setSpecMode('light')"><i class="ti ti-sun"></i> Light</button>
+          <button class="spec-mode-btn" id="mode-btn-dark" onclick="setSpecMode('dark')"><i class="ti ti-moon"></i> Dark</button>
+        </div>
+      </div>
+      <div id="spec-viewport" class="spec-viewport">
+
+        <!-- Rect -->
+        <div class="spec-variant-row">
+          <div class="spec-variant-header">
+            <span class="spec-variant-name">Rect</span>
+            <span class="spec-attr-chip">variant="rect"</span>
+            <span class="spec-variant-sep">·</span>
+            <span class="spec-variant-desc">Default. Rectangular placeholder for images, cards, banners, and arbitrary blocks.</span>
+          </div>
+          <div class="spec-variant-body">
+            <div class="spec-demos" style="flex-direction:column;gap:8px;width:100%;">
+              <fresh-skeleton width="100%" height="80px"></fresh-skeleton>
+              <fresh-skeleton width="240px" height="32px"></fresh-skeleton>
+              <fresh-skeleton width="160px" height="20px"></fresh-skeleton>
+            </div>
+          </div>
+        </div>
+
+        <!-- Circle -->
+        <div class="spec-variant-row">
+          <div class="spec-variant-header">
+            <span class="spec-variant-name">Circle</span>
+            <span class="spec-attr-chip">variant="circle"</span>
+            <span class="spec-variant-sep">·</span>
+            <span class="spec-variant-desc">Circular placeholder for avatars, icons, and profile images.</span>
+          </div>
+          <div class="spec-variant-body">
+            <div class="spec-demos">
+              <fresh-skeleton variant="circle" size="32px"></fresh-skeleton>
+              <fresh-skeleton variant="circle" size="40px"></fresh-skeleton>
+              <fresh-skeleton variant="circle" size="56px"></fresh-skeleton>
+              <fresh-skeleton variant="circle" size="80px"></fresh-skeleton>
+            </div>
+          </div>
+        </div>
+
+        <!-- Text -->
+        <div class="spec-variant-row">
+          <div class="spec-variant-header">
+            <span class="spec-variant-name">Text</span>
+            <span class="spec-attr-chip">variant="text"</span>
+            <span class="spec-variant-sep">·</span>
+            <span class="spec-variant-desc">Multi-line text block. The last line is 65% width to simulate natural line breaks.</span>
+          </div>
+          <div class="spec-variant-body">
+            <div class="spec-demos" style="flex-direction:column;gap:16px;width:100%;">
+              <fresh-skeleton variant="text" lines="2" width="360px"></fresh-skeleton>
+              <fresh-skeleton variant="text" lines="4" width="480px"></fresh-skeleton>
+            </div>
+          </div>
+        </div>
+
+        <!-- Composed -->
+        <div class="spec-variant-row">
+          <div class="spec-variant-header">
+            <span class="spec-variant-name">Composed</span>
+            <span class="spec-attr-chip">mixed variants</span>
+            <span class="spec-variant-sep">·</span>
+            <span class="spec-variant-desc">Combine circle, rect, and text variants to match the shape of your loading content.</span>
+          </div>
+          <div class="spec-variant-body">
+            <div class="spec-demos" style="flex-direction:column;gap:16px;width:100%;">
+              <!-- Card skeleton -->
+              <div style="display:flex;align-items:center;gap:12px;">
+                <fresh-skeleton variant="circle" size="40px"></fresh-skeleton>
+                <div style="display:flex;flex-direction:column;gap:6px;flex:1;">
+                  <fresh-skeleton width="140px" height="14px"></fresh-skeleton>
+                  <fresh-skeleton width="200px" height="12px"></fresh-skeleton>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /spec-viewport -->
+    </div><!-- /spec-card -->
+  </div>
+
+  <!-- AI RULES -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar">
+        <span class="spec-rules-title">AI action rules</span>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <span class="spec-rules-hint">Click any rule to edit</span>
+          <button class="spec-rules-reset" onclick="restoreDefaults()"><i class="ti ti-rotate" style="font-size:10px;"></i> Restore FreshDS defaults</button>
+        </div>
+      </div>
+      <div class="spec-rules-section">
+        <div class="spec-rules-section-head">
+          <span class="spec-rules-variant">General</span>
+          <span class="spec-attr-chip">fresh-skeleton</span>
+        </div>
+        <ul class="spec-rule-list" id="rules-general">
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Mirror the shape of the content being loaded as closely as possible. Use <code>variant="circle"</code> for avatars, <code>variant="text"</code> for paragraphs, and <code>variant="rect"</code> for images and blocks.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Replace the entire skeleton immediately when data arrives. Do not show a partial mix of skeleton and loaded content in the same logical section.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Use skeleton screens for content that loads in under 5 seconds. For longer waits, add a progress bar or spinner with an informational label explaining the operation.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Set <code>width</code> and <code>height</code> to match the actual rendered dimensions of the element they represent. Skeletons that are visibly smaller or larger than the content cause jarring layout shifts on load.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Do not show skeleton screens for operations triggered by user actions (button clicks). Use a loading spinner on the button or inline spinner instead, which communicates that the system is responding.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+        </ul>
+        <button class="spec-add-rule" onclick="addRule('rules-general')"><i class="ti ti-plus"></i> Add rule</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ATTRIBUTES -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Attributes</span></div>
+      <table class="spec-a11y-table">
+        <thead><tr><th style="width:130px">Attribute</th><th style="width:220px">Values</th><th style="width:80px">Default</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">variant</td><td class="spec-a11y-req"><code>rect</code> <code>circle</code> <code>text</code></td><td class="spec-a11y-req"><code>rect</code></td><td class="spec-a11y-req">Shape of the placeholder. Circle uses <code>size</code> for diameter. Text stacks multiple lines.</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">width</td><td class="spec-a11y-req">CSS value</td><td class="spec-a11y-req"><code>100%</code></td><td class="spec-a11y-req">Width of the bone. Applies to <code>rect</code> and <code>text</code> variants.</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">height</td><td class="spec-a11y-req">CSS value</td><td class="spec-a11y-req"><code>14px</code></td><td class="spec-a11y-req">Height of the bone. Applies to <code>rect</code> and each line in <code>text</code> variant.</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">size</td><td class="spec-a11y-req">CSS value</td><td class="spec-a11y-req"><code>40px</code></td><td class="spec-a11y-req">Diameter shorthand for <code>circle</code> variant only.</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">lines</td><td class="spec-a11y-req">number</td><td class="spec-a11y-req"><code>3</code></td><td class="spec-a11y-req">Number of text lines to render. Only applies to <code>text</code> variant. Last line renders at 65% width.</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">radius</td><td class="spec-a11y-req">CSS value</td><td class="spec-a11y-req"><code>var(--radius-sm)</code></td><td class="spec-a11y-req">Border radius override for <code>rect</code> variant bones.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- CODE -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Code</span></div>
+      <div style="padding:16px 20px;display:flex;flex-direction:column;gap:0;">
+
+        <div class="code-block" data-code="<!-- Avatar + name skeleton (user card) -->
+<div style=&quot;display:flex;align-items:center;gap:12px;&quot;>
+  <fresh-skeleton variant=&quot;circle&quot; size=&quot;40px&quot;></fresh-skeleton>
+  <div style=&quot;display:flex;flex-direction:column;gap:6px;&quot;>
+    <fresh-skeleton width=&quot;140px&quot; height=&quot;14px&quot;></fresh-skeleton>
+    <fresh-skeleton width=&quot;200px&quot; height=&quot;12px&quot;></fresh-skeleton>
+  </div>
+</div>">
+          <div class="code-block-header"><span><span class="code-lang">HTML</span><span class="code-context">User card skeleton</span></span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+          <div class="code-body"><span class="hl-com">&lt;!-- Avatar + name skeleton (user card) --&gt;</span>
+<span class="hl-pun">&lt;</span><span class="hl-tag">div</span> <span class="hl-attr">style</span><span class="hl-pun">=</span><span class="hl-val">"display:flex;align-items:center;gap:12px;"</span><span class="hl-pun">&gt;</span>
+  <span class="hl-pun">&lt;</span><span class="hl-tag">fresh-skeleton</span> <span class="hl-attr">variant</span><span class="hl-pun">=</span><span class="hl-val">"circle"</span> <span class="hl-attr">size</span><span class="hl-pun">=</span><span class="hl-val">"40px"</span><span class="hl-pun">&gt;&lt;/</span><span class="hl-tag">fresh-skeleton</span><span class="hl-pun">&gt;</span>
+  <span class="hl-pun">&lt;</span><span class="hl-tag">div</span> <span class="hl-attr">style</span><span class="hl-pun">=</span><span class="hl-val">"display:flex;flex-direction:column;gap:6px;"</span><span class="hl-pun">&gt;</span>
+    <span class="hl-pun">&lt;</span><span class="hl-tag">fresh-skeleton</span> <span class="hl-attr">width</span><span class="hl-pun">=</span><span class="hl-val">"140px"</span> <span class="hl-attr">height</span><span class="hl-pun">=</span><span class="hl-val">"14px"</span><span class="hl-pun">&gt;&lt;/</span><span class="hl-tag">fresh-skeleton</span><span class="hl-pun">&gt;</span>
+    <span class="hl-pun">&lt;</span><span class="hl-tag">fresh-skeleton</span> <span class="hl-attr">width</span><span class="hl-pun">=</span><span class="hl-val">"200px"</span> <span class="hl-attr">height</span><span class="hl-pun">=</span><span class="hl-val">"12px"</span><span class="hl-pun">&gt;&lt;/</span><span class="hl-tag">fresh-skeleton</span><span class="hl-pun">&gt;</span>
+  <span class="hl-pun">&lt;/</span><span class="hl-tag">div</span><span class="hl-pun">&gt;</span>
+<span class="hl-pun">&lt;/</span><span class="hl-tag">div</span><span class="hl-pun">&gt;</span></div>
+        </div>
+
+        <div class="code-block" data-code="<fresh-skeleton variant=&quot;text&quot; lines=&quot;3&quot; width=&quot;480px&quot;></fresh-skeleton>">
+          <div class="code-block-header"><span><span class="code-lang">HTML</span><span class="code-context">Text block</span></span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+          <div class="code-body"><span class="hl-pun">&lt;</span><span class="hl-tag">fresh-skeleton</span> <span class="hl-attr">variant</span><span class="hl-pun">=</span><span class="hl-val">"text"</span> <span class="hl-attr">lines</span><span class="hl-pun">=</span><span class="hl-val">"3"</span> <span class="hl-attr">width</span><span class="hl-pun">=</span><span class="hl-val">"480px"</span><span class="hl-pun">&gt;&lt;/</span><span class="hl-tag">fresh-skeleton</span><span class="hl-pun">&gt;</span></div>
+        </div>
+
+        <div class="code-block" data-code="<fresh-skeleton width=&quot;100%&quot; height=&quot;180px&quot; radius=&quot;var(--radius-lg)&quot;></fresh-skeleton>">
+          <div class="code-block-header"><span><span class="code-lang">HTML</span><span class="code-context">Image placeholder</span></span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+          <div class="code-body"><span class="hl-pun">&lt;</span><span class="hl-tag">fresh-skeleton</span> <span class="hl-attr">width</span><span class="hl-pun">=</span><span class="hl-val">"100%"</span> <span class="hl-attr">height</span><span class="hl-pun">=</span><span class="hl-val">"180px"</span> <span class="hl-attr">radius</span><span class="hl-pun">=</span><span class="hl-val">"var(--radius-lg)"</span><span class="hl-pun">&gt;&lt;/</span><span class="hl-tag">fresh-skeleton</span><span class="hl-pun">&gt;</span></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- TOKENS -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Tokens</span></div>
+      <table class="spec-a11y-table">
+        <thead><tr><th style="width:220px">Token</th><th style="width:200px">Role</th><th>State</th></tr></thead>
+        <tbody>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--surface-overlay</td><td class="spec-a11y-req">Shimmer base color</td><td class="spec-a11y-req">all</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--surface-subtle</td><td class="spec-a11y-req">Shimmer highlight color</td><td class="spec-a11y-req">animation midpoint</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--radius-sm</td><td class="spec-a11y-req">Default bone radius</td><td class="spec-a11y-req">rect variant</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ACCESSIBILITY -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Accessibility</span></div>
+      <div style="padding:12px 24px 14px;border-bottom:1px solid #d4d4d7;">
+        <p style="font-size:13px;color:#555;line-height:1.6;margin:0;">Skeleton satisfies all <a href="components.html#accessibility" target="_parent" style="color:#5b6af7;text-decoration:none;font-weight:500;">universal accessibility concerns</a>. Component-specific concerns are below.</p>
+      </div>
+      <table class="spec-a11y-table">
+        <thead><tr><th>Concern</th><th>Requirement</th></tr></thead>
+        <tbody>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">screen reader</td><td class="spec-a11y-req">Skeleton bones are decorative. Wrap the skeleton group in a container with <code>aria-busy="true"</code> and <code>aria-label</code> describing what is loading. Remove <code>aria-busy</code> when content is ready.</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">animation</td><td class="spec-a11y-req">The shimmer animation respects <code>prefers-reduced-motion</code> if your target environment sets it. Consider pausing animation for users who have requested reduced motion via a CSS media query.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<script src="components/feedback/fresh-skeleton.js"></script>
+<script src="js/spec-page.js"></script>
+
+<script type="module">
+  import { supabase } from '/systems/js/supabase-client.js'
+  var RULE_IDS = ['rules-general'];
+  var _saveTimer = null, _loading = false;
+  function getRulesSnapshot() {
+    var r = {};
+    RULE_IDS.forEach(function(id) { var l = document.getElementById(id); if (!l) return; r[id] = Array.from(l.querySelectorAll('.spec-rule-text')).map(function(el) { return el.innerHTML.trim(); }); });
+    return r;
+  }
+  function applySnapshot(saved) {
+    RULE_IDS.forEach(function(id) { var l = document.getElementById(id); if (!l) return; var rules = (saved && saved[id] && saved[id].length) ? saved[id] : window.DEFAULT_RULES[id]; l.innerHTML = rules.map(function(t) { return '<li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">' + t + '</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>'; }).join(''); }); }
+  async function saveRulesNow() {
+    try { var { data: { user } } = await supabase.auth.getUser(); if (!user) return; var { data: p } = await supabase.from('profiles').select('component_rules').eq('id', user.id).single(); var e = (p && p.component_rules) ? p.component_rules : {}; e.skeleton = getRulesSnapshot(); await supabase.from('profiles').update({ component_rules: e }).eq('id', user.id); } catch(e) {}
+  }
+  function schedSave() { if (_loading) return; clearTimeout(_saveTimer); _saveTimer = setTimeout(saveRulesNow, 1000); }
+  var panel = document.querySelector('.spec-rules-panel'); if (panel) new MutationObserver(schedSave).observe(panel, { childList: true, subtree: true, characterData: true });
+  ;(async function() { try { var { data: { user } } = await supabase.auth.getUser(); if (!user) return; var { data: p } = await supabase.from('profiles').select('component_rules').eq('id', user.id).single(); if (p && p.component_rules && p.component_rules.skeleton) { _loading = true; applySnapshot(p.component_rules.skeleton); _loading = false; } } catch(e) {} })();
+</script>
+
+<script>
+  var DEFAULT_RULES = {
+    'rules-general': [
+      'Mirror the shape of the content being loaded as closely as possible. Use <code>variant="circle"</code> for avatars, <code>variant="text"</code> for paragraphs, and <code>variant="rect"</code> for images and blocks.',
+      'Replace the entire skeleton immediately when data arrives. Do not show a partial mix of skeleton and loaded content in the same logical section.',
+      'Use skeleton screens for content that loads in under 5 seconds. For longer waits, add a progress bar or spinner with an informational label explaining the operation.',
+      'Set <code>width</code> and <code>height</code> to match the actual rendered dimensions of the element they represent. Skeletons that are visibly smaller or larger than the content cause jarring layout shifts on load.',
+      'Do not show skeleton screens for operations triggered by user actions (button clicks). Use a loading spinner on the button or inline spinner instead, which communicates that the system is responding.'
+    ]
+  };
+  function restoreDefaults() {
+    if (!confirm('Reset all skeleton rules to FreshDS defaults? Any edits you have made will be lost.')) return;
+    Object.keys(DEFAULT_RULES).forEach(function(id) { var l = document.getElementById(id); if (!l) return; l.innerHTML = DEFAULT_RULES[id].map(function(t) { return '<li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">' + t + '</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>'; }).join(''); });
+  }
+</script>
+</body>
+</html>

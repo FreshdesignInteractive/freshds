@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Auth guard: redirects to / if no session or unpaid -->
+<script type="module" src="/systems/js/auth-guard.js"></script>
+<script type="module" src="/systems/js/paid-guard.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Border Radius | FreshDS</title>
+<base href="../../">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="styles/site.css">
+<link rel="stylesheet" href="tokens/primitives.css">
+<link rel="stylesheet" href="tokens/theme.css">
+<link rel="stylesheet" href="tokens/dataviz.css">
+<script src="js/freshds.js"></script>
+<script src="js/freshds-site.js"></script>
+<link rel="stylesheet" href="styles/components/spec-page.css">
+</head>
+<body>
+
+<div class="comp-page">
+
+  <h1 class="comp-title">Border Radius</h1>
+  <p class="comp-desc">Five radius tokens cover every rounding need, from tight control corners to fully circular pills. All components reference these tokens exclusively. Values update live when changed in the theme designer.</p>
+
+  <!-- SPEC CARD -->
+  <div class="comp-section">
+    <div class="spec-card">
+      <div class="spec-card-topbar">
+        <span class="spec-rules-title">Radius scale</span>
+        <div class="spec-mode-switcher">
+          <button class="spec-mode-btn active" id="mode-btn-light" onclick="setSpecMode('light')"><i class="ti ti-sun"></i> Light</button>
+          <button class="spec-mode-btn" id="mode-btn-dark" onclick="setSpecMode('dark')"><i class="ti ti-moon"></i> Dark</button>
+        </div>
+      </div>
+      <div id="spec-viewport" class="spec-viewport">
+
+        <!-- Scale blocks -->
+        <div class="spec-variant-row">
+          <div class="spec-variant-header">
+            <span class="spec-variant-name">Scale</span>
+            <span class="spec-variant-sep">·</span>
+            <span class="spec-variant-desc">Token values reflect your current theme settings.</span>
+          </div>
+          <div class="spec-variant-body" style="gap:32px;align-items:flex-end;flex-wrap:wrap">
+            <div style="text-align:center">
+              <div style="width:72px;height:72px;background:var(--color-interactive);border-radius:var(--radius-sm);margin:0 auto"></div>
+              <div style="font-size:11px;font-family:var(--font-mono);color:var(--color-interactive-text);margin-top:12px">--radius-sm</div>
+              <div id="rv-sm" style="font-size:11px;color:var(--text-tertiary);margin-top:2px">4px</div>
+            </div>
+            <div style="text-align:center">
+              <div style="width:72px;height:72px;background:var(--color-interactive);border-radius:var(--radius-md);margin:0 auto"></div>
+              <div style="font-size:11px;font-family:var(--font-mono);color:var(--color-interactive-text);margin-top:12px">--radius-md</div>
+              <div id="rv-md" style="font-size:11px;color:var(--text-tertiary);margin-top:2px">8px</div>
+            </div>
+            <div style="text-align:center">
+              <div style="width:72px;height:72px;background:var(--color-interactive);border-radius:var(--radius-lg);margin:0 auto"></div>
+              <div style="font-size:11px;font-family:var(--font-mono);color:var(--color-interactive-text);margin-top:12px">--radius-lg</div>
+              <div id="rv-lg" style="font-size:11px;color:var(--text-tertiary);margin-top:2px">12px</div>
+            </div>
+            <div style="text-align:center">
+              <div style="width:72px;height:72px;background:var(--color-interactive);border-radius:var(--radius-xl);margin:0 auto"></div>
+              <div style="font-size:11px;font-family:var(--font-mono);color:var(--color-interactive-text);margin-top:12px">--radius-xl</div>
+              <div id="rv-xl" style="font-size:11px;color:var(--text-tertiary);margin-top:2px">20px</div>
+            </div>
+            <div style="text-align:center">
+              <div style="width:72px;height:72px;background:var(--color-interactive);border-radius:var(--radius-full);margin:0 auto"></div>
+              <div style="font-size:11px;font-family:var(--font-mono);color:var(--color-interactive-text);margin-top:12px">--radius-full</div>
+              <div style="font-size:11px;color:var(--text-tertiary);margin-top:2px">9999px</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- In context -->
+        <div class="spec-variant-row">
+          <div class="spec-variant-header">
+            <span class="spec-variant-name">In context</span>
+            <span class="spec-variant-sep">·</span>
+            <span class="spec-variant-desc">Components using radius tokens directly.</span>
+          </div>
+          <div class="spec-variant-body" style="gap:12px;flex-wrap:wrap;align-items:center">
+            <fresh-button variant="primary">Button md</fresh-button>
+            <fresh-badge variant="primary">Badge sm</fresh-badge>
+            <fresh-badge variant="success" dot>Live full</fresh-badge>
+            <fresh-avatar name="Jane Smith" size="md"></fresh-avatar>
+            <fresh-toggle checked>Toggle full</fresh-toggle>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- AI RULES -->
+  <div class="comp-section">
+    <div id="ai-rules-panel" class="spec-rules-panel">
+      <div class="spec-rules-topbar">
+        <span class="spec-rules-title">AI action rules</span>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <span class="spec-rules-hint">Click any rule to edit</span>
+          <button class="spec-rules-reset" onclick="restoreDefaults()"><i class="ti ti-rotate" style="font-size:10px;"></i> Restore FreshDS defaults</button>
+        </div>
+      </div>
+      <div class="spec-rules-section">
+        <div class="spec-rules-section-head">
+          <span class="spec-rules-variant">General</span>
+          <span class="spec-attr-chip">--radius-{scale}</span>
+        </div>
+        <ul class="spec-rule-list" id="rules-general">
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Always use radius tokens for all border-radius values in components and layouts. Never write hardcoded px values for corner rounding. The five valid tokens are <code>--radius-sm</code>, <code>--radius-md</code>, <code>--radius-lg</code>, <code>--radius-xl</code>, and <code>--radius-full</code>.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Match token to component scale: <code>--radius-sm</code> for badges, chips, checkboxes, and small tags. <code>--radius-md</code> for buttons, inputs, selects, and dropdowns. <code>--radius-lg</code> for cards, modals, drawers, and side panels. <code>--radius-xl</code> for large floating surfaces and feature cards.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Use <code>--radius-full</code> (9999px) exclusively for pill shapes: toggle tracks, avatar circles, status dots, and pill-style badges. Do not apply it to rectangular UI elements such as cards, modals, or input fields.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Never skip radius steps to create contrast within a single screen. Mixing <code>--radius-sm</code> and <code>--radius-xl</code> on sibling elements creates visual inconsistency. Adjacent components of similar hierarchy should use the same or adjacent token steps.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Documentation and spec-page chrome must use hardcoded border-radius values, never <code>var(--radius-*)</code> tokens. This prevents customer theme overrides from distorting documentation UI. Only the spec-viewport content area uses radius tokens.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+        </ul>
+        <button class="spec-add-rule" onclick="addRule('rules-general')"><i class="ti ti-plus"></i> Add rule</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOKEN REFERENCE -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Token reference</span></div>
+      <table class="spec-a11y-table">
+        <thead><tr><th>Token</th><th>Value</th><th>Used in</th></tr></thead>
+        <tbody>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern"><code>--radius-sm</code></td><td id="rtv-sm" class="spec-a11y-req">4px</td><td class="spec-a11y-req">Badges, code chips, small tags, checkboxes</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern"><code>--radius-md</code></td><td id="rtv-md" class="spec-a11y-req">8px</td><td class="spec-a11y-req">Buttons, inputs, selects, dropdowns (default)</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern"><code>--radius-lg</code></td><td id="rtv-lg" class="spec-a11y-req">12px</td><td class="spec-a11y-req">Cards, modals, drawers, panels</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern"><code>--radius-xl</code></td><td id="rtv-xl" class="spec-a11y-req">20px</td><td class="spec-a11y-req">Floating surfaces, large feature cards</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern"><code>--radius-full</code></td><td class="spec-a11y-req">9999px</td><td class="spec-a11y-req">Pills, avatar circles, toggle tracks, status dots</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<script src="components/core/fresh-button.js"></script>
+<script src="components/feedback/fresh-badge.js"></script>
+<script src="components/data/fresh-avatar.js"></script>
+<script src="components/core/fresh-toggle.js"></script>
+<script src="js/spec-page.js"></script>
+
+<script>
+  function syncRadiusLabels() {
+    var root = document.documentElement;
+    ['sm', 'md', 'lg', 'xl'].forEach(function(t) {
+      var val = getComputedStyle(root).getPropertyValue('--radius-' + t).trim();
+      if (!val) return;
+      var demo = document.getElementById('rv-' + t);
+      var table = document.getElementById('rtv-' + t);
+      if (demo) demo.textContent = val;
+      if (table) table.textContent = val;
+    });
+  }
+  syncRadiusLabels();
+  new MutationObserver(syncRadiusLabels).observe(document.documentElement, { attributes: true, attributeFilter: ['style'] });
+</script>
+
+<script type="module">
+  import { supabase } from '/systems/js/supabase-client.js'
+  var RULE_IDS = ['rules-general'];
+  var _saveTimer = null, _loading = false;
+  function getRulesSnapshot() {
+    var r = {};
+    RULE_IDS.forEach(function(id) { var l = document.getElementById(id); if (!l) return; r[id] = Array.from(l.querySelectorAll('.spec-rule-text')).map(function(el) { return el.innerHTML.trim(); }); });
+    return r;
+  }
+  function applySnapshot(saved) {
+    RULE_IDS.forEach(function(id) { var l = document.getElementById(id); if (!l) return; var rules = (saved && saved[id] && saved[id].length) ? saved[id] : window.DEFAULT_RULES[id]; l.innerHTML = rules.map(function(t) { return '<li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">' + t + '</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>'; }).join(''); }); }
+  async function saveRulesNow() {
+    try { var { data: { user } } = await supabase.auth.getUser(); if (!user) return; var { data: p } = await supabase.from('profiles').select('component_rules').eq('id', user.id).single(); var e = (p && p.component_rules) ? p.component_rules : {}; e.radius = getRulesSnapshot(); await supabase.from('profiles').update({ component_rules: e }).eq('id', user.id); } catch(e) {} }
+  function schedSave() { if (_loading) return; clearTimeout(_saveTimer); _saveTimer = setTimeout(saveRulesNow, 1000); }
+  var panel = document.getElementById('ai-rules-panel'); if (panel) new MutationObserver(schedSave).observe(panel, { childList: true, subtree: true, characterData: true });
+  ;(async function() { try { var { data: { user } } = await supabase.auth.getUser(); if (!user) return; var { data: p } = await supabase.from('profiles').select('component_rules').eq('id', user.id).single(); if (p && p.component_rules && p.component_rules.radius) { _loading = true; applySnapshot(p.component_rules.radius); _loading = false; } } catch(e) {} })();
+</script>
+
+<script>
+  var DEFAULT_RULES = {
+    'rules-general': [
+      'Always use radius tokens for all border-radius values in components and layouts. Never write hardcoded px values for corner rounding. The five valid tokens are <code>--radius-sm</code>, <code>--radius-md</code>, <code>--radius-lg</code>, <code>--radius-xl</code>, and <code>--radius-full</code>.',
+      'Match token to component scale: <code>--radius-sm</code> for badges, chips, checkboxes, and small tags. <code>--radius-md</code> for buttons, inputs, selects, and dropdowns. <code>--radius-lg</code> for cards, modals, drawers, and side panels. <code>--radius-xl</code> for large floating surfaces and feature cards.',
+      'Use <code>--radius-full</code> (9999px) exclusively for pill shapes: toggle tracks, avatar circles, status dots, and pill-style badges. Do not apply it to rectangular UI elements such as cards, modals, or input fields.',
+      'Never skip radius steps to create contrast within a single screen. Mixing <code>--radius-sm</code> and <code>--radius-xl</code> on sibling elements creates visual inconsistency. Adjacent components of similar hierarchy should use the same or adjacent token steps.',
+      'Documentation and spec-page chrome must use hardcoded border-radius values, never <code>var(--radius-*)</code> tokens. This prevents customer theme overrides from distorting documentation UI. Only the spec-viewport content area uses radius tokens.'
+    ]
+  };
+  function restoreDefaults() {
+    if (!confirm('Reset all radius rules to FreshDS defaults? Any edits you have made will be lost.')) return;
+    Object.keys(DEFAULT_RULES).forEach(function(id) { var l = document.getElementById(id); if (!l) return; l.innerHTML = DEFAULT_RULES[id].map(function(t) { return '<li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">' + t + '</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>'; }).join(''); }); }
+</script>
+</body>
+</html>

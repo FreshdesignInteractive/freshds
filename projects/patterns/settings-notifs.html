@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Auth guard: redirects to / if no session or unpaid -->
+<script type="module" src="/systems/js/auth-guard.js"></script>
+<script type="module" src="/systems/js/paid-guard.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Notification Preferences | Acme</title>
+<link rel="icon" type="image/svg+xml" href="../../systems/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="../../systems/tokens/primitives.css">
+<link rel="stylesheet" href="../../systems/tokens/theme.css">
+<link rel="stylesheet" href="../../systems/tokens/dataviz.css">
+<link rel="stylesheet" href="../../systems/styles/reset.css">
+<link rel="stylesheet" href="../../systems/styles/patterns/dashboard.css">
+<link rel="stylesheet" href="../../systems/styles/patterns/settings.css">
+<script>if(location.href.indexOf('?thumb')!==-1)document.write('<style>#demo-bar{display:none!important}
+/* nav config */
+.nav-logo-dark { display: none; }
+[data-mode="dark"] .nav-logo-light { display: none; }
+[data-mode="dark"] .nav-logo-dark  { display: block; }
+.sno-sidebar-footer { display: flex; align-items: center; gap: var(--space-3); width: 100%; min-width: 0; }
+.sno-sidebar-user-info { flex: 1; min-width: 0; overflow: hidden; }
+.sno-sidebar-user-name { font-size: var(--font-size-sm); font-weight: 500; color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.sno-sidebar-user-role { font-size: var(--font-size-xs); color: var(--text-tertiary); white-space: nowrap; }
+fresh-sidebar[collapsed] .sno-sidebar-user-info { display: none; }
+.sno-icon-flyout { position: fixed; left: 57px; top: 0; width: 200px; background: var(--surface-canvas); border: 1px solid var(--surface-border); border-radius: var(--radius-md); box-shadow: 0 8px 28px rgba(0,0,0,0.12), 0 2px 6px rgba(0,0,0,0.06); z-index: 90; display: none; overflow: hidden; }
+.sno-icon-flyout.open { display: block; }
+.sno-flyout-label { padding: var(--space-2) var(--space-3) var(--space-1); font-size: var(--font-size-xs); font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: var(--text-tertiary); border-bottom: 1px solid var(--surface-border); }
+.sno-flyout-item { display: flex; align-items: center; padding: 7px var(--space-3); font-size: var(--font-size-sm); font-family: var(--font-sans); color: var(--text-secondary); cursor: pointer; transition: background 100ms, color 100ms; -webkit-font-smoothing: antialiased; }
+.sno-flyout-item:hover { background: var(--surface-subtle); color: var(--text-primary); }
+.sno-flyout-item.active { background: var(--nav-active-bg); color: var(--nav-active-text); font-weight: 500; }
+.sno-tab-strip { background: var(--surface-nav); border-bottom: 1px solid var(--surface-border); padding: 0 var(--space-5); display: flex; align-items: center; height: 44px; flex-shrink: 0; }
+.sno-tab-dropdown { position: fixed; top: 0; left: 0; min-width: 168px; background: var(--surface-canvas); border: 1px solid var(--surface-border); border-radius: var(--radius-md); box-shadow: 0 8px 28px rgba(0,0,0,0.12), 0 2px 6px rgba(0,0,0,0.06); z-index: 90; display: none; overflow: hidden; padding: var(--space-1) 0; }
+.sno-tab-dropdown.open { display: block; }
+.sno-tab-drop-item { display: flex; align-items: center; padding: 7px var(--space-4); font-size: var(--font-size-sm); font-family: var(--font-sans); color: var(--text-secondary); cursor: pointer; transition: background 100ms, color 100ms; -webkit-font-smoothing: antialiased; }
+.sno-tab-drop-item:hover { background: var(--surface-subtle); color: var(--text-primary); }
+.sno-tab-drop-item.active { color: var(--nav-active-text); background: var(--nav-active-bg); font-weight: 500; }
+</style>');</script>
+<script src="../../systems/js/freshds.js"></script>
+<script src="../../systems/js/pattern-bar.js"></script>
+<link rel="stylesheet" href="../../systems/styles/spec-panel.css">
+</head>
+<body>
+<div id="app">
+  <div class="demo-bar" id="demo-bar">
+    <div class="demo-inner" id="demo-inner">
+      <button class="demo-mode-btn" id="mode-toggle-btn" onclick="toggleDemoMode()"><i class="ti ti-moon"></i></button>
+      <div class="demo-sep"></div>
+      <button class="demo-spec-btn" onclick="spOpen()" aria-label="Configure pattern"><i class="ti ti-layout-sidebar-right"></i> Configure</button>
+    </div>
+    <div class="demo-sep"></div>
+    <button class="demo-collapse-btn" id="demo-collapse-btn" onclick="toggleDemoBar()"><i class="ti ti-minus"></i></button>
+  </div>
+
+  <div class="dash-shell">
+    <fresh-navbar id="sno-topbar" data-nav-logged-in>
+      <div slot="actions" data-nav-actions-logged-in></div>
+    </fresh-navbar>
+
+    <div id="sno-tab-strip" class="sno-tab-strip" style="display:none;">
+      <fresh-topbar-menu id="sno-top-tabs"></fresh-topbar-menu>
+    </div>
+    <div class="sno-tab-dropdown" id="sno-tab-dropdown"></div>
+
+    <div class="dash-body">
+
+      <fresh-sidebar id="sno-sidebar" style="display:none;flex-shrink:0;height:100%;overflow:hidden;">
+        <div id="sno-nav-content"></div>
+      </fresh-sidebar>
+
+      <div class="sno-icon-flyout" id="sno-icon-flyout">
+        <div class="sno-flyout-label" id="sno-flyout-label"></div>
+        <div id="sno-flyout-items"></div>
+      </div>
+
+      <main class="dash-main">
+
+        <div style="padding:var(--space-5) var(--space-8);border-bottom:1px solid var(--surface-border);background:var(--surface-bg);flex-shrink:0;">
+          <div style="font-size:20px;font-weight:800;color:var(--text-primary);">Notification Preferences</div>
+          <div style="font-size:13px;color:var(--text-secondary);margin-top:2px;">Choose how and when you get notified</div>
+        </div>
+
+        <div class="dash-content" id="sno-content">
+          <div class="stg-content" style="max-width:780px;padding-right:var(--space-5);">
+
+            <!-- Global toggles -->
+            <div class="stg-section">
+              <div class="stg-section-title">Channels</div>
+              <div class="stg-card">
+                <div class="stg-row" style="padding:0 0 var(--space-3);">
+                  <div>
+                    <div class="stg-row-label"><i class="ti ti-mail" style="margin-right:var(--space-1);"></i> Email notifications</div>
+                    <div class="stg-row-desc">Receive notifications at priya@acme.io</div>
+                  </div>
+                  <fresh-toggle checked class="stg-row-control"></fresh-toggle>
+                </div>
+                <div class="stg-row" style="padding:var(--space-3) 0;">
+                  <div>
+                    <div class="stg-row-label"><i class="ti ti-brand-slack" style="margin-right:var(--space-1);"></i> Slack notifications</div>
+                    <div class="stg-row-desc">DM via @priya-sharma in Acme Slack</div>
+                  </div>
+                  <fresh-toggle checked class="stg-row-control"></fresh-toggle>
+                </div>
+                <div class="stg-row" style="padding:var(--space-3) 0;">
+                  <div>
+                    <div class="stg-row-label"><i class="ti ti-device-mobile" style="margin-right:var(--space-1);"></i> Push notifications</div>
+                    <div class="stg-row-desc">iPhone 15 Pro · Acme iOS app</div>
+                  </div>
+                  <fresh-toggle checked class="stg-row-control"></fresh-toggle>
+                </div>
+                <div class="stg-row" style="padding:var(--space-3) 0 0;border-bottom:none;">
+                  <div>
+                    <div class="stg-row-label"><i class="ti ti-mail-forward" style="margin-right:var(--space-1);"></i> Weekly digest email</div>
+                    <div class="stg-row-desc">Summary of activity every Monday at 8 AM</div>
+                  </div>
+                  <fresh-toggle checked class="stg-row-control"></fresh-toggle>
+                </div>
+              </div>
+            </div>
+
+            <!-- Notification matrix -->
+            <div class="stg-section">
+              <div class="stg-section-title">Notification types</div>
+              <div class="stg-section-desc">Control which events send notifications and on which channels.</div>
+
+              <div class="stg-card" style="padding:0;overflow:hidden;">
+                <table class="stg-notif-table">
+                  <thead>
+                    <tr>
+                      <th>Event</th>
+                      <th><i class="ti ti-app-window"></i><br>In-app</th>
+                      <th><i class="ti ti-mail"></i><br>Email</th>
+                      <th><i class="ti ti-brand-slack"></i><br>Slack</th>
+                      <th><i class="ti ti-device-mobile"></i><br>Push</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="stg-notif-group-row"><td colspan="5">Mentions & Comments</td></tr>
+                    <tr>
+                      <td><div class="stg-notif-label">Someone mentions you</div><div class="stg-notif-sub">@mention in any comment or doc</div></td>
+                      <td><fresh-checkbox checked></fresh-checkbox></td>
+                      <td><fresh-checkbox checked></fresh-checkbox></td>
+                      <td><fresh-checkbox checked></fresh-checkbox></td>
+                      <td><fresh-checkbox checked></fresh-checkbox></td>
+                    </tr>
+                    <tr>
+                      <td><div class="stg-notif-label">Replies to your comments</div><div class="stg-notif-sub">Someone replies in a thread you started</div></td>
+                      <td><fresh-checkbox checked></fresh-checkbox></td>
+                      <td><fresh-checkbox checked></fresh-checkbox></td>
+                      <td><fresh-checkbox></fresh-checkbox></td>
+                      <td><fresh-checkbox checked></fresh-checkbox></td>
+                    </tr>
+                    <tr>
+                      <td><div class="stg-notif-label">Comment on your document</div><div class="stg-notif-sub">New comment on a doc you own or edited</div></td>
+                      <td><fresh-checkbox checked></fresh-checkbox></td>
+                      <td><fresh-checkbox></fresh-checkbox></td>
+                      <td><fresh-checkbox></fresh-checkbox></td>
+                      <td><fresh-checkbox></fresh-checkbox></td>
+                    </tr>
+
+                    <tr class="stg-notif-group-row"><td colspan="5">Tasks & Assignments</td></tr>
+                    <tr>
+                      <td><div class="stg-notif-label">Task assigned to you</div><div class="stg-notif-sub">New task ownership or delegation</div></td>
+                      <td><fresh-checkbox checked></fresh-checkbox></td>
+                      <td><fresh-checkbox checked></fresh-checkbox></td>
+                      <td><fresh-checkbox checked></fresh-checkbox></td>
+                      <td><fresh-checkbox checked></fresh-checkbox></td>
+                    </tr>
+                    <tr>
+                      <td><div class="stg-notif-label">Task due soon</div><div class="stg-notif-sub">24 hours before due date</div></td>
+                      <td><fresh-checkbox checked></fresh-checkbox></td>
+                      <td><fresh-checkbox checked></fresh-checkbox></td>
+                      <td><fresh-checkbox></fresh-checkbox></td>
+                      <td><fresh-checkbox checked></fresh-checkbox></td>
+                    </tr>
+                    <tr>
+                      <td><div class="stg-notif-label">Task completed</div><div class="stg-notif-sub">Task you assigned gets marked done</div></td>
+                      <td><fresh-checkbox checked></fresh-checkbox></td>
+                      <td><fresh-checkbox></fresh-checkbox></td>
+                      <td><fresh-checkbox></fresh-checkbox></td>
+                      <td><fresh-checkbox></fresh-checkbox></td>
+                    </tr>
+
+                    <tr class="stg-notif-group-row"><td colspan="5">Approvals</td></tr>
+                    <tr>
+                      <td><div class="stg-notif-label">Approval requested from you</div><div class="stg-notif-sub">You are in the approval chain</div></td>
+                      <td><fresh-checkbox checked></fresh-checkbox></td>
+                      <td><fresh-checkbox checked></fresh-checkbox></td>
+                      <td><fresh-checkbox checked></fresh-checkbox></td>
+                      <td><fresh-checkbox checked></fresh-checkbox></td>
+                    </tr>
+                    <tr>
+                      <td><div class="stg-notif-label">Your request approved or rejected</div></td>
+                      <td><fresh-checkbox checked></fresh-checkbox></td>
+                      <td><fresh-checkbox checked></fresh-checkbox></td>
+                      <td><fresh-checkbox checked></fresh-checkbox></td>
+                      <td><fresh-checkbox></fresh-checkbox></td>
+                    </tr>
+
+                    <tr class="stg-notif-group-row"><td colspan="5">Workflows & AI</td></tr>
+                    <tr>
+                      <td><div class="stg-notif-label">Workflow run failed</div><div class="stg-notif-sub">Error in a workflow you own</div></td>
+                      <td><fresh-checkbox checked></fresh-checkbox></td>
+                      <td><fresh-checkbox checked></fresh-checkbox></td>
+                      <td><fresh-checkbox checked></fresh-checkbox></td>
+                      <td><fresh-checkbox></fresh-checkbox></td>
+                    </tr>
+                    <tr>
+                      <td><div class="stg-notif-label">AI agent completed a task</div></td>
+                      <td><fresh-checkbox checked></fresh-checkbox></td>
+                      <td><fresh-checkbox></fresh-checkbox></td>
+                      <td><fresh-checkbox></fresh-checkbox></td>
+                      <td><fresh-checkbox></fresh-checkbox></td>
+                    </tr>
+
+                    <tr class="stg-notif-group-row"><td colspan="5">Team & Admin</td></tr>
+                    <tr>
+                      <td><div class="stg-notif-label">New member joined</div></td>
+                      <td><fresh-checkbox checked></fresh-checkbox></td>
+                      <td><fresh-checkbox></fresh-checkbox></td>
+                      <td><fresh-checkbox checked></fresh-checkbox></td>
+                      <td><fresh-checkbox></fresh-checkbox></td>
+                    </tr>
+                    <tr>
+                      <td><div class="stg-notif-label">Billing alerts</div><div class="stg-notif-sub">Usage limits, payment issues</div></td>
+                      <td><fresh-checkbox checked></fresh-checkbox></td>
+                      <td><fresh-checkbox checked></fresh-checkbox></td>
+                      <td><fresh-checkbox></fresh-checkbox></td>
+                      <td><fresh-checkbox></fresh-checkbox></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div style="display:flex;justify-content:flex-end;gap:var(--space-2);padding-bottom:var(--space-8);">
+              <fresh-button variant="ghost">Reset to defaults</fresh-button>
+              <fresh-button variant="primary"><i class="ti ti-device-floppy"></i> Save preferences</fresh-button>
+            </div>
+
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+</div>
+<script src="../../systems/components/core/fresh-button.js"></script>
+<script src="../../systems/components/core/fresh-checkbox.js"></script>
+<script src="../../systems/components/core/fresh-toggle.js"></script>
+
+<aside class="sp-panel" id="sp-panel" aria-label="Pattern spec" aria-hidden="true">
+  <div class="sp-hdr"><span class="sp-hdr-title">Configure</span><button class="sp-hdr-close" onclick="spClose()" aria-label="Close"><i class="ti ti-x"></i></button></div>
+  <div class="sp-body">
+    <div class="sp-section"><div class="sp-section-label">ZONES</div><div id="sp-zones"></div></div>
+    <div class="sp-section">
+      <div class="sp-section-label">GLOBAL TEMPLATE RULES</div>
+      <div class="sp-rules-hdr"><i class="ti ti-sparkles sp-rules-hdr-icon"></i><span class="sp-rules-hdr-name">AI RULES</span><span class="sp-rules-hdr-hint">Click to edit</span></div>
+      <div id="sp-cats"></div>
+    </div>
+  </div>
+  <div class="sp-bottom">
+    <button class="sp-btn sp-btn-icon" id="sp-share-btn" onclick="spShare()" title="Share link" aria-label="Share link"><i class="ti ti-link"></i></button>
+    <button class="sp-btn sp-btn-primary" onclick="spStartBuilding()">Configure <i class="ti ti-arrow-right"></i></button>
+  </div>
+</aside>
+<div class="sp-modal-backdrop" id="sp-modal-backdrop" onclick="spCloseModal()">
+  <div class="sp-modal" onclick="event.stopPropagation()">
+    <div class="sp-modal-hdr"><span>Claude Code Prompt</span><button class="sp-modal-close" onclick="spCloseModal()"><i class="ti ti-x"></i></button></div>
+    <div class="sp-modal-body"><pre class="sp-modal-pre" id="sp-modal-pre"></pre></div>
+    <div class="sp-modal-foot"><span class="sp-copy-ok" id="sp-copy-ok">Copied to clipboard</span><button class="sp-btn sp-btn-primary" onclick="spCopyPrompt()"><i class="ti ti-copy"></i> Copy prompt</button></div>
+  </div>
+</div>
+<script src="../../systems/components/navigation/fresh-navbar.js"></script>
+<script src="../../systems/components/navigation/fresh-sidebar.js"></script>
+<script src="../../systems/components/navigation/fresh-topbar-menu.js"></script>
+<script src="../../systems/components/data/fresh-avatar.js"></script>
+<script src="../../systems/js/nav-taxonomy.js"></script>
+<script src="../../systems/js/freshds-nav-apply.js"></script>
+<script>
+var _currentPattern='persistent-sidebar',_flyoutIdx=-1;
+function _readNavCfg(){var cfg={nav_pattern:'persistent-sidebar',taxonomy:[]};try{var s=localStorage.getItem('freshds-nav-cfg');if(s)Object.assign(cfg,JSON.parse(s));}catch(e){}return cfg;}
+function _getTax(cfg){return(Array.isArray(cfg.taxonomy)&&cfg.taxonomy.length>0)?cfg.taxonomy:(typeof DEFAULT_TAXONOMY!=='undefined'?DEFAULT_TAXONOMY:[]);}
+function _buildIconRail(tax){var html='<fresh-nav-group label="Nav" open>';tax.forEach(function(item,idx){var ic=item.icon?' icon="'+item.icon+'"':'';html+='<fresh-nav-item'+ic+(idx===0?' active':'')+' data-tax-idx="'+idx+'">'+(item.label||'')+'</fresh-nav-item>';});return html+'</fresh-nav-group>';}
+function _applyNavPattern(){var cfg=_readNavCfg();var tax=_getTax(cfg);_currentPattern=cfg.nav_pattern||'persistent-sidebar';var navbar=document.getElementById('sno-topbar');var sidebar=document.getElementById('sno-sidebar');var tabStrip=document.getElementById('sno-tab-strip');sidebar.style.display='none';tabStrip.style.display='none';sidebar.removeAttribute('collapsed');sidebar.style.position='';sidebar.style.zIndex='';sidebar.style.height='100%';sidebar.style.width='';(function(){var b=document.getElementById('_hd-bd');if(b)b.style.display='none';})();navbar.removeAttribute('hamburger');_closeFlyout();document.getElementById('sno-tab-dropdown').classList.remove('open');if(_currentPattern==='persistent-sidebar'){sidebar.style.display='';document.getElementById('sno-nav-content').innerHTML=buildSidebarHtml(tax);}else if(_currentPattern==='collapsible-sidebar'){sidebar.style.display='';navbar.setAttribute('hamburger','');sidebar.setAttribute('collapsed','');document.getElementById('sno-nav-content').innerHTML=_buildIconRail(tax);}else if(_currentPattern==='top-nav-tabs'){tabStrip.style.display='';var tabsEl=document.getElementById('sno-top-tabs');tabsEl.setAttribute('tabs',buildTabsJson(tax));if(tax[0])tabsEl.setAttribute('active',tax[0].id);}else if(_currentPattern==='dual-level'){tabStrip.style.display='';sidebar.style.display='';var _dtabs=tabStrip.querySelector('fresh-topbar-menu');var _dnc=document.getElementById(sidebar.id.replace('-sidebar','-nav-content'));_dtabs.setAttribute('tabs',buildTabsJson(tax));if(tax[0])_dtabs.setAttribute('active',tax[0].id);_dnc.innerHTML=buildDualLevelSections(tax);var _dswitch=function(key){_dnc.querySelectorAll('.section-nav').forEach(function(el){el.style.display=el.id===('snav-'+key)?'contents':'none';});var _da=_dnc.querySelector('#snav-'+key);sidebar.style.display=(_da&&_da.dataset.hasChildren==='1')?'':'none';};_dswitch(tax[0]?tax[0].id:'');if(!_dtabs._dlWired){_dtabs._dlWired=true;_dtabs.addEventListener('change',function(e){_dswitch(e.detail.key);});}}else if(_currentPattern==='hamburger-drawer'){navbar.setAttribute('hamburger','');document.getElementById(sidebar.id.replace('-sidebar','-nav-content')).innerHTML=buildSidebarHtml(tax);(function(){var b=document.getElementById('_hd-bd');if(b)b.style.display='none';})();}else if(_currentPattern==='command-palette'){sidebar.style.display='';sidebar.setAttribute('collapsed','');document.getElementById(sidebar.id.replace('-sidebar','-nav-content')).innerHTML=_buildIconRail(tax);}else{sidebar.style.display='';document.getElementById(sidebar.id.replace('-sidebar','-nav-content')).innerHTML=buildSidebarHtml(tax);}}
+function _closeFlyout(){_flyoutIdx=-1;document.getElementById('sno-icon-flyout').classList.remove('open');}
+function _openFlyout(idx,anchorEl){var cfg=_readNavCfg();var tax=_getTax(cfg);var section=tax[idx];var kids=(section&&section.children)||[];if(!kids.length){_closeFlyout();return;}_flyoutIdx=idx;document.getElementById('sno-flyout-label').textContent=section.label||'';document.getElementById('sno-flyout-items').innerHTML=kids.map(function(child,ci){return'<div class="sno-flyout-item'+(ci===0?' active':'')+'">'+( child.label||'')+'</div>';}).join('');var rect=anchorEl.getBoundingClientRect();var flyout=document.getElementById('sno-icon-flyout');flyout.style.top=rect.top+'px';flyout.classList.add('open');requestAnimationFrame(function(){var fh=flyout.offsetHeight,vh=window.innerHeight;if(rect.top+fh>vh-8)flyout.style.top=Math.max(8,vh-fh-8)+'px';});}
+var _tabDropKey=null,_tabPrevActive='',_tabClickX=0;
+function _closeTabDrop(){_tabDropKey=null;document.getElementById('sno-tab-dropdown').classList.remove('open');}
+function _openTabDrop(key,x){var cfg=_readNavCfg();var tax=_getTax(cfg);var item=null;for(var i=0;i<tax.length;i++){if(tax[i].id===key){item=tax[i];break;}}var kids=(item&&item.children)||[];if(!kids.length){_closeTabDrop();return;}_tabDropKey=key;var drop=document.getElementById('sno-tab-dropdown');var stripBot=document.getElementById('sno-tab-strip').getBoundingClientRect().bottom;drop.innerHTML=kids.map(function(child,ci){return'<div class="sno-tab-drop-item'+(ci===0?' active':'')+'">'+( child.label||'')+'</div>';}).join('');drop.style.top=stripBot+'px';drop.style.left='0';drop.classList.add('open');requestAnimationFrame(function(){var w=drop.offsetWidth,vw=window.innerWidth;drop.style.left=Math.max(8,Math.min(x-w/2,vw-w-8))+'px';});}
+document.addEventListener('DOMContentLoaded',function(){_applyNavPattern();if(window.FreshNavApply)window.FreshNavApply.apply();document.getElementById('sno-topbar').addEventListener('hamburger-click',function(){if(_currentPattern!=='collapsible-sidebar'&&_currentPattern!=='hamburger-drawer')return;var sb=document.getElementById('sno-sidebar');var tax=_getTax(_readNavCfg());if(_currentPattern==='hamburger-drawer'){var _hdbd=document.getElementById('_hd-bd');if(!_hdbd){_hdbd=document.createElement('div');_hdbd.id='_hd-bd';_hdbd.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:99;display:none';var _sbRef=sb;_hdbd.addEventListener('click',function(){_sbRef.style.display='none';_sbRef.style.position='';_sbRef.style.zIndex='';_sbRef.style.height='100%';_sbRef.style.width='';_hdbd.style.display='none';});document.body.appendChild(_hdbd);}var _hdopen=sb.style.display!=='none';if(_hdopen){sb.style.display='none';sb.style.position='';sb.style.zIndex='';sb.style.height='100%';sb.style.width='';_hdbd.style.display='none';}else{sb.style.display='';sb.style.position='fixed';sb.style.left='0';sb.style.top='0';sb.style.height='100vh';sb.style.width='var(--sidebar-w,240px)';sb.style.zIndex='100';_hdbd.style.display='';}return;}if(sb.hasAttribute('collapsed')){sb.removeAttribute('collapsed');document.getElementById('sno-nav-content').innerHTML=buildSidebarHtml(tax);_closeFlyout();}else{sb.setAttribute('collapsed','');document.getElementById('sno-nav-content').innerHTML=_buildIconRail(tax);}});document.getElementById('sno-nav-content').addEventListener('nav-click',function(e){if(_currentPattern!=='collapsible-sidebar'&&_currentPattern!=='command-palette')return;var sb=document.getElementById('sno-sidebar');if(!sb.hasAttribute('collapsed'))return;var item=e.target;if(!item||item.tagName.toLowerCase()!=='fresh-nav-item')return;var idx=parseInt(item.dataset.taxIdx,10);if(isNaN(idx))return;Array.prototype.slice.call(document.querySelectorAll('#sno-nav-content fresh-nav-item')).forEach(function(el,i){if(i===idx)el.setAttribute('active','');else el.removeAttribute('active');});if(idx===_flyoutIdx){_closeFlyout();return;}_openFlyout(idx,item);});document.getElementById('sno-nav-content').addEventListener('click',function(e){e.stopPropagation();});document.getElementById('sno-icon-flyout').addEventListener('click',function(e){e.stopPropagation();});document.getElementById('sno-top-tabs').addEventListener('mousedown',function(e){_tabClickX=e.clientX;});document.getElementById('sno-top-tabs').addEventListener('click',function(e){if(_currentPattern!=='top-nav-tabs')return;e.stopPropagation();var activeNow=this.getAttribute('active');if(activeNow!==_tabPrevActive){_tabPrevActive=activeNow;_openTabDrop(activeNow,_tabClickX);}else{if(_tabDropKey===activeNow)_closeTabDrop();else _openTabDrop(activeNow,_tabClickX);}});document.getElementById('sno-tab-dropdown').addEventListener('click',function(e){e.stopPropagation();});document.addEventListener('click',function(){_closeFlyout();_closeTabDrop();});document.addEventListener('keydown',function(e){if(e.key==='Escape'){_closeFlyout();_closeTabDrop();spClose();spCloseModal();}});});
+window.addEventListener('storage',function(e){if(e.key!=='freshds-nav-cfg')return;_applyNavPattern();if(window.FreshNavApply)window.FreshNavApply.apply();});
+var _lastNavCfgStr=null;(function _poll(){var s=localStorage.getItem('freshds-nav-cfg')||'';if(s!==_lastNavCfgStr){_lastNavCfgStr=s;_applyNavPattern();if(window.FreshNavApply)window.FreshNavApply.apply();}setTimeout(_poll,400);}());
+window.addEventListener('pageshow',function(e){if(e.persisted){_applyNavPattern();if(window.FreshNavApply)window.FreshNavApply.apply();}});
+var SP_ZONES=[{key:'header',label:'Page header',el:'sno-header',on:true},{key:'content',label:'Page content',el:'sno-content',on:true}];
+var SP_RULES={'LAYOUT':['Full app shell: dash-shell with fresh-navbar + fresh-sidebar from nav config.','dash-main: flex:1, overflow-y:auto, padding var(--space-5) var(--space-6).'],'PAGE HEADER':['dash-page-header: flex row, space-between, border-bottom. Title left, actions right.','Use fresh-button with appropriate variants for header actions.'],'CONTENT':['Wrap content sections in dash-card with dash-card-title.','Use FreshDS tokens for all spacing, color, and typography.']};
+function spOpen(){document.getElementById('sp-panel').classList.add('open');document.getElementById('sp-panel').setAttribute('aria-hidden','false');_spRenderZones();_spRenderCats();var u=new URL(location.href);u.searchParams.set('spec','open');history.replaceState(null,'',u.toString());}
+function spClose(){document.getElementById('sp-panel').classList.remove('open');document.getElementById('sp-panel').setAttribute('aria-hidden','true');var u=new URL(location.href);u.searchParams.delete('spec');history.replaceState(null,'',u.toString());}
+function _spRenderZones(){var el=document.getElementById('sp-zones');el.innerHTML='';SP_ZONES.forEach(function(z){var row=document.createElement('div');row.className='sp-zone-row';row.innerHTML='<span class="sp-zone-label">'+z.label+'</span><label class="sp-toggle"><input type="checkbox"'+(z.on?' checked':'')+'><span class="sp-toggle-track"></span><span class="sp-toggle-thumb"></span></label>';row.querySelector('input').addEventListener('change',function(){z.on=this.checked;var t=document.getElementById(z.el);if(t)t.style.display=z.on?'':'none';});el.appendChild(row);});}
+function _spRenderCats(){var el=document.getElementById('sp-cats');el.innerHTML='';Object.keys(SP_RULES).forEach(function(cat){var wrap=document.createElement('div');wrap.className='sp-cat';_spBuildCat(cat,wrap);el.appendChild(wrap);});}
+function _spBuildCat(cat,wrap){wrap.innerHTML='';var label=document.createElement('div');label.className='sp-cat-label';label.textContent=cat;wrap.appendChild(label);SP_RULES[cat].forEach(function(rule,ri){wrap.appendChild(_spRuleRow(cat,ri,rule,wrap));});var addBtn=document.createElement('button');addBtn.className='sp-add-rule';addBtn.innerHTML='<i class="ti ti-plus"></i> Add rule';addBtn.addEventListener('click',function(){SP_RULES[cat].push('New rule');_spBuildCat(cat,wrap);var texts=wrap.querySelectorAll('.sp-rule-text');var last=texts[texts.length-1];if(last){last.focus();var r=document.createRange();r.selectNodeContents(last);var s=window.getSelection();s.removeAllRanges();s.addRange(r);}});wrap.appendChild(addBtn);}
+function _spRuleRow(cat,ri,text,wrap){var row=document.createElement('div');row.className='sp-rule';var dot=document.createElement('span');dot.className='sp-rule-dot';var span=document.createElement('span');span.className='sp-rule-text';span.contentEditable='true';span.textContent=text;span.addEventListener('input',function(){SP_RULES[cat][ri]=span.textContent;});var del=document.createElement('button');del.className='sp-rule-del';del.innerHTML='<i class="ti ti-trash"></i>';del.setAttribute('aria-label','Delete rule');del.addEventListener('click',function(){SP_RULES[cat].splice(ri,1);_spBuildCat(cat,wrap);});row.appendChild(dot);row.appendChild(span);row.appendChild(del);return row;}
+function spShare(){var u=new URL(location.href);u.searchParams.set('spec','open');var btn=document.getElementById('sp-share-btn');navigator.clipboard.writeText(u.toString()).then(function(){var orig=btn.innerHTML;btn.innerHTML='<i class="ti ti-check"></i>';setTimeout(function(){btn.innerHTML=orig;},1800);}).catch(function(){});}
+function spStartBuilding(){var lines=['Build this page using the FreshDS design system.',''];Object.keys(SP_RULES).forEach(function(cat){lines.push('## '+cat);SP_RULES[cat].forEach(function(rule){lines.push('- '+rule);});lines.push('');});lines.push('## ACTIVE ZONES');SP_ZONES.forEach(function(z){lines.push('- '+z.label+': '+(z.on?'SHOWN':'HIDDEN'));});document.getElementById('sp-modal-pre').textContent=lines.join('\n');document.getElementById('sp-modal-backdrop').classList.add('open');}
+function spCloseModal(){document.getElementById('sp-modal-backdrop').classList.remove('open');}
+function spCopyPrompt(){navigator.clipboard.writeText(document.getElementById('sp-modal-pre').textContent).then(function(){var ok=document.getElementById('sp-copy-ok');ok.classList.add('show');setTimeout(function(){ok.classList.remove('show');},1800);}).catch(function(){});}
+if(new URL(location.href).searchParams.get('spec')==='open'){document.addEventListener('DOMContentLoaded',spOpen);}
+</script>
+</body>
+</html>

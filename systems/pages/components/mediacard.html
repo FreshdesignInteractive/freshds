@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Auth guard: redirects to / if no session or unpaid -->
+<script type="module" src="/systems/js/auth-guard.js"></script>
+<script type="module" src="/systems/js/paid-guard.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Media Card | FreshDS</title>
+<base href="../../">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="styles/site.css">
+<link rel="stylesheet" href="tokens/primitives.css">
+<link rel="stylesheet" href="tokens/theme.css">
+<script src="js/freshds.js"></script>
+<script src="js/freshds-site.js"></script>
+<link rel="stylesheet" href="styles/components/spec-page.css">
+</head>
+<body>
+
+<div class="comp-page">
+  <h1 class="comp-title">Media Card</h1>
+  <p class="comp-desc">Card with a prominent thumbnail area and a text footer. Designed for pattern libraries, image galleries, and any grid of visual items where a preview is the primary identifier.</p>
+
+  <!-- STATES CARD -->
+  <div class="comp-section">
+    <div class="spec-card">
+      <div class="spec-card-topbar">
+        <span class="spec-rules-title">Media card variants</span>
+        <div class="spec-mode-switcher">
+          <button class="spec-mode-btn active" id="mode-btn-light" onclick="setSpecMode('light')"><i class="ti ti-sun"></i> Light</button>
+          <button class="spec-mode-btn" id="mode-btn-dark" onclick="setSpecMode('dark')"><i class="ti ti-moon"></i> Dark</button>
+        </div>
+      </div>
+      <div id="spec-viewport" class="spec-viewport">
+
+        <!-- Default with slotted thumb -->
+        <div class="spec-variant-row">
+          <div class="spec-variant-header">
+            <span class="spec-variant-name">Default</span>
+            <span class="spec-attr-chip">title + description</span>
+            <span class="spec-variant-sep">·</span>
+            <span class="spec-variant-desc">Slotted thumbnail with a title and optional description footer. Hover lifts the card with a shadow and 2px translate.</span>
+          </div>
+          <div class="spec-variant-body">
+            <div class="spec-demos" style="gap:var(--space-4);flex-wrap:wrap;align-items:flex-start;">
+              <fresh-media-card title="Dashboard overview" description="Analytics layout" style="width:220px">
+                <div slot="thumb" style="background:linear-gradient(135deg,var(--color-interactive-subtle),var(--color-interactive));height:100%;display:flex;align-items:center;justify-content:center;">
+                  <i class="ti ti-layout-dashboard" style="font-size:2rem;color:var(--color-interactive-text);opacity:0.7;"></i>
+                </div>
+              </fresh-media-card>
+              <fresh-media-card title="User profile" description="Account settings" style="width:220px">
+                <div slot="thumb" style="background:linear-gradient(135deg,var(--color-success-subtle),var(--color-success-border));height:100%;display:flex;align-items:center;justify-content:center;">
+                  <i class="ti ti-user-circle" style="font-size:2rem;color:var(--color-success);opacity:0.8;"></i>
+                </div>
+              </fresh-media-card>
+            </div>
+          </div>
+        </div>
+
+        <!-- Clickable (href) -->
+        <div class="spec-variant-row">
+          <div class="spec-variant-header">
+            <span class="spec-variant-name">Clickable link</span>
+            <span class="spec-attr-chip">href</span>
+            <span class="spec-variant-sep">·</span>
+            <span class="spec-variant-desc">When <code>href</code> is set the card renders as an <code>&lt;a&gt;</code> tag. Supports <code>target</code> and <code>rel</code> automatically for <code>_blank</code>.</span>
+          </div>
+          <div class="spec-variant-body">
+            <div class="spec-demos">
+              <fresh-media-card
+                title="Open in new tab"
+                description="External link pattern"
+                href="#"
+                target="_blank"
+                style="width:220px"
+              >
+                <div slot="thumb" style="background:linear-gradient(135deg,var(--color-warning-subtle),var(--color-warning-border));height:100%;display:flex;align-items:center;justify-content:center;">
+                  <i class="ti ti-external-link" style="font-size:2rem;color:var(--color-warning);opacity:0.8;"></i>
+                </div>
+              </fresh-media-card>
+            </div>
+          </div>
+        </div>
+
+        <!-- Title only (no description) -->
+        <div class="spec-variant-row">
+          <div class="spec-variant-header">
+            <span class="spec-variant-name">Without description</span>
+            <span class="spec-attr-chip">title only</span>
+            <span class="spec-variant-sep">·</span>
+            <span class="spec-variant-desc">Omit the <code>description</code> for compact grids where the title alone identifies the item.</span>
+          </div>
+          <div class="spec-variant-body">
+            <div class="spec-demos" style="gap:var(--space-4);flex-wrap:wrap;align-items:flex-start;">
+              <fresh-media-card title="Sidebar nav" style="width:160px">
+                <div slot="thumb" style="background:var(--surface-subtle);height:100%;"></div>
+              </fresh-media-card>
+              <fresh-media-card title="Data table" style="width:160px">
+                <div slot="thumb" style="background:var(--surface-overlay);height:100%;"></div>
+              </fresh-media-card>
+              <fresh-media-card title="Modal dialog" style="width:160px">
+                <div slot="thumb" style="background:var(--surface-subtle);height:100%;"></div>
+              </fresh-media-card>
+            </div>
+          </div>
+        </div>
+
+        <!-- Custom aspect ratio -->
+        <div class="spec-variant-row">
+          <div class="spec-variant-header">
+            <span class="spec-variant-name">Custom ratio</span>
+            <span class="spec-attr-chip">ratio="4/3"</span>
+            <span class="spec-variant-sep">·</span>
+            <span class="spec-variant-desc">Override the default 16/10 thumbnail ratio. Use <code>ratio="1/1"</code> for square previews or <code>ratio="4/3"</code> for traditional screenshots.</span>
+          </div>
+          <div class="spec-variant-body">
+            <div class="spec-demos" style="gap:var(--space-4);align-items:flex-start;">
+              <fresh-media-card title="Square preview" ratio="1/1" style="width:180px">
+                <div slot="thumb" style="background:linear-gradient(135deg,var(--color-info-subtle),var(--color-info-border));height:100%;display:flex;align-items:center;justify-content:center;">
+                  <i class="ti ti-photo" style="font-size:2rem;color:var(--color-info);opacity:0.7;"></i>
+                </div>
+              </fresh-media-card>
+              <fresh-media-card title="4/3 screenshot" ratio="4/3" description="Traditional ratio" style="width:180px">
+                <div slot="thumb" style="background:linear-gradient(135deg,var(--color-danger-subtle),var(--color-danger-border));height:100%;display:flex;align-items:center;justify-content:center;">
+                  <i class="ti ti-device-desktop" style="font-size:2rem;color:var(--color-danger);opacity:0.7;"></i>
+                </div>
+              </fresh-media-card>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /spec-viewport -->
+    </div><!-- /spec-card -->
+  </div>
+
+  <!-- AI RULES -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar">
+        <span class="spec-rules-title">AI action rules</span>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <span class="spec-rules-hint">Click any rule to edit</span>
+          <button class="spec-rules-reset" onclick="restoreDefaults()"><i class="ti ti-rotate" style="font-size:10px;"></i> Restore FreshDS defaults</button>
+        </div>
+      </div>
+      <div class="spec-rules-section">
+        <div class="spec-rules-section-head">
+          <span class="spec-rules-variant">General</span>
+          <span class="spec-attr-chip">fresh-media-card</span>
+        </div>
+        <ul class="spec-rule-list" id="rules-general">
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Always provide a <code>title</code>. The title is required for accessibility and is the primary label for the card when the thumbnail cannot be seen (low vision, image failure).</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Use the <code>slot="thumb"</code> for gradient or illustrative previews, and use <code>src</code> only when you have a real image URL. Never use <code>src</code> with a placeholder color - use the slot instead.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Set <code>href</code> when the card should navigate. Do not wrap a non-link card in an <code>&lt;a&gt;</code> tag externally - the component handles link rendering internally based on whether <code>href</code> is present.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Keep <code>description</code> to a single short line. The text is truncated with ellipsis at the card width so long strings will be cut off. If more detail is needed, open a drawer or modal on click.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Use a consistent <code>ratio</code> across all cards in a grid. Mixed ratios create uneven rows and break the visual rhythm. Choose one ratio per grid and apply it to every card in that context.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+        </ul>
+        <button class="spec-add-rule" onclick="addRule('rules-general')"><i class="ti ti-plus"></i> Add rule</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ATTRIBUTES -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Attributes</span></div>
+      <table class="spec-a11y-table">
+        <thead><tr><th style="width:130px">Attribute / Slot</th><th style="width:200px">Values</th><th style="width:80px">Default</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">title</td><td class="spec-a11y-req">string</td><td class="spec-a11y-req">-</td><td class="spec-a11y-req">Card label shown in the footer. Required. Truncated with ellipsis when the card is too narrow.</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">description</td><td class="spec-a11y-req">string</td><td class="spec-a11y-req">-</td><td class="spec-a11y-req">Optional secondary line below the title. Truncated with ellipsis.</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">src</td><td class="spec-a11y-req">string (URL)</td><td class="spec-a11y-req">-</td><td class="spec-a11y-req">Image URL. When set, renders an <code>&lt;img&gt;</code> with <code>loading="lazy"</code>. Overrides the <code>thumb</code> slot.</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">href</td><td class="spec-a11y-req">string (URL)</td><td class="spec-a11y-req">-</td><td class="spec-a11y-req">When set, the card renders as an <code>&lt;a&gt;</code> tag and is keyboard-focusable as a link.</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">target</td><td class="spec-a11y-req">string</td><td class="spec-a11y-req">-</td><td class="spec-a11y-req">Link target, e.g. <code>_blank</code>. Automatically adds <code>rel="noopener noreferrer"</code> when <code>_blank</code>.</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">ratio</td><td class="spec-a11y-req">CSS ratio string</td><td class="spec-a11y-req"><code>16/10</code></td><td class="spec-a11y-req">Thumbnail aspect ratio as a CSS <code>aspect-ratio</code> value, e.g. <code>16/9</code>, <code>4/3</code>, <code>1/1</code>.</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">slot="thumb"</td><td class="spec-a11y-req">element</td><td class="spec-a11y-req">-</td><td class="spec-a11y-req">Custom thumbnail content. Fill 100% width and height. Used when <code>src</code> is not provided.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- CODE -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Code</span></div>
+      <div style="padding:16px 20px;display:flex;flex-direction:column;gap:0;">
+
+        <div class="code-block" data-code="<!-- Slotted gradient thumbnail -->
+<fresh-media-card title=&quot;Dashboard&quot; description=&quot;Analytics overview&quot;>
+  <div slot=&quot;thumb&quot; style=&quot;background:var(--color-interactive-subtle);height:100%&quot;></div>
+</fresh-media-card>">
+          <div class="code-block-header"><span><span class="code-lang">HTML</span><span class="code-context">Slotted thumb</span></span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+          <div class="code-body"><span class="hl-com">&lt;!-- Slotted gradient thumbnail --&gt;</span>
+<span class="hl-pun">&lt;</span><span class="hl-tag">fresh-media-card</span> <span class="hl-attr">title</span><span class="hl-pun">=</span><span class="hl-val">"Dashboard"</span> <span class="hl-attr">description</span><span class="hl-pun">=</span><span class="hl-val">"Analytics overview"</span><span class="hl-pun">&gt;</span>
+  <span class="hl-pun">&lt;</span><span class="hl-tag">div</span> <span class="hl-attr">slot</span><span class="hl-pun">=</span><span class="hl-val">"thumb"</span> <span class="hl-attr">style</span><span class="hl-pun">=</span><span class="hl-val">"background:var(--color-interactive-subtle);height:100%"</span><span class="hl-pun">&gt;&lt;/</span><span class="hl-tag">div</span><span class="hl-pun">&gt;</span>
+<span class="hl-pun">&lt;/</span><span class="hl-tag">fresh-media-card</span><span class="hl-pun">&gt;</span></div>
+        </div>
+
+        <div class="code-block" data-code="<!-- Image URL thumbnail with link -->
+<fresh-media-card
+  src=&quot;screenshots/dashboard.png&quot;
+  title=&quot;Dashboard&quot;
+  description=&quot;Analytics overview&quot;
+  href=&quot;/patterns/dashboard&quot;
+></fresh-media-card>">
+          <div class="code-block-header"><span><span class="code-lang">HTML</span><span class="code-context">Image + link</span></span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+          <div class="code-body"><span class="hl-com">&lt;!-- Image URL thumbnail with link --&gt;</span>
+<span class="hl-pun">&lt;</span><span class="hl-tag">fresh-media-card</span>
+  <span class="hl-attr">src</span><span class="hl-pun">=</span><span class="hl-val">"screenshots/dashboard.png"</span>
+  <span class="hl-attr">title</span><span class="hl-pun">=</span><span class="hl-val">"Dashboard"</span>
+  <span class="hl-attr">description</span><span class="hl-pun">=</span><span class="hl-val">"Analytics overview"</span>
+  <span class="hl-attr">href</span><span class="hl-pun">=</span><span class="hl-val">"/patterns/dashboard"</span>
+<span class="hl-pun">&gt;&lt;/</span><span class="hl-tag">fresh-media-card</span><span class="hl-pun">&gt;</span></div>
+        </div>
+
+        <div class="code-block" data-code="<!-- Square ratio, no description -->
+<fresh-media-card title=&quot;Avatar&quot; ratio=&quot;1/1&quot; style=&quot;width:180px&quot;>
+  <div slot=&quot;thumb&quot; style=&quot;background:var(--surface-subtle);height:100%&quot;></div>
+</fresh-media-card>">
+          <div class="code-block-header"><span><span class="code-lang">HTML</span><span class="code-context">Square ratio</span></span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+          <div class="code-body"><span class="hl-com">&lt;!-- Square ratio, no description --&gt;</span>
+<span class="hl-pun">&lt;</span><span class="hl-tag">fresh-media-card</span> <span class="hl-attr">title</span><span class="hl-pun">=</span><span class="hl-val">"Avatar"</span> <span class="hl-attr">ratio</span><span class="hl-pun">=</span><span class="hl-val">"1/1"</span> <span class="hl-attr">style</span><span class="hl-pun">=</span><span class="hl-val">"width:180px"</span><span class="hl-pun">&gt;</span>
+  <span class="hl-pun">&lt;</span><span class="hl-tag">div</span> <span class="hl-attr">slot</span><span class="hl-pun">=</span><span class="hl-val">"thumb"</span> <span class="hl-attr">style</span><span class="hl-pun">=</span><span class="hl-val">"background:var(--surface-subtle);height:100%"</span><span class="hl-pun">&gt;&lt;/</span><span class="hl-tag">div</span><span class="hl-pun">&gt;</span>
+<span class="hl-pun">&lt;/</span><span class="hl-tag">fresh-media-card</span><span class="hl-pun">&gt;</span></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- TOKENS -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Tokens</span></div>
+      <table class="spec-a11y-table">
+        <thead><tr><th style="width:220px">Token</th><th style="width:200px">Role</th><th>State</th></tr></thead>
+        <tbody>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--surface-bg</td><td class="spec-a11y-req">Card background</td><td class="spec-a11y-req">all</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--surface-border</td><td class="spec-a11y-req">Card border + footer top divider</td><td class="spec-a11y-req">default</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--surface-border-strong</td><td class="spec-a11y-req">Card border on hover</td><td class="spec-a11y-req">hover</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--surface-subtle</td><td class="spec-a11y-req">Thumbnail background fallback</td><td class="spec-a11y-req">no src, no slot</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--elev-2</td><td class="spec-a11y-req">Card box-shadow on hover</td><td class="spec-a11y-req">hover</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--elev-1</td><td class="spec-a11y-req">Card box-shadow on active/press</td><td class="spec-a11y-req">active</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--text-primary</td><td class="spec-a11y-req">Title text color</td><td class="spec-a11y-req">all</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--text-secondary</td><td class="spec-a11y-req">Description text color</td><td class="spec-a11y-req">all</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--radius-lg</td><td class="spec-a11y-req">Card border radius</td><td class="spec-a11y-req">all</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--color-interactive</td><td class="spec-a11y-req">Focus outline</td><td class="spec-a11y-req">focus-visible</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ACCESSIBILITY -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Accessibility</span></div>
+      <table class="spec-a11y-table">
+        <thead><tr><th>Concern</th><th>Requirement</th></tr></thead>
+        <tbody>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">image alt text</td><td class="spec-a11y-req">When <code>src</code> is set the generated <code>&lt;img&gt;</code> uses the <code>title</code> attribute as its <code>alt</code>. Ensure the title text describes the image content, not just the card label.</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">link semantics</td><td class="spec-a11y-req">When <code>href</code> is set the card renders as a native <code>&lt;a&gt;</code> and is keyboard-navigable with Tab/Enter. Do not add an extra click handler on the card element when <code>href</code> is already set.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<script src="components/containers/fresh-media-card.js"></script>
+<script src="js/spec-page.js"></script>
+
+<script type="module">
+  import { supabase } from '/systems/js/supabase-client.js'
+  var RULE_IDS = ['rules-general'];
+  var _saveTimer = null, _loading = false;
+  function getRulesSnapshot() {
+    var r = {};
+    RULE_IDS.forEach(function(id) { var l = document.getElementById(id); if (!l) return; r[id] = Array.from(l.querySelectorAll('.spec-rule-text')).map(function(el) { return el.innerHTML.trim(); }); });
+    return r;
+  }
+  function applySnapshot(saved) {
+    RULE_IDS.forEach(function(id) { var l = document.getElementById(id); if (!l) return; var rules = (saved && saved[id] && saved[id].length) ? saved[id] : window.DEFAULT_RULES[id]; l.innerHTML = rules.map(function(t) { return '<li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">' + t + '</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>'; }).join(''); });
+  }
+  async function saveRulesNow() {
+    try { var { data: { user } } = await supabase.auth.getUser(); if (!user) return; var { data: p } = await supabase.from('profiles').select('component_rules').eq('id', user.id).single(); var e = (p && p.component_rules) ? p.component_rules : {}; e.mediacard = getRulesSnapshot(); await supabase.from('profiles').update({ component_rules: e }).eq('id', user.id); } catch(e) {}
+  }
+  function schedSave() { if (_loading) return; clearTimeout(_saveTimer); _saveTimer = setTimeout(saveRulesNow, 1000); }
+  var panel = document.querySelector('.spec-rules-panel'); if (panel) new MutationObserver(schedSave).observe(panel, { childList: true, subtree: true, characterData: true });
+  ;(async function() { try { var { data: { user } } = await supabase.auth.getUser(); if (!user) return; var { data: p } = await supabase.from('profiles').select('component_rules').eq('id', user.id).single(); if (p && p.component_rules && p.component_rules.mediacard) { _loading = true; applySnapshot(p.component_rules.mediacard); _loading = false; } } catch(e) {} })();
+</script>
+
+<script>
+  var DEFAULT_RULES = {
+    'rules-general': [
+      'Always provide a <code>title</code>. The title is required for accessibility and is the primary label for the card when the thumbnail cannot be seen (low vision, image failure).',
+      'Use the <code>slot="thumb"</code> for gradient or illustrative previews, and use <code>src</code> only when you have a real image URL. Never use <code>src</code> with a placeholder color - use the slot instead.',
+      'Set <code>href</code> when the card should navigate. Do not wrap a non-link card in an <code>&lt;a&gt;</code> tag externally - the component handles link rendering internally based on whether <code>href</code> is present.',
+      'Keep <code>description</code> to a single short line. The text is truncated with ellipsis at the card width so long strings will be cut off. If more detail is needed, open a drawer or modal on click.',
+      'Use a consistent <code>ratio</code> across all cards in a grid. Mixed ratios create uneven rows and break the visual rhythm. Choose one ratio per grid and apply it to every card in that context.'
+    ]
+  };
+  function restoreDefaults() {
+    if (!confirm('Reset all media card rules to FreshDS defaults? Any edits you have made will be lost.')) return;
+    Object.keys(DEFAULT_RULES).forEach(function(id) { var l = document.getElementById(id); if (!l) return; l.innerHTML = DEFAULT_RULES[id].map(function(t) { return '<li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">' + t + '</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>'; }).join(''); });
+  }
+</script>
+</body>
+</html>

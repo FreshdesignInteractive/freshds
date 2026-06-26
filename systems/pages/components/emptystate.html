@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Auth guard: redirects to / if no session or unpaid -->
+<script type="module" src="/systems/js/auth-guard.js"></script>
+<script type="module" src="/systems/js/paid-guard.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Empty State | FreshDS</title>
+<base href="../../">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="styles/site.css">
+<link rel="stylesheet" href="tokens/primitives.css">
+<link rel="stylesheet" href="tokens/theme.css">
+<script src="js/freshds.js"></script>
+<script src="js/freshds-site.js"></script>
+<link rel="stylesheet" href="styles/components/spec-page.css">
+</head>
+<body>
+
+<div class="comp-page">
+  <h1 class="comp-title">Empty State</h1>
+  <p class="comp-desc">Zero-state placeholder shown when a list, table, or container has no content. Always explains why the space is empty and, where appropriate, offers a clear next action.</p>
+
+  <!-- STATES CARD -->
+  <div class="comp-section">
+    <div class="spec-card">
+      <div class="spec-card-topbar">
+        <span class="spec-rules-title">Empty state variants</span>
+        <div class="spec-mode-switcher">
+          <button class="spec-mode-btn active" id="mode-btn-light" onclick="setSpecMode('light')"><i class="ti ti-sun"></i> Light</button>
+          <button class="spec-mode-btn" id="mode-btn-dark" onclick="setSpecMode('dark')"><i class="ti ti-moon"></i> Dark</button>
+        </div>
+      </div>
+      <div id="spec-viewport" class="spec-viewport">
+
+        <!-- Default -->
+        <div class="spec-variant-row">
+          <div class="spec-variant-header">
+            <span class="spec-variant-name">Default</span>
+            <span class="spec-attr-chip">icon + title + description</span>
+            <span class="spec-variant-sep">·</span>
+            <span class="spec-variant-desc">Icon, title, and supporting description. Use for inbox-zero, no-data, and permission-denied states.</span>
+          </div>
+          <div class="spec-variant-body">
+            <div class="spec-demos">
+              <fresh-empty-state
+                icon="ti-inbox"
+                title="No messages yet"
+                description="Messages from your team will appear here once they are sent."
+              ></fresh-empty-state>
+            </div>
+          </div>
+        </div>
+
+        <!-- With action -->
+        <div class="spec-variant-row">
+          <div class="spec-variant-header">
+            <span class="spec-variant-name">With action</span>
+            <span class="spec-attr-chip">slot="action"</span>
+            <span class="spec-variant-sep">·</span>
+            <span class="spec-variant-desc">Add a CTA via the action slot when there is a direct path for the user to fill the empty space themselves.</span>
+          </div>
+          <div class="spec-variant-body">
+            <div class="spec-demos">
+              <fresh-empty-state
+                icon="ti-sparkles"
+                title="Start your first conversation"
+                description="Ask the AI anything about your data, documents, or codebase."
+              >
+                <fresh-button slot="action" variant="primary"><i class="ti ti-sparkles"></i> Ask AI</fresh-button>
+              </fresh-empty-state>
+            </div>
+          </div>
+        </div>
+
+        <!-- No results / search state -->
+        <div class="spec-variant-row">
+          <div class="spec-variant-header">
+            <span class="spec-variant-name">No results</span>
+            <span class="spec-attr-chip">icon="ti-search"</span>
+            <span class="spec-variant-sep">·</span>
+            <span class="spec-variant-desc">Use the search icon and a ghost action button when results are filtered out, to let users clear filters quickly.</span>
+          </div>
+          <div class="spec-variant-body">
+            <div class="spec-demos">
+              <fresh-empty-state
+                icon="ti-search"
+                title="No results found"
+                description="Try different keywords or remove some filters."
+              >
+                <fresh-button slot="action" variant="ghost" size="sm">Clear filters</fresh-button>
+              </fresh-empty-state>
+            </div>
+          </div>
+        </div>
+
+        <!-- Minimal (no icon) -->
+        <div class="spec-variant-row">
+          <div class="spec-variant-header">
+            <span class="spec-variant-name">Minimal</span>
+            <span class="spec-attr-chip">no icon</span>
+            <span class="spec-variant-sep">·</span>
+            <span class="spec-variant-desc">Title and description only, no icon. Use in dense table rows or sidebar panels where vertical space is limited.</span>
+          </div>
+          <div class="spec-variant-body">
+            <div class="spec-demos">
+              <fresh-empty-state
+                title="No items"
+                description="Add your first item to get started."
+              ></fresh-empty-state>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /spec-viewport -->
+    </div><!-- /spec-card -->
+  </div>
+
+  <!-- AI RULES -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar">
+        <span class="spec-rules-title">AI action rules</span>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <span class="spec-rules-hint">Click any rule to edit</span>
+          <button class="spec-rules-reset" onclick="restoreDefaults()"><i class="ti ti-rotate" style="font-size:10px;"></i> Restore FreshDS defaults</button>
+        </div>
+      </div>
+      <div class="spec-rules-section">
+        <div class="spec-rules-section-head">
+          <span class="spec-rules-variant">General</span>
+          <span class="spec-attr-chip">fresh-empty-state</span>
+        </div>
+        <ul class="spec-rule-list" id="rules-general">
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Always provide a <code>description</code> that explains why the space is empty. "No data" alone is not helpful - tell the user what normally appears here and how it gets populated.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Add the <code>action</code> slot only when there is a concrete step the user can take right now. Do not add a CTA if the empty state is caused by filters or permissions the user cannot change in context.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Choose the <code>icon</code> to match the content type, not the action: use <code>ti-inbox</code> for messages, <code>ti-search</code> for search, <code>ti-file</code> for documents. Do not use generic icons like <code>ti-alert-circle</code> for empty states.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Omit the icon in dense or narrow layouts (e.g. sidebar lists, inline table cells). The <code>icon</code> attribute is optional - a title and description alone work well for constrained spaces.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Do not confuse empty state with error state. If data failed to load, use <code>fresh-alert variant="danger"</code> with a retry action, not an empty state component.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+        </ul>
+        <button class="spec-add-rule" onclick="addRule('rules-general')"><i class="ti ti-plus"></i> Add rule</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ATTRIBUTES -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Attributes</span></div>
+      <table class="spec-a11y-table">
+        <thead><tr><th style="width:140px">Attribute / Slot</th><th style="width:180px">Values</th><th style="width:80px">Default</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">icon</td><td class="spec-a11y-req">Tabler icon class</td><td class="spec-a11y-req"><code>ti-inbox</code></td><td class="spec-a11y-req">Tabler icon class displayed in the boxed icon area, e.g. <code>ti-inbox</code>. Omit attribute entirely to hide the icon.</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">title</td><td class="spec-a11y-req">string</td><td class="spec-a11y-req">-</td><td class="spec-a11y-req">Primary headline. Keep to one short sentence.</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">description</td><td class="spec-a11y-req">string</td><td class="spec-a11y-req">-</td><td class="spec-a11y-req">Supporting context explaining why the space is empty and what normally appears here.</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">slot="action"</td><td class="spec-a11y-req">element</td><td class="spec-a11y-req">-</td><td class="spec-a11y-req">Optional CTA placed below the description. Accepts any element, typically a <code>fresh-button</code>.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- CODE -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Code</span></div>
+      <div style="padding:16px 20px;display:flex;flex-direction:column;gap:0;">
+
+        <div class="code-block" data-code="<fresh-empty-state
+  icon=&quot;ti-inbox&quot;
+  title=&quot;No messages yet&quot;
+  description=&quot;Messages from your team will appear here.&quot;
+></fresh-empty-state>">
+          <div class="code-block-header"><span><span class="code-lang">HTML</span><span class="code-context">Default</span></span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+          <div class="code-body"><span class="hl-pun">&lt;</span><span class="hl-tag">fresh-empty-state</span>
+  <span class="hl-attr">icon</span><span class="hl-pun">=</span><span class="hl-val">"ti-inbox"</span>
+  <span class="hl-attr">title</span><span class="hl-pun">=</span><span class="hl-val">"No messages yet"</span>
+  <span class="hl-attr">description</span><span class="hl-pun">=</span><span class="hl-val">"Messages from your team will appear here."</span>
+<span class="hl-pun">&gt;&lt;/</span><span class="hl-tag">fresh-empty-state</span><span class="hl-pun">&gt;</span></div>
+        </div>
+
+        <div class="code-block" data-code="<fresh-empty-state
+  icon=&quot;ti-sparkles&quot;
+  title=&quot;Start your first conversation&quot;
+  description=&quot;Ask the AI anything about your data or codebase.&quot;
+>
+  <fresh-button slot=&quot;action&quot; variant=&quot;primary&quot;>Ask AI</fresh-button>
+</fresh-empty-state>">
+          <div class="code-block-header"><span><span class="code-lang">HTML</span><span class="code-context">With action</span></span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+          <div class="code-body"><span class="hl-pun">&lt;</span><span class="hl-tag">fresh-empty-state</span>
+  <span class="hl-attr">icon</span><span class="hl-pun">=</span><span class="hl-val">"ti-sparkles"</span>
+  <span class="hl-attr">title</span><span class="hl-pun">=</span><span class="hl-val">"Start your first conversation"</span>
+  <span class="hl-attr">description</span><span class="hl-pun">=</span><span class="hl-val">"Ask the AI anything about your data or codebase."</span>
+<span class="hl-pun">&gt;</span>
+  <span class="hl-pun">&lt;</span><span class="hl-tag">fresh-button</span> <span class="hl-attr">slot</span><span class="hl-pun">=</span><span class="hl-val">"action"</span> <span class="hl-attr">variant</span><span class="hl-pun">=</span><span class="hl-val">"primary"</span><span class="hl-pun">&gt;</span><span class="hl-txt">Ask AI</span><span class="hl-pun">&lt;/</span><span class="hl-tag">fresh-button</span><span class="hl-pun">&gt;</span>
+<span class="hl-pun">&lt;/</span><span class="hl-tag">fresh-empty-state</span><span class="hl-pun">&gt;</span></div>
+        </div>
+
+        <div class="code-block" data-code="<fresh-empty-state
+  icon=&quot;ti-search&quot;
+  title=&quot;No results found&quot;
+  description=&quot;Try different keywords or remove some filters.&quot;
+>
+  <fresh-button slot=&quot;action&quot; variant=&quot;ghost&quot; size=&quot;sm&quot;>Clear filters</fresh-button>
+</fresh-empty-state>">
+          <div class="code-block-header"><span><span class="code-lang">HTML</span><span class="code-context">No results</span></span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+          <div class="code-body"><span class="hl-pun">&lt;</span><span class="hl-tag">fresh-empty-state</span>
+  <span class="hl-attr">icon</span><span class="hl-pun">=</span><span class="hl-val">"ti-search"</span>
+  <span class="hl-attr">title</span><span class="hl-pun">=</span><span class="hl-val">"No results found"</span>
+  <span class="hl-attr">description</span><span class="hl-pun">=</span><span class="hl-val">"Try different keywords or remove some filters."</span>
+<span class="hl-pun">&gt;</span>
+  <span class="hl-pun">&lt;</span><span class="hl-tag">fresh-button</span> <span class="hl-attr">slot</span><span class="hl-pun">=</span><span class="hl-val">"action"</span> <span class="hl-attr">variant</span><span class="hl-pun">=</span><span class="hl-val">"ghost"</span> <span class="hl-attr">size</span><span class="hl-pun">=</span><span class="hl-val">"sm"</span><span class="hl-pun">&gt;</span><span class="hl-txt">Clear filters</span><span class="hl-pun">&lt;/</span><span class="hl-tag">fresh-button</span><span class="hl-pun">&gt;</span>
+<span class="hl-pun">&lt;/</span><span class="hl-tag">fresh-empty-state</span><span class="hl-pun">&gt;</span></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- TOKENS -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Tokens</span></div>
+      <table class="spec-a11y-table">
+        <thead><tr><th style="width:220px">Token</th><th style="width:200px">Role</th><th>State</th></tr></thead>
+        <tbody>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--surface-overlay</td><td class="spec-a11y-req">Icon box background</td><td class="spec-a11y-req">all</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--surface-border</td><td class="spec-a11y-req">Icon box border</td><td class="spec-a11y-req">all</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--text-tertiary</td><td class="spec-a11y-req">Icon color</td><td class="spec-a11y-req">all</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--text-primary</td><td class="spec-a11y-req">Title text color</td><td class="spec-a11y-req">all</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--text-tertiary</td><td class="spec-a11y-req">Description text color</td><td class="spec-a11y-req">all</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--font-size-lg</td><td class="spec-a11y-req">Title font size</td><td class="spec-a11y-req">all</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--font-size-md</td><td class="spec-a11y-req">Description font size</td><td class="spec-a11y-req">all</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--font-size-3xl</td><td class="spec-a11y-req">Icon glyph size</td><td class="spec-a11y-req">all</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--radius-xl</td><td class="spec-a11y-req">Icon box border radius</td><td class="spec-a11y-req">all</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--space-12</td><td class="spec-a11y-req">Vertical padding</td><td class="spec-a11y-req">all</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ACCESSIBILITY -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Accessibility</span></div>
+      <table class="spec-a11y-table">
+        <thead><tr><th>Concern</th><th>Requirement</th></tr></thead>
+        <tbody>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">decorative icon</td><td class="spec-a11y-req">The icon element carries <code>aria-hidden="true"</code>. All meaning must be conveyed via the <code>title</code> and <code>description</code> text so the state is fully understandable without the icon.</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">action button</td><td class="spec-a11y-req">When an action slot is provided, the button must have a descriptive label that stands alone. Avoid "Click here" - prefer "Create your first project" or "Clear filters".</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<script src="components/feedback/fresh-empty-state.js"></script>
+<script src="js/spec-page.js"></script>
+
+<script type="module">
+  import { supabase } from '/systems/js/supabase-client.js'
+  var RULE_IDS = ['rules-general'];
+  var _saveTimer = null, _loading = false;
+  function getRulesSnapshot() {
+    var r = {};
+    RULE_IDS.forEach(function(id) { var l = document.getElementById(id); if (!l) return; r[id] = Array.from(l.querySelectorAll('.spec-rule-text')).map(function(el) { return el.innerHTML.trim(); }); });
+    return r;
+  }
+  function applySnapshot(saved) {
+    RULE_IDS.forEach(function(id) { var l = document.getElementById(id); if (!l) return; var rules = (saved && saved[id] && saved[id].length) ? saved[id] : window.DEFAULT_RULES[id]; l.innerHTML = rules.map(function(t) { return '<li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">' + t + '</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>'; }).join(''); });
+  }
+  async function saveRulesNow() {
+    try { var { data: { user } } = await supabase.auth.getUser(); if (!user) return; var { data: p } = await supabase.from('profiles').select('component_rules').eq('id', user.id).single(); var e = (p && p.component_rules) ? p.component_rules : {}; e.emptystate = getRulesSnapshot(); await supabase.from('profiles').update({ component_rules: e }).eq('id', user.id); } catch(e) {}
+  }
+  function schedSave() { if (_loading) return; clearTimeout(_saveTimer); _saveTimer = setTimeout(saveRulesNow, 1000); }
+  var panel = document.querySelector('.spec-rules-panel'); if (panel) new MutationObserver(schedSave).observe(panel, { childList: true, subtree: true, characterData: true });
+  ;(async function() { try { var { data: { user } } = await supabase.auth.getUser(); if (!user) return; var { data: p } = await supabase.from('profiles').select('component_rules').eq('id', user.id).single(); if (p && p.component_rules && p.component_rules.emptystate) { _loading = true; applySnapshot(p.component_rules.emptystate); _loading = false; } } catch(e) {} })();
+</script>
+
+<script>
+  var DEFAULT_RULES = {
+    'rules-general': [
+      'Always provide a <code>description</code> that explains why the space is empty. "No data" alone is not helpful - tell the user what normally appears here and how it gets populated.',
+      'Add the <code>action</code> slot only when there is a concrete step the user can take right now. Do not add a CTA if the empty state is caused by filters or permissions the user cannot change in context.',
+      'Choose the <code>icon</code> to match the content type, not the action: use <code>ti-inbox</code> for messages, <code>ti-search</code> for search, <code>ti-file</code> for documents. Do not use generic icons like <code>ti-alert-circle</code> for empty states.',
+      'Omit the icon in dense or narrow layouts (e.g. sidebar lists, inline table cells). The <code>icon</code> attribute is optional - a title and description alone work well for constrained spaces.',
+      'Do not confuse empty state with error state. If data failed to load, use <code>fresh-alert variant="danger"</code> with a retry action, not an empty state component.'
+    ]
+  };
+  function restoreDefaults() {
+    if (!confirm('Reset all empty state rules to FreshDS defaults? Any edits you have made will be lost.')) return;
+    Object.keys(DEFAULT_RULES).forEach(function(id) { var l = document.getElementById(id); if (!l) return; l.innerHTML = DEFAULT_RULES[id].map(function(t) { return '<li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">' + t + '</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>'; }).join(''); });
+  }
+</script>
+</body>
+</html>

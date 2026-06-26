@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Auth guard: redirects to / if no session or unpaid -->
+<script type="module" src="/systems/js/auth-guard.js"></script>
+<script type="module" src="/systems/js/paid-guard.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SSO Sign In | Acme</title>
+<link rel="icon" type="image/svg+xml" href="../../systems/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="../../systems/tokens/primitives.css">
+<link rel="stylesheet" href="../../systems/tokens/theme.css">
+<link rel="stylesheet" href="../../systems/tokens/dataviz.css">
+<link rel="stylesheet" href="../../systems/styles/reset.css">
+<link rel="stylesheet" href="../../systems/styles/patterns/auth.css">
+<script>if(location.href.indexOf('?thumb')!==-1)document.write('<style>#demo-bar{display:none!important}</style>');</script>
+<script src="../../systems/js/freshds.js"></script>
+<script src="../../systems/js/pattern-bar.js"></script>
+
+<style>
+  .auth-divider {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    margin: var(--space-5) 0;
+    color: var(--text-tertiary);
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .auth-divider::before,
+  .auth-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--surface-border);
+  }
+
+  .sso-providers {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-2);
+    margin-bottom: var(--space-2);
+  }
+  .sso-providers fresh-button {
+    width: 100%;
+  }
+
+  @media (max-width: 479px) {
+    .sso-providers { grid-template-columns: 1fr; }
+  }
+
+  .sso-domain-hint {
+    font-size: 12px;
+    color: var(--text-tertiary);
+    text-align: center;
+    margin-top: var(--space-3);
+    line-height: 1.5;
+  }
+</style>
+<link rel="stylesheet" href="../../systems/styles/spec-panel.css">
+</head>
+<body>
+<div id="app">
+
+  <div class="demo-bar" id="demo-bar">
+    <div class="demo-inner" id="demo-inner">
+      <button class="demo-mode-btn" id="mode-toggle-btn" onclick="toggleDemoMode()" aria-label="Toggle dark mode">
+        <i class="ti ti-moon"></i>
+      </button>
+      <div class="demo-sep"></div>
+      <button class="demo-spec-btn" onclick="spOpen()" aria-label="Configure pattern"><i class="ti ti-layout-sidebar-right"></i> Configure</button>
+    </div>
+    <div class="demo-sep"></div>
+    <button class="demo-collapse-btn" id="demo-collapse-btn" onclick="toggleDemoBar()" aria-label="Collapse toolbar">
+      <i class="ti ti-minus"></i>
+    </button>
+  </div>
+
+  <div class="auth-page">
+    <fresh-navbar id="auth-topbar">
+      <div slot="actions" style="display:flex;align-items:center;gap:8px;">
+        <fresh-button variant="ghost" size="sm">Sign in</fresh-button>
+        <fresh-button variant="primary" size="sm">Sign up</fresh-button>
+      </div>
+    </fresh-navbar>
+
+    <div class="auth-body">
+      <div class="auth-left" aria-hidden="true">
+        <div class="auth-left-inner">
+          <div class="auth-left-icon"><i class="ti ti-photo"></i></div>
+          <div class="auth-left-label">Customer image</div>
+        </div>
+      </div>
+
+      <div class="auth-right">
+        <div class="auth-form-wrap">
+          <div class="auth-form">
+
+            <h1 class="auth-title">Sign in to Acme</h1>
+            <p class="auth-sub">Enter your work email and we'll redirect you to your organization's identity provider.</p>
+
+            <div class="field-stack">
+              <div class="field">
+                <label class="field-label" for="work-email">Work email</label>
+                <fresh-input
+                  id="work-email"
+                  type="email"
+                  placeholder="you@company.com"
+                  autocomplete="email"
+                ></fresh-input>
+              </div>
+            </div>
+
+            <fresh-button>Continue with SSO</fresh-button>
+
+            <div class="auth-divider">or continue with</div>
+
+            <div class="sso-providers">
+              <fresh-button variant="secondary"><i class="ti ti-brand-google"></i> Google</fresh-button>
+              <fresh-button variant="secondary"><i class="ti ti-brand-windows"></i> Microsoft</fresh-button>
+              <fresh-button variant="secondary"><i class="ti ti-brand-github"></i> GitHub</fresh-button>
+            </div>
+
+            <p class="sso-domain-hint">
+              We'll detect your provider automatically based on your email domain.
+            </p>
+
+          </div>
+        </div>
+
+        <div class="auth-foot">
+          Not using SSO?&nbsp;<a class="auth-link" href="auth-login.html">Sign in with password</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+<script src="../../systems/components/navigation/fresh-navbar.js"></script>
+<script src="../../systems/js/freshds-nav-apply.js"></script>
+<script src="../../systems/components/core/fresh-input.js"></script>
+<script src="../../systems/components/core/fresh-button.js"></script>
+</body>
+</html>

@@ -414,7 +414,7 @@ body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--tex
 </div>
 
 <script type="module">
-  import { supabase } from '/js/supabase-client.js'
+  import { supabase } from '/systems/js/supabase-client.js'
 
   window.openRequestModal = async function() {
     const { data: { session } } = await supabase.auth.getSession()

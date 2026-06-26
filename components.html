@@ -4,14 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>FreshDS | Design System</title>
-<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="icon" type="image/svg+xml" href="systems/favicon.svg">
 
 <!-- Auth guard, redirects to / if no session -->
-<script type="module" src="/js/auth-guard.js"></script>
-<script type="module" src="/js/paid-guard.js"></script>
+<script type="module" src="/systems/js/auth-guard.js"></script>
+<script type="module" src="/systems/js/paid-guard.js"></script>
 
 <!-- Supabase cloud sync: shared save hook + theme load -->
-<script type="module" src="/js/cloud-sync.js"></script>
+<script type="module" src="/systems/js/cloud-sync.js"></script>
 
 
 <!-- Fonts -->
@@ -26,21 +26,21 @@
 <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
 
 <!-- Tokens (listed individually, @import doesn't work on file://) -->
-<link rel="stylesheet" href="tokens/primitives.css">
-<link rel="stylesheet" href="tokens/theme.css">
-<link rel="stylesheet" href="tokens/dataviz.css">
+<link rel="stylesheet" href="systems/tokens/primitives.css">
+<link rel="stylesheet" href="systems/tokens/theme.css">
+<link rel="stylesheet" href="systems/tokens/dataviz.css">
 
 <!-- Styles -->
-<link rel="stylesheet" href="styles/reset.css">
-<link rel="stylesheet" href="styles/layout.css">
-<link rel="stylesheet" href="styles/components/core.css">
-<link rel="stylesheet" href="styles/docs.css">
+<link rel="stylesheet" href="systems/styles/reset.css">
+<link rel="stylesheet" href="systems/styles/layout.css">
+<link rel="stylesheet" href="systems/styles/components/core.css">
+<link rel="stylesheet" href="systems/styles/docs.css">
 
 <!-- Theme engine: runs before body renders to set color scale vars, eliminating FOUC -->
-<script src="js/freshds.js"></script>
-<script src="js/freshds-site.js"></script>
-<link rel="stylesheet" href="/styles/site-header.css">
-<script type="module" src="/js/site-header.js"></script>
+<script src="systems/js/freshds.js"></script>
+<script src="systems/js/freshds-site.js"></script>
+<link rel="stylesheet" href="/systems/styles/site-header.css">
+<script type="module" src="/systems/js/site-header.js"></script>
 </head>
 <body>
 <div class="fds-app" id="app">
@@ -336,53 +336,53 @@
 
 </div>
 
-<script src="components/core/fresh-button.js"></script>
-<script src="components/core/fresh-dropdown-button.js"></script>
-<script src="components/core/fresh-input.js"></script>
-<script src="components/core/fresh-select.js"></script>
-<script src="components/core/fresh-checkbox.js"></script>
-<script src="components/core/fresh-radio.js"></script>
-<script src="components/core/fresh-toggle.js"></script>
-<script src="components/core/fresh-slider.js"></script>
-<script src="components/core/fresh-form-field.js"></script>
-<script src="components/feedback/fresh-spinner.js"></script>
-<script src="components/feedback/fresh-badge.js"></script>
-<script src="components/feedback/fresh-progress.js"></script>
-<script src="components/feedback/fresh-skeleton.js"></script>
-<script src="components/feedback/fresh-alert.js"></script>
-<script src="components/feedback/fresh-toast.js"></script>
-<script src="components/feedback/fresh-tooltip.js"></script>
-<script src="components/feedback/fresh-empty-state.js"></script>
-<script src="components/data/fresh-avatar.js"></script>
-<script src="components/navigation/fresh-navbar.js"></script>
-<script src="components/navigation/fresh-sidebar.js"></script>
-<script src="components/navigation/fresh-tabs.js"></script>
-<script src="components/navigation/fresh-topbar-menu.js"></script>
-<script src="components/navigation/fresh-breadcrumb.js"></script>
-<script src="components/navigation/fresh-pagination.js"></script>
-<script src="components/navigation/fresh-stepper.js"></script>
-<script src="components/containers/fresh-card.js"></script>
-<script src="components/containers/fresh-media-card.js"></script>
-<script src="components/containers/fresh-accordion.js"></script>
-<script src="components/containers/fresh-popover.js"></script>
-<script src="components/containers/fresh-modal.js"></script>
-<script src="components/containers/fresh-drawer.js"></script>
-<script src="components/containers/fresh-table.js"></script>
-<script src="components/data/fresh-stat-card.js"></script>
-<script src="components/data/fresh-data-table.js"></script>
-<script src="components/data/fresh-chart.js"></script>
-<script src="components/data/fresh-timeline.js"></script>
-<script src="components/ai/fresh-prompt-input.js"></script>
-<script src="components/ai/fresh-ai-response.js"></script>
-<script src="components/ai/fresh-thinking.js"></script>
-<script src="components/ai/fresh-confidence-badge.js"></script>
-<script src="components/ai/fresh-citation-chip.js"></script>
-<script src="components/ai/fresh-suggestion-card.js"></script>
-<script src="components/ai/fresh-model-selector.js"></script>
-<script src="components/ai/fresh-token-meter.js"></script>
-<script src="components/ai/fresh-feedback.js"></script>
-<script src="components/ai/fresh-diff-viewer.js"></script>
-<script src="components/ai/fresh-prompt-history.js"></script>
-<script src="components/ai/fresh-ai-mode-toggle.js"></script>
+<script src="systems/components/core/fresh-button.js"></script>
+<script src="systems/components/core/fresh-dropdown-button.js"></script>
+<script src="systems/components/core/fresh-input.js"></script>
+<script src="systems/components/core/fresh-select.js"></script>
+<script src="systems/components/core/fresh-checkbox.js"></script>
+<script src="systems/components/core/fresh-radio.js"></script>
+<script src="systems/components/core/fresh-toggle.js"></script>
+<script src="systems/components/core/fresh-slider.js"></script>
+<script src="systems/components/core/fresh-form-field.js"></script>
+<script src="systems/components/feedback/fresh-spinner.js"></script>
+<script src="systems/components/feedback/fresh-badge.js"></script>
+<script src="systems/components/feedback/fresh-progress.js"></script>
+<script src="systems/components/feedback/fresh-skeleton.js"></script>
+<script src="systems/components/feedback/fresh-alert.js"></script>
+<script src="systems/components/feedback/fresh-toast.js"></script>
+<script src="systems/components/feedback/fresh-tooltip.js"></script>
+<script src="systems/components/feedback/fresh-empty-state.js"></script>
+<script src="systems/components/data/fresh-avatar.js"></script>
+<script src="systems/components/navigation/fresh-navbar.js"></script>
+<script src="systems/components/navigation/fresh-sidebar.js"></script>
+<script src="systems/components/navigation/fresh-tabs.js"></script>
+<script src="systems/components/navigation/fresh-topbar-menu.js"></script>
+<script src="systems/components/navigation/fresh-breadcrumb.js"></script>
+<script src="systems/components/navigation/fresh-pagination.js"></script>
+<script src="systems/components/navigation/fresh-stepper.js"></script>
+<script src="systems/components/containers/fresh-card.js"></script>
+<script src="systems/components/containers/fresh-media-card.js"></script>
+<script src="systems/components/containers/fresh-accordion.js"></script>
+<script src="systems/components/containers/fresh-popover.js"></script>
+<script src="systems/components/containers/fresh-modal.js"></script>
+<script src="systems/components/containers/fresh-drawer.js"></script>
+<script src="systems/components/containers/fresh-table.js"></script>
+<script src="systems/components/data/fresh-stat-card.js"></script>
+<script src="systems/components/data/fresh-data-table.js"></script>
+<script src="systems/components/data/fresh-chart.js"></script>
+<script src="systems/components/data/fresh-timeline.js"></script>
+<script src="systems/components/ai/fresh-prompt-input.js"></script>
+<script src="systems/components/ai/fresh-ai-response.js"></script>
+<script src="systems/components/ai/fresh-thinking.js"></script>
+<script src="systems/components/ai/fresh-confidence-badge.js"></script>
+<script src="systems/components/ai/fresh-citation-chip.js"></script>
+<script src="systems/components/ai/fresh-suggestion-card.js"></script>
+<script src="systems/components/ai/fresh-model-selector.js"></script>
+<script src="systems/components/ai/fresh-token-meter.js"></script>
+<script src="systems/components/ai/fresh-feedback.js"></script>
+<script src="systems/components/ai/fresh-diff-viewer.js"></script>
+<script src="systems/components/ai/fresh-prompt-history.js"></script>
+<script src="systems/components/ai/fresh-ai-mode-toggle.js"></script>
 </body>
 </html>

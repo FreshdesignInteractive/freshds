@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Auth guard: redirects to / if no session or unpaid -->
+<script type="module" src="/systems/js/auth-guard.js"></script>
+<script type="module" src="/systems/js/paid-guard.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blank Slate (Logged Out) | Acme</title>
+<link rel="icon" type="image/svg+xml" href="../../systems/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="../../systems/tokens/primitives.css">
+<link rel="stylesheet" href="../../systems/tokens/theme.css">
+<link rel="stylesheet" href="../../systems/tokens/dataviz.css">
+<link rel="stylesheet" href="../../systems/styles/reset.css">
+<link rel="stylesheet" href="../../systems/styles/patterns/dashboard.css">
+<script>if(location.href.indexOf('?thumb')!==-1)document.write('<style>#demo-bar{display:none!important}</style>');</script>
+<script src="../../systems/js/freshds.js"></script>
+<script src="../../systems/js/pattern-bar.js"></script>
+<style>
+.nav-logo-dark { display: none; }
+[data-mode="dark"] .nav-logo-light { display: none; }
+[data-mode="dark"] .nav-logo-dark  { display: block; }
+
+/* ── Spec trigger button ── */</style>
+<link rel="stylesheet" href="../../systems/styles/spec-panel.css">
+</head>
+<body>
+<div id="app">
+
+  <div class="demo-bar" id="demo-bar">
+    <div class="demo-inner" id="demo-inner">
+      <button class="demo-mode-btn" id="mode-toggle-btn" onclick="toggleDemoMode()" aria-label="Toggle dark mode">
+        <i class="ti ti-moon"></i>
+      </button>
+      <div class="demo-sep"></div>
+      <button class="demo-spec-btn" onclick="spOpen()" aria-label="Configure pattern">
+        <i class="ti ti-layout-sidebar-right"></i> Configure
+      </button>
+    </div>
+    <div class="demo-sep"></div>
+    <button class="demo-collapse-btn" id="demo-collapse-btn" onclick="toggleDemoBar()" aria-label="Collapse toolbar">
+      <i class="ti ti-minus"></i>
+    </button>
+  </div>
+
+  <div class="dash-shell">
+    <fresh-navbar id="bslo-topbar">
+      <div slot="actions" style="display:flex;align-items:center;gap:8px;">
+        <fresh-button variant="secondary" size="sm">Sign in</fresh-button>
+        <fresh-button variant="primary" size="sm">Sign up</fresh-button>
+      </div>
+    </fresh-navbar>
+    <div class="dash-body">
+      <main class="dash-main" style="overflow-y:auto;"></main>
+    </div>
+  </div>
+
+</div>
+
+<!-- Spec panel -->
+<aside class="sp-panel" id="sp-panel" aria-label="Pattern spec" aria-hidden="true">
+  <div class="sp-hdr">
+    <span class="sp-hdr-title">Configure</span>
+    <button class="sp-hdr-close" onclick="spClose()" aria-label="Close"><i class="ti ti-x"></i></button>
+  </div>
+  <div class="sp-body">
+    <div class="sp-section">
+      <div class="sp-section-label">GLOBAL TEMPLATE RULES</div>
+      <div class="sp-rules-hdr">
+        <i class="ti ti-sparkles sp-rules-hdr-icon"></i>
+        <span class="sp-rules-hdr-name">AI RULES: BLANK SLATE (LOGGED OUT)</span>
+        <span class="sp-rules-hdr-hint">Click to edit</span>
+      </div>
+      <div id="sp-cats"></div>
+    </div>
+  </div>
+  <div class="sp-bottom">
+    <button class="sp-btn sp-btn-icon" id="sp-share-btn" onclick="spShare()" title="Share builder link" aria-label="Share builder link">
+      <i class="ti ti-link"></i>
+    </button>
+    <button class="sp-btn sp-btn-primary" onclick="spStartBuilding()">
+      Configure <i class="ti ti-arrow-right"></i>
+    </button>
+  </div>
+</aside>
+
+<!-- Prompt modal -->
+<div class="sp-modal-backdrop" id="sp-modal-backdrop" onclick="spCloseModal()">
+  <div class="sp-modal" onclick="event.stopPropagation()">
+    <div class="sp-modal-hdr">
+      <span>Claude Code Prompt</span>
+      <button class="sp-modal-close" onclick="spCloseModal()"><i class="ti ti-x"></i></button>
+    </div>
+    <div class="sp-modal-body">
+      <pre class="sp-modal-pre" id="sp-modal-pre"></pre>
+    </div>
+    <div class="sp-modal-foot">
+      <span class="sp-copy-ok" id="sp-copy-ok">Copied to clipboard</span>
+      <button class="sp-btn sp-btn-primary" onclick="spCopyPrompt()">
+        <i class="ti ti-copy"></i> Copy prompt
+      </button>
+    </div>
+  </div>
+</div>
+
+<script src="../../systems/components/navigation/fresh-navbar.js"></script>
+<script src="../../systems/components/core/fresh-button.js"></script>
+<script src="../../systems/js/freshds-nav-apply.js"></script>
+
+<script>
+var SP_RULES = {
+  'SHELL': [
+    'The page shell is always full viewport height with the navbar pinned at the top.',
+    'The content area fills the remaining height and scrolls independently of the navbar.',
+    'Background of the content area uses var(--surface-bg); match this in all child pages.'
+  ],
+  'HEADER': [
+    'Always logged-out state: Sign in (secondary) and Sign up (primary) buttons in the actions slot.',
+    'Logo is applied from the navigation designer (freshds-nav-cfg); never hardcode a logo inline.',
+    'Do not add a sidebar, tab strip, or any secondary navigation to this template.'
+  ],
+  'PAGE GRID': [
+    'Content below the navbar uses var(--space-6) padding on all sides (desktop).',
+    'On mobile (below 768px), reduce side padding to var(--space-4).',
+    'Max content width is unconstrained by default; constrain with a centered container if needed.'
+  ]
+};
+
+/* ── Spec panel ──────────────────────────────────────────── */
+
+function spOpen() {
+  document.getElementById('sp-panel').classList.add('open');
+  document.getElementById('sp-panel').setAttribute('aria-hidden', 'false');
+  _spRenderCats();
+  var u = new URL(location.href);
+  u.searchParams.set('spec', 'open');
+  history.replaceState(null, '', u.toString());
+}
+
+function spClose() {
+  document.getElementById('sp-panel').classList.remove('open');
+  document.getElementById('sp-panel').setAttribute('aria-hidden', 'true');
+  var u = new URL(location.href);
+  u.searchParams.delete('spec');
+  history.replaceState(null, '', u.toString());
+}
+
+function _spEsc(s) {
+  return (s || '').replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+function _spRenderCats() {
+  var el = document.getElementById('sp-cats');
+  el.innerHTML = '';
+  Object.keys(SP_RULES).forEach(function(cat) {
+    var wrap = document.createElement('div');
+    wrap.className = 'sp-cat';
+    _spBuildCat(cat, wrap);
+    el.appendChild(wrap);
+  });
+}
+
+function _spBuildCat(cat, wrap) {
+  wrap.innerHTML = '';
+  var label = document.createElement('div');
+  label.className = 'sp-cat-label';
+  label.textContent = cat;
+  wrap.appendChild(label);
+  SP_RULES[cat].forEach(function(rule, ri) { wrap.appendChild(_spRuleRow(cat, ri, rule, wrap)); });
+  var addBtn = document.createElement('button');
+  addBtn.className = 'sp-add-rule';
+  addBtn.innerHTML = '<i class="ti ti-plus"></i> Add rule';
+  addBtn.addEventListener('click', function() {
+    SP_RULES[cat].push('New rule');
+    _spBuildCat(cat, wrap);
+    var texts = wrap.querySelectorAll('.sp-rule-text');
+    var last = texts[texts.length - 1];
+    if (last) { last.focus(); var r = document.createRange(); r.selectNodeContents(last); var s = window.getSelection(); s.removeAllRanges(); s.addRange(r); }
+  });
+  wrap.appendChild(addBtn);
+}
+
+function _spRuleRow(cat, ri, text, wrap) {
+  var row = document.createElement('div');
+  row.className = 'sp-rule';
+  var dot = document.createElement('span');
+  dot.className = 'sp-rule-dot';
+  var span = document.createElement('span');
+  span.className = 'sp-rule-text';
+  span.contentEditable = 'true';
+  span.textContent = text;
+  span.addEventListener('input', function() { SP_RULES[cat][ri] = span.textContent; });
+  var del = document.createElement('button');
+  del.className = 'sp-rule-del';
+  del.innerHTML = '<i class="ti ti-trash"></i>';
+  del.setAttribute('aria-label', 'Delete rule');
+  del.addEventListener('click', function() { SP_RULES[cat].splice(ri, 1); _spBuildCat(cat, wrap); });
+  row.appendChild(dot); row.appendChild(span); row.appendChild(del);
+  return row;
+}
+
+function spShare() {
+  var u = new URL(location.href);
+  u.searchParams.set('spec', 'open');
+  var btn = document.getElementById('sp-share-btn');
+  navigator.clipboard.writeText(u.toString()).then(function() {
+    var orig = btn.innerHTML;
+    btn.innerHTML = '<i class="ti ti-check"></i>';
+    setTimeout(function() { btn.innerHTML = orig; }, 1800);
+  }).catch(function() {});
+}
+
+function spStartBuilding() {
+  var lines = ['Build a logged-out page shell using the FreshDS design system.', ''];
+  Object.keys(SP_RULES).forEach(function(cat) {
+    lines.push('## ' + cat);
+    SP_RULES[cat].forEach(function(rule) { lines.push('- ' + rule); });
+    lines.push('');
+  });
+  document.getElementById('sp-modal-pre').textContent = lines.join('\n');
+  document.getElementById('sp-modal-backdrop').classList.add('open');
+}
+
+function spCloseModal() { document.getElementById('sp-modal-backdrop').classList.remove('open'); }
+
+function spCopyPrompt() {
+  navigator.clipboard.writeText(document.getElementById('sp-modal-pre').textContent).then(function() {
+    var ok = document.getElementById('sp-copy-ok');
+    ok.classList.add('show');
+    setTimeout(function() { ok.classList.remove('show'); }, 1800);
+  }).catch(function() {});
+}
+
+if (new URL(location.href).searchParams.get('spec') === 'open') {
+  document.addEventListener('DOMContentLoaded', spOpen);
+}
+</script>
+</body>
+</html>

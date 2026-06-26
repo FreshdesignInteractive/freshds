@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Auth guard: redirects to / if no session or unpaid -->
+<script type="module" src="/systems/js/auth-guard.js"></script>
+<script type="module" src="/systems/js/paid-guard.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dropdown Button | FreshDS</title>
+<base href="../../">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="styles/site.css">
+<link rel="stylesheet" href="tokens/primitives.css">
+<link rel="stylesheet" href="tokens/theme.css">
+<script src="js/freshds.js"></script>
+<script src="js/freshds-site.js"></script>
+<link rel="stylesheet" href="styles/components/spec-page.css">
+</head>
+<body>
+
+<div class="comp-page">
+  <h1 class="comp-title">Dropdown Button</h1>
+  <p class="comp-desc">A button that opens a contextual menu of secondary actions. Also known as a menu button (W3C ARIA). Use when a primary label has multiple related variants or destinations. Options are passed as <code>&lt;option&gt;</code> children or a JSON <code>items</code> attribute.</p>
+
+  <!-- STATES CARD -->
+  <div class="comp-section">
+    <div class="spec-card">
+      <div class="spec-card-topbar">
+        <span class="spec-rules-title">Dropdown button states</span>
+        <div class="spec-mode-switcher">
+          <button class="spec-mode-btn active" id="mode-btn-light" onclick="setSpecMode('light')"><i class="ti ti-sun"></i> Light</button>
+          <button class="spec-mode-btn" id="mode-btn-dark" onclick="setSpecMode('dark')"><i class="ti ti-moon"></i> Dark</button>
+        </div>
+      </div>
+      <div id="spec-viewport" class="spec-viewport">
+
+        <div class="spec-variant-row">
+          <div class="spec-variant-header">
+            <span class="spec-variant-name">Variants</span>
+            <span class="spec-variant-sep">·</span>
+            <span class="spec-variant-desc">Primary, secondary, ghost, and danger. Mirrors the <code>fresh-button</code> variant set.</span>
+          </div>
+          <div class="spec-variant-body">
+            <div class="spec-demos" style="gap:10px;flex-wrap:wrap;align-items:center;">
+              <fresh-dropdown-button label="Export" variant="primary">
+                <option value="csv">Export as CSV</option>
+                <option value="pdf">Export as PDF</option>
+                <option value="png">Export as PNG</option>
+              </fresh-dropdown-button>
+              <fresh-dropdown-button label="Actions" variant="secondary">
+                <option value="edit">Edit</option>
+                <option value="duplicate">Duplicate</option>
+                <option value="delete" class="danger">Delete</option>
+              </fresh-dropdown-button>
+              <fresh-dropdown-button label="More" variant="ghost">
+                <option value="share">Share</option>
+                <option value="archive">Archive</option>
+              </fresh-dropdown-button>
+              <fresh-dropdown-button label="Remove" variant="danger">
+                <option value="soft">Soft delete</option>
+                <option value="hard" class="danger">Permanently delete</option>
+              </fresh-dropdown-button>
+            </div>
+          </div>
+        </div>
+
+        <div class="spec-variant-row">
+          <div class="spec-variant-header">
+            <span class="spec-variant-name">Disabled</span>
+            <span class="spec-attr-chip">disabled</span>
+            <span class="spec-variant-sep">·</span>
+            <span class="spec-variant-desc">The entire control is non-interactive. Pointer events are suppressed.</span>
+          </div>
+          <div class="spec-variant-body">
+            <div class="spec-demos" style="gap:10px;align-items:center;">
+              <fresh-dropdown-button label="Export" variant="primary" disabled>
+                <option value="csv">Export as CSV</option>
+                <option value="pdf">Export as PDF</option>
+              </fresh-dropdown-button>
+              <fresh-dropdown-button label="Actions" variant="secondary" disabled>
+                <option value="edit">Edit</option>
+              </fresh-dropdown-button>
+            </div>
+          </div>
+        </div>
+
+        <div class="spec-variant-row">
+          <div class="spec-variant-header">
+            <span class="spec-variant-name">Sizes</span>
+            <span class="spec-attr-chip">size="sm"</span>
+            <span class="spec-attr-chip">size="md"</span>
+            <span class="spec-attr-chip">size="lg"</span>
+            <span class="spec-variant-sep">·</span>
+            <span class="spec-variant-desc">Three height tiers: 28px small, 34px default, 40px large.</span>
+          </div>
+          <div class="spec-variant-body">
+            <div class="spec-demos" style="gap:10px;align-items:center;">
+              <fresh-dropdown-button label="Small" variant="primary" size="sm">
+                <option value="a">Option A</option>
+                <option value="b">Option B</option>
+              </fresh-dropdown-button>
+              <fresh-dropdown-button label="Default" variant="primary">
+                <option value="a">Option A</option>
+                <option value="b">Option B</option>
+              </fresh-dropdown-button>
+              <fresh-dropdown-button label="Large" variant="primary" size="lg">
+                <option value="a">Option A</option>
+                <option value="b">Option B</option>
+              </fresh-dropdown-button>
+            </div>
+          </div>
+        </div>
+
+        <div class="spec-variant-row">
+          <div class="spec-variant-header">
+            <span class="spec-variant-name">Rich items with descriptions</span>
+            <span class="spec-attr-chip">items='[...]'</span>
+            <span class="spec-variant-sep">·</span>
+            <span class="spec-variant-desc">JSON items support optional <code>desc</code> for sub-labels, <code>separator</code> for dividers, and <code>danger</code> for destructive options.</span>
+          </div>
+          <div class="spec-variant-body">
+            <div class="spec-demos" style="gap:10px;align-items:center;">
+              <fresh-dropdown-button label="Export" variant="primary" items='[{"value":"bundle","label":"Dev Kit","desc":"Theme-matched CSS tokens and components only."},{"separator":true},{"value":"dssite","label":"Full DS","desc":"Complete documentation site with all components and guides."}]'></fresh-dropdown-button>
+              <fresh-dropdown-button label="Deploy" variant="secondary" items='[{"value":"staging","label":"Staging","desc":"Preview environment, no customer traffic."},{"separator":true},{"value":"prod","label":"Production","desc":"Live environment. Requires approval.","danger":true}]'></fresh-dropdown-button>
+            </div>
+          </div>
+        </div>
+
+        <div class="spec-variant-row">
+          <div class="spec-variant-header">
+            <span class="spec-variant-name">All variants x all sizes</span>
+            <span class="spec-variant-sep">·</span>
+            <span class="spec-variant-desc">Full matrix: one row per size, all four variants across.</span>
+          </div>
+          <div class="spec-variant-body">
+            <div class="spec-demos" style="flex-direction:column;align-items:flex-start;gap:8px;">
+              <div style="display:flex;gap:8px;align-items:center;">
+                <fresh-dropdown-button label="Primary" variant="primary" size="sm"><option value="a">Option</option></fresh-dropdown-button>
+                <fresh-dropdown-button label="Secondary" variant="secondary" size="sm"><option value="a">Option</option></fresh-dropdown-button>
+                <fresh-dropdown-button label="Ghost" variant="ghost" size="sm"><option value="a">Option</option></fresh-dropdown-button>
+                <fresh-dropdown-button label="Danger" variant="danger" size="sm"><option value="a">Option</option></fresh-dropdown-button>
+              </div>
+              <div style="display:flex;gap:8px;align-items:center;">
+                <fresh-dropdown-button label="Primary" variant="primary"><option value="a">Option</option></fresh-dropdown-button>
+                <fresh-dropdown-button label="Secondary" variant="secondary"><option value="a">Option</option></fresh-dropdown-button>
+                <fresh-dropdown-button label="Ghost" variant="ghost"><option value="a">Option</option></fresh-dropdown-button>
+                <fresh-dropdown-button label="Danger" variant="danger"><option value="a">Option</option></fresh-dropdown-button>
+              </div>
+              <div style="display:flex;gap:8px;align-items:center;">
+                <fresh-dropdown-button label="Primary" variant="primary" size="lg"><option value="a">Option</option></fresh-dropdown-button>
+                <fresh-dropdown-button label="Secondary" variant="secondary" size="lg"><option value="a">Option</option></fresh-dropdown-button>
+                <fresh-dropdown-button label="Ghost" variant="ghost" size="lg"><option value="a">Option</option></fresh-dropdown-button>
+                <fresh-dropdown-button label="Danger" variant="danger" size="lg"><option value="a">Option</option></fresh-dropdown-button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- AI RULES -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar">
+        <span class="spec-rules-title">AI action rules</span>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <span class="spec-rules-hint">Click any rule to edit</span>
+          <button class="spec-rules-reset" onclick="restoreDefaults()"><i class="ti ti-rotate" style="font-size:10px;"></i> Restore FreshDS defaults</button>
+        </div>
+      </div>
+      <div class="spec-rules-section">
+        <div class="spec-rules-section-head">
+          <span class="spec-rules-variant">General</span>
+          <span class="spec-attr-chip">fresh-dropdown-button</span>
+        </div>
+        <ul class="spec-rule-list" id="rules-general">
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Use a dropdown button when a single concept (Export, Actions) has 2 to 6 related variants. More than 6 options are better served by a modal or separate page.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Always add <code>class="danger"</code> to destructive options (delete, remove, revoke). This renders them in red and signals caution before the user commits.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Match the <code>variant</code> to the page context. Use <code>primary</code> for the page's main action, <code>secondary</code> for supporting actions, and <code>ghost</code> inside dense tool rows.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Listen to the <code>select</code> event for menu picks. Use <code>e.detail.value</code> to dispatch the correct action, not the label text, which can change with localization.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Use <code>data-desc</code> on option elements or the <code>desc</code> field in JSON items to add sub-labels. Reserve this for options that genuinely need disambiguation, not as a workaround for unclear labels.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+        </ul>
+        <button class="spec-add-rule" onclick="addRule('rules-general')"><i class="ti ti-plus"></i> Add rule</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ATTRIBUTES -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Attributes</span></div>
+      <table class="spec-a11y-table">
+        <thead><tr><th style="width:130px">Attribute</th><th style="width:220px">Values</th><th style="width:80px">Default</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">label</td><td class="spec-a11y-req"><code>string</code></td><td class="spec-a11y-req"><code>Options</code></td><td class="spec-a11y-req">Text shown in the button label area.</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">variant</td><td class="spec-a11y-req"><code>primary</code> <code>secondary</code> <code>ghost</code> <code>danger</code></td><td class="spec-a11y-req"><code>primary</code></td><td class="spec-a11y-req">Visual style. Mirrors fresh-button variants.</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">size</td><td class="spec-a11y-req"><code>sm</code> <code>md</code> <code>lg</code></td><td class="spec-a11y-req"><code>md</code></td><td class="spec-a11y-req">Height and padding scale: 28px / 34px / 40px.</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">disabled</td><td class="spec-a11y-req"><code>boolean</code></td><td class="spec-a11y-req">-</td><td class="spec-a11y-req">Disables the entire control including the menu.</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">items</td><td class="spec-a11y-req"><code>JSON array</code></td><td class="spec-a11y-req">-</td><td class="spec-a11y-req">Pass items as JSON instead of <code>&lt;option&gt;</code> children. Each item supports: <code>{ value, label, desc?, separator?, danger?, disabled? }</code>.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- EVENTS -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Events</span></div>
+      <table class="spec-a11y-table">
+        <thead><tr><th style="width:130px">Event</th><th style="width:220px">Detail</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">select</td><td class="spec-a11y-req"><code>{ value, label }</code></td><td class="spec-a11y-req">Fired when a menu item is chosen. <code>detail.value</code> is the option's value attribute. <code>detail.label</code> is its visible text.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- CODE -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Code</span></div>
+      <div style="padding:16px 20px;display:flex;flex-direction:column;gap:0;">
+
+        <div class="code-block" data-code='<fresh-dropdown-button label="Export" variant="primary">
+  <option value="csv">Export as CSV</option>
+  <option value="pdf">Export as PDF</option>
+  <option value="png">Export as PNG</option>
+</fresh-dropdown-button>'>
+          <div class="code-block-header"><span><span class="code-lang">HTML</span><span class="code-context">Basic dropdown</span></span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+          <div class="code-body"><pre><code><span class="hl-pun">&lt;</span><span class="hl-tag">fresh-dropdown-button</span>
+  <span class="hl-attr">label</span><span class="hl-pun">="</span><span class="hl-val">Export</span><span class="hl-pun">"</span>
+  <span class="hl-attr">variant</span><span class="hl-pun">="</span><span class="hl-val">primary</span><span class="hl-pun">"</span>
+<span class="hl-pun">&gt;</span>
+  <span class="hl-pun">&lt;</span><span class="hl-tag">option</span> <span class="hl-attr">value</span><span class="hl-pun">="</span><span class="hl-val">csv</span><span class="hl-pun">"&gt;</span><span class="hl-txt">Export as CSV</span><span class="hl-pun">&lt;/</span><span class="hl-tag">option</span><span class="hl-pun">&gt;</span>
+  <span class="hl-pun">&lt;</span><span class="hl-tag">option</span> <span class="hl-attr">value</span><span class="hl-pun">="</span><span class="hl-val">pdf</span><span class="hl-pun">"&gt;</span><span class="hl-txt">Export as PDF</span><span class="hl-pun">&lt;/</span><span class="hl-tag">option</span><span class="hl-pun">&gt;</span>
+  <span class="hl-pun">&lt;</span><span class="hl-tag">option</span> <span class="hl-attr">value</span><span class="hl-pun">="</span><span class="hl-val">png</span><span class="hl-pun">"&gt;</span><span class="hl-txt">Export as PNG</span><span class="hl-pun">&lt;/</span><span class="hl-tag">option</span><span class="hl-pun">&gt;</span>
+<span class="hl-pun">&lt;/</span><span class="hl-tag">fresh-dropdown-button</span><span class="hl-pun">&gt;</span></code></pre></div>
+        </div>
+
+        <div class="code-block" data-code='<fresh-dropdown-button label="Actions" variant="secondary" size="sm">
+  <option value="edit">Edit</option>
+  <option value="duplicate">Duplicate</option>
+  <option value="delete" class="danger">Delete</option>
+</fresh-dropdown-button>'>
+          <div class="code-block-header"><span><span class="code-lang">HTML</span><span class="code-context">With danger option and sm size</span></span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+          <div class="code-body"><pre><code><span class="hl-pun">&lt;</span><span class="hl-tag">fresh-dropdown-button</span>
+  <span class="hl-attr">label</span><span class="hl-pun">="</span><span class="hl-val">Actions</span><span class="hl-pun">"</span>
+  <span class="hl-attr">variant</span><span class="hl-pun">="</span><span class="hl-val">secondary</span><span class="hl-pun">"</span>
+  <span class="hl-attr">size</span><span class="hl-pun">="</span><span class="hl-val">sm</span><span class="hl-pun">"</span>
+<span class="hl-pun">&gt;</span>
+  <span class="hl-pun">&lt;</span><span class="hl-tag">option</span> <span class="hl-attr">value</span><span class="hl-pun">="</span><span class="hl-val">edit</span><span class="hl-pun">"&gt;</span><span class="hl-txt">Edit</span><span class="hl-pun">&lt;/</span><span class="hl-tag">option</span><span class="hl-pun">&gt;</span>
+  <span class="hl-pun">&lt;</span><span class="hl-tag">option</span> <span class="hl-attr">value</span><span class="hl-pun">="</span><span class="hl-val">duplicate</span><span class="hl-pun">"&gt;</span><span class="hl-txt">Duplicate</span><span class="hl-pun">&lt;/</span><span class="hl-tag">option</span><span class="hl-pun">&gt;</span>
+  <span class="hl-pun">&lt;</span><span class="hl-tag">option</span> <span class="hl-attr">value</span><span class="hl-pun">="</span><span class="hl-val">delete</span><span class="hl-pun">"</span> <span class="hl-attr">class</span><span class="hl-pun">="</span><span class="hl-val">danger</span><span class="hl-pun">"&gt;</span><span class="hl-txt">Delete</span><span class="hl-pun">&lt;/</span><span class="hl-tag">option</span><span class="hl-pun">&gt;</span>
+<span class="hl-pun">&lt;/</span><span class="hl-tag">fresh-dropdown-button</span><span class="hl-pun">&gt;</span></code></pre></div>
+        </div>
+
+        <div class="code-block" data-code="document.querySelector('fresh-dropdown-button').addEventListener('select', (e) => {
+  if (e.detail.value === 'csv') exportCSV();
+  else if (e.detail.value === 'pdf') exportPDF();
+  else if (e.detail.value === 'png') exportPNG();
+});">
+          <div class="code-block-header"><span><span class="code-lang">JS</span><span class="code-context">Handle select event</span></span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+          <div class="code-body"><pre><code>document.<span class="hl-tag">querySelector</span>(<span class="hl-val">'fresh-dropdown-button'</span>)
+  .<span class="hl-tag">addEventListener</span>(<span class="hl-val">'select'</span>, (e) =&gt; {
+    <span class="hl-attr">if</span> (e.detail.value === <span class="hl-val">'csv'</span>)      <span class="hl-tag">exportCSV</span>();
+    <span class="hl-attr">else if</span> (e.detail.value === <span class="hl-val">'pdf'</span>) <span class="hl-tag">exportPDF</span>();
+    <span class="hl-attr">else if</span> (e.detail.value === <span class="hl-val">'png'</span>) <span class="hl-tag">exportPNG</span>();
+  });</code></pre></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- TOKENS -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Tokens</span></div>
+      <table class="spec-a11y-table">
+        <thead><tr><th style="width:220px">Token</th><th style="width:200px">Role</th><th>State</th></tr></thead>
+        <tbody>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--btn-primary-bg</td><td class="spec-a11y-req">Primary button background</td><td class="spec-a11y-req">variant=primary</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--btn-primary-text</td><td class="spec-a11y-req">Primary button text</td><td class="spec-a11y-req">variant=primary</td></tr>
+          <tr class="spec-a11y-req"><td class="spec-a11y-concern">--btn-primary-hover</td><td class="spec-a11y-req">Primary hover background</td><td class="spec-a11y-req">variant=primary, hover</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--btn-secondary-border</td><td class="spec-a11y-req">Secondary border and divider</td><td class="spec-a11y-req">variant=secondary</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--btn-secondary-text</td><td class="spec-a11y-req">Secondary text</td><td class="spec-a11y-req">variant=secondary</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--btn-danger-bg</td><td class="spec-a11y-req">Danger button background</td><td class="spec-a11y-req">variant=danger</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--surface-input</td><td class="spec-a11y-req">Menu panel background</td><td class="spec-a11y-req">open</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--surface-subtle</td><td class="spec-a11y-req">Menu item hover background</td><td class="spec-a11y-req">menu item hover</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--color-danger</td><td class="spec-a11y-req">Danger menu item text</td><td class="spec-a11y-req">class="danger" on option</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--color-danger-subtle</td><td class="spec-a11y-req">Danger menu item hover background</td><td class="spec-a11y-req">class="danger" on option, hover</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ACCESSIBILITY -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Accessibility</span></div>
+      <table class="spec-a11y-table">
+        <thead><tr><th>Concern</th><th>Requirement</th></tr></thead>
+        <tbody>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">Menu button pattern</td><td class="spec-a11y-req">The trigger button has <code>aria-haspopup="menu"</code> and <code>aria-expanded</code> toggled between true and false as the menu opens and closes.</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">Menu items</td><td class="spec-a11y-req">Each menu item renders with <code>role="menuitem"</code> and keyboard focus. Disabled items carry the native <code>disabled</code> attribute and are skipped by pointer events.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<script src="components/core/fresh-dropdown-button.js"></script>
+<script src="js/spec-page.js"></script>
+
+<script type="module">
+  import { supabase } from '/systems/js/supabase-client.js'
+  var RULE_IDS = ['rules-general'];
+  var _saveTimer = null, _loading = false;
+  function getRulesSnapshot() {
+    var r = {};
+    RULE_IDS.forEach(function(id) { var l = document.getElementById(id); if (!l) return; r[id] = Array.from(l.querySelectorAll('.spec-rule-text')).map(function(el) { return el.innerHTML.trim(); }); });
+    return r;
+  }
+  function applySnapshot(saved) {
+    RULE_IDS.forEach(function(id) { var l = document.getElementById(id); if (!l) return; var rules = (saved && saved[id] && saved[id].length) ? saved[id] : window.DEFAULT_RULES[id]; l.innerHTML = rules.map(function(t) { return '<li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">' + t + '</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>'; }).join(''); });
+  }
+  async function saveRulesNow() {
+    try { var { data: { user } } = await supabase.auth.getUser(); if (!user) return; var { data: p } = await supabase.from('profiles').select('component_rules').eq('id', user.id).single(); var e = (p && p.component_rules) ? p.component_rules : {}; e['dropdown-button'] = getRulesSnapshot(); await supabase.from('profiles').update({ component_rules: e }).eq('id', user.id); } catch(e) {}
+  }
+  function schedSave() { if (_loading) return; clearTimeout(_saveTimer); _saveTimer = setTimeout(saveRulesNow, 1000); }
+  var panel = document.querySelector('.spec-rules-panel'); if (panel) new MutationObserver(schedSave).observe(panel, { childList: true, subtree: true, characterData: true });
+  ;(async function() { try { var { data: { user } } = await supabase.auth.getUser(); if (!user) return; var { data: p } = await supabase.from('profiles').select('component_rules').eq('id', user.id).single(); if (p && p.component_rules && p.component_rules['dropdown-button']) { _loading = true; applySnapshot(p.component_rules['dropdown-button']); _loading = false; } } catch(e) {} })();
+</script>
+
+<script>
+  var DEFAULT_RULES = {
+    'rules-general': [
+      'Use a dropdown button when a single concept (Export, Actions) has 2 to 6 related variants. More than 6 options are better served by a modal or separate page.',
+      'Always add <code>class="danger"</code> to destructive options (delete, remove, revoke). This renders them in red and signals caution before the user commits.',
+      'Match the <code>variant</code> to the page context. Use <code>primary</code> for the page\'s main action, <code>secondary</code> for supporting actions, and <code>ghost</code> inside dense tool rows.',
+      'Listen to the <code>select</code> event for menu picks. Use <code>e.detail.value</code> to dispatch the correct action, not the label text, which can change with localization.',
+      'Use <code>data-desc</code> on option elements or the <code>desc</code> field in JSON items to add sub-labels. Reserve this for options that genuinely need disambiguation, not as a workaround for unclear labels.'
+    ]
+  };
+  function restoreDefaults() {
+    if (!confirm('Reset all dropdown button rules to FreshDS defaults? Any edits you have made will be lost.')) return;
+    Object.keys(DEFAULT_RULES).forEach(function(id) { var l = document.getElementById(id); if (!l) return; l.innerHTML = DEFAULT_RULES[id].map(function(t) { return '<li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">' + t + '</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>'; }).join(''); });
+  }
+</script>
+</body>
+</html>

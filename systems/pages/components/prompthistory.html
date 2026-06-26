@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Auth guard: redirects to / if no session or unpaid -->
+<script type="module" src="/systems/js/auth-guard.js"></script>
+<script type="module" src="/systems/js/paid-guard.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prompt History | FreshDS</title>
+<base href="../../">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="styles/site.css">
+<link rel="stylesheet" href="tokens/primitives.css">
+<link rel="stylesheet" href="tokens/theme.css">
+<script src="js/freshds.js"></script>
+<script src="js/freshds-site.js"></script>
+<link rel="stylesheet" href="styles/components/spec-page.css">
+</head>
+<body>
+
+<div class="comp-page">
+  <h1 class="comp-title">Prompt History</h1>
+  <p class="comp-desc">Horizontally scrollable row of recent AI prompts rendered as clickable chips. Lets users quickly reuse previous queries without retyping.</p>
+
+  <!-- STATES CARD -->
+  <div class="comp-section">
+    <div class="spec-card">
+      <div class="spec-card-topbar">
+        <span class="spec-rules-title">Prompt history states</span>
+        <div class="spec-mode-switcher">
+          <button class="spec-mode-btn active" id="mode-btn-light" onclick="setSpecMode('light')"><i class="ti ti-sun"></i> Light</button>
+          <button class="spec-mode-btn" id="mode-btn-dark" onclick="setSpecMode('dark')"><i class="ti ti-moon"></i> Dark</button>
+        </div>
+      </div>
+      <div id="spec-viewport" class="spec-viewport">
+
+        <!-- Default list -->
+        <div class="spec-variant-row">
+          <div class="spec-variant-header">
+            <span class="spec-variant-name">Default</span>
+            <span class="spec-attr-chip">prompts array</span>
+            <span class="spec-variant-sep">·</span>
+            <span class="spec-variant-desc">Horizontal scrollable chip row with a "Recent" label and history icon. Prompts longer than <code>max-chars</code> are truncated with ellipsis; the full text is in the <code>title</code> tooltip.</span>
+          </div>
+          <div class="spec-variant-body">
+            <div class="spec-demos" style="flex-direction:column;align-items:stretch;width:100%;">
+              <fresh-prompt-history
+                prompts='["Summarize last quarter revenue","Show active users by region","Compare Q3 vs Q4 performance","List top 10 customers by ARR","Which campaigns had the highest conversion rate?"]'>
+              </fresh-prompt-history>
+            </div>
+          </div>
+        </div>
+
+        <!-- Empty state -->
+        <div class="spec-variant-row">
+          <div class="spec-variant-header">
+            <span class="spec-variant-name">Empty</span>
+            <span class="spec-attr-chip">prompts='[]'</span>
+            <span class="spec-variant-sep">·</span>
+            <span class="spec-variant-desc">When no prompts are in the history the component renders a "No recent prompts" message in place of chips.</span>
+          </div>
+          <div class="spec-variant-body">
+            <div class="spec-demos" style="flex-direction:column;align-items:stretch;width:100%;">
+              <fresh-prompt-history prompts='[]'></fresh-prompt-history>
+            </div>
+          </div>
+        </div>
+
+        <!-- With many items (scrollable) -->
+        <div class="spec-variant-row">
+          <div class="spec-variant-header">
+            <span class="spec-variant-name">Many prompts</span>
+            <span class="spec-attr-chip">6+ items</span>
+            <span class="spec-variant-sep">·</span>
+            <span class="spec-variant-desc">With more prompts than the container can display, the row scrolls horizontally. The scrollbar is hidden; users swipe or drag to reveal more chips.</span>
+          </div>
+          <div class="spec-variant-body">
+            <div class="spec-demos" style="flex-direction:column;align-items:stretch;width:100%;">
+              <fresh-prompt-history
+                prompts='["Revenue by product line","MoM churn rate trend","Top support ticket categories","Avg ticket resolution time","DAU vs MAU ratio","Feature adoption by tier","Pipeline value by stage","Users with expiring trials"]'>
+              </fresh-prompt-history>
+            </div>
+          </div>
+        </div>
+
+        <!-- Custom max-chars -->
+        <div class="spec-variant-row">
+          <div class="spec-variant-header">
+            <span class="spec-variant-name">Short truncation</span>
+            <span class="spec-attr-chip">max-chars="25"</span>
+            <span class="spec-variant-sep">·</span>
+            <span class="spec-variant-desc">Reduce <code>max-chars</code> to create more compact chips in narrow containers. Full text is always available in the tooltip on hover.</span>
+          </div>
+          <div class="spec-variant-body">
+            <div class="spec-demos" style="flex-direction:column;align-items:stretch;width:100%;">
+              <fresh-prompt-history
+                max-chars="25"
+                prompts='["Summarize last quarter revenue","Show active users by region","Compare Q3 vs Q4 performance","List top 10 customers by ARR"]'>
+              </fresh-prompt-history>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /spec-viewport -->
+    </div><!-- /spec-card -->
+  </div>
+
+  <!-- AI RULES -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar">
+        <span class="spec-rules-title">AI action rules</span>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <span class="spec-rules-hint">Click any rule to edit</span>
+          <button class="spec-rules-reset" onclick="restoreDefaults()"><i class="ti ti-rotate" style="font-size:10px;"></i> Restore FreshDS defaults</button>
+        </div>
+      </div>
+      <div class="spec-rules-section">
+        <div class="spec-rules-section-head">
+          <span class="spec-rules-variant">General</span>
+          <span class="spec-attr-chip">fresh-prompt-history</span>
+        </div>
+        <ul class="spec-rule-list" id="rules-general">
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Load the <code>prompts</code> array from Supabase on page load, keyed to the authenticated user ID. Never read prompt history from localStorage - it does not persist across devices and leaks data in shared environments.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Listen to the <code>select</code> event and populate the prompt input with <code>detail.prompt</code> immediately. Do not submit the prompt automatically - the user may want to edit it before sending.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Cap the history at 10-20 items maximum. When a new prompt is submitted, prepend it to the array and trim to the cap. Do not show the same prompt twice - deduplicate before saving to Supabase.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Place <code>fresh-prompt-history</code> directly above the <code>fresh-prompt-input</code> component so the spatial relationship between history and input is clear. Do not place it in a sidebar or below the input.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Adjust <code>max-chars</code> to match the available container width. A good baseline is 40 characters for full-width inputs and 25 characters for narrow chat sidebars. Always test that chips do not overflow the container before shipping.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+        </ul>
+        <button class="spec-add-rule" onclick="addRule('rules-general')"><i class="ti ti-plus"></i> Add rule</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ATTRIBUTES -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Attributes</span></div>
+      <table class="spec-a11y-table">
+        <thead><tr><th style="width:130px">Attribute</th><th style="width:180px">Values</th><th style="width:80px">Default</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">prompts</td><td class="spec-a11y-req">JSON array of strings</td><td class="spec-a11y-req">-</td><td class="spec-a11y-req">Ordered list of recent prompts. Index 0 is shown first (most recent). Renders an empty state message when the array is empty.</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">max-chars</td><td class="spec-a11y-req">number</td><td class="spec-a11y-req"><code>40</code></td><td class="spec-a11y-req">Maximum character length displayed per chip before truncation with ellipsis. Full text is shown in the native <code>title</code> tooltip.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- EVENTS -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Events</span></div>
+      <table class="spec-a11y-table">
+        <thead><tr><th style="width:130px">Event</th><th style="width:260px">Detail</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">select</td><td class="spec-a11y-req"><code>{ prompt: string, index: number }</code></td><td class="spec-a11y-req">Fires when a chip is clicked. <code>prompt</code> is the full original string (not truncated). <code>index</code> is the zero-based position in the array. Bubbles and is composed.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- CODE -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Code</span></div>
+      <div style="padding:16px 20px;display:flex;flex-direction:column;gap:0;">
+
+        <div class="code-block" data-code="<fresh-prompt-history
+  prompts='[
+    &quot;Summarize last quarter revenue&quot;,
+    &quot;Show active users by region&quot;,
+    &quot;Compare Q3 vs Q4&quot;
+  ]'>
+</fresh-prompt-history>">
+          <div class="code-block-header"><span><span class="code-lang">HTML</span><span class="code-context">Basic</span></span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+          <div class="code-body"><span class="hl-pun">&lt;</span><span class="hl-tag">fresh-prompt-history</span>
+  <span class="hl-attr">prompts</span><span class="hl-pun">=</span><span class="hl-val">'[
+    "Summarize last quarter revenue",
+    "Show active users by region",
+    "Compare Q3 vs Q4"
+  ]'</span><span class="hl-pun">&gt;
+&lt;/</span><span class="hl-tag">fresh-prompt-history</span><span class="hl-pun">&gt;</span></div>
+        </div>
+
+        <div class="code-block" data-code="const history = document.querySelector('fresh-prompt-history');
+const input   = document.querySelector('fresh-prompt-input');
+
+history.addEventListener('select', (e) => {
+  const { prompt } = e.detail;
+  input.setAttribute('value', prompt);
+  input.focus();
+});">
+          <div class="code-block-header"><span><span class="code-lang">JS</span><span class="code-context">Populate prompt input on select</span></span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+          <div class="code-body"><span class="hl-txt">const</span> <span class="hl-txt">history</span> <span class="hl-pun">=</span> <span class="hl-txt">document</span><span class="hl-pun">.</span><span class="hl-txt">querySelector</span><span class="hl-pun">(</span><span class="hl-val">'fresh-prompt-history'</span><span class="hl-pun">);</span>
+<span class="hl-txt">const</span> <span class="hl-txt">input</span>   <span class="hl-pun">=</span> <span class="hl-txt">document</span><span class="hl-pun">.</span><span class="hl-txt">querySelector</span><span class="hl-pun">(</span><span class="hl-val">'fresh-prompt-input'</span><span class="hl-pun">);</span>
+
+<span class="hl-txt">history</span><span class="hl-pun">.</span><span class="hl-txt">addEventListener</span><span class="hl-pun">(</span><span class="hl-val">'select'</span><span class="hl-pun">, (</span><span class="hl-txt">e</span><span class="hl-pun">) =&gt; {</span>
+  <span class="hl-txt">const</span> <span class="hl-pun">{ </span><span class="hl-txt">prompt</span><span class="hl-pun"> } =</span> <span class="hl-txt">e</span><span class="hl-pun">.</span><span class="hl-txt">detail</span><span class="hl-pun">;</span>
+  <span class="hl-txt">input</span><span class="hl-pun">.</span><span class="hl-txt">setAttribute</span><span class="hl-pun">(</span><span class="hl-val">'value'</span><span class="hl-pun">,</span> <span class="hl-txt">prompt</span><span class="hl-pun">);</span>
+  <span class="hl-txt">input</span><span class="hl-pun">.</span><span class="hl-txt">focus</span><span class="hl-pun">();</span>
+<span class="hl-pun">});</span></div>
+        </div>
+
+        <div class="code-block" data-code="// Load from Supabase and prepend new prompts
+async function loadHistory(userId) {
+  const { data } = await supabase
+    .from('profiles')
+    .select('prompt_history')
+    .eq('id', userId)
+    .single();
+
+  const prompts = data?.prompt_history || [];
+  document.querySelector('fresh-prompt-history')
+    .setAttribute('prompts', JSON.stringify(prompts));
+}
+
+async function addToHistory(userId, newPrompt) {
+  const el = document.querySelector('fresh-prompt-history');
+  const current = JSON.parse(el.getAttribute('prompts') || '[]');
+  const deduped = [newPrompt, ...current.filter(p => p !== newPrompt)].slice(0, 20);
+  el.setAttribute('prompts', JSON.stringify(deduped));
+  await supabase.from('profiles')
+    .update({ prompt_history: deduped })
+    .eq('id', userId);
+}">
+          <div class="code-block-header"><span><span class="code-lang">JS</span><span class="code-context">Supabase load and update</span></span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+          <div class="code-body"><span class="hl-com">// Load from Supabase and prepend new prompts</span>
+<span class="hl-txt">async function</span> <span class="hl-txt">loadHistory</span><span class="hl-pun">(</span><span class="hl-txt">userId</span><span class="hl-pun">) {</span>
+  <span class="hl-txt">const</span> <span class="hl-pun">{ </span><span class="hl-txt">data</span><span class="hl-pun"> } =</span> <span class="hl-txt">await</span> <span class="hl-txt">supabase</span>
+    <span class="hl-pun">.</span><span class="hl-txt">from</span><span class="hl-pun">(</span><span class="hl-val">'profiles'</span><span class="hl-pun">)</span>
+    <span class="hl-pun">.</span><span class="hl-txt">select</span><span class="hl-pun">(</span><span class="hl-val">'prompt_history'</span><span class="hl-pun">)</span>
+    <span class="hl-pun">.</span><span class="hl-txt">eq</span><span class="hl-pun">(</span><span class="hl-val">'id'</span><span class="hl-pun">,</span> <span class="hl-txt">userId</span><span class="hl-pun">).</span><span class="hl-txt">single</span><span class="hl-pun">();</span>
+  <span class="hl-txt">const</span> <span class="hl-txt">prompts</span> <span class="hl-pun">=</span> <span class="hl-txt">data</span><span class="hl-pun">?.</span><span class="hl-txt">prompt_history</span> <span class="hl-pun">||</span> <span class="hl-pun">[];</span>
+  <span class="hl-txt">document</span><span class="hl-pun">.</span><span class="hl-txt">querySelector</span><span class="hl-pun">(</span><span class="hl-val">'fresh-prompt-history'</span><span class="hl-pun">)</span>
+    <span class="hl-pun">.</span><span class="hl-txt">setAttribute</span><span class="hl-pun">(</span><span class="hl-val">'prompts'</span><span class="hl-pun">,</span> <span class="hl-txt">JSON</span><span class="hl-pun">.</span><span class="hl-txt">stringify</span><span class="hl-pun">(</span><span class="hl-txt">prompts</span><span class="hl-pun">));</span>
+<span class="hl-pun">}</span></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- TOKENS -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Tokens</span></div>
+      <table class="spec-a11y-table">
+        <thead><tr><th style="width:240px">Token</th><th style="width:200px">Role</th><th>State</th></tr></thead>
+        <tbody>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--text-tertiary</td><td class="spec-a11y-req">Label text and icon</td><td class="spec-a11y-req">all</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--surface-overlay</td><td class="spec-a11y-req">Chip background</td><td class="spec-a11y-req">default</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--surface-border-strong</td><td class="spec-a11y-req">Chip border</td><td class="spec-a11y-req">default</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--text-secondary</td><td class="spec-a11y-req">Chip text color</td><td class="spec-a11y-req">default</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--color-ai-text</td><td class="spec-a11y-req">Chip text and border on hover</td><td class="spec-a11y-req">hover</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--badge-primary-bg</td><td class="spec-a11y-req">Chip background on hover</td><td class="spec-a11y-req">hover</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--font-size-xs</td><td class="spec-a11y-req">Label font size</td><td class="spec-a11y-req">all</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--font-size-sm</td><td class="spec-a11y-req">Chip text font size</td><td class="spec-a11y-req">all</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--space-2</td><td class="spec-a11y-req">Gap between chips</td><td class="spec-a11y-req">all</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ACCESSIBILITY -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Accessibility</span></div>
+      <table class="spec-a11y-table">
+        <thead><tr><th>Concern</th><th>Requirement</th></tr></thead>
+        <tbody>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">list role</td><td class="spec-a11y-req">The chip row has <code>role="list"</code> and <code>aria-label="Recent prompts"</code>. Screen readers can navigate the list of prompts before selecting one.</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">full text tooltip</td><td class="spec-a11y-req">Each chip has a native <code>title</code> attribute set to the full, untruncated prompt text. This exposes the complete prompt to screen readers and sighted users hovering over truncated chips.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<script src="components/ai/fresh-prompt-history.js"></script>
+<script src="js/spec-page.js"></script>
+
+<script type="module">
+  import { supabase } from '/systems/js/supabase-client.js'
+  var RULE_IDS = ['rules-general'];
+  var _saveTimer = null, _loading = false;
+  function getRulesSnapshot() {
+    var r = {};
+    RULE_IDS.forEach(function(id) { var l = document.getElementById(id); if (!l) return; r[id] = Array.from(l.querySelectorAll('.spec-rule-text')).map(function(el) { return el.innerHTML.trim(); }); });
+    return r;
+  }
+  function applySnapshot(saved) {
+    RULE_IDS.forEach(function(id) { var l = document.getElementById(id); if (!l) return; var rules = (saved && saved[id] && saved[id].length) ? saved[id] : window.DEFAULT_RULES[id]; l.innerHTML = rules.map(function(t) { return '<li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">' + t + '</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>'; }).join(''); });
+  }
+  async function saveRulesNow() {
+    try { var { data: { user } } = await supabase.auth.getUser(); if (!user) return; var { data: p } = await supabase.from('profiles').select('component_rules').eq('id', user.id).single(); var e = (p && p.component_rules) ? p.component_rules : {}; e.prompthistory = getRulesSnapshot(); await supabase.from('profiles').update({ component_rules: e }).eq('id', user.id); } catch(e) {}
+  }
+  function schedSave() { if (_loading) return; clearTimeout(_saveTimer); _saveTimer = setTimeout(saveRulesNow, 1000); }
+  var panel = document.querySelector('.spec-rules-panel'); if (panel) new MutationObserver(schedSave).observe(panel, { childList: true, subtree: true, characterData: true });
+  ;(async function() { try { var { data: { user } } = await supabase.auth.getUser(); if (!user) return; var { data: p } = await supabase.from('profiles').select('component_rules').eq('id', user.id).single(); if (p && p.component_rules && p.component_rules.prompthistory) { _loading = true; applySnapshot(p.component_rules.prompthistory); _loading = false; } } catch(e) {} })();
+</script>
+
+<script>
+  var DEFAULT_RULES = {
+    'rules-general': [
+      'Load the <code>prompts</code> array from Supabase on page load, keyed to the authenticated user ID. Never read prompt history from localStorage - it does not persist across devices and leaks data in shared environments.',
+      'Listen to the <code>select</code> event and populate the prompt input with <code>detail.prompt</code> immediately. Do not submit the prompt automatically - the user may want to edit it before sending.',
+      'Cap the history at 10-20 items maximum. When a new prompt is submitted, prepend it to the array and trim to the cap. Do not show the same prompt twice - deduplicate before saving to Supabase.',
+      'Place <code>fresh-prompt-history</code> directly above the <code>fresh-prompt-input</code> component so the spatial relationship between history and input is clear. Do not place it in a sidebar or below the input.',
+      'Adjust <code>max-chars</code> to match the available container width. A good baseline is 40 characters for full-width inputs and 25 characters for narrow chat sidebars. Always test that chips do not overflow the container before shipping.'
+    ]
+  };
+  function restoreDefaults() {
+    if (!confirm('Reset all prompt history rules to FreshDS defaults? Any edits you have made will be lost.')) return;
+    Object.keys(DEFAULT_RULES).forEach(function(id) { var l = document.getElementById(id); if (!l) return; l.innerHTML = DEFAULT_RULES[id].map(function(t) { return '<li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">' + t + '</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>'; }).join(''); });
+  }
+</script>
+</body>
+</html>

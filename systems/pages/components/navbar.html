@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Auth guard: redirects to / if no session or unpaid -->
+<script type="module" src="/systems/js/auth-guard.js"></script>
+<script type="module" src="/systems/js/paid-guard.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Navbar | FreshDS</title>
+<base href="../../">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="styles/site.css">
+<link rel="stylesheet" href="tokens/primitives.css">
+<link rel="stylesheet" href="tokens/theme.css">
+<script src="js/freshds.js"></script>
+<script src="js/freshds-site.js"></script>
+<link rel="stylesheet" href="styles/components/spec-page.css">
+<style>
+  .logo-dark { display: none; }
+  [data-mode="dark"] .logo-light { display: none; }
+  [data-mode="dark"] .logo-dark { display: block; }
+</style>
+</head>
+<body>
+
+<div class="comp-page">
+  <h1 class="comp-title">Navbar</h1>
+  <p class="comp-desc">Top-level application header with three composable slots: brand, nav links, and actions. Sticks to the top of its container and spans full width.</p>
+
+  <!-- STATES CARD -->
+  <div class="comp-section">
+    <div class="spec-card">
+      <div class="spec-card-topbar">
+        <span class="spec-rules-title">Navbar states</span>
+        <div class="spec-mode-switcher">
+          <button class="spec-mode-btn active" id="mode-btn-light" onclick="setSpecMode('light')"><i class="ti ti-sun"></i> Light</button>
+          <button class="spec-mode-btn" id="mode-btn-dark" onclick="setSpecMode('dark')"><i class="ti ti-moon"></i> Dark</button>
+        </div>
+      </div>
+      <div id="spec-viewport" class="spec-viewport">
+
+        <!-- Logged in -->
+        <div class="spec-variant-row">
+          <div class="spec-variant-header">
+            <span class="spec-variant-name">Logged in</span>
+            <span class="spec-variant-sep">·</span>
+            <span class="spec-variant-desc">Logo and configured action icons with user avatar.</span>
+          </div>
+          <div class="spec-variant-body">
+            <div class="spec-demos" style="display:block;padding:0;width:100%;">
+              <fresh-navbar id="nb-spec-loggedin">
+                <div slot="actions" id="nb-spec-actions-in" style="display:flex;align-items:center;gap:8px">
+                  <fresh-button variant="ghost" icon-only size="sm" aria-label="Search"><i class="ti ti-search"></i></fresh-button>
+                  <fresh-button variant="ghost" icon-only size="sm" aria-label="Notifications"><i class="ti ti-bell"></i></fresh-button>
+                  <fresh-avatar name="Jane Smith" size="sm"></fresh-avatar>
+                </div>
+              </fresh-navbar>
+            </div>
+          </div>
+        </div>
+
+        <!-- Logged out -->
+        <div class="spec-variant-row">
+          <div class="spec-variant-header">
+            <span class="spec-variant-name">Logged out</span>
+            <span class="spec-variant-sep">·</span>
+            <span class="spec-variant-desc">Logo with Sign in and Sign up CTAs, no icon actions.</span>
+          </div>
+          <div class="spec-variant-body">
+            <div class="spec-demos" style="display:block;padding:0;width:100%;">
+              <fresh-navbar id="nb-spec-loggedout">
+                <div slot="actions" style="display:flex;align-items:center;gap:8px">
+                  <fresh-button variant="secondary" size="sm">Sign in</fresh-button>
+                  <fresh-button variant="primary" size="sm">Sign up</fresh-button>
+                </div>
+              </fresh-navbar>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- AI RULES -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar">
+        <span class="spec-rules-title">AI action rules</span>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <span class="spec-rules-hint">Click any rule to edit</span>
+          <button class="spec-rules-reset" onclick="restoreDefaults()"><i class="ti ti-rotate" style="font-size:10px;"></i> Restore FreshDS defaults</button>
+        </div>
+      </div>
+      <div class="spec-rules-section">
+        <div class="spec-rules-section-head">
+          <span class="spec-rules-variant">General</span>
+          <span class="spec-attr-chip">fresh-navbar</span>
+        </div>
+        <ul class="spec-rule-list" id="rules-general">
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Use exactly one <code>fresh-navbar</code> per page at the very top of the content area. Never nest navbars.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Add <code>hamburger</code> only when a collapsible sidebar or mobile drawer is present on the same page. Wire the <code>hamburger-click</code> event to toggle that panel.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Place the user avatar or account menu in the <code>actions</code> slot on the far right, always the last element in that slot.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Limit the <code>nav</code> slot to top-level destination links only. Section or sub-page links belong in a sidebar or secondary nav, not in the navbar.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Cap the <code>nav</code> slot at 5 destination items. Beyond 5, links overflow the bar at typical viewport widths. Move lower-priority destinations to a secondary menu or sidebar. Use <code>fresh-topbar-menu</code> with <code>size="sm"</code> as the nav slot content to get built-in hover and active states without custom styling.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+        </ul>
+        <button class="spec-add-rule" onclick="addRule('rules-general')"><i class="ti ti-plus"></i> Add rule</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLOTS -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Slots</span></div>
+      <table class="spec-a11y-table">
+        <thead><tr><th style="width:130px">Slot</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">brand</td><td class="spec-a11y-req">Logo or wordmark. Defaults to the FreshDS Acme SVG when omitted. Positioned left, before the nav slot.</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">nav</td><td class="spec-a11y-req">Navigation links. Positioned left, after the brand. Use a <code>&lt;nav&gt;</code> element with anchor tags inside.</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">actions</td><td class="spec-a11y-req">Right-side controls: search, notifications, avatar, CTA buttons.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ATTRIBUTES -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Attributes</span></div>
+      <table class="spec-a11y-table">
+        <thead><tr><th style="width:130px">Attribute</th><th style="width:220px">Values</th><th style="width:80px">Default</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">hamburger</td><td class="spec-a11y-req">boolean</td><td class="spec-a11y-req">-</td><td class="spec-a11y-req">Adds a menu toggle icon button to the left of the brand slot. Fires <code>hamburger-click</code> on press.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- EVENTS -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Events</span></div>
+      <table class="spec-a11y-table">
+        <thead><tr><th style="width:130px">Event</th><th style="width:220px">Detail</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">hamburger-click</td><td class="spec-a11y-req">none</td><td class="spec-a11y-req">Fired when the hamburger button is clicked. Only available when <code>hamburger</code> attribute is present. Bubbles and is composed.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- CODE -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Code</span></div>
+      <div style="padding:16px 20px;display:flex;flex-direction:column;gap:0;">
+
+        <div class="code-block" data-code="&lt;fresh-navbar&gt;
+  &lt;fresh-topbar-menu slot=&quot;nav&quot; size=&quot;sm&quot;
+    tabs='[{&quot;key&quot;:&quot;dashboard&quot;,&quot;label&quot;:&quot;Dashboard&quot;},{&quot;key&quot;:&quot;projects&quot;,&quot;label&quot;:&quot;Projects&quot;},{&quot;key&quot;:&quot;settings&quot;,&quot;label&quot;:&quot;Settings&quot;}]'
+    active=&quot;projects&quot;&gt;
+  &lt;/fresh-topbar-menu&gt;
+  &lt;div slot=&quot;actions&quot; style=&quot;display:flex;align-items:center;gap:8px&quot;&gt;
+    &lt;fresh-button variant=&quot;ghost&quot; icon-only size=&quot;sm&quot; aria-label=&quot;Search&quot;&gt;&lt;i class=&quot;ti ti-search&quot;&gt;&lt;/i&gt;&lt;/fresh-button&gt;
+    &lt;fresh-avatar name=&quot;Jane Smith&quot; size=&quot;sm&quot;&gt;&lt;/fresh-avatar&gt;
+  &lt;/div&gt;
+&lt;/fresh-navbar&gt;">
+          <div class="code-block-header"><span><span class="code-lang">HTML</span><span class="code-context">Default with nav and actions</span></span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+          <div class="code-body"><span class="hl-pun">&lt;</span><span class="hl-tag">fresh-navbar</span><span class="hl-pun">&gt;</span>
+  <span class="hl-pun">&lt;</span><span class="hl-tag">fresh-topbar-menu</span> <span class="hl-attr">slot</span><span class="hl-pun">=</span><span class="hl-val">"nav"</span> <span class="hl-attr">size</span><span class="hl-pun">=</span><span class="hl-val">"sm"</span>
+    <span class="hl-attr">tabs</span><span class="hl-pun">=</span><span class="hl-val">'[{"key":"dashboard","label":"Dashboard"},{"key":"projects","label":"Projects"},{"key":"settings","label":"Settings"}]'</span>
+    <span class="hl-attr">active</span><span class="hl-pun">=</span><span class="hl-val">"projects"</span><span class="hl-pun">&gt;</span>
+  <span class="hl-pun">&lt;/</span><span class="hl-tag">fresh-topbar-menu</span><span class="hl-pun">&gt;</span>
+  <span class="hl-pun">&lt;</span><span class="hl-tag">div</span> <span class="hl-attr">slot</span><span class="hl-pun">=</span><span class="hl-val">"actions"</span> <span class="hl-attr">style</span><span class="hl-pun">=</span><span class="hl-val">"display:flex;align-items:center;gap:8px"</span><span class="hl-pun">&gt;</span>
+    <span class="hl-pun">&lt;</span><span class="hl-tag">fresh-button</span> <span class="hl-attr">variant</span><span class="hl-pun">=</span><span class="hl-val">"ghost"</span> <span class="hl-attr">icon-only</span> <span class="hl-attr">size</span><span class="hl-pun">=</span><span class="hl-val">"sm"</span> <span class="hl-attr">aria-label</span><span class="hl-pun">=</span><span class="hl-val">"Search"</span><span class="hl-pun">&gt;&lt;</span><span class="hl-tag">i</span> <span class="hl-attr">class</span><span class="hl-pun">=</span><span class="hl-val">"ti ti-search"</span><span class="hl-pun">&gt;&lt;/</span><span class="hl-tag">i</span><span class="hl-pun">&gt;&lt;/</span><span class="hl-tag">fresh-button</span><span class="hl-pun">&gt;</span>
+    <span class="hl-pun">&lt;</span><span class="hl-tag">fresh-avatar</span> <span class="hl-attr">name</span><span class="hl-pun">=</span><span class="hl-val">"Jane Smith"</span> <span class="hl-attr">size</span><span class="hl-pun">=</span><span class="hl-val">"sm"</span><span class="hl-pun">&gt;&lt;/</span><span class="hl-tag">fresh-avatar</span><span class="hl-pun">&gt;</span>
+  <span class="hl-pun">&lt;/</span><span class="hl-tag">div</span><span class="hl-pun">&gt;</span>
+<span class="hl-pun">&lt;/</span><span class="hl-tag">fresh-navbar</span><span class="hl-pun">&gt;</span></div>
+        </div>
+
+        <div class="code-block" data-code="&lt;fresh-navbar hamburger id=&quot;app-navbar&quot;&gt;
+  &lt;fresh-topbar-menu slot=&quot;nav&quot; size=&quot;sm&quot;
+    tabs='[{&quot;key&quot;:&quot;dashboard&quot;,&quot;label&quot;:&quot;Dashboard&quot;}]'
+    active=&quot;dashboard&quot; id=&quot;nav-tabs&quot;&gt;
+  &lt;/fresh-topbar-menu&gt;
+  &lt;div slot=&quot;actions&quot;&gt;
+    &lt;fresh-avatar name=&quot;Jane Smith&quot; size=&quot;sm&quot;&gt;&lt;/fresh-avatar&gt;
+  &lt;/div&gt;
+&lt;/fresh-navbar&gt;
+&lt;script&gt;
+  document.getElementById('app-navbar').addEventListener('hamburger-click', () =&gt; {
+    document.getElementById('sidebar').toggleAttribute('collapsed');
+  });
+  document.getElementById('nav-tabs').addEventListener('change', e =&gt; {
+    // navigate to e.detail.key
+  });
+&lt;/script&gt;">
+          <div class="code-block-header"><span><span class="code-lang">HTML</span><span class="code-context">Hamburger with sidebar toggle</span></span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+          <div class="code-body"><span class="hl-pun">&lt;</span><span class="hl-tag">fresh-navbar</span> <span class="hl-attr">hamburger</span> <span class="hl-attr">id</span><span class="hl-pun">=</span><span class="hl-val">"app-navbar"</span><span class="hl-pun">&gt;</span>
+  <span class="hl-pun">&lt;</span><span class="hl-tag">fresh-topbar-menu</span> <span class="hl-attr">slot</span><span class="hl-pun">=</span><span class="hl-val">"nav"</span> <span class="hl-attr">size</span><span class="hl-pun">=</span><span class="hl-val">"sm"</span>
+    <span class="hl-attr">tabs</span><span class="hl-pun">=</span><span class="hl-val">'[{"key":"dashboard","label":"Dashboard"}]'</span>
+    <span class="hl-attr">active</span><span class="hl-pun">=</span><span class="hl-val">"dashboard"</span> <span class="hl-attr">id</span><span class="hl-pun">=</span><span class="hl-val">"nav-tabs"</span><span class="hl-pun">&gt;</span>
+  <span class="hl-pun">&lt;/</span><span class="hl-tag">fresh-topbar-menu</span><span class="hl-pun">&gt;</span>
+  <span class="hl-pun">&lt;</span><span class="hl-tag">div</span> <span class="hl-attr">slot</span><span class="hl-pun">=</span><span class="hl-val">"actions"</span><span class="hl-pun">&gt;</span>
+    <span class="hl-pun">&lt;</span><span class="hl-tag">fresh-avatar</span> <span class="hl-attr">name</span><span class="hl-pun">=</span><span class="hl-val">"Jane Smith"</span> <span class="hl-attr">size</span><span class="hl-pun">=</span><span class="hl-val">"sm"</span><span class="hl-pun">&gt;&lt;/</span><span class="hl-tag">fresh-avatar</span><span class="hl-pun">&gt;</span>
+  <span class="hl-pun">&lt;/</span><span class="hl-tag">div</span><span class="hl-pun">&gt;</span>
+<span class="hl-pun">&lt;/</span><span class="hl-tag">fresh-navbar</span><span class="hl-pun">&gt;</span>
+<span class="hl-pun">&lt;</span><span class="hl-tag">script</span><span class="hl-pun">&gt;</span>
+  <span class="hl-txt">document.getElementById('app-navbar').addEventListener('hamburger-click', () =&gt; {</span>
+    <span class="hl-txt">document.getElementById('sidebar').toggleAttribute('collapsed');</span>
+  <span class="hl-txt">});</span>
+  <span class="hl-txt">document.getElementById('nav-tabs').addEventListener('change', e =&gt; {</span>
+    <span class="hl-cmt">// navigate to e.detail.key</span>
+  <span class="hl-txt">});</span>
+<span class="hl-pun">&lt;/</span><span class="hl-tag">script</span><span class="hl-pun">&gt;</span></div>
+        </div>
+
+        <div class="code-block" data-code="&lt;fresh-navbar&gt;
+  &lt;div slot=&quot;brand&quot; style=&quot;display:flex;align-items:center;gap:8px&quot;&gt;
+    &lt;img src=&quot;/logo.svg&quot; alt=&quot;Acme&quot; height=&quot;24&quot;&gt;
+  &lt;/div&gt;
+  &lt;div slot=&quot;actions&quot; style=&quot;display:flex;align-items:center;gap:8px&quot;&gt;
+    &lt;fresh-button variant=&quot;secondary&quot; size=&quot;sm&quot;&gt;Sign in&lt;/fresh-button&gt;
+    &lt;fresh-button variant=&quot;primary&quot; size=&quot;sm&quot;&gt;Get started&lt;/fresh-button&gt;
+  &lt;/div&gt;
+&lt;/fresh-navbar&gt;">
+          <div class="code-block-header"><span><span class="code-lang">HTML</span><span class="code-context">Custom brand with CTA buttons</span></span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+          <div class="code-body"><span class="hl-pun">&lt;</span><span class="hl-tag">fresh-navbar</span><span class="hl-pun">&gt;</span>
+  <span class="hl-pun">&lt;</span><span class="hl-tag">div</span> <span class="hl-attr">slot</span><span class="hl-pun">=</span><span class="hl-val">"brand"</span> <span class="hl-attr">style</span><span class="hl-pun">=</span><span class="hl-val">"display:flex;align-items:center;gap:8px"</span><span class="hl-pun">&gt;</span>
+    <span class="hl-pun">&lt;</span><span class="hl-tag">img</span> <span class="hl-attr">src</span><span class="hl-pun">=</span><span class="hl-val">"/logo.svg"</span> <span class="hl-attr">alt</span><span class="hl-pun">=</span><span class="hl-val">"Acme"</span> <span class="hl-attr">height</span><span class="hl-pun">=</span><span class="hl-val">"24"</span><span class="hl-pun">&gt;</span>
+  <span class="hl-pun">&lt;/</span><span class="hl-tag">div</span><span class="hl-pun">&gt;</span>
+  <span class="hl-pun">&lt;</span><span class="hl-tag">div</span> <span class="hl-attr">slot</span><span class="hl-pun">=</span><span class="hl-val">"actions"</span> <span class="hl-attr">style</span><span class="hl-pun">=</span><span class="hl-val">"display:flex;align-items:center;gap:8px"</span><span class="hl-pun">&gt;</span>
+    <span class="hl-pun">&lt;</span><span class="hl-tag">fresh-button</span> <span class="hl-attr">variant</span><span class="hl-pun">=</span><span class="hl-val">"secondary"</span> <span class="hl-attr">size</span><span class="hl-pun">=</span><span class="hl-val">"sm"</span><span class="hl-pun">&gt;</span><span class="hl-txt">Sign in</span><span class="hl-pun">&lt;/</span><span class="hl-tag">fresh-button</span><span class="hl-pun">&gt;</span>
+    <span class="hl-pun">&lt;</span><span class="hl-tag">fresh-button</span> <span class="hl-attr">variant</span><span class="hl-pun">=</span><span class="hl-val">"primary"</span> <span class="hl-attr">size</span><span class="hl-pun">=</span><span class="hl-val">"sm"</span><span class="hl-pun">&gt;</span><span class="hl-txt">Get started</span><span class="hl-pun">&lt;/</span><span class="hl-tag">fresh-button</span><span class="hl-pun">&gt;</span>
+  <span class="hl-pun">&lt;/</span><span class="hl-tag">div</span><span class="hl-pun">&gt;</span>
+<span class="hl-pun">&lt;/</span><span class="hl-tag">fresh-navbar</span><span class="hl-pun">&gt;</span></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- TOKENS -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Tokens</span></div>
+      <table class="spec-a11y-table">
+        <thead><tr><th style="width:220px">Token</th><th style="width:200px">Role</th><th>State</th></tr></thead>
+        <tbody>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--surface-nav</td><td class="spec-a11y-req">Bar background</td><td class="spec-a11y-req">all</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--surface-border</td><td class="spec-a11y-req">Bottom border</td><td class="spec-a11y-req">border on</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--surface-subtle</td><td class="spec-a11y-req">Hamburger hover background</td><td class="spec-a11y-req">hover</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--text-primary</td><td class="spec-a11y-req">Brand text, active nav link</td><td class="spec-a11y-req">default</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--text-secondary</td><td class="spec-a11y-req">Inactive nav links, hamburger icon</td><td class="spec-a11y-req">default</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--topbar-h</td><td class="spec-a11y-req">Navbar height</td><td class="spec-a11y-req">all (default 52px)</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--space-6</td><td class="spec-a11y-req">Horizontal padding</td><td class="spec-a11y-req">all</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--radius-md</td><td class="spec-a11y-req">Hamburger button and nav link radius</td><td class="spec-a11y-req">all</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ACCESSIBILITY -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Accessibility</span></div>
+      <div style="padding:12px 24px 14px;border-bottom:1px solid #d4d4d7;">
+        <p style="font-size:13px;color:#555;line-height:1.6;margin:0;">Navbar satisfies all <a href="components.html#accessibility" target="_parent" style="color:#5b6af7;text-decoration:none;font-weight:500;">universal accessibility concerns</a>. Component-specific concerns are below.</p>
+      </div>
+      <table class="spec-a11y-table">
+        <thead><tr><th>Concern</th><th>Requirement</th></tr></thead>
+        <tbody>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">landmark</td><td class="spec-a11y-req">The bar renders as a <code>&lt;header&gt;</code> element, providing a navigation landmark automatically. Do not wrap it in another <code>&lt;header&gt;</code>.</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">hamburger label</td><td class="spec-a11y-req">The hamburger button has a built-in <code>aria-label="Open menu"</code>. Update this via <code>::part(hamburger)</code> if the controlled panel has a more specific name.</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">icon buttons</td><td class="spec-a11y-req">Any icon-only button placed in the <code>actions</code> slot must have an <code>aria-label</code> describing the action (e.g. "Search", "Notifications").</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<script src="components/core/fresh-button.js"></script>
+<script src="components/data/fresh-avatar.js"></script>
+<script src="components/navigation/fresh-topbar-menu.js"></script>
+<script src="components/navigation/fresh-navbar.js"></script>
+<script src="js/spec-page.js"></script>
+
+<script>
+  (function() {
+    var NB_ICONS = [
+      { key: 'search',    icon: 'ti-search',         label: 'Search' },
+      { key: 'bell',      icon: 'ti-bell',           label: 'Notifications' },
+      { key: 'help',      icon: 'ti-help-circle',    label: 'Help' },
+      { key: 'plus',      icon: 'ti-circle-plus',    label: 'New' },
+      { key: 'grid',      icon: 'ti-grid-dots',      label: 'Apps' },
+      { key: 'settings',  icon: 'ti-settings-2',     label: 'Settings' },
+      { key: 'messages',  icon: 'ti-message-circle', label: 'Messages' },
+      { key: 'bookmark',  icon: 'ti-bookmark',       label: 'Saved' }
+    ];
+
+    var cfg = { logoUrl: '', logoUrlDark: '', activeIcons: ['search', 'bell'] };
+    try {
+      var s = localStorage.getItem('freshds-nav-cfg');
+      if (s) {
+        var stored = JSON.parse(s);
+        cfg = Object.assign(cfg, stored.navbar_cfg || stored);
+      }
+    } catch(e) {}
+
+    // Apply logo to both navbar instances (remove any previous brand slot first)
+    var _effLight = cfg.logoUrl    || cfg.logoUrlDark;
+    var _effDark  = cfg.logoUrlDark || cfg.logoUrl;
+    ['nb-spec-loggedin', 'nb-spec-loggedout'].forEach(function(id) {
+      var navbar = document.getElementById(id);
+      if (!navbar) return;
+      navbar.querySelectorAll('[slot="brand"]').forEach(function(el) { el.remove(); });
+      if (_effLight || _effDark) {
+        var brandDiv = document.createElement('div');
+        brandDiv.setAttribute('slot', 'brand');
+        var logoHtml;
+        if (_effLight === _effDark) {
+          logoHtml = '<img src="' + _effLight.replace(/"/g, '&quot;') + '" alt="Logo" style="height:24px;max-width:140px;object-fit:contain">';
+        } else {
+          logoHtml = '<img class="logo-light" src="' + _effLight.replace(/"/g, '&quot;') + '" alt="Logo" style="height:24px;max-width:140px;object-fit:contain">' +
+                     '<img class="logo-dark"  src="' + _effDark.replace(/"/g, '&quot;')  + '" alt="Logo" style="height:24px;max-width:140px;object-fit:contain">';
+        }
+        brandDiv.innerHTML = logoHtml;
+        navbar.insertBefore(brandDiv, navbar.firstChild);
+      }
+    });
+
+    // Apply configured action icons + avatar to logged-in navbar
+    var actionsIn = document.getElementById('nb-spec-actions-in');
+    if (actionsIn) {
+      var iconsHtml = (cfg.activeIcons || []).map(function(key) {
+        var ic = NB_ICONS.filter(function(i) { return i.key === key; })[0];
+        return ic ? '<fresh-button variant="ghost" icon-only size="sm" aria-label="' + ic.label + '"><i class="ti ' + ic.icon + '"></i></fresh-button>' : '';
+      }).join('');
+      actionsIn.innerHTML = iconsHtml + '<fresh-avatar name="Jane Smith" size="sm"></fresh-avatar>';
+    }
+  })();
+</script>
+
+<script type="module">
+  import { supabase } from '/systems/js/supabase-client.js'
+  var RULE_IDS = ['rules-general'];
+  var _saveTimer = null, _loading = false;
+  function getRulesSnapshot() {
+    var r = {};
+    RULE_IDS.forEach(function(id) { var l = document.getElementById(id); if (!l) return; r[id] = Array.from(l.querySelectorAll('.spec-rule-text')).map(function(el) { return el.innerHTML.trim(); }); });
+    return r;
+  }
+  function applySnapshot(saved) {
+    RULE_IDS.forEach(function(id) { var l = document.getElementById(id); if (!l) return; var rules = (saved && saved[id] && saved[id].length) ? saved[id] : window.DEFAULT_RULES[id]; l.innerHTML = rules.map(function(t) { return '<li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">' + t + '</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>'; }).join(''); }); }
+  async function saveRulesNow() {
+    try { var { data: { user } } = await supabase.auth.getUser(); if (!user) return; var { data: p } = await supabase.from('profiles').select('component_rules').eq('id', user.id).single(); var e = (p && p.component_rules) ? p.component_rules : {}; e.navbar = getRulesSnapshot(); await supabase.from('profiles').update({ component_rules: e }).eq('id', user.id); } catch(e) {}
+  }
+  function schedSave() { if (_loading) return; clearTimeout(_saveTimer); _saveTimer = setTimeout(saveRulesNow, 1000); }
+  var panel = document.querySelector('.spec-rules-panel'); if (panel) new MutationObserver(schedSave).observe(panel, { childList: true, subtree: true, characterData: true });
+  ;(async function() { try { var { data: { user } } = await supabase.auth.getUser(); if (!user) return; var { data: p } = await supabase.from('profiles').select('component_rules').eq('id', user.id).single(); if (p && p.component_rules && p.component_rules.navbar) { _loading = true; applySnapshot(p.component_rules.navbar); _loading = false; } } catch(e) {} })();
+</script>
+
+<script>
+  var DEFAULT_RULES = {
+    'rules-general': [
+      'Use exactly one <code>fresh-navbar</code> per page at the very top of the content area. Never nest navbars.',
+      'Add <code>hamburger</code> only when a collapsible sidebar or mobile drawer is present on the same page. Wire the <code>hamburger-click</code> event to toggle that panel.',
+      'Place the user avatar or account menu in the <code>actions</code> slot on the far right, always the last element in that slot.',
+      'Limit the <code>nav</code> slot to top-level destination links only. Section or sub-page links belong in a sidebar or secondary nav, not in the navbar.',
+      'Cap the <code>nav</code> slot at 5 destination items. Beyond 5, links overflow the bar at typical viewport widths. Move lower-priority destinations to a secondary menu or sidebar. Use <code>fresh-topbar-menu</code> with <code>size="sm"</code> as the nav slot content to get built-in hover and active states without custom styling.'
+    ]
+  };
+  function restoreDefaults() {
+    if (!confirm('Reset all navbar rules to FreshDS defaults? Any edits you have made will be lost.')) return;
+    Object.keys(DEFAULT_RULES).forEach(function(id) { var l = document.getElementById(id); if (!l) return; l.innerHTML = DEFAULT_RULES[id].map(function(t) { return '<li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">' + t + '</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>'; }).join(''); }); }
+</script>
+</body>
+</html>

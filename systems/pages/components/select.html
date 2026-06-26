@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Auth guard: redirects to / if no session or unpaid -->
+<script type="module" src="/systems/js/auth-guard.js"></script>
+<script type="module" src="/systems/js/paid-guard.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Select | FreshDS</title>
+<base href="../../">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="styles/site.css">
+<link rel="stylesheet" href="tokens/primitives.css">
+<link rel="stylesheet" href="tokens/theme.css">
+<script src="js/freshds.js"></script>
+<script src="js/freshds-site.js"></script>
+<link rel="stylesheet" href="styles/components/spec-page.css">
+</head>
+<body>
+
+<div class="comp-page">
+  <h1 class="comp-title">Select</h1>
+  <p class="comp-desc">Dropdown selection from a predefined list of options. Use when users must pick exactly one value from a known set that is too long for radio buttons.</p>
+
+  <!-- STATES CARD -->
+  <div class="comp-section">
+    <div class="spec-card">
+      <div class="spec-card-topbar">
+        <span class="spec-rules-title">Select states</span>
+        <div class="spec-mode-switcher">
+          <button class="spec-mode-btn active" id="mode-btn-light" onclick="setSpecMode('light')"><i class="ti ti-sun"></i> Light</button>
+          <button class="spec-mode-btn" id="mode-btn-dark" onclick="setSpecMode('dark')"><i class="ti ti-moon"></i> Dark</button>
+        </div>
+      </div>
+      <div id="spec-viewport" class="spec-viewport">
+
+        <!-- Default / placeholder -->
+        <div class="spec-variant-row">
+          <div class="spec-variant-header">
+            <span class="spec-variant-name">Default</span>
+            <span class="spec-attr-chip">placeholder="..."</span>
+            <span class="spec-variant-sep">·</span>
+            <span class="spec-variant-desc">No value selected. The placeholder is shown as a non-selectable hint.</span>
+          </div>
+          <div class="spec-variant-body">
+            <div class="spec-demos">
+              <div style="width:220px">
+                <fresh-select placeholder="Select a role">
+                  <option value="admin">Admin</option>
+                  <option value="editor">Editor</option>
+                  <option value="viewer">Viewer</option>
+                </fresh-select>
+              </div>
+            </div>
+            <div class="spec-sizes">
+              <div class="spec-size-item">
+                <div style="width:120px"><fresh-select size="sm" placeholder="Small"><option value="a">Option A</option><option value="b">Option B</option></fresh-select></div>
+                <span class="spec-size-px">28px</span>
+              </div>
+              <div class="spec-size-item">
+                <div style="width:120px"><fresh-select placeholder="Medium"><option value="a">Option A</option><option value="b">Option B</option></fresh-select></div>
+                <span class="spec-size-px">34px</span>
+              </div>
+              <div class="spec-size-item">
+                <div style="width:120px"><fresh-select size="lg" placeholder="Large"><option value="a">Option A</option><option value="b">Option B</option></fresh-select></div>
+                <span class="spec-size-px">40px</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- With value -->
+        <div class="spec-variant-row">
+          <div class="spec-variant-header">
+            <span class="spec-variant-name">With value</span>
+            <span class="spec-attr-chip">value="editor"</span>
+            <span class="spec-variant-sep">·</span>
+            <span class="spec-variant-desc">An option is pre-selected via the <code>value</code> attribute.</span>
+          </div>
+          <div class="spec-variant-body">
+            <div class="spec-demos">
+              <div style="width:220px">
+                <fresh-select value="editor">
+                  <option value="admin">Admin</option>
+                  <option value="editor">Editor</option>
+                  <option value="viewer">Viewer</option>
+                </fresh-select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Error -->
+        <div class="spec-variant-row">
+          <div class="spec-variant-header">
+            <span class="spec-variant-name">Error</span>
+            <span class="spec-attr-chip">error="..."</span>
+            <span class="spec-variant-sep">·</span>
+            <span class="spec-variant-desc">Validation failed. A red border and error message appear below the control.</span>
+          </div>
+          <div class="spec-variant-body">
+            <div class="spec-demos">
+              <div style="width:220px">
+                <fresh-select error="Please select a role" placeholder="Select a role">
+                  <option value="admin">Admin</option>
+                  <option value="editor">Editor</option>
+                  <option value="viewer">Viewer</option>
+                </fresh-select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Disabled -->
+        <div class="spec-variant-row">
+          <div class="spec-variant-header">
+            <span class="spec-variant-name">Disabled</span>
+            <span class="spec-attr-chip">disabled</span>
+            <span class="spec-variant-sep">·</span>
+            <span class="spec-variant-desc">Interaction is blocked. Opacity drops to 40% to indicate the field is not editable.</span>
+          </div>
+          <div class="spec-variant-body">
+            <div class="spec-demos">
+              <div style="width:220px">
+                <fresh-select disabled placeholder="Not available">
+                  <option value="admin">Admin</option>
+                  <option value="editor">Editor</option>
+                </fresh-select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /spec-viewport -->
+    </div><!-- /spec-card -->
+  </div>
+
+  <!-- AI RULES -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar">
+        <span class="spec-rules-title">AI action rules</span>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <span class="spec-rules-hint">Click any rule to edit</span>
+          <button class="spec-rules-reset" onclick="restoreDefaults()"><i class="ti ti-rotate" style="font-size:10px;"></i> Restore FreshDS defaults</button>
+        </div>
+      </div>
+      <div class="spec-rules-section">
+        <div class="spec-rules-section-head">
+          <span class="spec-rules-variant">General</span>
+          <span class="spec-attr-chip">fresh-select</span>
+        </div>
+        <ul class="spec-rule-list" id="rules-general">
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Use <code>fresh-select</code> when users must choose exactly one value from a fixed list of 5 or more options. For fewer options, prefer <code>fresh-radio</code> groups.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Always set a meaningful <code>placeholder</code> so the empty state is distinguishable from a selected value. Never leave the select blank with no hint.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Wrap in <code>fresh-form-field</code> to provide a label and hint. Never render a bare <code>fresh-select</code> without an accessible label in a form context.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Set <code>error</code> with a human-readable message when validation fails. Never use the error state for informational or warning messages.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Match the <code>size</code> of the select to adjacent inputs in the same form row. Mixing sizes in a single row creates misaligned baselines.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+        </ul>
+        <button class="spec-add-rule" onclick="addRule('rules-general')"><i class="ti ti-plus"></i> Add rule</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ATTRIBUTES -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Attributes</span></div>
+      <table class="spec-a11y-table">
+        <thead><tr><th style="width:130px">Attribute</th><th style="width:220px">Values</th><th style="width:80px">Default</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">placeholder</td><td class="spec-a11y-req">string</td><td class="spec-a11y-req">-</td><td class="spec-a11y-req">Shown as a non-selectable hint when no value is selected.</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">value</td><td class="spec-a11y-req">string</td><td class="spec-a11y-req">-</td><td class="spec-a11y-req">Pre-selects the matching <code>&lt;option&gt;</code> by value on render.</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">size</td><td class="spec-a11y-req"><code>sm</code> <code>md</code> <code>lg</code></td><td class="spec-a11y-req"><code>md</code></td><td class="spec-a11y-req">Height: sm 28px, md 34px, lg 40px. Font size and padding scale proportionally.</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">error</td><td class="spec-a11y-req">string</td><td class="spec-a11y-req">-</td><td class="spec-a11y-req">Validation error message. Activates the red border and renders the message below the control.</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">disabled</td><td class="spec-a11y-req">boolean</td><td class="spec-a11y-req">-</td><td class="spec-a11y-req">Prevents all interaction. Drops opacity to 40% and sets the native disabled attribute.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- CODE -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Code</span></div>
+      <div style="padding:16px 20px;display:flex;flex-direction:column;gap:0;">
+
+        <div class="code-block" data-code="<fresh-select placeholder=&quot;Select a role&quot;>
+  <option value=&quot;admin&quot;>Admin</option>
+  <option value=&quot;editor&quot;>Editor</option>
+  <option value=&quot;viewer&quot;>Viewer</option>
+</fresh-select>">
+          <div class="code-block-header"><span><span class="code-lang">HTML</span><span class="code-context">Basic</span></span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+          <div class="code-body"><span class="hl-pun">&lt;</span><span class="hl-tag">fresh-select</span> <span class="hl-attr">placeholder</span><span class="hl-pun">=</span><span class="hl-val">"Select a role"</span><span class="hl-pun">&gt;</span>
+  <span class="hl-pun">&lt;</span><span class="hl-tag">option</span> <span class="hl-attr">value</span><span class="hl-pun">=</span><span class="hl-val">"admin"</span><span class="hl-pun">&gt;</span><span class="hl-txt">Admin</span><span class="hl-pun">&lt;/</span><span class="hl-tag">option</span><span class="hl-pun">&gt;</span>
+  <span class="hl-pun">&lt;</span><span class="hl-tag">option</span> <span class="hl-attr">value</span><span class="hl-pun">=</span><span class="hl-val">"editor"</span><span class="hl-pun">&gt;</span><span class="hl-txt">Editor</span><span class="hl-pun">&lt;/</span><span class="hl-tag">option</span><span class="hl-pun">&gt;</span>
+  <span class="hl-pun">&lt;</span><span class="hl-tag">option</span> <span class="hl-attr">value</span><span class="hl-pun">=</span><span class="hl-val">"viewer"</span><span class="hl-pun">&gt;</span><span class="hl-txt">Viewer</span><span class="hl-pun">&lt;/</span><span class="hl-tag">option</span><span class="hl-pun">&gt;</span>
+<span class="hl-pun">&lt;/</span><span class="hl-tag">fresh-select</span><span class="hl-pun">&gt;</span></div>
+        </div>
+
+        <div class="code-block" data-code="<fresh-form-field label=&quot;Role&quot; required error=&quot;Please select a role&quot;>
+  <fresh-select placeholder=&quot;Choose role&quot;>
+    <option value=&quot;admin&quot;>Admin</option>
+    <option value=&quot;editor&quot;>Editor</option>
+    <option value=&quot;viewer&quot;>Viewer</option>
+  </fresh-select>
+</fresh-form-field>">
+          <div class="code-block-header"><span><span class="code-lang">HTML</span><span class="code-context">With form field and error</span></span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+          <div class="code-body"><span class="hl-pun">&lt;</span><span class="hl-tag">fresh-form-field</span> <span class="hl-attr">label</span><span class="hl-pun">=</span><span class="hl-val">"Role"</span> <span class="hl-attr">required</span> <span class="hl-attr">error</span><span class="hl-pun">=</span><span class="hl-val">"Please select a role"</span><span class="hl-pun">&gt;</span>
+  <span class="hl-pun">&lt;</span><span class="hl-tag">fresh-select</span> <span class="hl-attr">placeholder</span><span class="hl-pun">=</span><span class="hl-val">"Choose role"</span><span class="hl-pun">&gt;</span>
+    <span class="hl-pun">&lt;</span><span class="hl-tag">option</span> <span class="hl-attr">value</span><span class="hl-pun">=</span><span class="hl-val">"admin"</span><span class="hl-pun">&gt;</span><span class="hl-txt">Admin</span><span class="hl-pun">&lt;/</span><span class="hl-tag">option</span><span class="hl-pun">&gt;</span>
+    <span class="hl-pun">&lt;</span><span class="hl-tag">option</span> <span class="hl-attr">value</span><span class="hl-pun">=</span><span class="hl-val">"editor"</span><span class="hl-pun">&gt;</span><span class="hl-txt">Editor</span><span class="hl-pun">&lt;/</span><span class="hl-tag">option</span><span class="hl-pun">&gt;</span>
+    <span class="hl-pun">&lt;</span><span class="hl-tag">option</span> <span class="hl-attr">value</span><span class="hl-pun">=</span><span class="hl-val">"viewer"</span><span class="hl-pun">&gt;</span><span class="hl-txt">Viewer</span><span class="hl-pun">&lt;/</span><span class="hl-tag">option</span><span class="hl-pun">&gt;</span>
+  <span class="hl-pun">&lt;/</span><span class="hl-tag">fresh-select</span><span class="hl-pun">&gt;</span>
+<span class="hl-pun">&lt;/</span><span class="hl-tag">fresh-form-field</span><span class="hl-pun">&gt;</span></div>
+        </div>
+
+        <div class="code-block" data-code="<fresh-select size=&quot;sm&quot; value=&quot;active&quot;">
+  <option value=&quot;active&quot;>Active</option>
+  <option value=&quot;paused&quot;>Paused</option>
+  <option value=&quot;archived&quot;>Archived</option>
+</fresh-select>">
+          <div class="code-block-header"><span><span class="code-lang">HTML</span><span class="code-context">Small with pre-selected value</span></span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+          <div class="code-body"><span class="hl-pun">&lt;</span><span class="hl-tag">fresh-select</span> <span class="hl-attr">size</span><span class="hl-pun">=</span><span class="hl-val">"sm"</span> <span class="hl-attr">value</span><span class="hl-pun">=</span><span class="hl-val">"active"</span><span class="hl-pun">&gt;</span>
+  <span class="hl-pun">&lt;</span><span class="hl-tag">option</span> <span class="hl-attr">value</span><span class="hl-pun">=</span><span class="hl-val">"active"</span><span class="hl-pun">&gt;</span><span class="hl-txt">Active</span><span class="hl-pun">&lt;/</span><span class="hl-tag">option</span><span class="hl-pun">&gt;</span>
+  <span class="hl-pun">&lt;</span><span class="hl-tag">option</span> <span class="hl-attr">value</span><span class="hl-pun">=</span><span class="hl-val">"paused"</span><span class="hl-pun">&gt;</span><span class="hl-txt">Paused</span><span class="hl-pun">&lt;/</span><span class="hl-tag">option</span><span class="hl-pun">&gt;</span>
+  <span class="hl-pun">&lt;</span><span class="hl-tag">option</span> <span class="hl-attr">value</span><span class="hl-pun">=</span><span class="hl-val">"archived"</span><span class="hl-pun">&gt;</span><span class="hl-txt">Archived</span><span class="hl-pun">&lt;/</span><span class="hl-tag">option</span><span class="hl-pun">&gt;</span>
+<span class="hl-pun">&lt;/</span><span class="hl-tag">fresh-select</span><span class="hl-pun">&gt;</span></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- TOKENS -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Tokens</span></div>
+      <table class="spec-a11y-table">
+        <thead><tr><th style="width:220px">Token</th><th style="width:200px">Role</th><th>State</th></tr></thead>
+        <tbody>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--surface-input</td><td class="spec-a11y-req">Background fill</td><td class="spec-a11y-req">default</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--surface-border-strong</td><td class="spec-a11y-req">Border colour</td><td class="spec-a11y-req">default</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--color-danger-border</td><td class="spec-a11y-req">Border colour</td><td class="spec-a11y-req">error</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--color-danger</td><td class="spec-a11y-req">Error message text</td><td class="spec-a11y-req">error</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--input-focus-border</td><td class="spec-a11y-req">Border colour</td><td class="spec-a11y-req">focus</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--input-focus-ring</td><td class="spec-a11y-req">Focus ring shadow</td><td class="spec-a11y-req">focus</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--surface-subtle</td><td class="spec-a11y-req">Background fill</td><td class="spec-a11y-req">disabled</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--text-primary</td><td class="spec-a11y-req">Option text colour</td><td class="spec-a11y-req">all</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--text-tertiary</td><td class="spec-a11y-req">Chevron icon colour</td><td class="spec-a11y-req">all</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--radius-md</td><td class="spec-a11y-req">Border radius</td><td class="spec-a11y-req">all</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--font-sans</td><td class="spec-a11y-req">Font family</td><td class="spec-a11y-req">all</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ACCESSIBILITY -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Accessibility</span></div>
+      <div style="padding:12px 24px 14px;border-bottom:1px solid #d4d4d7;">
+        <p style="font-size:13px;color:#555;line-height:1.6;margin:0;">Select satisfies all <a href="components.html#accessibility" target="_parent" style="color:#5b6af7;text-decoration:none;font-weight:500;">universal accessibility concerns</a>. Component-specific concerns are below.</p>
+      </div>
+      <table class="spec-a11y-table">
+        <thead><tr><th>Concern</th><th>Requirement</th></tr></thead>
+        <tbody>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">label association</td><td class="spec-a11y-req">Wrap in <code>fresh-form-field</code> with a <code>label</code> attribute so the visible label is programmatically associated with the native select via the shadow DOM. Never rely on placeholder text as the only label.</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">error announcement</td><td class="spec-a11y-req">The error message container has <code>role="alert"</code>, causing screen readers to announce it immediately when it appears. Only set <code>error</code> for true validation failures, not for hints or warnings.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<script src="components/core/fresh-select.js"></script>
+<script src="components/core/fresh-form-field.js"></script>
+<script src="js/spec-page.js"></script>
+
+<script type="module">
+  import { supabase } from '/systems/js/supabase-client.js'
+  var RULE_IDS = ['rules-general'];
+  var _saveTimer = null, _loading = false;
+  function getRulesSnapshot() {
+    var r = {};
+    RULE_IDS.forEach(function(id) { var l = document.getElementById(id); if (!l) return; r[id] = Array.from(l.querySelectorAll('.spec-rule-text')).map(function(el) { return el.innerHTML.trim(); }); });
+    return r;
+  }
+  function applySnapshot(saved) {
+    RULE_IDS.forEach(function(id) { var l = document.getElementById(id); if (!l) return; var rules = (saved && saved[id] && saved[id].length) ? saved[id] : window.DEFAULT_RULES[id]; l.innerHTML = rules.map(function(t) { return '<li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">' + t + '</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>'; }).join(''); }); }
+  async function saveRulesNow() {
+    try { var { data: { user } } = await supabase.auth.getUser(); if (!user) return; var { data: p } = await supabase.from('profiles').select('component_rules').eq('id', user.id).single(); var e = (p && p.component_rules) ? p.component_rules : {}; e.select = getRulesSnapshot(); await supabase.from('profiles').update({ component_rules: e }).eq('id', user.id); } catch(e) {}
+  }
+  function schedSave() { if (_loading) return; clearTimeout(_saveTimer); _saveTimer = setTimeout(saveRulesNow, 1000); }
+  var panel = document.querySelector('.spec-rules-panel'); if (panel) new MutationObserver(schedSave).observe(panel, { childList: true, subtree: true, characterData: true });
+  ;(async function() { try { var { data: { user } } = await supabase.auth.getUser(); if (!user) return; var { data: p } = await supabase.from('profiles').select('component_rules').eq('id', user.id).single(); if (p && p.component_rules && p.component_rules.select) { _loading = true; applySnapshot(p.component_rules.select); _loading = false; } } catch(e) {} })();
+</script>
+
+<script>
+  var DEFAULT_RULES = {
+    'rules-general': [
+      'Use <code>fresh-select</code> when users must choose exactly one value from a fixed list of 5 or more options. For fewer options, prefer <code>fresh-radio</code> groups.',
+      'Always set a meaningful <code>placeholder</code> so the empty state is distinguishable from a selected value. Never leave the select blank with no hint.',
+      'Wrap in <code>fresh-form-field</code> to provide a label and hint. Never render a bare <code>fresh-select</code> without an accessible label in a form context.',
+      'Set <code>error</code> with a human-readable message when validation fails. Never use the error state for informational or warning messages.',
+      'Match the <code>size</code> of the select to adjacent inputs in the same form row. Mixing sizes in a single row creates misaligned baselines.'
+    ]
+  };
+  function restoreDefaults() {
+    if (!confirm('Reset all select rules to FreshDS defaults? Any edits you have made will be lost.')) return;
+    Object.keys(DEFAULT_RULES).forEach(function(id) { var l = document.getElementById(id); if (!l) return; l.innerHTML = DEFAULT_RULES[id].map(function(t) { return '<li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">' + t + '</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>'; }).join(''); });
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Auth guard: redirects to / if no session or unpaid -->
+<script type="module" src="/systems/js/auth-guard.js"></script>
+<script type="module" src="/systems/js/paid-guard.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Spacing | FreshDS</title>
+<base href="../../">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="styles/site.css">
+<link rel="stylesheet" href="tokens/primitives.css">
+<link rel="stylesheet" href="tokens/theme.css">
+<script src="js/freshds.js"></script>
+<script src="js/freshds-site.js"></script>
+<link rel="stylesheet" href="styles/components/spec-page.css">
+<style>
+  .sp-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 5px 0;
+  }
+  .sp-meta {
+    width: 160px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+  }
+  .sp-token {
+    font-size: 11px;
+    font-family: var(--font-mono);
+    color: var(--color-interactive-text);
+  }
+  .sp-val {
+    font-size: 11px;
+    color: var(--text-tertiary);
+  }
+  /* border-radius is intentionally hardcoded — never var(--radius-*) */
+  .sp-bar {
+    height: 18px;
+    background: var(--color-interactive);
+    border-radius: 3px;
+    opacity: 0.75;
+    flex-shrink: 0;
+  }
+</style>
+</head>
+<body>
+
+<div class="comp-page">
+
+  <h1 class="comp-title">Spacing</h1>
+  <p class="comp-desc">A 4px base unit drives the entire spacing system. Every component gap and padding is a multiple of 4, creating consistent predictable rhythm across the UI.</p>
+
+  <!-- SPEC CARD -->
+  <div class="comp-section">
+    <div class="spec-card">
+      <div class="spec-card-topbar">
+        <span class="spec-rules-title">Spacing scale</span>
+        <div class="spec-mode-switcher">
+          <button class="spec-mode-btn active" id="mode-btn-light" onclick="setSpecMode('light')"><i class="ti ti-sun"></i> Light</button>
+          <button class="spec-mode-btn" id="mode-btn-dark" onclick="setSpecMode('dark')"><i class="ti ti-moon"></i> Dark</button>
+        </div>
+      </div>
+      <div id="spec-viewport" class="spec-viewport">
+        <div class="spec-variant-row">
+          <div class="spec-variant-body" style="flex-direction:column;align-items:stretch;padding:20px 24px;gap:0">
+            <div class="sp-row"><div class="sp-meta"><span class="sp-token">--space-1</span><span class="sp-val">4px</span></div><div class="sp-bar" style="width:var(--space-1)"></div></div>
+            <div class="sp-row"><div class="sp-meta"><span class="sp-token">--space-2</span><span class="sp-val">8px</span></div><div class="sp-bar" style="width:var(--space-2)"></div></div>
+            <div class="sp-row"><div class="sp-meta"><span class="sp-token">--space-3</span><span class="sp-val">12px</span></div><div class="sp-bar" style="width:var(--space-3)"></div></div>
+            <div class="sp-row"><div class="sp-meta"><span class="sp-token">--space-4</span><span class="sp-val">16px</span></div><div class="sp-bar" style="width:var(--space-4)"></div></div>
+            <div class="sp-row"><div class="sp-meta"><span class="sp-token">--space-5</span><span class="sp-val">20px</span></div><div class="sp-bar" style="width:var(--space-5)"></div></div>
+            <div class="sp-row"><div class="sp-meta"><span class="sp-token">--space-6</span><span class="sp-val">24px</span></div><div class="sp-bar" style="width:var(--space-6)"></div></div>
+            <div class="sp-row"><div class="sp-meta"><span class="sp-token">--space-8</span><span class="sp-val">32px</span></div><div class="sp-bar" style="width:var(--space-8)"></div></div>
+            <div class="sp-row"><div class="sp-meta"><span class="sp-token">--space-10</span><span class="sp-val">40px</span></div><div class="sp-bar" style="width:var(--space-10)"></div></div>
+            <div class="sp-row"><div class="sp-meta"><span class="sp-token">--space-12</span><span class="sp-val">48px</span></div><div class="sp-bar" style="width:var(--space-12)"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- AI RULES -->
+  <div class="comp-section">
+    <div id="ai-rules-panel" class="spec-rules-panel">
+      <div class="spec-rules-topbar">
+        <span class="spec-rules-title">AI action rules</span>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <span class="spec-rules-hint">Click any rule to edit</span>
+          <button class="spec-rules-reset" onclick="restoreDefaults()"><i class="ti ti-rotate" style="font-size:10px;"></i> Restore FreshDS defaults</button>
+        </div>
+      </div>
+      <div class="spec-rules-section">
+        <div class="spec-rules-section-head">
+          <span class="spec-rules-variant">General</span>
+          <span class="spec-attr-chip">--space-{n}</span>
+        </div>
+        <ul class="spec-rule-list" id="rules-general">
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Always use spacing tokens (<code>--space-1</code> through <code>--space-12</code>) for all padding, gap, and margin values. Never write hardcoded px values for spacing in component or layout CSS.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Only the nine defined steps are valid: 1, 2, 3, 4, 5, 6, 8, 10, 12. Do not interpolate or invent intermediate values such as <code>--space-7</code> or <code>--space-9</code>.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Apply the containment rule: inner item gaps should be one token step smaller than the surrounding container padding. A card with <code>padding: var(--space-5)</code> uses <code>gap: var(--space-4)</code> between its children.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true"><code>--space-4</code> (16px) is the default component padding. Use <code>--space-5</code> or <code>--space-6</code> for cards and panels. Use <code>--space-3</code> or smaller for compact or dense UI variants.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Page-level layout uses <code>--space-8</code> (32px) as the standard section gap. Between major page sections use <code>--space-10</code> or <code>--space-12</code>. Never use spacing tokens for fixed widths or heights.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Spacing tokens are for layout rhythm only. Never assign them to <code>width</code>, <code>height</code>, <code>font-size</code>, <code>border-radius</code>, or <code>border-width</code>. Those dimensions have their own token families.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+        </ul>
+        <button class="spec-add-rule" onclick="addRule('rules-general')"><i class="ti ti-plus"></i> Add rule</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOKEN REFERENCE -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Token reference</span></div>
+      <table class="spec-a11y-table">
+        <thead><tr><th>Token</th><th>Value</th><th>Use for</th></tr></thead>
+        <tbody>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern"><code>--space-1</code></td><td class="spec-a11y-req">4px</td><td class="spec-a11y-req">Icon gaps, tight inline spacing</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern"><code>--space-2</code></td><td class="spec-a11y-req">8px</td><td class="spec-a11y-req">Between related labels and inputs</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern"><code>--space-3</code></td><td class="spec-a11y-req">12px</td><td class="spec-a11y-req">Button padding (sm), nav item gaps</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern"><code>--space-4</code></td><td class="spec-a11y-req">16px</td><td class="spec-a11y-req">Button padding (default), card inner gaps</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern"><code>--space-5</code></td><td class="spec-a11y-req">20px</td><td class="spec-a11y-req">Card padding (sm), form field spacing</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern"><code>--space-6</code></td><td class="spec-a11y-req">24px</td><td class="spec-a11y-req">Card padding (default), section gaps</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern"><code>--space-8</code></td><td class="spec-a11y-req">32px</td><td class="spec-a11y-req">Demo surface padding, between sections</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern"><code>--space-10</code></td><td class="spec-a11y-req">40px</td><td class="spec-a11y-req">Page content padding</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern"><code>--space-12</code></td><td class="spec-a11y-req">48px</td><td class="spec-a11y-req">Page bottom margin, layout spacing</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<script src="js/spec-page.js"></script>
+
+<script type="module">
+  import { supabase } from '/systems/js/supabase-client.js'
+  var RULE_IDS = ['rules-general'];
+  var _saveTimer = null, _loading = false;
+  function getRulesSnapshot() {
+    var r = {};
+    RULE_IDS.forEach(function(id) { var l = document.getElementById(id); if (!l) return; r[id] = Array.from(l.querySelectorAll('.spec-rule-text')).map(function(el) { return el.innerHTML.trim(); }); });
+    return r;
+  }
+  function applySnapshot(saved) {
+    RULE_IDS.forEach(function(id) { var l = document.getElementById(id); if (!l) return; var rules = (saved && saved[id] && saved[id].length) ? saved[id] : window.DEFAULT_RULES[id]; l.innerHTML = rules.map(function(t) { return '<li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">' + t + '</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>'; }).join(''); }); }
+  async function saveRulesNow() {
+    try { var { data: { user } } = await supabase.auth.getUser(); if (!user) return; var { data: p } = await supabase.from('profiles').select('component_rules').eq('id', user.id).single(); var e = (p && p.component_rules) ? p.component_rules : {}; e.spacing = getRulesSnapshot(); await supabase.from('profiles').update({ component_rules: e }).eq('id', user.id); } catch(e) {} }
+  function schedSave() { if (_loading) return; clearTimeout(_saveTimer); _saveTimer = setTimeout(saveRulesNow, 1000); }
+  var panel = document.getElementById('ai-rules-panel'); if (panel) new MutationObserver(schedSave).observe(panel, { childList: true, subtree: true, characterData: true });
+  ;(async function() { try { var { data: { user } } = await supabase.auth.getUser(); if (!user) return; var { data: p } = await supabase.from('profiles').select('component_rules').eq('id', user.id).single(); if (p && p.component_rules && p.component_rules.spacing) { _loading = true; applySnapshot(p.component_rules.spacing); _loading = false; } } catch(e) {} })();
+</script>
+
+<script>
+  var DEFAULT_RULES = {
+    'rules-general': [
+      'Always use spacing tokens (<code>--space-1</code> through <code>--space-12</code>) for all padding, gap, and margin values. Never write hardcoded px values for spacing in component or layout CSS.',
+      'Only the nine defined steps are valid: 1, 2, 3, 4, 5, 6, 8, 10, 12. Do not interpolate or invent intermediate values such as <code>--space-7</code> or <code>--space-9</code>.',
+      'Apply the containment rule: inner item gaps should be one token step smaller than the surrounding container padding. A card with <code>padding: var(--space-5)</code> uses <code>gap: var(--space-4)</code> between its children.',
+      '<code>--space-4</code> (16px) is the default component padding. Use <code>--space-5</code> or <code>--space-6</code> for cards and panels. Use <code>--space-3</code> or smaller for compact or dense UI variants.',
+      'Page-level layout uses <code>--space-8</code> (32px) as the standard section gap. Between major page sections use <code>--space-10</code> or <code>--space-12</code>. Never use spacing tokens for fixed widths or heights.',
+      'Spacing tokens are for layout rhythm only. Never assign them to <code>width</code>, <code>height</code>, <code>font-size</code>, <code>border-radius</code>, or <code>border-width</code>. Those dimensions have their own token families.'
+    ]
+  };
+  function restoreDefaults() {
+    if (!confirm('Reset all spacing rules to FreshDS defaults? Any edits you have made will be lost.')) return;
+    Object.keys(DEFAULT_RULES).forEach(function(id) { var l = document.getElementById(id); if (!l) return; l.innerHTML = DEFAULT_RULES[id].map(function(t) { return '<li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">' + t + '</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>'; }).join(''); }); }
+</script>
+</body>
+</html>

@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Auth guard: redirects to / if no session or unpaid -->
+<script type="module" src="/systems/js/auth-guard.js"></script>
+<script type="module" src="/systems/js/paid-guard.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Typography | FreshDS</title>
+<base href="../../">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="styles/site.css">
+<link rel="stylesheet" href="tokens/primitives.css">
+<link rel="stylesheet" href="tokens/theme.css">
+<script src="js/freshds.js"></script>
+<script src="js/freshds-site.js"></script>
+<link rel="stylesheet" href="styles/components/spec-page.css">
+<style>
+  .type-row {
+    display: flex;
+    align-items: baseline;
+    gap: 24px;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+  }
+  .type-row:last-child { border-bottom: none; }
+  .type-meta {
+    width: 160px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .type-token {
+    font-size: 11px;
+    font-weight: 600;
+    font-family: var(--font-mono);
+    color: #888;
+  }
+  .type-size {
+    font-size: 10px;
+    color: #aaa;
+  }
+  .type-sample {
+    font-family: var(--font-sans);
+    color: #1a1a1a;
+    line-height: 1.2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .spec-viewport[data-mode="dark"] .type-row { border-bottom-color: rgba(255,255,255,0.06); }
+  .spec-viewport[data-mode="dark"] .type-token { color: #5a5f6a; }
+  .spec-viewport[data-mode="dark"] .type-size  { color: #3a3f48; }
+  .spec-viewport[data-mode="dark"] .type-sample { color: #e0e0e4; }
+
+  .weight-row {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+  }
+  .weight-row:last-child { border-bottom: none; }
+  .weight-meta {
+    width: 100px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .weight-label { font-size: 12px; font-weight: 600; color: #888; font-family: var(--font-mono); }
+  .weight-name  { font-size: 10px; color: #aaa; }
+  .weight-sample { font-family: var(--font-sans); font-size: 18px; color: #1a1a1a; }
+
+  .spec-viewport[data-mode="dark"] .weight-row  { border-bottom-color: rgba(255,255,255,0.06); }
+  .spec-viewport[data-mode="dark"] .weight-label { color: #5a5f6a; }
+  .spec-viewport[data-mode="dark"] .weight-name  { color: #3a3f48; }
+  .spec-viewport[data-mode="dark"] .weight-sample { color: #e0e0e4; }
+
+  .font-display {
+    font-size: 32px;
+    font-weight: 300;
+    line-height: 1.15;
+    color: #1a1a1a;
+    letter-spacing: -0.01em;
+  }
+  .font-alphabet {
+    font-size: 13px;
+    color: #888;
+    margin-top: 8px;
+    letter-spacing: 0.02em;
+  }
+  .font-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: #aaa;
+    margin-bottom: 10px;
+  }
+  .font-name {
+    font-size: 11px;
+    font-weight: 600;
+    color: #555;
+    font-family: var(--font-mono);
+  }
+  .font-token {
+    font-size: 11px;
+    color: #aaa;
+    font-family: var(--font-mono);
+  }
+
+  .spec-viewport[data-mode="dark"] .font-display  { color: #e0e0e4; }
+  .spec-viewport[data-mode="dark"] .font-alphabet  { color: #3a3f48; }
+  .spec-viewport[data-mode="dark"] .font-label     { color: #3a3f48; }
+  .spec-viewport[data-mode="dark"] .font-name      { color: #888; }
+  .spec-viewport[data-mode="dark"] .font-token     { color: #3a3f48; }
+
+  .mono-display {
+    font-size: 26px;
+    font-weight: 400;
+    line-height: 1.2;
+    color: #1a1a1a;
+    font-family: var(--font-mono);
+  }
+  .mono-sample {
+    font-size: 12px;
+    color: #888;
+    margin-top: 8px;
+    font-family: var(--font-mono);
+  }
+  .spec-viewport[data-mode="dark"] .mono-display { color: #e0e0e4; }
+  .spec-viewport[data-mode="dark"] .mono-sample  { color: #3a3f48; }
+</style>
+</head>
+<body>
+
+<div class="comp-page">
+
+  <h1 class="comp-title">Typography</h1>
+  <p class="comp-desc">Two typefaces: one for UI text and labels, one for code and data. Both are configurable in the Theme and update every component automatically via <code style="font-family:var(--font-mono);font-size:12px">--font-sans</code> and <code style="font-family:var(--font-mono);font-size:12px">--font-mono</code>.</p>
+
+  <!-- VISUAL DEMO -->
+  <div class="comp-section">
+    <div class="spec-card">
+      <div class="spec-card-topbar">
+        <span class="spec-rules-title">Type system</span>
+        <div class="spec-mode-switcher">
+          <button class="spec-mode-btn active" id="mode-btn-light" onclick="setSpecMode('light')"><i class="ti ti-sun"></i> Light</button>
+          <button class="spec-mode-btn" id="mode-btn-dark" onclick="setSpecMode('dark')"><i class="ti ti-moon"></i> Dark</button>
+        </div>
+      </div>
+      <div id="spec-viewport" class="spec-viewport">
+
+        <!-- Sans-serif -->
+        <div class="spec-variant-row">
+          <div class="spec-variant-header">
+            <span class="spec-variant-name">UI / sans-serif</span>
+            <span class="spec-variant-sep">·</span>
+            <span class="spec-variant-desc" style="display:flex;align-items:center;gap:8px">
+              <span id="typo-sans-name" style="font-weight:500"></span>
+              <span style="opacity:0.4">·</span>
+              <span style="font-family:var(--font-mono);font-size:11px;opacity:0.5">--font-sans</span>
+            </span>
+          </div>
+          <div class="spec-variant-body" style="flex-direction:column;align-items:flex-start;gap:0;padding:20px 24px">
+            <div class="font-display" style="font-family:var(--font-sans)">Aa Bb Cc Dd Ee Ff Gg Hh</div>
+            <div class="font-alphabet" style="font-family:var(--font-sans)">ABCDEFGHIJKLMNOPQRSTUVWXYZ · abcdefghijklmnopqrstuvwxyz · 0123456789 · !@#$%&amp;</div>
+          </div>
+        </div>
+
+        <!-- Monospace -->
+        <div class="spec-variant-row">
+          <div class="spec-variant-header">
+            <span class="spec-variant-name">Code / mono</span>
+            <span class="spec-variant-sep">·</span>
+            <span class="spec-variant-desc" style="display:flex;align-items:center;gap:8px">
+              <span id="typo-mono-name" style="font-weight:500"></span>
+              <span style="opacity:0.4">·</span>
+              <span style="font-family:var(--font-mono);font-size:11px;opacity:0.5">--font-mono</span>
+            </span>
+          </div>
+          <div class="spec-variant-body" style="flex-direction:column;align-items:flex-start;gap:0;padding:20px 24px">
+            <div class="mono-display">Aa Bb Cc Dd Ee Ff Gg Hh</div>
+            <div class="mono-sample">--color-interactive: oklch(0.58 0.19 270) · const scale = generateScale(primary)</div>
+          </div>
+        </div>
+
+        <!-- Type scale -->
+        <div class="spec-variant-row">
+          <div class="spec-variant-header">
+            <span class="spec-variant-name">Type scale</span>
+            <span class="spec-variant-sep">·</span>
+            <span class="spec-variant-desc">Size steps from <code style="font-family:var(--font-mono);font-size:11px">--font-size-3xs</code> to <code style="font-family:var(--font-mono);font-size:11px">--font-size-2xl</code></span>
+          </div>
+          <div class="spec-variant-body" style="flex-direction:column;align-items:stretch;padding:12px 24px 16px;gap:0">
+            <div class="type-row"><div class="type-meta"><div class="type-token">--font-size-3xs</div><div class="type-size">10px</div></div><span class="type-sample" style="font-size:10px">The quick brown fox jumps over the lazy dog. Pack my box with five dozen liquor jugs.</span></div>
+            <div class="type-row"><div class="type-meta"><div class="type-token">--font-size-2xs</div><div class="type-size">11px</div></div><span class="type-sample" style="font-size:11px">The quick brown fox jumps over the lazy dog. Pack my box with five dozen liquor jugs.</span></div>
+            <div class="type-row"><div class="type-meta"><div class="type-token">--font-size-xs</div><div class="type-size">12px</div></div><span class="type-sample" style="font-size:12px">The quick brown fox jumps over the lazy dog. Pack my box with five dozen liquor jugs.</span></div>
+            <div class="type-row"><div class="type-meta"><div class="type-token">--font-size-sm</div><div class="type-size">13px</div></div><span class="type-sample" style="font-size:13px">The quick brown fox jumps over the lazy dog. Pack my box with five dozen liquor jugs.</span></div>
+            <div class="type-row"><div class="type-meta"><div class="type-token">--font-size-md</div><div class="type-size">14px</div></div><span class="type-sample" style="font-size:14px">The quick brown fox jumps over the lazy dog. Pack my box with five dozen liquor jugs.</span></div>
+            <div class="type-row"><div class="type-meta"><div class="type-token">--font-size-lg</div><div class="type-size">16px</div></div><span class="type-sample" style="font-size:16px">The quick brown fox jumps over the lazy dog.</span></div>
+            <div class="type-row"><div class="type-meta"><div class="type-token">--font-size-xl</div><div class="type-size">18px</div></div><span class="type-sample" style="font-size:18px">The quick brown fox jumps over the lazy dog.</span></div>
+            <div class="type-row"><div class="type-meta"><div class="type-token">--font-size-2xl</div><div class="type-size">24px</div></div><span class="type-sample" style="font-size:24px">The quick brown fox jumps over.</span></div>
+          </div>
+        </div>
+
+        <!-- Weights -->
+        <div class="spec-variant-row">
+          <div class="spec-variant-header">
+            <span class="spec-variant-name">Weight scale</span>
+            <span class="spec-variant-sep">·</span>
+            <span class="spec-variant-desc">All weights rendered in the active UI font</span>
+          </div>
+          <div class="spec-variant-body" style="flex-direction:column;align-items:stretch;padding:12px 24px 16px;gap:0">
+            <div class="weight-row"><div class="weight-meta"><div class="weight-label">300</div><div class="weight-name">Light</div></div><span class="weight-sample" style="font-weight:300">Enterprise design at scale</span></div>
+            <div class="weight-row"><div class="weight-meta"><div class="weight-label">400</div><div class="weight-name">Regular</div></div><span class="weight-sample" style="font-weight:400">Enterprise design at scale</span></div>
+            <div class="weight-row"><div class="weight-meta"><div class="weight-label">500</div><div class="weight-name">Medium</div></div><span class="weight-sample" style="font-weight:500">Enterprise design at scale</span></div>
+            <div class="weight-row"><div class="weight-meta"><div class="weight-label">600</div><div class="weight-name">Semibold</div></div><span class="weight-sample" style="font-weight:600">Enterprise design at scale</span></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- AI RULES -->
+  <div class="comp-section">
+    <div class="spec-rules-panel" id="ai-rules-panel">
+      <div class="spec-rules-topbar">
+        <span class="spec-rules-title">AI action rules</span>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <span class="spec-rules-hint">Click any rule to edit</span>
+          <button class="spec-rules-reset" onclick="restoreDefaults()"><i class="ti ti-rotate" style="font-size:10px;"></i> Restore FreshDS defaults</button>
+        </div>
+      </div>
+      <div class="spec-rules-section">
+        <div class="spec-rules-section-head">
+          <span class="spec-rules-variant">Generation rules</span>
+          <span class="spec-attr-chip">--font-sans · --font-mono</span>
+        </div>
+        <ul class="spec-rule-list" id="rules-general">
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Always set font-family using <code>var(--font-sans)</code> or <code>var(--font-mono)</code>. Never hardcode a font name like "Inter" or "JetBrains Mono" in component code. The customer may have configured a different typeface and the token is the only correct reference.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Use <code>var(--font-mono)</code> for all code snippets, token names, data values, numeric IDs, and timestamps. Use <code>var(--font-sans)</code> for everything else including labels, descriptions, headings, and button text.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Set font size using <code>var(--font-size-md)</code> (14px) as the default body text. Use <code>var(--font-size-sm)</code> (13px) for secondary labels. Use <code>var(--font-size-xs)</code> (12px) for captions and timestamps. Never set font-size in px or rem directly; always use the scale token.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Use font-weight 400 for body, 500 for labels and interactive elements, 600 for headings and emphasis. Never use 700 or higher. Never use 300 (Light) for text smaller than 16px as it fails contrast at small sizes.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Set line-height to 1.5 for body paragraphs, 1.6 for help text and descriptions, 1.2 for headings and display text. Never use unitless values below 1.2 or above 1.8 on any text element.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Use <code>var(--text-primary)</code> for main content, <code>var(--text-secondary)</code> for supporting text, <code>var(--text-tertiary)</code> for captions and placeholders. Never set text color as a raw hex; always use a semantic text token so dark mode works automatically.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+        </ul>
+        <button class="spec-add-rule" onclick="addRule('rules-general')"><i class="ti ti-plus"></i> Add rule</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- CODE -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Code</span></div>
+      <div style="padding:16px 20px;display:flex;flex-direction:column;gap:0;">
+
+        <div class="code-block" data-code='<p style="font-family:var(--font-sans);font-size:var(--font-size-md);font-weight:400;color:var(--text-primary);line-height:1.5">
+  Account details updated successfully.
+</p>'>
+          <div class="code-block-header"><span><span class="code-lang">HTML</span><span class="code-context">Body text — default</span></span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+          <div class="code-body"><span class="hl-pun">&lt;</span><span class="hl-tag">p</span> <span class="hl-attr">style</span><span class="hl-pun">=</span><span class="hl-val">"font-family:var(--font-sans);font-size:var(--font-size-md);font-weight:400;color:var(--text-primary);line-height:1.5"</span><span class="hl-pun">&gt;</span>
+  <span class="hl-txt">Account details updated successfully.</span>
+<span class="hl-pun">&lt;/</span><span class="hl-tag">p</span><span class="hl-pun">&gt;</span></div>
+        </div>
+
+        <div class="code-block" data-code='<h2 style="font-family:var(--font-sans);font-size:var(--font-size-2xl);font-weight:600;color:var(--text-primary);line-height:1.2">
+  Team settings
+</h2>'>
+          <div class="code-block-header"><span><span class="code-lang">HTML</span><span class="code-context">Section heading</span></span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+          <div class="code-body"><span class="hl-pun">&lt;</span><span class="hl-tag">h2</span> <span class="hl-attr">style</span><span class="hl-pun">=</span><span class="hl-val">"font-family:var(--font-sans);font-size:var(--font-size-2xl);font-weight:600;color:var(--text-primary);line-height:1.2"</span><span class="hl-pun">&gt;</span>
+  <span class="hl-txt">Team settings</span>
+<span class="hl-pun">&lt;/</span><span class="hl-tag">h2</span><span class="hl-pun">&gt;</span></div>
+        </div>
+
+        <div class="code-block" data-code='<!-- Label + mono data value side by side -->
+<span style="font-family:var(--font-sans);font-size:var(--font-size-sm);font-weight:500;color:var(--text-secondary)">Last modified</span>
+<span style="font-family:var(--font-mono);font-size:var(--font-size-xs);color:var(--text-tertiary)">2024-03-15 · 14:32 UTC</span>'>
+          <div class="code-block-header"><span><span class="code-lang">HTML</span><span class="code-context">Label + mono data value</span></span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+          <div class="code-body"><span class="hl-com">&lt;!-- Label + mono data value side by side --&gt;</span>
+<span class="hl-pun">&lt;</span><span class="hl-tag">span</span> <span class="hl-attr">style</span><span class="hl-pun">=</span><span class="hl-val">"font-family:var(--font-sans);font-size:var(--font-size-sm);font-weight:500;color:var(--text-secondary)"</span><span class="hl-pun">&gt;</span><span class="hl-txt">Last modified</span><span class="hl-pun">&lt;/</span><span class="hl-tag">span</span><span class="hl-pun">&gt;</span>
+<span class="hl-pun">&lt;</span><span class="hl-tag">span</span> <span class="hl-attr">style</span><span class="hl-pun">=</span><span class="hl-val">"font-family:var(--font-mono);font-size:var(--font-size-xs);color:var(--text-tertiary)"</span><span class="hl-pun">&gt;</span><span class="hl-txt">2024-03-15 · 14:32 UTC</span><span class="hl-pun">&lt;/</span><span class="hl-tag">span</span><span class="hl-pun">&gt;</span></div>
+        </div>
+
+        <div class="code-block" data-code='.card-label {
+  font-family: var(--font-sans);
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+.card-value {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+  color: var(--text-tertiary);
+}'>
+          <div class="code-block-header"><span><span class="code-lang">CSS</span><span class="code-context">Component typography styles</span></span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+          <div class="code-body"><span class="hl-tag">.card-label</span> <span class="hl-pun">{</span>
+  <span class="hl-attr">font-family</span><span class="hl-pun">:</span> <span class="hl-val">var(--font-sans)</span><span class="hl-pun">;</span>
+  <span class="hl-attr">font-size</span><span class="hl-pun">:</span> <span class="hl-val">var(--font-size-sm)</span><span class="hl-pun">;</span>
+  <span class="hl-attr">font-weight</span><span class="hl-pun">:</span> <span class="hl-val">500</span><span class="hl-pun">;</span>
+  <span class="hl-attr">color</span><span class="hl-pun">:</span> <span class="hl-val">var(--text-secondary)</span><span class="hl-pun">;</span>
+  <span class="hl-attr">line-height</span><span class="hl-pun">:</span> <span class="hl-val">1.5</span><span class="hl-pun">;</span>
+<span class="hl-pun">}</span>
+<span class="hl-tag">.card-value</span> <span class="hl-pun">{</span>
+  <span class="hl-attr">font-family</span><span class="hl-pun">:</span> <span class="hl-val">var(--font-mono)</span><span class="hl-pun">;</span>
+  <span class="hl-attr">font-size</span><span class="hl-pun">:</span> <span class="hl-val">var(--font-size-xs)</span><span class="hl-pun">;</span>
+  <span class="hl-attr">color</span><span class="hl-pun">:</span> <span class="hl-val">var(--text-tertiary)</span><span class="hl-pun">;</span>
+<span class="hl-pun">}</span></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- TOKENS -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Tokens</span></div>
+      <table class="spec-a11y-table">
+        <thead>
+          <tr><th style="width:180px">Token</th><th style="width:260px">Resolved value</th><th>Usage</th></tr>
+        </thead>
+        <tbody>
+          <tr class="spec-a11y-row">
+            <td class="spec-a11y-concern">--font-sans</td>
+            <td class="spec-a11y-req"><code id="typo-sans-stack" style="font-family:var(--font-mono);font-size:11px"></code></td>
+            <td class="spec-a11y-req">All UI text: labels, buttons, headings, descriptions, inputs</td>
+          </tr>
+          <tr class="spec-a11y-row">
+            <td class="spec-a11y-concern">--font-mono</td>
+            <td class="spec-a11y-req"><code id="typo-mono-stack" style="font-family:var(--font-mono);font-size:11px"></code></td>
+            <td class="spec-a11y-req">Code, token names, data values, numeric IDs, timestamps</td>
+          </tr>
+          <tr class="spec-a11y-row">
+            <td class="spec-a11y-concern">--font-size-3xs</td>
+            <td class="spec-a11y-req"><code>10px</code></td>
+            <td class="spec-a11y-req">Badge counts, status dots with text, icon captions</td>
+          </tr>
+          <tr class="spec-a11y-row">
+            <td class="spec-a11y-concern">--font-size-2xs</td>
+            <td class="spec-a11y-req"><code>11px</code></td>
+            <td class="spec-a11y-req">Eyebrow labels, section dividers, tight metadata</td>
+          </tr>
+          <tr class="spec-a11y-row">
+            <td class="spec-a11y-concern">--font-size-xs</td>
+            <td class="spec-a11y-req"><code>12px</code></td>
+            <td class="spec-a11y-req">Captions, legal copy, timestamps</td>
+          </tr>
+          <tr class="spec-a11y-row">
+            <td class="spec-a11y-concern">--font-size-sm</td>
+            <td class="spec-a11y-req"><code>13px</code></td>
+            <td class="spec-a11y-req">Secondary labels, helper text, table cells</td>
+          </tr>
+          <tr class="spec-a11y-row">
+            <td class="spec-a11y-concern">--font-size-md</td>
+            <td class="spec-a11y-req"><code>14px</code></td>
+            <td class="spec-a11y-req">Default body text, inputs, dropdown items</td>
+          </tr>
+          <tr class="spec-a11y-row">
+            <td class="spec-a11y-concern">--font-size-lg</td>
+            <td class="spec-a11y-req"><code>16px</code></td>
+            <td class="spec-a11y-req">Prominent body text, card descriptions</td>
+          </tr>
+          <tr class="spec-a11y-row">
+            <td class="spec-a11y-concern">--font-size-xl</td>
+            <td class="spec-a11y-req"><code>18px</code></td>
+            <td class="spec-a11y-req">Section headings, dialog titles</td>
+          </tr>
+          <tr class="spec-a11y-row">
+            <td class="spec-a11y-concern">--font-size-2xl</td>
+            <td class="spec-a11y-req"><code>24px</code></td>
+            <td class="spec-a11y-req">Page headings, display text, hero callouts</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ACCESSIBILITY -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Accessibility</span></div>
+      <table class="spec-a11y-table">
+        <thead><tr><th>Concern</th><th>Requirement</th></tr></thead>
+        <tbody>
+          <tr class="spec-a11y-row">
+            <td class="spec-a11y-concern">contrast</td>
+            <td class="spec-a11y-req">Body text (14px regular) requires 4.5:1 contrast. Large text (18px+ or 14px bold) requires 3:1. Use <code>var(--text-primary)</code> on <code>var(--surface-bg)</code> by default; the DS token pairs are pre-verified at both contrast levels.</td>
+          </tr>
+          <tr class="spec-a11y-row">
+            <td class="spec-a11y-concern">minimum size</td>
+            <td class="spec-a11y-req">Do not render interactive text (links, buttons) below 12px (<code>--font-size-xs</code>). Captions and decorative labels may use 10px (<code>--font-size-3xs</code>) if they carry no interactive or essential meaning.</td>
+          </tr>
+          <tr class="spec-a11y-row">
+            <td class="spec-a11y-concern">line height</td>
+            <td class="spec-a11y-req">WCAG 1.4.12 requires line-height at least 1.5x font-size for body text. FreshDS defaults are 1.5 (body) and 1.6 (descriptions). Never override with a value below 1.5 on paragraph-length content.</td>
+          </tr>
+          <tr class="spec-a11y-row">
+            <td class="spec-a11y-concern">letter spacing</td>
+            <td class="spec-a11y-req">WCAG 1.4.12: user agents may apply 0.12em letter-spacing without loss of content or function. Avoid <code>letter-spacing: normal</code> combined with very tight custom tracking; keep tracking at or above -0.02em.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<script src="js/spec-page.js"></script>
+
+<script type="module">
+  import { supabase } from '/systems/js/supabase-client.js'
+  var RULE_IDS = ['rules-general'];
+  var _saveTimer = null, _loading = false;
+  function getRulesSnapshot() {
+    var r = {};
+    RULE_IDS.forEach(function(id) { var l = document.getElementById(id); if (!l) return; r[id] = Array.from(l.querySelectorAll('.spec-rule-text')).map(function(el) { return el.innerHTML.trim(); }); });
+    return r;
+  }
+  function applySnapshot(saved) {
+    RULE_IDS.forEach(function(id) { var l = document.getElementById(id); if (!l) return; var rules = (saved && saved[id] && saved[id].length) ? saved[id] : window.DEFAULT_RULES[id]; l.innerHTML = rules.map(function(t) { return '<li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">' + t + '</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>'; }).join(''); });
+  }
+  async function saveRulesNow() {
+    try { var { data: { user } } = await supabase.auth.getUser(); if (!user) return; var { data: p } = await supabase.from('profiles').select('component_rules').eq('id', user.id).single(); var e = (p && p.component_rules) ? p.component_rules : {}; e.typography = getRulesSnapshot(); await supabase.from('profiles').update({ component_rules: e }).eq('id', user.id); } catch(e) {}
+  }
+  function schedSave() { if (_loading) return; clearTimeout(_saveTimer); _saveTimer = setTimeout(saveRulesNow, 1000); }
+  var aiPanel = document.getElementById('ai-rules-panel');
+  if (aiPanel) new MutationObserver(schedSave).observe(aiPanel, { childList: true, subtree: true, characterData: true });
+  ;(async function() { try { var { data: { user } } = await supabase.auth.getUser(); if (!user) return; var { data: p } = await supabase.from('profiles').select('component_rules').eq('id', user.id).single(); if (p && p.component_rules && p.component_rules.typography) { _loading = true; applySnapshot(p.component_rules.typography); _loading = false; } } catch(e) {} })();
+</script>
+
+<script>
+  var DEFAULT_RULES = {
+    'rules-general': [
+      'Always set font-family using <code>var(--font-sans)</code> or <code>var(--font-mono)</code>. Never hardcode a font name like "Inter" or "JetBrains Mono" in component code. The customer may have configured a different typeface and the token is the only correct reference.',
+      'Use <code>var(--font-mono)</code> for all code snippets, token names, data values, numeric IDs, and timestamps. Use <code>var(--font-sans)</code> for everything else including labels, descriptions, headings, and button text.',
+      'Set font size using <code>var(--font-size-md)</code> (14px) as the default body text. Use <code>var(--font-size-sm)</code> (13px) for secondary labels. Use <code>var(--font-size-xs)</code> (12px) for captions and timestamps. Never set font-size in px or rem directly; always use the scale token.',
+      'Use font-weight 400 for body, 500 for labels and interactive elements, 600 for headings and emphasis. Never use 700 or higher. Never use 300 (Light) for text smaller than 16px as it fails contrast at small sizes.',
+      'Set line-height to 1.5 for body paragraphs, 1.6 for help text and descriptions, 1.2 for headings and display text. Never use unitless values below 1.2 or above 1.8 on any text element.',
+      'Use <code>var(--text-primary)</code> for main content, <code>var(--text-secondary)</code> for supporting text, <code>var(--text-tertiary)</code> for captions and placeholders. Never set text color as a raw hex; always use a semantic text token so dark mode works automatically.'
+    ]
+  };
+  function restoreDefaults() {
+    if (!confirm('Reset all typography rules to FreshDS defaults? Any edits you have made will be lost.')) return;
+    Object.keys(DEFAULT_RULES).forEach(function(id) { var l = document.getElementById(id); if (!l) return; l.innerHTML = DEFAULT_RULES[id].map(function(t) { return '<li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">' + t + '</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>'; }).join(''); });
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Auth guard: redirects to / if no session or unpaid -->
+<script type="module" src="/systems/js/auth-guard.js"></script>
+<script type="module" src="/systems/js/paid-guard.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Toast | FreshDS</title>
+<base href="../../">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="styles/site.css">
+<link rel="stylesheet" href="tokens/primitives.css">
+<link rel="stylesheet" href="tokens/theme.css">
+<script src="js/freshds.js"></script>
+<script src="js/freshds-site.js"></script>
+<link rel="stylesheet" href="styles/components/spec-page.css">
+</head>
+<body>
+
+<div class="comp-page">
+  <h1 class="comp-title">Toast</h1>
+  <p class="comp-desc">Transient notification overlays that appear in the bottom-right corner and auto-dismiss after a configurable duration. Triggered programmatically via <code style="font-family:var(--font-mono);font-size:13px;background:#f1f1f3;padding:1px 5px;border-radius:3px;">FreshToast.show()</code>.</p>
+
+  <!-- STATES CARD -->
+  <div class="comp-section">
+    <div class="spec-card">
+      <div class="spec-card-topbar">
+        <span class="spec-rules-title">Toast variants</span>
+        <div class="spec-mode-switcher">
+          <button class="spec-mode-btn active" id="mode-btn-light" onclick="setSpecMode('light')"><i class="ti ti-sun"></i> Light</button>
+          <button class="spec-mode-btn" id="mode-btn-dark" onclick="setSpecMode('dark')"><i class="ti ti-moon"></i> Dark</button>
+        </div>
+      </div>
+      <div id="spec-viewport" class="spec-viewport">
+
+        <!-- Info -->
+        <div class="spec-variant-row">
+          <div class="spec-variant-header">
+            <span class="spec-variant-name">Info</span>
+            <span class="spec-attr-chip">variant="info"</span>
+            <span class="spec-variant-sep">·</span>
+            <span class="spec-variant-desc">Default variant for neutral informational messages and status updates.</span>
+          </div>
+          <div class="spec-variant-body">
+            <div class="spec-demos">
+              <fresh-toast message="Processing your request..." variant="info" duration="0"></fresh-toast>
+            </div>
+          </div>
+        </div>
+
+        <!-- Success -->
+        <div class="spec-variant-row">
+          <div class="spec-variant-header">
+            <span class="spec-variant-name">Success</span>
+            <span class="spec-attr-chip">variant="success"</span>
+            <span class="spec-variant-sep">·</span>
+            <span class="spec-variant-desc">Confirms a completed action: save, publish, upload, invite sent.</span>
+          </div>
+          <div class="spec-variant-body">
+            <div class="spec-demos">
+              <fresh-toast message="Changes saved successfully." variant="success" duration="0"></fresh-toast>
+            </div>
+          </div>
+        </div>
+
+        <!-- Warning -->
+        <div class="spec-variant-row">
+          <div class="spec-variant-header">
+            <span class="spec-variant-name">Warning</span>
+            <span class="spec-attr-chip">variant="warning"</span>
+            <span class="spec-variant-sep">·</span>
+            <span class="spec-variant-desc">Non-blocking caution: rate limit approaching, quota nearly reached.</span>
+          </div>
+          <div class="spec-variant-body">
+            <div class="spec-demos">
+              <fresh-toast message="API quota at 90%. Upgrade to avoid disruption." variant="warning" duration="0"></fresh-toast>
+            </div>
+          </div>
+        </div>
+
+        <!-- Danger -->
+        <div class="spec-variant-row">
+          <div class="spec-variant-header">
+            <span class="spec-variant-name">Danger</span>
+            <span class="spec-attr-chip">variant="danger"</span>
+            <span class="spec-variant-sep">·</span>
+            <span class="spec-variant-desc">Reports a recoverable failure: upload error, action could not be completed.</span>
+          </div>
+          <div class="spec-variant-body">
+            <div class="spec-demos">
+              <fresh-toast message="Upload failed. Check your connection and try again." variant="danger" duration="0"></fresh-toast>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /spec-viewport -->
+    </div><!-- /spec-card -->
+  </div>
+
+  <!-- AI RULES -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar">
+        <span class="spec-rules-title">AI action rules</span>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <span class="spec-rules-hint">Click any rule to edit</span>
+          <button class="spec-rules-reset" onclick="restoreDefaults()"><i class="ti ti-rotate" style="font-size:10px;"></i> Restore FreshDS defaults</button>
+        </div>
+      </div>
+      <div class="spec-rules-section">
+        <div class="spec-rules-section-head">
+          <span class="spec-rules-variant">General</span>
+          <span class="spec-attr-chip">fresh-toast</span>
+        </div>
+        <ul class="spec-rule-list" id="rules-general">
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Always trigger toasts via <code>FreshToast.show(message, opts)</code>, not by placing <code>&lt;fresh-toast&gt;</code> directly in HTML. The static method manages the container and stacking automatically.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Use toasts for non-blocking feedback on completed async actions: save, delete, share, copy. Never show a toast before an operation completes.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Keep the message under 80 characters. Toasts are glanceable, not prose. Link to a log or detail page rather than embedding long error messages.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Set <code>duration: 0</code> for persistent toasts only when the message requires manual acknowledgment. Default 4000ms is appropriate for most confirmations.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">For critical errors that require user action, use <code>fresh-alert</code> inline or a <code>fresh-modal</code> instead of a toast. Auto-dismissing danger toasts may be missed.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Suppress duplicate toasts: if the same message is already visible, do not show it again. Cap concurrent toasts at 3; queue or drop additional ones rather than stacking an unbounded column. Call <code>FreshToast.show()</code> only once per user-triggered event, never inside a loop or polling handler.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+        </ul>
+        <button class="spec-add-rule" onclick="addRule('rules-general')"><i class="ti ti-plus"></i> Add rule</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ATTRIBUTES -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Options</span></div>
+      <table class="spec-a11y-table">
+        <thead><tr><th style="width:130px">Option</th><th style="width:220px">Values</th><th style="width:80px">Default</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">message</td><td class="spec-a11y-req">string</td><td class="spec-a11y-req">-</td><td class="spec-a11y-req">The text shown in the toast body. First argument to <code>FreshToast.show()</code>.</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">variant</td><td class="spec-a11y-req"><code>info</code> <code>success</code> <code>warning</code> <code>danger</code></td><td class="spec-a11y-req"><code>info</code></td><td class="spec-a11y-req">Controls the icon color. Background and border are always neutral surface tokens.</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">duration</td><td class="spec-a11y-req">number (ms), <code>0</code> = persistent</td><td class="spec-a11y-req"><code>4000</code></td><td class="spec-a11y-req">How long the toast stays visible before auto-dismissing. Set <code>0</code> to require explicit close.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- CODE -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Code</span></div>
+      <div style="padding:16px 20px;display:flex;flex-direction:column;gap:0;">
+
+        <div class="code-block" data-code="// Success confirmation after save
+FreshToast.show('Changes saved successfully.', { variant: 'success' });">
+          <div class="code-block-header"><span><span class="code-lang">JS</span><span class="code-context">Success toast</span></span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+          <div class="code-body"><span class="hl-com">// Success confirmation after save</span>
+<span class="hl-txt">FreshToast.show(</span><span class="hl-val">'Changes saved successfully.'</span><span class="hl-txt">, { variant: </span><span class="hl-val">'success'</span><span class="hl-txt"> });</span></div>
+        </div>
+
+        <div class="code-block" data-code="// Danger toast with longer duration
+FreshToast.show('Upload failed. Check your connection.', { variant: 'danger', duration: 6000 });">
+          <div class="code-block-header"><span><span class="code-lang">JS</span><span class="code-context">Danger with custom duration</span></span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+          <div class="code-body"><span class="hl-com">// Danger toast with longer duration</span>
+<span class="hl-txt">FreshToast.show(</span><span class="hl-val">'Upload failed. Check your connection.'</span><span class="hl-txt">, { variant: </span><span class="hl-val">'danger'</span><span class="hl-txt">, duration: </span><span class="hl-txt">6000</span><span class="hl-txt"> });</span></div>
+        </div>
+
+        <div class="code-block" data-code="// Persistent toast - user must manually close
+FreshToast.show('Processing large export, this may take a few minutes.', { variant: 'info', duration: 0 });">
+          <div class="code-block-header"><span><span class="code-lang">JS</span><span class="code-context">Persistent</span></span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+          <div class="code-body"><span class="hl-com">// Persistent toast - user must manually close</span>
+<span class="hl-txt">FreshToast.show(</span><span class="hl-val">'Processing large export, this may take a few minutes.'</span><span class="hl-txt">, { variant: </span><span class="hl-val">'info'</span><span class="hl-txt">, duration: </span><span class="hl-txt">0</span><span class="hl-txt"> });</span></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- TOKENS -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Tokens</span></div>
+      <table class="spec-a11y-table">
+        <thead><tr><th style="width:220px">Token</th><th style="width:200px">Role</th><th>State</th></tr></thead>
+        <tbody>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--surface-bg</td><td class="spec-a11y-req">Toast background</td><td class="spec-a11y-req">all</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--surface-border-strong</td><td class="spec-a11y-req">Toast border</td><td class="spec-a11y-req">all</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--elev-3</td><td class="spec-a11y-req">Box shadow</td><td class="spec-a11y-req">all</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--color-info</td><td class="spec-a11y-req">Icon color</td><td class="spec-a11y-req">info variant</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--color-success</td><td class="spec-a11y-req">Icon color</td><td class="spec-a11y-req">success variant</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--color-warning</td><td class="spec-a11y-req">Icon color</td><td class="spec-a11y-req">warning variant</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--color-danger</td><td class="spec-a11y-req">Icon color</td><td class="spec-a11y-req">danger variant</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--text-primary</td><td class="spec-a11y-req">Message text color</td><td class="spec-a11y-req">all</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--radius-lg</td><td class="spec-a11y-req">Border radius</td><td class="spec-a11y-req">all</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--surface-overlay</td><td class="spec-a11y-req">Close button hover</td><td class="spec-a11y-req">close hover</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ACCESSIBILITY -->
+  <div class="comp-section">
+    <div class="spec-rules-panel">
+      <div class="spec-rules-topbar"><span class="spec-rules-title">Accessibility</span></div>
+      <div style="padding:12px 24px 14px;border-bottom:1px solid #d4d4d7;">
+        <p style="font-size:13px;color:#555;line-height:1.6;margin:0;">Toast satisfies all <a href="components.html#accessibility" target="_parent" style="color:#5b6af7;text-decoration:none;font-weight:500;">universal accessibility concerns</a>. Component-specific concerns are below.</p>
+      </div>
+      <table class="spec-a11y-table">
+        <thead><tr><th>Concern</th><th>Requirement</th></tr></thead>
+        <tbody>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">live region</td><td class="spec-a11y-req">The toast uses <code>role="status"</code> and <code>aria-live="polite"</code>. Screen readers announce the message without interrupting the user's current focus.</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">auto-dismiss timing</td><td class="spec-a11y-req">Default 4-second duration may be too short for users who read slowly. For long or complex messages, set a longer <code>duration</code> or use <code>duration: 0</code> to require explicit dismissal.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<script src="components/feedback/fresh-toast.js"></script>
+<script src="js/spec-page.js"></script>
+
+<script type="module">
+  import { supabase } from '/systems/js/supabase-client.js'
+  var RULE_IDS = ['rules-general'];
+  var _saveTimer = null, _loading = false;
+  function getRulesSnapshot() {
+    var r = {};
+    RULE_IDS.forEach(function(id) { var l = document.getElementById(id); if (!l) return; r[id] = Array.from(l.querySelectorAll('.spec-rule-text')).map(function(el) { return el.innerHTML.trim(); }); });
+    return r;
+  }
+  function applySnapshot(saved) {
+    RULE_IDS.forEach(function(id) { var l = document.getElementById(id); if (!l) return; var rules = (saved && saved[id] && saved[id].length) ? saved[id] : window.DEFAULT_RULES[id]; l.innerHTML = rules.map(function(t) { return '<li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">' + t + '</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>'; }).join(''); }); }
+  async function saveRulesNow() {
+    try { var { data: { user } } = await supabase.auth.getUser(); if (!user) return; var { data: p } = await supabase.from('profiles').select('component_rules').eq('id', user.id).single(); var e = (p && p.component_rules) ? p.component_rules : {}; e.toast = getRulesSnapshot(); await supabase.from('profiles').update({ component_rules: e }).eq('id', user.id); } catch(e) {}
+  }
+  function schedSave() { if (_loading) return; clearTimeout(_saveTimer); _saveTimer = setTimeout(saveRulesNow, 1000); }
+  var panel = document.querySelector('.spec-rules-panel'); if (panel) new MutationObserver(schedSave).observe(panel, { childList: true, subtree: true, characterData: true });
+  ;(async function() { try { var { data: { user } } = await supabase.auth.getUser(); if (!user) return; var { data: p } = await supabase.from('profiles').select('component_rules').eq('id', user.id).single(); if (p && p.component_rules && p.component_rules.toast) { _loading = true; applySnapshot(p.component_rules.toast); _loading = false; } } catch(e) {} })();
+</script>
+
+<script>
+  var DEFAULT_RULES = {
+    'rules-general': [
+      'Always trigger toasts via <code>FreshToast.show(message, opts)</code>, not by placing <code>&lt;fresh-toast&gt;</code> directly in HTML. The static method manages the container and stacking automatically.',
+      'Use toasts for non-blocking feedback on completed async actions: save, delete, share, copy. Never show a toast before an operation completes.',
+      'Keep the message under 80 characters. Toasts are glanceable, not prose. Link to a log or detail page rather than embedding long error messages.',
+      'Set <code>duration: 0</code> for persistent toasts only when the message requires manual acknowledgment. Default 4000ms is appropriate for most confirmations.',
+      'For critical errors that require user action, use <code>fresh-alert</code> inline or a <code>fresh-modal</code> instead of a toast. Auto-dismissing danger toasts may be missed.',
+      'Suppress duplicate toasts: if the same message is already visible, do not show it again. Cap concurrent toasts at 3; queue or drop additional ones rather than stacking an unbounded column. Call <code>FreshToast.show()</code> only once per user-triggered event, never inside a loop or polling handler.'
+    ]
+  };
+  function restoreDefaults() {
+    if (!confirm('Reset all toast rules to FreshDS defaults? Any edits you have made will be lost.')) return;
+    Object.keys(DEFAULT_RULES).forEach(function(id) { var l = document.getElementById(id); if (!l) return; l.innerHTML = DEFAULT_RULES[id].map(function(t) { return '<li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">' + t + '</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>'; }).join(''); });
+  }
+</script>
+</body>
+</html>
