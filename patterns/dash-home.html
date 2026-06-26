@@ -207,7 +207,101 @@ fresh-sidebar[collapsed] .dh-sidebar-user-info { display: none; }
       <!-- Sidebar: shown for sidebar patterns -->
       <fresh-sidebar id="dh-sidebar" style="display:none;flex-shrink:0;height:100%;overflow:hidden;">
         <div id="dh-nav-content"></div>
-<!-- /dash-body -->
+      </fresh-sidebar>
+
+      <!-- Icon rail flyout: collapsible sidebar collapsed state -->
+      <div class="dh-icon-flyout" id="dh-icon-flyout">
+        <div class="dh-flyout-label" id="dh-flyout-label"></div>
+        <div id="dh-flyout-items"></div>
+      </div>
+
+      <main class="dash-main">
+        <div class="dash-page-header">
+          <div>
+            <div class="dash-page-title">Good morning, Jamie</div>
+            <div class="dash-page-subtitle">Here's what's happening in your workspace today.</div>
+          </div>
+          <div class="dash-page-actions">
+            <fresh-button variant="secondary" size="sm"><i class="ti ti-calendar"></i> Jun 20, 2026</fresh-button>
+            <fresh-button variant="primary" size="sm"><i class="ti ti-plus"></i> New project</fresh-button>
+          </div>
+        </div>
+
+        <div class="dash-content">
+
+          <!-- Zone: Stat Cards -->
+          <div id="dh-stat-section">
+            <div class="dh-stat-grid">
+              <fresh-stat-card value="$48,320" label="Monthly revenue" trend="12.4" trend-label="vs last month" icon="ti-currency-dollar"></fresh-stat-card>
+              <fresh-stat-card value="1,847"   label="Active users"    trend="8.1"  trend-label="vs last month" icon="ti-users"></fresh-stat-card>
+              <fresh-stat-card value="24"      label="Open projects"   trend="-2"   trend-label="vs last week"  icon="ti-folders"></fresh-stat-card>
+              <fresh-stat-card value="98.7%"   label="Uptime"          trend="0.2"  trend-label="this week"     icon="ti-server"></fresh-stat-card>
+            </div>
+          </div>
+
+          <!-- Chart column + Activity column -->
+          <div class="dh-main-row">
+
+            <!-- Left: quick stats + revenue chart -->
+            <div class="dh-chart-col">
+
+              <!-- Zone: Quick Stats -->
+              <div id="dh-quick-section">
+                <div class="dh-quick-grid">
+                  <div class="quick-stat">
+                    <div class="quick-stat-icon"><i class="ti ti-check"></i></div>
+                    <div>
+                      <div class="quick-stat-label">Tasks done today</div>
+                      <div class="quick-stat-value">18</div>
+                    </div>
+                  </div>
+                  <div class="quick-stat">
+                    <div class="quick-stat-icon"><i class="ti ti-message"></i></div>
+                    <div>
+                      <div class="quick-stat-label">New comments</div>
+                      <div class="quick-stat-value">37</div>
+                    </div>
+                  </div>
+                  <div class="quick-stat">
+                    <div class="quick-stat-icon"><i class="ti ti-rocket"></i></div>
+                    <div>
+                      <div class="quick-stat-label">Deploys this week</div>
+                      <div class="quick-stat-value">5</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Zone: Revenue Chart -->
+              <div id="dh-chart-section">
+                <fresh-chart id="dh-revenue-fc" title="Revenue over time" description="Monthly MRR, last 6 months"></fresh-chart>
+              </div>
+
+            </div><!-- /dh-chart-col -->
+
+            <!-- Zone: Activity Feed -->
+            <div class="dh-activity-col" id="dh-activity-col">
+              <div class="dash-card">
+                <div class="activity-header">
+                  <div class="dash-card-title">Recent activity</div>
+                  <button class="activity-view-all">View all</button>
+                </div>
+                <fresh-timeline items='[
+                  {"timestamp":"5 min ago",  "title":"PR #541 merged",            "description":"merged by Marcus Chen",       "icon":"ti-git-merge",      "variant":"success"},
+                  {"timestamp":"23 min ago", "title":"New comment on Design spec", "description":"Priya Sharma left a comment", "icon":"ti-message",        "variant":"primary"},
+                  {"timestamp":"1 hr ago",   "title":"Deploy to production",       "description":"v2.6.0 shipped successfully", "icon":"ti-rocket",         "variant":"success"},
+                  {"timestamp":"2 hrs ago",  "title":"Quota warning",              "description":"API usage at 82% of limit",  "icon":"ti-alert-triangle", "variant":"warning"},
+                  {"timestamp":"Yesterday",  "title":"Jamie joined the workspace", "description":"Welcome to Acme!",            "icon":"ti-user-plus",      "variant":"neutral"}
+                ]'></fresh-timeline>
+              </div>
+            </div>
+
+          </div><!-- /dh-main-row -->
+
+        </div><!-- /dash-content -->
+      </main>
+
+    </div><!-- /dash-body -->
   </div><!-- /dash-shell -->
 
 </div><!-- /app -->

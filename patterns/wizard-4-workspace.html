@@ -124,6 +124,82 @@ fresh-sidebar[collapsed] .ows-sidebar-user-info { display: none; }
 
       <fresh-sidebar id="ows-sidebar" style="display:none;flex-shrink:0;height:100%;overflow:hidden;">
         <div id="ows-nav-content"></div>
+      </fresh-sidebar>
+
+      <div class="ows-icon-flyout" id="ows-icon-flyout">
+        <div class="ows-flyout-label" id="ows-flyout-label"></div>
+        <div id="ows-flyout-items"></div>
+      </div>
+    <div class="onb-body">
+      <div class="onb-wrap">
+
+        <div class="onb-stepper">
+          <fresh-stepper step="4" steps='[
+            {"label":"Role"},
+            {"label":"Use case"},
+            {"label":"Profile"},
+            {"label":"Workspace"},
+            {"label":"Team"},
+            {"label":"Integrations"}
+          ]'></fresh-stepper>
+        </div>
+
+        <div class="onb-eyebrow">Step 4 of 6</div>
+        <h1 class="onb-title">Set up your workspace</h1>
+        <p class="onb-sub">This is your team's home in Acme. You can always change this later.</p>
+
+        <div class="onb-field-stack">
+          <div class="onb-field">
+            <label class="onb-label" for="workspace-name">Workspace name</label>
+            <fresh-input id="workspace-name" value="Acme Design Team" autocomplete="organization"></fresh-input>
+          </div>
+
+          <div class="onb-field">
+            <label class="onb-label" for="workspace-slug">Workspace URL</label>
+            <div class="slug-row">
+              <span class="slug-prefix">acme.app/</span>
+              <input class="slug-input" id="workspace-slug" type="text" value="acme-design" placeholder="your-workspace" spellcheck="false" autocomplete="off">
+            </div>
+            <div class="onb-field-hint">Only lowercase letters, numbers, and hyphens.</div>
+          </div>
+
+          <div class="onb-field-row">
+            <div class="onb-field">
+              <label class="onb-label" for="team-size">Team size</label>
+              <fresh-select id="team-size">
+                <option value="">Select…</option>
+                <option value="1" selected>Just me</option>
+                <option value="2-10">2–10 people</option>
+                <option value="11-50">11–50 people</option>
+                <option value="51-200">51–200 people</option>
+                <option value="200+">200+ people</option>
+              </fresh-select>
+            </div>
+            <div class="onb-field">
+              <label class="onb-label" for="industry">Industry</label>
+              <fresh-select id="industry">
+                <option value="">Select…</option>
+                <option value="tech" selected>Technology / SaaS</option>
+                <option value="fintech">Fintech</option>
+                <option value="healthcare">Healthcare</option>
+                <option value="ecommerce">E-commerce</option>
+                <option value="media">Media / Publishing</option>
+                <option value="edu">Education</option>
+                <option value="agency">Agency / Consulting</option>
+                <option value="other">Other</option>
+              </fresh-select>
+            </div>
+          </div>
+        </div>
+
+        <div class="onb-nav">
+          <fresh-button variant="ghost"><i class="ti ti-arrow-left"></i> Back</fresh-button>
+          <fresh-button variant="primary">Continue <i class="ti ti-arrow-right"></i></fresh-button>
+        </div>
+
+      </div>
+    </div>
+    </div>
   </div>
 
 </div>

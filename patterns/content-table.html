@@ -117,6 +117,80 @@ fresh-sidebar[collapsed] .ctb-sidebar-user-info { display: none; }
 
       <fresh-sidebar id="ctb-sidebar" style="display:none;flex-shrink:0;height:100%;overflow:hidden;">
         <div id="ctb-nav-content"></div>
+      </fresh-sidebar>
+
+      <div class="ctb-icon-flyout" id="ctb-icon-flyout">
+        <div class="ctb-flyout-label" id="ctb-flyout-label"></div>
+        <div id="ctb-flyout-items"></div>
+      </div>
+
+      <main class="dash-main">
+
+        <div class="dash-page-header" id="ctb-page-header">
+          <div>
+            <div class="dash-page-title">All deals</div>
+            <div class="dash-page-subtitle">64 open deals · $2.4M pipeline value</div>
+          </div>
+          <div class="dash-page-actions">
+            <fresh-button variant="secondary" size="sm"><i class="ti ti-columns"></i> Columns</fresh-button>
+            <fresh-button variant="secondary" size="sm"><i class="ti ti-download"></i> Export</fresh-button>
+            <fresh-button variant="primary" size="sm"><i class="ti ti-plus"></i> New deal</fresh-button>
+          </div>
+        </div>
+
+        <div class="ctb-main-inner">
+
+          <!-- Toolbar: search + inline selection actions -->
+          <div class="ctb-toolbar" id="ctb-toolbar">
+            <div class="ctb-search-wrap">
+              <i class="ti ti-search"></i>
+              <input type="text" id="ctb-search-input" placeholder="Search deals..." autocomplete="off">
+            </div>
+            <div class="ctb-sel-actions" id="ctb-sel-actions">
+              <span class="ctb-sel-count" id="ctb-sel-count">0 selected</span>
+              <button class="ctb-del-btn" onclick="deleteSelected()">
+                <i class="ti ti-trash"></i> Delete
+              </button>
+            </div>
+          </div>
+
+          <!-- Table -->
+          <div class="ctb-table-wrap" id="ctb-table-section">
+            <table class="ctb-table" id="ctb-table">
+              <colgroup>
+                <col style="width:44px">
+                <col style="width:22%">
+                <col style="width:16%">
+                <col style="width:14%">
+                <col style="width:10%">
+                <col style="width:14%">
+                <col style="width:12%">
+                <col style="width:10%">
+              </colgroup>
+              <thead>
+                <tr>
+                  <th><input type="checkbox" class="ctb-check" id="ctb-check-all" onchange="toggleAll(this)"></th>
+                  <th><button class="ctb-sort-btn" data-col="name" onclick="sortBy('name')">Deal Name <i class="ti ti-arrows-sort"></i></button></th>
+                  <th><button class="ctb-sort-btn" data-col="company" onclick="sortBy('company')">Company <i class="ti ti-arrows-sort"></i></button></th>
+                  <th>Owner</th>
+                  <th><button class="ctb-sort-btn" data-col="value_num" onclick="sortBy('value_num')">Value <i class="ti ti-arrows-sort"></i></button></th>
+                  <th>Stage</th>
+                  <th><button class="ctb-sort-btn" data-col="close_ts" onclick="sortBy('close_ts')">Close Date <i class="ti ti-arrows-sort"></i></button></th>
+                  <th><button class="ctb-sort-btn" data-col="prob_num" onclick="sortBy('prob_num')">Probability <i class="ti ti-arrows-sort"></i></button></th>
+                </tr>
+              </thead>
+              <tbody id="ctb-tbody"></tbody>
+            </table>
+            <div class="ctb-empty" id="ctb-empty">
+              <i class="ti ti-search-off"></i>
+              <span>No deals match your search</span>
+            </div>
+          </div>
+
+        </div>
+
+      </main>
+    </div>
   </div>
 
 </div>

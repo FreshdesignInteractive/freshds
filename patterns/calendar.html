@@ -118,6 +118,139 @@ fresh-sidebar[collapsed] .ca-sidebar-user-info { display: none; }
 
       <fresh-sidebar id="ca-sidebar" style="display:none;flex-shrink:0;height:100%;overflow:hidden;">
         <div id="ca-nav-content"></div>
+      </fresh-sidebar>
+
+      <div class="ca-icon-flyout" id="ca-icon-flyout">
+        <div class="ca-flyout-label" id="ca-flyout-label"></div>
+        <div id="ca-flyout-items"></div>
+      </div>
+
+      <main class="dash-main">
+
+        <!-- Calendar toolbar -->
+        <div class="cnt-cal-header" id="ca-toolbar">
+          <div class="cnt-cal-nav">
+            <fresh-button variant="ghost" size="sm" icon-only><i class="ti ti-chevron-left"></i></fresh-button>
+            <fresh-button variant="ghost" size="sm" icon-only><i class="ti ti-chevron-right"></i></fresh-button>
+            <fresh-button variant="secondary" size="sm">Today</fresh-button>
+          </div>
+          <div class="cnt-cal-title">June 2026</div>
+          <div style="display:flex;align-items:center;gap:var(--space-2);">
+            <fresh-topbar-menu id="ca-view-tabs">
+              <button slot="tab">Day</button>
+              <button slot="tab">Week</button>
+              <button slot="tab" class="active">Month</button>
+            </fresh-topbar-menu>
+            <fresh-button variant="primary" size="sm"><i class="ti ti-plus"></i> New event</fresh-button>
+          </div>
+        </div>
+
+        <!-- Calendar grid -->
+        <div class="cnt-cal-wrap" id="ca-grid">
+          <div class="cnt-cal-grid">
+            <!-- Day headers -->
+            <div class="cnt-cal-day-name">Sun</div>
+            <div class="cnt-cal-day-name">Mon</div>
+            <div class="cnt-cal-day-name">Tue</div>
+            <div class="cnt-cal-day-name">Wed</div>
+            <div class="cnt-cal-day-name">Thu</div>
+            <div class="cnt-cal-day-name">Fri</div>
+            <div class="cnt-cal-day-name">Sat</div>
+
+            <!-- Week 1: May 31 – Jun 6 -->
+            <div class="cnt-cal-cell other-month"><div class="cnt-cal-date"><span class="cnt-cal-date-num">31</span></div></div>
+            <div class="cnt-cal-cell"><div class="cnt-cal-date"><span class="cnt-cal-date-num">1</span></div>
+              <div class="cnt-cal-event primary">Team standup 9am</div>
+            </div>
+            <div class="cnt-cal-cell"><div class="cnt-cal-date"><span class="cnt-cal-date-num">2</span></div>
+              <div class="cnt-cal-event success">Analytics closed won</div>
+            </div>
+            <div class="cnt-cal-cell"><div class="cnt-cal-date"><span class="cnt-cal-date-num">3</span></div>
+              <div class="cnt-cal-event primary">1:1 with Marcus</div>
+            </div>
+            <div class="cnt-cal-cell"><div class="cnt-cal-date"><span class="cnt-cal-date-num">4</span></div>
+              <div class="cnt-cal-event warning">Product review</div>
+            </div>
+            <div class="cnt-cal-cell today"><div class="cnt-cal-date"><span class="cnt-cal-date-num">5</span></div>
+              <div class="cnt-cal-event primary">Q2 Board Review 2pm</div>
+              <div class="cnt-cal-event danger">Deadline: Proposal</div>
+            </div>
+            <div class="cnt-cal-cell"><div class="cnt-cal-date"><span class="cnt-cal-date-num">6</span></div></div>
+
+            <!-- Week 2: Jun 7–13 -->
+            <div class="cnt-cal-cell"><div class="cnt-cal-date"><span class="cnt-cal-date-num">7</span></div></div>
+            <div class="cnt-cal-cell"><div class="cnt-cal-date"><span class="cnt-cal-date-num">8</span></div>
+              <div class="cnt-cal-event primary">Techvault demo 10am</div>
+            </div>
+            <div class="cnt-cal-cell"><div class="cnt-cal-date"><span class="cnt-cal-date-num">9</span></div>
+              <div class="cnt-cal-event warning">Sprint planning 9am</div>
+            </div>
+            <div class="cnt-cal-cell"><div class="cnt-cal-date"><span class="cnt-cal-date-num">10</span></div>
+              <div class="cnt-cal-event success">Feature freeze</div>
+            </div>
+            <div class="cnt-cal-cell"><div class="cnt-cal-date"><span class="cnt-cal-date-num">11</span></div>
+              <div class="cnt-cal-event primary">1:1 with Jamie</div>
+            </div>
+            <div class="cnt-cal-cell"><div class="cnt-cal-date"><span class="cnt-cal-date-num">12</span></div>
+              <div class="cnt-cal-event primary">Luminate call 3pm</div>
+            </div>
+            <div class="cnt-cal-cell"><div class="cnt-cal-date"><span class="cnt-cal-date-num">13</span></div></div>
+
+            <!-- Week 3: Jun 14–20 -->
+            <div class="cnt-cal-cell"><div class="cnt-cal-date"><span class="cnt-cal-date-num">14</span></div></div>
+            <div class="cnt-cal-cell"><div class="cnt-cal-date"><span class="cnt-cal-date-num">15</span></div>
+              <div class="cnt-cal-event warning">Design review</div>
+              <div class="cnt-cal-event primary">Sales sync 11am</div>
+            </div>
+            <div class="cnt-cal-cell"><div class="cnt-cal-date"><span class="cnt-cal-date-num">16</span></div>
+              <div class="cnt-cal-event primary">1:1 with Tom</div>
+            </div>
+            <div class="cnt-cal-cell"><div class="cnt-cal-date"><span class="cnt-cal-date-num">17</span></div>
+              <div class="cnt-cal-event success">Beta launch</div>
+            </div>
+            <div class="cnt-cal-cell"><div class="cnt-cal-date"><span class="cnt-cal-date-num">18</span></div></div>
+            <div class="cnt-cal-cell"><div class="cnt-cal-date"><span class="cnt-cal-date-num">19</span></div>
+              <div class="cnt-cal-event primary">Weekly review</div>
+            </div>
+            <div class="cnt-cal-cell"><div class="cnt-cal-date"><span class="cnt-cal-date-num">20</span></div></div>
+
+            <!-- Week 4: Jun 21–27 -->
+            <div class="cnt-cal-cell"><div class="cnt-cal-date"><span class="cnt-cal-date-num">21</span></div></div>
+            <div class="cnt-cal-cell"><div class="cnt-cal-date"><span class="cnt-cal-date-num">22</span></div>
+              <div class="cnt-cal-event primary">All hands 10am</div>
+            </div>
+            <div class="cnt-cal-cell"><div class="cnt-cal-date"><span class="cnt-cal-date-num">23</span></div>
+              <div class="cnt-cal-event primary">1:1 with Priya</div>
+            </div>
+            <div class="cnt-cal-cell"><div class="cnt-cal-date"><span class="cnt-cal-date-num">24</span></div>
+              <div class="cnt-cal-event warning">QA sign-off</div>
+            </div>
+            <div class="cnt-cal-cell"><div class="cnt-cal-date"><span class="cnt-cal-date-num">25</span></div>
+              <div class="cnt-cal-event danger">Close: Compliance deal</div>
+            </div>
+            <div class="cnt-cal-cell"><div class="cnt-cal-date"><span class="cnt-cal-date-num">26</span></div>
+              <div class="cnt-cal-event primary">Demo day</div>
+            </div>
+            <div class="cnt-cal-cell"><div class="cnt-cal-date"><span class="cnt-cal-date-num">27</span></div></div>
+
+            <!-- Week 5: Jun 28–30 + Jul 1–4 -->
+            <div class="cnt-cal-cell"><div class="cnt-cal-date"><span class="cnt-cal-date-num">28</span></div></div>
+            <div class="cnt-cal-cell"><div class="cnt-cal-date"><span class="cnt-cal-date-num">29</span></div>
+              <div class="cnt-cal-event primary">Sprint retro</div>
+            </div>
+            <div class="cnt-cal-cell"><div class="cnt-cal-date"><span class="cnt-cal-date-num">30</span></div>
+              <div class="cnt-cal-event danger">Close: Platform renewal</div>
+            </div>
+            <div class="cnt-cal-cell other-month"><div class="cnt-cal-date"><span class="cnt-cal-date-num">1</span></div></div>
+            <div class="cnt-cal-cell other-month"><div class="cnt-cal-date"><span class="cnt-cal-date-num">2</span></div></div>
+            <div class="cnt-cal-cell other-month"><div class="cnt-cal-date"><span class="cnt-cal-date-num">3</span></div></div>
+            <div class="cnt-cal-cell other-month"><div class="cnt-cal-date"><span class="cnt-cal-date-num">4</span></div></div>
+          </div>
+        </div>
+
+      </main>
+
+    </div>
   </div>
 
 </div>

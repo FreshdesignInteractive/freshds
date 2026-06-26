@@ -81,6 +81,102 @@ fresh-sidebar[collapsed] .ac-sidebar-user-info { display: none; }
 
       <fresh-sidebar id="ac-sidebar" style="display:none;flex-shrink:0;height:100%;overflow:hidden;">
         <div id="ac-nav-content"></div>
+      </fresh-sidebar>
+
+      <div class="ac-icon-flyout" id="ac-icon-flyout">
+        <div class="ac-flyout-label" id="ac-flyout-label"></div>
+        <div id="ac-flyout-items"></div>
+      </div>
+
+      <!-- Conversation history sidebar -->
+      <aside class="ai-sidebar" id="ac-conversation-sidebar">
+        <div class="ai-sidebar-header">
+          <fresh-button variant="primary" size="sm" style="width:100%">
+            <i class="ti ti-plus"></i> New chat
+          </fresh-button>
+        </div>
+        <div class="ai-sidebar-list">
+          <div class="ai-sidebar-title" style="padding:var(--space-2) var(--space-3) var(--space-1)">Today</div>
+          <div class="ai-conv-item active">
+            <i class="ti ti-message ai-conv-item-icon"></i>
+            <div class="ai-conv-item-body">
+              <div class="ai-conv-item-title">Revenue analysis Q2</div>
+              <div class="ai-conv-item-time">2 min ago</div>
+            </div>
+          </div>
+          <div class="ai-conv-item">
+            <i class="ti ti-message ai-conv-item-icon"></i>
+            <div class="ai-conv-item-body">
+              <div class="ai-conv-item-title">Summarise support tickets</div>
+              <div class="ai-conv-item-time">1 hr ago</div>
+            </div>
+          </div>
+          <div class="ai-conv-item">
+            <i class="ti ti-message ai-conv-item-icon"></i>
+            <div class="ai-conv-item-body">
+              <div class="ai-conv-item-title">Draft release notes v2.6</div>
+              <div class="ai-conv-item-time">4 hrs ago</div>
+            </div>
+          </div>
+          <div class="ai-sidebar-title" style="padding:var(--space-3) var(--space-3) var(--space-1)">Yesterday</div>
+          <div class="ai-conv-item">
+            <i class="ti ti-message ai-conv-item-icon"></i>
+            <div class="ai-conv-item-body">
+              <div class="ai-conv-item-title">Churn risk report</div>
+              <div class="ai-conv-item-time">Yesterday</div>
+            </div>
+          </div>
+          <div class="ai-conv-item">
+            <i class="ti ti-message ai-conv-item-icon"></i>
+            <div class="ai-conv-item-body">
+              <div class="ai-conv-item-title">API docs refactor plan</div>
+              <div class="ai-conv-item-time">Yesterday</div>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Chat main -->
+      <main class="ai-main">
+        <div class="ai-chat-header" id="ac-chat-header">
+          <div>
+            <div class="ai-chat-title">Revenue analysis Q2</div>
+            <div class="ai-chat-meta">Claude Sonnet 4 · 4,820 tokens used</div>
+          </div>
+          <div class="ai-chat-actions">
+            <fresh-button variant="ghost" size="sm" icon-only aria-label="Share"><i class="ti ti-share"></i></fresh-button>
+            <fresh-button variant="ghost" size="sm" icon-only aria-label="More"><i class="ti ti-dots"></i></fresh-button>
+          </div>
+        </div>
+
+        <div class="ai-messages" id="ac-messages">
+          <fresh-ai-response role="user">What drove the revenue growth in Q2? Break it down by plan tier.</fresh-ai-response>
+          <fresh-ai-response role="assistant" model="Claude Sonnet 4">
+            Q2 revenue grew <strong>18.4% MoM</strong> to $48,320. Here's the breakdown by plan tier:<br><br>
+            <strong>Enterprise</strong> — $34,790 (+22%) · Drove most of the growth. 3 new logos from outbound, 2 expansions from existing accounts (Globex, Initech).<br><br>
+            <strong>Pro</strong> — $9,180 (+12%) · Steady seat expansion within existing teams. Churn remains low at 1.4%.<br><br>
+            <strong>Starter</strong> — $4,350 (+8%) · Slower growth but healthy conversion to Pro at 14% monthly.
+          </fresh-ai-response>
+          <fresh-ai-response role="user">Which accounts are at risk of churning this quarter?</fresh-ai-response>
+          <fresh-ai-response role="assistant" model="Claude Sonnet 4">
+            Based on usage patterns and engagement signals, <strong>3 accounts show elevated churn risk</strong>:<br><br>
+            1. <strong>Acme Labs</strong> (Pro, $480/mo) — No logins in 18 days. Last active user was the primary admin who left the company.<br>
+            2. <strong>DataCo</strong> (Starter, $149/mo) — Usage dropped 60% after their Q1 project ended. No new projects started.<br>
+            3. <strong>NovaTech</strong> (Pro, $320/mo) — Filed 3 support tickets in the last week, all unresolved.<br><br>
+            Recommended action: reach out to all three within 48 hours.
+          </fresh-ai-response>
+        </div>
+
+        <div class="ai-input-area" id="ac-input-area">
+          <fresh-prompt-input placeholder="Ask a follow-up…" value=""></fresh-prompt-input>
+          <div class="ai-input-meta">
+            <span><fresh-token-meter used="4820" total="200000" compact></fresh-token-meter></span>
+            <span>Claude Sonnet 4</span>
+          </div>
+        </div>
+      </main>
+
+    </div>
   </div>
 
 </div>

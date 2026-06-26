@@ -76,6 +76,228 @@ fresh-sidebar[collapsed] .cpe-sidebar-user-info { display: none; }
 
       <fresh-sidebar id="cpe-sidebar" style="display:none;flex-shrink:0;height:100%;overflow:hidden;">
         <div id="cpe-nav-content"></div>
+      </fresh-sidebar>
+
+      <div class="cpe-icon-flyout" id="cpe-icon-flyout">
+        <div class="cpe-flyout-label" id="cpe-flyout-label"></div>
+        <div id="cpe-flyout-items"></div>
+      </div>
+
+
+      <main class="dash-main">
+
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:var(--space-4) var(--space-5);border-bottom:1px solid var(--surface-border);background:var(--surface-bg);flex-shrink:0;">
+          <div>
+            <div style="font-size:15px;font-weight:700;color:var(--text-primary);">Permissions Matrix</div>
+            <div style="font-size:12px;color:var(--text-secondary);margin-top:2px;">Control what each role can see and do</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:var(--space-2);">
+            <fresh-button variant="ghost" size="sm"><i class="ti ti-download"></i> Export</fresh-button>
+            <fresh-button variant="primary" size="sm"><i class="ti ti-plus"></i> New role</fresh-button>
+          </div>
+        </div>
+
+        <div class="col-perm-layout">
+
+          <!-- Role list sidebar -->
+          <div class="col-perm-roles">
+            <div class="col-panel-title">Roles</div>
+            <div class="col-perm-role-item active">
+              <i class="ti ti-shield"></i> Admin
+              <fresh-badge variant="danger" size="sm" style="margin-left:auto;">3</fresh-badge>
+            </div>
+            <div class="col-perm-role-item">
+              <i class="ti ti-user-cog"></i> Manager
+              <fresh-badge variant="neutral" size="sm" style="margin-left:auto;">4</fresh-badge>
+            </div>
+            <div class="col-perm-role-item">
+              <i class="ti ti-user"></i> Member
+              <fresh-badge variant="neutral" size="sm" style="margin-left:auto;">9</fresh-badge>
+            </div>
+            <div class="col-perm-role-item">
+              <i class="ti ti-eye"></i> Viewer
+              <fresh-badge variant="neutral" size="sm" style="margin-left:auto;">2</fresh-badge>
+            </div>
+            <div style="border-top:1px dashed var(--surface-border);margin:var(--space-2) 0;"></div>
+            <div class="col-perm-role-item">
+              <i class="ti ti-sparkles"></i> AI Operator
+              <fresh-badge variant="neutral" size="sm" style="margin-left:auto;">2</fresh-badge>
+            </div>
+            <div class="col-perm-role-item">
+              <i class="ti ti-code"></i> Developer
+              <fresh-badge variant="neutral" size="sm" style="margin-left:auto;">1</fresh-badge>
+            </div>
+          </div>
+
+          <!-- Permissions table -->
+          <div class="col-perm-matrix">
+            <table class="col-perm-table">
+              <thead>
+                <tr>
+                  <th>Permission</th>
+                  <th><i class="ti ti-shield" style="color:var(--color-danger-text);"></i><br>Admin</th>
+                  <th><i class="ti ti-user-cog"></i><br>Manager</th>
+                  <th><i class="ti ti-user"></i><br>Member</th>
+                  <th><i class="ti ti-eye"></i><br>Viewer</th>
+                  <th><i class="ti ti-sparkles"></i><br>AI Op.</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- Records group -->
+                <tr class="col-perm-group-row"><td colspan="6">Records & Data</td></tr>
+                <tr>
+                  <td>View records</td>
+                  <td><i class="ti ti-check col-perm-check"></i></td>
+                  <td><i class="ti ti-check col-perm-check"></i></td>
+                  <td><i class="ti ti-check col-perm-check"></i></td>
+                  <td><i class="ti ti-check col-perm-check"></i></td>
+                  <td><i class="ti ti-check col-perm-check"></i></td>
+                </tr>
+                <tr>
+                  <td>Create records</td>
+                  <td><i class="ti ti-check col-perm-check"></i></td>
+                  <td><i class="ti ti-check col-perm-check"></i></td>
+                  <td><i class="ti ti-check col-perm-check"></i></td>
+                  <td><i class="ti ti-minus col-perm-dash"></i></td>
+                  <td><i class="ti ti-minus col-perm-dash"></i></td>
+                </tr>
+                <tr>
+                  <td>Edit records</td>
+                  <td><i class="ti ti-check col-perm-check"></i></td>
+                  <td><i class="ti ti-check col-perm-check"></i></td>
+                  <td><i class="ti ti-check col-perm-check"></i></td>
+                  <td><i class="ti ti-minus col-perm-dash"></i></td>
+                  <td><i class="ti ti-minus col-perm-dash"></i></td>
+                </tr>
+                <tr>
+                  <td>Delete records</td>
+                  <td><i class="ti ti-check col-perm-check"></i></td>
+                  <td><i class="ti ti-check col-perm-check"></i></td>
+                  <td><i class="ti ti-minus col-perm-dash"></i></td>
+                  <td><i class="ti ti-minus col-perm-dash"></i></td>
+                  <td><i class="ti ti-minus col-perm-dash"></i></td>
+                </tr>
+                <tr>
+                  <td>Import / export data</td>
+                  <td><i class="ti ti-check col-perm-check"></i></td>
+                  <td><i class="ti ti-check col-perm-check"></i></td>
+                  <td><i class="ti ti-circle-half col-perm-partial"></i></td>
+                  <td><i class="ti ti-minus col-perm-dash"></i></td>
+                  <td><i class="ti ti-minus col-perm-dash"></i></td>
+                </tr>
+
+                <!-- Workflows group -->
+                <tr class="col-perm-group-row"><td colspan="6">Workflows & Automation</td></tr>
+                <tr>
+                  <td>View workflows</td>
+                  <td><i class="ti ti-check col-perm-check"></i></td>
+                  <td><i class="ti ti-check col-perm-check"></i></td>
+                  <td><i class="ti ti-check col-perm-check"></i></td>
+                  <td><i class="ti ti-minus col-perm-dash"></i></td>
+                  <td><i class="ti ti-check col-perm-check"></i></td>
+                </tr>
+                <tr>
+                  <td>Create / edit workflows</td>
+                  <td><i class="ti ti-check col-perm-check"></i></td>
+                  <td><i class="ti ti-check col-perm-check"></i></td>
+                  <td><i class="ti ti-minus col-perm-dash"></i></td>
+                  <td><i class="ti ti-minus col-perm-dash"></i></td>
+                  <td><i class="ti ti-check col-perm-check"></i></td>
+                </tr>
+                <tr>
+                  <td>Run workflows manually</td>
+                  <td><i class="ti ti-check col-perm-check"></i></td>
+                  <td><i class="ti ti-check col-perm-check"></i></td>
+                  <td><i class="ti ti-circle-half col-perm-partial"></i></td>
+                  <td><i class="ti ti-minus col-perm-dash"></i></td>
+                  <td><i class="ti ti-check col-perm-check"></i></td>
+                </tr>
+                <tr>
+                  <td>Delete workflows</td>
+                  <td><i class="ti ti-check col-perm-check"></i></td>
+                  <td><i class="ti ti-minus col-perm-dash"></i></td>
+                  <td><i class="ti ti-minus col-perm-dash"></i></td>
+                  <td><i class="ti ti-minus col-perm-dash"></i></td>
+                  <td><i class="ti ti-minus col-perm-dash"></i></td>
+                </tr>
+
+                <!-- AI group -->
+                <tr class="col-perm-group-row"><td colspan="6">AI Features</td></tr>
+                <tr>
+                  <td>Use AI chat & tools</td>
+                  <td><i class="ti ti-check col-perm-check"></i></td>
+                  <td><i class="ti ti-check col-perm-check"></i></td>
+                  <td><i class="ti ti-check col-perm-check"></i></td>
+                  <td><i class="ti ti-minus col-perm-dash"></i></td>
+                  <td><i class="ti ti-check col-perm-check"></i></td>
+                </tr>
+                <tr>
+                  <td>Build AI agents</td>
+                  <td><i class="ti ti-check col-perm-check"></i></td>
+                  <td><i class="ti ti-check col-perm-check"></i></td>
+                  <td><i class="ti ti-minus col-perm-dash"></i></td>
+                  <td><i class="ti ti-minus col-perm-dash"></i></td>
+                  <td><i class="ti ti-check col-perm-check"></i></td>
+                </tr>
+                <tr>
+                  <td>Deploy agents to production</td>
+                  <td><i class="ti ti-check col-perm-check"></i></td>
+                  <td><i class="ti ti-minus col-perm-dash"></i></td>
+                  <td><i class="ti ti-minus col-perm-dash"></i></td>
+                  <td><i class="ti ti-minus col-perm-dash"></i></td>
+                  <td><i class="ti ti-check col-perm-check"></i></td>
+                </tr>
+
+                <!-- Admin group -->
+                <tr class="col-perm-group-row"><td colspan="6">Administration</td></tr>
+                <tr>
+                  <td>Manage team members</td>
+                  <td><i class="ti ti-check col-perm-check"></i></td>
+                  <td><i class="ti ti-circle-half col-perm-partial"></i></td>
+                  <td><i class="ti ti-minus col-perm-dash"></i></td>
+                  <td><i class="ti ti-minus col-perm-dash"></i></td>
+                  <td><i class="ti ti-minus col-perm-dash"></i></td>
+                </tr>
+                <tr>
+                  <td>Manage billing</td>
+                  <td><i class="ti ti-check col-perm-check"></i></td>
+                  <td><i class="ti ti-minus col-perm-dash"></i></td>
+                  <td><i class="ti ti-minus col-perm-dash"></i></td>
+                  <td><i class="ti ti-minus col-perm-dash"></i></td>
+                  <td><i class="ti ti-minus col-perm-dash"></i></td>
+                </tr>
+                <tr>
+                  <td>Manage integrations</td>
+                  <td><i class="ti ti-check col-perm-check"></i></td>
+                  <td><i class="ti ti-check col-perm-check"></i></td>
+                  <td><i class="ti ti-minus col-perm-dash"></i></td>
+                  <td><i class="ti ti-minus col-perm-dash"></i></td>
+                  <td><i class="ti ti-minus col-perm-dash"></i></td>
+                </tr>
+                <tr>
+                  <td>View audit log</td>
+                  <td><i class="ti ti-check col-perm-check"></i></td>
+                  <td><i class="ti ti-check col-perm-check"></i></td>
+                  <td><i class="ti ti-minus col-perm-dash"></i></td>
+                  <td><i class="ti ti-minus col-perm-dash"></i></td>
+                  <td><i class="ti ti-minus col-perm-dash"></i></td>
+                </tr>
+                <tr>
+                  <td>Configure SSO / SCIM</td>
+                  <td><i class="ti ti-check col-perm-check"></i></td>
+                  <td><i class="ti ti-minus col-perm-dash"></i></td>
+                  <td><i class="ti ti-minus col-perm-dash"></i></td>
+                  <td><i class="ti ti-minus col-perm-dash"></i></td>
+                  <td><i class="ti ti-minus col-perm-dash"></i></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+
+      </main>
+    </div>
   </div>
 
 </div>

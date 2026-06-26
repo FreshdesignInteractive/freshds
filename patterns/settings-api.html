@@ -71,6 +71,157 @@ fresh-sidebar[collapsed] .sap-sidebar-user-info { display: none; }
 
       <fresh-sidebar id="sap-sidebar" style="display:none;flex-shrink:0;height:100%;overflow:hidden;">
         <div id="sap-nav-content"></div>
+      </fresh-sidebar>
+
+      <div class="sap-icon-flyout" id="sap-icon-flyout">
+        <div class="sap-flyout-label" id="sap-flyout-label"></div>
+        <div id="sap-flyout-items"></div>
+      </div>
+
+      <main class="dash-main">
+
+        <div style="padding:var(--space-5) var(--space-8);border-bottom:1px solid var(--surface-border);background:var(--surface-bg);flex-shrink:0;">
+          <div style="font-size:20px;font-weight:800;color:var(--text-primary);">API Keys & Tokens</div>
+          <div style="font-size:13px;color:var(--text-secondary);margin-top:2px;">Manage programmatic access to your workspace</div>
+        </div>
+
+        <div class="dash-content" id="sap-content">
+          <div class="stg-content" style="max-width:720px;">
+
+            <fresh-alert variant="warning" style="margin-bottom:var(--space-5);">
+              API keys grant full access to your workspace. Never commit keys to source control or share them publicly.
+            </fresh-alert>
+
+            <!-- Personal API keys -->
+            <div class="stg-section">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:var(--space-4);">
+                <div>
+                  <div class="stg-section-title" style="margin-bottom:2px;">Personal API keys</div>
+                  <div style="font-size:13px;color:var(--text-secondary);">Scoped to your account and permissions</div>
+                </div>
+                <fresh-button variant="primary" size="sm"><i class="ti ti-plus"></i> Generate key</fresh-button>
+              </div>
+
+              <div class="stg-card" style="padding:0;overflow:hidden;">
+                <div style="padding:var(--space-2) var(--space-4);background:var(--surface-subtle);border-bottom:1px solid var(--surface-border);display:grid;grid-template-columns:8px 140px 1fr 140px 80px;gap:var(--space-3);align-items:center;">
+                  <div></div>
+                  <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-tertiary);">Name</div>
+                  <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-tertiary);">Key</div>
+                  <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-tertiary);">Last used</div>
+                  <div></div>
+                </div>
+
+                <div style="padding:var(--space-3) var(--space-4);border-bottom:1px solid var(--surface-border);display:grid;grid-template-columns:8px 140px 1fr 140px 80px;gap:var(--space-3);align-items:center;">
+                  <div class="stg-key-status active"></div>
+                  <div class="stg-key-name">Production</div>
+                  <div class="stg-key-value">acm_live_••••••••••••••••••K9xP</div>
+                  <div class="stg-key-meta">2 hours ago</div>
+                  <div style="display:flex;gap:var(--space-1);">
+                    <fresh-button variant="ghost" size="sm" icon-only><i class="ti ti-copy"></i></fresh-button>
+                    <fresh-button variant="ghost" size="sm" icon-only><i class="ti ti-trash" style="color:var(--color-danger-text);"></i></fresh-button>
+                  </div>
+                </div>
+
+                <div style="padding:var(--space-3) var(--space-4);border-bottom:1px solid var(--surface-border);display:grid;grid-template-columns:8px 140px 1fr 140px 80px;gap:var(--space-3);align-items:center;">
+                  <div class="stg-key-status active"></div>
+                  <div class="stg-key-name">Development</div>
+                  <div class="stg-key-value">acm_test_••••••••••••••••••N7qT</div>
+                  <div class="stg-key-meta">Yesterday</div>
+                  <div style="display:flex;gap:var(--space-1);">
+                    <fresh-button variant="ghost" size="sm" icon-only><i class="ti ti-copy"></i></fresh-button>
+                    <fresh-button variant="ghost" size="sm" icon-only><i class="ti ti-trash" style="color:var(--color-danger-text);"></i></fresh-button>
+                  </div>
+                </div>
+
+                <div style="padding:var(--space-3) var(--space-4);display:grid;grid-template-columns:8px 140px 1fr 140px 80px;gap:var(--space-3);align-items:center;opacity:0.5;">
+                  <div class="stg-key-status revoked"></div>
+                  <div class="stg-key-name">CI pipeline</div>
+                  <div class="stg-key-value">acm_live_••••••••••••••••••3mYx <fresh-badge variant="danger" size="sm">Revoked</fresh-badge></div>
+                  <div class="stg-key-meta">Jun 1</div>
+                  <div style="display:flex;gap:var(--space-1);">
+                    <fresh-button variant="ghost" size="sm" icon-only disabled><i class="ti ti-copy"></i></fresh-button>
+                    <fresh-button variant="ghost" size="sm" icon-only><i class="ti ti-trash" style="color:var(--color-danger-text);"></i></fresh-button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Service accounts -->
+            <div class="stg-section">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:var(--space-4);">
+                <div>
+                  <div class="stg-section-title" style="margin-bottom:2px;">Service accounts</div>
+                  <div style="font-size:13px;color:var(--text-secondary);">Non-human accounts for CI/CD and integrations</div>
+                </div>
+                <fresh-button variant="secondary" size="sm"><i class="ti ti-plus"></i> New service account</fresh-button>
+              </div>
+
+              <div class="stg-card">
+                <div class="stg-row" style="padding:0 0 var(--space-3);">
+                  <div style="display:flex;align-items:center;gap:var(--space-3);">
+                    <div style="width:32px;height:32px;border-radius:var(--radius-md);background:var(--surface-subtle);display:flex;align-items:center;justify-content:center;"><i class="ti ti-robot" style="color:var(--text-secondary);"></i></div>
+                    <div>
+                      <div class="stg-row-label">acme-ci-bot</div>
+                      <div class="stg-row-desc">Read/write · Used by GitHub Actions</div>
+                    </div>
+                  </div>
+                  <div style="display:flex;align-items:center;gap:var(--space-2);">
+                    <fresh-badge variant="success" size="sm">Active</fresh-badge>
+                    <fresh-button variant="ghost" size="sm">Manage</fresh-button>
+                  </div>
+                </div>
+                <div class="stg-row" style="padding:var(--space-3) 0 0;border-bottom:none;">
+                  <div style="display:flex;align-items:center;gap:var(--space-3);">
+                    <div style="width:32px;height:32px;border-radius:var(--radius-md);background:var(--surface-subtle);display:flex;align-items:center;justify-content:center;"><i class="ti ti-robot" style="color:var(--text-secondary);"></i></div>
+                    <div>
+                      <div class="stg-row-label">data-importer</div>
+                      <div class="stg-row-desc">Read-only · Used by ETL pipeline</div>
+                    </div>
+                  </div>
+                  <div style="display:flex;align-items:center;gap:var(--space-2);">
+                    <fresh-badge variant="success" size="sm">Active</fresh-badge>
+                    <fresh-button variant="ghost" size="sm">Manage</fresh-button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Scopes reference -->
+            <div class="stg-section">
+              <div class="stg-section-title">Available scopes</div>
+              <div class="stg-card" style="padding:0;overflow:hidden;">
+                <div style="display:grid;grid-template-columns:1fr 2fr 80px;padding:var(--space-2) var(--space-4);background:var(--surface-subtle);border-bottom:1px solid var(--surface-border);">
+                  <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-tertiary);">Scope</div>
+                  <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-tertiary);">Description</div>
+                  <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-tertiary);">Your key</div>
+                </div>
+                <div style="display:grid;grid-template-columns:1fr 2fr 80px;padding:var(--space-3) var(--space-4);border-bottom:1px solid var(--surface-border);">
+                  <code style="font-size:11px;color:var(--color-interactive-text);">records:read</code>
+                  <div style="font-size:12px;color:var(--text-secondary);">Read contacts, deals, and companies</div>
+                  <i class="ti ti-check" style="color:var(--color-success-text);"></i>
+                </div>
+                <div style="display:grid;grid-template-columns:1fr 2fr 80px;padding:var(--space-3) var(--space-4);border-bottom:1px solid var(--surface-border);">
+                  <code style="font-size:11px;color:var(--color-interactive-text);">records:write</code>
+                  <div style="font-size:12px;color:var(--text-secondary);">Create and update records</div>
+                  <i class="ti ti-check" style="color:var(--color-success-text);"></i>
+                </div>
+                <div style="display:grid;grid-template-columns:1fr 2fr 80px;padding:var(--space-3) var(--space-4);border-bottom:1px solid var(--surface-border);">
+                  <code style="font-size:11px;color:var(--color-interactive-text);">workflows:read</code>
+                  <div style="font-size:12px;color:var(--text-secondary);">List and read workflow definitions</div>
+                  <i class="ti ti-check" style="color:var(--color-success-text);"></i>
+                </div>
+                <div style="display:grid;grid-template-columns:1fr 2fr 80px;padding:var(--space-3) var(--space-4);">
+                  <code style="font-size:11px;color:var(--color-interactive-text);">admin:write</code>
+                  <div style="font-size:12px;color:var(--text-secondary);">Manage members and settings (admin only)</div>
+                  <i class="ti ti-minus" style="color:var(--text-tertiary);"></i>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </main>
+    </div>
   </div>
 </div>
 <script src="../components/core/fresh-button.js"></script>

@@ -71,6 +71,133 @@ fresh-sidebar[collapsed] .cpa-sidebar-user-info { display: none; }
 
       <fresh-sidebar id="cpa-sidebar" style="display:none;flex-shrink:0;height:100%;overflow:hidden;">
         <div id="cpa-nav-content"></div>
+      </fresh-sidebar>
+
+      <div class="cpa-icon-flyout" id="cpa-icon-flyout">
+        <div class="cpa-flyout-label" id="cpa-flyout-label"></div>
+        <div id="cpa-flyout-items"></div>
+      </div>
+    <div class="com-page" style="padding-top:var(--space-8);">
+      <div class="com-settings-grid">
+
+        <!-- Settings nav -->
+        <nav class="com-settings-nav">
+          <div class="com-settings-nav-item"><i class="ti ti-user"></i> Profile</div>
+          <div class="com-settings-nav-item"><i class="ti ti-users"></i> Team</div>
+          <div class="com-settings-nav-item"><i class="ti ti-building"></i> Workspace</div>
+          <div class="com-settings-nav-item active"><i class="ti ti-credit-card"></i> Billing</div>
+          <div class="com-settings-nav-item"><i class="ti ti-shield-check"></i> Security</div>
+          <div class="com-settings-nav-item"><i class="ti ti-bell"></i> Notifications</div>
+          <div class="com-settings-nav-item"><i class="ti ti-api"></i> API keys</div>
+          <div class="com-settings-nav-item"><i class="ti ti-plug"></i> Integrations</div>
+        </nav>
+
+        <!-- Billing content -->
+        <div>
+
+          <!-- Current plan -->
+          <div class="com-settings-section">
+            <div class="com-settings-section-header">
+              <div>
+                <div class="com-settings-section-title">Current plan</div>
+                <div style="font-size:12px;color:var(--text-secondary);margin-top:2px;">Renews Jun 4, 2027</div>
+              </div>
+              <fresh-button variant="secondary" size="sm">Change plan</fresh-button>
+            </div>
+            <div class="com-settings-section-body">
+              <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:var(--space-3);">
+                <div>
+                  <div style="display:flex;align-items:center;gap:var(--space-2);margin-bottom:var(--space-1);">
+                    <span style="font-size:16px;font-weight:700;color:var(--text-primary);">Acme Pro</span>
+                    <fresh-badge variant="success">Active</fresh-badge>
+                  </div>
+                  <div style="font-size:13px;color:var(--text-secondary);">5 seats · Annual billing · $2,880/yr</div>
+                </div>
+                <div style="text-align:right;">
+                  <div style="font-size:22px;font-weight:800;color:var(--text-primary);">$48<span style="font-size:13px;font-weight:500;color:var(--text-secondary);">/seat/mo</span></div>
+                  <div style="font-size:12px;color:var(--text-secondary);">billed annually</div>
+                </div>
+              </div>
+              <div style="margin-top:var(--space-4);">
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:var(--space-1);">
+                  <span style="font-size:12px;color:var(--text-secondary);">Seats used</span>
+                  <span style="font-size:12px;font-weight:600;color:var(--text-primary);">4 / 5</span>
+                </div>
+                <fresh-progress value="80" variant="primary"></fresh-progress>
+              </div>
+            </div>
+          </div>
+
+          <!-- Payment methods -->
+          <div class="com-settings-section">
+            <div class="com-settings-section-header">
+              <div class="com-settings-section-title">Payment methods</div>
+              <fresh-button variant="secondary" size="sm"><i class="ti ti-plus"></i> Add card</fresh-button>
+            </div>
+            <div class="com-settings-section-body">
+              <div class="com-payment-card">
+                <div class="com-payment-card-icon">VISA</div>
+                <div class="com-payment-card-info">
+                  <div class="com-payment-card-name">Visa ending in 4242</div>
+                  <div class="com-payment-card-detail">Jamie Rivera · Expires 12/28</div>
+                </div>
+                <div class="com-default-badge">Default</div>
+                <fresh-button variant="ghost" size="sm" icon-only><i class="ti ti-dots"></i></fresh-button>
+              </div>
+              <div class="com-payment-card">
+                <div class="com-payment-card-icon">MC</div>
+                <div class="com-payment-card-info">
+                  <div class="com-payment-card-name">Mastercard ending in 8888</div>
+                  <div class="com-payment-card-detail">Jamie Rivera · Expires 08/26</div>
+                </div>
+                <fresh-button variant="ghost" size="sm">Set default</fresh-button>
+                <fresh-button variant="ghost" size="sm" icon-only><i class="ti ti-dots"></i></fresh-button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Billing history -->
+          <div class="com-settings-section">
+            <div class="com-settings-section-header">
+              <div class="com-settings-section-title">Billing history</div>
+              <fresh-button variant="secondary" size="sm"><i class="ti ti-download"></i> Download all</fresh-button>
+            </div>
+            <div class="com-settings-section-body" style="padding:0;">
+              <fresh-data-table
+                columns='[
+                  {"key":"date",    "label":"Date",        "sortable":true},
+                  {"key":"desc",    "label":"Description", "sortable":false},
+                  {"key":"amount",  "label":"Amount",      "sortable":true},
+                  {"key":"status",  "label":"Status",      "sortable":false},
+                  {"key":"invoice", "label":"Invoice",     "sortable":false}
+                ]'
+                data='[
+                  {"date":"Jun 4, 2026",  "desc":"Acme Pro · Annual · 5 seats", "amount":"$2,880", "status":"Paid", "invoice":"INV-2026-006"},
+                  {"date":"Jun 4, 2025",  "desc":"Acme Pro · Annual · 5 seats", "amount":"$2,880", "status":"Paid", "invoice":"INV-2025-006"},
+                  {"date":"Jun 4, 2024",  "desc":"Acme Pro · Annual · 3 seats", "amount":"$1,728", "status":"Paid", "invoice":"INV-2024-006"},
+                  {"date":"Nov 12, 2023", "desc":"Acme Starter · 3 seats (upgrade)", "amount":"$0",  "status":"Free", "invoice":"|"}
+                ]'>
+              </fresh-data-table>
+            </div>
+          </div>
+
+          <!-- Danger zone -->
+          <div class="com-settings-section" style="border-color:var(--color-danger-subtle);">
+            <div class="com-settings-section-header">
+              <div class="com-settings-section-title" style="color:var(--color-danger-text);">Cancel subscription</div>
+            </div>
+            <div class="com-settings-section-body">
+              <div style="font-size:13px;color:var(--text-secondary);margin-bottom:var(--space-3);">
+                Cancelling will downgrade your workspace to the free Starter plan at the end of your billing period on Jun 4, 2027. Your data will be preserved.
+              </div>
+              <fresh-button variant="danger"><i class="ti ti-circle-x"></i> Cancel subscription</fresh-button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    </div>
   </div>
 
 </div>

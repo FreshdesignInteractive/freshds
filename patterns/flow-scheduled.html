@@ -77,6 +77,216 @@ fresh-sidebar[collapsed] .fsc-sidebar-user-info { display: none; }
 
       <fresh-sidebar id="fsc-sidebar" style="display:none;flex-shrink:0;height:100%;overflow:hidden;">
         <div id="fsc-nav-content"></div>
+      </fresh-sidebar>
+
+      <div class="fsc-icon-flyout" id="fsc-icon-flyout">
+        <div class="fsc-flyout-label" id="fsc-flyout-label"></div>
+        <div id="fsc-flyout-items"></div>
+      </div>
+
+      <main class="dash-main">
+
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:var(--space-4) var(--space-5);border-bottom:1px solid var(--surface-border);background:var(--surface-bg);flex-shrink:0;">
+          <div>
+            <div style="font-size:15px;font-weight:700;color:var(--text-primary);">Scheduled Tasks</div>
+            <div style="font-size:12px;color:var(--text-secondary);margin-top:2px;">8 tasks · 6 active · 1 paused · 1 failed</div>
+          </div>
+          <fresh-button variant="primary" size="sm"><i class="ti ti-plus"></i> New task</fresh-button>
+        </div>
+
+        <div class="wf-schedule-layout">
+
+          <!-- Task list -->
+          <div class="wf-task-list">
+            <div class="wf-task-row active">
+              <div class="wf-task-status-dot success"></div>
+              <div class="wf-task-info">
+                <div class="wf-task-name">Weekly digest email</div>
+                <div class="wf-task-next">Next: Mon 8:00 AM</div>
+              </div>
+              <fresh-badge variant="success" size="sm">Active</fresh-badge>
+            </div>
+            <div class="wf-task-row">
+              <div class="wf-task-status-dot danger"></div>
+              <div class="wf-task-info">
+                <div class="wf-task-name">Lead score refresh</div>
+                <div class="wf-task-next">Last failed · Jun 3</div>
+              </div>
+              <fresh-badge variant="danger" size="sm">Failed</fresh-badge>
+            </div>
+            <div class="wf-task-row">
+              <div class="wf-task-status-dot success"></div>
+              <div class="wf-task-info">
+                <div class="wf-task-name">SLA check</div>
+                <div class="wf-task-next">Next: in 12 min</div>
+              </div>
+              <fresh-badge variant="success" size="sm">Active</fresh-badge>
+            </div>
+            <div class="wf-task-row">
+              <div class="wf-task-status-dot warning"></div>
+              <div class="wf-task-info">
+                <div class="wf-task-name">Data sync | Salesforce</div>
+                <div class="wf-task-next">Paused · Jun 1</div>
+              </div>
+              <fresh-badge variant="warning" size="sm">Paused</fresh-badge>
+            </div>
+            <div class="wf-task-row">
+              <div class="wf-task-status-dot success"></div>
+              <div class="wf-task-info">
+                <div class="wf-task-name">Invoice generation</div>
+                <div class="wf-task-next">Next: Jul 1, 12:00 AM</div>
+              </div>
+              <fresh-badge variant="success" size="sm">Active</fresh-badge>
+            </div>
+            <div class="wf-task-row">
+              <div class="wf-task-status-dot success"></div>
+              <div class="wf-task-info">
+                <div class="wf-task-name">Churn risk report</div>
+                <div class="wf-task-next">Next: Fri 7:00 AM</div>
+              </div>
+              <fresh-badge variant="success" size="sm">Active</fresh-badge>
+            </div>
+            <div class="wf-task-row">
+              <div class="wf-task-status-dot success"></div>
+              <div class="wf-task-info">
+                <div class="wf-task-name">Database backup</div>
+                <div class="wf-task-next">Next: midnight</div>
+              </div>
+              <fresh-badge variant="success" size="sm">Active</fresh-badge>
+            </div>
+            <div class="wf-task-row">
+              <div class="wf-task-status-dot success"></div>
+              <div class="wf-task-info">
+                <div class="wf-task-name">Usage report export</div>
+                <div class="wf-task-next">Next: Mon 6:00 AM</div>
+              </div>
+              <fresh-badge variant="success" size="sm">Active</fresh-badge>
+            </div>
+          </div>
+
+          <!-- Task detail -->
+          <div class="wf-task-detail">
+
+            <!-- Task header -->
+            <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:var(--space-5);">
+              <div>
+                <div style="font-size:17px;font-weight:700;color:var(--text-primary);margin-bottom:var(--space-1);">Weekly digest email</div>
+                <div style="font-size:12px;color:var(--text-secondary);">Sends a summary email to all active users every Monday morning</div>
+              </div>
+              <div style="display:flex;align-items:center;gap:var(--space-2);">
+                <fresh-button variant="ghost" size="sm"><i class="ti ti-player-play"></i> Run now</fresh-button>
+                <fresh-toggle checked></fresh-toggle>
+              </div>
+            </div>
+
+            <!-- Schedule builder -->
+            <div class="wf-cron-builder">
+              <div class="wf-cron-builder-title">Schedule</div>
+              <div class="wf-cron-row">
+                <div class="wf-cron-label">Frequency</div>
+                <fresh-select style="min-width:160px;">
+                  <option>Every minute</option>
+                  <option>Hourly</option>
+                  <option>Daily</option>
+                  <option selected>Weekly</option>
+                  <option>Monthly</option>
+                  <option>Custom (cron)</option>
+                </fresh-select>
+              </div>
+              <div class="wf-cron-row">
+                <div class="wf-cron-label">Day</div>
+                <div style="display:flex;gap:var(--space-1);">
+                  <button style="padding:var(--space-1) var(--space-2);border-radius:var(--radius-sm);border:1.5px solid var(--surface-border);background:var(--surface-subtle);color:var(--text-tertiary);font-size:11px;cursor:pointer;font-weight:600;">S</button>
+                  <button style="padding:var(--space-1) var(--space-2);border-radius:var(--radius-sm);border:1.5px solid var(--color-interactive);background:var(--color-interactive-subtle);color:var(--color-interactive-text);font-size:11px;cursor:pointer;font-weight:600;">M</button>
+                  <button style="padding:var(--space-1) var(--space-2);border-radius:var(--radius-sm);border:1.5px solid var(--surface-border);background:var(--surface-subtle);color:var(--text-tertiary);font-size:11px;cursor:pointer;font-weight:600;">T</button>
+                  <button style="padding:var(--space-1) var(--space-2);border-radius:var(--radius-sm);border:1.5px solid var(--surface-border);background:var(--surface-subtle);color:var(--text-tertiary);font-size:11px;cursor:pointer;font-weight:600;">W</button>
+                  <button style="padding:var(--space-1) var(--space-2);border-radius:var(--radius-sm);border:1.5px solid var(--surface-border);background:var(--surface-subtle);color:var(--text-tertiary);font-size:11px;cursor:pointer;font-weight:600;">T</button>
+                  <button style="padding:var(--space-1) var(--space-2);border-radius:var(--radius-sm);border:1.5px solid var(--surface-border);background:var(--surface-subtle);color:var(--text-tertiary);font-size:11px;cursor:pointer;font-weight:600;">F</button>
+                  <button style="padding:var(--space-1) var(--space-2);border-radius:var(--radius-sm);border:1.5px solid var(--surface-border);background:var(--surface-subtle);color:var(--text-tertiary);font-size:11px;cursor:pointer;font-weight:600;">S</button>
+                </div>
+              </div>
+              <div class="wf-cron-row">
+                <div class="wf-cron-label">Time</div>
+                <fresh-input value="08:00" type="time" style="--input-width:120px;"></fresh-input>
+                <fresh-select style="min-width:160px;">
+                  <option selected>UTC</option>
+                  <option>US/Pacific</option>
+                  <option>US/Eastern</option>
+                  <option>Europe/London</option>
+                </fresh-select>
+              </div>
+              <div style="margin-top:var(--space-3);padding-top:var(--space-3);border-top:1px solid var(--surface-border);display:flex;align-items:center;gap:var(--space-3);">
+                <div class="wf-cron-label" style="min-width:auto;font-size:11px;">Cron expression</div>
+                <div class="wf-cron-express">0 8 * * 1</div>
+                <div style="font-size:11px;color:var(--text-tertiary);">Every Monday at 8:00 AM UTC</div>
+              </div>
+            </div>
+
+            <!-- Task settings -->
+            <div class="wf-config-card" style="margin-bottom:var(--space-4);">
+              <div class="wf-config-card-title">Settings</div>
+              <div style="display:flex;flex-direction:column;gap:var(--space-3);">
+                <div class="wf-config-field">
+                  <div class="wf-config-label">Workflow to run</div>
+                  <fresh-select>
+                    <option selected>Weekly digest | all users</option>
+                    <option>Weekly digest | admins only</option>
+                    <option>Custom workflow…</option>
+                  </fresh-select>
+                </div>
+                <div class="wf-config-field">
+                  <div class="wf-config-label">On failure</div>
+                  <fresh-select>
+                    <option selected>Notify me + retry once</option>
+                    <option>Retry 3 times</option>
+                    <option>Fail silently</option>
+                  </fresh-select>
+                </div>
+                <div style="display:flex;align-items:center;justify-content:space-between;">
+                  <div>
+                    <div class="wf-config-label" style="font-size:12px;color:var(--text-primary);">Skip if previous still running</div>
+                    <div style="font-size:11px;color:var(--text-tertiary);">Prevents overlapping executions</div>
+                  </div>
+                  <fresh-toggle checked></fresh-toggle>
+                </div>
+              </div>
+            </div>
+
+            <!-- Recent runs -->
+            <div class="wf-config-card">
+              <div class="wf-config-card-title">Recent runs</div>
+              <div style="display:flex;flex-direction:column;">
+                <div class="wf-history-row" style="padding-left:0;padding-right:0;">
+                  <fresh-badge variant="success" size="sm">Success</fresh-badge>
+                  <div class="wf-history-name">Jun 2, 2026 · 8:00 AM</div>
+                  <div class="wf-history-duration">2.1s</div>
+                  <div class="wf-history-time">2,341 emails sent</div>
+                </div>
+                <div class="wf-history-row" style="padding-left:0;padding-right:0;">
+                  <fresh-badge variant="success" size="sm">Success</fresh-badge>
+                  <div class="wf-history-name">May 26, 2026 · 8:00 AM</div>
+                  <div class="wf-history-duration">1.9s</div>
+                  <div class="wf-history-time">2,298 emails sent</div>
+                </div>
+                <div class="wf-history-row" style="padding-left:0;padding-right:0;border-bottom:none;">
+                  <fresh-badge variant="success" size="sm">Success</fresh-badge>
+                  <div class="wf-history-name">May 19, 2026 · 8:00 AM</div>
+                  <div class="wf-history-duration">2.4s</div>
+                  <div class="wf-history-time">2,201 emails sent</div>
+                </div>
+              </div>
+              <div style="margin-top:var(--space-3);">
+                <fresh-button variant="ghost" size="sm"><i class="ti ti-history"></i> View full history</fresh-button>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </main>
+
+    </div>
   </div>
 
 </div>

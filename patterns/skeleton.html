@@ -118,6 +118,128 @@ fresh-sidebar[collapsed] .sk-sidebar-user-info { display: none; }
 
       <fresh-sidebar id="sk-sidebar" style="display:none;flex-shrink:0;height:100%;overflow:hidden;">
         <div id="sk-nav-content"></div>
+      </fresh-sidebar>
+
+      <div class="sk-icon-flyout" id="sk-icon-flyout">
+        <div class="sk-flyout-label" id="sk-flyout-label"></div>
+        <div id="sk-flyout-items"></div>
+      </div>
+
+      <main class="dash-main">
+        <div class="dash-content">
+
+          <div class="fb-grid-2">
+
+            <!-- List / feed -->
+            <div class="fb-card" id="sk-list">
+              <div class="fb-card-label">List / feed</div>
+              <div style="display:flex;flex-direction:column;gap:var(--space-3);">
+                <div style="display:flex;align-items:center;gap:var(--space-3);">
+                  <fresh-skeleton variant="circle" width="36px" height="36px"></fresh-skeleton>
+                  <div style="flex:1;display:flex;flex-direction:column;gap:var(--space-2);">
+                    <fresh-skeleton width="60%" height="14px"></fresh-skeleton>
+                    <fresh-skeleton width="40%" height="12px"></fresh-skeleton>
+                  </div>
+                </div>
+                <div style="display:flex;align-items:center;gap:var(--space-3);">
+                  <fresh-skeleton variant="circle" width="36px" height="36px"></fresh-skeleton>
+                  <div style="flex:1;display:flex;flex-direction:column;gap:var(--space-2);">
+                    <fresh-skeleton width="70%" height="14px"></fresh-skeleton>
+                    <fresh-skeleton width="35%" height="12px"></fresh-skeleton>
+                  </div>
+                </div>
+                <div style="display:flex;align-items:center;gap:var(--space-3);">
+                  <fresh-skeleton variant="circle" width="36px" height="36px"></fresh-skeleton>
+                  <div style="flex:1;display:flex;flex-direction:column;gap:var(--space-2);">
+                    <fresh-skeleton width="50%" height="14px"></fresh-skeleton>
+                    <fresh-skeleton width="45%" height="12px"></fresh-skeleton>
+                  </div>
+                </div>
+                <div style="display:flex;align-items:center;gap:var(--space-3);">
+                  <fresh-skeleton variant="circle" width="36px" height="36px"></fresh-skeleton>
+                  <div style="flex:1;display:flex;flex-direction:column;gap:var(--space-2);">
+                    <fresh-skeleton width="65%" height="14px"></fresh-skeleton>
+                    <fresh-skeleton width="30%" height="12px"></fresh-skeleton>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card / article -->
+            <div class="fb-card" id="sk-card">
+              <div class="fb-card-label">Card / article</div>
+              <div style="display:flex;flex-direction:column;gap:var(--space-3);">
+                <fresh-skeleton width="100%" height="140px" variant="rect"></fresh-skeleton>
+                <fresh-skeleton width="80%" height="16px"></fresh-skeleton>
+                <fresh-skeleton width="55%" height="14px"></fresh-skeleton>
+                <div style="display:flex;flex-direction:column;gap:var(--space-1);">
+                  <fresh-skeleton width="100%" height="12px"></fresh-skeleton>
+                  <fresh-skeleton width="100%" height="12px"></fresh-skeleton>
+                  <fresh-skeleton width="65%" height="12px"></fresh-skeleton>
+                </div>
+                <div style="display:flex;align-items:center;gap:var(--space-2);margin-top:var(--space-1);">
+                  <fresh-skeleton variant="circle" width="24px" height="24px"></fresh-skeleton>
+                  <fresh-skeleton width="100px" height="12px"></fresh-skeleton>
+                  <fresh-skeleton width="60px" height="12px" style="margin-left:auto;"></fresh-skeleton>
+                </div>
+              </div>
+            </div>
+
+            <!-- Table rows -->
+            <div class="fb-card" id="sk-table">
+              <div class="fb-card-label">Table rows</div>
+              <div style="display:flex;flex-direction:column;gap:var(--space-1);">
+                <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:var(--space-3);padding:var(--space-2) 0;border-bottom:2px solid var(--surface-border);margin-bottom:var(--space-2);">
+                  <fresh-skeleton width="80%" height="12px"></fresh-skeleton>
+                  <fresh-skeleton width="70%" height="12px"></fresh-skeleton>
+                  <fresh-skeleton width="60%" height="12px"></fresh-skeleton>
+                  <fresh-skeleton width="50%" height="12px"></fresh-skeleton>
+                </div>
+                <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:var(--space-3);padding:var(--space-2) 0;border-bottom:1px solid var(--surface-border);">
+                  <fresh-skeleton width="75%" height="13px"></fresh-skeleton><fresh-skeleton width="60%" height="13px"></fresh-skeleton><fresh-skeleton width="80%" height="13px"></fresh-skeleton><fresh-skeleton width="50%" height="13px"></fresh-skeleton>
+                </div>
+                <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:var(--space-3);padding:var(--space-2) 0;border-bottom:1px solid var(--surface-border);">
+                  <fresh-skeleton width="65%" height="13px"></fresh-skeleton><fresh-skeleton width="55%" height="13px"></fresh-skeleton><fresh-skeleton width="70%" height="13px"></fresh-skeleton><fresh-skeleton width="45%" height="13px"></fresh-skeleton>
+                </div>
+                <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:var(--space-3);padding:var(--space-2) 0;border-bottom:1px solid var(--surface-border);">
+                  <fresh-skeleton width="80%" height="13px"></fresh-skeleton><fresh-skeleton width="70%" height="13px"></fresh-skeleton><fresh-skeleton width="60%" height="13px"></fresh-skeleton><fresh-skeleton width="55%" height="13px"></fresh-skeleton>
+                </div>
+                <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:var(--space-3);padding:var(--space-2) 0;">
+                  <fresh-skeleton width="70%" height="13px"></fresh-skeleton><fresh-skeleton width="50%" height="13px"></fresh-skeleton><fresh-skeleton width="75%" height="13px"></fresh-skeleton><fresh-skeleton width="40%" height="13px"></fresh-skeleton>
+                </div>
+              </div>
+            </div>
+
+            <!-- Dashboard stats -->
+            <div class="fb-card" id="sk-dashboard">
+              <div class="fb-card-label">Dashboard stats</div>
+              <div style="display:flex;flex-direction:column;gap:var(--space-4);">
+                <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-3);">
+                  <div style="display:flex;flex-direction:column;gap:var(--space-2);padding:var(--space-3);background:var(--surface-subtle);border-radius:var(--radius-md);">
+                    <fresh-skeleton width="40%" height="11px"></fresh-skeleton>
+                    <fresh-skeleton width="60%" height="24px"></fresh-skeleton>
+                    <fresh-skeleton width="70%" height="11px"></fresh-skeleton>
+                  </div>
+                  <div style="display:flex;flex-direction:column;gap:var(--space-2);padding:var(--space-3);background:var(--surface-subtle);border-radius:var(--radius-md);">
+                    <fresh-skeleton width="50%" height="11px"></fresh-skeleton>
+                    <fresh-skeleton width="55%" height="24px"></fresh-skeleton>
+                    <fresh-skeleton width="65%" height="11px"></fresh-skeleton>
+                  </div>
+                  <div style="display:flex;flex-direction:column;gap:var(--space-2);padding:var(--space-3);background:var(--surface-subtle);border-radius:var(--radius-md);">
+                    <fresh-skeleton width="45%" height="11px"></fresh-skeleton>
+                    <fresh-skeleton width="50%" height="24px"></fresh-skeleton>
+                    <fresh-skeleton width="60%" height="11px"></fresh-skeleton>
+                  </div>
+                </div>
+                <fresh-skeleton width="100%" height="120px" variant="rect"></fresh-skeleton>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </main>
+    </div>
   </div>
 
 </div>

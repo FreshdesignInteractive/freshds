@@ -71,6 +71,120 @@ fresh-sidebar[collapsed] .sup-sidebar-user-info { display: none; }
 
       <fresh-sidebar id="sup-sidebar" style="display:none;flex-shrink:0;height:100%;overflow:hidden;">
         <div id="sup-nav-content"></div>
+      </fresh-sidebar>
+
+      <div class="sup-icon-flyout" id="sup-icon-flyout">
+        <div class="sup-flyout-label" id="sup-flyout-label"></div>
+        <div id="sup-flyout-items"></div>
+      </div>
+
+      <main class="dash-main">
+
+        <div style="padding:var(--space-5) var(--space-8);border-bottom:1px solid var(--surface-border);background:var(--surface-bg);flex-shrink:0;">
+          <div style="font-size:20px;font-weight:800;color:var(--text-primary);">Choose a plan</div>
+          <div style="font-size:13px;color:var(--text-secondary);margin-top:2px;">You're on Starter. Upgrade to unlock more power.</div>
+        </div>
+
+        <div class="dash-content" id="sup-content">
+          <div class="stg-content" style="max-width:800px;">
+
+            <!-- Billing toggle -->
+            <div style="display:flex;align-items:center;justify-content:center;gap:var(--space-3);margin-bottom:var(--space-6);">
+              <span style="font-size:13px;color:var(--text-secondary);">Monthly</span>
+              <fresh-toggle checked></fresh-toggle>
+              <span style="font-size:13px;font-weight:600;color:var(--text-primary);">Annual</span>
+              <fresh-badge variant="success" size="sm">Save 20%</fresh-badge>
+            </div>
+
+            <!-- Plan cards -->
+            <div class="stg-plan-cards" style="margin-bottom:var(--space-6);">
+
+              <div class="stg-plan-card">
+                <div class="stg-plan-name">Starter</div>
+                <div class="stg-plan-desc">For individuals and small teams</div>
+                <div class="stg-plan-price">$0</div>
+                <div class="stg-plan-price-sub">Free forever</div>
+                <div class="stg-plan-feature"><i class="ti ti-check"></i> 3 seats</div>
+                <div class="stg-plan-feature"><i class="ti ti-check"></i> 10K AI credits/mo</div>
+                <div class="stg-plan-feature"><i class="ti ti-check"></i> 5 workflows</div>
+                <div class="stg-plan-feature"><i class="ti ti-check"></i> 1GB storage</div>
+                <div class="stg-plan-feature missing"><i class="ti ti-x"></i> Custom roles</div>
+                <div class="stg-plan-feature missing"><i class="ti ti-x"></i> AI agents</div>
+                <div class="stg-plan-feature missing"><i class="ti ti-x"></i> SSO / SCIM</div>
+                <div style="margin-top:var(--space-4);">
+                  <fresh-button variant="secondary" style="width:100%;" disabled>Current plan</fresh-button>
+                </div>
+              </div>
+
+              <div class="stg-plan-card popular">
+                <div class="stg-plan-badge">Most popular</div>
+                <div class="stg-plan-name">Pro</div>
+                <div class="stg-plan-desc">For growing teams that need more</div>
+                <div class="stg-plan-price">$49</div>
+                <div class="stg-plan-price-sub">per seat/month · billed annually</div>
+                <div class="stg-plan-feature"><i class="ti ti-check"></i> Unlimited seats</div>
+                <div class="stg-plan-feature"><i class="ti ti-check"></i> 100K AI credits/seat</div>
+                <div class="stg-plan-feature"><i class="ti ti-check"></i> Unlimited workflows</div>
+                <div class="stg-plan-feature"><i class="ti ti-check"></i> 20GB storage</div>
+                <div class="stg-plan-feature"><i class="ti ti-check"></i> Custom roles</div>
+                <div class="stg-plan-feature"><i class="ti ti-check"></i> AI agents (5)</div>
+                <div class="stg-plan-feature missing"><i class="ti ti-x"></i> SSO / SCIM</div>
+                <div style="margin-top:var(--space-4);">
+                  <fresh-button variant="primary" style="width:100%;">Upgrade to Pro</fresh-button>
+                </div>
+              </div>
+
+              <div class="stg-plan-card">
+                <div class="stg-plan-name">Enterprise</div>
+                <div class="stg-plan-desc">For large teams with advanced needs</div>
+                <div class="stg-plan-price" style="font-size:22px;">Custom</div>
+                <div class="stg-plan-price-sub">Talk to us for pricing</div>
+                <div class="stg-plan-feature"><i class="ti ti-check"></i> Unlimited seats</div>
+                <div class="stg-plan-feature"><i class="ti ti-check"></i> Unlimited AI credits</div>
+                <div class="stg-plan-feature"><i class="ti ti-check"></i> Unlimited workflows</div>
+                <div class="stg-plan-feature"><i class="ti ti-check"></i> 100GB+ storage</div>
+                <div class="stg-plan-feature"><i class="ti ti-check"></i> Custom roles & RBAC</div>
+                <div class="stg-plan-feature"><i class="ti ti-check"></i> Unlimited AI agents</div>
+                <div class="stg-plan-feature"><i class="ti ti-check"></i> SSO / SCIM</div>
+                <div style="margin-top:var(--space-4);">
+                  <fresh-button variant="secondary" style="width:100%;"><i class="ti ti-mail"></i> Contact sales</fresh-button>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Feature comparison table -->
+            <div class="stg-section">
+              <div class="stg-section-title">Full comparison</div>
+              <div class="stg-card" style="padding:0;overflow:hidden;">
+                <table style="width:100%;border-collapse:collapse;">
+                  <thead>
+                    <tr style="background:var(--surface-subtle);">
+                      <th style="text-align:left;padding:var(--space-3) var(--space-4);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-tertiary);border-bottom:1px solid var(--surface-border);min-width:200px;">Feature</th>
+                      <th style="text-align:center;padding:var(--space-3) var(--space-4);font-size:12px;font-weight:700;color:var(--text-secondary);border-bottom:1px solid var(--surface-border);">Starter</th>
+                      <th style="text-align:center;padding:var(--space-3) var(--space-4);font-size:12px;font-weight:700;color:var(--color-success-text);border-bottom:1px solid var(--surface-border);">Pro</th>
+                      <th style="text-align:center;padding:var(--space-3) var(--space-4);font-size:12px;font-weight:700;color:var(--color-interactive-text);border-bottom:1px solid var(--surface-border);">Enterprise</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr style="background:var(--surface-subtle);"><td colspan="4" style="padding:var(--space-2) var(--space-4);font-size:10px;font-weight:700;text-transform:uppercase;color:var(--text-tertiary);letter-spacing:0.08em;border-bottom:1px solid var(--surface-border);">Core</td></tr>
+                    <tr style="border-bottom:1px solid var(--surface-border);"><td style="padding:var(--space-3) var(--space-4);font-size:13px;color:var(--text-primary);">Seats</td><td style="text-align:center;font-size:12px;color:var(--text-secondary);">3</td><td style="text-align:center;font-size:12px;">Unlimited</td><td style="text-align:center;font-size:12px;">Unlimited</td></tr>
+                    <tr style="border-bottom:1px solid var(--surface-border);"><td style="padding:var(--space-3) var(--space-4);font-size:13px;color:var(--text-primary);">AI credits / mo</td><td style="text-align:center;font-size:12px;color:var(--text-secondary);">10K</td><td style="text-align:center;font-size:12px;">100K/seat</td><td style="text-align:center;font-size:12px;">Unlimited</td></tr>
+                    <tr style="border-bottom:1px solid var(--surface-border);"><td style="padding:var(--space-3) var(--space-4);font-size:13px;color:var(--text-primary);">Storage</td><td style="text-align:center;font-size:12px;color:var(--text-secondary);">1GB</td><td style="text-align:center;font-size:12px;">20GB</td><td style="text-align:center;font-size:12px;">100GB+</td></tr>
+                    <tr style="border-bottom:1px solid var(--surface-border);"><td style="padding:var(--space-3) var(--space-4);font-size:13px;color:var(--text-primary);">Workflows</td><td style="text-align:center;font-size:12px;color:var(--text-secondary);">5</td><td style="text-align:center;font-size:12px;">Unlimited</td><td style="text-align:center;font-size:12px;">Unlimited</td></tr>
+                    <tr style="background:var(--surface-subtle);"><td colspan="4" style="padding:var(--space-2) var(--space-4);font-size:10px;font-weight:700;text-transform:uppercase;color:var(--text-tertiary);letter-spacing:0.08em;border-bottom:1px solid var(--surface-border);">Security & Admin</td></tr>
+                    <tr style="border-bottom:1px solid var(--surface-border);"><td style="padding:var(--space-3) var(--space-4);font-size:13px;color:var(--text-primary);">SSO / SCIM</td><td style="text-align:center;color:var(--text-tertiary);"><i class="ti ti-x"></i></td><td style="text-align:center;color:var(--text-tertiary);"><i class="ti ti-x"></i></td><td style="text-align:center;color:var(--color-success-text);"><i class="ti ti-check"></i></td></tr>
+                    <tr style="border-bottom:1px solid var(--surface-border);"><td style="padding:var(--space-3) var(--space-4);font-size:13px;color:var(--text-primary);">Custom roles / RBAC</td><td style="text-align:center;color:var(--text-tertiary);"><i class="ti ti-x"></i></td><td style="text-align:center;color:var(--color-success-text);"><i class="ti ti-check"></i></td><td style="text-align:center;color:var(--color-success-text);"><i class="ti ti-check"></i></td></tr>
+                    <tr><td style="padding:var(--space-3) var(--space-4);font-size:13px;color:var(--text-primary);">Audit log</td><td style="text-align:center;color:var(--text-tertiary);"><i class="ti ti-x"></i></td><td style="text-align:center;color:var(--color-success-text);"><i class="ti ti-check"></i></td><td style="text-align:center;color:var(--color-success-text);"><i class="ti ti-check"></i></td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </main>
+    </div>
   </div>
 </div>
 <script src="../components/core/fresh-button.js"></script>

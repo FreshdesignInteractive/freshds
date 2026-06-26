@@ -123,6 +123,72 @@ fresh-sidebar[collapsed] .dan-sidebar-user-info { display: none; }
 
       <fresh-sidebar id="dan-sidebar" style="display:none;flex-shrink:0;height:100%;overflow:hidden;">
         <div id="dan-nav-content"></div>
+      </fresh-sidebar>
+
+      <div class="dan-icon-flyout" id="dan-icon-flyout">
+        <div class="dan-flyout-label" id="dan-flyout-label"></div>
+        <div id="dan-flyout-items"></div>
+      </div>
+
+      <main class="dash-main">
+        <div class="dash-page-header" id="dan-header">
+          <div>
+            <div class="dash-page-title">Analytics Deep-dive</div>
+            <div class="dash-page-subtitle">Detailed analysis of your product usage and growth.</div>
+          </div>
+          <div class="dash-page-actions">
+            <fresh-button variant="secondary" size="sm"><i class="ti ti-calendar"></i> Last 90 days</fresh-button>
+            <fresh-button variant="secondary" size="sm"><i class="ti ti-download"></i> Export CSV</fresh-button>
+          </div>
+        </div>
+
+        <div class="dash-content" id="dan-content">
+
+          <!-- Metric selector -->
+          <div class="metric-pills">
+            <div class="metric-pill active"><span class="metric-pill-dot" style="color:var(--dv-1)"></span> Revenue</div>
+            <div class="metric-pill"><span class="metric-pill-dot" style="color:var(--dv-2)"></span> Active users</div>
+            <div class="metric-pill"><span class="metric-pill-dot" style="color:var(--dv-3)"></span> Signups</div>
+            <div class="metric-pill"><span class="metric-pill-dot" style="color:var(--dv-4)"></span> Churn</div>
+          </div>
+
+          <!-- Main chart full-width -->
+          <div style="margin-bottom:var(--space-4)">
+            <fresh-chart id="da-rev-fc" title="Revenue | last 90 days" description="Compared against previous period (dashed)" height="220px"></fresh-chart>
+          </div>
+
+          <!-- Breakdown + second chart -->
+          <div class="dash-cols-2">
+            <div class="dash-card">
+              <div class="dash-card-title">Revenue by plan</div>
+              <div class="dash-card-sub">Breakdown of total MRR by subscription tier</div>
+              <div class="breakdown-row">
+                <div class="breakdown-label">Enterprise</div>
+                <div class="breakdown-bar-wrap"><div class="breakdown-bar" style="width:72%"></div></div>
+                <div class="breakdown-value">$34,790</div>
+                <div class="breakdown-pct">72%</div>
+              </div>
+              <div class="breakdown-row">
+                <div class="breakdown-label">Pro</div>
+                <div class="breakdown-bar-wrap"><div class="breakdown-bar" style="width:19%;opacity:0.7"></div></div>
+                <div class="breakdown-value">$9,180</div>
+                <div class="breakdown-pct">19%</div>
+              </div>
+              <div class="breakdown-row">
+                <div class="breakdown-label">Starter</div>
+                <div class="breakdown-bar-wrap"><div class="breakdown-bar" style="width:9%;opacity:0.5"></div></div>
+                <div class="breakdown-value">$4,350</div>
+                <div class="breakdown-pct">9%</div>
+              </div>
+            </div>
+
+            <fresh-chart id="da-eng-fc" title="User engagement" description="DAU / MAU ratio over 90 days" height="180px"></fresh-chart>
+          </div>
+
+        </div>
+      </main>
+
+    </div>
   </div>
 
 </div>

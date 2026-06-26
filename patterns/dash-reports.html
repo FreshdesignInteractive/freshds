@@ -87,6 +87,59 @@ fresh-sidebar[collapsed] .dre-sidebar-user-info { display: none; }
 
       <fresh-sidebar id="dre-sidebar" style="display:none;flex-shrink:0;height:100%;overflow:hidden;">
         <div id="dre-nav-content"></div>
+      </fresh-sidebar>
+
+      <div class="dre-icon-flyout" id="dre-icon-flyout">
+        <div class="dre-flyout-label" id="dre-flyout-label"></div>
+        <div id="dre-flyout-items"></div>
+      </div>
+
+      <main class="dash-main">
+        <div class="dash-page-header" id="dre-header">
+          <div>
+            <div class="dash-page-title">Reports</div>
+            <div class="dash-page-subtitle">All saved and scheduled reports for your workspace.</div>
+          </div>
+          <div class="dash-page-actions">
+            <fresh-button variant="secondary" size="sm"><i class="ti ti-filter"></i> Filter</fresh-button>
+            <fresh-button variant="primary" size="sm"><i class="ti ti-plus"></i> New report</fresh-button>
+          </div>
+        </div>
+
+        <div class="dash-content" id="dre-content">
+          <fresh-data-table
+            searchable
+            selectable
+            search-placeholder="Search reports…"
+            columns='[
+              {"key":"name",      "label":"Report name",  "sortable":true},
+              {"key":"type",      "label":"Type",         "sortable":true},
+              {"key":"created_by","label":"Created by",   "sortable":false},
+              {"key":"schedule",  "label":"Schedule",     "sortable":false},
+              {"key":"last_run",  "label":"Last run",     "sortable":true},
+              {"key":"status",    "label":"Status",       "sortable":false}
+            ]'
+            data='[
+              {"name":"Q2 Revenue Summary",         "type":"Financial",   "created_by":"Priya Sharma",  "schedule":"Weekly",  "last_run":"Jun 2, 2026",  "status":"Active"},
+              {"name":"User Cohort Analysis",       "type":"Analytics",   "created_by":"Marcus Chen",   "schedule":"Monthly", "last_run":"Jun 1, 2026",  "status":"Active"},
+              {"name":"API Usage Report",           "type":"Technical",   "created_by":"Tom Okeke",     "schedule":"Daily",   "last_run":"Jun 3, 2026",  "status":"Active"},
+              {"name":"Churn Risk Dashboard",       "type":"Analytics",   "created_by":"Jamie Rivera",  "schedule":"Weekly",  "last_run":"May 30, 2026", "status":"Active"},
+              {"name":"Monthly Exec Summary",       "type":"Financial",   "created_by":"Priya Sharma",  "schedule":"Monthly", "last_run":"Jun 1, 2026",  "status":"Active"},
+              {"name":"Feature Adoption Trends",    "type":"Product",     "created_by":"Marcus Chen",   "schedule":"Weekly",  "last_run":"May 27, 2026", "status":"Paused"},
+              {"name":"Support Ticket Volume",      "type":"Operations",  "created_by":"Tom Okeke",     "schedule":"Daily",   "last_run":"Jun 3, 2026",  "status":"Active"},
+              {"name":"Infrastructure Cost Report", "type":"Technical",   "created_by":"Tom Okeke",     "schedule":"Monthly", "last_run":"Jun 1, 2026",  "status":"Active"},
+              {"name":"NPS Score Tracker",          "type":"Product",     "created_by":"Jamie Rivera",  "schedule":"Monthly", "last_run":"May 31, 2026", "status":"Active"},
+              {"name":"Sales Pipeline Overview",    "type":"Financial",   "created_by":"Priya Sharma",  "schedule":"Weekly",  "last_run":"May 28, 2026", "status":"Paused"}
+            ]'>
+            <div slot="bulk-actions">
+              <fresh-button variant="secondary" size="sm"><i class="ti ti-download"></i> Export selected</fresh-button>
+              <fresh-button variant="danger" size="sm"><i class="ti ti-trash"></i> Delete</fresh-button>
+            </div>
+          </fresh-data-table>
+        </div>
+      </main>
+
+    </div>
   </div>
 
 </div>

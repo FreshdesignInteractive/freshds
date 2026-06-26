@@ -77,6 +77,157 @@ fresh-sidebar[collapsed] .fwi-sidebar-user-info { display: none; }
 
       <fresh-sidebar id="fwi-sidebar" style="display:none;flex-shrink:0;height:100%;overflow:hidden;">
         <div id="fwi-nav-content"></div>
+      </fresh-sidebar>
+
+      <div class="fwi-icon-flyout" id="fwi-icon-flyout">
+        <div class="fwi-flyout-label" id="fwi-flyout-label"></div>
+        <div id="fwi-flyout-items"></div>
+      </div>
+
+      <main class="dash-main">
+
+        <div class="dash-page-header" style="flex-shrink:0;">
+          <div>
+            <div class="dash-page-title">New Workflow</div>
+            <div class="dash-page-subtitle">Create a workflow in 4 steps</div>
+          </div>
+          <div class="dash-page-actions">
+            <fresh-button variant="ghost" size="sm"><i class="ti ti-x"></i> Cancel</fresh-button>
+          </div>
+        </div>
+
+        <!-- Stepper -->
+        <div style="padding: var(--space-4) var(--space-6) 0; flex-shrink:0;">
+          <fresh-stepper current="2">
+            <span slot="step">Basics</span>
+            <span slot="step">Trigger</span>
+            <span slot="step">Actions</span>
+            <span slot="step">Review</span>
+          </fresh-stepper>
+        </div>
+
+        <!-- Step content -->
+        <div class="wf-wizard-wrap">
+
+          <!-- Step 2: Trigger (current) -->
+          <div class="wf-step-card">
+            <div class="wf-step-card-title">Configure trigger</div>
+            <div class="wf-step-card-desc">Choose what starts this workflow and set the conditions.</div>
+
+            <div class="wf-form-grid">
+              <div class="wf-form-full">
+                <fresh-form-field label="Trigger event" required>
+                  <fresh-select slot="input">
+                    <option>Record created</option>
+                    <option selected>Record updated</option>
+                    <option>Record deleted</option>
+                    <option>Form submitted</option>
+                    <option>Webhook received</option>
+                    <option>Schedule (cron)</option>
+                  </fresh-select>
+                </fresh-form-field>
+              </div>
+              <div>
+                <fresh-form-field label="Object type" required>
+                  <fresh-select slot="input">
+                    <option>Contact</option>
+                    <option selected>Deal</option>
+                    <option>Company</option>
+                    <option>Task</option>
+                  </fresh-select>
+                </fresh-form-field>
+              </div>
+              <div>
+                <fresh-form-field label="Filter by status">
+                  <fresh-select slot="input">
+                    <option>Any status</option>
+                    <option selected>Qualified</option>
+                    <option>Proposal sent</option>
+                    <option>Closed won</option>
+                  </fresh-select>
+                </fresh-form-field>
+              </div>
+              <div class="wf-form-full">
+                <fresh-form-field label="Run this workflow">
+                  <fresh-select slot="input">
+                    <option>Every time the trigger fires</option>
+                    <option selected>Once per record</option>
+                    <option>Once per record per day</option>
+                  </fresh-select>
+                </fresh-form-field>
+              </div>
+            </div>
+          </div>
+
+          <!-- Additional conditions card -->
+          <div class="wf-step-card">
+            <div class="wf-step-card-title" style="margin-bottom:var(--space-4);">Additional conditions <fresh-badge variant="neutral" size="sm">Optional</fresh-badge></div>
+
+            <div class="wf-condition-group">
+              <div class="wf-condition-group-header">
+                <span style="font-size:11px;color:var(--text-secondary);">Run only if ALL of these match</span>
+                <button class="wf-condition-logic-badge">AND</button>
+              </div>
+              <div class="wf-condition-row">
+                <div class="wf-condition-field">
+                  <fresh-select>
+                    <option selected>Deal value</option>
+                    <option>Owner</option>
+                    <option>Stage</option>
+                    <option>Source</option>
+                  </fresh-select>
+                </div>
+                <div class="wf-condition-op">
+                  <fresh-select>
+                    <option selected>is greater than</option>
+                    <option>is less than</option>
+                    <option>equals</option>
+                  </fresh-select>
+                </div>
+                <div class="wf-condition-val">
+                  <fresh-input value="10000" placeholder="Value"></fresh-input>
+                </div>
+                <button class="wf-condition-del" aria-label="Remove"><i class="ti ti-x"></i></button>
+              </div>
+              <div class="wf-condition-row">
+                <div class="wf-condition-field">
+                  <fresh-select>
+                    <option>Deal value</option>
+                    <option selected>Stage</option>
+                    <option>Owner</option>
+                  </fresh-select>
+                </div>
+                <div class="wf-condition-op">
+                  <fresh-select>
+                    <option selected>is one of</option>
+                    <option>is not</option>
+                  </fresh-select>
+                </div>
+                <div class="wf-condition-val">
+                  <fresh-input value="Proposal, Negotiation" placeholder="Values"></fresh-input>
+                </div>
+                <button class="wf-condition-del" aria-label="Remove"><i class="ti ti-x"></i></button>
+              </div>
+              <div class="wf-add-condition-row">
+                <fresh-button variant="ghost" size="sm"><i class="ti ti-plus"></i> Add condition</fresh-button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Wizard footer -->
+        <div class="wf-wizard-footer">
+          <fresh-button variant="secondary" size="sm"><i class="ti ti-arrow-left"></i> Back</fresh-button>
+          <div class="wf-wizard-footer-right">
+            <fresh-button variant="ghost" size="sm">Save draft</fresh-button>
+            <fresh-button variant="primary" size="sm">Continue <i class="ti ti-arrow-right"></i></fresh-button>
+          </div>
+        </div>
+
+      </main>
+
+    </div>
   </div>
 
 </div>

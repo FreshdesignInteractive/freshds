@@ -119,6 +119,142 @@
 
       <fresh-sidebar id="ct-sidebar" style="display:none;flex-shrink:0;height:100%;overflow:hidden;">
         <div id="ct-nav-content"></div>
+      </fresh-sidebar>
+
+      <div class="ct-icon-flyout" id="ct-icon-flyout">
+        <div class="ct-flyout-label" id="ct-flyout-label"></div>
+        <div id="ct-flyout-items"></div>
+      </div>
+
+      <main class="dash-main">
+
+        <div class="dash-page-header" id="ct-page-header">
+          <div>
+            <div class="dash-page-title">Timeline</div>
+            <div class="dash-page-subtitle">Product Roadmap: Q1–Q4 2026</div>
+          </div>
+          <div class="dash-page-actions">
+            <fresh-button variant="secondary" size="sm"><i class="ti ti-zoom-in"></i> Zoom</fresh-button>
+            <fresh-button variant="secondary" size="sm"><i class="ti ti-filter"></i> Filter</fresh-button>
+            <fresh-button variant="primary" size="sm"><i class="ti ti-plus"></i> Add milestone</fresh-button>
+          </div>
+        </div>
+
+        <div class="cnt-tl-wrap" id="ct-timeline-grid">
+          <div class="cnt-tl-table">
+
+            <!-- Labels column -->
+            <div class="cnt-tl-labels" id="ct-tl-labels">
+              <div class="cnt-tl-label-header">Task / Milestone</div>
+              <div class="cnt-tl-row"><fresh-avatar name="Priya Sharma" size="xs"></fresh-avatar> AI Copilot Beta</div>
+              <div class="cnt-tl-row"><fresh-avatar name="Marcus Chen" size="xs"></fresh-avatar> Design System v2</div>
+              <div class="cnt-tl-row"><fresh-avatar name="Jamie Rivera" size="xs"></fresh-avatar> API v2 Migration</div>
+              <div class="cnt-tl-row"><fresh-avatar name="Tom Okeke" size="xs"></fresh-avatar> Mobile App Launch</div>
+              <div class="cnt-tl-row"><fresh-avatar name="Anika Patel" size="xs"></fresh-avatar> SSO Integration</div>
+              <div class="cnt-tl-row"><fresh-avatar name="Priya Sharma" size="xs"></fresh-avatar> Analytics Platform</div>
+              <div class="cnt-tl-row"><fresh-avatar name="Marcus Chen" size="xs"></fresh-avatar> Compliance Module</div>
+              <div class="cnt-tl-row"><fresh-avatar name="Sarah Novak" size="xs"></fresh-avatar> Enterprise Onboarding</div>
+            </div>
+
+            <!-- Gantt chart -->
+            <div class="cnt-tl-gantt">
+              <div class="cnt-tl-header-row">
+                <div class="cnt-tl-month">Jan</div>
+                <div class="cnt-tl-month">Feb</div>
+                <div class="cnt-tl-month">Mar</div>
+                <div class="cnt-tl-month">Apr</div>
+                <div class="cnt-tl-month">May</div>
+                <div class="cnt-tl-month">Jun</div>
+                <div class="cnt-tl-month">Jul</div>
+                <div class="cnt-tl-month">Aug</div>
+                <div class="cnt-tl-month">Sep</div>
+                <div class="cnt-tl-month">Oct</div>
+                <div class="cnt-tl-month">Nov</div>
+                <div class="cnt-tl-month">Dec</div>
+              </div>
+
+              <!-- Row 1: AI Copilot Beta (Mar–Jun) -->
+              <div class="cnt-tl-gantt-row">
+                <div class="cnt-tl-cell"></div>
+                <div class="cnt-tl-cell"></div>
+                <div class="cnt-tl-cell"><div class="cnt-tl-bar primary" style="left:4px;right:-160px;">AI Copilot Beta</div></div>
+                <div class="cnt-tl-cell"></div><div class="cnt-tl-cell"></div><div class="cnt-tl-cell"></div>
+                <div class="cnt-tl-cell"></div><div class="cnt-tl-cell"></div><div class="cnt-tl-cell"></div>
+                <div class="cnt-tl-cell"></div><div class="cnt-tl-cell"></div><div class="cnt-tl-cell"></div>
+              </div>
+
+              <!-- Row 2: Design System v2 (Jan–Apr) -->
+              <div class="cnt-tl-gantt-row">
+                <div class="cnt-tl-cell"><div class="cnt-tl-bar warning" style="left:4px;right:-240px;">Design System v2</div></div>
+                <div class="cnt-tl-cell"></div><div class="cnt-tl-cell"></div><div class="cnt-tl-cell"></div>
+                <div class="cnt-tl-cell"></div><div class="cnt-tl-cell"></div><div class="cnt-tl-cell"></div>
+                <div class="cnt-tl-cell"></div><div class="cnt-tl-cell"></div><div class="cnt-tl-cell"></div>
+                <div class="cnt-tl-cell"></div><div class="cnt-tl-cell"></div>
+              </div>
+
+              <!-- Row 3: API v2 Migration (Feb–May) -->
+              <div class="cnt-tl-gantt-row">
+                <div class="cnt-tl-cell"></div>
+                <div class="cnt-tl-cell"><div class="cnt-tl-bar info" style="left:4px;right:-160px;">API v2 Migration</div></div>
+                <div class="cnt-tl-cell"></div><div class="cnt-tl-cell"></div><div class="cnt-tl-cell"></div>
+                <div class="cnt-tl-cell"></div><div class="cnt-tl-cell"></div><div class="cnt-tl-cell"></div>
+                <div class="cnt-tl-cell"></div><div class="cnt-tl-cell"></div><div class="cnt-tl-cell"></div>
+                <div class="cnt-tl-cell"></div>
+              </div>
+
+              <!-- Row 4: Mobile App Launch (May–Sep) -->
+              <div class="cnt-tl-gantt-row">
+                <div class="cnt-tl-cell"></div><div class="cnt-tl-cell"></div><div class="cnt-tl-cell"></div>
+                <div class="cnt-tl-cell"></div>
+                <div class="cnt-tl-cell"><div class="cnt-tl-bar success" style="left:4px;right:-320px;">Mobile App Launch</div></div>
+                <div class="cnt-tl-cell"></div><div class="cnt-tl-cell"></div><div class="cnt-tl-cell"></div>
+                <div class="cnt-tl-cell"></div><div class="cnt-tl-cell"></div><div class="cnt-tl-cell"></div>
+                <div class="cnt-tl-cell"></div>
+              </div>
+
+              <!-- Row 5: SSO Integration (Jan–Mar) -->
+              <div class="cnt-tl-gantt-row">
+                <div class="cnt-tl-cell"><div class="cnt-tl-bar success" style="left:4px;right:-160px;">SSO Integration</div></div>
+                <div class="cnt-tl-cell"></div><div class="cnt-tl-cell"></div><div class="cnt-tl-cell"></div>
+                <div class="cnt-tl-cell"></div><div class="cnt-tl-cell"></div><div class="cnt-tl-cell"></div>
+                <div class="cnt-tl-cell"></div><div class="cnt-tl-cell"></div><div class="cnt-tl-cell"></div>
+                <div class="cnt-tl-cell"></div><div class="cnt-tl-cell"></div>
+              </div>
+
+              <!-- Row 6: Analytics Platform (Jul–Nov) -->
+              <div class="cnt-tl-gantt-row">
+                <div class="cnt-tl-cell"></div><div class="cnt-tl-cell"></div><div class="cnt-tl-cell"></div>
+                <div class="cnt-tl-cell"></div><div class="cnt-tl-cell"></div><div class="cnt-tl-cell"></div>
+                <div class="cnt-tl-cell"><div class="cnt-tl-bar primary" style="left:4px;right:-320px;">Analytics Platform</div></div>
+                <div class="cnt-tl-cell"></div><div class="cnt-tl-cell"></div><div class="cnt-tl-cell"></div>
+                <div class="cnt-tl-cell"></div><div class="cnt-tl-cell"></div>
+              </div>
+
+              <!-- Row 7: Compliance Module (Apr–Jun) -->
+              <div class="cnt-tl-gantt-row">
+                <div class="cnt-tl-cell"></div><div class="cnt-tl-cell"></div><div class="cnt-tl-cell"></div>
+                <div class="cnt-tl-cell"><div class="cnt-tl-bar warning" style="left:4px;right:-160px;">Compliance Module</div></div>
+                <div class="cnt-tl-cell"></div><div class="cnt-tl-cell"></div><div class="cnt-tl-cell"></div>
+                <div class="cnt-tl-cell"></div><div class="cnt-tl-cell"></div><div class="cnt-tl-cell"></div>
+                <div class="cnt-tl-cell"></div><div class="cnt-tl-cell"></div>
+              </div>
+
+              <!-- Row 8: Enterprise Onboarding (Aug–Dec) -->
+              <div class="cnt-tl-gantt-row">
+                <div class="cnt-tl-cell"></div><div class="cnt-tl-cell"></div><div class="cnt-tl-cell"></div>
+                <div class="cnt-tl-cell"></div><div class="cnt-tl-cell"></div><div class="cnt-tl-cell"></div>
+                <div class="cnt-tl-cell"></div>
+                <div class="cnt-tl-cell"><div class="cnt-tl-bar info" style="left:4px;right:-320px;">Enterprise Onboarding</div></div>
+                <div class="cnt-tl-cell"></div><div class="cnt-tl-cell"></div><div class="cnt-tl-cell"></div>
+                <div class="cnt-tl-cell"></div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+      </main>
+    </div>
   </div>
 
 </div>

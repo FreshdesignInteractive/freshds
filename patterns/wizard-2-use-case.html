@@ -76,6 +76,79 @@ fresh-sidebar[collapsed] .ouc-sidebar-user-info { display: none; }
 
       <fresh-sidebar id="ouc-sidebar" style="display:none;flex-shrink:0;height:100%;overflow:hidden;">
         <div id="ouc-nav-content"></div>
+      </fresh-sidebar>
+
+      <div class="ouc-icon-flyout" id="ouc-icon-flyout">
+        <div class="ouc-flyout-label" id="ouc-flyout-label"></div>
+        <div id="ouc-flyout-items"></div>
+      </div>
+    <div class="onb-body">
+      <div class="onb-wrap">
+
+        <div class="onb-stepper">
+          <fresh-stepper step="2" steps='[
+            {"label":"Role"},
+            {"label":"Use case"},
+            {"label":"Profile"},
+            {"label":"Workspace"},
+            {"label":"Team"},
+            {"label":"Integrations"}
+          ]'></fresh-stepper>
+        </div>
+
+        <div class="onb-eyebrow">Step 2 of 6</div>
+        <h1 class="onb-title">What will you use Acme for?</h1>
+        <p class="onb-sub">Select all that apply. We'll surface the most relevant features for you.</p>
+
+        <div class="pick-grid" id="usecase-grid">
+          <div class="pick-card selected" onclick="toggleCard(this)">
+            <div class="pick-card-check"><i class="ti ti-check"></i></div>
+            <div class="pick-card-icon"><i class="ti ti-sparkles"></i></div>
+            <div class="pick-card-label">AI assistance</div>
+            <div class="pick-card-desc">Drafting, summarizing, and generating content</div>
+          </div>
+          <div class="pick-card selected" onclick="toggleCard(this)">
+            <div class="pick-card-check"><i class="ti ti-check"></i></div>
+            <div class="pick-card-icon"><i class="ti ti-users"></i></div>
+            <div class="pick-card-label">Team collaboration</div>
+            <div class="pick-card-desc">Working with colleagues in real time</div>
+          </div>
+          <div class="pick-card" onclick="toggleCard(this)">
+            <div class="pick-card-check"><i class="ti ti-check"></i></div>
+            <div class="pick-card-icon"><i class="ti ti-chart-dots-3"></i></div>
+            <div class="pick-card-label">Analytics</div>
+            <div class="pick-card-desc">Tracking metrics and reporting</div>
+          </div>
+          <div class="pick-card" onclick="toggleCard(this)">
+            <div class="pick-card-check"><i class="ti ti-check"></i></div>
+            <div class="pick-card-icon"><i class="ti ti-git-branch"></i></div>
+            <div class="pick-card-label">Workflows</div>
+            <div class="pick-card-desc">Automating repeatable processes</div>
+          </div>
+          <div class="pick-card" onclick="toggleCard(this)">
+            <div class="pick-card-check"><i class="ti ti-check"></i></div>
+            <div class="pick-card-icon"><i class="ti ti-shield-check"></i></div>
+            <div class="pick-card-label">Compliance</div>
+            <div class="pick-card-desc">Audit trails and access controls</div>
+          </div>
+          <div class="pick-card" onclick="toggleCard(this)">
+            <div class="pick-card-check"><i class="ti ti-check"></i></div>
+            <div class="pick-card-icon"><i class="ti ti-plug"></i></div>
+            <div class="pick-card-label">Integrations</div>
+            <div class="pick-card-desc">Connecting to your existing tools</div>
+          </div>
+        </div>
+
+        <div class="onb-nav">
+          <fresh-button variant="ghost"><i class="ti ti-arrow-left"></i> Back</fresh-button>
+          <div class="onb-nav-right">
+            <fresh-button variant="primary">Continue <i class="ti ti-arrow-right"></i></fresh-button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    </div>
   </div>
 
 </div>

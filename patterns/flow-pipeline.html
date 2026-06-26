@@ -77,6 +77,196 @@ fresh-sidebar[collapsed] .fpi-sidebar-user-info { display: none; }
 
       <fresh-sidebar id="fpi-sidebar" style="display:none;flex-shrink:0;height:100%;overflow:hidden;">
         <div id="fpi-nav-content"></div>
+      </fresh-sidebar>
+
+      <div class="fpi-icon-flyout" id="fpi-icon-flyout">
+        <div class="fpi-flyout-label" id="fpi-flyout-label"></div>
+        <div id="fpi-flyout-items"></div>
+      </div>
+
+      <main class="dash-main">
+
+        <!-- Topbar for builder -->
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:var(--space-3) var(--space-5);border-bottom:1px solid var(--surface-border);background:var(--surface-bg);flex-shrink:0;gap:var(--space-3);">
+          <div style="display:flex;align-items:center;gap:var(--space-3);">
+            <fresh-input value="Lead enrichment pipeline" style="--input-width:220px;" size="sm"></fresh-input>
+            <fresh-badge variant="warning">Draft</fresh-badge>
+          </div>
+          <div style="display:flex;align-items:center;gap:var(--space-2);">
+            <fresh-button variant="ghost" size="sm"><i class="ti ti-history"></i> History</fresh-button>
+            <fresh-button variant="secondary" size="sm"><i class="ti ti-player-play"></i> Test run</fresh-button>
+            <fresh-button variant="primary" size="sm"><i class="ti ti-check"></i> Publish</fresh-button>
+          </div>
+        </div>
+
+        <div class="wf-pipeline-body">
+
+          <!-- Node palette -->
+          <div class="wf-node-palette">
+            <div class="wf-palette-group">
+              <div class="wf-palette-group-title">Triggers</div>
+              <div class="wf-palette-item"><i class="ti ti-bolt"></i> Record event</div>
+              <div class="wf-palette-item"><i class="ti ti-clock"></i> Schedule</div>
+              <div class="wf-palette-item"><i class="ti ti-webhook"></i> Webhook</div>
+              <div class="wf-palette-item"><i class="ti ti-forms"></i> Form submit</div>
+            </div>
+            <div class="wf-palette-group">
+              <div class="wf-palette-group-title">Actions</div>
+              <div class="wf-palette-item"><i class="ti ti-mail"></i> Send email</div>
+              <div class="wf-palette-item"><i class="ti ti-bell"></i> Send notification</div>
+              <div class="wf-palette-item"><i class="ti ti-database"></i> Update record</div>
+              <div class="wf-palette-item"><i class="ti ti-api"></i> HTTP request</div>
+              <div class="wf-palette-item"><i class="ti ti-brand-slack"></i> Slack message</div>
+            </div>
+            <div class="wf-palette-group">
+              <div class="wf-palette-group-title">Logic</div>
+              <div class="wf-palette-item"><i class="ti ti-git-fork"></i> Condition</div>
+              <div class="wf-palette-item"><i class="ti ti-repeat"></i> Loop</div>
+              <div class="wf-palette-item"><i class="ti ti-clock-pause"></i> Wait / delay</div>
+            </div>
+            <div class="wf-palette-group">
+              <div class="wf-palette-group-title">AI</div>
+              <div class="wf-palette-item"><i class="ti ti-sparkles"></i> AI summarize</div>
+              <div class="wf-palette-item"><i class="ti ti-robot"></i> AI classify</div>
+              <div class="wf-palette-item"><i class="ti ti-wand"></i> AI transform</div>
+            </div>
+          </div>
+
+          <!-- Canvas -->
+          <div class="wf-canvas">
+            <div class="wf-canvas-inner">
+
+              <!-- Node: Trigger -->
+              <div class="wf-node">
+                <div class="wf-node-icon trigger"><i class="ti ti-bolt"></i></div>
+                <div class="wf-node-label">Record Created</div>
+                <div class="wf-node-sub">Contact · Any status</div>
+              </div>
+
+              <div class="wf-edge">
+                <div class="wf-edge-add"><i class="ti ti-plus"></i></div>
+                <div class="wf-edge-arrow"><i class="ti ti-chevron-right"></i></div>
+              </div>
+
+              <!-- Node: Condition -->
+              <div class="wf-node">
+                <div class="wf-node-icon condition"><i class="ti ti-git-fork"></i></div>
+                <div class="wf-node-label">Check email domain</div>
+                <div class="wf-node-sub">If domain is corporate</div>
+              </div>
+
+              <div class="wf-edge">
+                <div class="wf-edge-add"><i class="ti ti-plus"></i></div>
+                <div class="wf-edge-arrow"><i class="ti ti-chevron-right"></i></div>
+              </div>
+
+              <!-- Node: AI action -->
+              <div class="wf-node">
+                <div class="wf-node-icon ai"><i class="ti ti-sparkles"></i></div>
+                <div class="wf-node-label">AI Enrich</div>
+                <div class="wf-node-sub">Research company data</div>
+              </div>
+
+              <div class="wf-edge">
+                <div class="wf-edge-add"><i class="ti ti-plus"></i></div>
+                <div class="wf-edge-arrow"><i class="ti ti-chevron-right"></i></div>
+              </div>
+
+              <!-- Node: Update record -->
+              <div class="wf-node active">
+                <div class="wf-node-icon action"><i class="ti ti-database"></i></div>
+                <div class="wf-node-label">Update Contact</div>
+                <div class="wf-node-sub">Set company, industry, size</div>
+              </div>
+
+              <div class="wf-edge">
+                <div class="wf-edge-add"><i class="ti ti-plus"></i></div>
+                <div class="wf-edge-arrow"><i class="ti ti-chevron-right"></i></div>
+              </div>
+
+              <!-- Node: Notify -->
+              <div class="wf-node">
+                <div class="wf-node-icon action"><i class="ti ti-brand-slack"></i></div>
+                <div class="wf-node-label">Slack: Sales team</div>
+                <div class="wf-node-sub">#new-leads channel</div>
+              </div>
+
+              <div class="wf-edge">
+                <div class="wf-edge-add"><i class="ti ti-plus"></i></div>
+                <div class="wf-edge-arrow"><i class="ti ti-chevron-right"></i></div>
+              </div>
+
+              <!-- End node -->
+              <div class="wf-node">
+                <div class="wf-node-icon output"><i class="ti ti-flag"></i></div>
+                <div class="wf-node-label">End</div>
+                <div class="wf-node-sub">Workflow complete</div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Node config panel (active node selected) -->
+          <div class="wf-node-config">
+            <div class="wf-node-config-header">
+              <div class="wf-node-icon action" style="width:28px;height:28px;font-size:14px;margin:0;"><i class="ti ti-database"></i></div>
+              <div>
+                <div style="font-size:13px;font-weight:600;color:var(--text-primary);">Update Contact</div>
+                <div style="font-size:11px;color:var(--text-secondary);">Action</div>
+              </div>
+            </div>
+            <div class="wf-node-config-body">
+              <div class="wf-node-config-field">
+                <div class="wf-node-config-label">Object</div>
+                <fresh-select>
+                  <option selected>Contact</option>
+                  <option>Deal</option>
+                  <option>Company</option>
+                </fresh-select>
+              </div>
+              <div class="wf-node-config-field">
+                <div class="wf-node-config-label">Field mappings</div>
+                <div style="display:flex;flex-direction:column;gap:var(--space-2);">
+                  <div style="display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:var(--space-1);">
+                    <fresh-input value="company" size="sm"></fresh-input>
+                    <i class="ti ti-arrow-right" style="color:var(--text-tertiary);font-size:12px;"></i>
+                    <fresh-input value="{{ai.company}}" size="sm"></fresh-input>
+                  </div>
+                  <div style="display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:var(--space-1);">
+                    <fresh-input value="industry" size="sm"></fresh-input>
+                    <i class="ti ti-arrow-right" style="color:var(--text-tertiary);font-size:12px;"></i>
+                    <fresh-input value="{{ai.industry}}" size="sm"></fresh-input>
+                  </div>
+                  <div style="display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:var(--space-1);">
+                    <fresh-input value="size" size="sm"></fresh-input>
+                    <i class="ti ti-arrow-right" style="color:var(--text-tertiary);font-size:12px;"></i>
+                    <fresh-input value="{{ai.headcount}}" size="sm"></fresh-input>
+                  </div>
+                </div>
+                <div style="margin-top:var(--space-2);">
+                  <fresh-button variant="ghost" size="sm"><i class="ti ti-plus"></i> Add field</fresh-button>
+                </div>
+              </div>
+              <div class="wf-node-config-field">
+                <div class="wf-node-config-label">On failure</div>
+                <fresh-select>
+                  <option selected>Continue anyway</option>
+                  <option>Stop workflow</option>
+                  <option>Retry 3 times</option>
+                </fresh-select>
+              </div>
+            </div>
+            <div class="wf-node-config-footer">
+              <fresh-button variant="danger" size="sm" style="flex:1;"><i class="ti ti-trash"></i> Delete</fresh-button>
+              <fresh-button variant="primary" size="sm" style="flex:2;">Save node</fresh-button>
+            </div>
+          </div>
+
+        </div>
+
+      </main>
+
+    </div>
   </div>
 
 </div>

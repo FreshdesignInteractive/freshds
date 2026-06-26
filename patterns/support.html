@@ -176,6 +176,174 @@ fresh-sidebar[collapsed] .su-sidebar-user-info { display: none; }
 
       <fresh-sidebar id="su-sidebar" style="display:none;flex-shrink:0;height:100%;overflow:hidden;">
         <div id="su-nav-content"></div>
+      </fresh-sidebar>
+
+      <div class="su-icon-flyout" id="su-icon-flyout">
+        <div class="su-flyout-label" id="su-flyout-label"></div>
+        <div id="su-flyout-items"></div>
+      </div>
+
+      <main class="dash-main">
+
+        <!-- Hero search -->
+        <div class="su-hero" id="su-hero">
+          <div class="su-hero-title">How can we help?</div>
+          <div class="su-hero-sub">Search our help docs, guides, and release notes</div>
+          <div class="su-hero-search">
+            <fresh-input placeholder="Search for articles, guides…" clearable style="flex:1;"></fresh-input>
+            <fresh-button variant="primary"><i class="ti ti-search"></i> Search</fresh-button>
+          </div>
+          <div class="su-hero-popular">
+            Popular:
+            <a href="#">How to set up SSO</a>
+            <a href="#">AI credit limits</a>
+            <a href="#">Import contacts</a>
+          </div>
+        </div>
+
+        <div class="dash-content">
+
+          <!-- Categories -->
+          <div class="su-section-label" id="su-cat-section">Browse by category</div>
+          <div class="su-cat-grid" id="su-cat-grid">
+
+            <div class="fb-category-card">
+              <div class="fb-category-icon" style="background:var(--color-success-subtle);color:var(--color-success-text);"><i class="ti ti-rocket"></i></div>
+              <div class="fb-category-name">Getting started</div>
+              <div class="fb-category-count">14 articles</div>
+            </div>
+            <div class="fb-category-card">
+              <div class="fb-category-icon" style="background:var(--color-interactive-subtle);color:var(--color-interactive-text);"><i class="ti ti-git-branch"></i></div>
+              <div class="fb-category-name">Workflows</div>
+              <div class="fb-category-count">28 articles</div>
+            </div>
+            <div class="fb-category-card">
+              <div class="fb-category-icon" style="background:var(--color-warning-subtle);color:var(--color-warning-text);"><i class="ti ti-sparkles"></i></div>
+              <div class="fb-category-name">AI &amp; Agents</div>
+              <div class="fb-category-count">19 articles</div>
+            </div>
+            <div class="fb-category-card">
+              <div class="fb-category-icon" style="background:var(--color-danger-subtle);color:var(--color-danger-text);"><i class="ti ti-users"></i></div>
+              <div class="fb-category-name">Team &amp; permissions</div>
+              <div class="fb-category-count">11 articles</div>
+            </div>
+            <div class="fb-category-card">
+              <div class="fb-category-icon" style="background:var(--surface-overlay);color:var(--text-secondary);"><i class="ti ti-credit-card"></i></div>
+              <div class="fb-category-name">Billing &amp; plans</div>
+              <div class="fb-category-count">8 articles</div>
+            </div>
+            <div class="fb-category-card">
+              <div class="fb-category-icon" style="background:var(--color-info-subtle);color:var(--color-info-text);"><i class="ti ti-code"></i></div>
+              <div class="fb-category-name">API &amp; integrations</div>
+              <div class="fb-category-count">22 articles</div>
+            </div>
+
+          </div>
+
+          <!-- Article lists -->
+          <div class="su-article-grid" id="su-article-grid">
+
+            <div>
+              <div class="su-section-label">Most viewed</div>
+              <div class="dash-card" style="padding:0;overflow:hidden;">
+                <div class="fb-article-row" style="padding:var(--space-3) var(--space-4);">
+                  <i class="ti ti-file-text" style="font-size:15px;color:var(--text-tertiary);flex-shrink:0;"></i>
+                  <div style="flex:1;min-width:0;">
+                    <div class="fb-article-title">How to import contacts from a CSV</div>
+                    <div class="fb-article-meta">5 min read &middot; Getting started</div>
+                  </div>
+                </div>
+                <div class="fb-article-row" style="padding:var(--space-3) var(--space-4);">
+                  <i class="ti ti-file-text" style="font-size:15px;color:var(--text-tertiary);flex-shrink:0;"></i>
+                  <div style="flex:1;min-width:0;">
+                    <div class="fb-article-title">Setting up SSO with Google Workspace</div>
+                    <div class="fb-article-meta">8 min read &middot; Security</div>
+                  </div>
+                </div>
+                <div class="fb-article-row" style="padding:var(--space-3) var(--space-4);">
+                  <i class="ti ti-file-text" style="font-size:15px;color:var(--text-tertiary);flex-shrink:0;"></i>
+                  <div style="flex:1;min-width:0;">
+                    <div class="fb-article-title">Understanding AI credit usage and limits</div>
+                    <div class="fb-article-meta">4 min read &middot; AI &amp; Agents</div>
+                  </div>
+                </div>
+                <div class="fb-article-row" style="padding:var(--space-3) var(--space-4);">
+                  <i class="ti ti-file-text" style="font-size:15px;color:var(--text-tertiary);flex-shrink:0;"></i>
+                  <div style="flex:1;min-width:0;">
+                    <div class="fb-article-title">Building your first automation workflow</div>
+                    <div class="fb-article-meta">10 min read &middot; Workflows</div>
+                  </div>
+                </div>
+                <div class="fb-article-row" style="padding:var(--space-3) var(--space-4);border-bottom:none;">
+                  <i class="ti ti-file-text" style="font-size:15px;color:var(--text-tertiary);flex-shrink:0;"></i>
+                  <div style="flex:1;min-width:0;">
+                    <div class="fb-article-title">Inviting team members and managing roles</div>
+                    <div class="fb-article-meta">3 min read &middot; Team &amp; permissions</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <div class="su-section-label">Recently updated</div>
+              <div class="dash-card" style="padding:0;overflow:hidden;">
+                <div class="fb-article-row" style="padding:var(--space-3) var(--space-4);">
+                  <i class="ti ti-sparkles" style="font-size:15px;color:var(--color-interactive-text);flex-shrink:0;"></i>
+                  <div style="flex:1;min-width:0;">
+                    <div class="fb-article-title">AI Agent builder — complete guide <fresh-badge variant="info" size="sm">New</fresh-badge></div>
+                    <div class="fb-article-meta">Updated Jun 1 &middot; AI &amp; Agents</div>
+                  </div>
+                </div>
+                <div class="fb-article-row" style="padding:var(--space-3) var(--space-4);">
+                  <i class="ti ti-file-text" style="font-size:15px;color:var(--text-tertiary);flex-shrink:0;"></i>
+                  <div style="flex:1;min-width:0;">
+                    <div class="fb-article-title">Webhook payload reference</div>
+                    <div class="fb-article-meta">Updated May 28 &middot; API &amp; integrations</div>
+                  </div>
+                </div>
+                <div class="fb-article-row" style="padding:var(--space-3) var(--space-4);">
+                  <i class="ti ti-file-text" style="font-size:15px;color:var(--text-tertiary);flex-shrink:0;"></i>
+                  <div style="flex:1;min-width:0;">
+                    <div class="fb-article-title">Enterprise plan — feature comparison</div>
+                    <div class="fb-article-meta">Updated May 25 &middot; Billing &amp; plans</div>
+                  </div>
+                </div>
+                <div class="fb-article-row" style="padding:var(--space-3) var(--space-4);">
+                  <i class="ti ti-file-text" style="font-size:15px;color:var(--text-tertiary);flex-shrink:0;"></i>
+                  <div style="flex:1;min-width:0;">
+                    <div class="fb-article-title">Salesforce integration field mapping</div>
+                    <div class="fb-article-meta">Updated May 20 &middot; API &amp; integrations</div>
+                  </div>
+                </div>
+                <div class="fb-article-row" style="padding:var(--space-3) var(--space-4);border-bottom:none;">
+                  <i class="ti ti-file-text" style="font-size:15px;color:var(--text-tertiary);flex-shrink:0;"></i>
+                  <div style="flex:1;min-width:0;">
+                    <div class="fb-article-title">SCIM provisioning with Okta</div>
+                    <div class="fb-article-meta">Updated May 18 &middot; Security</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Still need help -->
+          <div class="su-contact-card" id="su-contact-card">
+            <div class="su-contact-icon">💬</div>
+            <div style="flex:1;">
+              <div class="su-contact-title">Still need help?</div>
+              <div class="su-contact-sub">Our support team typically responds within 2 hours on weekdays.</div>
+            </div>
+            <div class="su-contact-actions">
+              <fresh-button variant="secondary"><i class="ti ti-message-circle"></i> Chat</fresh-button>
+              <fresh-button variant="ghost"><i class="ti ti-mail"></i> Email</fresh-button>
+            </div>
+          </div>
+
+        </div>
+      </main>
+
+    </div>
   </div>
 
 </div>

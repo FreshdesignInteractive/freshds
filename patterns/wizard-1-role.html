@@ -121,6 +121,84 @@ fresh-sidebar[collapsed] .or-sidebar-user-info { display: none; }
 
       <fresh-sidebar id="or-sidebar" style="display:none;flex-shrink:0;height:100%;overflow:hidden;">
         <div id="or-nav-content"></div>
+      </fresh-sidebar>
+
+      <div class="or-icon-flyout" id="or-icon-flyout">
+        <div class="or-flyout-label" id="or-flyout-label"></div>
+        <div id="or-flyout-items"></div>
+      </div>
+
+      <main class="dash-main">
+
+        <div class="onb-body">
+          <div class="onb-wrap">
+
+            <div class="onb-stepper" id="or-stepper">
+              <fresh-stepper step="1" steps='[
+                {"label":"Role"},
+                {"label":"Use case"},
+                {"label":"Profile"},
+                {"label":"Workspace"},
+                {"label":"Team"},
+                {"label":"Integrations"}
+              ]'></fresh-stepper>
+            </div>
+
+            <div class="onb-eyebrow">Step 1 of 6</div>
+            <h1 class="onb-title">What best describes your role?</h1>
+            <p class="onb-sub">We'll tailor your experience based on how you work.</p>
+
+            <div class="pick-grid" id="or-role-grid">
+              <div class="pick-card" data-role="engineer" onclick="selectCard(this)">
+                <div class="pick-card-check"><i class="ti ti-check"></i></div>
+                <div class="pick-card-icon"><i class="ti ti-code"></i></div>
+                <div class="pick-card-label">Engineer</div>
+                <div class="pick-card-desc">Building products and shipping code</div>
+              </div>
+              <div class="pick-card" data-role="designer" onclick="selectCard(this)">
+                <div class="pick-card-check"><i class="ti ti-check"></i></div>
+                <div class="pick-card-icon"><i class="ti ti-vector-bezier-2"></i></div>
+                <div class="pick-card-label">Designer</div>
+                <div class="pick-card-desc">Crafting interfaces and experiences</div>
+              </div>
+              <div class="pick-card" data-role="pm" onclick="selectCard(this)">
+                <div class="pick-card-check"><i class="ti ti-check"></i></div>
+                <div class="pick-card-icon"><i class="ti ti-layout-kanban"></i></div>
+                <div class="pick-card-label">Product Manager</div>
+                <div class="pick-card-desc">Defining strategy and roadmaps</div>
+              </div>
+              <div class="pick-card" data-role="data" onclick="selectCard(this)">
+                <div class="pick-card-check"><i class="ti ti-check"></i></div>
+                <div class="pick-card-icon"><i class="ti ti-chart-bar"></i></div>
+                <div class="pick-card-label">Data &amp; Analytics</div>
+                <div class="pick-card-desc">Turning data into decisions</div>
+              </div>
+              <div class="pick-card" data-role="marketing" onclick="selectCard(this)">
+                <div class="pick-card-check"><i class="ti ti-check"></i></div>
+                <div class="pick-card-icon"><i class="ti ti-speakerphone"></i></div>
+                <div class="pick-card-label">Marketing</div>
+                <div class="pick-card-desc">Growing the audience and brand</div>
+              </div>
+              <div class="pick-card" data-role="other" onclick="selectCard(this)">
+                <div class="pick-card-check"><i class="ti ti-check"></i></div>
+                <div class="pick-card-icon"><i class="ti ti-dots"></i></div>
+                <div class="pick-card-label">Other</div>
+                <div class="pick-card-desc">Something else entirely</div>
+              </div>
+            </div>
+
+            <div class="onb-nav" id="or-bottom-nav">
+              <span></span>
+              <div class="onb-nav-right">
+                <fresh-button variant="primary">Continue <i class="ti ti-arrow-right"></i></fresh-button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </main>
+    </div>
   </div>
 
 </div>

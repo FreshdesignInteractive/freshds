@@ -162,6 +162,135 @@ fresh-sidebar[collapsed] .dno-sidebar-user-info { display: none; }
 
       <fresh-sidebar id="dno-sidebar" style="display:none;flex-shrink:0;height:100%;overflow:hidden;">
         <div id="dno-nav-content"></div>
+      </fresh-sidebar>
+
+      <div class="dno-icon-flyout" id="dno-icon-flyout">
+        <div class="dno-flyout-label" id="dno-flyout-label"></div>
+        <div id="dno-flyout-items"></div>
+      </div>
+
+      <main class="dash-main">
+        <div class="dash-page-header" id="dno-header">
+          <div>
+            <div class="dash-page-title">Notification Center</div>
+            <div class="dash-page-subtitle">4 unread notifications</div>
+          </div>
+          <div class="dash-page-actions">
+            <fresh-button variant="secondary" size="sm"><i class="ti ti-checks"></i> Mark all read</fresh-button>
+            <fresh-button variant="secondary" size="sm"><i class="ti ti-filter"></i> Filter</fresh-button>
+          </div>
+        </div>
+
+        <div class="dash-content" id="dno-content">
+          <div class="notif-layout">
+
+            <!-- Notifications list -->
+            <div>
+              <div class="notif-group-label">Today</div>
+
+              <div class="notif-item unread">
+                <div class="notif-icon primary"><i class="ti ti-at"></i></div>
+                <div class="notif-content">
+                  <div class="notif-title">Marcus Chen mentioned you</div>
+                  <div class="notif-body">In <strong>Design System spec</strong>: "@Jamie can you review the token naming section before we ship?"</div>
+                  <div class="notif-time">5 minutes ago</div>
+                </div>
+                <div class="notif-unread-dot"></div>
+              </div>
+
+              <div class="notif-item unread">
+                <div class="notif-icon danger"><i class="ti ti-alert-triangle"></i></div>
+                <div class="notif-content">
+                  <div class="notif-title">API quota warning</div>
+                  <div class="notif-body">Your workspace has reached <strong>82%</strong> of its monthly API quota. Upgrade to avoid service interruptions.</div>
+                  <div class="notif-time">2 hours ago</div>
+                </div>
+                <div class="notif-unread-dot"></div>
+              </div>
+
+              <div class="notif-item unread">
+                <div class="notif-icon success"><i class="ti ti-rocket"></i></div>
+                <div class="notif-content">
+                  <div class="notif-title">Deploy successful</div>
+                  <div class="notif-body"><strong>v2.6.0</strong> deployed to production by Tom Okeke. No errors detected.</div>
+                  <div class="notif-time">3 hours ago</div>
+                </div>
+                <div class="notif-unread-dot"></div>
+              </div>
+
+              <div class="notif-item unread">
+                <div class="notif-icon primary"><i class="ti ti-user-plus"></i></div>
+                <div class="notif-content">
+                  <div class="notif-title">Priya Sharma accepted your invite</div>
+                  <div class="notif-body">Priya Sharma has joined your workspace as a Member.</div>
+                  <div class="notif-time">5 hours ago</div>
+                </div>
+                <div class="notif-unread-dot"></div>
+              </div>
+
+              <div class="notif-group-label" style="margin-top:var(--space-4)">Yesterday</div>
+
+              <div class="notif-item">
+                <div class="notif-icon"><i class="ti ti-git-merge"></i></div>
+                <div class="notif-content">
+                  <div class="notif-title">PR #538 merged</div>
+                  <div class="notif-body">Marcus Chen merged <strong>feat: new dashboard layout</strong> into main.</div>
+                  <div class="notif-time">Yesterday at 16:44</div>
+                </div>
+              </div>
+
+              <div class="notif-item">
+                <div class="notif-icon warning"><i class="ti ti-shield"></i></div>
+                <div class="notif-content">
+                  <div class="notif-title">Incident #88 resolved</div>
+                  <div class="notif-body">API latency spike was resolved in 22 minutes. Post-mortem available.</div>
+                  <div class="notif-time">Yesterday at 11:03</div>
+                </div>
+              </div>
+
+              <div class="notif-item">
+                <div class="notif-icon"><i class="ti ti-file-analytics"></i></div>
+                <div class="notif-content">
+                  <div class="notif-title">Q2 revenue report is ready</div>
+                  <div class="notif-body">Your scheduled report <strong>Q2 Revenue Summary</strong> has been generated and is ready to view.</div>
+                  <div class="notif-time">Yesterday at 09:00</div>
+                </div>
+              </div>
+
+            </div><!-- /list -->
+
+            <!-- Preferences panel -->
+            <div>
+              <div class="dash-card">
+                <div class="dash-card-title" style="margin-bottom:var(--space-3)">Notification preferences</div>
+                <div class="pref-row">
+                  <div><div class="pref-label">Mentions</div><div class="pref-sub">When someone @mentions you</div></div>
+                  <fresh-toggle checked></fresh-toggle>
+                </div>
+                <div class="pref-row">
+                  <div><div class="pref-label">Deploys</div><div class="pref-sub">Deploy success &amp; failures</div></div>
+                  <fresh-toggle checked></fresh-toggle>
+                </div>
+                <div class="pref-row">
+                  <div><div class="pref-label">Alerts</div><div class="pref-sub">Quota &amp; system warnings</div></div>
+                  <fresh-toggle checked></fresh-toggle>
+                </div>
+                <div class="pref-row">
+                  <div><div class="pref-label">Reports</div><div class="pref-sub">Scheduled report delivery</div></div>
+                  <fresh-toggle></fresh-toggle>
+                </div>
+                <div class="pref-row">
+                  <div><div class="pref-label">Team activity</div><div class="pref-sub">Joins, PR merges, etc.</div></div>
+                  <fresh-toggle></fresh-toggle>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </main>
+
+    </div>
   </div>
 
 </div>

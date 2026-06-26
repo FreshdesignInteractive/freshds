@@ -159,6 +159,86 @@ fresh-sidebar[collapsed] .otm-sidebar-user-info { display: none; }
 
       <fresh-sidebar id="otm-sidebar" style="display:none;flex-shrink:0;height:100%;overflow:hidden;">
         <div id="otm-nav-content"></div>
+      </fresh-sidebar>
+
+      <div class="otm-icon-flyout" id="otm-icon-flyout">
+        <div class="otm-flyout-label" id="otm-flyout-label"></div>
+        <div id="otm-flyout-items"></div>
+      </div>
+
+      <div class="onb-body">
+        <div class="onb-wrap">
+
+          <div class="onb-stepper">
+            <fresh-stepper step="5" steps='[
+              {"label":"Role"},
+              {"label":"Use case"},
+              {"label":"Profile"},
+              {"label":"Workspace"},
+              {"label":"Team"},
+              {"label":"Integrations"}
+            ]'></fresh-stepper>
+          </div>
+
+          <div class="onb-eyebrow">Step 5 of 6</div>
+          <h1 class="onb-title">Invite your team</h1>
+          <p class="onb-sub">Add teammates to Acme. You can always invite more from Settings later.</p>
+
+          <div class="onb-field-stack">
+            <div class="otm-invite-row">
+              <div class="otm-invite-email">
+                <label class="onb-label" for="otm-email-input">Email address</label>
+                <fresh-input id="otm-email-input" type="email" placeholder="name@company.com" autocomplete="off"></fresh-input>
+              </div>
+              <div class="otm-invite-role">
+                <label class="onb-label" for="otm-role-select">Role</label>
+                <fresh-select id="otm-role-select">
+                  <option value="member" selected>Member</option>
+                  <option value="admin">Admin</option>
+                  <option value="viewer">Viewer</option>
+                </fresh-select>
+              </div>
+              <fresh-button variant="secondary" onclick="otmAddInvite()">Add</fresh-button>
+            </div>
+
+            <div class="otm-pending-list" id="otm-pending-list">
+              <div class="otm-pending-row" data-email="alex.kim@company.com" data-role="admin">
+                <fresh-avatar name="Alex Kim" size="sm"></fresh-avatar>
+                <div class="otm-pending-info">
+                  <div class="otm-pending-email">alex.kim@company.com</div>
+                  <div class="otm-pending-status">Invite pending</div>
+                </div>
+                <fresh-badge variant="neutral">Admin</fresh-badge>
+                <button class="otm-pending-remove" onclick="otmRemoveInvite(this)" aria-label="Remove invite">
+                  <i class="ti ti-x"></i>
+                </button>
+              </div>
+              <div class="otm-pending-row" data-email="priya.s@company.com" data-role="member">
+                <fresh-avatar name="Priya S" size="sm"></fresh-avatar>
+                <div class="otm-pending-info">
+                  <div class="otm-pending-email">priya.s@company.com</div>
+                  <div class="otm-pending-status">Invite pending</div>
+                </div>
+                <fresh-badge variant="neutral">Member</fresh-badge>
+                <button class="otm-pending-remove" onclick="otmRemoveInvite(this)" aria-label="Remove invite">
+                  <i class="ti ti-x"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="onb-nav">
+            <fresh-button variant="ghost"><i class="ti ti-arrow-left"></i> Back</fresh-button>
+            <fresh-button variant="primary">Continue <i class="ti ti-arrow-right"></i></fresh-button>
+          </div>
+
+          <div class="otm-skip-link">
+            <button class="otm-skip-btn">Skip for now</button>
+          </div>
+
+        </div>
+      </div>
+    </div>
   </div>
 
 </div>

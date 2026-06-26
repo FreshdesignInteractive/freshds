@@ -132,6 +132,220 @@ fresh-sidebar[collapsed] .st-sidebar-user-info { display: none; }
 
       <fresh-sidebar id="st-sidebar" style="display:none;flex-shrink:0;height:100%;overflow:hidden;">
         <div id="st-nav-content"></div>
+      </fresh-sidebar>
+
+      <div class="st-icon-flyout" id="st-icon-flyout">
+        <div class="st-flyout-label" id="st-flyout-label"></div>
+        <div id="st-flyout-items"></div>
+      </div>
+
+      <main class="dash-main">
+
+        <!-- Page title -->
+        <div style="padding:var(--space-5) var(--space-8);border-bottom:1px solid var(--surface-border);background:var(--surface-bg);flex-shrink:0;" id="st-page-header">
+          <div style="font-size:20px;font-weight:800;color:var(--text-primary);">Settings</div>
+          <div style="font-size:13px;color:var(--text-secondary);margin-top:2px;">Manage your workspace, account, and preferences</div>
+        </div>
+
+        <div class="dash-content">
+          <div class="stg-content" style="max-width:680px;">
+
+            <!-- ── Workspace ──────────────────────────────── -->
+            <div class="stg-section" id="st-workspace">
+              <div class="stg-section-title">Workspace</div>
+              <div class="stg-section-desc">Name, slug, and regional preferences for your workspace.</div>
+
+              <div class="stg-card">
+                <div style="display:flex;align-items:center;gap:var(--space-4);margin-bottom:var(--space-5);">
+                  <div style="width:56px;height:56px;border-radius:var(--radius-lg);background:var(--color-interactive);display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:800;color:var(--text-inverse);flex-shrink:0;">A</div>
+                  <div style="flex:1;">
+                    <div style="font-size:13px;font-weight:600;color:var(--text-primary);margin-bottom:var(--space-1);">Workspace logo</div>
+                    <div style="font-size:12px;color:var(--text-secondary);margin-bottom:var(--space-2);">PNG, JPG or SVG · Max 512×512px · 2MB</div>
+                    <div style="display:flex;gap:var(--space-2);">
+                      <fresh-button variant="secondary" size="sm"><i class="ti ti-upload"></i> Upload</fresh-button>
+                      <fresh-button variant="ghost" size="sm">Remove</fresh-button>
+                    </div>
+                  </div>
+                </div>
+                <div style="display:flex;flex-direction:column;gap:var(--space-4);">
+                  <div style="display:flex;flex-direction:column;gap:var(--space-1);">
+                    <div style="font-size:13px;font-weight:500;color:var(--text-primary);">Workspace name <span style="color:var(--color-danger-text);">*</span></div>
+                    <fresh-input value="Acme Corp"></fresh-input>
+                  </div>
+                  <div style="display:flex;flex-direction:column;gap:var(--space-1);">
+                    <div style="font-size:13px;font-weight:500;color:var(--text-primary);">Workspace URL</div>
+                    <fresh-input value="acme" prefix="app.acme.io/"></fresh-input>
+                  </div>
+                  <div style="display:flex;flex-direction:column;gap:var(--space-1);">
+                    <div style="font-size:13px;font-weight:500;color:var(--text-primary);">Timezone</div>
+                    <fresh-select>
+                      <option>UTC</option>
+                      <option selected>US/Pacific (GMT-7)</option>
+                      <option>US/Eastern (GMT-4)</option>
+                      <option>Europe/London (GMT+1)</option>
+                      <option>Asia/Kolkata (GMT+5:30)</option>
+                      <option>Asia/Tokyo (GMT+9)</option>
+                    </fresh-select>
+                  </div>
+                  <div style="display:flex;flex-direction:column;gap:var(--space-1);">
+                    <div style="font-size:13px;font-weight:500;color:var(--text-primary);">Language</div>
+                    <fresh-select>
+                      <option selected>English (US)</option>
+                      <option>English (UK)</option>
+                      <option>Español</option>
+                      <option>Français</option>
+                      <option>Deutsch</option>
+                    </fresh-select>
+                  </div>
+                </div>
+                <div style="display:flex;justify-content:flex-end;margin-top:var(--space-4);">
+                  <fresh-button variant="primary" size="sm">Save changes</fresh-button>
+                </div>
+              </div>
+            </div>
+
+            <!-- ── Notifications ─────────────────────────── -->
+            <div class="stg-section" id="st-notifications">
+              <div class="stg-section-title">Notifications</div>
+              <div class="stg-section-desc">Choose how and when you get notified.</div>
+
+              <div class="stg-card">
+                <div class="stg-row" style="padding:0 0 var(--space-3);">
+                  <div>
+                    <div class="stg-row-label"><i class="ti ti-mail" style="margin-right:4px;"></i> Email notifications</div>
+                    <div class="stg-row-desc">Receive notifications at jane@acme.com</div>
+                  </div>
+                  <fresh-toggle checked class="stg-row-control"></fresh-toggle>
+                </div>
+                <div class="stg-row" style="padding:var(--space-3) 0;">
+                  <div>
+                    <div class="stg-row-label"><i class="ti ti-bell" style="margin-right:4px;"></i> In-app notifications</div>
+                    <div class="stg-row-desc">Alerts and mentions inside the product</div>
+                  </div>
+                  <fresh-toggle checked class="stg-row-control"></fresh-toggle>
+                </div>
+                <div class="stg-row" style="padding:var(--space-3) 0;">
+                  <div>
+                    <div class="stg-row-label"><i class="ti ti-brand-slack" style="margin-right:4px;"></i> Slack notifications</div>
+                    <div class="stg-row-desc">DM via @jane-smith in Acme Slack</div>
+                  </div>
+                  <fresh-toggle class="stg-row-control"></fresh-toggle>
+                </div>
+                <div class="stg-row" style="padding:var(--space-3) 0 0;border-bottom:none;">
+                  <div>
+                    <div class="stg-row-label"><i class="ti ti-mail-forward" style="margin-right:4px;"></i> Weekly digest</div>
+                    <div class="stg-row-desc">Summary of activity sent every Monday at 8 AM</div>
+                  </div>
+                  <fresh-toggle checked class="stg-row-control"></fresh-toggle>
+                </div>
+              </div>
+            </div>
+
+            <!-- ── Security ──────────────────────────────── -->
+            <div class="stg-section" id="st-security">
+              <div class="stg-section-title">Security</div>
+              <div class="stg-section-desc">Password, two-factor authentication, and active sessions.</div>
+
+              <div class="stg-card">
+                <div class="stg-row" style="padding:0 0 var(--space-4);">
+                  <div>
+                    <div class="stg-row-label">Password</div>
+                    <div class="stg-row-desc">Last changed 3 months ago</div>
+                  </div>
+                  <fresh-button variant="secondary" size="sm" class="stg-row-control">Change password</fresh-button>
+                </div>
+                <div class="stg-row" style="padding:var(--space-3) 0;">
+                  <div>
+                    <div style="display:flex;align-items:center;gap:var(--space-2);">
+                      <div class="stg-row-label">Two-factor authentication</div>
+                      <fresh-badge variant="success" size="sm"><i class="ti ti-check"></i> Enabled</fresh-badge>
+                    </div>
+                    <div class="stg-row-desc">Authenticator app · Added Jun 1, 2025</div>
+                  </div>
+                  <fresh-button variant="ghost" size="sm" class="stg-row-control">Manage</fresh-button>
+                </div>
+                <div class="stg-row" style="padding:var(--space-3) 0;">
+                  <div>
+                    <div class="stg-row-label">Session timeout</div>
+                    <div class="stg-row-desc">Automatically sign out after a period of inactivity</div>
+                  </div>
+                  <fresh-select class="stg-row-control" style="width:160px;flex-shrink:0;">
+                    <option>30 minutes</option>
+                    <option selected>4 hours</option>
+                    <option>1 day</option>
+                    <option>Never</option>
+                  </fresh-select>
+                </div>
+                <div class="stg-row" style="padding:var(--space-3) 0 0;border-bottom:none;">
+                  <div>
+                    <div class="stg-row-label">Active sessions</div>
+                    <div class="stg-row-desc">3 devices signed in · MacBook Pro, iPhone, Chrome/Linux</div>
+                  </div>
+                  <fresh-button variant="ghost" size="sm" class="stg-row-control">View all</fresh-button>
+                </div>
+              </div>
+            </div>
+
+            <!-- ── Privacy & data ────────────────────────── -->
+            <div class="stg-section" id="st-privacy">
+              <div class="stg-section-title">Privacy &amp; data</div>
+              <div class="stg-section-desc">Control how your data is used and what you share.</div>
+
+              <div class="stg-card">
+                <div class="stg-row" style="padding:0 0 var(--space-3);">
+                  <div>
+                    <div class="stg-row-label">Product analytics</div>
+                    <div class="stg-row-desc">Share anonymous usage patterns to help improve features. No content or PII is included.</div>
+                  </div>
+                  <fresh-toggle checked class="stg-row-control"></fresh-toggle>
+                </div>
+                <div class="stg-row" style="padding:var(--space-3) 0;">
+                  <div>
+                    <div class="stg-row-label">AI model improvement</div>
+                    <div class="stg-row-desc">Allow anonymized interactions to improve AI accuracy. Data is never linked to your account.</div>
+                  </div>
+                  <fresh-toggle class="stg-row-control"></fresh-toggle>
+                </div>
+                <div class="stg-row" style="padding:var(--space-3) 0 0;border-bottom:none;">
+                  <div>
+                    <div class="stg-row-label">Export your data</div>
+                    <div class="stg-row-desc">Download a copy of all your personal data · Last export: never</div>
+                  </div>
+                  <fresh-button variant="secondary" size="sm" class="stg-row-control"><i class="ti ti-download"></i> Request export</fresh-button>
+                </div>
+              </div>
+            </div>
+
+            <!-- ── Danger zone ────────────────────────────── -->
+            <div class="stg-section" id="st-danger">
+              <div class="stg-section-title">Danger zone</div>
+
+              <div class="stg-danger-card">
+                <div class="stg-danger-header">Irreversible actions</div>
+                <div style="background:var(--surface-canvas);">
+                  <div class="stg-row" style="padding:var(--space-4) var(--space-5) var(--space-4);">
+                    <div>
+                      <div class="stg-row-label">Leave workspace</div>
+                      <div class="stg-row-desc">You will lose access to all data. Another admin must re-invite you.</div>
+                    </div>
+                    <fresh-button variant="ghost" size="sm" class="stg-row-control" style="color:var(--color-danger-text);border-color:var(--color-danger-border);">Leave</fresh-button>
+                  </div>
+                  <div class="stg-row" style="padding:0 var(--space-5) var(--space-4);border-bottom:none;">
+                    <div>
+                      <div class="stg-row-label">Delete workspace</div>
+                      <div class="stg-row-desc">Permanently deletes the workspace and all its data. This cannot be undone.</div>
+                    </div>
+                    <fresh-button variant="ghost" size="sm" class="stg-row-control" style="color:var(--color-danger-text);border-color:var(--color-danger-border);">Delete workspace</fresh-button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </main>
+
+    </div>
   </div>
 
 </div>

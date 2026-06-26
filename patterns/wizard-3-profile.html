@@ -76,6 +76,79 @@ fresh-sidebar[collapsed] .opf-sidebar-user-info { display: none; }
 
       <fresh-sidebar id="opf-sidebar" style="display:none;flex-shrink:0;height:100%;overflow:hidden;">
         <div id="opf-nav-content"></div>
+      </fresh-sidebar>
+
+      <div class="opf-icon-flyout" id="opf-icon-flyout">
+        <div class="opf-flyout-label" id="opf-flyout-label"></div>
+        <div id="opf-flyout-items"></div>
+      </div>
+    <div class="onb-body">
+      <div class="onb-wrap">
+
+        <div class="onb-stepper">
+          <fresh-stepper step="3" steps='[
+            {"label":"Role"},
+            {"label":"Use case"},
+            {"label":"Profile"},
+            {"label":"Workspace"},
+            {"label":"Team"},
+            {"label":"Integrations"}
+          ]'></fresh-stepper>
+        </div>
+
+        <div class="onb-eyebrow">Step 3 of 6</div>
+        <h1 class="onb-title">Set up your profile</h1>
+        <p class="onb-sub">Let your teammates know who they're working with.</p>
+
+        <div class="avatar-upload" style="margin-bottom:var(--space-6)">
+          <div class="avatar-upload-placeholder" aria-hidden="true">
+            <i class="ti ti-user"></i>
+          </div>
+          <div class="avatar-upload-info">
+            <div class="avatar-upload-title">Profile photo</div>
+            <div class="avatar-upload-sub">JPG, PNG or GIF · Max 5 MB</div>
+          </div>
+          <fresh-button variant="secondary" size="sm">Upload</fresh-button>
+        </div>
+
+        <div class="onb-field-stack">
+          <div class="onb-field-row">
+            <div class="onb-field">
+              <label class="onb-label" for="first-name">First name</label>
+              <fresh-input id="first-name" value="Jamie" autocomplete="given-name"></fresh-input>
+            </div>
+            <div class="onb-field">
+              <label class="onb-label" for="last-name">Last name</label>
+              <fresh-input id="last-name" value="Rivera" autocomplete="family-name"></fresh-input>
+            </div>
+          </div>
+          <div class="onb-field">
+            <label class="onb-label" for="job-title">Job title</label>
+            <fresh-input id="job-title" placeholder="e.g. Product Designer" autocomplete="organization-title"></fresh-input>
+          </div>
+          <div class="onb-field">
+            <label class="onb-label" for="timezone">Timezone</label>
+            <fresh-select id="timezone">
+              <option value="">Select your timezone…</option>
+              <option value="pst" selected>Pacific Time (PT) | UTC-8</option>
+              <option value="mst">Mountain Time (MT) | UTC-7</option>
+              <option value="cst">Central Time (CT) | UTC-6</option>
+              <option value="est">Eastern Time (ET) | UTC-5</option>
+              <option value="gmt">Greenwich Mean Time (GMT)</option>
+              <option value="cet">Central European Time (CET) | UTC+1</option>
+              <option value="ist">India Standard Time (IST) | UTC+5:30</option>
+            </fresh-select>
+          </div>
+        </div>
+
+        <div class="onb-nav">
+          <fresh-button variant="ghost"><i class="ti ti-arrow-left"></i> Back</fresh-button>
+          <fresh-button variant="primary">Continue <i class="ti ti-arrow-right"></i></fresh-button>
+        </div>
+
+      </div>
+    </div>
+    </div>
   </div>
 
 </div>
