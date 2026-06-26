@@ -92,6 +92,7 @@ Avatar identity colors use `--dv-1` through `--dv-8` (the data viz palette), not
 - No build server · file:// · no ES modules
 
 ## Rules, non-negotiable
+0. **No page-level overrides on templates or components.** Never override layout, spacing, padding, or component behaviour with inline styles or page-scoped CSS rules. If something looks wrong on a page, fix it in the shared stylesheet (`dashboard.css`, `onboarding.css`, etc.) or in the component itself. A page-level `<style>` block is only for page-specific structural rules (e.g. a unique layout unique to that one pattern), never for correcting something that should work globally.
 1. **No em dashes, ever.** Never write `—` (U+2014) anywhere in FreshDS site or app: not in titles, labels, descriptions, panel headers, tooltips, or copy. Use a comma, colon, or period instead. In `<title>` tags use ` | ` as the separator. This applies to all HTML, JS strings, and CSS content values across the entire project.
 2. **Always use DS components.** Any UI element that has a matching web component (`<fresh-*>`) must use it, never raw HTML equivalents.
 2. **No component? Ask first.** If a needed component doesn't exist in the DS, stop and ask before building raw HTML or a workaround.
