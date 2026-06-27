@@ -4,8 +4,8 @@
 const path = window.location.pathname;
 const isActive = (page) => {
   if (page === 'dashboard')   return path.includes('dashboard') || path === '/' || path === '/index.html';
-  if (page === 'theme')       return path.includes('theme.html');
-  if (page === 'navigation')  return path.includes('navigation.html');
+  if (page === 'theme')       return path.includes('app/theme.html');
+  if (page === 'navigation')  return path.includes('app/navigation.html');
   if (page === 'components')  return path.includes('app');
   if (page === 'patterns')    return path.includes('patterns');
   return false;
@@ -15,22 +15,22 @@ function tab(key, label, href, locked) {
   const active = isActive(key);
   const lockIcon = locked ? '<i class="ti ti-lock sh-tab-lock"></i>' : '';
   const cls = ['sh-tab', active ? 'sh-tab-active' : '', locked ? 'sh-tab-locked' : ''].filter(Boolean).join(' ');
-  const dest = locked ? '/dashboard.html' : href;
+  const dest = locked ? '/app/dashboard.html' : href;
   return `<a class="sh-tab-wrap" href="${dest}" data-key="${key}" data-real-href="${href}">`
        + `<span class="${cls}">${label}${lockIcon}</span></a>`;
 }
 
 const headerHTML = `<header class="site-header" id="site-header">
-  <a class="sh-logo" href="/dashboard.html">
+  <a class="sh-logo" href="/app/dashboard.html">
     <img class="sh-logo-full" src="/assets/freshdesign-logo.svg" alt="Freshdesign" height="26">
     <img class="sh-logo-emblem" src="/assets/freshdesign-emblem.svg" alt="Freshdesign" height="30">
   </a>
   <nav class="sh-nav">
-    ${tab('dashboard',  'Dashboard',       '/dashboard.html', false)}
-    ${tab('theme',      'Theme',           '/theme.html', true)}
-    ${tab('navigation', 'Navigation',      '/navigation.html', true)}
-    ${tab('components', 'Components',      '/components.html', true)}
-    ${tab('patterns',   'Pattern Library', '/patterns.html', true)}
+    ${tab('dashboard',  'Dashboard',       '/app/dashboard.html', false)}
+    ${tab('theme',      'Theme',           '/app/theme.html', true)}
+    ${tab('navigation', 'Navigation',      '/app/navigation.html', true)}
+    ${tab('components', 'Components',      '/app/components.html', true)}
+    ${tab('patterns',   'Pattern Library', '/app/patterns.html', true)}
   </nav>
   <div class="sh-right">
     <div class="sh-av-wrap" id="sh-av-wrap">

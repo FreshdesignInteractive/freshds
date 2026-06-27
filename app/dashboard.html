@@ -4,17 +4,17 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>FreshDS | Get Started</title>
-<link rel="icon" type="image/svg+xml" href="systems/favicon.svg">
+<link rel="icon" type="image/svg+xml" href="/systems/favicon.svg">
 
 <!-- Auth guard -->
-<script type="module" src="/systems/js/auth-guard.js"></script>
-<script type="module" src="/systems/js/cloud-sync.js"></script>
-<link rel="stylesheet" href="/systems/styles/site-header.css">
-<script type="module" src="/systems/js/site-header.js"></script>
+<script type="module" src="/js/auth-guard.js"></script>
+<script type="module" src="/js/cloud-sync.js"></script>
+<link rel="stylesheet" href="/styles/site-header.css">
+<script type="module" src="/js/site-header.js"></script>
 
 <!-- User info, sign out, payment gate -->
 <script type="module">
-  import { supabase } from '/systems/js/supabase-client.js'
+  import { supabase } from '/js/supabase-client.js'
 
   // ── Stripe checkout ────────────────────────────────────────────
   window.__initiateCheckout = async function() {
@@ -149,8 +149,8 @@
 
 <!-- JSZip + DS engine (needed for exportDSSite) -->
 <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
-<script src="systems/js/freshds.js"></script>
-<script src="systems/js/freshds-site.js"></script>
+<script src="/systems/js/freshds.js"></script>
+<script src="/systems/js/freshds-site.js"></script>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

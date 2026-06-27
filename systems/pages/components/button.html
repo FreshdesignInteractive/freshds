@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
 <!-- Auth guard: redirects to / if no session or unpaid -->
-<script type="module" src="/systems/js/auth-guard.js"></script>
-<script type="module" src="/systems/js/paid-guard.js"></script>
+<script type="module" src="/js/auth-guard.js"></script>
+<script type="module" src="/js/paid-guard.js"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Button | FreshDS</title>
@@ -596,7 +596,7 @@
 
 <!-- Supabase rules persistence, separate module so it can import from supabase-client.js -->
 <script type="module">
-  import { supabase } from '/systems/js/supabase-client.js'
+  import { supabase } from '/js/supabase-client.js'
 
   var RULE_IDS = ['rules-primary', 'rules-secondary', 'rules-ghost', 'rules-danger', 'rules-ai'];
   var _saveTimer = null;

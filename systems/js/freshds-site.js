@@ -540,7 +540,7 @@ var COMPONENT_PAGES = {
 };
 
 function navigate(page) {
-  if (page === 'theme') { window.location.href = 'theme.html'; return; }
+  if (page === 'theme') { window.location.href = '/app/theme.html'; return; }
 
   var url = FOUNDATION_PAGES[page] || COMPONENT_PAGES[page];
   if (url) {
@@ -987,7 +987,7 @@ function exportJSON() {
 }
 
 var _PATTERN_HTML_FILES = [
-  'patterns.html',
+  'app/patterns.html',
   'projects/patterns/ai-agent-feed.html','projects/patterns/ai-chat.html','projects/patterns/ai-config.html',
   'projects/patterns/ai-feedback.html','projects/patterns/ai-history.html','projects/patterns/ai-knowledge.html',
   'projects/patterns/ai-memory.html','projects/patterns/ai-model-sel.html','projects/patterns/ai-playground.html',
@@ -1465,8 +1465,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
       var tabsEl = this.querySelector('#section-tabs');
       if (tabsEl) tabsEl.addEventListener('change', function(e) {
-        if (e.detail && e.detail.key === 'patterns') window.location.href = 'patterns.html';
-        else if (e.detail && e.detail.key === 'ds') window.location.href = 'components.html';
+        if (e.detail && e.detail.key === 'patterns') window.location.href = 'app/patterns.html';
+        else if (e.detail && e.detail.key === 'ds') window.location.href = '/app/components.html';
       });
     }
   }

@@ -294,8 +294,8 @@ const DEVKIT_FILES = [
 const FULLSITE_EXTRA_FILES = [
   // Entry points
   'index.html',
-  'components.html',
-  'patterns.html',
+  'app/components.html',
+  'app/patterns.html',
   // Shared assets
   'systems/favicon.svg',
   'systems/freshdesign-logo.svg',

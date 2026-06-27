@@ -48,7 +48,7 @@
 </div>
 
 <script type="module">
-  import { supabase } from '/systems/js/supabase-client.js'
+  import { supabase } from '/js/supabase-client.js'
 
   async function waitForSession() {
     const { data: { session } } = await supabase.auth.getSession()

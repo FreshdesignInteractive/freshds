@@ -800,14 +800,14 @@ body {
 </div>
 
 <script type="module">
-  import { supabase, BETA_SEAT_LIMIT } from '/systems/js/supabase-client.js'
+  import { supabase, BETA_SEAT_LIMIT } from '/js/supabase-client.js'
 
   const LIMIT = BETA_SEAT_LIMIT
 
   // If already signed in and approved, go straight to app
   ;(async () => {
     const { data: { session } } = await supabase.auth.getSession()
-    if (session) window.location.replace('/dashboard.html')
+    if (session) window.location.replace('/app/dashboard.html')
   })()
 
   // Show status banner returned from auth callback
@@ -843,7 +843,7 @@ body {
   // Sign-in modal (opened from nav "Join beta" button)
   window.openRequestModal = async function() {
     const { data: { session } } = await supabase.auth.getSession()
-    if (session) { window.location.replace('/dashboard.html'); return }
+    if (session) { window.location.replace('/app/dashboard.html'); return }
     document.getElementById('request-overlay').classList.add('open')
     document.body.style.overflow = 'hidden'
   }
