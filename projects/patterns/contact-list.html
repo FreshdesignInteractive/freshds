@@ -283,40 +283,30 @@ fresh-sidebar[collapsed] .cl-sidebar-user-info { display: none; }
       <div class="sp-section-label">ZONES</div>
       <div id="sp-zones"></div>
     </div>
-    <div class="sp-section">
-      <div class="sp-section-label">GLOBAL TEMPLATE RULES</div>
-      <div class="sp-rules-hdr">
-        <i class="ti ti-sparkles sp-rules-hdr-icon"></i>
-        <span class="sp-rules-hdr-name">AI RULES: CONTACT LIST</span>
-        <span class="sp-rules-hdr-hint">Click to edit</span>
-      </div>
-      <div id="sp-cats"></div>
-    </div>
   </div>
   <div class="sp-bottom">
-    <button class="sp-btn sp-btn-icon" id="sp-share-btn" onclick="spShare()" title="Share link" aria-label="Share link">
-      <i class="ti ti-link"></i>
-    </button>
-    <button class="sp-btn sp-btn-primary" onclick="spStartBuilding()">
-      Configure <i class="ti ti-arrow-right"></i>
+    <button class="sp-btn sp-btn-primary sp-btn-block" onclick="spCopyTo()">
+      Copy to project <i class="ti ti-arrow-right"></i>
     </button>
   </div>
 </aside>
 
-<!-- Prompt modal -->
 <div class="sp-modal-backdrop" id="sp-modal-backdrop" onclick="spCloseModal()">
-  <div class="sp-modal" onclick="event.stopPropagation()">
+  <div class="sp-modal sp-copy-modal" onclick="event.stopPropagation()">
     <div class="sp-modal-hdr">
-      <span>Claude Code Prompt</span>
+      <span>Copy to project</span>
       <button class="sp-modal-close" onclick="spCloseModal()"><i class="ti ti-x"></i></button>
     </div>
     <div class="sp-modal-body">
-      <pre class="sp-modal-pre" id="sp-modal-pre"></pre>
+      <p class="sp-modal-desc">Zones turned off will be removed. The demo toolbar and configure panel will be stripped out.</p>
+      <div class="sp-modal-field">
+        <label class="sp-modal-label" for="sp-project-name">Project name</label>
+        <input class="sp-modal-input" id="sp-project-name" type="text" placeholder="my-project" autocomplete="off">
+      </div>
     </div>
     <div class="sp-modal-foot">
-      <span class="sp-copy-ok" id="sp-copy-ok">Copied to clipboard</span>
-      <button class="sp-btn sp-btn-primary" onclick="spCopyPrompt()">
-        <i class="ti ti-copy"></i> Copy prompt
+      <button class="sp-btn sp-btn-primary" onclick="spDoCopy()">
+        <i class="ti ti-files"></i> Copy file
       </button>
     </div>
   </div>
@@ -585,38 +575,10 @@ var SP_ZONES = [
   { key: 'pagination',    label: 'Pagination',       el: 'cl-pagination-row', on: true }
 ];
 
-var SP_RULES = {
-  'LAYOUT': [
-    'dash-page-header holds the title, subtitle, and primary actions. Title shows the record type ("All contacts") and a live count in the subtitle.',
-    'dash-content contains the filter bar, list card, and pagination row in a single column.',
-    'The list card (dash-card, padding 0, overflow hidden) holds all cnt-list-row entries.'
-  ],
-  'FILTER BAR': [
-    'Search input (max-width 280px) + status tab strip (fresh-topbar-menu) + Filter and Sort secondary buttons on the right.',
-    'Status tabs: All / Active / Lead / Inactive. "All" is active by default.',
-    'fresh-topbar-menu renders tabs without an underline rail — do not use fresh-tabs here.'
-  ],
-  'CONTACT ROW': [
-    'Each row: fresh-avatar (size sm, name attribute used for initials + identity color) + info block (flex: 1) + aside (badge + actions).',
-    'Info block: cnt-list-name (bold, primary text) + cnt-list-meta (secondary text: title · company · email, separated by ·).',
-    'Aside: status badge (variant success/warning/info/neutral) + ghost icon-only button for overflow actions.'
-  ],
-  'STATUS BADGES': [
-    'Active: variant success. Lead: variant warning or info. Inactive: variant neutral.',
-    'Badge text should match the tab label exactly so users can correlate filter state with row state.'
-  ],
-  'PAGINATION': [
-    'Use fresh-pagination with total, page-size, and current-page attributes.',
-    'Show "Showing N of M contacts" in 13px secondary text on the left, fresh-pagination on the right.',
-    'Pagination row sits below the list card with margin-top var(--space-4).'
-  ]
-};
-
 function spOpen() {
   document.getElementById('sp-panel').classList.add('open');
   document.getElementById('sp-panel').setAttribute('aria-hidden', 'false');
   _spRenderZones();
-  _spRenderCats();
   var u = new URL(location.href); u.searchParams.set('spec', 'open');
   history.replaceState(null, '', u.toString());
 }
@@ -643,71 +605,36 @@ function _spRenderZones() {
   });
 }
 
-function _spRenderCats() {
-  var el = document.getElementById('sp-cats'); el.innerHTML = '';
-  Object.keys(SP_RULES).forEach(function(cat) {
-    var wrap = document.createElement('div'); wrap.className = 'sp-cat';
-    _spBuildCat(cat, wrap); el.appendChild(wrap);
-  });
-}
-
-function _spBuildCat(cat, wrap) {
-  wrap.innerHTML = '';
-  var label = document.createElement('div'); label.className = 'sp-cat-label'; label.textContent = cat;
-  wrap.appendChild(label);
-  SP_RULES[cat].forEach(function(rule, ri) { wrap.appendChild(_spRuleRow(cat, ri, rule, wrap)); });
-  var addBtn = document.createElement('button'); addBtn.className = 'sp-add-rule';
-  addBtn.innerHTML = '<i class="ti ti-plus"></i> Add rule';
-  addBtn.addEventListener('click', function() {
-    SP_RULES[cat].push('New rule'); _spBuildCat(cat, wrap);
-    var texts = wrap.querySelectorAll('.sp-rule-text'); var last = texts[texts.length - 1];
-    if (last) { last.focus(); var r = document.createRange(); r.selectNodeContents(last); var s = window.getSelection(); s.removeAllRanges(); s.addRange(r); }
-  });
-  wrap.appendChild(addBtn);
-}
-
-function _spRuleRow(cat, ri, text, wrap) {
-  var row  = document.createElement('div'); row.className = 'sp-rule';
-  var dot  = document.createElement('span'); dot.className = 'sp-rule-dot';
-  var span = document.createElement('span'); span.className = 'sp-rule-text';
-  span.contentEditable = 'true'; span.textContent = text;
-  span.addEventListener('input', function() { SP_RULES[cat][ri] = span.textContent; });
-  var del  = document.createElement('button'); del.className = 'sp-rule-del';
-  del.innerHTML = '<i class="ti ti-trash"></i>'; del.setAttribute('aria-label', 'Delete rule');
-  del.addEventListener('click', function() { SP_RULES[cat].splice(ri, 1); _spBuildCat(cat, wrap); });
-  row.appendChild(dot); row.appendChild(span); row.appendChild(del);
-  return row;
-}
-
-function spShare() {
-  var u = new URL(location.href); u.searchParams.set('spec', 'open');
-  var btn = document.getElementById('sp-share-btn');
-  navigator.clipboard.writeText(u.toString()).then(function() {
-    var orig = btn.innerHTML; btn.innerHTML = '<i class="ti ti-check"></i>';
-    setTimeout(function() { btn.innerHTML = orig; }, 1800);
-  }).catch(function() {});
-}
-
-function spStartBuilding() {
-  var lines = ['Build a contact list page using the FreshDS design system.', ''];
-  Object.keys(SP_RULES).forEach(function(cat) {
-    lines.push('## ' + cat);
-    SP_RULES[cat].forEach(function(rule) { lines.push('- ' + rule); });
-    lines.push('');
-  });
-  lines.push('## ACTIVE ZONES');
-  SP_ZONES.forEach(function(z) { lines.push('- ' + z.label + ': ' + (z.on ? 'SHOWN' : 'HIDDEN')); });
-  document.getElementById('sp-modal-pre').textContent = lines.join('\n');
+function spCopyTo() {
+  document.getElementById('sp-project-name').value = '';
   document.getElementById('sp-modal-backdrop').classList.add('open');
 }
 
 function spCloseModal() { document.getElementById('sp-modal-backdrop').classList.remove('open'); }
 
-function spCopyPrompt() {
-  navigator.clipboard.writeText(document.getElementById('sp-modal-pre').textContent).then(function() {
-    var ok = document.getElementById('sp-copy-ok'); ok.classList.add('show');
-    setTimeout(function() { ok.classList.remove('show'); }, 1800);
-  }).catch(function() {});
+function spDoCopy() {
+  var name = (document.getElementById('sp-project-name').value || '').trim().replace(/[^a-z0-9_-]/gi, '-').toLowerCase();
+  if (!name) { document.getElementById('sp-project-name').focus(); return; }
+  var clone = document.documentElement.cloneNode(true);
+  SP_ZONES.forEach(function(z) {
+    if (!z.on) { var el = clone.getElementById ? clone.querySelector('#' + z.el) : null; if (el) el.remove(); }
+  });
+  ['demo-bar', 'sp-panel', 'sp-modal-backdrop'].forEach(function(id) {
+    var el = clone.querySelector('#' + id); if (el) el.remove();
+  });
+  clone.querySelectorAll('link[href*="spec-panel"]').forEach(function(l) { l.remove(); });
+  ['pattern-bar', 'auth-guard', 'paid-guard', 'cloud-sync'].forEach(function(name) {
+    clone.querySelectorAll('script[src*="' + name + '"]').forEach(function(s) { s.remove(); });
+  });
+  var filename = location.pathname.split('/').pop() || 'pattern.html';
+  var html = '<!DOCTYPE html>\n' + clone.outerHTML;
+  var blob = new Blob([html], {type: 'text/html'});
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = filename;
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  URL.revokeObjectURL(a.href);
+  spCloseModal();
 }
 
 if (new URL(location.href).searchParams.get('spec') === 'open') {

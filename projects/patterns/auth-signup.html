@@ -129,40 +129,30 @@
       <div class="sp-section-label">ZONES</div>
       <div id="sp-zones"></div>
     </div>
-    <div class="sp-section">
-      <div class="sp-section-label">GLOBAL TEMPLATE RULES</div>
-      <div class="sp-rules-hdr">
-        <i class="ti ti-sparkles sp-rules-hdr-icon"></i>
-        <span class="sp-rules-hdr-name">AI RULES: SIGN UP</span>
-        <span class="sp-rules-hdr-hint">Click to edit</span>
-      </div>
-      <div id="sp-cats"></div>
-    </div>
   </div>
   <div class="sp-bottom">
-    <button class="sp-btn sp-btn-icon" id="sp-share-btn" onclick="spShare()" title="Share builder link" aria-label="Share builder link">
-      <i class="ti ti-link"></i>
-    </button>
-    <button class="sp-btn sp-btn-primary" onclick="spStartBuilding()">
-      Configure <i class="ti ti-arrow-right"></i>
+    <button class="sp-btn sp-btn-primary sp-btn-block" onclick="spCopyTo()">
+      Copy to project <i class="ti ti-arrow-right"></i>
     </button>
   </div>
 </aside>
 
-<!-- Prompt modal -->
 <div class="sp-modal-backdrop" id="sp-modal-backdrop" onclick="spCloseModal()">
-  <div class="sp-modal" onclick="event.stopPropagation()">
+  <div class="sp-modal sp-copy-modal" onclick="event.stopPropagation()">
     <div class="sp-modal-hdr">
-      <span>Claude Code Prompt</span>
+      <span>Copy to project</span>
       <button class="sp-modal-close" onclick="spCloseModal()"><i class="ti ti-x"></i></button>
     </div>
     <div class="sp-modal-body">
-      <pre class="sp-modal-pre" id="sp-modal-pre"></pre>
+      <p class="sp-modal-desc">Zones turned off will be removed. The demo toolbar and configure panel will be stripped out.</p>
+      <div class="sp-modal-field">
+        <label class="sp-modal-label" for="sp-project-name">Project name</label>
+        <input class="sp-modal-input" id="sp-project-name" type="text" placeholder="my-project" autocomplete="off">
+      </div>
     </div>
     <div class="sp-modal-foot">
-      <span class="sp-copy-ok" id="sp-copy-ok">Copied to clipboard</span>
-      <button class="sp-btn sp-btn-primary" onclick="spCopyPrompt()">
-        <i class="ti ti-copy"></i> Copy prompt
+      <button class="sp-btn sp-btn-primary" onclick="spDoCopy()">
+        <i class="ti ti-files"></i> Copy file
       </button>
     </div>
   </div>
@@ -391,6 +381,40 @@ function spCopyPrompt() {
     el.classList.add('show');
     setTimeout(function() { el.classList.remove('show'); }, 1800);
   }).catch(function() {});
+}
+
+/* ── Copy to project ─────────────────────────────────────── */
+
+function spCopyTo() {
+  document.getElementById('sp-project-name').value = '';
+  document.getElementById('sp-modal-backdrop').classList.add('open');
+}
+
+function spDoCopy() {
+  var name = (document.getElementById('sp-project-name').value || '').trim().replace(/[^a-z0-9_-]/gi, '-').toLowerCase();
+  if (!name) { document.getElementById('sp-project-name').focus(); return; }
+  var clone = document.documentElement.cloneNode(true);
+  SP_ZONES.forEach(function(z) {
+    if (!z.required && !z.on) {
+      var el = clone.querySelector('#' + (z.el || z.id)); if (el) el.remove();
+    }
+  });
+  ['demo-bar', 'sp-panel', 'sp-modal-backdrop'].forEach(function(id) {
+    var el = clone.querySelector('#' + id); if (el) el.remove();
+  });
+  clone.querySelectorAll('link[href*="spec-panel"]').forEach(function(l) { l.remove(); });
+  ['pattern-bar', 'auth-guard', 'paid-guard', 'cloud-sync'].forEach(function(key) {
+    clone.querySelectorAll('script[src*="' + key + '"]').forEach(function(s) { s.remove(); });
+  });
+  var filename = location.pathname.split('/').pop() || 'pattern.html';
+  var html = '<!DOCTYPE html>\n' + clone.outerHTML;
+  var blob = new Blob([html], {type: 'text/html'});
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = filename;
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  URL.revokeObjectURL(a.href);
+  spCloseModal();
 }
 
 /* ── Helpers ─────────────────────────────────────────────── */

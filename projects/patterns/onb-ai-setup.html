@@ -286,22 +286,31 @@ fresh-sidebar[collapsed] .oas-sidebar-user-info { display: none; }
   <div class="sp-hdr"><span class="sp-hdr-title">Configure</span><button class="sp-hdr-close" onclick="spClose()" aria-label="Close"><i class="ti ti-x"></i></button></div>
   <div class="sp-body">
     <div class="sp-section"><div class="sp-section-label">ZONES</div><div id="sp-zones"></div></div>
-    <div class="sp-section">
-      <div class="sp-section-label">GLOBAL TEMPLATE RULES</div>
-      <div class="sp-rules-hdr"><i class="ti ti-sparkles sp-rules-hdr-icon"></i><span class="sp-rules-hdr-name">AI RULES</span><span class="sp-rules-hdr-hint">Click to edit</span></div>
-      <div id="sp-cats"></div>
-    </div>
   </div>
   <div class="sp-bottom">
-    <button class="sp-btn sp-btn-icon" id="sp-share-btn" onclick="spShare()" title="Share link" aria-label="Share link"><i class="ti ti-link"></i></button>
-    <button class="sp-btn sp-btn-primary" onclick="spStartBuilding()">Configure <i class="ti ti-arrow-right"></i></button>
+    <button class="sp-btn sp-btn-primary sp-btn-block" onclick="spCopyTo()">
+      Copy to project <i class="ti ti-arrow-right"></i>
+    </button>
   </div>
 </aside>
 <div class="sp-modal-backdrop" id="sp-modal-backdrop" onclick="spCloseModal()">
-  <div class="sp-modal" onclick="event.stopPropagation()">
-    <div class="sp-modal-hdr"><span>Claude Code Prompt</span><button class="sp-modal-close" onclick="spCloseModal()"><i class="ti ti-x"></i></button></div>
-    <div class="sp-modal-body"><pre class="sp-modal-pre" id="sp-modal-pre"></pre></div>
-    <div class="sp-modal-foot"><span class="sp-copy-ok" id="sp-copy-ok">Copied to clipboard</span><button class="sp-btn sp-btn-primary" onclick="spCopyPrompt()"><i class="ti ti-copy"></i> Copy prompt</button></div>
+  <div class="sp-modal sp-copy-modal" onclick="event.stopPropagation()">
+    <div class="sp-modal-hdr">
+      <span>Copy to project</span>
+      <button class="sp-modal-close" onclick="spCloseModal()"><i class="ti ti-x"></i></button>
+    </div>
+    <div class="sp-modal-body">
+      <p class="sp-modal-desc">Zones turned off will be removed. The demo toolbar and configure panel will be stripped out.</p>
+      <div class="sp-modal-field">
+        <label class="sp-modal-label" for="sp-project-name">Project name</label>
+        <input class="sp-modal-input" id="sp-project-name" type="text" placeholder="my-project" autocomplete="off">
+      </div>
+    </div>
+    <div class="sp-modal-foot">
+      <button class="sp-btn sp-btn-primary" onclick="spDoCopy()">
+        <i class="ti ti-files"></i> Copy file
+      </button>
+    </div>
   </div>
 </div>
 <script src="../../systems/components/navigation/fresh-navbar.js"></script>
@@ -325,19 +334,75 @@ document.addEventListener('DOMContentLoaded',function(){_applyNavPattern();if(wi
 window.addEventListener('storage',function(e){if(e.key!=='freshds-nav-cfg')return;_applyNavPattern();if(window.FreshNavApply)window.FreshNavApply.apply();});
 var _lastNavCfgStr=null;(function _poll(){var s=localStorage.getItem('freshds-nav-cfg')||'';if(s!==_lastNavCfgStr){_lastNavCfgStr=s;_applyNavPattern();if(window.FreshNavApply)window.FreshNavApply.apply();}setTimeout(_poll,400);}());
 window.addEventListener('pageshow',function(e){if(e.persisted){_applyNavPattern();if(window.FreshNavApply)window.FreshNavApply.apply();}});
+/* ── Spec panel ──────────────────────────────────────────── */
+
 var SP_ZONES=[{key:'header',label:'Page header',el:'oas-header',on:true},{key:'content',label:'Page content',el:'oas-content',on:true}];
-var SP_RULES={'LAYOUT':['Full app shell: dash-shell with fresh-navbar + fresh-sidebar from nav config.','dash-main: flex:1, overflow-y:auto, padding var(--space-5) var(--space-6).'],'PAGE HEADER':['dash-page-header: flex row, space-between, border-bottom. Title left, actions right.','Use fresh-button with appropriate variants for header actions.'],'CONTENT':['Wrap content sections in dash-card with dash-card-title.','Use FreshDS tokens for all spacing, color, and typography.']};
-function spOpen(){document.getElementById('sp-panel').classList.add('open');document.getElementById('sp-panel').setAttribute('aria-hidden','false');_spRenderZones();_spRenderCats();var u=new URL(location.href);u.searchParams.set('spec','open');history.replaceState(null,'',u.toString());}
-function spClose(){document.getElementById('sp-panel').classList.remove('open');document.getElementById('sp-panel').setAttribute('aria-hidden','true');var u=new URL(location.href);u.searchParams.delete('spec');history.replaceState(null,'',u.toString());}
-function _spRenderZones(){var el=document.getElementById('sp-zones');el.innerHTML='';SP_ZONES.forEach(function(z){var row=document.createElement('div');row.className='sp-zone-row';row.innerHTML='<span class="sp-zone-label">'+z.label+'</span><label class="sp-toggle"><input type="checkbox"'+(z.on?' checked':'')+'><span class="sp-toggle-track"></span><span class="sp-toggle-thumb"></span></label>';row.querySelector('input').addEventListener('change',function(){z.on=this.checked;var t=document.getElementById(z.el);if(t)t.style.display=z.on?'':'none';});el.appendChild(row);});}
-function _spRenderCats(){var el=document.getElementById('sp-cats');el.innerHTML='';Object.keys(SP_RULES).forEach(function(cat){var wrap=document.createElement('div');wrap.className='sp-cat';_spBuildCat(cat,wrap);el.appendChild(wrap);});}
-function _spBuildCat(cat,wrap){wrap.innerHTML='';var label=document.createElement('div');label.className='sp-cat-label';label.textContent=cat;wrap.appendChild(label);SP_RULES[cat].forEach(function(rule,ri){wrap.appendChild(_spRuleRow(cat,ri,rule,wrap));});var addBtn=document.createElement('button');addBtn.className='sp-add-rule';addBtn.innerHTML='<i class="ti ti-plus"></i> Add rule';addBtn.addEventListener('click',function(){SP_RULES[cat].push('New rule');_spBuildCat(cat,wrap);var texts=wrap.querySelectorAll('.sp-rule-text');var last=texts[texts.length-1];if(last){last.focus();var r=document.createRange();r.selectNodeContents(last);var s=window.getSelection();s.removeAllRanges();s.addRange(r);}});wrap.appendChild(addBtn);}
-function _spRuleRow(cat,ri,text,wrap){var row=document.createElement('div');row.className='sp-rule';var dot=document.createElement('span');dot.className='sp-rule-dot';var span=document.createElement('span');span.className='sp-rule-text';span.contentEditable='true';span.textContent=text;span.addEventListener('input',function(){SP_RULES[cat][ri]=span.textContent;});var del=document.createElement('button');del.className='sp-rule-del';del.innerHTML='<i class="ti ti-trash"></i>';del.setAttribute('aria-label','Delete rule');del.addEventListener('click',function(){SP_RULES[cat].splice(ri,1);_spBuildCat(cat,wrap);});row.appendChild(dot);row.appendChild(span);row.appendChild(del);return row;}
-function spShare(){var u=new URL(location.href);u.searchParams.set('spec','open');var btn=document.getElementById('sp-share-btn');navigator.clipboard.writeText(u.toString()).then(function(){var orig=btn.innerHTML;btn.innerHTML='<i class="ti ti-check"></i>';setTimeout(function(){btn.innerHTML=orig;},1800);}).catch(function(){});}
-function spStartBuilding(){var lines=['Build this page using the FreshDS design system.',''];Object.keys(SP_RULES).forEach(function(cat){lines.push('## '+cat);SP_RULES[cat].forEach(function(rule){lines.push('- '+rule);});lines.push('');});lines.push('## ACTIVE ZONES');SP_ZONES.forEach(function(z){lines.push('- '+z.label+': '+(z.on?'SHOWN':'HIDDEN'));});document.getElementById('sp-modal-pre').textContent=lines.join('\n');document.getElementById('sp-modal-backdrop').classList.add('open');}
-function spCloseModal(){document.getElementById('sp-modal-backdrop').classList.remove('open');}
-function spCopyPrompt(){navigator.clipboard.writeText(document.getElementById('sp-modal-pre').textContent).then(function(){var ok=document.getElementById('sp-copy-ok');ok.classList.add('show');setTimeout(function(){ok.classList.remove('show');},1800);}).catch(function(){});}
-if(new URL(location.href).searchParams.get('spec')==='open'){document.addEventListener('DOMContentLoaded',spOpen);}
+
+function spOpen() {
+  document.getElementById('sp-panel').classList.add('open');
+  document.getElementById('sp-panel').setAttribute('aria-hidden', 'false');
+  _spRenderZones();
+  var u = new URL(location.href); u.searchParams.set('spec', 'open');
+  history.replaceState(null, '', u.toString());
+}
+
+function spClose() {
+  document.getElementById('sp-panel').classList.remove('open');
+  document.getElementById('sp-panel').setAttribute('aria-hidden', 'true');
+  var u = new URL(location.href); u.searchParams.delete('spec');
+  history.replaceState(null, '', u.toString());
+}
+
+function _spRenderZones() {
+  var el = document.getElementById('sp-zones'); el.innerHTML = '';
+  SP_ZONES.forEach(function(z) {
+    var row = document.createElement('div'); row.className = 'sp-zone-row';
+    row.innerHTML = '<span class="sp-zone-label">' + z.label + '</span>' +
+      '<label class="sp-toggle"><input type="checkbox"' + (z.on ? ' checked' : '') + '>' +
+      '<span class="sp-toggle-track"></span><span class="sp-toggle-thumb"></span></label>';
+    row.querySelector('input').addEventListener('change', function() {
+      z.on = this.checked;
+      var t = document.getElementById(z.el); if (t) t.style.display = z.on ? '' : 'none';
+    });
+    el.appendChild(row);
+  });
+}
+
+function spCopyTo() {
+  document.getElementById('sp-project-name').value = '';
+  document.getElementById('sp-modal-backdrop').classList.add('open');
+}
+
+function spCloseModal() { document.getElementById('sp-modal-backdrop').classList.remove('open'); }
+
+function spDoCopy() {
+  var name = (document.getElementById('sp-project-name').value || '').trim().replace(/[^a-z0-9_-]/gi, '-').toLowerCase();
+  if (!name) { document.getElementById('sp-project-name').focus(); return; }
+  var clone = document.documentElement.cloneNode(true);
+  SP_ZONES.forEach(function(z) {
+    if (!z.on) { var el = clone.querySelector('#' + z.el); if (el) el.remove(); }
+  });
+  ['demo-bar', 'sp-panel', 'sp-modal-backdrop'].forEach(function(id) {
+    var el = clone.querySelector('#' + id); if (el) el.remove();
+  });
+  clone.querySelectorAll('link[href*="spec-panel"]').forEach(function(l) { l.remove(); });
+  ['pattern-bar', 'auth-guard', 'paid-guard', 'cloud-sync'].forEach(function(key) {
+    clone.querySelectorAll('script[src*="' + key + '"]').forEach(function(s) { s.remove(); });
+  });
+  var filename = location.pathname.split('/').pop() || 'pattern.html';
+  var html = '<!DOCTYPE html>\n' + clone.outerHTML;
+  var blob = new Blob([html], {type: 'text/html'});
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = filename;
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  URL.revokeObjectURL(a.href);
+  spCloseModal();
+}
+
+if (new URL(location.href).searchParams.get('spec') === 'open') {
+  document.addEventListener('DOMContentLoaded', spOpen);
+}
 </script>
 </body>
 </html>

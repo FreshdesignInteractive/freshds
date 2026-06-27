@@ -463,40 +463,30 @@
       <div class="sp-section-label">ZONES</div>
       <div id="sp-zones"></div>
     </div>
-    <div class="sp-section">
-      <div class="sp-section-label">GLOBAL TEMPLATE RULES</div>
-      <div class="sp-rules-hdr">
-        <i class="ti ti-sparkles sp-rules-hdr-icon"></i>
-        <span class="sp-rules-hdr-name">AI RULES: FILTER &amp; SEARCH</span>
-        <span class="sp-rules-hdr-hint">Click to edit</span>
-      </div>
-      <div id="sp-cats"></div>
-    </div>
   </div>
   <div class="sp-bottom">
-    <button class="sp-btn sp-btn-icon" id="sp-share-btn" onclick="spShare()" title="Share link" aria-label="Share link">
-      <i class="ti ti-link"></i>
-    </button>
-    <button class="sp-btn sp-btn-primary" onclick="spStartBuilding()">
-      Configure <i class="ti ti-arrow-right"></i>
+    <button class="sp-btn sp-btn-primary sp-btn-block" onclick="spCopyTo()">
+      Copy to project <i class="ti ti-arrow-right"></i>
     </button>
   </div>
 </aside>
 
-<!-- Prompt modal -->
 <div class="sp-modal-backdrop" id="sp-modal-backdrop" onclick="spCloseModal()">
-  <div class="sp-modal" onclick="event.stopPropagation()">
+  <div class="sp-modal sp-copy-modal" onclick="event.stopPropagation()">
     <div class="sp-modal-hdr">
-      <span>Claude Code Prompt</span>
+      <span>Copy to project</span>
       <button class="sp-modal-close" onclick="spCloseModal()"><i class="ti ti-x"></i></button>
     </div>
     <div class="sp-modal-body">
-      <pre class="sp-modal-pre" id="sp-modal-pre"></pre>
+      <p class="sp-modal-desc">Zones turned off will be removed. The demo toolbar and configure panel will be stripped out.</p>
+      <div class="sp-modal-field">
+        <label class="sp-modal-label" for="sp-project-name">Project name</label>
+        <input class="sp-modal-input" id="sp-project-name" type="text" placeholder="my-project" autocomplete="off">
+      </div>
     </div>
     <div class="sp-modal-foot">
-      <span class="sp-copy-ok" id="sp-copy-ok">Copied to clipboard</span>
-      <button class="sp-btn sp-btn-primary" onclick="spCopyPrompt()">
-        <i class="ti ti-copy"></i> Copy prompt
+      <button class="sp-btn sp-btn-primary" onclick="spDoCopy()">
+        <i class="ti ti-files"></i> Copy file
       </button>
     </div>
   </div>
@@ -795,153 +785,66 @@ var SP_ZONES = [
   { key: 'pagination',     label: 'Pagination',     el: 'cf-pagination-row', on: true }
 ];
 
-var SP_RULES = {
-  'LAYOUT': [
-    'Use cnt-filter-layout (flex row) for the filter sidebar + results area.',
-    'Filter sidebar is fixed width (set in content.css); results fill remaining space with overflow-y: auto.',
-    'Search strip sits above the filter layout, spanning the full content width.',
-    'Wrap results rows in a dash-card (no padding) containing a cnt-list.'
-  ],
-  'SEARCH': [
-    'Use fresh-input with clearable and icon="ti-search" attributes for the search field.',
-    'Active filter chips appear below the search field in a flex-wrap row.',
-    'Each chip shows the filter label and a ti-x remove icon. Use color-interactive-subtle background.',
-    'A "Clear all" ghost button appears at the end of the chip row.'
-  ],
-  'FILTER SIDEBAR': [
-    'Group filters by dimension (Stage, Owner, Value, Date, Industry) using cnt-filter-group.',
-    'Multi-select dimensions use fresh-checkbox; single-select dimensions use fresh-radio with a shared name.',
-    'Show a result count (cnt-filter-count) next to each checkbox option.',
-    'Pre-check filters that match the currently active filter chips shown above.'
-  ],
-  'RESULTS LIST': [
-    'Each row: stage color dot, company fresh-avatar (name attr), deal name + meta line, amount, confidence badge, ghost icon-only dots button.',
-    'Stage dot is an 8px circle colored with the appropriate status token (warning = Proposal, success = Won).',
-    'Confidence badge uses fresh-badge: success for high (70%+), warning for medium, info for low.',
-    'Sort control uses fresh-topbar-menu tabs (Value / Close date / Last updated) in the results header.'
-  ],
-  'PAGINATION': [
-    'Use fresh-pagination at the bottom of the results area.',
-    'Show a "Showing X of Y results" label on the left, fresh-pagination on the right.',
-    'Pagination is only shown when total results exceed page-size.'
-  ]
-};
-
 function spOpen() {
   document.getElementById('sp-panel').classList.add('open');
   document.getElementById('sp-panel').setAttribute('aria-hidden', 'false');
   _spRenderZones();
-  _spRenderCats();
-  var u = new URL(location.href);
-  u.searchParams.set('spec', 'open');
+  var u = new URL(location.href); u.searchParams.set('spec', 'open');
   history.replaceState(null, '', u.toString());
 }
 
 function spClose() {
   document.getElementById('sp-panel').classList.remove('open');
   document.getElementById('sp-panel').setAttribute('aria-hidden', 'true');
-  var u = new URL(location.href);
-  u.searchParams.delete('spec');
+  var u = new URL(location.href); u.searchParams.delete('spec');
   history.replaceState(null, '', u.toString());
 }
 
 function _spRenderZones() {
-  var el = document.getElementById('sp-zones');
-  el.innerHTML = '';
+  var el = document.getElementById('sp-zones'); el.innerHTML = '';
   SP_ZONES.forEach(function(z) {
-    var row = document.createElement('div');
-    row.className = 'sp-zone-row';
-    var uid = 'sp-z-' + z.key;
-    row.innerHTML =
-      '<span class="sp-zone-label">' + z.label + '</span>' +
-      '<label class="sp-toggle">' +
-        '<input type="checkbox" id="' + uid + '"' + (z.on ? ' checked' : '') + '>' +
-        '<span class="sp-toggle-track"></span>' +
-        '<span class="sp-toggle-thumb"></span>' +
-      '</label>';
+    var row = document.createElement('div'); row.className = 'sp-zone-row';
+    row.innerHTML = '<span class="sp-zone-label">' + z.label + '</span>' +
+      '<label class="sp-toggle"><input type="checkbox"' + (z.on ? ' checked' : '') + '>' +
+      '<span class="sp-toggle-track"></span><span class="sp-toggle-thumb"></span></label>';
     row.querySelector('input').addEventListener('change', function() {
       z.on = this.checked;
-      var target = document.getElementById(z.el);
-      if (target) target.style.display = z.on ? '' : 'none';
+      var t = document.getElementById(z.el); if (t) t.style.display = z.on ? '' : 'none';
     });
     el.appendChild(row);
   });
 }
 
-function _spRenderCats() {
-  var el = document.getElementById('sp-cats');
-  el.innerHTML = '';
-  Object.keys(SP_RULES).forEach(function(cat) {
-    var wrap = document.createElement('div');
-    wrap.className = 'sp-cat';
-    _spBuildCat(cat, wrap);
-    el.appendChild(wrap);
-  });
-}
-
-function _spBuildCat(cat, wrap) {
-  wrap.innerHTML = '';
-  var label = document.createElement('div');
-  label.className = 'sp-cat-label';
-  label.textContent = cat;
-  wrap.appendChild(label);
-  SP_RULES[cat].forEach(function(rule, ri) { wrap.appendChild(_spRuleRow(cat, ri, rule, wrap)); });
-  var addBtn = document.createElement('button');
-  addBtn.className = 'sp-add-rule';
-  addBtn.innerHTML = '<i class="ti ti-plus"></i> Add rule';
-  addBtn.addEventListener('click', function() {
-    SP_RULES[cat].push('New rule');
-    _spBuildCat(cat, wrap);
-    var texts = wrap.querySelectorAll('.sp-rule-text');
-    var last  = texts[texts.length - 1];
-    if (last) { last.focus(); var r = document.createRange(); r.selectNodeContents(last); var s = window.getSelection(); s.removeAllRanges(); s.addRange(r); }
-  });
-  wrap.appendChild(addBtn);
-}
-
-function _spRuleRow(cat, ri, text, wrap) {
-  var row  = document.createElement('div');  row.className = 'sp-rule';
-  var dot  = document.createElement('span'); dot.className = 'sp-rule-dot';
-  var span = document.createElement('span');
-  span.className = 'sp-rule-text'; span.contentEditable = 'true'; span.textContent = text;
-  span.addEventListener('input', function() { SP_RULES[cat][ri] = span.textContent; });
-  var del  = document.createElement('button');
-  del.className = 'sp-rule-del'; del.innerHTML = '<i class="ti ti-trash"></i>';
-  del.setAttribute('aria-label', 'Delete rule');
-  del.addEventListener('click', function() { SP_RULES[cat].splice(ri, 1); _spBuildCat(cat, wrap); });
-  row.appendChild(dot); row.appendChild(span); row.appendChild(del);
-  return row;
-}
-
-function spShare() {
-  var u = new URL(location.href); u.searchParams.set('spec', 'open');
-  var btn = document.getElementById('sp-share-btn');
-  navigator.clipboard.writeText(u.toString()).then(function() {
-    var orig = btn.innerHTML; btn.innerHTML = '<i class="ti ti-check"></i>';
-    setTimeout(function() { btn.innerHTML = orig; }, 1800);
-  }).catch(function() {});
-}
-
-function spStartBuilding() {
-  var lines = ['Build a Filter and Search page using the FreshDS design system.', ''];
-  Object.keys(SP_RULES).forEach(function(cat) {
-    lines.push('## ' + cat);
-    SP_RULES[cat].forEach(function(rule) { lines.push('- ' + rule); });
-    lines.push('');
-  });
-  lines.push('## ACTIVE ZONES');
-  SP_ZONES.forEach(function(z) { lines.push('- ' + z.label + ': ' + (z.on ? 'SHOWN' : 'HIDDEN')); });
-  document.getElementById('sp-modal-pre').textContent = lines.join('\n');
+function spCopyTo() {
+  document.getElementById('sp-project-name').value = '';
   document.getElementById('sp-modal-backdrop').classList.add('open');
 }
 
 function spCloseModal() { document.getElementById('sp-modal-backdrop').classList.remove('open'); }
 
-function spCopyPrompt() {
-  navigator.clipboard.writeText(document.getElementById('sp-modal-pre').textContent).then(function() {
-    var ok = document.getElementById('sp-copy-ok'); ok.classList.add('show');
-    setTimeout(function() { ok.classList.remove('show'); }, 1800);
-  }).catch(function() {});
+function spDoCopy() {
+  var name = (document.getElementById('sp-project-name').value || '').trim().replace(/[^a-z0-9_-]/gi, '-').toLowerCase();
+  if (!name) { document.getElementById('sp-project-name').focus(); return; }
+  var clone = document.documentElement.cloneNode(true);
+  SP_ZONES.forEach(function(z) {
+    if (!z.on) { var el = clone.getElementById ? clone.querySelector('#' + z.el) : null; if (el) el.remove(); }
+  });
+  ['demo-bar', 'sp-panel', 'sp-modal-backdrop'].forEach(function(id) {
+    var el = clone.querySelector('#' + id); if (el) el.remove();
+  });
+  clone.querySelectorAll('link[href*="spec-panel"]').forEach(function(l) { l.remove(); });
+  ['pattern-bar', 'auth-guard', 'paid-guard', 'cloud-sync'].forEach(function(name) {
+    clone.querySelectorAll('script[src*="' + name + '"]').forEach(function(s) { s.remove(); });
+  });
+  var filename = location.pathname.split('/').pop() || 'pattern.html';
+  var html = '<!DOCTYPE html>\n' + clone.outerHTML;
+  var blob = new Blob([html], {type: 'text/html'});
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = filename;
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  URL.revokeObjectURL(a.href);
+  spCloseModal();
 }
 
 if (new URL(location.href).searchParams.get('spec') === 'open') {
