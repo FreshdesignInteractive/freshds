@@ -3,11 +3,11 @@
 
 const path = window.location.pathname;
 const isActive = (page) => {
-  if (page === 'dashboard')   return path.includes('dashboard') || path === '/' || path === '/index.html';
-  if (page === 'theme')       return path.includes('app/theme.html');
-  if (page === 'navigation')  return path.includes('app/navigation.html');
-  if (page === 'components')  return path.includes('app');
-  if (page === 'patterns')    return path.includes('patterns');
+  if (page === 'dashboard')   return path.includes('/app/dashboard.html') || path === '/' || path === '/index.html';
+  if (page === 'theme')       return path.includes('/app/theme.html');
+  if (page === 'navigation')  return path.includes('/app/navigation.html');
+  if (page === 'components')  return path.includes('/app/components.html');
+  if (page === 'patterns')    return path.includes('/app/patterns.html');
   return false;
 };
 
