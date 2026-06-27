@@ -828,12 +828,14 @@ body {
   }
 
   // Load seat count
+  let betaFull = false
   async function loadSeatCount() {
     const { data: count, error } = await supabase.rpc('beta_seat_count')
     if (error || count === null) {
       document.getElementById('seat-text').textContent = ' of 100 beta seats claimed'
       return
     }
+    betaFull = count >= LIMIT
     const pct = Math.min(100, Math.round((count / LIMIT) * 100))
     document.getElementById('seat-fill').style.width = pct + '%'
     document.getElementById('seat-text').textContent = `${count} of ${LIMIT} beta seats claimed`
@@ -844,6 +846,7 @@ body {
   window.openRequestModal = async function() {
     const { data: { session } } = await supabase.auth.getSession()
     if (session) { window.location.replace('/app/dashboard.html'); return }
+    if (betaFull) { window.location.assign('/site/waitlist.html'); return }
     document.getElementById('request-overlay').classList.add('open')
     document.body.style.overflow = 'hidden'
   }

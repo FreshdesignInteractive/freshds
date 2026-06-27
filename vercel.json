@@ -6,6 +6,7 @@
   },
   "redirects": [
     { "source": "/schedule.html",    "destination": "/site/schedule.html",   "permanent": true },
+    { "source": "/waitlist.html",    "destination": "/site/waitlist.html",   "permanent": true },
     { "source": "/about.html",      "destination": "/site/about.html",      "permanent": true },
     { "source": "/contact.html",    "destination": "/site/contact.html",    "permanent": true },
     { "source": "/privacy.html",    "destination": "/site/privacy.html",    "permanent": true },
