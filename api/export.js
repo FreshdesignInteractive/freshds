@@ -186,6 +186,13 @@ function _injectThemeSeed(html, t) {
   return html.replace('<head>', '<head>\n' + seed);
 }
 
+function _stripSiteGuards(html) {
+  return html
+    .replace(/<script[^>]*src="[^"]*auth-guard\.js"[^>]*><\/script>\n?/g, '')
+    .replace(/<script[^>]*src="[^"]*paid-guard\.js"[^>]*><\/script>\n?/g, '')
+    .replace(/<script[^>]*src="[^"]*cloud-sync\.js"[^>]*><\/script>\n?/g, '');
+}
+
 function _generateReadme(isSite, t) {
   return (
     '# FreshDS ' + (isSite ? 'Full DS' : 'Dev Kit') + '\n\n' +
@@ -493,7 +500,10 @@ async function handler(req, res) {
   fetched.forEach(function(file) {
     if (!file) return;
     var content = file.text;
-    if (file.relPath.endsWith('.html') && isFullSite) content = _injectThemeSeed(content, t);
+    if (file.relPath.endsWith('.html') && isFullSite) {
+      content = _injectThemeSeed(content, t);
+      content = _stripSiteGuards(content);
+    }
     zip.file(root + file.relPath, content);
   });
 
