@@ -97,7 +97,49 @@
   margin-bottom: var(--space-3);
 }
 
-/* Spec trigger */</style>
+/* Invite input row */
+.invite-input-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+.invite-input-row fresh-input { flex: 1; }
+
+/* Member row base layout */
+.invited-list {
+  display: flex;
+  flex-direction: column;
+}
+.invited-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+.invited-item-email {
+  flex: 1;
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.invited-item-role {
+  font-size: var(--font-size-sm);
+  color: var(--text-tertiary);
+  white-space: nowrap;
+  min-width: 52px;
+  text-align: right;
+}
+.invited-item-remove {
+  display: flex; align-items: center; justify-content: center;
+  width: 28px; height: 28px; flex-shrink: 0;
+  border: none; border-radius: var(--radius-md);
+  background: transparent; color: var(--text-tertiary);
+  cursor: pointer; font-size: 14px;
+  transition: background 150ms, color 150ms;
+}
+.invited-item-remove:hover { background: var(--surface-subtle); color: var(--text-primary); }
+</style>
 <link rel="stylesheet" href="../../systems/styles/spec-panel.css">
 </head>
 <body>
@@ -156,8 +198,8 @@
           <div class="ml-invite-section" id="ml-invite-section">
             <div class="ml-invite-label">Invite a teammate</div>
             <div class="invite-input-row">
-              <fresh-input placeholder="colleague@company.com" type="email" clearable></fresh-input>
-              <fresh-button variant="secondary"><i class="ti ti-plus"></i> Add</fresh-button>
+              <fresh-input id="ml-invite-input" placeholder="colleague@company.com" type="email" clearable></fresh-input>
+              <fresh-button id="ml-add-btn" variant="secondary"><i class="ti ti-plus"></i> Add</fresh-button>
             </div>
           </div>
 
@@ -628,6 +670,57 @@ function spCopyPrompt() {
 if (new URL(location.href).searchParams.get('spec') === 'open') {
   document.addEventListener('DOMContentLoaded', spOpen);
 }
+
+/* ── Member list interactivity ───────────────────────────────── */
+
+function _updateMemberCount() {
+  var count = document.querySelectorAll('#ml-member-list .invited-item').length;
+  var subtitle = document.querySelector('.dash-page-subtitle');
+  if (subtitle) subtitle.textContent = count + ' member' + (count !== 1 ? 's' : '') + ' · Invite teammates to collaborate in Acme';
+}
+
+function _makeMemberRow(email) {
+  var namePart = email.split('@')[0].replace(/[._-]+/g, ' ')
+    .replace(/\b\w/g, function(c) { return c.toUpperCase(); });
+  var div = document.createElement('div');
+  div.className = 'invited-item';
+  div.innerHTML =
+    '<fresh-avatar name="' + namePart.replace(/"/g, '&quot;') + '" size="sm"></fresh-avatar>' +
+    '<span class="invited-item-email">' + email.replace(/</g, '&lt;').replace(/>/g, '&gt;') + '</span>' +
+    '<span class="invited-item-role">Member</span>' +
+    '<button class="invited-item-remove" aria-label="Remove ' + namePart.replace(/"/g, '&quot;') + '"><i class="ti ti-x"></i></button>';
+  return div;
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  var addBtn  = document.getElementById('ml-add-btn');
+  var inputEl = document.getElementById('ml-invite-input');
+  var list    = document.querySelector('#ml-member-list .invited-list');
+
+  function _doAdd() {
+    var raw   = inputEl.value || (inputEl.shadowRoot && inputEl.shadowRoot.querySelector('input') ? inputEl.shadowRoot.querySelector('input').value : '');
+    var email = (raw || '').trim();
+    if (!email) return;
+    list.appendChild(_makeMemberRow(email));
+    inputEl.value = '';
+    var inner = inputEl.shadowRoot && inputEl.shadowRoot.querySelector('input');
+    if (inner) { inner.value = ''; inner.dispatchEvent(new Event('input')); }
+    _updateMemberCount();
+  }
+
+  addBtn.addEventListener('click', _doAdd);
+
+  inputEl.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') _doAdd();
+  });
+
+  document.getElementById('ml-member-list').addEventListener('click', function(e) {
+    var btn = e.target.closest('.invited-item-remove');
+    if (!btn) return;
+    btn.closest('.invited-item').remove();
+    _updateMemberCount();
+  });
+});
 </script>
 </body>
 </html>
