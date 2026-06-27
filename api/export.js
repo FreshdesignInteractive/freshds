@@ -194,7 +194,7 @@ function _generateReadme(isSite, t) {
     'Generated: ' + new Date().toISOString() + '\n\n' +
     (isSite
       ? '## Getting started\n\n' +
-        'Open `index.html` in a browser to browse components and patterns.\n\n' +
+        'Open `app/components.html` to browse component docs, or `app/patterns.html` for the pattern library.\n\n' +
         'Create your own project folder inside `projects/` — e.g. `projects/my-app/`.\n' +
         'Pages you create there reference system files with `../../systems/`.\n\n'
       : '## Getting started\n\n' +
@@ -223,9 +223,11 @@ function _generateReadme(isSite, t) {
     '│   ├── styles/         ← shared layout and pattern CSS\n' +
     '│   └── js/             ← theme engine (freshds.js)\n' +
     (isSite
-      ? '├── projects/\n' +
-        '│   └── patterns/   ← reference patterns (copy-prompt source)\n' +
-        '├── index.html      ← local DS home\n'
+      ? '├── app/\n' +
+        '│   ├── components.html  ← component docs browser\n' +
+        '│   └── patterns.html    ← pattern library browser\n' +
+        '├── projects/\n' +
+        '│   └── patterns/   ← reference patterns (copy-prompt source)\n'
       : '') +
     '└── README.md\n' +
     '```\n'
@@ -293,7 +295,6 @@ const DEVKIT_FILES = [
 
 const FULLSITE_EXTRA_FILES = [
   // Entry points
-  'index.html',
   'app/components.html',
   'app/patterns.html',
   // Shared assets
