@@ -119,7 +119,7 @@ fresh-sidebar[collapsed] .im-sidebar-user-info { display: none; }
       </button>
       <div class="demo-sep"></div>
       <button class="demo-spec-btn" onclick="spOpen()" aria-label="Configure pattern">
-        <i class="ti ti-layout-sidebar-right"></i> Configure
+        Configure
       </button>
     </div>
     <div class="demo-sep"></div>
@@ -239,7 +239,7 @@ fresh-sidebar[collapsed] .im-sidebar-user-info { display: none; }
   </div>
   <div class="sp-bottom">
     <button class="sp-btn sp-btn-primary sp-btn-block" onclick="spCopyTo()">
-      Copy to project <i class="ti ti-arrow-right"></i>
+      Get this file
     </button>
   </div>
 </aside>
@@ -251,15 +251,12 @@ fresh-sidebar[collapsed] .im-sidebar-user-info { display: none; }
       <button class="sp-modal-close" onclick="spCloseModal()"><i class="ti ti-x"></i></button>
     </div>
     <div class="sp-modal-body">
-      <p class="sp-modal-desc">Zones turned off will be removed. The demo toolbar and configure panel will be stripped out.</p>
-      <div class="sp-modal-field">
-        <label class="sp-modal-label" for="sp-project-name">Project name</label>
-        <input class="sp-modal-input" id="sp-project-name" type="text" placeholder="my-project" autocomplete="off">
-      </div>
+      <p class="sp-modal-desc">Save this file to your project folder and open it in Claude Code. Use it as your starting point — build the page, adjust the layout, and customise it to fit your product.</p>
+      <p class="sp-modal-desc">Zones you turned off are already removed. The demo toolbar and configure panel are stripped out.</p>
     </div>
     <div class="sp-modal-foot">
       <button class="sp-btn sp-btn-primary" onclick="spDoCopy()">
-        <i class="ti ti-files"></i> Copy file
+        <i class="ti ti-download"></i> Download
       </button>
     </div>
   </div>
@@ -585,15 +582,12 @@ function _spRenderZones() {
 }
 
 function spCopyTo() {
-  document.getElementById('sp-project-name').value = '';
   document.getElementById('sp-modal-backdrop').classList.add('open');
 }
 
 function spCloseModal() { document.getElementById('sp-modal-backdrop').classList.remove('open'); }
 
 function spDoCopy() {
-  var name = (document.getElementById('sp-project-name').value || '').trim().replace(/[^a-z0-9_-]/gi, '-').toLowerCase();
-  if (!name) { document.getElementById('sp-project-name').focus(); return; }
   var clone = document.documentElement.cloneNode(true);
   SP_ZONES.forEach(function(z) {
     if (!z.on) { var el = clone.getElementById ? clone.querySelector('#' + z.el) : null; if (el) el.remove(); }
