@@ -193,53 +193,6 @@ function _stripSiteGuards(html) {
     .replace(/<script[^>]*src="[^"]*cloud-sync\.js"[^>]*><\/script>\n?/g, '');
 }
 
-function _generateReadme(isSite, t) {
-  return (
-    '# FreshDS ' + (isSite ? 'Full DS' : 'Dev Kit') + '\n\n' +
-    'Primary: `' + t.primary   + '`\n' +
-    'Secondary: `' + t.secondary + '`\n' +
-    'Generated: ' + new Date().toISOString() + '\n\n' +
-    (isSite
-      ? '## Getting started\n\n' +
-        'Open `app/components.html` to browse component docs, or `app/patterns.html` for the pattern library.\n\n' +
-        'Create your own project folder inside `projects/` — e.g. `projects/my-app/`.\n' +
-        'Pages you create there reference system files with `../../systems/`.\n\n'
-      : '## Getting started\n\n' +
-        'Add the `systems/` folder to your project. Create a project folder at the same\n' +
-        'level as `systems/` (e.g. `projects/my-app/`), then reference files as shown below.\n\n') +
-    '## Quick start\n\n' +
-    '```html\n' +
-    '<!-- From a page inside projects/my-app/ -->\n' +
-    '<link rel="stylesheet" href="../../systems/tokens/primitives.css">\n' +
-    '<link rel="stylesheet" href="../../systems/tokens/theme-vars.css">\n' +
-    '<link rel="stylesheet" href="../../systems/tokens/theme.css">\n\n' +
-    '<!-- Grid (optional) -->\n' +
-    '<link rel="stylesheet" href="../../systems/styles/grid.css">\n\n' +
-    '<!-- Theme engine -->\n' +
-    '<script src="../../systems/js/freshds.js"><\/script>\n\n' +
-    '<!-- Web components (load only what you use) -->\n' +
-    '<script src="../../systems/components/core/fresh-button.js"><\/script>\n' +
-    '```\n\n' +
-    '## Folder layout\n\n' +
-    '```\n' +
-    'freshds/\n' +
-    '├── systems/\n' +
-    '│   ├── tokens/         ← CSS custom properties (primitives, theme, dataviz)\n' +
-    '│   │   └── theme-vars.css  ← your computed brand palette (edit to override)\n' +
-    '│   ├── components/     ← web components (.js, one file per component)\n' +
-    '│   ├── styles/         ← shared layout and pattern CSS\n' +
-    '│   └── js/             ← theme engine (freshds.js)\n' +
-    (isSite
-      ? '├── app/\n' +
-        '│   ├── components.html  ← component docs browser\n' +
-        '│   └── patterns.html    ← pattern library browser\n' +
-        '├── projects/\n' +
-        '│   └── patterns/   ← reference patterns (copy-prompt source)\n'
-      : '') +
-    '└── README.md\n' +
-    '```\n'
-  );
-}
 
 // ── Static file lists ──────────────────────────────────────────────────────
 const DEVKIT_FILES = [
@@ -601,10 +554,9 @@ async function handler(req, res) {
     zip.file(root + file.zipPath, content);
   });
 
-  zip.file(root + 'README.md', _generateReadme(isFullSite, t));
 
   const buffer   = await zip.generateAsync({ type: 'nodebuffer', compression: 'DEFLATE' });
-  const filename = isFullSite ? 'FreshDS.zip' : 'freshds-bundle.zip';
+  const filename = isFullSite ? 'FreshDS.zip' : isSDK ? 'freshds-sdk.zip' : 'freshds-bundle.zip';
 
   res.setHeader('Content-Type', 'application/zip');
   res.setHeader('Content-Disposition', 'attachment; filename="' + filename + '"');
