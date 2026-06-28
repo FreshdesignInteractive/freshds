@@ -300,6 +300,97 @@ const DEVKIT_FILES = [
   'systems/components/ai/fresh-ai-mode-toggle.js'
 ];
 
+// SDK_FILES entries are either:
+//   'path/in/repo'                              → zipped at same relative path
+//   { fetch: 'path/in/repo', zip: 'dest/path' } → zipped at a different path
+const SDK_FILES = [
+  // CLAUDE.md — fetched from sdk-assets/ but placed at SDK root so Claude Code finds it
+  { fetch: 'sdk-assets/CLAUDE.md', zip: 'CLAUDE.md' },
+  // Readme
+  'readme.html',
+  // Tokens
+  'systems/tokens/primitives.css',
+  'systems/tokens/theme.css',
+  'systems/tokens/dataviz.css',
+  // Base styles
+  'systems/styles/reset.css',
+  'systems/styles/grid.css',
+  'systems/styles/components/core.css',
+  // Pattern stylesheets — all preloaded so every downloaded page renders correctly
+  'systems/styles/patterns/ai-chat.css',
+  'systems/styles/patterns/auth.css',
+  'systems/styles/patterns/collab.css',
+  'systems/styles/patterns/commerce.css',
+  'systems/styles/patterns/content.css',
+  'systems/styles/patterns/dashboard.css',
+  'systems/styles/patterns/feedback.css',
+  'systems/styles/patterns/onboarding.css',
+  'systems/styles/patterns/settings.css',
+  'systems/styles/patterns/workflow.css',
+  // JS engine + nav helpers
+  'systems/js/freshds.js',
+  'systems/js/nav-taxonomy.js',
+  'systems/js/freshds-nav-apply.js',
+  // Components — core
+  'systems/components/core/fresh-button.js',
+  'systems/components/core/fresh-input.js',
+  'systems/components/core/fresh-select.js',
+  'systems/components/core/fresh-checkbox.js',
+  'systems/components/core/fresh-radio.js',
+  'systems/components/core/fresh-toggle.js',
+  'systems/components/core/fresh-slider.js',
+  'systems/components/core/fresh-form-field.js',
+  'systems/components/core/fresh-dropdown-button.js',
+  // Components — feedback
+  'systems/components/feedback/fresh-badge.js',
+  'systems/components/feedback/fresh-alert.js',
+  'systems/components/feedback/fresh-toast.js',
+  'systems/components/feedback/fresh-tooltip.js',
+  'systems/components/feedback/fresh-progress.js',
+  'systems/components/feedback/fresh-skeleton.js',
+  'systems/components/feedback/fresh-spinner.js',
+  'systems/components/feedback/fresh-empty-state.js',
+  // Components — navigation
+  'systems/components/navigation/fresh-navbar.js',
+  'systems/components/navigation/fresh-sidebar.js',
+  'systems/components/navigation/fresh-tabs.js',
+  'systems/components/navigation/fresh-topbar-menu.js',
+  'systems/components/navigation/fresh-breadcrumb.js',
+  'systems/components/navigation/fresh-pagination.js',
+  'systems/components/navigation/fresh-stepper.js',
+  'systems/components/navigation/fresh-simple-tabs.js',
+  // Components — containers
+  'systems/components/containers/fresh-card.js',
+  'systems/components/containers/fresh-modal.js',
+  'systems/components/containers/fresh-drawer.js',
+  'systems/components/containers/fresh-accordion.js',
+  'systems/components/containers/fresh-popover.js',
+  'systems/components/containers/fresh-media-card.js',
+  'systems/components/containers/fresh-table.js',
+  // Components — data
+  'systems/components/data/fresh-avatar.js',
+  'systems/components/data/fresh-stat-card.js',
+  'systems/components/data/fresh-data-table.js',
+  'systems/components/data/fresh-chart.js',
+  'systems/components/data/fresh-timeline.js',
+  // Components — AI
+  'systems/components/ai/fresh-prompt-input.js',
+  'systems/components/ai/fresh-ai-response.js',
+  'systems/components/ai/fresh-thinking.js',
+  'systems/components/ai/fresh-confidence-badge.js',
+  'systems/components/ai/fresh-citation-chip.js',
+  'systems/components/ai/fresh-suggestion-card.js',
+  'systems/components/ai/fresh-model-selector.js',
+  'systems/components/ai/fresh-token-meter.js',
+  'systems/components/ai/fresh-feedback.js',
+  'systems/components/ai/fresh-diff-viewer.js',
+  'systems/components/ai/fresh-prompt-history.js',
+  'systems/components/ai/fresh-ai-mode-toggle.js',
+  // Sample project
+  'projects/sample-project/CLAUDE.md',
+  'projects/sample-project/welcome.html'
+];
+
 const FULLSITE_EXTRA_FILES = [
   // Entry points
   'app/components.html',
@@ -475,21 +566,24 @@ async function handler(req, res) {
     return res.status(403).json({ error: 'Subscription required' });
   }
 
-  const type       = req.query.type === 'fullsite' ? 'fullsite' : 'devkit';
+  const type       = req.query.type === 'fullsite' ? 'fullsite' : req.query.type === 'sdk' ? 'sdk' : 'devkit';
   const isFullSite = type === 'fullsite';
+  const isSDK      = type === 'sdk';
   const t          = Object.assign({}, DEFAULT_THEME, profile.theme_config || {});
-  const root       = isFullSite ? 'FreshDS/' : 'freshds-bundle/';
+  const root       = isFullSite ? 'FreshDS/' : isSDK ? 'freshds-sdk/' : 'freshds-bundle/';
 
   // Fetch static files from the CDN (same deployment) in parallel
   const proto   = req.headers['x-forwarded-proto'] || 'https';
   const host    = req.headers['x-forwarded-host']  || req.headers.host;
   const baseUrl = proto + '://' + host;
 
-  const allFiles = isFullSite ? DEVKIT_FILES.concat(FULLSITE_EXTRA_FILES) : DEVKIT_FILES;
+  const allFiles = isFullSite ? DEVKIT_FILES.concat(FULLSITE_EXTRA_FILES) : isSDK ? SDK_FILES : DEVKIT_FILES;
   const fetched  = await Promise.all(
-    allFiles.map(function(relPath) {
-      return fetch(baseUrl + '/' + relPath)
-        .then(function(r) { return r.ok ? r.text().then(function(text) { return { relPath, text }; }) : null; })
+    allFiles.map(function(entry) {
+      var fetchPath = typeof entry === 'string' ? entry : entry.fetch;
+      var zipPath   = typeof entry === 'string' ? entry : entry.zip;
+      return fetch(baseUrl + '/' + fetchPath)
+        .then(function(r) { return r.ok ? r.text().then(function(text) { return { zipPath, text }; }) : null; })
         .catch(function() { return null; });
     })
   );
@@ -500,11 +594,11 @@ async function handler(req, res) {
   fetched.forEach(function(file) {
     if (!file) return;
     var content = file.text;
-    if (file.relPath.endsWith('.html') && isFullSite) {
-      content = _injectThemeSeed(content, t);
-      content = _stripSiteGuards(content);
+    if (file.zipPath.endsWith('.html')) {
+      if (isFullSite) content = _injectThemeSeed(content, t);
+      if (isFullSite || isSDK) content = _stripSiteGuards(content);
     }
-    zip.file(root + file.relPath, content);
+    zip.file(root + file.zipPath, content);
   });
 
   zip.file(root + 'README.md', _generateReadme(isFullSite, t));

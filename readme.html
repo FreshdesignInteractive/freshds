@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FreshDS SDK — Getting Started</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', system-ui, sans-serif;
+    font-size: 15px;
+    line-height: 1.7;
+    color: #1a1d26;
+    background: #f7f7f8;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .page { max-width: 760px; margin: 0 auto; padding: 60px 32px 100px; }
+
+  /* Header */
+  .hd { margin-bottom: 48px; border-bottom: 1px solid #e4e4e7; padding-bottom: 36px; }
+  .hd-eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #6c63ff; margin-bottom: 10px; }
+  .hd-title { font-size: 32px; font-weight: 700; letter-spacing: -0.02em; color: #0f1117; line-height: 1.2; margin-bottom: 14px; }
+  .hd-desc { font-size: 16px; color: #52556a; max-width: 540px; }
+
+  /* Sections */
+  .section { margin-bottom: 52px; }
+  .section-title {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.09em; text-transform: uppercase;
+    color: #8b8fa8; margin-bottom: 20px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .section-title::after { content: ''; flex: 1; height: 1px; background: #e8e8ec; }
+
+  p { color: #52556a; margin-bottom: 16px; }
+  p:last-child { margin-bottom: 0; }
+
+  /* Folder tree */
+  .tree {
+    background: #0f1117; border-radius: 10px;
+    padding: 20px 24px; margin: 20px 0;
+    font-family: 'SFMono-Regular', 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 13px; line-height: 2;
+    color: #c8cce0;
+    overflow-x: auto;
+  }
+  .tree .dir  { color: #7b74ff; font-weight: 600; }
+  .tree .note { color: #4e5268; font-style: italic; }
+
+  /* Steps */
+  .steps { display: flex; flex-direction: column; gap: 24px; }
+  .step { display: flex; gap: 18px; }
+  .step-num {
+    width: 28px; height: 28px; border-radius: 50%;
+    background: #6c63ff; color: #fff;
+    font-size: 12px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; margin-top: 2px;
+  }
+  .step-title { font-size: 15px; font-weight: 600; color: #0f1117; margin-bottom: 6px; }
+  .step-desc { font-size: 14px; color: #52556a; line-height: 1.65; }
+
+  /* Code */
+  code {
+    font-family: 'SFMono-Regular', 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 13px; background: #eeeef2; color: #3730a3;
+    padding: 2px 6px; border-radius: 4px;
+  }
+  .codeblock {
+    background: #0f1117; border-radius: 10px;
+    padding: 18px 22px; margin: 16px 0;
+    font-family: 'SFMono-Regular', 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 13px; line-height: 1.7; color: #c8cce0;
+    white-space: pre; overflow-x: auto;
+  }
+
+  /* Callout */
+  .callout {
+    background: #f0effe; border: 1px solid #c7c2fc;
+    border-radius: 10px; padding: 16px 20px;
+    font-size: 14px; color: #3730a3; line-height: 1.6;
+    margin: 20px 0;
+  }
+  .callout strong { font-weight: 600; }
+
+  /* Two-col cards */
+  .card-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 20px 0; }
+  .card { background: #fff; border: 1px solid #e4e4e7; border-radius: 10px; padding: 20px; }
+  .card-label { font-size: 11px; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; color: #8b8fa8; margin-bottom: 8px; }
+  .card-title { font-size: 15px; font-weight: 600; color: #0f1117; margin-bottom: 6px; }
+  .card-desc { font-size: 13px; color: #6b6f88; line-height: 1.55; }
+
+  /* Footer */
+  .footer { font-size: 13px; color: #9497b0; text-align: center; padding-top: 48px; border-top: 1px solid #e4e4e7; }
+  .footer a { color: #6c63ff; text-decoration: none; }
+  .footer a:hover { text-decoration: underline; }
+
+  @media (max-width: 580px) {
+    .page { padding: 40px 20px 80px; }
+    .hd-title { font-size: 26px; }
+    .card-row { grid-template-columns: 1fr; }
+    .tree { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="hd">
+    <div class="hd-eyebrow">FreshDS V3.0.0</div>
+    <h1 class="hd-title">Your design system is ready.</h1>
+    <p class="hd-desc">Everything in this folder is what you need to build fully designed product pages, entirely from AI.</p>
+  </div>
+
+  <!-- WHAT'S HERE -->
+  <div class="section">
+    <div class="section-title">What's in this folder</div>
+    <div class="tree">
+<span class="dir">freshds-sdk/</span>
+  &#x251C;&#x2500;&#x2500; <span style="color:#c8cce0">readme.html</span>              <span class="note">&#x2190; you are here</span>
+  &#x251C;&#x2500;&#x2500; <span style="color:#c8cce0">CLAUDE.md</span>                <span class="note">&#x2190; DS rules for Claude Code (don't touch)</span>
+  &#x251C;&#x2500;&#x2500; <span class="dir">systems/</span>                 <span class="note">&#x2190; the DS engine (don't touch)</span>
+  &#x2514;&#x2500;&#x2500; <span class="dir">projects/</span>                <span class="note">&#x2190; all your projects live here</span>
+      &#x2514;&#x2500;&#x2500; <span class="dir">sample-project/</span>      <span class="note">&#x2190; start here, or rename it</span>
+            &#x251C;&#x2500;&#x2500; <span style="color:#c8cce0">CLAUDE.md</span>        <span class="note">&#x2190; project context for Claude Code</span>
+            &#x2514;&#x2500;&#x2500; <span style="color:#c8cce0">welcome.html</span>     <span class="note">&#x2190; a working sample page</span>
+    </div>
+    <p>The rule is simple: <code>systems/</code> is shared and never touched. Your pages go into named subfolders inside <code>projects/</code>. Each project folder is independent — one per product, client, or feature area.</p>
+  </div>
+
+  <!-- HOW TO USE -->
+  <div class="section">
+    <div class="section-title">How to build with this</div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <div class="step-title">Create a project folder</div>
+          <div class="step-desc">Duplicate <code>sample-project/</code> and rename it to your product or client name. Or just rename <code>sample-project/</code> directly. All your pages for that product go inside it.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <div class="step-title">Download patterns from FreshDS</div>
+          <div class="step-desc">Go to <strong>freshdesign.com</strong>, browse the pattern library, configure the zones you want, then click <strong>Get this file</strong>. Drop the downloaded <code>.html</code> file straight into your project folder.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <div class="step-title">Open the SDK root in Claude Code</div>
+          <div class="step-desc">Launch Claude Code and open the <strong>freshds-sdk folder itself</strong> as your workspace — not just a project subfolder. This is important: Claude reads <code>CLAUDE.md</code> from the folder you open. Opening the SDK root means Claude loads both the DS rules at the top level and your project context simultaneously. If you open a project subfolder directly, it won't see the DS rules.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <div class="step-title">Describe what you want to build</div>
+          <div class="step-desc">Tell Claude which page to work on and what to change. Open the HTML file in a browser to preview. Iterate until it's right. Every component handles dark mode, responsive layouts, and your brand tokens automatically.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOLDER CONVENTIONS -->
+  <div class="section">
+    <div class="section-title">Folder conventions</div>
+    <div class="card-row">
+      <div class="card">
+        <div class="card-label">Shared engine</div>
+        <div class="card-title">systems/</div>
+        <div class="card-desc">Never modify anything inside <code>systems/</code>. All your pages reference it via <code>../../systems/</code>. When FreshDS ships an update, replace this folder entirely.</div>
+      </div>
+      <div class="card">
+        <div class="card-label">Your work</div>
+        <div class="card-title">projects/</div>
+        <div class="card-desc">One subfolder per product or client. Add as many pages as you need inside each. Multiple project folders can coexist side by side, all sharing the same engine.</div>
+      </div>
+    </div>
+    <div class="tree">
+<span class="dir">freshds-sdk/</span>
+  &#x251C;&#x2500;&#x2500; <span class="dir">systems/</span>
+  &#x2514;&#x2500;&#x2500; <span class="dir">projects/</span>
+      &#x251C;&#x2500;&#x2500; <span class="dir">acme-dashboard/</span>
+      &#x251C;&#x2500;&#x2500; <span class="dir">acme-onboarding/</span>
+      &#x2514;&#x2500;&#x2500; <span class="dir">client-xyz/</span>
+    </div>
+  </div>
+
+  <!-- COMPONENTS -->
+  <div class="section">
+    <div class="section-title">What you can build with</div>
+    <p>All components are standard web components. No framework required. They work in plain HTML files opened directly in a browser.</p>
+    <div class="codeblock"><span style="color:#7b74ff">&lt;fresh-button</span> <span style="color:#86efac">variant</span>=<span style="color:#fca5a5">"primary"</span><span style="color:#7b74ff">&gt;</span>Save<span style="color:#7b74ff">&lt;/fresh-button&gt;</span>
+<span style="color:#7b74ff">&lt;fresh-input</span> <span style="color:#86efac">placeholder</span>=<span style="color:#fca5a5">"Search..."</span> <span style="color:#86efac">icon</span>=<span style="color:#fca5a5">"ti-search"</span><span style="color:#7b74ff">&gt;&lt;/fresh-input&gt;</span>
+<span style="color:#7b74ff">&lt;fresh-badge</span> <span style="color:#86efac">variant</span>=<span style="color:#fca5a5">"success"</span> <span style="color:#86efac">dot</span><span style="color:#7b74ff">&gt;</span>Live<span style="color:#7b74ff">&lt;/fresh-badge&gt;</span>
+<span style="color:#7b74ff">&lt;fresh-navbar</span> <span style="color:#86efac">brand</span>=<span style="color:#fca5a5">"Acme"</span><span style="color:#7b74ff">&gt;&lt;/fresh-navbar&gt;</span>
+<span style="color:#7b74ff">&lt;fresh-modal</span> <span style="color:#86efac">id</span>=<span style="color:#fca5a5">"confirm"</span> <span style="color:#86efac">heading</span>=<span style="color:#fca5a5">"Confirm delete"</span><span style="color:#7b74ff">&gt;</span>...<span style="color:#7b74ff">&lt;/fresh-modal&gt;</span>
+<span style="color:#7b74ff">&lt;fresh-stat-card</span> <span style="color:#86efac">value</span>=<span style="color:#fca5a5">"$24.5k"</span> <span style="color:#86efac">label</span>=<span style="color:#fca5a5">"Revenue"</span> <span style="color:#86efac">trend</span>=<span style="color:#fca5a5">"12.4"</span><span style="color:#7b74ff">&gt;&lt;/fresh-stat-card&gt;</span></div>
+    <div class="callout">
+      <strong>Always use <code>&lt;fresh-*&gt;</code> components.</strong> Never build raw HTML equivalents for things FreshDS already covers. If Claude suggests a raw button, input, or badge, redirect it to the DS component.
+    </div>
+  </div>
+
+  <!-- PROMPTING -->
+  <div class="section">
+    <div class="section-title">Prompting Claude effectively</div>
+    <p>Claude understands FreshDS natively. Point it at the right file and describe what you need:</p>
+    <div class="codeblock">"Build a settings page in projects/acme-dashboard/settings.html using
+FreshDS. Include profile, notifications, and billing sections. Use
+fresh-tabs for the section switcher and fresh-button for actions."
+
+"Add a data table to this page showing user name, email, role, and
+status. Status column should use fresh-badge with the right variant."
+
+"This page needs a confirmation modal when the user clicks Delete.
+Use fresh-modal with a danger fresh-button as the confirm action."</div>
+  </div>
+
+  <!-- CLAUDE.MD -->
+  <div class="section">
+    <div class="section-title">How CLAUDE.md files work</div>
+    <p>The SDK ships with two levels of <code>CLAUDE.md</code> — instruction files that Claude Code reads automatically when you open a folder.</p>
+    <div class="card-row">
+      <div class="card">
+        <div class="card-label">SDK root</div>
+        <div class="card-title">freshds-sdk/CLAUDE.md</div>
+        <div class="card-desc">Contains the full FreshDS ruleset: always use <code>&lt;fresh-*&gt;</code> components, use DS tokens for all values, path conventions, component inventory. <strong>Don't edit this file.</strong> It updates when you replace <code>systems/</code>.</div>
+      </div>
+      <div class="card">
+        <div class="card-label">Per project</div>
+        <div class="card-title">projects/my-project/CLAUDE.md</div>
+        <div class="card-desc">Your project context: what the product is, who the users are, what pages exist. Short and human-written. Every project folder should have one — the sample project includes a starter template to copy.</div>
+      </div>
+    </div>
+    <div class="callout" style="margin-top:16px;">
+      <strong>Always open the SDK root in Claude Code — not a project subfolder.</strong> Claude reads <code>CLAUDE.md</code> from the folder you open and its subfolders simultaneously. Opening <code>freshds-sdk/</code> means Claude loads both the DS rules and your project context at once. If you open <code>projects/my-project/</code> directly, Claude only sees the project file and won't know the component rules.
+    </div>
+    <div class="tree" style="margin-top:16px;">
+<span class="dir">freshds-sdk/</span>               <span class="note">&#x2190; open THIS in Claude Code</span>
+  &#x251C;&#x2500;&#x2500; <span style="color:#c8cce0">CLAUDE.md</span>              <span class="note">&#x2190; DS rules (auto-loaded)</span>
+  &#x251C;&#x2500;&#x2500; <span class="dir">systems/</span>
+  &#x2514;&#x2500;&#x2500; <span class="dir">projects/</span>
+      &#x2514;&#x2500;&#x2500; <span class="dir">my-project/</span>
+            &#x251C;&#x2500;&#x2500; <span style="color:#c8cce0">CLAUDE.md</span>      <span class="note">&#x2190; project context (also auto-loaded)</span>
+            &#x2514;&#x2500;&#x2500; <span style="color:#c8cce0">dashboard.html</span>
+    </div>
+  </div>
+
+  <div class="footer">
+    Built by <a href="https://freshdesign.com">Freshdesign</a> &nbsp;·&nbsp; FreshDS V3.0.0 &nbsp;·&nbsp; <a href="https://freshdesign.com">freshdesign.com</a>
+  </div>
+
+</div>
+</body>
+</html>

@@ -583,6 +583,7 @@ function navigate(page) {
         if ((el.getAttribute('data-page') || '') === page) el.classList.add('active');
         else if ((el.getAttribute('onclick') || '').indexOf("'" + page + "'") !== -1) el.classList.add('active');
       });
+      _ensureNavVisible(page);
       var main = document.querySelector('.fds-main');
       if (main) main.scrollTop = 0;
       if (location.hash.slice(1) !== page) history.pushState(null, '', '#' + page);
@@ -601,11 +602,26 @@ function navigate(page) {
     if ((el.getAttribute('data-page') || '') === page) el.classList.add('active');
     else if ((el.getAttribute('onclick') || '').indexOf("'" + page + "'") !== -1) el.classList.add('active');
   });
+  _ensureNavVisible(page);
   var main = document.querySelector('.fds-main');
   if (main) main.scrollTop = 0;
   updateTokenOutput();
   if (page === 'typography') _updateTypoFontNames();
   if (location.hash.slice(1) !== page) history.pushState(null, '', '#' + page);
+}
+
+function _ensureNavVisible(page) {
+  var activeEl = document.querySelector('.nav-item[data-page="' + page + '"]');
+  if (!activeEl) return;
+  var group = activeEl.closest('.nav-group');
+  if (!group) return;
+  var header = group.querySelector('.nav-group-header');
+  var items  = group.querySelector('.nav-group-items');
+  if (header && items && items.classList.contains('collapsed')) {
+    header.classList.add('open');
+    items.classList.remove('collapsed');
+  }
+  requestAnimationFrame(function() { activeEl.scrollIntoView({ block: 'nearest' }); });
 }
 
 function toggleGroup(header) {
@@ -1288,6 +1304,11 @@ function exportDSSite() {
   _apiExport('fullsite', 'FreshDS.zip');
 }
 
+// SDK export — systems/ + readme + sample project. What users download to start building.
+function exportSDK() {
+  _apiExport('sdk', 'freshds-sdk.zip');
+}
+
 // ── Init ───────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', function() {
   if (ds.mode === 'dark') {
@@ -1604,15 +1625,18 @@ document.addEventListener('DOMContentLoaded', function() {
       if (window !== window.top) return;
       var active = this.getAttribute('active') || '';
       var groups = NAV_GROUPS.map(function(g) {
+        var hasActive = g.items.some(function(item) { return item.id === active; });
         var items = g.items.map(function(item) {
           var cls = 'nav-item' + (item.id === active ? ' active' : '');
           return '<a class="' + cls + '" href="' + item.href + '" data-page="' + item.id + '" onclick="navigate(\'' + item.id + '\');event.preventDefault();">' + item.label + '</a>';
         }).join('');
+        var headerCls = 'nav-group-header' + (hasActive ? ' open' : '');
+        var itemsCls  = 'nav-group-items'  + (hasActive ? '' : ' collapsed');
         return '<div class="nav-group">'
-          + '<div class="nav-group-header open" onclick="toggleGroup(this)">'
+          + '<div class="' + headerCls + '" onclick="toggleGroup(this)">'
           + '<i class="ti ' + g.icon + ' nav-section-icon"></i><span>' + g.group + '</span><i class="ti ti-chevron-right"></i>'
           + '</div>'
-          + '<div class="nav-group-items">' + items + '</div>'
+          + '<div class="' + itemsCls + '">' + items + '</div>'
           + '</div>';
       }).join('');
 

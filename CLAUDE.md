@@ -82,6 +82,7 @@ Avatar identity colors use `--dv-1` through `--dv-8` (the data viz palette), not
 - All three HTML pages (`index.html`, `configurator.html`, `patterns.html`) load both scripts in order: core first, then site.
 - The developer bundle export (`exportDeveloperBundle`) includes `js/freshds.js` but **never** `js/freshds-site.js`.
 - The full site export (`exportDSSite`) includes both.
+- The SDK export (`exportSDK`) is the primary customer download. See SDK assembly rules below.
 - **New site features** (search, nav, configurator UI, pattern library logic) always go in `freshds-site.js`.
 - **New DS engine capabilities** (new scale generators, new CSS variable utilities) always go in `freshds.js`.
 
@@ -876,3 +877,63 @@ All 60 components fully built (doc page + web component).
 | Diff viewer             | ✅ components/ai/fresh-diff-viewer.js |
 | Prompt history          | ✅ components/ai/fresh-prompt-history.js |
 | AI mode toggle          | ✅ components/ai/fresh-ai-mode-toggle.js |
+
+## SDK assembly rules
+
+The SDK (`freshds-sdk.zip`) is the primary customer download. It is a local workspace, not a self-contained design system. The customer's DS (tokens, themes, component docs, patterns) lives on freshdesign.com. The SDK gives them the engine and scaffolding to build pages locally with AI tools.
+
+### What goes in the SDK
+
+The source of truth is `SDK_FILES` in `api/export.js`. It is an explicit whitelist — only listed files are zipped. When adding files to the SDK, add them to this list. Never rely on glob/wildcard inclusion.
+
+**Always include:**
+- `systems/tokens/` — all three token files (primitives, theme, dataviz)
+- `systems/styles/reset.css`, `grid.css`, `components/core.css`
+- `systems/styles/patterns/*.css` — ALL pattern stylesheets, every one. Customers download individual pattern HTML files as starting points; those files reference pattern CSS. If a new pattern category is added, its CSS must be added to `SDK_FILES` immediately.
+- `systems/js/freshds.js` — the DS engine
+- `systems/js/nav-taxonomy.js` + `freshds-nav-apply.js` — required by all pattern pages that use navigation
+- All component JS files under `systems/components/` — every category (core, feedback, navigation, containers, data, ai)
+- `readme.html` — standalone getting-started guide
+- `projects/sample-project/welcome.html` — the pre-cleaned sample page
+- `projects/sample-project/CLAUDE.md` — project-level instruction template
+
+**Never include:**
+- `systems/js/freshds-site.js` — site-only code, references internal DS state
+- `api/` — serverless functions, not for local use
+- `app/` — the FreshDS docs app pages
+- `projects/patterns/` — pattern library pages are on freshdesign.com, not in the SDK
+- Any file containing auth guards, demo bars, or spec panel markup (see stripping rule below)
+
+### HTML stripping rule — non-negotiable
+
+Every HTML file that enters the SDK zip must be stripped of site-only infrastructure. This applies to:
+- The pre-built `projects/sample-project/welcome.html`
+- Custom pattern files created for specific customers
+- Any future pattern page added to `SDK_FILES`
+
+`_stripSiteGuards()` in `api/export.js` handles this automatically for all HTML in the SDK export. It removes:
+- `<script src="*auth-guard*">`, `<script src="*paid-guard*">`, `<script src="*cloud-sync*">`
+- `<script src="*pattern-bar*">`
+- `<div class="demo-bar">` and its contents
+- `<aside class="sp-panel">` and its contents
+- `<div class="sp-modal-backdrop">` and its contents
+- `<link href="*spec-panel*">`
+
+Do not bypass this. Do not manually pre-clean HTML files as a substitute — the stripping pass in `api/export.js` is the authoritative gate.
+
+### Custom patterns (future)
+
+When customers commission custom patterns, they follow the exact same rules as built-in patterns:
+1. The pattern HTML lives in `projects/patterns/` on the site (never at SDK root)
+2. The stripped version is what ships in the SDK — either as a replacement `sample-project/welcome.html` or as an additional file under `projects/sample-project/`
+3. Add the file path to `SDK_FILES` in `api/export.js`
+4. The pattern's CSS belongs in `systems/styles/patterns/` — create a new file if it's a new category, or extend an existing one. Either way, ensure it's in `SDK_FILES`.
+5. `_stripSiteGuards()` will clean it automatically at export time — no manual stripping needed.
+
+### CLAUDE.md files in the SDK
+
+The SDK ships two CLAUDE.md files:
+- `freshds-sdk/CLAUDE.md` — DS rules for builders (always use `<fresh-*>` components, token-only values, path conventions). This is a trimmed, builder-focused version of this file. Do not include site-maintenance or export rules here.
+- `freshds-sdk/projects/sample-project/CLAUDE.md` — project context template. Short. Customers copy and edit it for each new project.
+
+Both must be in `SDK_FILES`. When DS rules change (new components, deprecated tokens, new patterns), update both `CLAUDE.md` files in sync.
