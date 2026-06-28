@@ -282,6 +282,13 @@ function spDoCopy() {
   ['pattern-bar', 'auth-guard', 'paid-guard', 'cloud-sync'].forEach(function(key) {
     clone.querySelectorAll('script[src*="' + key + '"]').forEach(function(s) { s.remove(); });
   });
+  var navCfg = localStorage.getItem('freshds-nav-cfg');
+  if (navCfg) {
+    var cfgScript = document.createElement('script');
+    cfgScript.textContent = 'try{localStorage.setItem("freshds-nav-cfg",' + JSON.stringify(navCfg) + ');}catch(e){}';
+    var head = clone.querySelector('head');
+    if (head) head.insertBefore(cfgScript, head.firstChild);
+  }
   var filename = location.pathname.split('/').pop() || 'pattern.html';
   var html = '<!DOCTYPE html>\n' + clone.outerHTML;
   var blob = new Blob([html], {type: 'text/html'});

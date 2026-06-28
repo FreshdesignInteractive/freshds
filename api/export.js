@@ -194,6 +194,13 @@ function _stripSiteGuards(html) {
 }
 
 
+function _injectNavCfg(content, navCfg) {
+  if (!navCfg) return content;
+  var json   = JSON.stringify(typeof navCfg === 'string' ? navCfg : JSON.stringify(navCfg));
+  var script = '<script>try{localStorage.setItem("freshds-nav-cfg",' + json + ');}catch(e){}<\/script>\n';
+  return content.replace('<head>', '<head>\n' + script);
+}
+
 // ── Static file lists ──────────────────────────────────────────────────────
 const DEVKIT_FILES = [
   'systems/tokens/primitives.css',
@@ -507,7 +514,7 @@ async function handler(req, res) {
   });
   const { data: profile, error: profileErr } = await supabaseUser
     .from('profiles')
-    .select('has_paid, theme_config')
+    .select('has_paid, theme_config, nav_cfg')
     .eq('id', user.id)
     .single();
   if (profileErr) console.error('[export] profile read failed:', profileErr.message);
@@ -550,6 +557,7 @@ async function handler(req, res) {
     if (file.zipPath.endsWith('.html')) {
       if (isFullSite) content = _injectThemeSeed(content, t);
       if (isFullSite || isSDK) content = _stripSiteGuards(content);
+      if (isSDK) content = _injectNavCfg(content, profile.nav_cfg);
     }
     zip.file(root + file.zipPath, content);
   });
