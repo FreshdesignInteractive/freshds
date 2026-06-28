@@ -47,53 +47,28 @@
     }
   }
 
-  // ── Download dropdown ──────────────────────────────────────────
-  window.__toggleDlMenu = function(e) {
-    if (e) e.stopPropagation()
-    document.getElementById('dl-menu').classList.toggle('open')
-  }
-  window.__doExport = function(type) {
-    document.getElementById('dl-menu').classList.remove('open')
-    if (type === 'bundle') {
-      if (typeof exportDeveloperBundle === 'function') exportDeveloperBundle()
-      else alert('Download engine not ready. Please refresh and try again.')
-    } else {
-      if (typeof exportDSSite === 'function') exportDSSite()
-      else alert('Download engine not ready. Please refresh and try again.')
-    }
-  }
-  // Auto-download Full DS (used after payment confirmation)
+  // ── Download SDK ───────────────────────────────────────────────
   window.__triggerDownload = function() {
-    if (typeof exportDSSite === 'function') exportDSSite()
+    if (typeof exportSDK === 'function') exportSDK()
     else alert('Download engine not ready. Please refresh and try again.')
   }
-  document.addEventListener('click', function(e) {
-    const wrap = document.querySelector('.btn-dl-wrap')
-    if (wrap && !wrap.contains(e.target)) {
-      const menu = document.getElementById('dl-menu')
-      if (menu) menu.classList.remove('open')
-    }
-  })
 
   // ── Update button state ────────────────────────────────────────
   function setDownloadBtn(hasPaid) {
     const btn = document.getElementById('download-btn')
     const icon = document.getElementById('dl-icon')
     const label = document.getElementById('dl-label')
-    const chevron = document.getElementById('dl-chevron')
     if (!btn) return
     if (hasPaid) {
       btn.disabled = false
-      btn.onclick = window.__toggleDlMenu
-      if (icon)    { icon.className = 'ti ti-download' }
-      if (label)   { label.textContent = 'Download' }
-      if (chevron) { chevron.style.display = '' }
+      btn.onclick = window.__triggerDownload
+      if (icon)  { icon.className = 'ti ti-download' }
+      if (label) { label.textContent = 'Download SDK' }
     } else {
       btn.disabled = false
       btn.onclick = window.__initiateCheckout
-      if (icon)    { icon.className = 'ti ti-credit-card' }
-      if (label)   { label.textContent = 'Get access, $1' }
-      if (chevron) { chevron.style.display = 'none' }
+      if (icon)  { icon.className = 'ti ti-credit-card' }
+      if (label) { label.textContent = 'Get access, $1' }
     }
   }
 
@@ -296,32 +271,7 @@ body {
 .btn-download:active { transform: scale(0.98); }
 .btn-download:disabled { opacity: 0.6; cursor: default; }
 
-/* Download dropdown */
-.btn-dl-wrap { position: relative; flex-shrink: 0; }
-.dl-menu {
-  display: none;
-  position: absolute;
-  top: calc(100% + 10px);
-  right: 0;
-  background: #fff;
-  border: 1px solid #e4e4e7;
-  border-radius: 14px;
-  box-shadow: 0 8px 28px rgba(0,0,0,0.12);
-  min-width: 300px;
-  overflow: hidden;
-  z-index: 100;
-}
-.dl-menu.open { display: block; }
-.dl-menu-item {
-  all: unset; box-sizing: border-box;
-  display: block; width: 100%;
-  padding: 14px 18px; cursor: pointer;
-  transition: background 0.1s;
-}
-.dl-menu-item:hover { background: #f7f7f8; }
-.dl-menu-label { font-size: 14px; font-weight: 600; color: #111; margin-bottom: 3px; }
-.dl-menu-desc  { font-size: 13px; color: #777; line-height: 1.5; }
-.dl-menu-sep   { border: none; border-top: 1px solid #e4e4e7; margin: 0; }
+.btn-dl-wrap { flex-shrink: 0; }
 
 /* Demo section header */
 .demo-header {
@@ -428,22 +378,10 @@ body {
       </div>
     </div>
     <div class="btn-dl-wrap">
-      <button class="btn-download" id="download-btn" disabled onclick="window.__toggleDlMenu(event)">
+      <button class="btn-download" id="download-btn" disabled>
         <i class="ti ti-loader-2 spin" id="dl-icon"></i>
         <span id="dl-label">Loading…</span>
-        <i class="ti ti-chevron-down" id="dl-chevron" style="font-size:11px;display:none"></i>
       </button>
-      <div class="dl-menu" id="dl-menu">
-        <button class="dl-menu-item" onclick="window.__doExport('bundle')">
-          <div class="dl-menu-label">Dev Kit</div>
-          <div class="dl-menu-desc">Theme-matched CSS tokens + components only. No docs, just the files your devs need.</div>
-        </button>
-        <hr class="dl-menu-sep">
-        <button class="dl-menu-item" onclick="window.__doExport('dssite')">
-          <div class="dl-menu-label">Full DS</div>
-          <div class="dl-menu-desc">Complete docs site with all components, tokens, and guides. Host it for your team.</div>
-        </button>
-      </div>
     </div>
   </div>
 
