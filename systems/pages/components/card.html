@@ -169,6 +169,7 @@
           <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Use <code>href</code> to make the card a native link; this automatically sets <code>interactive</code> behaviour and renders as an <code>&lt;a&gt;</code> tag for correct semantics.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
           <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Choose <code>padding</code> based on content density: <code>sm</code> for compact lists, <code>md</code> (default) for standard content, <code>lg</code> for feature or marketing cards that need breathing room.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
           <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">Use the header slot for titles and toolbar actions; use the footer slot for confirmation buttons or pagination. Do not duplicate actions in both slots.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
+          <li class="spec-rule-li"><span class="spec-rule-bullet">•</span><span class="spec-rule-text" contenteditable="true">The header and footer slots are fully optional. Omit <code>slot="header"</code> and <code>slot="footer"</code> entirely when not needed; the card collapses those zones automatically. Never add empty slot elements as structural placeholders.</span><span class="spec-rule-actions"><button class="spec-rule-btn del" onclick="deleteRule(this)" title="Delete"><i class="ti ti-trash"></i></button></span></li>
         </ul>
         <button class="spec-add-rule" onclick="addRule('rules-general')"><i class="ti ti-plus"></i> Add rule</button>
       </div>
@@ -247,7 +248,7 @@
       <table class="spec-a11y-table">
         <thead><tr><th style="width:220px">Token</th><th style="width:200px">Role</th><th>State</th></tr></thead>
         <tbody>
-          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--surface-bg</td><td class="spec-a11y-req">Card fill colour</td><td class="spec-a11y-req">all</td></tr>
+          <tr class="spec-a11y-row"><td class="spec-a11y-concern">--surface-canvas</td><td class="spec-a11y-req">Card fill colour</td><td class="spec-a11y-req">all</td></tr>
           <tr class="spec-a11y-row"><td class="spec-a11y-concern">--surface-border</td><td class="spec-a11y-req">Card border, header and footer dividers</td><td class="spec-a11y-req">default</td></tr>
           <tr class="spec-a11y-row"><td class="spec-a11y-concern">--surface-border-strong</td><td class="spec-a11y-req">Border on hover</td><td class="spec-a11y-req">interactive hover</td></tr>
           <tr class="spec-a11y-row"><td class="spec-a11y-concern">--elev-1</td><td class="spec-a11y-req">Shadow on active press</td><td class="spec-a11y-req">interactive active</td></tr>
@@ -311,7 +312,8 @@
       'Add <code>interactive</code> only when the entire card is clickable as a unit. Do not use it for cards that contain individual interactive elements like buttons or links.',
       'Use <code>href</code> to make the card a native link; this automatically sets <code>interactive</code> behaviour and renders as an <code>&lt;a&gt;</code> tag for correct semantics.',
       'Choose <code>padding</code> based on content density: <code>sm</code> for compact lists, <code>md</code> (default) for standard content, <code>lg</code> for feature or marketing cards that need breathing room.',
-      'Use the header slot for titles and toolbar actions; use the footer slot for confirmation buttons or pagination. Do not duplicate actions in both slots.'
+      'Use the header slot for titles and toolbar actions; use the footer slot for confirmation buttons or pagination. Do not duplicate actions in both slots.',
+      'The header and footer slots are fully optional. Omit <code>slot="header"</code> and <code>slot="footer"</code> entirely when not needed; the card collapses those zones automatically. Never add empty slot elements as structural placeholders.'
     ]
   };
   function restoreDefaults() {

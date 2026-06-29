@@ -32,7 +32,16 @@ class FreshCard extends HTMLElement {
     this.attachShadow({ mode: 'open' });
   }
 
-  connectedCallback()        { this._render(); }
+  connectedCallback() {
+    this._render();
+    this._observer = new MutationObserver(() => this._render());
+    this._observer.observe(this, { childList: true });
+  }
+
+  disconnectedCallback() {
+    if (this._observer) { this._observer.disconnect(); this._observer = null; }
+  }
+
   attributeChangedCallback() { this._render(); }
 
   _render() {
@@ -41,6 +50,8 @@ class FreshCard extends HTMLElement {
     const href        = this.getAttribute('href') || '';
     const target      = this.getAttribute('target') || '';
     const tag         = href ? 'a' : 'div';
+    const hasHeader   = !!this.querySelector('[slot="header"]');
+    const hasFooter   = !!this.querySelector('[slot="footer"]');
 
     const pads = { none: '0', sm: 'var(--space-4)', md: 'var(--space-6)', lg: 'var(--space-8)' };
     const p    = pads[padding] || pads.md;
@@ -98,17 +109,10 @@ class FreshCard extends HTMLElement {
           -webkit-font-smoothing: antialiased;
         }
 
-        /* Hide header slot wrapper when unused */
-        .header-wrap:not(:has(slot[name="header"] ~ *)):empty,
-        .has-no-header { display: none; }
-
         .body {
           flex: 1;
           padding: ${p};
         }
-
-        /* Tighten body top padding when header is present */
-        slot[name="header"] + .body { padding-top: var(--space-4); }
 
         .footer {
           display: flex;
@@ -126,11 +130,11 @@ class FreshCard extends HTMLElement {
         ${target === '_blank' ? 'rel="noopener noreferrer"' : ''}
         part="card"
       >
-        <slot name="header" class="header"></slot>
+        ${hasHeader ? `<slot name="header" class="header"></slot>` : ''}
         <div class="body" part="body">
           <slot></slot>
         </div>
-        <slot name="footer" class="footer"></slot>
+        ${hasFooter ? `<slot name="footer" class="footer"></slot>` : ''}
       </${tag}>
     `;
   }
