@@ -18,9 +18,69 @@
 <link rel="stylesheet" href="../../systems/styles/reset.css">
 <link rel="stylesheet" href="../../systems/styles/patterns/dashboard.css">
 <link rel="stylesheet" href="../../systems/styles/patterns/collab.css">
-<script>if(location.href.indexOf('?thumb')!==-1)document.write('<style>#demo-bar{display:none!important}.nav-logo-dark{display:none;}[data-mode="dark"] .nav-logo-light{display:none;}[data-mode="dark"] .nav-logo-dark{display:block;}.cas-sidebar-footer{display:flex;align-items:center;gap:var(--space-3);width:100%;min-width:0;}.cas-sidebar-user-info{flex:1;min-width:0;overflow:hidden;}.cas-sidebar-user-name{font-size:var(--font-size-sm);font-weight:500;color:var(--text-primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}.cas-sidebar-user-role{font-size:var(--font-size-xs);color:var(--text-tertiary);white-space:nowrap;}fresh-sidebar[collapsed] .cas-sidebar-user-info{display:none;}.cas-icon-flyout{position:fixed;left:57px;top:0;width:200px;background:var(--surface-canvas);border:1px solid var(--surface-border);border-radius:var(--radius-md);box-shadow:0 8px 28px rgba(0,0,0,0.12),0 2px 6px rgba(0,0,0,0.06);z-index:90;display:none;overflow:hidden;}.cas-icon-flyout.open{display:block;}.cas-flyout-label{padding:var(--space-2) var(--space-3) var(--space-1);font-size:var(--font-size-xs);font-weight:600;letter-spacing:0.07em;text-transform:uppercase;color:var(--text-tertiary);border-bottom:1px solid var(--surface-border);}.cas-flyout-item{display:flex;align-items:center;padding:7px var(--space-3);font-size:var(--font-size-sm);font-family:var(--font-sans);color:var(--text-secondary);cursor:pointer;transition:background 100ms,color 100ms;-webkit-font-smoothing:antialiased;}.cas-flyout-item:hover{background:var(--surface-subtle);color:var(--text-primary);}.cas-flyout-item.active{background:var(--nav-active-bg);color:var(--nav-active-text);font-weight:500;}.cas-tab-strip{background:var(--surface-nav);border-bottom:1px solid var(--surface-border);padding:0 var(--space-5);display:flex;align-items:center;height:44px;flex-shrink:0;}.cas-tab-dropdown{position:fixed;top:0;left:0;min-width:168px;background:var(--surface-canvas);border:1px solid var(--surface-border);border-radius:var(--radius-md);box-shadow:0 8px 28px rgba(0,0,0,0.12),0 2px 6px rgba(0,0,0,0.06);z-index:90;display:none;overflow:hidden;padding:var(--space-1) 0;}.cas-tab-dropdown.open{display:block;}.cas-tab-drop-item{display:flex;align-items:center;padding:7px var(--space-4);font-size:var(--font-size-sm);font-family:var(--font-sans);color:var(--text-secondary);cursor:pointer;transition:background 100ms,color 100ms;-webkit-font-smoothing:antialiased;}.cas-tab-drop-item:hover{background:var(--surface-subtle);color:var(--text-primary);}.cas-tab-drop-item.active{color:var(--nav-active-text);background:var(--nav-active-bg);font-weight:500;}</style>');</script>
+<script>if(location.href.indexOf('?thumb')!==-1)document.write('<style>#demo-bar{display:none!important}</style>');</script>
 <script src="../../systems/js/freshds.js"></script>
 <script src="../../systems/js/pattern-bar.js"></script>
+<style>
+/* Logo switching */
+.nav-logo-dark { display: none; }
+[data-mode="dark"] .nav-logo-light { display: none; }
+[data-mode="dark"] .nav-logo-dark  { display: block; }
+
+/* Sidebar footer */
+.cas-sidebar-footer { display: flex; align-items: center; gap: var(--space-3); width: 100%; min-width: 0; }
+.cas-sidebar-user-info { flex: 1; min-width: 0; overflow: hidden; }
+.cas-sidebar-user-name { font-size: var(--font-size-sm); font-weight: 500; color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.cas-sidebar-user-role { font-size: var(--font-size-xs); color: var(--text-tertiary); white-space: nowrap; }
+fresh-sidebar[collapsed] .cas-sidebar-user-info { display: none; }
+
+/* Icon rail flyout */
+.cas-icon-flyout {
+  position: fixed; left: 57px; top: 0; width: 200px;
+  background: var(--surface-canvas); border: 1px solid var(--surface-border);
+  border-radius: var(--radius-md);
+  box-shadow: 0 8px 28px rgba(0,0,0,0.12), 0 2px 6px rgba(0,0,0,0.06);
+  z-index: 90; display: none; overflow: hidden;
+}
+.cas-icon-flyout.open { display: block; }
+.cas-flyout-label {
+  padding: var(--space-2) var(--space-3) var(--space-1);
+  font-size: var(--font-size-xs); font-weight: 600; letter-spacing: 0.07em;
+  text-transform: uppercase; color: var(--text-tertiary);
+  border-bottom: 1px solid var(--surface-border);
+}
+.cas-flyout-item {
+  display: flex; align-items: center; padding: 7px var(--space-3);
+  font-size: var(--font-size-sm); font-family: var(--font-sans);
+  color: var(--text-secondary); cursor: pointer;
+  transition: background 100ms, color 100ms; -webkit-font-smoothing: antialiased;
+}
+.cas-flyout-item:hover  { background: var(--surface-subtle); color: var(--text-primary); }
+.cas-flyout-item.active { background: var(--nav-active-bg); color: var(--nav-active-text); font-weight: 500; }
+
+/* Tab strip */
+.cas-tab-strip {
+  background: var(--surface-nav); border-bottom: 1px solid var(--surface-border);
+  padding: 0 var(--space-5); display: flex; align-items: center;
+  height: 44px; flex-shrink: 0;
+}
+.cas-tab-dropdown {
+  position: fixed; top: 0; left: 0; min-width: 168px;
+  background: var(--surface-canvas); border: 1px solid var(--surface-border);
+  border-radius: var(--radius-md);
+  box-shadow: 0 8px 28px rgba(0,0,0,0.12), 0 2px 6px rgba(0,0,0,0.06);
+  z-index: 90; display: none; overflow: hidden; padding: var(--space-1) 0;
+}
+.cas-tab-dropdown.open { display: block; }
+.cas-tab-drop-item {
+  display: flex; align-items: center; padding: 7px var(--space-4);
+  font-size: var(--font-size-sm); font-family: var(--font-sans);
+  color: var(--text-secondary); cursor: pointer;
+  transition: background 100ms, color 100ms; -webkit-font-smoothing: antialiased;
+}
+.cas-tab-drop-item:hover  { background: var(--surface-subtle); color: var(--text-primary); }
+.cas-tab-drop-item.active { color: var(--nav-active-text); background: var(--nav-active-bg); font-weight: 500; }
+</style>
 <link rel="stylesheet" href="../../systems/styles/spec-panel.css">
 </head>
 <body>
