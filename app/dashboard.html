@@ -12,120 +12,6 @@
 <link rel="stylesheet" href="/styles/site-header.css">
 <script type="module" src="/js/site-header.js"></script>
 
-<!-- User info, sign out, payment gate -->
-<script type="module">
-  import { supabase } from '/js/supabase-client.js'
-
-  // ── Stripe checkout ────────────────────────────────────────────
-  window.__initiateCheckout = async function() {
-    const btn = document.getElementById('download-btn')
-    if (btn) {
-      btn.disabled = true
-      const lbl = document.getElementById('dl-label')
-      const icn = document.getElementById('dl-icon')
-      if (lbl) lbl.textContent = 'Redirecting…'
-      if (icn) icn.className = 'ti ti-loader-2 spin'
-    }
-
-    const { data: { session } } = await supabase.auth.getSession()
-    const res = await fetch('/api/create-checkout', {
-      method: 'POST',
-      headers: { 'Authorization': 'Bearer ' + session.access_token }
-    })
-    const data = await res.json()
-
-    if (data.already_paid) {
-      // Race: webhook already fired before UI updated — just download
-      window.__triggerDownload()
-      return
-    }
-    if (data.url) {
-      window.location.href = data.url
-    } else {
-      if (btn) { btn.disabled = false; setDownloadBtn(false) }
-      alert('Could not start checkout. Please try again.')
-    }
-  }
-
-  // ── Download SDK ───────────────────────────────────────────────
-  window.__triggerDownload = function() {
-    if (typeof exportSDK === 'function') exportSDK()
-    else alert('Download engine not ready. Please refresh and try again.')
-  }
-
-  // ── Update button state ────────────────────────────────────────
-  function setDownloadBtn(hasPaid) {
-    const btn = document.getElementById('download-btn')
-    const icon = document.getElementById('dl-icon')
-    const label = document.getElementById('dl-label')
-    if (!btn) return
-    if (hasPaid) {
-      btn.disabled = false
-      btn.onclick = window.__triggerDownload
-      if (icon)  { icon.className = 'ti ti-download' }
-      if (label) { label.textContent = 'Download SDK' }
-    } else {
-      btn.disabled = false
-      btn.onclick = window.__initiateCheckout
-      if (icon)  { icon.className = 'ti ti-credit-card' }
-      if (label) { label.textContent = 'Get access, $1' }
-    }
-  }
-
-  // ── Payment success flow ───────────────────────────────────────
-  async function handlePaymentSuccess(userId) {
-    const banner = document.getElementById('payment-banner')
-    if (banner) banner.style.display = 'flex'
-
-    // Poll until webhook sets has_paid (max 12s)
-    for (let i = 0; i < 12; i++) {
-      await new Promise(r => setTimeout(r, 1000))
-      const { data } = await supabase.from('profiles').select('has_paid').eq('id', userId).single()
-      if (data?.has_paid) {
-        setDownloadBtn(true)
-        if (banner) banner.querySelector('.banner-text').textContent = 'Payment confirmed, your download is starting…'
-        setTimeout(() => window.__triggerDownload(), 800)
-        return
-      }
-    }
-    // Webhook delayed — tell user to refresh
-    if (banner) banner.querySelector('.banner-text').textContent = 'Payment received, please refresh the page to download.'
-  }
-
-  // ── Init ───────────────────────────────────────────────────────
-  const { data: { user } } = await supabase.auth.getUser()
-  if (user) {
-    // Check payment status
-    const { data: profile } = await supabase
-      .from('profiles').select('has_paid').eq('id', user.id).single()
-    const hasPaid = profile?.has_paid || false
-
-    // Handle Stripe redirect back after payment
-    const params = new URLSearchParams(window.location.search)
-    if (params.get('payment') === 'success') {
-      history.replaceState({}, '', '/dashboard.html')
-      if (hasPaid) {
-        // Webhook already fired — download immediately
-        const banner = document.getElementById('payment-banner')
-        if (banner) {
-          banner.style.display = 'flex'
-          banner.querySelector('.banner-text').textContent = 'Payment confirmed, your download is starting…'
-        }
-        setDownloadBtn(true)
-        setTimeout(() => window.__triggerDownload(), 1200)
-      } else {
-        await handlePaymentSuccess(user.id)
-      }
-    } else {
-      setDownloadBtn(hasPaid)
-    }
-  }
-</script>
-
-<!-- JSZip + DS engine (needed for exportDSSite) -->
-<script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
-<script src="/systems/js/freshds.js"></script>
-<script src="/systems/js/freshds-site.js"></script>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -229,50 +115,6 @@ body {
   margin-bottom: 16px;
 }
 
-/* Download card */
-.download-card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 20px;
-  padding: 32px;
-  display: flex;
-  align-items: center;
-  gap: 28px;
-  margin-bottom: 56px;
-}
-.download-icon {
-  width: 52px; height: 52px;
-  background: var(--red-light);
-  border-radius: 14px;
-  display: flex; align-items: center; justify-content: center;
-  flex-shrink: 0;
-}
-.download-icon i { font-size: 24px; color: var(--red); }
-.download-body { flex: 1; }
-.download-title { font-size: 18px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 6px; }
-.download-desc { font-size: 14.5px; color: var(--text-secondary); line-height: 1.65; margin-bottom: 18px; max-width: 540px; }
-.download-features { display: flex; gap: 28px; flex-wrap: wrap; }
-.download-feature {
-  font-size: 13px; color: var(--text-secondary);
-  display: flex; align-items: center; gap: 6px;
-}
-.download-feature i { color: var(--red); font-size: 14px; }
-.btn-download {
-  display: inline-flex; align-items: center; gap: 8px;
-  padding: 12px 24px;
-  background: var(--red); color: #fff;
-  border: none; border-radius: 999px;
-  font-family: inherit; font-size: 14px; font-weight: 600;
-  cursor: pointer; flex-shrink: 0;
-  transition: background 0.15s, transform 0.1s;
-  white-space: nowrap;
-}
-.btn-download:hover { background: var(--red-dark); }
-.btn-download:active { transform: scale(0.98); }
-.btn-download:disabled { opacity: 0.6; cursor: default; }
-
-.btn-dl-wrap { flex-shrink: 0; }
-
 /* Demo section header */
 .demo-header {
   display: flex; align-items: center; justify-content: space-between;
@@ -319,32 +161,11 @@ body {
 }
 .footer-copy { font-size: 13px; color: var(--text-tertiary); }
 
-/* Payment banner */
-.payment-banner {
-  display: none;
-  align-items: center;
-  gap: 10px;
-  background: #f0fdf4;
-  border: 1px solid #bbf7d0;
-  border-radius: 12px;
-  padding: 14px 20px;
-  margin-bottom: 24px;
-  font-size: 14px;
-  color: #166534;
-}
-.payment-banner i { font-size: 18px; color: #16a34a; flex-shrink: 0; }
-
-/* Spinner animation */
-@keyframes spin { to { transform: rotate(360deg); } }
-.spin { display: inline-block; animation: spin 0.7s linear infinite; }
-
 @media (max-width: 768px) {
   .demo-grid { grid-template-columns: 1fr; }
-  .download-card { flex-direction: column; align-items: flex-start; }
 }
 @media (max-width: 640px) {
   .nav { padding: 0 16px; }
-  .download-features { gap: 12px; flex-direction: column; }
   .footer { padding: 20px 16px; }
 }
 </style>
@@ -355,36 +176,6 @@ body {
 
 <div class="page">
 
-  <!-- Payment confirmation banner (shown after Stripe redirect) -->
-  <div class="payment-banner" id="payment-banner">
-    <i class="ti ti-circle-check"></i>
-    <span class="banner-text">Payment received, confirming your access…</span>
-  </div>
-
-  <!-- Download -->
-  <div class="section-label">Download</div>
-  <div class="download-card">
-    <div class="download-icon">
-      <i class="ti ti-world"></i>
-    </div>
-    <div class="download-body">
-      <div class="download-title">Full DS</div>
-      <p class="download-desc">Complete documentation site with all components, tokens, and guides. Host it for your team, configure your brand, then export the Dev Kit for your developers.</p>
-      <div class="download-features">
-        <span class="download-feature" id="ds-stat-components"><i class="ti ti-check"></i>48 components</span>
-        <span class="download-feature" id="ds-stat-patterns"><i class="ti ti-check"></i>75 patterns</span>
-        <span class="download-feature"><i class="ti ti-check"></i>Theme designer + Dev Kit export</span>
-        <span class="download-feature"><i class="ti ti-check"></i>Host anywhere</span>
-      </div>
-    </div>
-    <div class="btn-dl-wrap">
-      <button class="btn-download" id="download-btn" disabled>
-        <i class="ti ti-loader-2 spin" id="dl-icon"></i>
-        <span id="dl-label">Loading…</span>
-      </button>
-    </div>
-  </div>
-
 
 </div>
 
@@ -392,24 +183,5 @@ body {
   <span class="footer-copy">© 2026 Freshdesign. All Rights Reserved, Freshdesign Interactive, Inc.</span>
 </footer>
 
-<script>
-(function() {
-  function setStatText(id, text) {
-    var el = document.getElementById(id);
-    if (!el) return;
-    el.innerHTML = '<i class="ti ti-check"></i>' + text;
-  }
-  // Fetch patterns.html → count { id: entries in PL_PATTERNS array
-  fetch('/patterns.html').then(function(r){ return r.text(); }).then(function(html) {
-    var m = html.match(/\{\s*id:/g);
-    if (m && m.length > 0) setStatText('ds-stat-patterns', m.length + ' patterns');
-  }).catch(function(){});
-  // Fetch components.html → count unique components/**/*.js script tags
-  fetch('/components.html').then(function(r){ return r.text(); }).then(function(html) {
-    var m = html.match(/src="[^"]*\/components\/[^"]+\.js"/g);
-    if (m && m.length > 0) setStatText('ds-stat-components', m.length + ' components');
-  }).catch(function(){});
-}());
-</script>
 </body>
 </html>

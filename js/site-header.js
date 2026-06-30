@@ -8,6 +8,7 @@ const isActive = (page) => {
   if (page === 'navigation')  return path.includes('/app/navigation.html');
   if (page === 'components')  return path.includes('/app/components.html');
   if (page === 'patterns')    return path.includes('/app/patterns.html');
+  if (page === 'download')    return path.includes('/app/download.html');
   return false;
 };
 
@@ -31,6 +32,7 @@ const headerHTML = `<header class="site-header" id="site-header">
     ${tab('navigation', 'Navigation',      '/app/navigation.html', true)}
     ${tab('components', 'Components',      '/app/components.html', true)}
     ${tab('patterns',   'Pattern Library', '/app/patterns.html', true)}
+    ${tab('download',   'Download',        '/app/download.html', false)}
   </nav>
   <div class="sh-right">
     <div class="sh-av-wrap" id="sh-av-wrap">
