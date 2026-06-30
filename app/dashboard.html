@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FreshDS | Get Started</title>
+<title>FreshDS | Dashboard</title>
 <link rel="icon" type="image/svg+xml" href="/systems/favicon.svg">
 
 <!-- Auth guard -->
@@ -11,7 +11,6 @@
 <script type="module" src="/js/cloud-sync.js"></script>
 <link rel="stylesheet" href="/styles/site-header.css">
 <script type="module" src="/js/site-header.js"></script>
-
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -42,130 +41,135 @@ body {
   flex-direction: column;
 }
 
-/* Nav */
-.nav {
-  background: var(--card);
-  border-bottom: 1px solid var(--border);
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 0 40px; height: 60px; flex-shrink: 0;
-}
-.nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
-.nav-right { display: flex; align-items: center; }
-
-/* Avatar */
-.nav-avatar-wrap { position: relative; }
-.nav-avatar {
-  width: 36px; height: 36px; border-radius: 50%;
-  background: var(--red); color: #fff;
-  font-size: 14px; font-weight: 700; letter-spacing: 0;
-  display: flex; align-items: center; justify-content: center;
-  cursor: pointer; border: none; font-family: inherit;
-  overflow: hidden; transition: opacity 0.15s;
-}
-.nav-avatar:hover { opacity: 0.85; }
-
-/* Dropdown */
-.nav-avatar-dropdown {
-  display: none;
-  position: absolute;
-  top: calc(100% + 10px);
-  right: 0;
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.1);
-  min-width: 200px;
-  overflow: hidden;
-  z-index: 200;
-}
-.nav-avatar-dropdown.open { display: block; }
-.nav-dropdown-name {
-  padding: 14px 16px;
-  font-size: 14px; font-weight: 500;
-  color: var(--text-primary);
-  border-bottom: 1px solid var(--border);
-}
-.nav-dropdown-item {
-  display: flex; align-items: center; gap: 10px;
-  width: 100%; padding: 12px 16px;
-  font-size: 14px; color: var(--text-secondary);
-  background: none; border: none; text-align: left;
-  font-family: inherit; cursor: pointer;
-  transition: background 0.1s, color 0.1s;
-}
-.nav-dropdown-item:hover { background: var(--bg); color: var(--text-primary); }
-.nav-dropdown-item i { font-size: 16px; }
-
-/* Page */
 .page {
-  max-width: 960px;
+  max-width: 760px;
   margin: 0 auto;
   width: 100%;
   padding: 56px 24px 80px;
   flex: 1;
 }
 
-/* Section label */
-.section-label {
+/* Intro */
+.intro {
+  margin-bottom: 48px;
+}
+.intro-eyebrow {
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--text-tertiary);
-  margin-bottom: 16px;
+  color: var(--red);
+  margin-bottom: 12px;
+}
+.intro-title {
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--text-primary);
+  margin-bottom: 12px;
+  line-height: 1.2;
+}
+.intro-desc {
+  font-size: 15px;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  max-width: 580px;
 }
 
-/* Demo section header */
-.demo-header {
-  display: flex; align-items: center; justify-content: space-between;
-  margin-bottom: 16px;
+/* Step cards */
+.steps {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
-.btn-open-demo {
-  display: inline-flex; align-items: center; gap: 6px;
-  font-family: inherit; font-size: 14px; font-weight: 500;
-  color: var(--text-secondary); background: none; border: none;
-  cursor: pointer; text-decoration: none; transition: color 0.15s;
-  padding: 0;
-}
-.btn-open-demo:hover { color: var(--text-primary); }
-.btn-open-demo i { font-size: 14px; }
 
-/* Demo cards */
-.demo-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
-}
-.demo-card {
+.step-card {
   background: var(--card);
   border: 1px solid var(--border);
   border-radius: 16px;
-  padding: 28px;
+  padding: 24px 28px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 0.15s, box-shadow 0.15s;
 }
-.demo-card-icon {
-  width: 36px; height: 36px;
+.step-card:hover {
+  border-color: #ccc;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+}
+
+.step-icon {
+  width: 48px;
+  height: 48px;
   background: var(--red-light);
-  border-radius: 10px;
-  display: flex; align-items: center; justify-content: center;
-  margin-bottom: 20px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
 }
-.demo-card-icon i { font-size: 18px; color: var(--red); }
-.demo-card-title { font-size: 15px; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 8px; }
-.demo-card-desc { font-size: 14px; color: var(--text-secondary); line-height: 1.6; }
+.step-icon i {
+  font-size: 22px;
+  color: var(--red);
+}
+
+.step-body {
+  flex: 1;
+  min-width: 0;
+}
+.step-num {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  margin-bottom: 3px;
+}
+.step-title {
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+.step-desc {
+  font-size: 13.5px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.step-action {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-tertiary);
+  white-space: nowrap;
+  transition: color 0.15s;
+}
+.step-card:hover .step-action {
+  color: var(--text-primary);
+}
+.step-action i { font-size: 14px; }
 
 /* Footer */
 .footer {
-  border-top: 1px solid var(--border); background: var(--card);
+  border-top: 1px solid var(--border);
+  background: var(--card);
   padding: 20px 40px;
-  display: flex; align-items: center; justify-content: space-between;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 .footer-copy { font-size: 13px; color: var(--text-tertiary); }
 
-@media (max-width: 768px) {
-  .demo-grid { grid-template-columns: 1fr; }
-}
 @media (max-width: 640px) {
-  .nav { padding: 0 16px; }
+  .step-card { flex-wrap: wrap; gap: 16px; padding: 20px; }
+  .step-action { display: none; }
   .footer { padding: 20px 16px; }
 }
 </style>
@@ -176,6 +180,65 @@ body {
 
 <div class="page">
 
+  <div class="intro">
+    <div class="intro-eyebrow">How it works</div>
+    <h1 class="intro-title">Configure your design system in 5 steps.</h1>
+    <p class="intro-desc">FreshDS is a complete AI-native design system. Work through each section in order: set your brand, pick your navigation model, explore the component library, browse the pattern library, then download your SDK and start building.</p>
+  </div>
+
+  <div class="steps">
+
+    <a class="step-card" href="/app/theme.html">
+      <div class="step-icon"><i class="ti ti-palette"></i></div>
+      <div class="step-body">
+        <div class="step-num">Step 1</div>
+        <div class="step-title">Theme</div>
+        <div class="step-desc">Enter your brand colors and the engine generates a complete accessible color scale. Configure typography, border radius, spacing, and component styling. Every change updates live across the entire system.</div>
+      </div>
+      <div class="step-action">Open <i class="ti ti-arrow-right"></i></div>
+    </a>
+
+    <a class="step-card" href="/app/navigation.html">
+      <div class="step-icon"><i class="ti ti-layout-sidebar"></i></div>
+      <div class="step-body">
+        <div class="step-num">Step 2</div>
+        <div class="step-title">Navigation</div>
+        <div class="step-desc">Choose from 6 navigation patterns: persistent sidebar, collapsible sidebar, top nav tabs, hamburger drawer, dual-level, or command palette. Set your logo, menu structure, and icon set. Your choice applies across all patterns.</div>
+      </div>
+      <div class="step-action">Open <i class="ti ti-arrow-right"></i></div>
+    </a>
+
+    <a class="step-card" href="/app/components.html">
+      <div class="step-icon"><i class="ti ti-components"></i></div>
+      <div class="step-body">
+        <div class="step-num">Step 3</div>
+        <div class="step-title">Components</div>
+        <div class="step-desc">60+ production-ready components with usage docs, attribute specs, accessibility standards, and design token references — structured so AI coding tools understand them natively. This is what Claude Code reads when it builds your UI.</div>
+      </div>
+      <div class="step-action">Open <i class="ti ti-arrow-right"></i></div>
+    </a>
+
+    <a class="step-card" href="/app/patterns.html">
+      <div class="step-icon"><i class="ti ti-layout-grid"></i></div>
+      <div class="step-body">
+        <div class="step-num">Step 4</div>
+        <div class="step-title">Pattern Library</div>
+        <div class="step-desc">108 complete page layouts, dashboards, settings screens, onboarding flows, data tables, and more. Every pattern renders live with your brand theme and navigation model applied. Use them as starting points for any new page.</div>
+      </div>
+      <div class="step-action">Open <i class="ti ti-arrow-right"></i></div>
+    </a>
+
+    <a class="step-card" href="/app/download.html">
+      <div class="step-icon"><i class="ti ti-download"></i></div>
+      <div class="step-body">
+        <div class="step-num">Step 5</div>
+        <div class="step-title">Download</div>
+        <div class="step-desc">Export a production-ready SDK: the component library, design tokens, pattern stylesheets, and a sample project — all pre-configured with your theme. Drop it into your repo and start building with Claude Code immediately.</div>
+      </div>
+      <div class="step-action">Open <i class="ti ti-arrow-right"></i></div>
+    </a>
+
+  </div>
 
 </div>
 
