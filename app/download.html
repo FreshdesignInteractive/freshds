@@ -237,6 +237,82 @@ body {
 @keyframes spin { to { transform: rotate(360deg); } }
 .spin { display: inline-block; animation: spin 0.7s linear infinite; }
 
+/* Getting started steps */
+.gs-section {
+  margin-top: 52px;
+}
+.gs-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  margin-bottom: 28px;
+}
+.gs-steps {
+  display: flex;
+  flex-direction: column;
+}
+.gs-step {
+  display: flex;
+  gap: 20px;
+  position: relative;
+}
+.gs-step:not(:last-child) .gs-num-col::after {
+  content: '';
+  display: block;
+  width: 1px;
+  flex: 1;
+  background: var(--border);
+  margin: 6px auto 0;
+}
+.gs-num-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+  width: 28px;
+}
+.gs-num {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--card);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-tertiary);
+  flex-shrink: 0;
+}
+.gs-body {
+  padding-bottom: 28px;
+  flex: 1;
+}
+.gs-step:last-child .gs-body { padding-bottom: 0; }
+.gs-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 3px;
+  margin-top: 4px;
+}
+.gs-desc {
+  font-size: 13.5px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+.gs-desc code {
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  font-size: 12px;
+  background: #f0f0f2;
+  color: var(--text-primary);
+  padding: 1px 5px;
+  border-radius: 4px;
+}
+
 @media (max-width: 768px) {
   .download-card { flex-direction: column; align-items: flex-start; }
 }
@@ -279,6 +355,54 @@ body {
         <i class="ti ti-loader-2 spin" id="dl-icon"></i>
         <span id="dl-label">Loading…</span>
       </button>
+    </div>
+  </div>
+
+  <!-- Getting started -->
+  <div class="gs-section">
+    <div class="gs-label">Getting started</div>
+    <div class="gs-steps">
+
+      <div class="gs-step">
+        <div class="gs-num-col"><div class="gs-num">1</div></div>
+        <div class="gs-body">
+          <div class="gs-title">Download the SDK</div>
+          <div class="gs-desc">Click the button above to download the SDK zip. Unzip it anywhere on your machine — this becomes your local design system workspace.</div>
+        </div>
+      </div>
+
+      <div class="gs-step">
+        <div class="gs-num-col"><div class="gs-num">2</div></div>
+        <div class="gs-body">
+          <div class="gs-title">Create a project</div>
+          <div class="gs-desc">Inside the SDK, open the <code>projects/</code> folder. Duplicate the sample project and rename it to your product. Each project gets its own folder with a <code>CLAUDE.md</code> that tells your AI agent how to work with this DS.</div>
+        </div>
+      </div>
+
+      <div class="gs-step">
+        <div class="gs-num-col"><div class="gs-num">3</div></div>
+        <div class="gs-body">
+          <div class="gs-title">Explore the Pattern Library</div>
+          <div class="gs-desc">Head to the Pattern Library tab and browse the full set of page layouts. Find the patterns your product needs — dashboards, settings, onboarding flows, data tables, and more.</div>
+        </div>
+      </div>
+
+      <div class="gs-step">
+        <div class="gs-num-col"><div class="gs-num">4</div></div>
+        <div class="gs-body">
+          <div class="gs-title">Configure and export patterns</div>
+          <div class="gs-desc">Open each pattern, use the Configure panel to toggle zones and set your AI rules, then download it. Each pattern exports as a ready-to-use HTML file with your brand theme and navigation model applied.</div>
+        </div>
+      </div>
+
+      <div class="gs-step">
+        <div class="gs-num-col"><div class="gs-num">5</div></div>
+        <div class="gs-body">
+          <div class="gs-title">Start building</div>
+          <div class="gs-desc">Drop your exported patterns into your project folder. Point your AI coding tool at the project and start prompting — it has everything it needs to build on-brand, on-standard screens.</div>
+        </div>
+      </div>
+
     </div>
   </div>
 

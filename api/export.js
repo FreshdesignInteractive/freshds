@@ -266,8 +266,6 @@ const DEVKIT_FILES = [
 const SDK_FILES = [
   // CLAUDE.md — fetched from sdk-assets/ but placed at SDK root so Claude Code finds it
   { fetch: 'sdk-assets/CLAUDE.md', zip: 'CLAUDE.md' },
-  // Readme
-  'readme.html',
   // Tokens
   'systems/tokens/primitives.css',
   'systems/tokens/theme.css',
