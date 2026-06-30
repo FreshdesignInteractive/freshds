@@ -73,7 +73,6 @@ body {
   font-size: 15px;
   color: var(--text-secondary);
   line-height: 1.7;
-  max-width: 580px;
 }
 
 /* Step cards */
@@ -142,19 +141,21 @@ body {
 
 .step-action {
   flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
   display: flex;
   align-items: center;
-  gap: 6px;
-  font-size: 13px;
-  font-weight: 500;
+  justify-content: center;
+  background: var(--bg);
   color: var(--text-tertiary);
-  white-space: nowrap;
-  transition: color 0.15s;
+  transition: background 0.15s, color 0.15s;
 }
 .step-card:hover .step-action {
-  color: var(--text-primary);
+  background: var(--red-light);
+  color: var(--red);
 }
-.step-action i { font-size: 14px; }
+.step-action i { font-size: 15px; }
 
 /* Footer */
 .footer {
@@ -195,7 +196,7 @@ body {
         <div class="step-title">Theme</div>
         <div class="step-desc">Enter your brand colors and the engine generates a complete accessible color scale. Configure typography, border radius, spacing, and component styling. Every change updates live across the entire system.</div>
       </div>
-      <div class="step-action">Open <i class="ti ti-arrow-right"></i></div>
+      <div class="step-action"><i class="ti ti-arrow-right"></i></div>
     </a>
 
     <a class="step-card" href="/app/navigation.html">
@@ -205,7 +206,7 @@ body {
         <div class="step-title">Navigation</div>
         <div class="step-desc">Choose from 6 navigation patterns: persistent sidebar, collapsible sidebar, top nav tabs, hamburger drawer, dual-level, or command palette. Set your logo, menu structure, and icon set. Your choice applies across all patterns.</div>
       </div>
-      <div class="step-action">Open <i class="ti ti-arrow-right"></i></div>
+      <div class="step-action"><i class="ti ti-arrow-right"></i></div>
     </a>
 
     <a class="step-card" href="/app/components.html">
@@ -213,9 +214,9 @@ body {
       <div class="step-body">
         <div class="step-num">Step 3</div>
         <div class="step-title">Components</div>
-        <div class="step-desc">60+ production-ready components with usage docs, attribute specs, accessibility standards, and design token references — structured so AI coding tools understand them natively. This is what Claude Code reads when it builds your UI.</div>
+        <div class="step-desc">60+ production-ready components with usage docs, attribute specs, accessibility standards, and design token references — structured so AI coding tools understand them natively. Feed this to your agent and it knows exactly how to build your UI.</div>
       </div>
-      <div class="step-action">Open <i class="ti ti-arrow-right"></i></div>
+      <div class="step-action"><i class="ti ti-arrow-right"></i></div>
     </a>
 
     <a class="step-card" href="/app/patterns.html">
@@ -225,7 +226,7 @@ body {
         <div class="step-title">Pattern Library</div>
         <div class="step-desc">108 complete page layouts, dashboards, settings screens, onboarding flows, data tables, and more. Every pattern renders live with your brand theme and navigation model applied. Use them as starting points for any new page.</div>
       </div>
-      <div class="step-action">Open <i class="ti ti-arrow-right"></i></div>
+      <div class="step-action"><i class="ti ti-arrow-right"></i></div>
     </a>
 
     <a class="step-card" href="/app/download.html">
@@ -233,9 +234,9 @@ body {
       <div class="step-body">
         <div class="step-num">Step 5</div>
         <div class="step-title">Download</div>
-        <div class="step-desc">Export a production-ready SDK: the component library, design tokens, pattern stylesheets, and a sample project — all pre-configured with your theme. Drop it into your repo and start building with Claude Code immediately.</div>
+        <div class="step-desc">Export a production-ready SDK: the component library, design tokens, pattern stylesheets, and a sample project — all pre-configured with your theme. Drop it into your repo and start building with your AI coding tool of choice.</div>
       </div>
-      <div class="step-action">Open <i class="ti ti-arrow-right"></i></div>
+      <div class="step-action"><i class="ti ti-arrow-right"></i></div>
     </a>
 
   </div>
