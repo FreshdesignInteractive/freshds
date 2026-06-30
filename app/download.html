@@ -177,7 +177,7 @@ body {
   border-radius: 20px;
   padding: 32px;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 28px;
   margin-bottom: 56px;
 }
@@ -187,6 +187,7 @@ body {
   border-radius: 14px;
   display: flex; align-items: center; justify-content: center;
   flex-shrink: 0;
+  margin-top: 2px;
 }
 .download-icon i { font-size: 24px; color: var(--red); }
 .download-body { flex: 1; }
@@ -335,19 +336,18 @@ body {
   </div>
 
   <!-- Download -->
-  <div class="section-label">Download</div>
   <div class="download-card">
     <div class="download-icon">
       <i class="ti ti-world"></i>
     </div>
     <div class="download-body">
-      <div class="download-title">SDK</div>
+      <div class="download-title">Download SDK</div>
       <p class="download-desc">Your design system, pre-configured to your brand and navigation model. Download the SDK, add your pattern files, and your AI coding tool has everything it needs to build on-brand screens.</p>
       <div class="download-features">
         <span class="download-feature" id="ds-stat-components"><i class="ti ti-check"></i>48 components</span>
         <span class="download-feature" id="ds-stat-patterns"><i class="ti ti-check"></i>77 patterns</span>
         <span class="download-feature"><i class="ti ti-check"></i>Pre-configured to your brand</span>
-        <span class="download-feature"><i class="ti ti-check"></i>Ready for your AI agent</span>
+        <span class="download-feature" id="ds-stat-ai"><i class="ti ti-check"></i>Ready for your AI agent</span>
       </div>
     </div>
     <div class="btn-dl-wrap">
