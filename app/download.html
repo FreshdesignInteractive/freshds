@@ -193,12 +193,19 @@ body {
 .download-body { flex: 1; }
 .download-title { font-size: 18px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 6px; }
 .download-desc { font-size: 14.5px; color: var(--text-secondary); line-height: 1.65; margin-bottom: 18px; max-width: 540px; }
-.download-features { display: flex; gap: 20px; flex-wrap: nowrap; }
+.download-features { display: flex; align-items: center; gap: 0; flex-wrap: nowrap; }
 .download-feature {
   font-size: 13px; color: var(--text-secondary);
-  display: flex; align-items: center; gap: 6px;
+  display: flex; align-items: center; gap: 0;
+  white-space: nowrap;
 }
-.download-feature i { color: var(--red); font-size: 14px; }
+.download-feature + .download-feature::before {
+  content: '·';
+  font-size: 20px;
+  color: var(--border);
+  padding: 0 12px;
+  line-height: 1;
+}
 .btn-download {
   display: inline-flex; align-items: center; gap: 8px;
   padding: 12px 24px;
@@ -344,10 +351,10 @@ body {
       <div class="download-title">Download SDK</div>
       <p class="download-desc">Your design system, pre-configured to your brand and navigation model. Download the SDK, add your pattern files, and your AI coding tool has everything it needs to build on-brand screens.</p>
       <div class="download-features">
-        <span class="download-feature" id="ds-stat-components"><i class="ti ti-check"></i>48 components</span>
-        <span class="download-feature" id="ds-stat-patterns"><i class="ti ti-check"></i>77 patterns</span>
-        <span class="download-feature"><i class="ti ti-check"></i>Pre-configured to your brand</span>
-        <span class="download-feature" id="ds-stat-ai"><i class="ti ti-check"></i>Ready for your AI agent</span>
+        <span class="download-feature" id="ds-stat-components">48 components</span>
+        <span class="download-feature" id="ds-stat-patterns">77 patterns</span>
+        <span class="download-feature">Pre-configured to your brand</span>
+        <span class="download-feature">Ready for your AI agent</span>
       </div>
     </div>
     <div class="btn-dl-wrap">
@@ -417,7 +424,7 @@ body {
   function setStatText(id, text) {
     var el = document.getElementById(id);
     if (!el) return;
-    el.innerHTML = '<i class="ti ti-check"></i>' + text;
+    el.textContent = text;
   }
   fetch('/patterns.html').then(function(r){ return r.text(); }).then(function(html) {
     var m = html.match(/\{\s*id:/g);
