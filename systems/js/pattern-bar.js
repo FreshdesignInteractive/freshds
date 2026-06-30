@@ -118,22 +118,10 @@ function toggleDemoMode() {
     document.documentElement.removeAttribute('data-mode');
     if (app) app.removeAttribute('data-mode');
     if (btn) btn.innerHTML = '<i class="ti ti-moon"></i>';
-    /* Persist: clear mode in localStorage */
-    try {
-      var t = JSON.parse(localStorage.getItem('freshds-theme') || '{}');
-      delete t.mode;
-      localStorage.setItem('freshds-theme', JSON.stringify(t));
-    } catch (e) {}
   } else {
     document.documentElement.setAttribute('data-mode', 'dark');
     if (app) app.setAttribute('data-mode', 'dark');
     if (btn) btn.innerHTML = '<i class="ti ti-sun"></i>';
-    /* Persist: save mode to localStorage */
-    try {
-      var t = JSON.parse(localStorage.getItem('freshds-theme') || '{}');
-      t.mode = 'dark';
-      localStorage.setItem('freshds-theme', JSON.stringify(t));
-    } catch (e) {}
   }
 }
 
